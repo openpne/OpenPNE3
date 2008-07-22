@@ -3,3 +3,4 @@
 #    class:          sfPropelDatabase
 #    param:
 #      dsn:          mysql://root@localhost/dbname
+#      encoding: utf8
