@@ -8,5 +8,6 @@ propel:
     id: ~
     member_id: ~
     pc_address: { type: varchar(256) }
+    password: { type: varchar(32) }
     _uniques:
       authentication_pc_address_pc_address_index: [pc_address]
