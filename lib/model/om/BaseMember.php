@@ -20,6 +20,12 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 	protected $updated_at;
 
 	
+	protected $collAuthenticationPcAddresss;
+
+	
+	protected $lastAuthenticationPcAddressCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -217,6 +223,14 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
+			if ($this->collAuthenticationPcAddresss !== null) {
+				foreach($this->collAuthenticationPcAddresss as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -257,6 +271,14 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collAuthenticationPcAddresss !== null) {
+					foreach($this->collAuthenticationPcAddresss as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -377,6 +399,15 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 		$copyObj->setUpdatedAt($this->updated_at);
 
 
+		if ($deepCopy) {
+									$copyObj->setNew(false);
+
+			foreach($this->getAuthenticationPcAddresss() as $relObj) {
+				$copyObj->addAuthenticationPcAddress($relObj->copy($deepCopy));
+			}
+
+		} 
+
 		$copyObj->setNew(true);
 
 		$copyObj->setId(NULL); 
@@ -398,6 +429,74 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 			self::$peer = new MemberPeer();
 		}
 		return self::$peer;
+	}
+
+	
+	public function initAuthenticationPcAddresss()
+	{
+		if ($this->collAuthenticationPcAddresss === null) {
+			$this->collAuthenticationPcAddresss = array();
+		}
+	}
+
+	
+	public function getAuthenticationPcAddresss($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAuthenticationPcAddresss === null) {
+			if ($this->isNew()) {
+			   $this->collAuthenticationPcAddresss = array();
+			} else {
+
+				$criteria->add(AuthenticationPcAddressPeer::MEMBER_ID, $this->getId());
+
+				AuthenticationPcAddressPeer::addSelectColumns($criteria);
+				$this->collAuthenticationPcAddresss = AuthenticationPcAddressPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(AuthenticationPcAddressPeer::MEMBER_ID, $this->getId());
+
+				AuthenticationPcAddressPeer::addSelectColumns($criteria);
+				if (!isset($this->lastAuthenticationPcAddressCriteria) || !$this->lastAuthenticationPcAddressCriteria->equals($criteria)) {
+					$this->collAuthenticationPcAddresss = AuthenticationPcAddressPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastAuthenticationPcAddressCriteria = $criteria;
+		return $this->collAuthenticationPcAddresss;
+	}
+
+	
+	public function countAuthenticationPcAddresss($criteria = null, $distinct = false, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(AuthenticationPcAddressPeer::MEMBER_ID, $this->getId());
+
+		return AuthenticationPcAddressPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addAuthenticationPcAddress(AuthenticationPcAddress $l)
+	{
+		$this->collAuthenticationPcAddresss[] = $l;
+		$l->setMember($this);
 	}
 
 } 
