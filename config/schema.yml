@@ -1,17 +1,5 @@
 propel:
   member:
     id: ~
-    nickname: { type: longvarchar, required: true }
-    created_at: { type: timestamp, required: true, default: "1970-01-01 00:00:00" }
-    updated_at: { type: timestamp, required: true, default: "1970-01-01 00:00:00" }
-  member_secure:
-    id: ~
-    member_id: { type: integer, required: true, default: 0,  index: unique }
-    pc_address: { type: varbinary, required: true }
-    mobile_address: { type: varbinary, required: true }
-    regist_address: { type: varbinary, required: true }
-    password: { type: varbinary, required: true }
-    password_query_answer: { type: varbinary, required: true }
-    easy_access_id: { type: varbinary, required: true }
-    created_at: { type: timestamp, required: true, default: "1970-01-01 00:00:00" }
-    updated_at: { type: timestamp, required: true, default: "1970-01-01 00:00:00" }
+    created_at: ~
+    updated_at: ~
