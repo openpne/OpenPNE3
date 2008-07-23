@@ -3,3 +3,10 @@ propel:
     id: ~
     created_at: ~
     updated_at: ~
+
+  authentication_pc_address:
+    id: ~
+    member_id: ~
+    pc_address: { type: varchar(256) }
+    _uniques:
+      authentication_pc_address_pc_address_index: [pc_address]
