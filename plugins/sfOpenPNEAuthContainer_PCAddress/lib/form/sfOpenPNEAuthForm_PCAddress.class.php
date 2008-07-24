@@ -15,5 +15,12 @@ class sfOpenPNEAuthForm_PCAddress extends sfForm
       'email' => new sfWidgetFormInput(),
       'password' => new sfWidgetFormInputPassword(),
     ));
+
+    $this->setValidatorSchema(new sfValidatorSchema(array(
+      'email' => new sfValidatorEmail(),
+      'password' => new sfValidatorString(),
+    )));
+
+    $this->widgetSchema->setNameFormat('auth[%s]');
   }
 }

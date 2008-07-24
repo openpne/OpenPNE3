@@ -28,8 +28,6 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
     $formClass = 'sfOpenPNEAuthForm_' . $driver;
     $this->authForm = new $formClass();
-
-    $this->logout();
   }
 
   public function getAuthContainer()
@@ -42,20 +40,28 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     return $this->authForm;
   }
 
+  public function getMemberId()
+  {
+    return $this->getAttribute('member_id', null, 'sfOpenPNESecurityUser');
+  }
+
   public function login($form)
   {
-    $this->user = $this->getAuthContainer()->fetchData($form);
+    $member_id = $this->getAuthContainer()->fetchData($form);
 
-    if ($this->user) {
-        $this->setAuthenticated(true);
+    if ($member_id) {
+      $this->setAuthenticated(true);
+      $this->setAttribute('member_id', $member_id, 'sfOpenPNESecurityUser');
     } else {
-        $this->logout();
+      $this->logout();
     }
+
+    return $this->isAuthenticated();
   }
 
   public function logout()
   {
     $this->setAuthenticated(false);
-    $this->user = null;
+    $this->getAttributeHolder()->removeNamespace('sfOpenPNESecurityUser');
   }
 }

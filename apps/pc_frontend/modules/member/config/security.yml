@@ -1,0 +1,5 @@
+home:
+  is_secure: on
+
+all:
+  is_secure: off

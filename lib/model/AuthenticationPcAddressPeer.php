@@ -9,4 +9,10 @@
  */ 
 class AuthenticationPcAddressPeer extends BaseAuthenticationPcAddressPeer
 {
+  static public function retrieveByPcAddress($pcAddress)
+  {
+    $c = new Criteria();
+    $c->add(self::PC_ADDRESS, $pcAddress);
+    return self::doSelectOne($c);
+  }
 }
