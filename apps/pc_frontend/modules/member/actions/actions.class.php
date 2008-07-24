@@ -17,6 +17,18 @@ class memberActions extends sfActions
   */
   public function executeIndex($request)
   {
-    $this->forward('default', 'module');
+    $this->redirect('member/login');
+  }
+
+ /**
+  * Executes login action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeLogin($request)
+  {
+    $this->form = $this->getUser()->getAuthForm();
+
+    return sfView::SUCCESS;
   }
 }
