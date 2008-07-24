@@ -1,0 +1,8 @@
+propel:
+  _attributes: { package: plugins.sfOpenPNEAuthContainer_LoginID.lib.model }
+
+  authentication_login_id:
+    id: ~
+    member_id: { type: integer, foreignTable: member, foreignReference: id }
+    login_id: { type: varchar(128), index: unique }
+    password: { type: varchar(32) }
