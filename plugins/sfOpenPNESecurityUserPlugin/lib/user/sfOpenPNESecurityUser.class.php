@@ -21,12 +21,15 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   {
     parent::initialize($dispatcher, $storage, $options);
 
-    $driver = 'LoginID';
+    $authMode = sfConfig::get('app_openpne_auth_mode');
+    if (!$authMode) {
+        $authMode = 'LoginID';
+    }
 
-    $containerClass = 'sfOpenPNEAuthContainer_' . $driver;
+    $containerClass = 'sfOpenPNEAuthContainer_' . $authMode;
     $this->authContainer = new $containerClass();
 
-    $formClass = 'sfOpenPNEAuthForm_' . $driver;
+    $formClass = 'sfOpenPNEAuthForm_' . $authMode;
     $this->authForm = new $formClass();
   }
 

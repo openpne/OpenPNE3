@@ -1,2 +1,2 @@
-# default values
-#all:
+all:
+  openpne_auth_mode: LoginID
