@@ -4,22 +4,22 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 #-----------------------------------------------------------------------------
-#-- authentication_pc_address
+#-- authentication_login_id
 #-----------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `authentication_pc_address`;
+DROP TABLE IF EXISTS `authentication_login_id`;
 
 
-CREATE TABLE `authentication_pc_address`
+CREATE TABLE `authentication_login_id`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`member_id` INTEGER,
-	`pc_address` VARCHAR(128),
+	`login_id` VARCHAR(128),
 	`password` VARCHAR(32),
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `authentication_pc_address_U_1` (`pc_address`),
-	INDEX `authentication_pc_address_FI_1` (`member_id`),
-	CONSTRAINT `authentication_pc_address_FK_1`
+	UNIQUE KEY `authentication_login_id_U_1` (`login_id`),
+	INDEX `authentication_login_id_FI_1` (`member_id`),
+	CONSTRAINT `authentication_login_id_FK_1`
 		FOREIGN KEY (`member_id`)
 		REFERENCES `member` (`id`)
 )Type=InnoDB;

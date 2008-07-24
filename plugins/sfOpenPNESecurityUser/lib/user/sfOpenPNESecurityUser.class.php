@@ -21,7 +21,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   {
     parent::initialize($dispatcher, $storage, $options);
 
-    $driver = 'PCAddress';
+    $driver = 'LoginID';
 
     $containerClass = 'sfOpenPNEAuthContainer_' . $driver;
     $this->authContainer = new $containerClass();

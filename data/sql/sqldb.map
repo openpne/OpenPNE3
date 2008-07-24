@@ -1,3 +1,4 @@
 # Sqlfile -> Database map
 lib.model.schema.sql=propel
 plugins.sfOpenPNEAuthContainer_PCAddress.lib.model.schema.sql=propel
+plugins.sfOpenPNEAuthContainer_LoginID.lib.model.schema.sql=propel

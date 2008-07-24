@@ -20,10 +20,10 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 	protected $updated_at;
 
 	
-	protected $collAuthenticationPcAddresss;
+	protected $collAuthenticationLoginIds;
 
 	
-	protected $lastAuthenticationPcAddressCriteria = null;
+	protected $lastAuthenticationLoginIdCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -223,8 +223,8 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
-			if ($this->collAuthenticationPcAddresss !== null) {
-				foreach($this->collAuthenticationPcAddresss as $referrerFK) {
+			if ($this->collAuthenticationLoginIds !== null) {
+				foreach($this->collAuthenticationLoginIds as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -272,8 +272,8 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 			}
 
 
-				if ($this->collAuthenticationPcAddresss !== null) {
-					foreach($this->collAuthenticationPcAddresss as $referrerFK) {
+				if ($this->collAuthenticationLoginIds !== null) {
+					foreach($this->collAuthenticationLoginIds as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -402,8 +402,8 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
-			foreach($this->getAuthenticationPcAddresss() as $relObj) {
-				$copyObj->addAuthenticationPcAddress($relObj->copy($deepCopy));
+			foreach($this->getAuthenticationLoginIds() as $relObj) {
+				$copyObj->addAuthenticationLoginId($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -432,15 +432,15 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 	}
 
 	
-	public function initAuthenticationPcAddresss()
+	public function initAuthenticationLoginIds()
 	{
-		if ($this->collAuthenticationPcAddresss === null) {
-			$this->collAuthenticationPcAddresss = array();
+		if ($this->collAuthenticationLoginIds === null) {
+			$this->collAuthenticationLoginIds = array();
 		}
 	}
 
 	
-	public function getAuthenticationPcAddresss($criteria = null, $con = null)
+	public function getAuthenticationLoginIds($criteria = null, $con = null)
 	{
 				if ($criteria === null) {
 			$criteria = new Criteria();
@@ -450,34 +450,34 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collAuthenticationPcAddresss === null) {
+		if ($this->collAuthenticationLoginIds === null) {
 			if ($this->isNew()) {
-			   $this->collAuthenticationPcAddresss = array();
+			   $this->collAuthenticationLoginIds = array();
 			} else {
 
-				$criteria->add(AuthenticationPcAddressPeer::MEMBER_ID, $this->getId());
+				$criteria->add(AuthenticationLoginIdPeer::MEMBER_ID, $this->getId());
 
-				AuthenticationPcAddressPeer::addSelectColumns($criteria);
-				$this->collAuthenticationPcAddresss = AuthenticationPcAddressPeer::doSelect($criteria, $con);
+				AuthenticationLoginIdPeer::addSelectColumns($criteria);
+				$this->collAuthenticationLoginIds = AuthenticationLoginIdPeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(AuthenticationPcAddressPeer::MEMBER_ID, $this->getId());
+				$criteria->add(AuthenticationLoginIdPeer::MEMBER_ID, $this->getId());
 
-				AuthenticationPcAddressPeer::addSelectColumns($criteria);
-				if (!isset($this->lastAuthenticationPcAddressCriteria) || !$this->lastAuthenticationPcAddressCriteria->equals($criteria)) {
-					$this->collAuthenticationPcAddresss = AuthenticationPcAddressPeer::doSelect($criteria, $con);
+				AuthenticationLoginIdPeer::addSelectColumns($criteria);
+				if (!isset($this->lastAuthenticationLoginIdCriteria) || !$this->lastAuthenticationLoginIdCriteria->equals($criteria)) {
+					$this->collAuthenticationLoginIds = AuthenticationLoginIdPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastAuthenticationPcAddressCriteria = $criteria;
-		return $this->collAuthenticationPcAddresss;
+		$this->lastAuthenticationLoginIdCriteria = $criteria;
+		return $this->collAuthenticationLoginIds;
 	}
 
 	
-	public function countAuthenticationPcAddresss($criteria = null, $distinct = false, $con = null)
+	public function countAuthenticationLoginIds($criteria = null, $distinct = false, $con = null)
 	{
 				if ($criteria === null) {
 			$criteria = new Criteria();
@@ -487,15 +487,15 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		$criteria->add(AuthenticationPcAddressPeer::MEMBER_ID, $this->getId());
+		$criteria->add(AuthenticationLoginIdPeer::MEMBER_ID, $this->getId());
 
-		return AuthenticationPcAddressPeer::doCount($criteria, $distinct, $con);
+		return AuthenticationLoginIdPeer::doCount($criteria, $distinct, $con);
 	}
 
 	
-	public function addAuthenticationPcAddress(AuthenticationPcAddress $l)
+	public function addAuthenticationLoginId(AuthenticationLoginId $l)
 	{
-		$this->collAuthenticationPcAddresss[] = $l;
+		$this->collAuthenticationLoginIds[] = $l;
 		$l->setMember($this);
 	}
 

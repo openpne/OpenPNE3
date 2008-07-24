@@ -2,8 +2,8 @@ Member:
   first_member:
     id: ~
 
-AuthenticationPcAddress:
+AuthenticationLoginId:
   first_pc_address:
     member_id: first_member
-    pc_address: "sns@example.com"
+    login_id: "openpne"
     password: <?php echo md5('password') . "\n"; ?>
