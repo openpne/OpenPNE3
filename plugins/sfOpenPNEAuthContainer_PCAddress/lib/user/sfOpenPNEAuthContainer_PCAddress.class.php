@@ -17,7 +17,7 @@ class sfOpenPNEAuthContainer_PCAddress extends sfOpenPNEAuthContainer
     $data = AuthenticationPcAddressPeer::retrieveByPcAddress($email);
 
     if (!$data) {
-        return false;
+      return false;
     }
 
     if ($data->getPassword() == md5($password)) {
