@@ -7,9 +7,13 @@
  * @subpackage user
  * @author     Kousuke Ebihara <ebihara@tejimaya.net>
  */
-class sfOpenPNEAuthContainer
+abstract class sfOpenPNEAuthContainer
 {
-  public function fetchData($form)
-  {
-  }
+  /**
+   * Fetch data from storage container
+   *
+   * @param  sfForm $form
+   * @return int    memberId
+   */
+  abstract public function fetchData($form);
 }
