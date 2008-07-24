@@ -54,6 +54,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
     if ($member_id) {
       $this->setAuthenticated(true);
+      $this->setIsSNSMember(true);
       $this->setAttribute('member_id', $member_id, 'sfOpenPNESecurityUser');
     } else {
       $this->logout();
@@ -66,5 +67,16 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   {
     $this->setAuthenticated(false);
     $this->getAttributeHolder()->removeNamespace('sfOpenPNESecurityUser');
+    $this->clearCredential();
+  }
+
+  public function setIsSNSMember($isSNSMember)
+  {
+    if ($isSNSMember) {
+      $this->setAuthenticated(true);
+      $this->addCredential('SNSMember');
+    } else {
+      $this->removeCredential('SNSMember');
+    }
   }
 }
