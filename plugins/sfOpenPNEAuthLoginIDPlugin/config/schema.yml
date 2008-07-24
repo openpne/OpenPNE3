@@ -1,5 +1,5 @@
 propel:
-  _attributes: { package: plugins.sfOpenPNEAuthContainer_LoginID.lib.model }
+  _attributes: { package: plugins.sfOpenPNEAuthLoginIDPlugin.lib.model }
 
   authentication_login_id:
     id: ~

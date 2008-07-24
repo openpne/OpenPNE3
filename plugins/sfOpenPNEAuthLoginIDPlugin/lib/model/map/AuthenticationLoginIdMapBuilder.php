@@ -5,7 +5,7 @@
 class AuthenticationLoginIdMapBuilder {
 
 	
-	const CLASS_NAME = 'plugins.sfOpenPNEAuthContainer_LoginID.lib.model.map.AuthenticationLoginIdMapBuilder';
+	const CLASS_NAME = 'plugins.sfOpenPNEAuthLoginIDPlugin.lib.model.map.AuthenticationLoginIdMapBuilder';
 
 	
 	private $dbMap;
