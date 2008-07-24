@@ -1,5 +1,6 @@
 propel:
   member:
     id: ~
+    is_active: { type: boolean }
     created_at: ~
     updated_at: ~

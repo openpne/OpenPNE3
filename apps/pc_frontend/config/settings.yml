@@ -79,7 +79,7 @@ all:
 #    standard_helpers:       [Partial, Cache, Form]
 #
 #    # Activated modules from plugins or from the symfony core
-#    enabled_modules:        [default]
+    enabled_modules:        [default, loginId]
 #
 #    # Charset used for the response
 #    charset:                utf-8

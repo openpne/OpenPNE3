@@ -7,7 +7,7 @@
  * @subpackage user
  * @author     Kousuke Ebihara <ebihara@tejimaya.net>
  */
-class sfOpenPNEAuthForm_LoginID extends sfForm
+class sfOpenPNEAuthForm_LoginID extends sfOpenPNEAuthForm
 {
   public function configure()
   {
@@ -22,5 +22,14 @@ class sfOpenPNEAuthForm_LoginID extends sfForm
     )));
 
     $this->widgetSchema->setNameFormat('auth[%s]');
+  }
+
+  public function setForRegisterWidgets()
+  {
+    $this->validatorSchema['password_confirm'] = new sfValidatorString();
+    $this->widgetSchema['password_confirm'] = new sfWidgetFormInputPassword();
+
+    $this->mergePostValidator(new sfValidatorSchemaCompare('password', '==', 'password_confirm'));
+    $this->mergePostValidator(new sfValidatorPropelUnique(array('model' => 'AuthenticationLoginId', 'column' => 'login_id')));
   }
 }

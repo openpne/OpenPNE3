@@ -31,6 +31,8 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
     $formClass = 'sfOpenPNEAuthForm_' . $authMode;
     $this->authForm = new $formClass();
+
+    $this->initializeCredential();
   }
 
   public function getAuthContainer()
@@ -46,6 +48,11 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   public function getMemberId()
   {
     return $this->getAttribute('member_id', null, 'sfOpenPNESecurityUser');
+  }
+
+  public function getRegisterEndAction()
+  {
+    return $this->getAuthContainer()->getRegisterEndAction();
   }
 
   public function login($form)
@@ -67,7 +74,36 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   {
     $this->setAuthenticated(false);
     $this->getAttributeHolder()->removeNamespace('sfOpenPNESecurityUser');
-    $this->clearCredential();
+    $this->clearCredentials();
+  }
+
+  public function register($memberId = null, $form = null)
+  {
+    $isRegisterData = $this->getAuthContainer()->registerData($memberId, $form);
+    if ($isRegisterData) {
+      $this->setAuthenticated(true);
+      $this->setAttribute('member_id', $memberId, 'sfOpenPNESecurityUser');
+      return true;
+    }
+
+    return false;
+  }
+
+  public function initializeCredential()
+  {
+    $memberId = $this->getMemberId();
+    $isRegisterFinish = $this->getAuthContainer()->isRegisterFinish($memberId);
+
+    $this->setIsSNSMember(false);
+    $this->setIsSNSRegisterFinish(false);
+
+    if ($memberId && $isRegisterFinish) {
+      $this->setIsSNSRegisterFinish(true);
+    } elseif ($memberId) {
+      $this->setIsSNSMember(true);
+    }
+
+    $this->setIsSNSRegisterBegin($this->getAuthContainer()->isRegisterBegin());
   }
 
   public function setIsSNSMember($isSNSMember)
@@ -77,6 +113,36 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
       $this->addCredential('SNSMember');
     } else {
       $this->removeCredential('SNSMember');
+    }
+  }
+
+  public function setIsSNSRegisterBegin($isSNSRegisterBegin)
+  {
+    if ($this->hasCredential('SNSMember')) {
+      $this->removeCredential('SNSRegisterBegin');
+      return false;
+    }
+
+    if ($isSNSRegisterBegin) {
+      $this->setAuthenticated(true);
+      $this->addCredential('SNSRegisterBegin');
+    } else {
+      $this->removeCredential('SNSRegisterBegin');
+    }
+  }
+
+  public function setIsSNSRegisterFinish($isSNSRegisterFinish)
+  {
+    if ($this->hasCredential('SNSMember')) {
+      $this->removeCredential('SNSRegisterFinish');
+      return false;
+    }
+
+    if ($isSNSRegisterFinish) {
+      $this->setAuthenticated(true);
+      $this->addCredential('SNSRegisterFinish');
+    } else {
+      $this->removeCredential('SNSRegisterFinish');
     }
   }
 }

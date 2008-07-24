@@ -1,6 +1,7 @@
 Member:
   first_member:
     id: ~
+    is_active: 1
 
 AuthenticationLoginId:
   first_pc_address:

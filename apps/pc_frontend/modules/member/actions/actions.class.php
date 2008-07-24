@@ -44,6 +44,36 @@ class memberActions extends sfActions
   }
 
  /**
+  * Executes register action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeRegisterInput($request)
+  {
+    $this->form = $this->getUser()->getAuthForm();
+    $this->form->setForRegisterWidgets();
+
+    $auth = $request->getParameter('auth');
+
+    if ($auth) {
+      $this->form->bind($auth);
+
+      if ($this->form->isValid()) {
+        $member = new Member();
+        $member->setIsActive(false);
+        $member->save();
+
+        $this->redirectIf(
+          $this->getUser()->register($member->getId(), $this->form),
+          $this->getUser()->getRegisterEndAction()
+        );
+      }
+    }
+
+    return sfView::SUCCESS;
+  }
+
+ /**
   * Executes home action
   *
   * @param sfRequest $request A request object

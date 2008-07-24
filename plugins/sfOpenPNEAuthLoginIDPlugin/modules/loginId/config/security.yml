@@ -1,0 +1,3 @@
+register:
+  is_secure: on
+  credentials: SNSRegisterEnd
