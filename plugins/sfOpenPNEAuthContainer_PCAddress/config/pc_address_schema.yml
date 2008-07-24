@@ -1,0 +1,8 @@
+propel:
+  _attributes: { package: plugins.sfOpenPNEAuthContainer_PCAddress.lib.model }
+
+  authentication_pc_address:
+    id: ~
+    member_id: { type: integer, foreignTable: member, foreignReference: id }
+    pc_address: { type: varchar(128), index: unique }
+    password: { type: varchar(32) }

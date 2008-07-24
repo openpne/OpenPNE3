@@ -5,7 +5,7 @@
  *
  * 
  *
- * @package lib.model
+ * @package plugins.sfOpenPNEAuthContainer_PCAddress.lib.model
  */ 
 class AuthenticationPcAddressPeer extends BaseAuthenticationPcAddressPeer
 {

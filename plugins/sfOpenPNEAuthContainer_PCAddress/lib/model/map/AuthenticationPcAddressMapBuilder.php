@@ -5,7 +5,7 @@
 class AuthenticationPcAddressMapBuilder {
 
 	
-	const CLASS_NAME = 'lib.model.map.AuthenticationPcAddressMapBuilder';
+	const CLASS_NAME = 'plugins.sfOpenPNEAuthContainer_PCAddress.lib.model.map.AuthenticationPcAddressMapBuilder';
 
 	
 	private $dbMap;

@@ -10,7 +10,7 @@ abstract class BaseAuthenticationPcAddressPeer {
 	const TABLE_NAME = 'authentication_pc_address';
 
 	
-	const CLASS_DEFAULT = 'lib.model.AuthenticationPcAddress';
+	const CLASS_DEFAULT = 'plugins.sfOpenPNEAuthContainer_PCAddress.lib.model.AuthenticationPcAddress';
 
 	
 	const NUM_COLUMNS = 4;
@@ -54,7 +54,7 @@ abstract class BaseAuthenticationPcAddressPeer {
 	
 	public static function getMapBuilder()
 	{
-		return BasePeer::getMapBuilder('lib.model.map.AuthenticationPcAddressMapBuilder');
+		return BasePeer::getMapBuilder('plugins.sfOpenPNEAuthContainer_PCAddress.lib.model.map.AuthenticationPcAddressMapBuilder');
 	}
 	
 	public static function getPhpNameMap()
@@ -538,5 +538,5 @@ if (Propel::isInit()) {
 		Propel::log('Could not initialize Peer: ' . $e->getMessage(), Propel::LOG_ERR);
 	}
 } else {
-			Propel::registerMapBuilder('lib.model.map.AuthenticationPcAddressMapBuilder');
+			Propel::registerMapBuilder('plugins.sfOpenPNEAuthContainer_PCAddress.lib.model.map.AuthenticationPcAddressMapBuilder');
 }
