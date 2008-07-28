@@ -29,6 +29,7 @@ DROP TABLE IF EXISTS `profile`;
 CREATE TABLE `profile`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`name` TEXT,
 	`is_required` INTEGER,
 	`is_unique` INTEGER,
 	`form_type` VARCHAR(32),
@@ -52,7 +53,6 @@ DROP TABLE IF EXISTS `profile_i18n`;
 
 CREATE TABLE `profile_i18n`
 (
-	`name` TEXT,
 	`caption` TEXT,
 	`info` TEXT,
 	`id` INTEGER  NOT NULL,

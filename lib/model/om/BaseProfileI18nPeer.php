@@ -13,14 +13,11 @@ abstract class BaseProfileI18nPeer {
 	const CLASS_DEFAULT = 'lib.model.ProfileI18n';
 
 	
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 4;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
-
-	
-	const NAME = 'profile_i18n.NAME';
 
 	
 	const CAPTION = 'profile_i18n.CAPTION';
@@ -40,18 +37,18 @@ abstract class BaseProfileI18nPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Name', 'Caption', 'Info', 'Id', 'Culture', ),
-		BasePeer::TYPE_COLNAME => array (ProfileI18nPeer::NAME, ProfileI18nPeer::CAPTION, ProfileI18nPeer::INFO, ProfileI18nPeer::ID, ProfileI18nPeer::CULTURE, ),
-		BasePeer::TYPE_FIELDNAME => array ('name', 'caption', 'info', 'id', 'culture', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Caption', 'Info', 'Id', 'Culture', ),
+		BasePeer::TYPE_COLNAME => array (ProfileI18nPeer::CAPTION, ProfileI18nPeer::INFO, ProfileI18nPeer::ID, ProfileI18nPeer::CULTURE, ),
+		BasePeer::TYPE_FIELDNAME => array ('caption', 'info', 'id', 'culture', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Name' => 0, 'Caption' => 1, 'Info' => 2, 'Id' => 3, 'Culture' => 4, ),
-		BasePeer::TYPE_COLNAME => array (ProfileI18nPeer::NAME => 0, ProfileI18nPeer::CAPTION => 1, ProfileI18nPeer::INFO => 2, ProfileI18nPeer::ID => 3, ProfileI18nPeer::CULTURE => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('name' => 0, 'caption' => 1, 'info' => 2, 'id' => 3, 'culture' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Caption' => 0, 'Info' => 1, 'Id' => 2, 'Culture' => 3, ),
+		BasePeer::TYPE_COLNAME => array (ProfileI18nPeer::CAPTION => 0, ProfileI18nPeer::INFO => 1, ProfileI18nPeer::ID => 2, ProfileI18nPeer::CULTURE => 3, ),
+		BasePeer::TYPE_FIELDNAME => array ('caption' => 0, 'info' => 1, 'id' => 2, 'culture' => 3, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
 	
@@ -103,8 +100,6 @@ abstract class BaseProfileI18nPeer {
 	
 	public static function addSelectColumns(Criteria $criteria)
 	{
-
-		$criteria->addSelectColumn(ProfileI18nPeer::NAME);
 
 		$criteria->addSelectColumn(ProfileI18nPeer::CAPTION);
 

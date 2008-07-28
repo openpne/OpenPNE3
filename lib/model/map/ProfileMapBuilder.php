@@ -34,6 +34,8 @@ class ProfileMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
+		$tMap->addColumn('NAME', 'Name', 'string', CreoleTypes::LONGVARCHAR, false, null);
+
 		$tMap->addColumn('IS_REQUIRED', 'IsRequired', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 		$tMap->addColumn('IS_UNIQUE', 'IsUnique', 'boolean', CreoleTypes::BOOLEAN, false, null);

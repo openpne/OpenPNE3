@@ -13,7 +13,7 @@ abstract class BaseProfilePeer {
 	const CLASS_DEFAULT = 'lib.model.Profile';
 
 	
-	const NUM_COLUMNS = 12;
+	const NUM_COLUMNS = 13;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -21,6 +21,9 @@ abstract class BaseProfilePeer {
 
 	
 	const ID = 'profile.ID';
+
+	
+	const NAME = 'profile.NAME';
 
 	
 	const IS_REQUIRED = 'profile.IS_REQUIRED';
@@ -61,18 +64,18 @@ abstract class BaseProfilePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'IsRequired', 'IsUnique', 'FormType', 'ValueType', 'ValueRegexp', 'ValueMin', 'ValueMax', 'IsDispRegist', 'IsDispConfig', 'IsDispSearch', 'SortOrder', ),
-		BasePeer::TYPE_COLNAME => array (ProfilePeer::ID, ProfilePeer::IS_REQUIRED, ProfilePeer::IS_UNIQUE, ProfilePeer::FORM_TYPE, ProfilePeer::VALUE_TYPE, ProfilePeer::VALUE_REGEXP, ProfilePeer::VALUE_MIN, ProfilePeer::VALUE_MAX, ProfilePeer::IS_DISP_REGIST, ProfilePeer::IS_DISP_CONFIG, ProfilePeer::IS_DISP_SEARCH, ProfilePeer::SORT_ORDER, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'is_required', 'is_unique', 'form_type', 'value_type', 'value_regexp', 'value_min', 'value_max', 'is_disp_regist', 'is_disp_config', 'is_disp_search', 'sort_order', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'IsRequired', 'IsUnique', 'FormType', 'ValueType', 'ValueRegexp', 'ValueMin', 'ValueMax', 'IsDispRegist', 'IsDispConfig', 'IsDispSearch', 'SortOrder', ),
+		BasePeer::TYPE_COLNAME => array (ProfilePeer::ID, ProfilePeer::NAME, ProfilePeer::IS_REQUIRED, ProfilePeer::IS_UNIQUE, ProfilePeer::FORM_TYPE, ProfilePeer::VALUE_TYPE, ProfilePeer::VALUE_REGEXP, ProfilePeer::VALUE_MIN, ProfilePeer::VALUE_MAX, ProfilePeer::IS_DISP_REGIST, ProfilePeer::IS_DISP_CONFIG, ProfilePeer::IS_DISP_SEARCH, ProfilePeer::SORT_ORDER, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'is_required', 'is_unique', 'form_type', 'value_type', 'value_regexp', 'value_min', 'value_max', 'is_disp_regist', 'is_disp_config', 'is_disp_search', 'sort_order', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'IsRequired' => 1, 'IsUnique' => 2, 'FormType' => 3, 'ValueType' => 4, 'ValueRegexp' => 5, 'ValueMin' => 6, 'ValueMax' => 7, 'IsDispRegist' => 8, 'IsDispConfig' => 9, 'IsDispSearch' => 10, 'SortOrder' => 11, ),
-		BasePeer::TYPE_COLNAME => array (ProfilePeer::ID => 0, ProfilePeer::IS_REQUIRED => 1, ProfilePeer::IS_UNIQUE => 2, ProfilePeer::FORM_TYPE => 3, ProfilePeer::VALUE_TYPE => 4, ProfilePeer::VALUE_REGEXP => 5, ProfilePeer::VALUE_MIN => 6, ProfilePeer::VALUE_MAX => 7, ProfilePeer::IS_DISP_REGIST => 8, ProfilePeer::IS_DISP_CONFIG => 9, ProfilePeer::IS_DISP_SEARCH => 10, ProfilePeer::SORT_ORDER => 11, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'is_required' => 1, 'is_unique' => 2, 'form_type' => 3, 'value_type' => 4, 'value_regexp' => 5, 'value_min' => 6, 'value_max' => 7, 'is_disp_regist' => 8, 'is_disp_config' => 9, 'is_disp_search' => 10, 'sort_order' => 11, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'IsRequired' => 2, 'IsUnique' => 3, 'FormType' => 4, 'ValueType' => 5, 'ValueRegexp' => 6, 'ValueMin' => 7, 'ValueMax' => 8, 'IsDispRegist' => 9, 'IsDispConfig' => 10, 'IsDispSearch' => 11, 'SortOrder' => 12, ),
+		BasePeer::TYPE_COLNAME => array (ProfilePeer::ID => 0, ProfilePeer::NAME => 1, ProfilePeer::IS_REQUIRED => 2, ProfilePeer::IS_UNIQUE => 3, ProfilePeer::FORM_TYPE => 4, ProfilePeer::VALUE_TYPE => 5, ProfilePeer::VALUE_REGEXP => 6, ProfilePeer::VALUE_MIN => 7, ProfilePeer::VALUE_MAX => 8, ProfilePeer::IS_DISP_REGIST => 9, ProfilePeer::IS_DISP_CONFIG => 10, ProfilePeer::IS_DISP_SEARCH => 11, ProfilePeer::SORT_ORDER => 12, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'is_required' => 2, 'is_unique' => 3, 'form_type' => 4, 'value_type' => 5, 'value_regexp' => 6, 'value_min' => 7, 'value_max' => 8, 'is_disp_regist' => 9, 'is_disp_config' => 10, 'is_disp_search' => 11, 'sort_order' => 12, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	
@@ -126,6 +129,8 @@ abstract class BaseProfilePeer {
 	{
 
 		$criteria->addSelectColumn(ProfilePeer::ID);
+
+		$criteria->addSelectColumn(ProfilePeer::NAME);
 
 		$criteria->addSelectColumn(ProfilePeer::IS_REQUIRED);
 

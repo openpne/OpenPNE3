@@ -13,6 +13,10 @@ abstract class BaseProfile extends BaseObject  implements Persistent {
 
 
 	
+	protected $name;
+
+
+	
 	protected $is_required;
 
 
@@ -87,6 +91,13 @@ abstract class BaseProfile extends BaseObject  implements Persistent {
 	{
 
 		return $this->id;
+	}
+
+	
+	public function getName()
+	{
+
+		return $this->name;
 	}
 
 	
@@ -177,6 +188,20 @@ abstract class BaseProfile extends BaseObject  implements Persistent {
 		if ($this->id !== $v) {
 			$this->id = $v;
 			$this->modifiedColumns[] = ProfilePeer::ID;
+		}
+
+	} 
+	
+	public function setName($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->name !== $v) {
+			$this->name = $v;
+			$this->modifiedColumns[] = ProfilePeer::NAME;
 		}
 
 	} 
@@ -321,33 +346,35 @@ abstract class BaseProfile extends BaseObject  implements Persistent {
 
 			$this->id = $rs->getInt($startcol + 0);
 
-			$this->is_required = $rs->getBoolean($startcol + 1);
+			$this->name = $rs->getString($startcol + 1);
 
-			$this->is_unique = $rs->getBoolean($startcol + 2);
+			$this->is_required = $rs->getBoolean($startcol + 2);
 
-			$this->form_type = $rs->getString($startcol + 3);
+			$this->is_unique = $rs->getBoolean($startcol + 3);
 
-			$this->value_type = $rs->getString($startcol + 4);
+			$this->form_type = $rs->getString($startcol + 4);
 
-			$this->value_regexp = $rs->getString($startcol + 5);
+			$this->value_type = $rs->getString($startcol + 5);
 
-			$this->value_min = $rs->getInt($startcol + 6);
+			$this->value_regexp = $rs->getString($startcol + 6);
 
-			$this->value_max = $rs->getInt($startcol + 7);
+			$this->value_min = $rs->getInt($startcol + 7);
 
-			$this->is_disp_regist = $rs->getBoolean($startcol + 8);
+			$this->value_max = $rs->getInt($startcol + 8);
 
-			$this->is_disp_config = $rs->getBoolean($startcol + 9);
+			$this->is_disp_regist = $rs->getBoolean($startcol + 9);
 
-			$this->is_disp_search = $rs->getBoolean($startcol + 10);
+			$this->is_disp_config = $rs->getBoolean($startcol + 10);
 
-			$this->sort_order = $rs->getInt($startcol + 11);
+			$this->is_disp_search = $rs->getBoolean($startcol + 11);
+
+			$this->sort_order = $rs->getInt($startcol + 12);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 12; 
+						return $startcol + 13; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Profile object", $e);
 		}
@@ -526,36 +553,39 @@ abstract class BaseProfile extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getIsRequired();
+				return $this->getName();
 				break;
 			case 2:
-				return $this->getIsUnique();
+				return $this->getIsRequired();
 				break;
 			case 3:
-				return $this->getFormType();
+				return $this->getIsUnique();
 				break;
 			case 4:
-				return $this->getValueType();
+				return $this->getFormType();
 				break;
 			case 5:
-				return $this->getValueRegexp();
+				return $this->getValueType();
 				break;
 			case 6:
-				return $this->getValueMin();
+				return $this->getValueRegexp();
 				break;
 			case 7:
-				return $this->getValueMax();
+				return $this->getValueMin();
 				break;
 			case 8:
-				return $this->getIsDispRegist();
+				return $this->getValueMax();
 				break;
 			case 9:
-				return $this->getIsDispConfig();
+				return $this->getIsDispRegist();
 				break;
 			case 10:
-				return $this->getIsDispSearch();
+				return $this->getIsDispConfig();
 				break;
 			case 11:
+				return $this->getIsDispSearch();
+				break;
+			case 12:
 				return $this->getSortOrder();
 				break;
 			default:
@@ -569,17 +599,18 @@ abstract class BaseProfile extends BaseObject  implements Persistent {
 		$keys = ProfilePeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getIsRequired(),
-			$keys[2] => $this->getIsUnique(),
-			$keys[3] => $this->getFormType(),
-			$keys[4] => $this->getValueType(),
-			$keys[5] => $this->getValueRegexp(),
-			$keys[6] => $this->getValueMin(),
-			$keys[7] => $this->getValueMax(),
-			$keys[8] => $this->getIsDispRegist(),
-			$keys[9] => $this->getIsDispConfig(),
-			$keys[10] => $this->getIsDispSearch(),
-			$keys[11] => $this->getSortOrder(),
+			$keys[1] => $this->getName(),
+			$keys[2] => $this->getIsRequired(),
+			$keys[3] => $this->getIsUnique(),
+			$keys[4] => $this->getFormType(),
+			$keys[5] => $this->getValueType(),
+			$keys[6] => $this->getValueRegexp(),
+			$keys[7] => $this->getValueMin(),
+			$keys[8] => $this->getValueMax(),
+			$keys[9] => $this->getIsDispRegist(),
+			$keys[10] => $this->getIsDispConfig(),
+			$keys[11] => $this->getIsDispSearch(),
+			$keys[12] => $this->getSortOrder(),
 		);
 		return $result;
 	}
@@ -599,36 +630,39 @@ abstract class BaseProfile extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setIsRequired($value);
+				$this->setName($value);
 				break;
 			case 2:
-				$this->setIsUnique($value);
+				$this->setIsRequired($value);
 				break;
 			case 3:
-				$this->setFormType($value);
+				$this->setIsUnique($value);
 				break;
 			case 4:
-				$this->setValueType($value);
+				$this->setFormType($value);
 				break;
 			case 5:
-				$this->setValueRegexp($value);
+				$this->setValueType($value);
 				break;
 			case 6:
-				$this->setValueMin($value);
+				$this->setValueRegexp($value);
 				break;
 			case 7:
-				$this->setValueMax($value);
+				$this->setValueMin($value);
 				break;
 			case 8:
-				$this->setIsDispRegist($value);
+				$this->setValueMax($value);
 				break;
 			case 9:
-				$this->setIsDispConfig($value);
+				$this->setIsDispRegist($value);
 				break;
 			case 10:
-				$this->setIsDispSearch($value);
+				$this->setIsDispConfig($value);
 				break;
 			case 11:
+				$this->setIsDispSearch($value);
+				break;
+			case 12:
 				$this->setSortOrder($value);
 				break;
 		} 	}
@@ -639,17 +673,18 @@ abstract class BaseProfile extends BaseObject  implements Persistent {
 		$keys = ProfilePeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setIsRequired($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setIsUnique($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setFormType($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setValueType($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setValueRegexp($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setValueMin($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setValueMax($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setIsDispRegist($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setIsDispConfig($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setIsDispSearch($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setSortOrder($arr[$keys[11]]);
+		if (array_key_exists($keys[1], $arr)) $this->setName($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setIsRequired($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setIsUnique($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setFormType($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setValueType($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setValueRegexp($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setValueMin($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setValueMax($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setIsDispRegist($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setIsDispConfig($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setIsDispSearch($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setSortOrder($arr[$keys[12]]);
 	}
 
 	
@@ -658,6 +693,7 @@ abstract class BaseProfile extends BaseObject  implements Persistent {
 		$criteria = new Criteria(ProfilePeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(ProfilePeer::ID)) $criteria->add(ProfilePeer::ID, $this->id);
+		if ($this->isColumnModified(ProfilePeer::NAME)) $criteria->add(ProfilePeer::NAME, $this->name);
 		if ($this->isColumnModified(ProfilePeer::IS_REQUIRED)) $criteria->add(ProfilePeer::IS_REQUIRED, $this->is_required);
 		if ($this->isColumnModified(ProfilePeer::IS_UNIQUE)) $criteria->add(ProfilePeer::IS_UNIQUE, $this->is_unique);
 		if ($this->isColumnModified(ProfilePeer::FORM_TYPE)) $criteria->add(ProfilePeer::FORM_TYPE, $this->form_type);
@@ -698,6 +734,8 @@ abstract class BaseProfile extends BaseObject  implements Persistent {
 	
 	public function copyInto($copyObj, $deepCopy = false)
 	{
+
+		$copyObj->setName($this->name);
 
 		$copyObj->setIsRequired($this->is_required);
 
@@ -1008,16 +1046,6 @@ abstract class BaseProfile extends BaseObject  implements Persistent {
   public function setCulture($culture)
   {
     $this->culture = $culture;
-  }
-
-  public function getName($culture = null)
-  {
-    return $this->getCurrentProfileI18n($culture)->getName();
-  }
-
-  public function setName($value, $culture = null)
-  {
-    $this->getCurrentProfileI18n($culture)->setName($value);
   }
 
   public function getCaption($culture = null)

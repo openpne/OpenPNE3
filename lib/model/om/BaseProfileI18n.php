@@ -9,10 +9,6 @@ abstract class BaseProfileI18n extends BaseObject  implements Persistent {
 
 
 	
-	protected $name;
-
-
-	
 	protected $caption;
 
 
@@ -35,13 +31,6 @@ abstract class BaseProfileI18n extends BaseObject  implements Persistent {
 
 	
 	protected $alreadyInValidation = false;
-
-	
-	public function getName()
-	{
-
-		return $this->name;
-	}
 
 	
 	public function getCaption()
@@ -71,20 +60,6 @@ abstract class BaseProfileI18n extends BaseObject  implements Persistent {
 		return $this->culture;
 	}
 
-	
-	public function setName($v)
-	{
-
-						if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->name !== $v) {
-			$this->name = $v;
-			$this->modifiedColumns[] = ProfileI18nPeer::NAME;
-		}
-
-	} 
 	
 	public function setCaption($v)
 	{
@@ -150,21 +125,19 @@ abstract class BaseProfileI18n extends BaseObject  implements Persistent {
 	{
 		try {
 
-			$this->name = $rs->getString($startcol + 0);
+			$this->caption = $rs->getString($startcol + 0);
 
-			$this->caption = $rs->getString($startcol + 1);
+			$this->info = $rs->getString($startcol + 1);
 
-			$this->info = $rs->getString($startcol + 2);
+			$this->id = $rs->getInt($startcol + 2);
 
-			$this->id = $rs->getInt($startcol + 3);
-
-			$this->culture = $rs->getString($startcol + 4);
+			$this->culture = $rs->getString($startcol + 3);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 5; 
+						return $startcol + 4; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProfileI18n object", $e);
 		}
@@ -308,18 +281,15 @@ abstract class BaseProfileI18n extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				return $this->getName();
-				break;
-			case 1:
 				return $this->getCaption();
 				break;
-			case 2:
+			case 1:
 				return $this->getInfo();
 				break;
-			case 3:
+			case 2:
 				return $this->getId();
 				break;
-			case 4:
+			case 3:
 				return $this->getCulture();
 				break;
 			default:
@@ -332,11 +302,10 @@ abstract class BaseProfileI18n extends BaseObject  implements Persistent {
 	{
 		$keys = ProfileI18nPeer::getFieldNames($keyType);
 		$result = array(
-			$keys[0] => $this->getName(),
-			$keys[1] => $this->getCaption(),
-			$keys[2] => $this->getInfo(),
-			$keys[3] => $this->getId(),
-			$keys[4] => $this->getCulture(),
+			$keys[0] => $this->getCaption(),
+			$keys[1] => $this->getInfo(),
+			$keys[2] => $this->getId(),
+			$keys[3] => $this->getCulture(),
 		);
 		return $result;
 	}
@@ -353,18 +322,15 @@ abstract class BaseProfileI18n extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				$this->setName($value);
-				break;
-			case 1:
 				$this->setCaption($value);
 				break;
-			case 2:
+			case 1:
 				$this->setInfo($value);
 				break;
-			case 3:
+			case 2:
 				$this->setId($value);
 				break;
-			case 4:
+			case 3:
 				$this->setCulture($value);
 				break;
 		} 	}
@@ -374,11 +340,10 @@ abstract class BaseProfileI18n extends BaseObject  implements Persistent {
 	{
 		$keys = ProfileI18nPeer::getFieldNames($keyType);
 
-		if (array_key_exists($keys[0], $arr)) $this->setName($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setCaption($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setInfo($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setId($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setCulture($arr[$keys[4]]);
+		if (array_key_exists($keys[0], $arr)) $this->setCaption($arr[$keys[0]]);
+		if (array_key_exists($keys[1], $arr)) $this->setInfo($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setCulture($arr[$keys[3]]);
 	}
 
 	
@@ -386,7 +351,6 @@ abstract class BaseProfileI18n extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(ProfileI18nPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(ProfileI18nPeer::NAME)) $criteria->add(ProfileI18nPeer::NAME, $this->name);
 		if ($this->isColumnModified(ProfileI18nPeer::CAPTION)) $criteria->add(ProfileI18nPeer::CAPTION, $this->caption);
 		if ($this->isColumnModified(ProfileI18nPeer::INFO)) $criteria->add(ProfileI18nPeer::INFO, $this->info);
 		if ($this->isColumnModified(ProfileI18nPeer::ID)) $criteria->add(ProfileI18nPeer::ID, $this->id);
@@ -431,8 +395,6 @@ abstract class BaseProfileI18n extends BaseObject  implements Persistent {
 	
 	public function copyInto($copyObj, $deepCopy = false)
 	{
-
-		$copyObj->setName($this->name);
 
 		$copyObj->setCaption($this->caption);
 

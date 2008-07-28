@@ -32,8 +32,6 @@ class ProfileI18nMapBuilder {
 
 		$tMap->setUseIdGenerator(false);
 
-		$tMap->addColumn('NAME', 'Name', 'string', CreoleTypes::LONGVARCHAR, false, null);
-
 		$tMap->addColumn('CAPTION', 'Caption', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
 		$tMap->addColumn('INFO', 'Info', 'string', CreoleTypes::LONGVARCHAR, false, null);
