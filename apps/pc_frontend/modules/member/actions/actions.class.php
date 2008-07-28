@@ -86,4 +86,18 @@ class memberActions extends sfActions
   {
     return sfView::SUCCESS;
   }
+
+ /**
+  * Executes list action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeList($request)
+  {
+    $this->pager = new sfPropelPager('Member', 20);
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
+
+    return sfView::SUCCESS;
+  }
 }

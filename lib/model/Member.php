@@ -9,4 +9,8 @@
  */ 
 class Member extends BaseMember
 {
+  public function getProfile($profileName)
+  {
+    return MemberProfilePeer::retrieveByMemberIdAndProfileName($this->getId(), $profileName);
+  }
 }
