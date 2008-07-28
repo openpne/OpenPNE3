@@ -10,6 +10,21 @@
  */
 class friendActions extends sfActions
 {
+  public $id = 0;
+
+  public function preExecute()
+  {
+    $this->getUser()->removeCredential('friend');
+    $this->getUser()->removeCredential('non-friend');
+
+    $this->id = $this->getRequestParameter('id');
+    if (FriendPeer::isFriend($this->getUser()->getMemberId(), $this->id)) {
+      $this->getUser()->addCredential('friend');
+    } else {
+      $this->getUser()->addCredential('non-friend');
+    }
+  }
+
  /**
   * Executes index action
   *
@@ -27,11 +42,8 @@ class friendActions extends sfActions
   */
   public function executeHome($request)
   {
-    $id = $request->getParameter('id', $this->getUser()->getMemberId());
-    $this->redirectIf(($id == $this->getUser()->getMemberId()), 'member/home');
-
-    $this->member = MemberPeer::retrieveByPk($id);
-    $this->isFriend = FriendPeer::isFriend($this->getUser()->getMemberId(), $id);
+    $this->redirectToHomeIfIdIsNotValid();
+    $this->member = MemberPeer::retrieveByPk($this->id);
 
     return sfView::SUCCESS;
   }
@@ -43,12 +55,9 @@ class friendActions extends sfActions
   */
   public function executeLink($request)
   {
-    $id = $request->getParameter('id', $this->getUser()->getMemberId());
-    $this->redirectIf(($id == $this->getUser()->getMemberId()), 'member/home');
-    $this->redirectIf(FriendPeer::isFriend($this->getUser()->getMemberId(), $id), 'friend/home?id=' . $id);
-
-    FriendPeer::link($this->getUser()->getMemberId(), $id);
-    $this->redirect('friend/home?id=' . $id);
+    $this->redirectToHomeIfIdIsNotValid();
+    FriendPeer::link($this->getUser()->getMemberId(), $this->id);
+    $this->redirect('friend/home?id=' . $this->id);
   }
 
  /**
@@ -58,11 +67,17 @@ class friendActions extends sfActions
   */
   public function executeUnlink($request)
   {
-    $id = $request->getParameter('id', $this->getUser()->getMemberId());
-    $this->redirectIf(($id == $this->getUser()->getMemberId()), 'member/home');
-    $this->redirectUnless(FriendPeer::isFriend($this->getUser()->getMemberId(), $id), 'friend/home?id=' . $id);
+    $this->redirectToHomeIfIdIsNotValid();
+    FriendPeer::unlink($this->getUser()->getMemberId(), $this->id);
+    $this->redirect('friend/home?id=' . $this->id);
+  }
 
-    FriendPeer::unlink($this->getUser()->getMemberId(), $id);
-    $this->redirect('friend/home?id=' . $id);
+ /**
+  * Redirects to your home if ID is yours or it is empty.
+  */
+  private function redirectToHomeIfIdIsNotValid()
+  {
+    $this->redirectUnless($this->id, 'member/home');
+    $this->redirectIf(($this->id == $this->getUser()->getMemberId()), 'member/home');
   }
 }
