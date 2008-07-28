@@ -9,4 +9,13 @@
  */ 
 class ProfileOptionPeer extends BaseProfileOptionPeer
 {
+  public static function retrieveByIsProfileId($profileId)
+  {
+    $c = new Criteria();
+    $c->add(self::PROFILE_ID, $profileId);
+    $c->addAscendingOrderByColumn(self::SORT_ORDER);
+
+    $result = self::doSelect($c);
+    return $result;
+  }
 }

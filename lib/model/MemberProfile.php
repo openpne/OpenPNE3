@@ -9,4 +9,8 @@
  */ 
 class MemberProfile extends BaseMemberProfile
 {
+  function __toString()
+  {
+    return $this->getValue();
+  }
 }

@@ -24,6 +24,12 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 	protected $updated_at;
 
 	
+	protected $collMemberProfiles;
+
+	
+	protected $lastMemberProfileCriteria = null;
+
+	
 	protected $collAuthenticationLoginIds;
 
 	
@@ -246,6 +252,14 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
+			if ($this->collMemberProfiles !== null) {
+				foreach($this->collMemberProfiles as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collAuthenticationLoginIds !== null) {
 				foreach($this->collAuthenticationLoginIds as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -294,6 +308,14 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collMemberProfiles !== null) {
+					foreach($this->collMemberProfiles as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 				if ($this->collAuthenticationLoginIds !== null) {
 					foreach($this->collAuthenticationLoginIds as $referrerFK) {
@@ -436,6 +458,10 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
+			foreach($this->getMemberProfiles() as $relObj) {
+				$copyObj->addMemberProfile($relObj->copy($deepCopy));
+			}
+
 			foreach($this->getAuthenticationLoginIds() as $relObj) {
 				$copyObj->addAuthenticationLoginId($relObj->copy($deepCopy));
 			}
@@ -463,6 +489,142 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 			self::$peer = new MemberPeer();
 		}
 		return self::$peer;
+	}
+
+	
+	public function initMemberProfiles()
+	{
+		if ($this->collMemberProfiles === null) {
+			$this->collMemberProfiles = array();
+		}
+	}
+
+	
+	public function getMemberProfiles($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collMemberProfiles === null) {
+			if ($this->isNew()) {
+			   $this->collMemberProfiles = array();
+			} else {
+
+				$criteria->add(MemberProfilePeer::MEMBER_ID, $this->getId());
+
+				MemberProfilePeer::addSelectColumns($criteria);
+				$this->collMemberProfiles = MemberProfilePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(MemberProfilePeer::MEMBER_ID, $this->getId());
+
+				MemberProfilePeer::addSelectColumns($criteria);
+				if (!isset($this->lastMemberProfileCriteria) || !$this->lastMemberProfileCriteria->equals($criteria)) {
+					$this->collMemberProfiles = MemberProfilePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastMemberProfileCriteria = $criteria;
+		return $this->collMemberProfiles;
+	}
+
+	
+	public function countMemberProfiles($criteria = null, $distinct = false, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(MemberProfilePeer::MEMBER_ID, $this->getId());
+
+		return MemberProfilePeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addMemberProfile(MemberProfile $l)
+	{
+		$this->collMemberProfiles[] = $l;
+		$l->setMember($this);
+	}
+
+
+	
+	public function getMemberProfilesJoinProfile($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collMemberProfiles === null) {
+			if ($this->isNew()) {
+				$this->collMemberProfiles = array();
+			} else {
+
+				$criteria->add(MemberProfilePeer::MEMBER_ID, $this->getId());
+
+				$this->collMemberProfiles = MemberProfilePeer::doSelectJoinProfile($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(MemberProfilePeer::MEMBER_ID, $this->getId());
+
+			if (!isset($this->lastMemberProfileCriteria) || !$this->lastMemberProfileCriteria->equals($criteria)) {
+				$this->collMemberProfiles = MemberProfilePeer::doSelectJoinProfile($criteria, $con);
+			}
+		}
+		$this->lastMemberProfileCriteria = $criteria;
+
+		return $this->collMemberProfiles;
+	}
+
+
+	
+	public function getMemberProfilesJoinProfileOption($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collMemberProfiles === null) {
+			if ($this->isNew()) {
+				$this->collMemberProfiles = array();
+			} else {
+
+				$criteria->add(MemberProfilePeer::MEMBER_ID, $this->getId());
+
+				$this->collMemberProfiles = MemberProfilePeer::doSelectJoinProfileOption($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(MemberProfilePeer::MEMBER_ID, $this->getId());
+
+			if (!isset($this->lastMemberProfileCriteria) || !$this->lastMemberProfileCriteria->equals($criteria)) {
+				$this->collMemberProfiles = MemberProfilePeer::doSelectJoinProfileOption($criteria, $con);
+			}
+		}
+		$this->lastMemberProfileCriteria = $criteria;
+
+		return $this->collMemberProfiles;
 	}
 
 	

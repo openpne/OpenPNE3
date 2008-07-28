@@ -13,6 +13,10 @@ abstract class BaseMemberProfile extends BaseObject  implements Persistent {
 
 
 	
+	protected $member_id;
+
+
+	
 	protected $profile_id;
 
 
@@ -22,6 +26,9 @@ abstract class BaseMemberProfile extends BaseObject  implements Persistent {
 
 	
 	protected $value;
+
+	
+	protected $aMember;
 
 	
 	protected $aProfile;
@@ -40,6 +47,13 @@ abstract class BaseMemberProfile extends BaseObject  implements Persistent {
 	{
 
 		return $this->id;
+	}
+
+	
+	public function getMemberId()
+	{
+
+		return $this->member_id;
 	}
 
 	
@@ -74,6 +88,24 @@ abstract class BaseMemberProfile extends BaseObject  implements Persistent {
 		if ($this->id !== $v) {
 			$this->id = $v;
 			$this->modifiedColumns[] = MemberProfilePeer::ID;
+		}
+
+	} 
+	
+	public function setMemberId($v)
+	{
+
+						if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->member_id !== $v) {
+			$this->member_id = $v;
+			$this->modifiedColumns[] = MemberProfilePeer::MEMBER_ID;
+		}
+
+		if ($this->aMember !== null && $this->aMember->getId() !== $v) {
+			$this->aMember = null;
 		}
 
 	} 
@@ -134,17 +166,19 @@ abstract class BaseMemberProfile extends BaseObject  implements Persistent {
 
 			$this->id = $rs->getInt($startcol + 0);
 
-			$this->profile_id = $rs->getInt($startcol + 1);
+			$this->member_id = $rs->getInt($startcol + 1);
 
-			$this->profile_option_id = $rs->getInt($startcol + 2);
+			$this->profile_id = $rs->getInt($startcol + 2);
 
-			$this->value = $rs->getString($startcol + 3);
+			$this->profile_option_id = $rs->getInt($startcol + 3);
+
+			$this->value = $rs->getString($startcol + 4);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 4; 
+						return $startcol + 5; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating MemberProfile object", $e);
 		}
@@ -202,6 +236,13 @@ abstract class BaseMemberProfile extends BaseObject  implements Persistent {
 
 
 												
+			if ($this->aMember !== null) {
+				if ($this->aMember->isModified()) {
+					$affectedRows += $this->aMember->save($con);
+				}
+				$this->setMember($this->aMember);
+			}
+
 			if ($this->aProfile !== null) {
 				if ($this->aProfile->isModified() || ($this->aProfile->getCulture() && $this->aProfile->getCurrentProfileI18n()->isModified())) {
 					$affectedRows += $this->aProfile->save($con);
@@ -265,6 +306,12 @@ abstract class BaseMemberProfile extends BaseObject  implements Persistent {
 
 
 												
+			if ($this->aMember !== null) {
+				if (!$this->aMember->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aMember->getValidationFailures());
+				}
+			}
+
 			if ($this->aProfile !== null) {
 				if (!$this->aProfile->validate($columns)) {
 					$failureMap = array_merge($failureMap, $this->aProfile->getValidationFailures());
@@ -305,12 +352,15 @@ abstract class BaseMemberProfile extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getProfileId();
+				return $this->getMemberId();
 				break;
 			case 2:
-				return $this->getProfileOptionId();
+				return $this->getProfileId();
 				break;
 			case 3:
+				return $this->getProfileOptionId();
+				break;
+			case 4:
 				return $this->getValue();
 				break;
 			default:
@@ -324,9 +374,10 @@ abstract class BaseMemberProfile extends BaseObject  implements Persistent {
 		$keys = MemberProfilePeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getProfileId(),
-			$keys[2] => $this->getProfileOptionId(),
-			$keys[3] => $this->getValue(),
+			$keys[1] => $this->getMemberId(),
+			$keys[2] => $this->getProfileId(),
+			$keys[3] => $this->getProfileOptionId(),
+			$keys[4] => $this->getValue(),
 		);
 		return $result;
 	}
@@ -346,12 +397,15 @@ abstract class BaseMemberProfile extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setProfileId($value);
+				$this->setMemberId($value);
 				break;
 			case 2:
-				$this->setProfileOptionId($value);
+				$this->setProfileId($value);
 				break;
 			case 3:
+				$this->setProfileOptionId($value);
+				break;
+			case 4:
 				$this->setValue($value);
 				break;
 		} 	}
@@ -362,9 +416,10 @@ abstract class BaseMemberProfile extends BaseObject  implements Persistent {
 		$keys = MemberProfilePeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setProfileId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setProfileOptionId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setValue($arr[$keys[3]]);
+		if (array_key_exists($keys[1], $arr)) $this->setMemberId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setProfileId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setProfileOptionId($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setValue($arr[$keys[4]]);
 	}
 
 	
@@ -373,6 +428,7 @@ abstract class BaseMemberProfile extends BaseObject  implements Persistent {
 		$criteria = new Criteria(MemberProfilePeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(MemberProfilePeer::ID)) $criteria->add(MemberProfilePeer::ID, $this->id);
+		if ($this->isColumnModified(MemberProfilePeer::MEMBER_ID)) $criteria->add(MemberProfilePeer::MEMBER_ID, $this->member_id);
 		if ($this->isColumnModified(MemberProfilePeer::PROFILE_ID)) $criteria->add(MemberProfilePeer::PROFILE_ID, $this->profile_id);
 		if ($this->isColumnModified(MemberProfilePeer::PROFILE_OPTION_ID)) $criteria->add(MemberProfilePeer::PROFILE_OPTION_ID, $this->profile_option_id);
 		if ($this->isColumnModified(MemberProfilePeer::VALUE)) $criteria->add(MemberProfilePeer::VALUE, $this->value);
@@ -406,6 +462,8 @@ abstract class BaseMemberProfile extends BaseObject  implements Persistent {
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
+		$copyObj->setMemberId($this->member_id);
+
 		$copyObj->setProfileId($this->profile_id);
 
 		$copyObj->setProfileOptionId($this->profile_option_id);
@@ -434,6 +492,33 @@ abstract class BaseMemberProfile extends BaseObject  implements Persistent {
 			self::$peer = new MemberProfilePeer();
 		}
 		return self::$peer;
+	}
+
+	
+	public function setMember($v)
+	{
+
+
+		if ($v === null) {
+			$this->setMemberId(NULL);
+		} else {
+			$this->setMemberId($v->getId());
+		}
+
+
+		$this->aMember = $v;
+	}
+
+
+	
+	public function getMember($con = null)
+	{
+		if ($this->aMember === null && ($this->member_id !== null)) {
+						$this->aMember = MemberPeer::retrieveByPK($this->member_id, $con);
+
+			
+		}
+		return $this->aMember;
 	}
 
 	

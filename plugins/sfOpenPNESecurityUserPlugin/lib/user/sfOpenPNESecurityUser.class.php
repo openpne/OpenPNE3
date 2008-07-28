@@ -145,4 +145,18 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
       $this->removeCredential('SNSRegisterFinish');
     }
   }
+
+  public function getProfile($profileName)
+  {
+    if (!$this->isAuthenticated()) {
+      return false;
+    }
+
+    if (!$this->hasAttribute($profileName, 'sfOpenPNESecurityUserProfile')) {
+      $profile = MemberProfilePeer::retrieveByMemberIdAndProfileName($this->getMemberId(), $profileName);
+      $this->setAttribute($profileName, $profile, 'sfOpenPNESecurityUserProfile');
+    }
+
+    return $this->getAttribute($profileName, null, 'sfOpenPNESecurityUserProfile');
+  }
 }

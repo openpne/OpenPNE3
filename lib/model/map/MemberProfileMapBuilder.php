@@ -34,6 +34,8 @@ class MemberProfileMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
+		$tMap->addForeignKey('MEMBER_ID', 'MemberId', 'int', CreoleTypes::INTEGER, 'member', 'ID', false, null);
+
 		$tMap->addForeignKey('PROFILE_ID', 'ProfileId', 'int', CreoleTypes::INTEGER, 'profile', 'ID', false, null);
 
 		$tMap->addForeignKey('PROFILE_OPTION_ID', 'ProfileOptionId', 'int', CreoleTypes::INTEGER, 'profile_option', 'ID', false, null);

@@ -1006,6 +1006,40 @@ abstract class BaseProfile extends BaseObject  implements Persistent {
 
 
 	
+	public function getMemberProfilesJoinMember($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collMemberProfiles === null) {
+			if ($this->isNew()) {
+				$this->collMemberProfiles = array();
+			} else {
+
+				$criteria->add(MemberProfilePeer::PROFILE_ID, $this->getId());
+
+				$this->collMemberProfiles = MemberProfilePeer::doSelectJoinMember($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(MemberProfilePeer::PROFILE_ID, $this->getId());
+
+			if (!isset($this->lastMemberProfileCriteria) || !$this->lastMemberProfileCriteria->equals($criteria)) {
+				$this->collMemberProfiles = MemberProfilePeer::doSelectJoinMember($criteria, $con);
+			}
+		}
+		$this->lastMemberProfileCriteria = $criteria;
+
+		return $this->collMemberProfiles;
+	}
+
+
+	
 	public function getMemberProfilesJoinProfileOption($criteria = null, $con = null)
 	{
 				if ($criteria === null) {

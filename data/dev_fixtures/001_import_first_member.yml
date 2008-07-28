@@ -29,5 +29,6 @@ AuthenticationLoginId:
 
 MemberProfile:
   first_member_profile:
+    member_id: first_member
     profile_id: profile_nickname
     value: "OpenPNE君"

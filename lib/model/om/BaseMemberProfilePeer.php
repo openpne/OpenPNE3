@@ -13,7 +13,7 @@ abstract class BaseMemberProfilePeer {
 	const CLASS_DEFAULT = 'lib.model.MemberProfile';
 
 	
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 5;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -21,6 +21,9 @@ abstract class BaseMemberProfilePeer {
 
 	
 	const ID = 'member_profile.ID';
+
+	
+	const MEMBER_ID = 'member_profile.MEMBER_ID';
 
 	
 	const PROFILE_ID = 'member_profile.PROFILE_ID';
@@ -37,18 +40,18 @@ abstract class BaseMemberProfilePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'ProfileId', 'ProfileOptionId', 'Value', ),
-		BasePeer::TYPE_COLNAME => array (MemberProfilePeer::ID, MemberProfilePeer::PROFILE_ID, MemberProfilePeer::PROFILE_OPTION_ID, MemberProfilePeer::VALUE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'profile_id', 'profile_option_id', 'value', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'MemberId', 'ProfileId', 'ProfileOptionId', 'Value', ),
+		BasePeer::TYPE_COLNAME => array (MemberProfilePeer::ID, MemberProfilePeer::MEMBER_ID, MemberProfilePeer::PROFILE_ID, MemberProfilePeer::PROFILE_OPTION_ID, MemberProfilePeer::VALUE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'member_id', 'profile_id', 'profile_option_id', 'value', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProfileId' => 1, 'ProfileOptionId' => 2, 'Value' => 3, ),
-		BasePeer::TYPE_COLNAME => array (MemberProfilePeer::ID => 0, MemberProfilePeer::PROFILE_ID => 1, MemberProfilePeer::PROFILE_OPTION_ID => 2, MemberProfilePeer::VALUE => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'profile_id' => 1, 'profile_option_id' => 2, 'value' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'MemberId' => 1, 'ProfileId' => 2, 'ProfileOptionId' => 3, 'Value' => 4, ),
+		BasePeer::TYPE_COLNAME => array (MemberProfilePeer::ID => 0, MemberProfilePeer::MEMBER_ID => 1, MemberProfilePeer::PROFILE_ID => 2, MemberProfilePeer::PROFILE_OPTION_ID => 3, MemberProfilePeer::VALUE => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'member_id' => 1, 'profile_id' => 2, 'profile_option_id' => 3, 'value' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	
@@ -102,6 +105,8 @@ abstract class BaseMemberProfilePeer {
 	{
 
 		$criteria->addSelectColumn(MemberProfilePeer::ID);
+
+		$criteria->addSelectColumn(MemberProfilePeer::MEMBER_ID);
 
 		$criteria->addSelectColumn(MemberProfilePeer::PROFILE_ID);
 
@@ -188,6 +193,34 @@ abstract class BaseMemberProfilePeer {
 	}
 
 	
+	public static function doCountJoinMember(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(MemberProfilePeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(MemberProfilePeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(MemberProfilePeer::MEMBER_ID, MemberPeer::ID);
+
+		$rs = MemberProfilePeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
+	}
+
+
+	
 	public static function doCountJoinProfile(Criteria $criteria, $distinct = false, $con = null)
 	{
 				$criteria = clone $criteria;
@@ -240,6 +273,53 @@ abstract class BaseMemberProfilePeer {
 		} else {
 						return 0;
 		}
+	}
+
+
+	
+	public static function doSelectJoinMember(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		MemberProfilePeer::addSelectColumns($c);
+		$startcol = (MemberProfilePeer::NUM_COLUMNS - MemberProfilePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+		MemberPeer::addSelectColumns($c);
+
+		$c->addJoin(MemberProfilePeer::MEMBER_ID, MemberPeer::ID);
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = MemberProfilePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = MemberPeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj2 = new $cls();
+			$obj2->hydrate($rs, $startcol);
+
+			$newObject = true;
+			foreach($results as $temp_obj1) {
+				$temp_obj2 = $temp_obj1->getMember(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+										$temp_obj2->addMemberProfile($obj1); 					break;
+				}
+			}
+			if ($newObject) {
+				$obj2->initMemberProfiles();
+				$obj2->addMemberProfile($obj1); 			}
+			$results[] = $obj1;
+		}
+		return $results;
 	}
 
 
@@ -354,6 +434,8 @@ abstract class BaseMemberProfilePeer {
 			$criteria->addSelectColumn($column);
 		}
 
+		$criteria->addJoin(MemberProfilePeer::MEMBER_ID, MemberPeer::ID);
+
 		$criteria->addJoin(MemberProfilePeer::PROFILE_ID, ProfilePeer::ID);
 
 		$criteria->addJoin(MemberProfilePeer::PROFILE_OPTION_ID, ProfileOptionPeer::ID);
@@ -379,11 +461,16 @@ abstract class BaseMemberProfilePeer {
 		MemberProfilePeer::addSelectColumns($c);
 		$startcol2 = (MemberProfilePeer::NUM_COLUMNS - MemberProfilePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
 
+		MemberPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + MemberPeer::NUM_COLUMNS;
+
 		ProfilePeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + ProfilePeer::NUM_COLUMNS;
+		$startcol4 = $startcol3 + ProfilePeer::NUM_COLUMNS;
 
 		ProfileOptionPeer::addSelectColumns($c);
-		$startcol4 = $startcol3 + ProfileOptionPeer::NUM_COLUMNS;
+		$startcol5 = $startcol4 + ProfileOptionPeer::NUM_COLUMNS;
+
+		$c->addJoin(MemberProfilePeer::MEMBER_ID, MemberPeer::ID);
 
 		$c->addJoin(MemberProfilePeer::PROFILE_ID, ProfilePeer::ID);
 
@@ -403,7 +490,7 @@ abstract class BaseMemberProfilePeer {
 
 
 					
-			$omClass = ProfilePeer::getOMClass();
+			$omClass = MemberPeer::getOMClass();
 
 
 			$cls = Propel::import($omClass);
@@ -413,7 +500,7 @@ abstract class BaseMemberProfilePeer {
 			$newObject = true;
 			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
 				$temp_obj1 = $results[$j];
-				$temp_obj2 = $temp_obj1->getProfile(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+				$temp_obj2 = $temp_obj1->getMember(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
 					$newObject = false;
 					$temp_obj2->addMemberProfile($obj1); 					break;
 				}
@@ -426,7 +513,7 @@ abstract class BaseMemberProfilePeer {
 
 
 					
-			$omClass = ProfileOptionPeer::getOMClass();
+			$omClass = ProfilePeer::getOMClass();
 
 
 			$cls = Propel::import($omClass);
@@ -436,7 +523,7 @@ abstract class BaseMemberProfilePeer {
 			$newObject = true;
 			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
 				$temp_obj1 = $results[$j];
-				$temp_obj3 = $temp_obj1->getProfileOption(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+				$temp_obj3 = $temp_obj1->getProfile(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
 					$newObject = false;
 					$temp_obj3->addMemberProfile($obj1); 					break;
 				}
@@ -447,9 +534,62 @@ abstract class BaseMemberProfilePeer {
 				$obj3->addMemberProfile($obj1);
 			}
 
+
+					
+			$omClass = ProfileOptionPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj4 = new $cls();
+			$obj4->hydrate($rs, $startcol4);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj4 = $temp_obj1->getProfileOption(); 				if ($temp_obj4->getPrimaryKey() === $obj4->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj4->addMemberProfile($obj1); 					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj4->initMemberProfiles();
+				$obj4->addMemberProfile($obj1);
+			}
+
 			$results[] = $obj1;
 		}
 		return $results;
+	}
+
+
+	
+	public static function doCountJoinAllExceptMember(Criteria $criteria, $distinct = false, $con = null)
+	{
+				$criteria = clone $criteria;
+
+				$criteria->clearSelectColumns()->clearOrderByColumns();
+		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->addSelectColumn(MemberProfilePeer::COUNT_DISTINCT);
+		} else {
+			$criteria->addSelectColumn(MemberProfilePeer::COUNT);
+		}
+
+				foreach($criteria->getGroupByColumns() as $column)
+		{
+			$criteria->addSelectColumn($column);
+		}
+
+		$criteria->addJoin(MemberProfilePeer::PROFILE_ID, ProfilePeer::ID);
+
+		$criteria->addJoin(MemberProfilePeer::PROFILE_OPTION_ID, ProfileOptionPeer::ID);
+
+		$rs = MemberProfilePeer::doSelectRS($criteria, $con);
+		if ($rs->next()) {
+			return $rs->getInt(1);
+		} else {
+						return 0;
+		}
 	}
 
 
@@ -469,6 +609,8 @@ abstract class BaseMemberProfilePeer {
 		{
 			$criteria->addSelectColumn($column);
 		}
+
+		$criteria->addJoin(MemberProfilePeer::MEMBER_ID, MemberPeer::ID);
 
 		$criteria->addJoin(MemberProfilePeer::PROFILE_OPTION_ID, ProfileOptionPeer::ID);
 
@@ -498,6 +640,8 @@ abstract class BaseMemberProfilePeer {
 			$criteria->addSelectColumn($column);
 		}
 
+		$criteria->addJoin(MemberProfilePeer::MEMBER_ID, MemberPeer::ID);
+
 		$criteria->addJoin(MemberProfilePeer::PROFILE_ID, ProfilePeer::ID);
 
 		$rs = MemberProfilePeer::doSelectRS($criteria, $con);
@@ -510,64 +654,7 @@ abstract class BaseMemberProfilePeer {
 
 
 	
-	public static function doSelectJoinAllExceptProfile(Criteria $c, $con = null)
-	{
-		$c = clone $c;
-
-								if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		MemberProfilePeer::addSelectColumns($c);
-		$startcol2 = (MemberProfilePeer::NUM_COLUMNS - MemberProfilePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
-
-		ProfileOptionPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + ProfileOptionPeer::NUM_COLUMNS;
-
-		$c->addJoin(MemberProfilePeer::PROFILE_OPTION_ID, ProfileOptionPeer::ID);
-
-
-		$rs = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while($rs->next()) {
-
-			$omClass = MemberProfilePeer::getOMClass();
-
-			$cls = Propel::import($omClass);
-			$obj1 = new $cls();
-			$obj1->hydrate($rs);
-
-			$omClass = ProfileOptionPeer::getOMClass();
-
-
-			$cls = Propel::import($omClass);
-			$obj2  = new $cls();
-			$obj2->hydrate($rs, $startcol2);
-
-			$newObject = true;
-			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
-				$temp_obj1 = $results[$j];
-				$temp_obj2 = $temp_obj1->getProfileOption(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
-					$newObject = false;
-					$temp_obj2->addMemberProfile($obj1);
-					break;
-				}
-			}
-
-			if ($newObject) {
-				$obj2->initMemberProfiles();
-				$obj2->addMemberProfile($obj1);
-			}
-
-			$results[] = $obj1;
-		}
-		return $results;
-	}
-
-
-	
-	public static function doSelectJoinAllExceptProfileOption(Criteria $c, $con = null)
+	public static function doSelectJoinAllExceptMember(Criteria $c, $con = null)
 	{
 		$c = clone $c;
 
@@ -581,7 +668,12 @@ abstract class BaseMemberProfilePeer {
 		ProfilePeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + ProfilePeer::NUM_COLUMNS;
 
+		ProfileOptionPeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + ProfileOptionPeer::NUM_COLUMNS;
+
 		$c->addJoin(MemberProfilePeer::PROFILE_ID, ProfilePeer::ID);
+
+		$c->addJoin(MemberProfilePeer::PROFILE_OPTION_ID, ProfileOptionPeer::ID);
 
 
 		$rs = BasePeer::doSelect($c, $con);
@@ -615,6 +707,196 @@ abstract class BaseMemberProfilePeer {
 			if ($newObject) {
 				$obj2->initMemberProfiles();
 				$obj2->addMemberProfile($obj1);
+			}
+
+			$omClass = ProfileOptionPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3  = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getProfileOption(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addMemberProfile($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initMemberProfiles();
+				$obj3->addMemberProfile($obj1);
+			}
+
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinAllExceptProfile(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		MemberProfilePeer::addSelectColumns($c);
+		$startcol2 = (MemberProfilePeer::NUM_COLUMNS - MemberProfilePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+		MemberPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + MemberPeer::NUM_COLUMNS;
+
+		ProfileOptionPeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + ProfileOptionPeer::NUM_COLUMNS;
+
+		$c->addJoin(MemberProfilePeer::MEMBER_ID, MemberPeer::ID);
+
+		$c->addJoin(MemberProfilePeer::PROFILE_OPTION_ID, ProfileOptionPeer::ID);
+
+
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = MemberProfilePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = MemberPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj2  = new $cls();
+			$obj2->hydrate($rs, $startcol2);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj2 = $temp_obj1->getMember(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj2->addMemberProfile($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj2->initMemberProfiles();
+				$obj2->addMemberProfile($obj1);
+			}
+
+			$omClass = ProfileOptionPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3  = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getProfileOption(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addMemberProfile($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initMemberProfiles();
+				$obj3->addMemberProfile($obj1);
+			}
+
+			$results[] = $obj1;
+		}
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinAllExceptProfileOption(Criteria $c, $con = null)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		MemberProfilePeer::addSelectColumns($c);
+		$startcol2 = (MemberProfilePeer::NUM_COLUMNS - MemberProfilePeer::NUM_LAZY_LOAD_COLUMNS) + 1;
+
+		MemberPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + MemberPeer::NUM_COLUMNS;
+
+		ProfilePeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + ProfilePeer::NUM_COLUMNS;
+
+		$c->addJoin(MemberProfilePeer::MEMBER_ID, MemberPeer::ID);
+
+		$c->addJoin(MemberProfilePeer::PROFILE_ID, ProfilePeer::ID);
+
+
+		$rs = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while($rs->next()) {
+
+			$omClass = MemberProfilePeer::getOMClass();
+
+			$cls = Propel::import($omClass);
+			$obj1 = new $cls();
+			$obj1->hydrate($rs);
+
+			$omClass = MemberPeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj2  = new $cls();
+			$obj2->hydrate($rs, $startcol2);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj2 = $temp_obj1->getMember(); 				if ($temp_obj2->getPrimaryKey() === $obj2->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj2->addMemberProfile($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj2->initMemberProfiles();
+				$obj2->addMemberProfile($obj1);
+			}
+
+			$omClass = ProfilePeer::getOMClass();
+
+
+			$cls = Propel::import($omClass);
+			$obj3  = new $cls();
+			$obj3->hydrate($rs, $startcol3);
+
+			$newObject = true;
+			for ($j=0, $resCount=count($results); $j < $resCount; $j++) {
+				$temp_obj1 = $results[$j];
+				$temp_obj3 = $temp_obj1->getProfile(); 				if ($temp_obj3->getPrimaryKey() === $obj3->getPrimaryKey()) {
+					$newObject = false;
+					$temp_obj3->addMemberProfile($obj1);
+					break;
+				}
+			}
+
+			if ($newObject) {
+				$obj3->initMemberProfiles();
+				$obj3->addMemberProfile($obj1);
 			}
 
 			$results[] = $obj1;

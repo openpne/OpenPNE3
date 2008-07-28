@@ -112,16 +112,21 @@ DROP TABLE IF EXISTS `member_profile`;
 CREATE TABLE `member_profile`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`member_id` INTEGER,
 	`profile_id` INTEGER,
 	`profile_option_id` INTEGER,
 	`value` TEXT,
 	PRIMARY KEY (`id`),
-	INDEX `member_profile_FI_1` (`profile_id`),
+	INDEX `member_profile_FI_1` (`member_id`),
 	CONSTRAINT `member_profile_FK_1`
+		FOREIGN KEY (`member_id`)
+		REFERENCES `member` (`id`),
+	INDEX `member_profile_FI_2` (`profile_id`),
+	CONSTRAINT `member_profile_FK_2`
 		FOREIGN KEY (`profile_id`)
 		REFERENCES `profile` (`id`),
-	INDEX `member_profile_FI_2` (`profile_option_id`),
-	CONSTRAINT `member_profile_FK_2`
+	INDEX `member_profile_FI_3` (`profile_option_id`),
+	CONSTRAINT `member_profile_FK_3`
 		FOREIGN KEY (`profile_option_id`)
 		REFERENCES `profile_option` (`id`)
 )Type=InnoDB;

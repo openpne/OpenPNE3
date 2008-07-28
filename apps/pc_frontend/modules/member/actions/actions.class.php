@@ -50,23 +50,27 @@ class memberActions extends sfActions
   */
   public function executeRegisterInput($request)
   {
-    $this->form = $this->getUser()->getAuthForm();
-    $this->form->setForRegisterWidgets();
+    $this->authForm = $this->getUser()->getAuthForm();
+    $this->authForm->setForRegisterWidgets();
+
+    $this->profileForm = new ProfileForm();
+    $this->profileForm->setRegisterWidgets();
 
     $auth = $request->getParameter('auth');
+    $profile = $request->getParameter('profile');
 
-    if ($auth) {
-      $this->form->bind($auth);
+    if ($auth && $profile) {
+      $this->authForm->bind($auth);
+      $this->profileForm->bind($profile);
 
-      if ($this->form->isValid()) {
+      if ($this->authForm->isValid() && $this->profileForm->isValid()) {
         $member = new Member();
         $member->setIsActive(false);
         $member->save();
 
-        $this->redirectIf(
-          $this->getUser()->register($member->getId(), $this->form),
-          $this->getUser()->getRegisterEndAction()
-        );
+        $profileResult = $this->profileForm->save($member->getId());
+        $formResult = $this->getUser()->register($member->getId(), $this->authForm);
+        $this->redirectIf(($profileResult && $formResult), $this->getUser()->getRegisterEndAction());
       }
     }
 
