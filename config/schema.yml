@@ -4,3 +4,36 @@ propel:
     is_active: { type: boolean }
     created_at: ~
     updated_at: ~
+
+  profile:
+    id: ~
+    is_required: { type: boolean }
+    is_unique: { type: boolean }
+    form_type: { type: varchar(32) }
+    value_type: { type: varchar(32) }
+    value_regexp: { type: longvarchar }
+    value_min: { type: integer }
+    value_max: { type: integer }
+    is_disp_regist: { type: boolean }
+    is_disp_config: { type: boolean }
+    is_disp_search: { type: boolean }
+    sort_order: { type: integer }
+
+  profile_i18n:
+    name: { type: longvarchar }
+    caption: { type: longvarchar }
+    info: { type: longvarchar }
+
+  profile_option:
+    id: ~
+    profile_id: ~
+    sort_order: { type: integer }
+
+  profile_option_i18n:
+    value: { type: longvarchar }
+
+  member_profile:
+    id: ~
+    profile_id: ~
+    profile_option_id: ~
+    value: { type: longvarchar }
