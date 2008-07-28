@@ -132,5 +132,28 @@ CREATE TABLE `member_profile`
 		REFERENCES `profile_option` (`id`)
 )Type=InnoDB;
 
+#-----------------------------------------------------------------------------
+#-- friend
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `friend`;
+
+
+CREATE TABLE `friend`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`member_id_to` INTEGER  NOT NULL,
+	`member_id_from` INTEGER  NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `member_id_to_from` (`member_id_to`, `member_id_from`),
+	UNIQUE KEY `member_id_from_to` (`member_id_from`, `member_id_to`),
+	CONSTRAINT `friend_FK_1`
+		FOREIGN KEY (`member_id_to`)
+		REFERENCES `member` (`id`),
+	CONSTRAINT `friend_FK_2`
+		FOREIGN KEY (`member_id_from`)
+		REFERENCES `member` (`id`)
+)Type=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

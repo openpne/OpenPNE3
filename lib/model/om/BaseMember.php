@@ -30,6 +30,18 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 	protected $lastMemberProfileCriteria = null;
 
 	
+	protected $collFriendsRelatedByMemberIdTo;
+
+	
+	protected $lastFriendRelatedByMemberIdToCriteria = null;
+
+	
+	protected $collFriendsRelatedByMemberIdFrom;
+
+	
+	protected $lastFriendRelatedByMemberIdFromCriteria = null;
+
+	
 	protected $collAuthenticationLoginIds;
 
 	
@@ -260,6 +272,22 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collFriendsRelatedByMemberIdTo !== null) {
+				foreach($this->collFriendsRelatedByMemberIdTo as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collFriendsRelatedByMemberIdFrom !== null) {
+				foreach($this->collFriendsRelatedByMemberIdFrom as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collAuthenticationLoginIds !== null) {
 				foreach($this->collAuthenticationLoginIds as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -311,6 +339,22 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 
 				if ($this->collMemberProfiles !== null) {
 					foreach($this->collMemberProfiles as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collFriendsRelatedByMemberIdTo !== null) {
+					foreach($this->collFriendsRelatedByMemberIdTo as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collFriendsRelatedByMemberIdFrom !== null) {
+					foreach($this->collFriendsRelatedByMemberIdFrom as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -460,6 +504,14 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 
 			foreach($this->getMemberProfiles() as $relObj) {
 				$copyObj->addMemberProfile($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getFriendsRelatedByMemberIdTo() as $relObj) {
+				$copyObj->addFriendRelatedByMemberIdTo($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getFriendsRelatedByMemberIdFrom() as $relObj) {
+				$copyObj->addFriendRelatedByMemberIdFrom($relObj->copy($deepCopy));
 			}
 
 			foreach($this->getAuthenticationLoginIds() as $relObj) {
@@ -625,6 +677,142 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 		$this->lastMemberProfileCriteria = $criteria;
 
 		return $this->collMemberProfiles;
+	}
+
+	
+	public function initFriendsRelatedByMemberIdTo()
+	{
+		if ($this->collFriendsRelatedByMemberIdTo === null) {
+			$this->collFriendsRelatedByMemberIdTo = array();
+		}
+	}
+
+	
+	public function getFriendsRelatedByMemberIdTo($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collFriendsRelatedByMemberIdTo === null) {
+			if ($this->isNew()) {
+			   $this->collFriendsRelatedByMemberIdTo = array();
+			} else {
+
+				$criteria->add(FriendPeer::MEMBER_ID_TO, $this->getId());
+
+				FriendPeer::addSelectColumns($criteria);
+				$this->collFriendsRelatedByMemberIdTo = FriendPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(FriendPeer::MEMBER_ID_TO, $this->getId());
+
+				FriendPeer::addSelectColumns($criteria);
+				if (!isset($this->lastFriendRelatedByMemberIdToCriteria) || !$this->lastFriendRelatedByMemberIdToCriteria->equals($criteria)) {
+					$this->collFriendsRelatedByMemberIdTo = FriendPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastFriendRelatedByMemberIdToCriteria = $criteria;
+		return $this->collFriendsRelatedByMemberIdTo;
+	}
+
+	
+	public function countFriendsRelatedByMemberIdTo($criteria = null, $distinct = false, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(FriendPeer::MEMBER_ID_TO, $this->getId());
+
+		return FriendPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addFriendRelatedByMemberIdTo(Friend $l)
+	{
+		$this->collFriendsRelatedByMemberIdTo[] = $l;
+		$l->setMemberRelatedByMemberIdTo($this);
+	}
+
+	
+	public function initFriendsRelatedByMemberIdFrom()
+	{
+		if ($this->collFriendsRelatedByMemberIdFrom === null) {
+			$this->collFriendsRelatedByMemberIdFrom = array();
+		}
+	}
+
+	
+	public function getFriendsRelatedByMemberIdFrom($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collFriendsRelatedByMemberIdFrom === null) {
+			if ($this->isNew()) {
+			   $this->collFriendsRelatedByMemberIdFrom = array();
+			} else {
+
+				$criteria->add(FriendPeer::MEMBER_ID_FROM, $this->getId());
+
+				FriendPeer::addSelectColumns($criteria);
+				$this->collFriendsRelatedByMemberIdFrom = FriendPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(FriendPeer::MEMBER_ID_FROM, $this->getId());
+
+				FriendPeer::addSelectColumns($criteria);
+				if (!isset($this->lastFriendRelatedByMemberIdFromCriteria) || !$this->lastFriendRelatedByMemberIdFromCriteria->equals($criteria)) {
+					$this->collFriendsRelatedByMemberIdFrom = FriendPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastFriendRelatedByMemberIdFromCriteria = $criteria;
+		return $this->collFriendsRelatedByMemberIdFrom;
+	}
+
+	
+	public function countFriendsRelatedByMemberIdFrom($criteria = null, $distinct = false, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(FriendPeer::MEMBER_ID_FROM, $this->getId());
+
+		return FriendPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addFriendRelatedByMemberIdFrom(Friend $l)
+	{
+		$this->collFriendsRelatedByMemberIdFrom[] = $l;
+		$l->setMemberRelatedByMemberIdFrom($this);
 	}
 
 	
