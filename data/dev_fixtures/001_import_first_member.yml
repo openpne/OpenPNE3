@@ -1,3 +1,21 @@
+# data/fixures/001_add_profile_nickname.yml
+Profile:
+  profile_nickname:
+    is_required: 1
+    name: "nickname"
+    form_type: "text"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    sort_order: 100
+
+ProfileI18n:
+  profile_i18n_nickname:
+    id: profile_nickname
+    caption: "ニックネーム"
+    culture: "ja_JP"
+
 Member:
   first_member:
     id: ~
@@ -8,3 +26,8 @@ AuthenticationLoginId:
     member_id: first_member
     login_id: "openpne"
     password: <?php echo md5('password') . "\n"; ?>
+
+MemberProfile:
+  first_member_profile:
+    profile_id: profile_nickname
+    value: "OpenPNE君"
