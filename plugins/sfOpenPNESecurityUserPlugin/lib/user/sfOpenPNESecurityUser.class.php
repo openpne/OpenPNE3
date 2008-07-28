@@ -57,14 +57,14 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
   public function login($form)
   {
+    $this->logout();
+
     $member_id = $this->getAuthContainer()->fetchData($form);
 
     if ($member_id) {
       $this->setAuthenticated(true);
       $this->setIsSNSMember(true);
       $this->setAttribute('member_id', $member_id, 'sfOpenPNESecurityUser');
-    } else {
-      $this->logout();
     }
 
     return $this->isAuthenticated();
@@ -74,6 +74,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   {
     $this->setAuthenticated(false);
     $this->getAttributeHolder()->removeNamespace('sfOpenPNESecurityUser');
+    $this->getAttributeHolder()->removeNamespace('sfOpenPNESecurityUserProfile');
     $this->clearCredentials();
   }
 
