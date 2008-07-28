@@ -1,2 +1,6 @@
+all:
+  is_secure: on
+  credentials: SNSMember
+
 registerInput:
   credentials: SNSRegisterBegin
