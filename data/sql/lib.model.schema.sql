@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`is_active` INTEGER,
+	`is_active` INTEGER  NOT NULL,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`)
@@ -29,19 +29,20 @@ DROP TABLE IF EXISTS `profile`;
 CREATE TABLE `profile`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`name` TEXT,
-	`is_required` INTEGER,
-	`is_unique` INTEGER,
-	`form_type` VARCHAR(32),
-	`value_type` VARCHAR(32),
+	`name` VARCHAR(64)  NOT NULL,
+	`is_required` INTEGER  NOT NULL,
+	`is_unique` INTEGER  NOT NULL,
+	`form_type` VARCHAR(32)  NOT NULL,
+	`value_type` VARCHAR(32)  NOT NULL,
 	`value_regexp` TEXT,
 	`value_min` INTEGER,
 	`value_max` INTEGER,
-	`is_disp_regist` INTEGER,
-	`is_disp_config` INTEGER,
-	`is_disp_search` INTEGER,
+	`is_disp_regist` INTEGER  NOT NULL,
+	`is_disp_config` INTEGER  NOT NULL,
+	`is_disp_search` INTEGER  NOT NULL,
 	`sort_order` INTEGER,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `profile_U_1` (`name`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -53,7 +54,7 @@ DROP TABLE IF EXISTS `profile_i18n`;
 
 CREATE TABLE `profile_i18n`
 (
-	`caption` TEXT,
+	`caption` TEXT  NOT NULL,
 	`info` TEXT,
 	`id` INTEGER  NOT NULL,
 	`culture` VARCHAR(7)  NOT NULL,

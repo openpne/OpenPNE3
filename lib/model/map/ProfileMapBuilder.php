@@ -34,15 +34,15 @@ class ProfileMapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addColumn('NAME', 'Name', 'string', CreoleTypes::LONGVARCHAR, false, null);
+		$tMap->addColumn('NAME', 'Name', 'string', CreoleTypes::VARCHAR, true, 64);
 
-		$tMap->addColumn('IS_REQUIRED', 'IsRequired', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_REQUIRED', 'IsRequired', 'boolean', CreoleTypes::BOOLEAN, true, null);
 
-		$tMap->addColumn('IS_UNIQUE', 'IsUnique', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_UNIQUE', 'IsUnique', 'boolean', CreoleTypes::BOOLEAN, true, null);
 
-		$tMap->addColumn('FORM_TYPE', 'FormType', 'string', CreoleTypes::VARCHAR, false, 32);
+		$tMap->addColumn('FORM_TYPE', 'FormType', 'string', CreoleTypes::VARCHAR, true, 32);
 
-		$tMap->addColumn('VALUE_TYPE', 'ValueType', 'string', CreoleTypes::VARCHAR, false, 32);
+		$tMap->addColumn('VALUE_TYPE', 'ValueType', 'string', CreoleTypes::VARCHAR, true, 32);
 
 		$tMap->addColumn('VALUE_REGEXP', 'ValueRegexp', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
@@ -50,11 +50,11 @@ class ProfileMapBuilder {
 
 		$tMap->addColumn('VALUE_MAX', 'ValueMax', 'int', CreoleTypes::INTEGER, false, null);
 
-		$tMap->addColumn('IS_DISP_REGIST', 'IsDispRegist', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_DISP_REGIST', 'IsDispRegist', 'boolean', CreoleTypes::BOOLEAN, true, null);
 
-		$tMap->addColumn('IS_DISP_CONFIG', 'IsDispConfig', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_DISP_CONFIG', 'IsDispConfig', 'boolean', CreoleTypes::BOOLEAN, true, null);
 
-		$tMap->addColumn('IS_DISP_SEARCH', 'IsDispSearch', 'boolean', CreoleTypes::BOOLEAN, false, null);
+		$tMap->addColumn('IS_DISP_SEARCH', 'IsDispSearch', 'boolean', CreoleTypes::BOOLEAN, true, null);
 
 		$tMap->addColumn('SORT_ORDER', 'SortOrder', 'int', CreoleTypes::INTEGER, false, null);
 

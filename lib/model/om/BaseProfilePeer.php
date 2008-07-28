@@ -289,7 +289,7 @@ abstract class BaseProfilePeer {
 
   static public function getUniqueColumnNames()
   {
-    return array();
+    return array(array('name'));
   }
 	
 	public static function getTableMap()

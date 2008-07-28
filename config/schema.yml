@@ -1,27 +1,27 @@
 propel:
   member:
     id: ~
-    is_active: { type: boolean }
+    is_active: { type: boolean, required: true }
     created_at: ~
     updated_at: ~
 
   profile:
     id: ~
-    name: { type: longvarchar }
-    is_required: { type: boolean }
-    is_unique: { type: boolean }
-    form_type: { type: varchar(32) }
-    value_type: { type: varchar(32) }
+    name: { type: varchar(64), index: unique, required: true }
+    is_required: { type: boolean, required: true }
+    is_unique: { type: boolean, required: true }
+    form_type: { type: varchar(32), required: true }
+    value_type: { type: varchar(32), required: true }
     value_regexp: { type: longvarchar }
     value_min: { type: integer }
     value_max: { type: integer }
-    is_disp_regist: { type: boolean }
-    is_disp_config: { type: boolean }
-    is_disp_search: { type: boolean }
+    is_disp_regist: { type: boolean, required: true }
+    is_disp_config: { type: boolean, required: true }
+    is_disp_search: { type: boolean, required: true }
     sort_order: { type: integer }
 
   profile_i18n:
-    caption: { type: longvarchar }
+    caption: { type: longvarchar, required: true }
     info: { type: longvarchar }
 
   profile_option:
