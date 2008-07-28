@@ -27,6 +27,8 @@ class memberActions extends sfActions
   */
   public function executeLogin($request)
   {
+    $this->getUser()->logout();
+
     $this->form = $this->getUser()->getAuthForm();
     $auth = $request->getParameter('auth');
 
