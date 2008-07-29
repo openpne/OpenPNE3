@@ -9,6 +9,33 @@
  */ 
 class MemberProfilePeer extends BaseMemberProfilePeer
 {
+  public static function getProfileListByMemberId($memberId)
+  {
+    $profiles = array();
+
+    $c = new Criteria();
+
+    parent::addSelectColumns($c);
+
+    $c->addSelectColumn(ProfilePeer::NAME);
+    $c->addSelectColumn(ProfileI18nPeer::CAPTION);
+
+    $c->add(self::MEMBER_ID, $memberId);
+    $c->addJoin(ProfilePeer::ID, ProfileI18nPeer::ID);
+    $c->addJoin(ProfilePeer::ID, MemberProfilePeer::PROFILE_ID);
+    $c->addAscendingOrderByColumn(ProfilePeer::SORT_ORDER);
+
+    $rs = self::doSelectRS($c);
+
+    while ($rs->next()) {
+      $obj = new MemberProfile();
+      $obj->hydrateProfiles($rs);
+      $profiles[] = $obj;
+    }
+
+    return $profiles;
+  }
+
   public static function retrieveByMemberIdAndProfileId($memberId, $profileId)
   {
     $c = new Criteria();

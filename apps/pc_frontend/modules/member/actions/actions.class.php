@@ -113,4 +113,17 @@ class memberActions extends sfActions
 
     return sfView::SUCCESS;
   }
+
+ /**
+  * Executes profile action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeProfile($request)
+  {
+    $id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
+    $this->member = MemberPeer::retrieveByPk($id);
+
+    return sfView::SUCCESS;
+  }
 }

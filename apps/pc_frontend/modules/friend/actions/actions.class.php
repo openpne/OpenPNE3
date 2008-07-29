@@ -36,19 +36,6 @@ class friendActions extends sfActions
   }
 
  /**
-  * Executes home action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeHome($request)
-  {
-    $this->redirectToHomeIfIdIsNotValid();
-    $this->member = MemberPeer::retrieveByPk($this->id);
-
-    return sfView::SUCCESS;
-  }
-
- /**
   * Executes list action
   *
   * @param sfRequest $request A request object
@@ -69,7 +56,7 @@ class friendActions extends sfActions
   {
     $this->redirectToHomeIfIdIsNotValid();
     FriendPeer::link($this->getUser()->getMemberId(), $this->id);
-    $this->redirect('friend/home?id=' . $this->id);
+    $this->redirect('member/profile?id=' . $this->id);
   }
 
  /**
@@ -81,7 +68,7 @@ class friendActions extends sfActions
   {
     $this->redirectToHomeIfIdIsNotValid();
     FriendPeer::unlink($this->getUser()->getMemberId(), $this->id);
-    $this->redirect('friend/home?id=' . $this->id);
+    $this->redirect('member/profile?id=' . $this->id);
   }
 
  /**

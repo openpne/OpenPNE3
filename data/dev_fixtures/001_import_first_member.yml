@@ -1,4 +1,3 @@
-# data/fixures/001_add_profile_nickname.yml
 Profile:
   profile_nickname:
     is_required: 1
@@ -10,25 +9,58 @@ Profile:
     is_disp_search: 1
     sort_order: 100
 
+  profile_sex:
+    is_required: 1
+    name: "sex"
+    form_type: "select"
+    value_type: "integer"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    sort_order: 110
+
+  profile_self_intro:
+    is_required: 1
+    name: "self_intro"
+    form_type: "textarea"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    sort_order: 120
+
 ProfileI18n:
   profile_i18n_nickname:
     id: profile_nickname
     caption: "ニックネーム"
     culture: "ja_JP"
 
-Member:
-  first_member:
-    id: ~
-    is_active: 1
+  profile_i18n_sex:
+    id: profile_sex
+    caption: "性別"
+    culture: "ja_JP"
 
-AuthenticationLoginId:
-  first_pc_address:
-    member_id: first_member
-    login_id: "openpne"
-    password: <?php echo md5('password') . "\n"; ?>
+  profile_i18n_self_intro:
+    id: profile_self_intro
+    caption: "自己紹介"
+    culture: "ja_JP"
 
-MemberProfile:
-  first_member_profile:
-    member_id: first_member
-    profile_id: profile_nickname
-    value: "OpenPNE君"
+ProfileOption:
+  profile_option_sex_man:
+    profile_id: profile_sex
+    sort_order: 0
+
+  profile_option_sex_woman:
+    profile_id: profile_sex
+    sort_order: 1
+
+ProfileOptionI18n:
+  profile_option_sex_man:
+    id: profile_option_sex_man
+    value: "男性"
+    culture: "ja_JP"
+
+  profile_option_sex_woman:
+    id: profile_option_sex_woman
+    value: "女性"
+    culture: "ja_JP"

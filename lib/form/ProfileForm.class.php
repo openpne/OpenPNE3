@@ -82,15 +82,15 @@ class ProfileForm extends sfForm
 
     switch ($profile->getFormType()) {
       case 'checkbox':
-        $choices = $this->getFormOptions($profile->getId());
+        $choices = $this->getFormOptionsValue($profile->getId());
         $obj = new sfWidgetFormInputCheckbox(array('choices' => $choices));
         break;
       case 'select':
-        $choices = $this->getFormOptions($profile->getId());
+        $choices = $this->getFormOptionsValue($profile->getId());
         $obj = new sfWidgetFormSelect(array('choices' => $choices));
         break;
       case 'radio':
-        $choices = $this->getFormOptions($profile->getId());
+        $choices = $this->getFormOptionsValue($profile->getId());
         $obj = new sfWidgetFormSelectRadio(array('choices' => $choices));
         break;
       case 'textarea':
@@ -154,7 +154,19 @@ class ProfileForm extends sfForm
     $options = ProfileOptionPeer::retrieveByIsProfileId($profileId);
 
     foreach ($options as $option) {
-      $result[] = $option->getValue();
+      $result[] = $option->getId();
+    }
+
+    return $result;
+  }
+
+  private function getFormOptionsValue($profileId)
+  {
+    $result = array();
+    $options = ProfileOptionPeer::retrieveByIsProfileId($profileId);
+
+    foreach ($options as $option) {
+      $result[$option->getId()] = $option->getValue();
     }
 
     return $result;

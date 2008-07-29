@@ -1,0 +1,26 @@
+Member:
+  first_member:
+    id: ~
+    is_active: 1
+
+AuthenticationLoginId:
+  first_pc_address:
+    member_id: first_member
+    login_id: "openpne"
+    password: <?php echo md5('password') . "\n"; ?>
+
+MemberProfile:
+  first_member_profile_nickname:
+    member_id: first_member
+    profile_id: profile_nickname
+    value: "OpenPNE君"
+
+  first_member_profile_sex:
+    member_id: first_member
+    profile_id: profile_sex
+    profile_option_id: profile_option_sex_man
+
+  first_member_profile_self_intro:
+    member_id: first_member
+    profile_id: profile_self_intro
+    value: "よろしくお願いします。"
