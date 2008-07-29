@@ -46,6 +46,17 @@ class memberActions extends sfActions
   }
 
  /**
+  * Executes logout action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeLogout($request)
+  {
+    $this->getUser()->logout();
+    $this->redirect('member/login');
+  }
+
+ /**
   * Executes register action
   *
   * @param sfRequest $request A request object
