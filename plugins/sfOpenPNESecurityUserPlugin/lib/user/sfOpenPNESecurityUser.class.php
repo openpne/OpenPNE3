@@ -77,7 +77,6 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   {
     $this->setAuthenticated(false);
     $this->getAttributeHolder()->removeNamespace('sfOpenPNESecurityUser');
-    $this->getAttributeHolder()->removeNamespace('sfOpenPNESecurityUserProfile');
     $this->clearCredentials();
   }
 
@@ -148,14 +147,5 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     } else {
       $this->removeCredential('SNSRegisterFinish');
     }
-  }
-
-  public function getProfile($profileName)
-  {
-    if (!$this->isAuthenticated()) {
-      return false;
-    }
-
-    return MemberProfilePeer::retrieveByMemberIdAndProfileName($this->getMemberId(), $profileName);
   }
 }
