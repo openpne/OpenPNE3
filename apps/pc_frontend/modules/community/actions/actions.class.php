@@ -10,6 +10,28 @@
  */
 class communityActions extends sfActions
 {
+  public $id = 0;
+
+  public function preExecute()
+  {
+    $this->getUser()->removeCredential('communityAdmin');
+    $this->getUser()->removeCredential('editCommunity');
+    $this->getUser()->removeCredential('communityMember');
+    $this->getUser()->removeCredential('non-communityMember');
+
+    $this->id = $this->getRequestParameter('id');
+
+    if (CommunityMemberPeer::isMember($this->getUser()->getMemberId(), $this->id)) {
+      $this->getUser()->addCredential('communityMember');
+    } else {
+      $this->getUser()->addCredential('non-communityMember');
+    }
+
+    if (CommunityMemberPeer::isAdmin($this->getUser()->getMemberId(), $this->id)) {
+      $this->getUser()->addCredential('communityAdmin', 'editCommunity');
+    }
+  }
+
  /**
   * Executes index action
   *
@@ -27,13 +49,18 @@ class communityActions extends sfActions
   */
   public function executeEdit($request)
   {
-    $this->community = CommunityPeer::retrieveByPk($request->getParameter('id'));
+    if ($this->id && !$this->getUser()->hasCredential('editCommunity')) {
+      $this->forward('default', 'secure');
+    }
+
+    $this->community = CommunityPeer::retrieveByPk($this->id);
     $this->form = new CommunityForm($this->community);
 
     if ($request->isMethod('post')) {
       $this->form->bind($request->getParameter('community'));
       if ($this->form->isValid()) {
         $community = $this->form->save();
+
         $this->redirect('community/home?id=' . $community->getId());
       }
     }
@@ -46,7 +73,7 @@ class communityActions extends sfActions
   */
   public function executeHome($request)
   {
-    $this->community = CommunityPeer::retrieveByPk($request->getParameter('id'));
+    $this->community = CommunityPeer::retrieveByPk($this->id);
   }
 
  /**
@@ -61,5 +88,27 @@ class communityActions extends sfActions
     $this->pager->init();
 
     return sfView::SUCCESS;
+  }
+
+ /**
+  * Executes join action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeJoin($request)
+  {
+    CommunityMemberPeer::join($this->getUser()->getMemberId(), $this->id);
+    $this->redirect('community/home?id=' . $this->id);
+  }
+
+ /**
+  * Executes quit action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeQuit($request)
+  {
+    CommunityMemberPeer::quit($this->getUser()->getMemberId(), $this->id);
+    $this->redirect('community/home?id=' . $this->id);
   }
 }
