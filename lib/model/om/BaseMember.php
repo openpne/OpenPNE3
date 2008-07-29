@@ -42,6 +42,12 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 	protected $lastFriendRelatedByMemberIdFromCriteria = null;
 
 	
+	protected $collCommunityMembers;
+
+	
+	protected $lastCommunityMemberCriteria = null;
+
+	
 	protected $collAuthenticationLoginIds;
 
 	
@@ -288,6 +294,14 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collCommunityMembers !== null) {
+				foreach($this->collCommunityMembers as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collAuthenticationLoginIds !== null) {
 				foreach($this->collAuthenticationLoginIds as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -355,6 +369,14 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 
 				if ($this->collFriendsRelatedByMemberIdFrom !== null) {
 					foreach($this->collFriendsRelatedByMemberIdFrom as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collCommunityMembers !== null) {
+					foreach($this->collCommunityMembers as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -512,6 +534,10 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 
 			foreach($this->getFriendsRelatedByMemberIdFrom() as $relObj) {
 				$copyObj->addFriendRelatedByMemberIdFrom($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getCommunityMembers() as $relObj) {
+				$copyObj->addCommunityMember($relObj->copy($deepCopy));
 			}
 
 			foreach($this->getAuthenticationLoginIds() as $relObj) {
@@ -813,6 +839,108 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 	{
 		$this->collFriendsRelatedByMemberIdFrom[] = $l;
 		$l->setMemberRelatedByMemberIdFrom($this);
+	}
+
+	
+	public function initCommunityMembers()
+	{
+		if ($this->collCommunityMembers === null) {
+			$this->collCommunityMembers = array();
+		}
+	}
+
+	
+	public function getCommunityMembers($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCommunityMembers === null) {
+			if ($this->isNew()) {
+			   $this->collCommunityMembers = array();
+			} else {
+
+				$criteria->add(CommunityMemberPeer::MEMBER_ID, $this->getId());
+
+				CommunityMemberPeer::addSelectColumns($criteria);
+				$this->collCommunityMembers = CommunityMemberPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(CommunityMemberPeer::MEMBER_ID, $this->getId());
+
+				CommunityMemberPeer::addSelectColumns($criteria);
+				if (!isset($this->lastCommunityMemberCriteria) || !$this->lastCommunityMemberCriteria->equals($criteria)) {
+					$this->collCommunityMembers = CommunityMemberPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastCommunityMemberCriteria = $criteria;
+		return $this->collCommunityMembers;
+	}
+
+	
+	public function countCommunityMembers($criteria = null, $distinct = false, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(CommunityMemberPeer::MEMBER_ID, $this->getId());
+
+		return CommunityMemberPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addCommunityMember(CommunityMember $l)
+	{
+		$this->collCommunityMembers[] = $l;
+		$l->setMember($this);
+	}
+
+
+	
+	public function getCommunityMembersJoinCommunity($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collCommunityMembers === null) {
+			if ($this->isNew()) {
+				$this->collCommunityMembers = array();
+			} else {
+
+				$criteria->add(CommunityMemberPeer::MEMBER_ID, $this->getId());
+
+				$this->collCommunityMembers = CommunityMemberPeer::doSelectJoinCommunity($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(CommunityMemberPeer::MEMBER_ID, $this->getId());
+
+			if (!isset($this->lastCommunityMemberCriteria) || !$this->lastCommunityMemberCriteria->equals($criteria)) {
+				$this->collCommunityMembers = CommunityMemberPeer::doSelectJoinCommunity($criteria, $con);
+			}
+		}
+		$this->lastCommunityMemberCriteria = $criteria;
+
+		return $this->collCommunityMembers;
 	}
 
 	

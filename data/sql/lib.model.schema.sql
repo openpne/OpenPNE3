@@ -155,5 +155,45 @@ CREATE TABLE `friend`
 		REFERENCES `member` (`id`)
 )Type=InnoDB;
 
+#-----------------------------------------------------------------------------
+#-- community
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `community`;
+
+
+CREATE TABLE `community`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(64)  NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `community_U_1` (`name`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- community_member
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `community_member`;
+
+
+CREATE TABLE `community_member`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`community_id` INTEGER  NOT NULL,
+	`member_id` INTEGER  NOT NULL,
+	`position` VARCHAR(32),
+	PRIMARY KEY (`id`),
+	KEY `community_member_I_1`(`position`),
+	INDEX `community_member_FI_1` (`community_id`),
+	CONSTRAINT `community_member_FK_1`
+		FOREIGN KEY (`community_id`)
+		REFERENCES `community` (`id`),
+	INDEX `community_member_FI_2` (`member_id`),
+	CONSTRAINT `community_member_FK_2`
+		FOREIGN KEY (`member_id`)
+		REFERENCES `member` (`id`)
+)Type=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;
