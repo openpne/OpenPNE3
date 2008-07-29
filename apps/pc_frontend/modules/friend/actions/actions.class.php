@@ -49,6 +49,18 @@ class friendActions extends sfActions
   }
 
  /**
+  * Executes list action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeList($request)
+  {
+    $this->pager = FriendPeer::getFriendListPager($request->getParameter('member_id', $this->getUser()->getMemberId()), $request->getParameter('page', 1));
+
+    return sfView::SUCCESS;
+  }
+
+ /**
   * Executes link action
   *
   * @param sfRequest $request A request object

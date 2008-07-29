@@ -57,4 +57,18 @@ class FriendPeer extends BaseFriendPeer
 
     return false;
   }
+
+  public static function getFriendListPager($memberId, $page = 1, $size = 20)
+  {
+    $c = new Criteria();
+    $c->add(self::MEMBER_ID_FROM, $memberId);
+    $c->addJoin(MemberPeer::ID, self::MEMBER_ID_TO);
+
+    $pager = new sfPropelPager('Member', $size);
+    $pager->setCriteria($c);
+    $pager->setPage($page);
+    $pager->init();
+
+    return $pager;
+  }
 }

@@ -3,5 +3,6 @@
 <li><?php echo link_to('メンバー一覧', 'member/list') ?></li>
 <li><?php echo link_to('コミュニティ追加', 'community/edit') ?></li>
 <li><?php echo link_to('コミュニティ一覧', 'community/list') ?></li>
+<li><?php echo link_to(sprintf('フレンド一覧(%d)', $sf_user->getMember()->countFriendsRelatedByMemberIdTo()), 'friend/list') ?></li>
 <li><?php echo link_to(sprintf('参加コミュニティ一覧(%d)', $sf_user->getMember()->countCommunityMembers()), 'community/joinlist') ?></li>
 </ul>
