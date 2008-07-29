@@ -50,6 +50,11 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     return $this->getAttribute('member_id', null, 'sfOpenPNESecurityUser');
   }
 
+  public function getMember()
+  {
+    return MemberPeer::retrieveByPk($this->getMemberId());
+  }
+
   public function getRegisterEndAction()
   {
     return $this->getAuthContainer()->getRegisterEndAction();

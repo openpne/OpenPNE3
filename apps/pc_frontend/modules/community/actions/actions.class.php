@@ -91,6 +91,18 @@ class communityActions extends sfActions
   }
 
  /**
+  * Executes joinlist action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeJoinlist($request)
+  {
+    $this->pager = CommunityPeer::getJoinCommunityListPager($request->getParameter('member_id', $this->getUser()->getMemberId()), $request->getParameter('page', 1));
+
+    return sfView::SUCCESS;
+  }
+
+ /**
   * Executes join action
   *
   * @param sfRequest $request A request object
