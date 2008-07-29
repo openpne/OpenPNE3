@@ -156,11 +156,6 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
       return false;
     }
 
-    if (!$this->hasAttribute($profileName, 'sfOpenPNESecurityUserProfile')) {
-      $profile = MemberProfilePeer::retrieveByMemberIdAndProfileName($this->getMemberId(), $profileName);
-      $this->setAttribute($profileName, $profile, 'sfOpenPNESecurityUserProfile');
-    }
-
-    return $this->getAttribute($profileName, null, 'sfOpenPNESecurityUserProfile');
+    return MemberProfilePeer::retrieveByMemberIdAndProfileName($this->getMemberId(), $profileName);
   }
 }
