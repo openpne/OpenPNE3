@@ -22,6 +22,15 @@ class MemberProfile extends BaseMemberProfile
     return $this->getValue();
   }
 
+  public function getValue()
+  {
+    if ($this->getProfileOptionId()) {
+      return $this->getProfileOptionId();
+    }
+
+    return parent::getValue();
+  }
+
   public function hydrateProfiles($rs)
   {
     try {

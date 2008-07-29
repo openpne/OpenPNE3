@@ -9,6 +9,15 @@
  */
 class ProfileForm extends sfForm
 {
+  public function __construct($profileMember = null, $options = array(), $CSRFSecret = null)
+  {
+    parent::__construct(array(), $options, $CSRFSecret);
+
+    foreach ($profileMember as $profile) {
+      $this->setDefault($profile->getName(), $profile->getValue());
+    }
+  }
+
   public function configure()
   {
     $this->widgetSchema->setNameFormat('profile[%s]');
@@ -39,9 +48,7 @@ class ProfileForm extends sfForm
         $memberProfile->setValue($value);
       }
 
-      if (!$memberProfile->save()) {
-        return false;
-      }
+      $memberProfile->save();
     }
 
     return true;
@@ -170,5 +177,11 @@ class ProfileForm extends sfForm
     }
 
     return $result;
+  }
+
+  private function updateDefaultsFromObject($obj)
+  {
+    $this->setDefaults(array_merge($this->getDefaults(), $obj->toArray(BasePeer::TYPE_FIELDNAME)));
+    var_dump($obj->toArray(BasePeer::TYPE_FIELDNAME));
   }
 }
