@@ -1,6 +1,7 @@
 Member:
   first_member:
     id: ~
+    name: "OpenPNE君"
     is_active: 1
 
 AuthenticationLoginId:
@@ -10,11 +11,6 @@ AuthenticationLoginId:
     password: <?php echo md5('password') . "\n"; ?>
 
 MemberProfile:
-  first_member_profile_nickname:
-    member_id: first_member
-    profile_id: profile_nickname
-    value: "OpenPNE君"
-
   first_member_profile_sex:
     member_id: first_member
     profile_id: profile_sex

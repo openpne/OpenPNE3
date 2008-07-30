@@ -5,6 +5,6 @@
 
 <ul>
 <?php foreach ($pager->getResults() as $member) : ?>
-<li><?php echo link_to($member->getProfile('nickname'), 'member/profile?id=' . $member->getId()); ?></li>
+<li><?php echo link_to($member->getName(), 'member/profile?id=' . $member->getId()); ?></li>
 <?php endforeach; ?>
 </ul>

@@ -1,4 +1,6 @@
 <dl>
+<dt>ニックネーム</dt>
+<dd><?php echo $member->getName() ?></dd>
 <?php foreach ($member->getProfiles() as $profile) : ?>
 <dt><?php echo $profile->getCaption() ?></dt>
 <dd><?php echo $profile ?></dd>

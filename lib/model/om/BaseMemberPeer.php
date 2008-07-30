@@ -13,7 +13,7 @@ abstract class BaseMemberPeer {
 	const CLASS_DEFAULT = 'lib.model.Member';
 
 	
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 5;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -21,6 +21,9 @@ abstract class BaseMemberPeer {
 
 	
 	const ID = 'member.ID';
+
+	
+	const NAME = 'member.NAME';
 
 	
 	const IS_ACTIVE = 'member.IS_ACTIVE';
@@ -37,18 +40,18 @@ abstract class BaseMemberPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'IsActive', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_COLNAME => array (MemberPeer::ID, MemberPeer::IS_ACTIVE, MemberPeer::CREATED_AT, MemberPeer::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'is_active', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'IsActive', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_COLNAME => array (MemberPeer::ID, MemberPeer::NAME, MemberPeer::IS_ACTIVE, MemberPeer::CREATED_AT, MemberPeer::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'is_active', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'IsActive' => 1, 'CreatedAt' => 2, 'UpdatedAt' => 3, ),
-		BasePeer::TYPE_COLNAME => array (MemberPeer::ID => 0, MemberPeer::IS_ACTIVE => 1, MemberPeer::CREATED_AT => 2, MemberPeer::UPDATED_AT => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'is_active' => 1, 'created_at' => 2, 'updated_at' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'IsActive' => 2, 'CreatedAt' => 3, 'UpdatedAt' => 4, ),
+		BasePeer::TYPE_COLNAME => array (MemberPeer::ID => 0, MemberPeer::NAME => 1, MemberPeer::IS_ACTIVE => 2, MemberPeer::CREATED_AT => 3, MemberPeer::UPDATED_AT => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'is_active' => 2, 'created_at' => 3, 'updated_at' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	
@@ -102,6 +105,8 @@ abstract class BaseMemberPeer {
 	{
 
 		$criteria->addSelectColumn(MemberPeer::ID);
+
+		$criteria->addSelectColumn(MemberPeer::NAME);
 
 		$criteria->addSelectColumn(MemberPeer::IS_ACTIVE);
 

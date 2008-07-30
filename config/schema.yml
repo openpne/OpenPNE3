@@ -1,6 +1,7 @@
 propel:
   member:
     id: ~
+    name: { type: varchar(64), required: true }
     is_active: { type: boolean, required: true }
     created_at: ~
     updated_at: ~

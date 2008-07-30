@@ -1,14 +1,4 @@
 Profile:
-  profile_nickname:
-    is_required: 1
-    name: "nickname"
-    form_type: "text"
-    value_type: "string"
-    is_disp_regist: 1
-    is_disp_config: 1
-    is_disp_search: 1
-    sort_order: 100
-
   profile_sex:
     is_required: 1
     name: "sex"
@@ -30,11 +20,6 @@ Profile:
     sort_order: 120
 
 ProfileI18n:
-  profile_i18n_nickname:
-    id: profile_nickname
-    caption: "ニックネーム"
-    culture: "ja_JP"
-
   profile_i18n_sex:
     id: profile_sex
     caption: "性別"

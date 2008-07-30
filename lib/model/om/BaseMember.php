@@ -13,6 +13,10 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 
 
 	
+	protected $name;
+
+
+	
 	protected $is_active;
 
 
@@ -64,6 +68,13 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 	{
 
 		return $this->id;
+	}
+
+	
+	public function getName()
+	{
+
+		return $this->name;
 	}
 
 	
@@ -132,6 +143,20 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 
 	} 
 	
+	public function setName($v)
+	{
+
+						if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->name !== $v) {
+			$this->name = $v;
+			$this->modifiedColumns[] = MemberPeer::NAME;
+		}
+
+	} 
+	
 	public function setIsActive($v)
 	{
 
@@ -182,17 +207,19 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 
 			$this->id = $rs->getInt($startcol + 0);
 
-			$this->is_active = $rs->getBoolean($startcol + 1);
+			$this->name = $rs->getString($startcol + 1);
 
-			$this->created_at = $rs->getTimestamp($startcol + 2, null);
+			$this->is_active = $rs->getBoolean($startcol + 2);
 
-			$this->updated_at = $rs->getTimestamp($startcol + 3, null);
+			$this->created_at = $rs->getTimestamp($startcol + 3, null);
+
+			$this->updated_at = $rs->getTimestamp($startcol + 4, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 4; 
+						return $startcol + 5; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Member object", $e);
 		}
@@ -413,12 +440,15 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getIsActive();
+				return $this->getName();
 				break;
 			case 2:
-				return $this->getCreatedAt();
+				return $this->getIsActive();
 				break;
 			case 3:
+				return $this->getCreatedAt();
+				break;
+			case 4:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -432,9 +462,10 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 		$keys = MemberPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getIsActive(),
-			$keys[2] => $this->getCreatedAt(),
-			$keys[3] => $this->getUpdatedAt(),
+			$keys[1] => $this->getName(),
+			$keys[2] => $this->getIsActive(),
+			$keys[3] => $this->getCreatedAt(),
+			$keys[4] => $this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -454,12 +485,15 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setIsActive($value);
+				$this->setName($value);
 				break;
 			case 2:
-				$this->setCreatedAt($value);
+				$this->setIsActive($value);
 				break;
 			case 3:
+				$this->setCreatedAt($value);
+				break;
+			case 4:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -470,9 +504,10 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 		$keys = MemberPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setIsActive($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setCreatedAt($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setUpdatedAt($arr[$keys[3]]);
+		if (array_key_exists($keys[1], $arr)) $this->setName($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setIsActive($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setCreatedAt($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setUpdatedAt($arr[$keys[4]]);
 	}
 
 	
@@ -481,6 +516,7 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 		$criteria = new Criteria(MemberPeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(MemberPeer::ID)) $criteria->add(MemberPeer::ID, $this->id);
+		if ($this->isColumnModified(MemberPeer::NAME)) $criteria->add(MemberPeer::NAME, $this->name);
 		if ($this->isColumnModified(MemberPeer::IS_ACTIVE)) $criteria->add(MemberPeer::IS_ACTIVE, $this->is_active);
 		if ($this->isColumnModified(MemberPeer::CREATED_AT)) $criteria->add(MemberPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(MemberPeer::UPDATED_AT)) $criteria->add(MemberPeer::UPDATED_AT, $this->updated_at);
@@ -513,6 +549,8 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 	
 	public function copyInto($copyObj, $deepCopy = false)
 	{
+
+		$copyObj->setName($this->name);
 
 		$copyObj->setIsActive($this->is_active);
 

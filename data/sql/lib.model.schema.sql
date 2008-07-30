@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(64)  NOT NULL,
 	`is_active` INTEGER  NOT NULL,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,

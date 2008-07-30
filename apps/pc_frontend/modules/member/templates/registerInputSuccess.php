@@ -1,5 +1,6 @@
 <form action="<?php echo url_for('member/registerInput') ?>" method="post">
 <table>
+<?php echo $memberForm ?>
 <?php echo $authForm ?>
 <?php echo $profileForm ?>
 <tr>

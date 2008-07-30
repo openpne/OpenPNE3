@@ -63,27 +63,28 @@ class memberActions extends sfActions
   */
   public function executeRegisterInput($request)
   {
+    $this->memberForm = new MemberForm();
+
     $this->authForm = $this->getUser()->getAuthForm();
     $this->authForm->setForRegisterWidgets();
 
     $this->profileForm = new ProfileForm();
     $this->profileForm->setRegisterWidgets();
 
+    $member = $request->getParameter('member');
     $auth = $request->getParameter('auth');
     $profile = $request->getParameter('profile');
 
-    if ($auth && $profile) {
+    if ($member && $auth && $profile) {
+      $this->memberForm->bind($member);
       $this->authForm->bind($auth);
       $this->profileForm->bind($profile);
 
-      if ($this->authForm->isValid() && $this->profileForm->isValid()) {
-        $member = new Member();
-        $member->setIsActive(false);
-        $member->save();
-
-        $profileResult = $this->profileForm->save($member->getId());
-        $formResult = $this->getUser()->register($member->getId(), $this->authForm);
-        $this->redirectIf(($profileResult && $formResult), $this->getUser()->getRegisterEndAction());
+      if ($this->memberForm->isValid() && $this->authForm->isValid() && $this->profileForm->isValid()) {
+        $memberResult = $this->memberForm->save();
+        $profileResult = $this->profileForm->save($memberResult->getId());
+        $formResult = $this->getUser()->register($memberResult->getId(), $this->authForm);
+        $this->redirectIf(($memberResult && $profileResult && $formResult), $this->getUser()->getRegisterEndAction());
       }
     }
 
@@ -134,17 +135,22 @@ class memberActions extends sfActions
   */
   public function executeEditProfile($request)
   {
-    $profiles = $this->getUser()->getMember()->getProfiles();
-    $this->form = new ProfileForm($profiles);
-    $this->form->setConfigWidgets();
+    $this->memberForm = new MemberForm($this->getUser()->getMember());
 
+    $profiles = $this->getUser()->getMember()->getProfiles();
+    $this->profileForm = new ProfileForm($profiles);
+    $this->profileForm->setConfigWidgets();
+
+    $member = $request->getParameter('member');
     $profile = $request->getParameter('profile');
 
-    if ($profile) {
-      $this->form->bind($profile);
-      if ($this->form->isValid()) {
-        $result = $this->form->save($this->getUser()->getMemberId());
-        $this->redirectIf($result, 'member/profile');
+    if ($member && $profile) {
+      $this->memberForm->bind($member);
+      $this->profileForm->bind($profile);
+      if ($this->memberForm->isValid() && $this->profileForm->isValid()) {
+        $this->memberForm->save();
+        $this->profileForm->save($this->getUser()->getMemberId());
+        $this->redirect('member/profile');
       }
     }
 

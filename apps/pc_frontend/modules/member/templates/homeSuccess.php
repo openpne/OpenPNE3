@@ -1,4 +1,4 @@
-あなたのホームです。(メンバーID:<?php echo $sf_user->getMemberId() ?>, ニックネーム:<?php echo $sf_user->getMember()->getProfile('nickname') ?>)
+あなたのホームです。(メンバーID:<?php echo $sf_user->getMemberId() ?>, ニックネーム:<?php echo $sf_user->getMember()->getName() ?>)
 <ul>
 <li><?php echo link_to('プロフィール確認', 'member/profile') ?></li>
 <li><?php echo link_to('メンバー一覧', 'member/list') ?></li>

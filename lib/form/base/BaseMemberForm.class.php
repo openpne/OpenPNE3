@@ -13,6 +13,7 @@ class BaseMemberForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'         => new sfWidgetFormInputHidden(),
+      'name'       => new sfWidgetFormInput(),
       'is_active'  => new sfWidgetFormInputCheckbox(),
       'created_at' => new sfWidgetFormDateTime(),
       'updated_at' => new sfWidgetFormDateTime(),
@@ -20,6 +21,7 @@ class BaseMemberForm extends BaseFormPropel
 
     $this->setValidators(array(
       'id'         => new sfValidatorPropelChoice(array('model' => 'Member', 'column' => 'id', 'required' => false)),
+      'name'       => new sfValidatorString(array('max_length' => 64)),
       'is_active'  => new sfValidatorBoolean(),
       'created_at' => new sfValidatorDateTime(array('required' => false)),
       'updated_at' => new sfValidatorDateTime(array('required' => false)),

@@ -9,7 +9,7 @@
  */
 class ProfileForm extends sfForm
 {
-  public function __construct($profileMember = null, $options = array(), $CSRFSecret = null)
+  public function __construct($profileMember = array(), $options = array(), $CSRFSecret = null)
   {
     parent::__construct(array(), $options, $CSRFSecret);
 
