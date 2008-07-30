@@ -22,6 +22,7 @@ class sfOpenPNEAuthForm_LoginID extends sfOpenPNEAuthForm
     )));
 
     $this->widgetSchema->setNameFormat('auth[%s]');
+    $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('authform_login_id');
   }
 
   public function setForRegisterWidgets()

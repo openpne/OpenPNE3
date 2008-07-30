@@ -4,7 +4,7 @@
 <?php echo $authForm ?>
 <?php echo $profileForm ?>
 <tr>
-<td colspan="2"><input type="submit" value="register" /></td>
+<td colspan="2"><input type="submit" value="登録" /></td>
 </tr>
 </table>
 </form>

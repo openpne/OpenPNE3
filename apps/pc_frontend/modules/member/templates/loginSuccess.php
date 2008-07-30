@@ -2,7 +2,7 @@
 <table>
 <?php echo $form ?>
 <tr>
-<td colspan="2"><input type="submit" value="login" /></td>
+<td colspan="2"><input type="submit" value="ログイン" /></td>
 </tr>
 </table>
 </form>

@@ -20,6 +20,7 @@ class MemberForm extends BaseMemberForm
     ));
 
     $this->widgetSchema->setNameFormat('member[%s]');
+    $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_member');
   }
 
   protected function doSave($con = null)
