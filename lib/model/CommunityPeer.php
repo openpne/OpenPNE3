@@ -22,4 +22,18 @@ class CommunityPeer extends BaseCommunityPeer
 
     return $pager;
   }
+
+  public static function getCommunityMemberListPager($communityId, $page = 1, $size = 20)
+  {
+    $c = new Criteria();
+    $c->add(CommunityMemberPeer::COMMUNITY_ID, $communityId);
+    $c->addJoin(MemberPeer::ID, CommunityMemberPeer::MEMBER_ID);
+
+    $pager = new sfPropelPager('Member', $size);
+    $pager->setCriteria($c);
+    $pager->setPage($page);
+    $pager->init();
+
+    return $pager;
+  }
 }

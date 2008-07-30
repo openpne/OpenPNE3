@@ -1,6 +1,8 @@
 <?php echo $community->getName() ?>コミュニティのホームです。
 
 <ul>
+<li><?php echo link_to(sprintf('コミュニティメンバー一覧(%d)', $community->countCommunityMembers()), 'community/memberList?id=' . $community->getId()) ?></li>
+
 <?php if ($sf_user->hasCredential('editCommunity')) : ?>
 <li><?php echo link_to('このコミュニティを編集する', 'community/edit?id=' . $community->getId()) ?></li>
 <?php endif; ?>
