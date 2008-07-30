@@ -7,7 +7,7 @@
 <li><?php echo link_to('このコミュニティを編集する', 'community/edit?id=' . $community->getId()) ?></li>
 <?php endif; ?>
 
-<?php if (!$isCommunityAdmin) : ?>
+<?php if (!$isAdmin) : ?>
 <?php if ($isCommunityMember) : ?>
 <li><?php echo link_to('このコミュニティを退会する', 'community/quit?id=' . $community->getId()) ?></li>
 <?php else : ?>

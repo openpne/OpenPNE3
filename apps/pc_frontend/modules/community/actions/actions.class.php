@@ -11,9 +11,6 @@
 class communityActions extends sfActions
 {
   public $id = 0;
-  public $isAdmin = false;
-  public $isEditCommunity = false;
-  public $isCommunityMember = false;
 
   public function preExecute()
   {
