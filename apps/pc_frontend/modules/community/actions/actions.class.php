@@ -11,25 +11,17 @@
 class communityActions extends sfActions
 {
   public $id = 0;
+  public $isAdmin = false;
+  public $isEditCommunity = false;
+  public $isCommunityMember = false;
 
   public function preExecute()
   {
-    $this->getUser()->removeCredential('communityAdmin');
-    $this->getUser()->removeCredential('editCommunity');
-    $this->getUser()->removeCredential('communityMember');
-    $this->getUser()->removeCredential('non-communityMember');
-
     $this->id = $this->getRequestParameter('id');
 
-    if (CommunityMemberPeer::isMember($this->getUser()->getMemberId(), $this->id)) {
-      $this->getUser()->addCredential('communityMember');
-    } else {
-      $this->getUser()->addCredential('non-communityMember');
-    }
-
-    if (CommunityMemberPeer::isAdmin($this->getUser()->getMemberId(), $this->id)) {
-      $this->getUser()->addCredential('communityAdmin', 'editCommunity');
-    }
+    $this->isCommunityMember = CommunityMemberPeer::isMember($this->getUser()->getMemberId(), $this->id);
+    $this->isAdmin = CommunityMemberPeer::isAdmin($this->getUser()->getMemberId(), $this->id);
+    $this->isEditCommunity = $this->isAdmin;
   }
 
  /**
@@ -49,7 +41,7 @@ class communityActions extends sfActions
   */
   public function executeEdit($request)
   {
-    if ($this->id && !$this->getUser()->hasCredential('editCommunity')) {
+    if ($this->id && !$this->isEditCommunity) {
       $this->forward('default', 'secure');
     }
 
@@ -133,6 +125,8 @@ class communityActions extends sfActions
   */
   public function executeJoin($request)
   {
+    $this->forwardIf($this->isCommunityMember, 'default', 'secure');
+
     CommunityMemberPeer::join($this->getUser()->getMemberId(), $this->id);
     $this->redirect('community/home?id=' . $this->id);
   }
@@ -144,6 +138,8 @@ class communityActions extends sfActions
   */
   public function executeQuit($request)
   {
+    $this->forwardUnless($this->isCommunityMember, 'default', 'secure');
+
     CommunityMemberPeer::quit($this->getUser()->getMemberId(), $this->id);
     $this->redirect('community/home?id=' . $this->id);
   }

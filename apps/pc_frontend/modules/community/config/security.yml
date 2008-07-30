@@ -1,9 +1,3 @@
 all:
   is_secure: on
   credentials: SNSMember
-
-join:
-  credentials: [SNSMember, non-communityMember]
-
-quit:
-  credentials: [SNSMember, communityMember]

@@ -11,18 +11,12 @@
 class friendActions extends sfActions
 {
   public $id = 0;
+  public $isFriend = false;
 
   public function preExecute()
   {
-    $this->getUser()->removeCredential('friend');
-    $this->getUser()->removeCredential('non-friend');
-
     $this->id = $this->getRequestParameter('id');
-    if (FriendPeer::isFriend($this->getUser()->getMemberId(), $this->id)) {
-      $this->getUser()->addCredential('friend');
-    } else {
-      $this->getUser()->addCredential('non-friend');
-    }
+    $this->isFriend = FriendPeer::isFriend($this->getUser()->getMemberId(), $this->id);
   }
 
  /**
@@ -58,6 +52,7 @@ class friendActions extends sfActions
   */
   public function executeLink($request)
   {
+    $this->forwardIf($this->isFriend, 'default', 'secure');
     $this->redirectToHomeIfIdIsNotValid();
     FriendPeer::link($this->getUser()->getMemberId(), $this->id);
     $this->redirect('member/profile?id=' . $this->id);
@@ -70,6 +65,7 @@ class friendActions extends sfActions
   */
   public function executeUnlink($request)
   {
+    $this->forwardUnless($this->isFriend, 'default', 'secure');
     $this->redirectToHomeIfIdIsNotValid();
     FriendPeer::unlink($this->getUser()->getMemberId(), $this->id);
     $this->redirect('member/profile?id=' . $this->id);

@@ -1,9 +1,3 @@
 all:
   is_secure: on
   credentials: SNSMember
-
-link:
-  credentials: [SNSMember, non-friend]
-
-unlink:
-  credentials: [SNSMember, friend]
