@@ -30,15 +30,12 @@ class memberActions extends sfActions
     $this->getUser()->logout();
 
     $this->form = $this->getUser()->getAuthForm();
-    $auth = $request->getParameter('auth');
 
-    if ($auth) {
-      $this->form->bind($auth);
-
+    if ($request->isMethod('post')) {
+      $this->form->bind($request->getParameter('auth'));
       if ($this->form->isValid()) {
         $this->redirectIf($this->getUser()->login($this->form), 'member/home');
       }
-
       return sfView::ERROR;
     }
 
@@ -71,14 +68,10 @@ class memberActions extends sfActions
     $this->profileForm = new ProfileForm();
     $this->profileForm->setRegisterWidgets();
 
-    $member = $request->getParameter('member');
-    $auth = $request->getParameter('auth');
-    $profile = $request->getParameter('profile');
-
-    if ($member && $auth && $profile) {
-      $this->memberForm->bind($member);
-      $this->authForm->bind($auth);
-      $this->profileForm->bind($profile);
+    if ($request->isMethod('post')) {
+      $this->memberForm->bind($request->getParameter('member'));
+      $this->authForm->bind($request->getParameter('auth'));
+      $this->profileForm->bind($request->getParameter('profile'));
 
       if ($this->memberForm->isValid() && $this->authForm->isValid() && $this->profileForm->isValid()) {
         $memberResult = $this->memberForm->save();
@@ -141,12 +134,9 @@ class memberActions extends sfActions
     $this->profileForm = new ProfileForm($profiles);
     $this->profileForm->setConfigWidgets();
 
-    $member = $request->getParameter('member');
-    $profile = $request->getParameter('profile');
-
-    if ($member && $profile) {
-      $this->memberForm->bind($member);
-      $this->profileForm->bind($profile);
+    if ($request->isMethod('post')) {
+      $this->memberForm->bind($request->getParameter('member'));
+      $this->profileForm->bind($request->getParameter('profile'));
       if ($this->memberForm->isValid() && $this->profileForm->isValid()) {
         $this->memberForm->save();
         $this->profileForm->save($this->getUser()->getMemberId());
