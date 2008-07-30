@@ -1,10 +1,9 @@
-<?php if ($pager->haveToPaginate()) : ?>
-<?php echo link_to('< 前', 'member/list?page=' . $pager->getPreviousPage()) ?>&nbsp;
-<?php echo link_to('次 >', 'member/list?page=' . $pager->getNextPage()) ?>
-<?php endif; ?>
+<?php use_helper('Pagination'); ?>
 
+<?php echo pager_navigation($pager, 'member/list?page=%d'); ?>
 <ul>
 <?php foreach ($pager->getResults() as $member) : ?>
 <li><?php echo link_to($member->getName(), 'member/profile?id=' . $member->getId()); ?></li>
 <?php endforeach; ?>
 </ul>
+<?php echo pager_navigation($pager, 'member/list?page=%d'); ?>
