@@ -21,12 +21,15 @@ class sfOpenPNEAuthForm_LoginID extends sfOpenPNEAuthForm
       'password' => new sfValidatorString(),
     )));
 
-    $this->widgetSchema->setNameFormat('auth[%s]');
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('authform_login_id');
+
+    parent::configure();
   }
 
   public function setForRegisterWidgets()
   {
+    parent::setForRegisterWidgets();
+
     $this->validatorSchema['password_confirm'] = new sfValidatorString();
     $this->widgetSchema['password_confirm'] = new sfWidgetFormInputPassword();
 

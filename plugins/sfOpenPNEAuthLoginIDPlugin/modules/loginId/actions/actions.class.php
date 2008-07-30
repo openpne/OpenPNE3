@@ -17,9 +17,7 @@ class loginIdActions extends sfActions
   */
   public function executeRegisterEnd($request)
   {
-    $memberId = $this->getUser()->getMemberId();
-
-    $member = MemberPeer::retrieveByPk($memberId);
+    $member = $this->getUser()->getMember();
     $member->setIsActive(true);
     $member->save();
 

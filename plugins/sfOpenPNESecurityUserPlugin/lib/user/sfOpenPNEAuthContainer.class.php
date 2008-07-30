@@ -20,11 +20,34 @@ abstract class sfOpenPNEAuthContainer
   /**
    * Registers data to storage container.
    *
-   * @param  int    $memberId
    * @param  sfForm $form
+   * @param  int    $memberId
    * @return bool
    */
   abstract public function registerData($memberId, $form);
+
+  public function register($form, $memberId = 0)
+  {
+    $member = true;
+    $profile = true;
+
+    if ($form->memberForm) {
+      $member = $form->memberForm->save();
+      $memberId = $member->getId();
+    }
+
+    if ($form->profileForm) {
+      $profile = $form->profileForm->save($memberId);
+    }
+
+    $auth = $this->registerData($memberId, $form);
+
+    if ($member && $profile && $auth) {
+      return $memberId;
+    }
+
+    return false;
+  }
 
   /**
    * Is beginning to register of SNS.

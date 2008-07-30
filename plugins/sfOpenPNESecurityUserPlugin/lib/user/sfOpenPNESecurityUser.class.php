@@ -80,12 +80,12 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     $this->clearCredentials();
   }
 
-  public function register($memberId = null, $form = null)
+  public function register($form = null, $memberId = 0)
   {
-    $isRegisterData = $this->getAuthContainer()->registerData($memberId, $form);
-    if ($isRegisterData) {
+    $result = $this->getAuthContainer()->register($form, $memberId);
+    if ($result) {
       $this->setAuthenticated(true);
-      $this->setAttribute('member_id', $memberId, 'sfOpenPNESecurityUser');
+      $this->setAttribute('member_id', $result, 'sfOpenPNESecurityUser');
       return true;
     }
 
