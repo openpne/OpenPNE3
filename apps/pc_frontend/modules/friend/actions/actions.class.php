@@ -10,9 +10,6 @@
  */
 class friendActions extends sfActions
 {
-  public $id = 0;
-  public $isFriend = false;
-
   public function preExecute()
   {
     $this->id = $this->getRequestParameter('id');

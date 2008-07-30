@@ -10,8 +10,6 @@
  */
 class communityActions extends sfActions
 {
-  public $id = 0;
-
   public function preExecute()
   {
     $this->id = $this->getRequestParameter('id');
