@@ -44,6 +44,10 @@ class friendActions extends sfActions
   {
     $this->pager = FriendPeer::getFriendListPager($request->getParameter('member_id', $this->getUser()->getMemberId()), $request->getParameter('page', 1));
 
+    if (!$this->pager->getNbResults()) {
+      return sfView::ERROR;
+    }
+
     return sfView::SUCCESS;
   }
 

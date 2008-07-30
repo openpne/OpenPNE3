@@ -87,6 +87,10 @@ class communityActions extends sfActions
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
 
+    if (!$this->pager->getNbResults()) {
+      return sfView::ERROR;
+    }
+
     return sfView::SUCCESS;
   }
 
@@ -98,6 +102,10 @@ class communityActions extends sfActions
   public function executeJoinlist($request)
   {
     $this->pager = CommunityPeer::getJoinCommunityListPager($request->getParameter('member_id', $this->getUser()->getMemberId()), $request->getParameter('page', 1));
+
+    if (!$this->pager->getNbResults()) {
+      return sfView::ERROR;
+    }
 
     return sfView::SUCCESS;
   }
