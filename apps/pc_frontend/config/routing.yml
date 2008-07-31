@@ -1,5 +1,5 @@
 # openpne rules
-home:
+homepage:
   url:   /
   param: { module: member, action: home }
 
