@@ -97,6 +97,7 @@ class memberActions extends sfActions
   {
     $id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
     $this->member = MemberPeer::retrieveByPk($id);
+    $this->forward404Unless($this->member, 'Undefined member.');
 
     return sfView::SUCCESS;
   }

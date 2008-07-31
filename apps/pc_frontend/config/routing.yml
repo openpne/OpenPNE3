@@ -7,6 +7,16 @@ member_index:
   url:   /member
   param: { module: member, action: home }
 
+member_profile:
+  url:   /member/:id
+  param: { module: member, action: profile }
+  requirements: { id: \d+ }
+
+community_home:
+  url:   /community/:id
+  param: { module: community, action: home }
+  requirements: { id: \d+ }
+
 # default rules
 default_symfony:
   url:   /symfony/:action/*

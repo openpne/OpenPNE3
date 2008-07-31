@@ -26,7 +26,7 @@ class communityActions extends sfActions
   */
   public function executeIndex($request)
   {
-    $this->forward('default', 'module');
+    $this->forward404();
   }
 
  /**
@@ -61,6 +61,7 @@ class communityActions extends sfActions
   public function executeHome($request)
   {
     $this->community = CommunityPeer::retrieveByPk($this->id);
+    $this->forward404Unless($this->community, 'Undefined community.');
   }
 
  /**
