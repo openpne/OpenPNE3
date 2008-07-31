@@ -2,6 +2,9 @@ prod:
   .settings:
     no_script_name:         on
     logging_enabled:        off
+  .actions:
+    error_404_action:       error
+    module_disabled_action: error
 
 dev:
   .settings:
