@@ -1,14 +1,20 @@
 <?php
 
 /**
- * sfOpenPNEAuthContainer_LoginID will handle credential for OpenPNE by LoginID.
+ * sfOpenPNEAuthContainer_LoginID will handle credential for LoginID.
  *
- * @package    symfony
+ * @package    OpenPNE
  * @subpackage user
  * @author     Kousuke Ebihara <ebihara@tejimaya.net>
  */
 class sfOpenPNEAuthContainer_LoginID extends sfOpenPNEAuthContainer
 {
+  /**
+   * Fetches data from storage container.
+   *
+   * @param  sfForm $form
+   * @return int    the member id
+   */
   public function fetchData($form)
   {
     $login_id = $form->getValue('login_id');
@@ -27,11 +33,21 @@ class sfOpenPNEAuthContainer_LoginID extends sfOpenPNEAuthContainer
     return false;
   }
 
+  /**
+   * Returns true if the current state is a beginning of register.
+   *
+   * @return bool returns true if the current state is a beginning of register, false otherwise
+   */
   public function isRegisterBegin($member_id = null)
   {
     return true;
   }
 
+  /**
+   * Returns true if the current state is a end of register.
+   *
+   * @return bool returns true if the current state is a end of register, false otherwise
+   */
   public function isRegisterFinish($member_id = null)
   {
     $data = MemberPeer::retrieveByPk((int)$member_id);
@@ -47,6 +63,13 @@ class sfOpenPNEAuthContainer_LoginID extends sfOpenPNEAuthContainer
     }
   }
 
+  /**
+   * Registers data to storage container.
+   *
+   * @param  int    $memberId
+   * @param  sfForm $form
+   * @return bool   true if the data has already been saved, false otherwise
+   */
   public function registerData($memberId, $form)
   {
     if (!$memberId) {

@@ -3,7 +3,7 @@
 /**
  * sfOpenPNESecurityUser will handle credential for OpenPNE.
  *
- * @package    symfony
+ * @package    OpenPNE
  * @subpackage user
  * @author     Kousuke Ebihara <ebihara@tejimaya.net>
  */
@@ -13,7 +13,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   protected $authForm = null;
 
   /**
-   * Initializes this sfOpenPNESecurityUser.
+   * Initializes the current user.
    *
    * @see sfBasicSecurityUser
    */
@@ -32,7 +32,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     $formClass = 'sfOpenPNEAuthForm_' . $authMode;
     $this->authForm = new $formClass();
 
-    $this->initializeCredential();
+    $this->initializeCredentials();
   }
 
   public function getAuthContainer()
@@ -60,6 +60,12 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     return $this->getAuthContainer()->getRegisterEndAction();
   }
 
+ /**
+  * Login
+  *
+  * @param  sfForm $form
+  * @return bool   returns true if the current user is authenticated, false otherwise
+  */
   public function login($form)
   {
     $member_id = $this->getAuthContainer()->fetchData($form);
@@ -73,6 +79,9 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     return $this->isAuthenticated();
   }
 
+ /**
+  * Logout
+  */
   public function logout()
   {
     $this->setAuthenticated(false);
@@ -80,9 +89,15 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     $this->clearCredentials();
   }
 
-  public function register($form = null, $memberId = 0)
+ /**
+  * Registers the current user with OpenPNE
+  *
+  * @param  sfForm $form
+  * @return bool   returns true if the current user is authenticated, false otherwise
+  */
+  public function register($form = null)
   {
-    $result = $this->getAuthContainer()->register($form, $memberId);
+    $result = $this->getAuthContainer()->register($form);
     if ($result) {
       $this->setAuthenticated(true);
       $this->setAttribute('member_id', $result, 'sfOpenPNESecurityUser');
@@ -92,7 +107,10 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     return false;
   }
 
-  public function initializeCredential()
+ /**
+  * Initializes all credentials associated with this user.
+  */
+  public function initializeCredentials()
   {
     $memberId = $this->getMemberId();
     $isRegisterFinish = $this->getAuthContainer()->isRegisterFinish($memberId);

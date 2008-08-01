@@ -3,8 +3,8 @@
 /**
  * sfOpenPNEAuthForm represents a form to login.
  *
- * @package    symfony
- * @subpackage user
+ * @package    OpenPNE
+ * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.net>
  */
 abstract class sfOpenPNEAuthForm extends sfForm
@@ -12,11 +12,19 @@ abstract class sfOpenPNEAuthForm extends sfForm
   public $memberForm;
   public $profileForm;
 
+ /**
+  * Configures the current form.
+  */
   public function configure()
   {
     $this->widgetSchema->setNameFormat('auth[%s]');
   }
 
+ /**
+  * Returns the string representation of the form(s).
+  *
+  * @return string HTML for the form(s).
+  */
   public function __toString()
   {
     $result = '';
@@ -34,6 +42,9 @@ abstract class sfOpenPNEAuthForm extends sfForm
     return $result;
   }
 
+ /**
+  * Adds fields to the form for registering.
+  */
   public function setForRegisterWidgets()
   {
     $this->memberForm = new MemberForm();
@@ -41,6 +52,11 @@ abstract class sfOpenPNEAuthForm extends sfForm
     $this->profileForm->setRegisterWidgets();
   }
 
+ /**
+  * Binds the form with request parameters.
+  *
+  * @param sfRequest $request
+  */
   public function bindAll($request)
   {
     if ($this->memberForm) {
@@ -54,6 +70,11 @@ abstract class sfOpenPNEAuthForm extends sfForm
       $this->bind($request->getParameter('auth'));
   }
 
+ /**
+  * Returns true if the form is valid.
+  *
+  * @return bool true if form is valid, false otherwise.
+  */
   public function isValidAll()
   {
     if ($this->memberForm && !$this->memberForm->isValid()) {
