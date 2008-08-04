@@ -19,7 +19,7 @@ test:
     param:
       session_path: %SF_TEST_CACHE_DIR%/sessions
 
-#all:
+all:
 #  controller:
 #    class: sfFrontWebController
 #
@@ -49,10 +49,10 @@ test:
 #      use_flash:       true
 #      default_culture: %SF_DEFAULT_CULTURE%
 #
-#  storage:
-#    class: sfSessionStorage
-#    param:
-#      session_name: symfony
+  storage:
+    class: sfSessionStorage
+    param:
+      session_name: OpenPNE_pc_backend
 #
 #  view_cache:
 #    class: sfFileCache
