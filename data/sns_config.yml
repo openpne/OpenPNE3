@@ -1,5 +1,6 @@
 sns_name:
   caption:  "SNS名"
   type:     "input"
+  default:  "MySNS"
   option:
     required: true

@@ -32,6 +32,11 @@ class OpenPNEConfig extends sfConfig
       return $config->getValue();
     }
 
+    $yaml = self::loadConfigYaml();
+    if (isset($yaml[$name]['default'])) {
+      return $yaml[$name]['default'];
+    }
+
     return $default;
   }
 
