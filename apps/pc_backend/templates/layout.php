@@ -15,6 +15,7 @@
 <?php if ($sf_user->isAuthenticated()) : ?>
 <ul>
 <li><?php echo link_to('SNS設定', 'sns/config'); ?></li>
+<li><?php echo link_to('プロフィール項目設定', 'profile/config'); ?></li>
 </ul>
 <?php endif; ?>
 

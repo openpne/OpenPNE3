@@ -112,7 +112,7 @@ class memberActions extends sfActions
     $this->memberForm = new MemberForm($this->getUser()->getMember());
 
     $profiles = $this->getUser()->getMember()->getProfiles();
-    $this->profileForm = new ProfileForm($profiles);
+    $this->profileForm = new MemberProfileForm($profiles);
     $this->profileForm->setConfigWidgets();
 
     if ($request->isMethod('post')) {

@@ -48,7 +48,7 @@ abstract class sfOpenPNEAuthForm extends sfForm
   public function setForRegisterWidgets()
   {
     $this->memberForm = new MemberForm();
-    $this->profileForm = new ProfileForm();
+    $this->profileForm = new MemberProfileForm();
     $this->profileForm->setRegisterWidgets();
   }
 
