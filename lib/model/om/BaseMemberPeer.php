@@ -181,7 +181,7 @@ abstract class BaseMemberPeer {
 		$results = array();
 	
 				$cls = MemberPeer::getOMClass();
-		$cls = Propel::import($cls);
+		$cls = sfPropel::import($cls);
 				while($rs->next()) {
 		
 			$obj = new $cls();

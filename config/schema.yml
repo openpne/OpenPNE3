@@ -57,3 +57,8 @@ propel:
     community_id: { type: integer, required: true, foreignTable: community, foreignReference: id, OnDelete: cascade }
     member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
     position: { type: varchar(32), index: true }
+
+  admin_user:
+    id: ~
+    username: { type: varchar(64), index: unique, required: true }
+    password: { type: varchar(40), required: true }

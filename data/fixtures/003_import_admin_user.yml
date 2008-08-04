@@ -1,0 +1,5 @@
+AdminUser:
+  first_admin:
+    id: ~
+    username: "admin"
+    password: <?php echo md5('password') . "\n"; ?>

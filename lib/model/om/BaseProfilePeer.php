@@ -221,7 +221,7 @@ abstract class BaseProfilePeer {
 		$results = array();
 	
 				$cls = ProfilePeer::getOMClass();
-		$cls = Propel::import($cls);
+		$cls = sfPropel::import($cls);
 				while($rs->next()) {
 		
 			$obj = new $cls();
@@ -260,14 +260,14 @@ abstract class BaseProfilePeer {
 
       $omClass = ProfilePeer::getOMClass();
 
-      $cls = Propel::import($omClass);
+      $cls = sfPropel::import($omClass);
       $obj1 = new $cls();
       $obj1->hydrate($rs);
       $obj1->setCulture($culture);
 
       $omClass = ProfileI18nPeer::getOMClass($rs, $startcol);
 
-      $cls = Propel::import($omClass);
+      $cls = sfPropel::import($omClass);
       $obj2 = new $cls();
       $obj2->hydrate($rs, $startcol);
 

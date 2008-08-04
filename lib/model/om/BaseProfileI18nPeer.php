@@ -176,7 +176,7 @@ abstract class BaseProfileI18nPeer {
 		$results = array();
 	
 				$cls = ProfileI18nPeer::getOMClass();
-		$cls = Propel::import($cls);
+		$cls = sfPropel::import($cls);
 				while($rs->next()) {
 		
 			$obj = new $cls();
@@ -236,13 +236,13 @@ abstract class BaseProfileI18nPeer {
 
 			$omClass = ProfileI18nPeer::getOMClass();
 
-			$cls = Propel::import($omClass);
+			$cls = sfPropel::import($omClass);
 			$obj1 = new $cls();
 			$obj1->hydrate($rs);
 
 			$omClass = ProfilePeer::getOMClass();
 
-			$cls = Propel::import($omClass);
+			$cls = sfPropel::import($omClass);
 			$obj2 = new $cls();
 			$obj2->hydrate($rs, $startcol);
 
@@ -315,7 +315,7 @@ abstract class BaseProfileI18nPeer {
 			$omClass = ProfileI18nPeer::getOMClass();
 
 
-			$cls = Propel::import($omClass);
+			$cls = sfPropel::import($omClass);
 			$obj1 = new $cls();
 			$obj1->hydrate($rs);
 
@@ -324,7 +324,7 @@ abstract class BaseProfileI18nPeer {
 			$omClass = ProfilePeer::getOMClass();
 
 
-			$cls = Propel::import($omClass);
+			$cls = sfPropel::import($omClass);
 			$obj2 = new $cls();
 			$obj2->hydrate($rs, $startcol2);
 

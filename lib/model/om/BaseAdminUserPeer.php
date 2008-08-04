@@ -1,29 +1,32 @@
 <?php
 
 
-abstract class BaseCommunityPeer {
+abstract class BaseAdminUserPeer {
 
 	
 	const DATABASE_NAME = 'propel';
 
 	
-	const TABLE_NAME = 'community';
+	const TABLE_NAME = 'admin_user';
 
 	
-	const CLASS_DEFAULT = 'lib.model.Community';
+	const CLASS_DEFAULT = 'lib.model.AdminUser';
 
 	
-	const NUM_COLUMNS = 2;
+	const NUM_COLUMNS = 3;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 
 	
-	const ID = 'community.ID';
+	const ID = 'admin_user.ID';
 
 	
-	const NAME = 'community.NAME';
+	const USERNAME = 'admin_user.USERNAME';
+
+	
+	const PASSWORD = 'admin_user.PASSWORD';
 
 	
 	private static $phpNameMap = null;
@@ -31,30 +34,30 @@ abstract class BaseCommunityPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', ),
-		BasePeer::TYPE_COLNAME => array (CommunityPeer::ID, CommunityPeer::NAME, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'name', ),
-		BasePeer::TYPE_NUM => array (0, 1, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Username', 'Password', ),
+		BasePeer::TYPE_COLNAME => array (AdminUserPeer::ID, AdminUserPeer::USERNAME, AdminUserPeer::PASSWORD, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'username', 'password', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, ),
-		BasePeer::TYPE_COLNAME => array (CommunityPeer::ID => 0, CommunityPeer::NAME => 1, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, ),
-		BasePeer::TYPE_NUM => array (0, 1, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Username' => 1, 'Password' => 2, ),
+		BasePeer::TYPE_COLNAME => array (AdminUserPeer::ID => 0, AdminUserPeer::USERNAME => 1, AdminUserPeer::PASSWORD => 2, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'username' => 1, 'password' => 2, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	
 	public static function getMapBuilder()
 	{
-		return BasePeer::getMapBuilder('lib.model.map.CommunityMapBuilder');
+		return BasePeer::getMapBuilder('lib.model.map.AdminUserMapBuilder');
 	}
 	
 	public static function getPhpNameMap()
 	{
 		if (self::$phpNameMap === null) {
-			$map = CommunityPeer::getTableMap();
+			$map = AdminUserPeer::getTableMap();
 			$columns = $map->getColumns();
 			$nameMap = array();
 			foreach ($columns as $column) {
@@ -88,21 +91,23 @@ abstract class BaseCommunityPeer {
 	
 	public static function alias($alias, $column)
 	{
-		return str_replace(CommunityPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(AdminUserPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(CommunityPeer::ID);
+		$criteria->addSelectColumn(AdminUserPeer::ID);
 
-		$criteria->addSelectColumn(CommunityPeer::NAME);
+		$criteria->addSelectColumn(AdminUserPeer::USERNAME);
+
+		$criteria->addSelectColumn(AdminUserPeer::PASSWORD);
 
 	}
 
-	const COUNT = 'COUNT(community.ID)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT community.ID)';
+	const COUNT = 'COUNT(admin_user.ID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT admin_user.ID)';
 
 	
 	public static function doCount(Criteria $criteria, $distinct = false, $con = null)
@@ -111,9 +116,9 @@ abstract class BaseCommunityPeer {
 
 				$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(CommunityPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(AdminUserPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(CommunityPeer::COUNT);
+			$criteria->addSelectColumn(AdminUserPeer::COUNT);
 		}
 
 				foreach($criteria->getGroupByColumns() as $column)
@@ -121,7 +126,7 @@ abstract class BaseCommunityPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$rs = CommunityPeer::doSelectRS($criteria, $con);
+		$rs = AdminUserPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -133,7 +138,7 @@ abstract class BaseCommunityPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = CommunityPeer::doSelect($critcopy, $con);
+		$objects = AdminUserPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -142,7 +147,7 @@ abstract class BaseCommunityPeer {
 	
 	public static function doSelect(Criteria $criteria, $con = null)
 	{
-		return CommunityPeer::populateObjects(CommunityPeer::doSelectRS($criteria, $con));
+		return AdminUserPeer::populateObjects(AdminUserPeer::doSelectRS($criteria, $con));
 	}
 	
 	public static function doSelectRS(Criteria $criteria, $con = null)
@@ -153,7 +158,7 @@ abstract class BaseCommunityPeer {
 
 		if (!$criteria->getSelectColumns()) {
 			$criteria = clone $criteria;
-			CommunityPeer::addSelectColumns($criteria);
+			AdminUserPeer::addSelectColumns($criteria);
 		}
 
 				$criteria->setDbName(self::DATABASE_NAME);
@@ -165,7 +170,7 @@ abstract class BaseCommunityPeer {
 	{
 		$results = array();
 	
-				$cls = CommunityPeer::getOMClass();
+				$cls = AdminUserPeer::getOMClass();
 		$cls = sfPropel::import($cls);
 				while($rs->next()) {
 		
@@ -179,7 +184,7 @@ abstract class BaseCommunityPeer {
 
   static public function getUniqueColumnNames()
   {
-    return array(array('name'));
+    return array(array('username'));
   }
 	
 	public static function getTableMap()
@@ -190,7 +195,7 @@ abstract class BaseCommunityPeer {
 	
 	public static function getOMClass()
 	{
-		return CommunityPeer::CLASS_DEFAULT;
+		return AdminUserPeer::CLASS_DEFAULT;
 	}
 
 	
@@ -204,7 +209,7 @@ abstract class BaseCommunityPeer {
 			$criteria = clone $values; 		} else {
 			$criteria = $values->buildCriteria(); 		}
 
-		$criteria->remove(CommunityPeer::ID); 
+		$criteria->remove(AdminUserPeer::ID); 
 
 				$criteria->setDbName(self::DATABASE_NAME);
 
@@ -231,8 +236,8 @@ abstract class BaseCommunityPeer {
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; 
-			$comparison = $criteria->getComparison(CommunityPeer::ID);
-			$selectCriteria->add(CommunityPeer::ID, $criteria->remove(CommunityPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(AdminUserPeer::ID);
+			$selectCriteria->add(AdminUserPeer::ID, $criteria->remove(AdminUserPeer::ID), $comparison);
 
 		} else { 			$criteria = $values->buildCriteria(); 			$selectCriteria = $values->buildPkeyCriteria(); 		}
 
@@ -249,7 +254,7 @@ abstract class BaseCommunityPeer {
 		}
 		$affectedRows = 0; 		try {
 									$con->begin();
-			$affectedRows += BasePeer::doDeleteAll(CommunityPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(AdminUserPeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -262,16 +267,16 @@ abstract class BaseCommunityPeer {
 	 public static function doDelete($values, $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(CommunityPeer::DATABASE_NAME);
+			$con = Propel::getConnection(AdminUserPeer::DATABASE_NAME);
 		}
 
 		if ($values instanceof Criteria) {
-			$criteria = clone $values; 		} elseif ($values instanceof Community) {
+			$criteria = clone $values; 		} elseif ($values instanceof AdminUser) {
 
 			$criteria = $values->buildPkeyCriteria();
 		} else {
 						$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(CommunityPeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(AdminUserPeer::ID, (array) $values, Criteria::IN);
 		}
 
 				$criteria->setDbName(self::DATABASE_NAME);
@@ -290,13 +295,13 @@ abstract class BaseCommunityPeer {
 	}
 
 	
-	public static function doValidate(Community $obj, $cols = null)
+	public static function doValidate(AdminUser $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(CommunityPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(CommunityPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(AdminUserPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(AdminUserPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -312,11 +317,11 @@ abstract class BaseCommunityPeer {
 
 		}
 
-		$res =  BasePeer::doValidate(CommunityPeer::DATABASE_NAME, CommunityPeer::TABLE_NAME, $columns);
+		$res =  BasePeer::doValidate(AdminUserPeer::DATABASE_NAME, AdminUserPeer::TABLE_NAME, $columns);
     if ($res !== true) {
         $request = sfContext::getInstance()->getRequest();
         foreach ($res as $failed) {
-            $col = CommunityPeer::translateFieldname($failed->getColumn(), BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
+            $col = AdminUserPeer::translateFieldname($failed->getColumn(), BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
             $request->setError($col, $failed->getMessage());
         }
     }
@@ -331,12 +336,12 @@ abstract class BaseCommunityPeer {
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
 
-		$criteria = new Criteria(CommunityPeer::DATABASE_NAME);
+		$criteria = new Criteria(AdminUserPeer::DATABASE_NAME);
 
-		$criteria->add(CommunityPeer::ID, $pk);
+		$criteria->add(AdminUserPeer::ID, $pk);
 
 
-		$v = CommunityPeer::doSelect($criteria, $con);
+		$v = AdminUserPeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -353,8 +358,8 @@ abstract class BaseCommunityPeer {
 			$objs = array();
 		} else {
 			$criteria = new Criteria();
-			$criteria->add(CommunityPeer::ID, $pks, Criteria::IN);
-			$objs = CommunityPeer::doSelect($criteria, $con);
+			$criteria->add(AdminUserPeer::ID, $pks, Criteria::IN);
+			$objs = AdminUserPeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
@@ -362,10 +367,10 @@ abstract class BaseCommunityPeer {
 } 
 if (Propel::isInit()) {
 			try {
-		BaseCommunityPeer::getMapBuilder();
+		BaseAdminUserPeer::getMapBuilder();
 	} catch (Exception $e) {
 		Propel::log('Could not initialize Peer: ' . $e->getMessage(), Propel::LOG_ERR);
 	}
 } else {
-			Propel::registerMapBuilder('lib.model.map.CommunityMapBuilder');
+			Propel::registerMapBuilder('lib.model.map.AdminUserMapBuilder');
 }

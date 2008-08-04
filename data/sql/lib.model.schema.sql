@@ -196,5 +196,21 @@ CREATE TABLE `community_member`
 		REFERENCES `member` (`id`)
 )Type=InnoDB;
 
+#-----------------------------------------------------------------------------
+#-- admin_user
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `admin_user`;
+
+
+CREATE TABLE `admin_user`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`username` VARCHAR(64)  NOT NULL,
+	`password` VARCHAR(40)  NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `admin_user_U_1` (`username`)
+)Type=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;
