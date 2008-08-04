@@ -12,6 +12,12 @@
 </head>
 <body>
 
+<?php if ($sf_user->isAuthenticated()) : ?>
+<ul>
+<li><?php echo link_to('SNS設定', 'sns/config'); ?></li>
+</ul>
+<?php endif; ?>
+
 <?php echo $sf_content ?>
 
 </body>

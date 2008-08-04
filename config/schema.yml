@@ -62,3 +62,8 @@ propel:
     id: ~
     username: { type: varchar(64), index: unique, required: true }
     password: { type: varchar(40), required: true }
+
+  sns_config:
+    id: ~
+    name: { type: varchar(64), index: unique, required: true }
+    value: { type: longvarchar }

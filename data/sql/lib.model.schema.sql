@@ -212,5 +212,21 @@ CREATE TABLE `admin_user`
 	UNIQUE KEY `admin_user_U_1` (`username`)
 )Type=InnoDB;
 
+#-----------------------------------------------------------------------------
+#-- sns_config
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sns_config`;
+
+
+CREATE TABLE `sns_config`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(64)  NOT NULL,
+	`value` TEXT,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `sns_config_U_1` (`name`)
+)Type=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;
