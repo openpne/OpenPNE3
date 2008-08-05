@@ -4,7 +4,7 @@
 <p><?php echo link_to('プロフィール項目登録', 'profile/edit') ?></p>
 <table>
 <thead><tr>
-<th>操作</th>
+<th colspan="2">操作</th>
 <th>ID</th>
 <th>項目名</th>
 <th>識別名</th>
@@ -20,6 +20,7 @@
 <?php foreach ($profiles as $value): ?>
 <tr>
 <td><?php echo link_to('変更', 'profile/edit?id=' . $value->getId()) ?></td>
+<td><?php echo link_to('削除', 'profile/delete?id=' . $value->getId()) ?></td>
 <td><?php echo $value->getId() ?></td>
 <td><?php echo $value->getCaption() ?></td>
 <td><?php echo $value->getName() ?></td>

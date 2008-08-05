@@ -38,4 +38,20 @@ class profileActions extends sfActions
       }
     }
   }
+
+ /**
+  * Executes delete action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeDelete($request)
+  {
+    $this->profile = ProfilePeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($this->profile);
+
+    if ($request->isMethod('post')) {
+      $this->profile->delete();
+      $this->redirect('profile/list');
+    }
+  }
 }
