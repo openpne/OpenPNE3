@@ -11,5 +11,14 @@ class ProfileI18nForm extends BaseProfileI18nForm
 {
   public function configure()
   {
+    $this->setWidgets(array(
+      'caption' => new sfWidgetFormInput(),
+      'info' => new sfWidgetFormInput(),
+    ));
+
+    $this->widgetSchema->setLabels(array(
+      'caption' => '項目名',
+      'info' => '説明',
+    ));
   }
 }

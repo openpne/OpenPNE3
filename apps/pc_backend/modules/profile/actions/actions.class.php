@@ -19,4 +19,23 @@ class profileActions extends sfActions
   {
     $this->profiles = ProfilePeer::doSelect(new Criteria());
   }
+
+ /**
+  * Executes edit action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeEdit($request)
+  {
+    $this->profile = ProfilePeer::retrieveByPk($request->getParameter('id'));
+    $this->form = new ProfileForm();
+
+    if ($request->isMethod('post')) {
+      $this->form->bind($request->getParameter('profile'));
+      if ($this->form->isValid()) {
+        $this->form->save();
+        $this->redirect('profile/list');
+      }
+    }
+  }
 }

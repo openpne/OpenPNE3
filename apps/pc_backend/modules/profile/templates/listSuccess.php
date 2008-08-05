@@ -1,6 +1,7 @@
 <h2>プロフィール項目設定</h2>
 
 <h3>プロフィール項目一覧</h3>
+<p><?php echo link_to('プロフィール項目登録', 'profile/edit') ?></p>
 <table>
 <thead><tr>
 <th>ID</th>
