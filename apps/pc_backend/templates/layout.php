@@ -12,10 +12,12 @@
 </head>
 <body>
 
+<h1><?php echo OpenPNEConfig::get('sns_name') ?>管理画面</h1>
+
 <?php if ($sf_user->isAuthenticated()) : ?>
 <ul>
 <li><?php echo link_to('SNS設定', 'sns/config'); ?></li>
-<li><?php echo link_to('プロフィール項目設定', 'profile/config'); ?></li>
+<li><?php echo link_to('プロフィール項目設定', 'profile/list'); ?></li>
 </ul>
 <?php endif; ?>
 
