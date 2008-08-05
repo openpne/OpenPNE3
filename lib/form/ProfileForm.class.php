@@ -56,7 +56,7 @@ class ProfileForm extends BaseProfileForm
       'sort_order' => '並び順',
     ));
 
-    $this->setDefaults(array(
+    $this->setDefaults($this->getDefaults() + array(
       'is_unique' => '0',
       'is_disp_regist' => '1',
       'is_disp_config' => '1',

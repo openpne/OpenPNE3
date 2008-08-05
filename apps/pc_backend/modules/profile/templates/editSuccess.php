@@ -1,5 +1,10 @@
 <h2>プロフィール項目追加</h2>
+<?php if ($form->isNew()): ?>
 <form action="<?php echo url_for('profile/edit') ?>" method="post">
+<?php else : ?>
+<form action="<?php echo url_for('profile/edit?id=' . $profile->getId()) ?>" method="post">
+<?php echo $form['id']->render() ?>
+<?php endif; ?>
 <table>
 
 <tr><th colspan="2">ja_JP 用設定</th></tr>

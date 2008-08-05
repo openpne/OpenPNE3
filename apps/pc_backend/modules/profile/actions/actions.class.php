@@ -28,7 +28,7 @@ class profileActions extends sfActions
   public function executeEdit($request)
   {
     $this->profile = ProfilePeer::retrieveByPk($request->getParameter('id'));
-    $this->form = new ProfileForm();
+    $this->form = new ProfileForm($this->profile);
 
     if ($request->isMethod('post')) {
       $this->form->bind($request->getParameter('profile'));
