@@ -44,14 +44,25 @@
 <table>
 <thead><tr>
 <th>ID</th>
-<th>項目名</th>
+<th>項目名(ja_JP)</th>
 <th>並び順（昇順）</th>
+<th>操作</th>
 </tr></thead>
 <?php foreach ($value->getProfileOptions() as $option) : ?>
+<form action="<?php echo url_for('profile/editOption?id=' . $option->getId()) ?>" method="post">
 <tr>
 <td><?php echo $option->getId() ?></td>
-<td><?php echo $option->getValue() ?></td>
-<td><?php echo $option->getSortOrder() ?></td>
+<td>
+<?php echo $option_form[$value->getId()][$option->getId()]['ja_JP']['value']->render() ?>
+</td>
+<td>
+<?php echo $option_form[$value->getId()][$option->getId()]['sort_order']->render() ?>
+</td>
+<td>
+<?php echo $option_form[$value->getId()][$option->getId()]['id']->render() ?>
+<input type="submit" value="変更" />
+</td>
+</form>
 </tr>
 <?php endforeach; ?>
 </table>

@@ -18,6 +18,13 @@ class profileActions extends sfActions
   public function executeList($request)
   {
     $this->profiles = ProfilePeer::doSelect(new Criteria());
+    $this->option_form = array();
+    foreach ($this->profiles as $value) {
+      $this->option_form[$value->getId()] = array();
+      foreach ($value->getProfileOptions() as $option) {
+        $this->option_form[$value->getId()][$option->getId()] = new ProfileOptionForm(ProfileOptionPeer::retrieveByPk($option->getId()));
+      }
+    }
   }
 
  /**
@@ -37,6 +44,25 @@ class profileActions extends sfActions
         $this->redirect('profile/list');
       }
     }
+  }
+
+ /**
+  * Executes editOption action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeEditOption($request)
+  {
+    $this->profileOption = ProfileOptionPeer::retrieveByPk($request->getParameter('id'));
+    $this->form = new ProfileOptionForm($this->profileOption);
+
+    if ($request->isMethod('post')) {
+      $this->form->bind($request->getParameter('profile_option'));
+      if ($this->form->isValid()) {
+        $this->form->save();
+      }
+    }
+    $this->redirect('profile/list');
   }
 
  /**

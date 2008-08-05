@@ -11,5 +11,8 @@ class ProfileOptionI18nForm extends BaseProfileOptionI18nForm
 {
   public function configure()
   {
+    $this->setWidgets(array(
+      'value' => new sfWidgetFormInput(),
+    ));
   }
 }

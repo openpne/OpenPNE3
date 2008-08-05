@@ -11,5 +11,23 @@ class ProfileOptionForm extends BaseProfileOptionForm
 {
   public function configure()
   {
+    $options = array();
+    if ($this->object && $this->object->getId()) {
+      $options['id_format'] = '%s' . $this->object->getId();
+    }
+
+    $this->setWidgets(array(
+      'id'         => new sfWidgetFormInputHidden(),
+      'sort_order' => new sfWidgetFormInput($options),
+    ));
+
+    $this->setValidators(array(
+      'id'         => new sfValidatorPropelChoice(array('model' => 'ProfileOption', 'column' => 'id', 'required' => false)),
+      'sort_order' => new sfValidatorInteger(array('required' => false)),
+    ));
+
+    $this->widgetSchema->setNameFormat('profile_option[%s]');
+
+    $this->embedI18n(array('ja_JP'));
   }
 }
