@@ -80,4 +80,20 @@ class profileActions extends sfActions
       $this->redirect('profile/list');
     }
   }
+
+ /**
+  * Executes deleteOption action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeDeleteOption($request)
+  {
+    $this->profileOption = ProfileOptionPeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($this->profileOption);
+
+    if ($request->isMethod('post')) {
+      $this->profileOption->delete();
+    }
+    $this->redirect('profile/list');
+  }
 }

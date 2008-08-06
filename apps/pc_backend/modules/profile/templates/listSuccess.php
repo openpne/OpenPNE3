@@ -46,7 +46,7 @@
 <th>ID</th>
 <th>項目名(ja_JP)</th>
 <th>並び順（昇順）</th>
-<th>操作</th>
+<th colspan="2">操作</th>
 </tr></thead>
 <?php foreach ($value->getProfileOptions() as $option) : ?>
 <form action="<?php echo url_for('profile/editOption?id=' . $option->getId()) ?>" method="post">
@@ -63,6 +63,11 @@
 <input type="submit" value="変更" />
 </td>
 </form>
+<td>
+<form action="<?php echo url_for('profile/deleteOption?id=' . $option->getId()) ?>" method="post">
+<input type="submit" value="削除" />
+</form>
+</td>
 </tr>
 <?php endforeach; ?>
 </table>
