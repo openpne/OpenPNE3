@@ -18,11 +18,13 @@ class ProfileOptionForm extends BaseProfileOptionForm
 
     $this->setWidgets(array(
       'id'         => new sfWidgetFormInputHidden(),
+      'profile_id'         => new sfWidgetFormInputHidden(),
       'sort_order' => new sfWidgetFormInput($options),
     ));
 
     $this->setValidators(array(
       'id'         => new sfValidatorPropelChoice(array('model' => 'ProfileOption', 'column' => 'id', 'required' => false)),
+      'profile_id'         => new sfValidatorPropelChoice(array('model' => 'Profile', 'column' => 'id', 'required' => true)),
       'sort_order' => new sfValidatorInteger(array('required' => false)),
     ));
 

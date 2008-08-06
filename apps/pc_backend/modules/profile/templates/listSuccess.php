@@ -38,7 +38,7 @@
 
 <h3>プロフィール選択肢一覧</h3>
 <?php foreach ($profiles as $value): ?>
-<?php if ($value->countProfileOptions()) : ?>
+<?php if ($value->getFormType() == 'radio' || $value->getFormType() == 'checkbox' || $value->getFormType() == 'select') : ?>
 
 <h4><?php echo $value->getCaption() ?></h4>
 <table>
@@ -48,26 +48,37 @@
 <th>並び順（昇順）</th>
 <th colspan="2">操作</th>
 </tr></thead>
-<?php foreach ($value->getProfileOptions() as $option) : ?>
-<form action="<?php echo url_for('profile/editOption?id=' . $option->getId()) ?>" method="post">
+<?php foreach ($option_form[$value->getId()] as $form) : ?>
+<form action="<?php echo url_for('profile/editOption?id=' . $form->getObject()->getId()) ?>" method="post">
 <tr>
-<td><?php echo $option->getId() ?></td>
+<td><?php echo ($form->getObject()->isNew() ? '-' : $form->getObject()->getId()) ?></td>
 <td>
-<?php echo $option_form[$value->getId()][$option->getId()]['ja_JP']['value']->render() ?>
+<?php echo $form['ja_JP']['value']->render() ?>
 </td>
 <td>
-<?php echo $option_form[$value->getId()][$option->getId()]['sort_order']->render() ?>
+<?php echo $form['sort_order']->render() ?>
 </td>
+<?php if ($form->getObject()->isNew()) : ?>
+<td colspan="2">
+<?php echo $form['profile_id']->render() ?>
+<input type="submit" value="項目追加" />
+</td>
+</form>
+<?php else : ?>
 <td>
-<?php echo $option_form[$value->getId()][$option->getId()]['id']->render() ?>
+<?php echo $form['id']->render() ?>
+<?php echo $form['profile_id']->render() ?>
 <input type="submit" value="変更" />
 </td>
 </form>
 <td>
-<form action="<?php echo url_for('profile/deleteOption?id=' . $option->getId()) ?>" method="post">
+<?php echo $form['id']->render() ?>
+<?php echo $form['profile_id']->render() ?>
+<form action="<?php echo url_for('profile/deleteOption?id=' . $form->getObject()->getId()) ?>" method="post">
 <input type="submit" value="削除" />
 </form>
 </td>
+<?php endif; ?>
 </tr>
 <?php endforeach; ?>
 </table>

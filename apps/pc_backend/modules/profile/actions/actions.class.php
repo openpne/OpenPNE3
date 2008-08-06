@@ -24,6 +24,9 @@ class profileActions extends sfActions
       foreach ($value->getProfileOptions() as $option) {
         $this->option_form[$value->getId()][$option->getId()] = new ProfileOptionForm(ProfileOptionPeer::retrieveByPk($option->getId()));
       }
+      $newProfileOption = new ProfileOption();
+      $newProfileOption->setProfileId($value->getId());
+      $this->option_form[$value->getId()][] = new ProfileOptionForm($newProfileOption);
     }
   }
 
