@@ -8,7 +8,7 @@
  * @author     Kousuke Ebihara <ebihara@tejimaya.net>
  * @version    SVN: $Id: sfPropelFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
  */
-class MemberProfileForm extends sfForm
+class MemberProfileForm extends OpenPNEFormAutoGenerate
 {
   public function __construct($profileMember = array(), $options = array(), $CSRFSecret = null)
   {
@@ -76,12 +76,12 @@ class MemberProfileForm extends sfForm
   private function setProfileWidgets($profiles)
   {
     foreach ($profiles as $profile) {
-      $this->widgetSchema[$profile->getName()] = $this->generateWidget($profile);
-      $this->validatorSchema[$profile->getName()] = $this->generateValidator($profile);
+      $this->widgetSchema[$profile->getName()] = $this->_generateWidget($profile);
+      $this->validatorSchema[$profile->getName()] = $this->_generateValidator($profile);
     }
   }
 
-  private function generateWidget($profile)
+  private function _generateWidget($profile)
   {
     $option = array();
     if ($profile->getCaption()) {
@@ -114,7 +114,7 @@ class MemberProfileForm extends sfForm
     return $obj;
   }
 
-  private function generateValidator($profile)
+  private function _generateValidator($profile)
   {
     $formType = $profile->getFormType();
     $valueType = $profile->getValueType();
