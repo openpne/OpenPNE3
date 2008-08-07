@@ -20,7 +20,7 @@ class SnsConfigForm extends sfForm
       $widgets[$key] = $this->generateWidget($value);
       $validators[$key] = $this->generateValidator($value);
       $labels[$key] = $value['caption'];
-      $defaults[$key] = OpenPNEConfig::get($key);
+      $defaults[$key] = OpenPNEConfig::get($key, 'sns', SnsConfigPeer::retrieveByName($name)->getValue());
     }
 
     $this->setWidgets($widgets);

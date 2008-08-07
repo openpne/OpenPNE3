@@ -67,3 +67,9 @@ propel:
     id: ~
     name: { type: varchar(64), index: unique, required: true }
     value: { type: longvarchar }
+
+  member_config:
+    id: ~
+    member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
+    name: { type: varchar(64), index: unique, required: true }
+    value: { type: longvarchar }

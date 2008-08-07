@@ -52,6 +52,12 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 	protected $lastCommunityMemberCriteria = null;
 
 	
+	protected $collMemberConfigs;
+
+	
+	protected $lastMemberConfigCriteria = null;
+
+	
 	protected $collAuthenticationLoginIds;
 
 	
@@ -329,6 +335,14 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collMemberConfigs !== null) {
+				foreach($this->collMemberConfigs as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collAuthenticationLoginIds !== null) {
 				foreach($this->collAuthenticationLoginIds as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -404,6 +418,14 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 
 				if ($this->collCommunityMembers !== null) {
 					foreach($this->collCommunityMembers as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collMemberConfigs !== null) {
+					foreach($this->collMemberConfigs as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -576,6 +598,10 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 
 			foreach($this->getCommunityMembers() as $relObj) {
 				$copyObj->addCommunityMember($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getMemberConfigs() as $relObj) {
+				$copyObj->addMemberConfig($relObj->copy($deepCopy));
 			}
 
 			foreach($this->getAuthenticationLoginIds() as $relObj) {
@@ -979,6 +1005,74 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 		$this->lastCommunityMemberCriteria = $criteria;
 
 		return $this->collCommunityMembers;
+	}
+
+	
+	public function initMemberConfigs()
+	{
+		if ($this->collMemberConfigs === null) {
+			$this->collMemberConfigs = array();
+		}
+	}
+
+	
+	public function getMemberConfigs($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collMemberConfigs === null) {
+			if ($this->isNew()) {
+			   $this->collMemberConfigs = array();
+			} else {
+
+				$criteria->add(MemberConfigPeer::MEMBER_ID, $this->getId());
+
+				MemberConfigPeer::addSelectColumns($criteria);
+				$this->collMemberConfigs = MemberConfigPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(MemberConfigPeer::MEMBER_ID, $this->getId());
+
+				MemberConfigPeer::addSelectColumns($criteria);
+				if (!isset($this->lastMemberConfigCriteria) || !$this->lastMemberConfigCriteria->equals($criteria)) {
+					$this->collMemberConfigs = MemberConfigPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastMemberConfigCriteria = $criteria;
+		return $this->collMemberConfigs;
+	}
+
+	
+	public function countMemberConfigs($criteria = null, $distinct = false, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(MemberConfigPeer::MEMBER_ID, $this->getId());
+
+		return MemberConfigPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addMemberConfig(MemberConfig $l)
+	{
+		$this->collMemberConfigs[] = $l;
+		$l->setMember($this);
 	}
 
 	

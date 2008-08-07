@@ -1,0 +1,21 @@
+# app_name:
+#   category_name:
+#     setting_name:
+#       Name:       "sample"
+#       Caption:    "Sample"
+#       FormType:   "input"
+#       ValueType:  "string"
+#       IsRegist:   true
+#       IsConfig:   true
+#       IsRequired: true
+
+pc_frontend:
+  security:
+    pc_address:
+      Name:       "pc_address"
+      Caption:    "PCメールアドレス"
+      FormType:   "input"
+      ValueType:  "email"
+      IsRegist:   true
+      IsConfig:   true
+      IsRequired: true

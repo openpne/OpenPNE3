@@ -127,4 +127,30 @@ class memberActions extends sfActions
 
     return sfView::SUCCESS;
   }
+
+ /**
+  * Executes config action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeConfig($request)
+  {
+    $this->forms = array();
+    $categories = array('security');
+
+    foreach ($categories as $category) {
+      $this->forms[$category] = new MemberConfigForm(array(), array('category' => $category));
+    }
+
+    if ($request->isMethod('post')) {
+      $targetForm = $this->forms[$request->getParameter('category')];
+      $targetForm->bind($request->getParameter('member_config'));
+      if ($targetForm->isValid()) {
+        $targetForm->save($this->getUser()->getMemberId());
+        $this->redirect('member/config');
+      }
+    }
+
+    return sfView::SUCCESS;
+  }
 }

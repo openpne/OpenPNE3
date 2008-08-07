@@ -228,5 +228,26 @@ CREATE TABLE `sns_config`
 	UNIQUE KEY `sns_config_U_1` (`name`)
 )Type=InnoDB;
 
+#-----------------------------------------------------------------------------
+#-- member_config
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `member_config`;
+
+
+CREATE TABLE `member_config`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`member_id` INTEGER  NOT NULL,
+	`name` VARCHAR(64)  NOT NULL,
+	`value` TEXT,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `member_config_U_1` (`name`),
+	INDEX `member_config_FI_1` (`member_id`),
+	CONSTRAINT `member_config_FK_1`
+		FOREIGN KEY (`member_id`)
+		REFERENCES `member` (`id`)
+)Type=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;
