@@ -25,10 +25,6 @@ class BaseMemberConfigForm extends BaseFormPropel
       'value'     => new sfValidatorString(array('required' => false)),
     ));
 
-    $this->validatorSchema->setPostValidator(
-      new sfValidatorPropelUnique(array('model' => 'MemberConfig', 'column' => array('name')))
-    );
-
     $this->widgetSchema->setNameFormat('member_config[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);

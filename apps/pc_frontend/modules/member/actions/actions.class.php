@@ -139,7 +139,8 @@ class memberActions extends sfActions
     $categories = array('security');
 
     foreach ($categories as $category) {
-      $this->forms[$category] = new MemberConfigForm(array(), array('category' => $category));
+      $this->forms[$category] = new MemberConfigForm();
+      $this->forms[$category]->setConfigWidgets($category, $this->getUser()->getMemberId());
     }
 
     if ($request->isMethod('post')) {

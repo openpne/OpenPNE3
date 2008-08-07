@@ -242,7 +242,6 @@ CREATE TABLE `member_config`
 	`name` VARCHAR(64)  NOT NULL,
 	`value` TEXT,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `member_config_U_1` (`name`),
 	INDEX `member_config_FI_1` (`member_id`),
 	CONSTRAINT `member_config_FK_1`
 		FOREIGN KEY (`member_id`)

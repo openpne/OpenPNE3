@@ -11,6 +11,7 @@ abstract class sfOpenPNEAuthForm extends sfForm
 {
   public $memberForm;
   public $profileForm;
+  public $configForm;
 
  /**
   * Configures the current form.
@@ -33,6 +34,10 @@ abstract class sfOpenPNEAuthForm extends sfForm
       $result .= $this->memberForm;
     }
 
+    if ($this->configForm) {
+      $result .= $this->configForm;
+    }
+
     $result .= parent::__toString();
 
     if ($this->profileForm) {
@@ -48,8 +53,12 @@ abstract class sfOpenPNEAuthForm extends sfForm
   public function setForRegisterWidgets()
   {
     $this->memberForm = new MemberForm();
+
     $this->profileForm = new MemberProfileForm();
     $this->profileForm->setRegisterWidgets();
+
+    $this->configForm = new MemberConfigForm();
+    $this->configForm->setRegisterWidgets();
   }
 
  /**
@@ -67,7 +76,11 @@ abstract class sfOpenPNEAuthForm extends sfForm
       $this->profileForm->bind($request->getParameter('profile'));
     }
 
-      $this->bind($request->getParameter('auth'));
+    if ($this->configForm) {
+      $this->configForm->bind($request->getParameter('member_config'));
+    }
+
+    $this->bind($request->getParameter('auth'));
   }
 
  /**
@@ -82,6 +95,10 @@ abstract class sfOpenPNEAuthForm extends sfForm
     }
 
     if ($this->profileForm && !$this->profileForm->isValid()) {
+      return false;
+    }
+
+    if ($this->configForm && !$this->configForm->isValid()) {
       return false;
     }
 

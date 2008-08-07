@@ -9,39 +9,33 @@
  */
 class MemberConfigForm extends OpenPNEFormAutoGenerate
 {
-  public function __construct($defaults = array(), $options = array(), $CSRFSecret = null)
-  {
-    if (!array_key_exists('category', $options)) {
-      throw new RuntimeException(sprintf('%s requires the following option: \'category\'.', get_class($this)));
-    }
-
-    parent::__construct($defaults, $options, $CSRFSecret);
-  }
+  private $memberConfigSettings = array();
 
   public function configure()
   {
-    $sfUser = sfContext::getInstance()->getUser();
     $config = OpenPNEConfig::loadConfigYaml('member');
-    $memberConfig = array();
 
+    if (array_key_exists('all', $config)) {
+      $this->memberConfigSettings += $config['all'];
+    }
+
+    if (array_key_exists(sfConfig::get('sf_app'), $config)) {
+      $this->memberConfigSettings += $config[sfConfig::get('sf_app')];
+    }
+  }
+
+  public function setMemberConfigWidgets($settings, $memberId)
+  {
     $widgets = array();
     $validators = array();
     $labels = array();
     $defaults = array();
 
-    if (array_key_exists('all', $config)) {
-      $memberConfig += $config['all'];
-    }
-
-    if (array_key_exists(sfConfig::get('sf_app'), $config)) {
-      $memberConfig += $config[sfConfig::get('sf_app')];
-    }
-
-    foreach ($memberConfig[$this->options['category']] as $key => $value) {
+    foreach ($settings as $key => $value) {
       $widgets[$key] = $this->generateWidget($value);
       $validators[$key] = $this->generateValidator($value);
       $labels[$key] = $value['Caption'];
-      $defaults[$key] = OpenPNEConfig::get($key, 'member', MemberConfigPeer::retrieveByNameAndMemberId($key, $sfUser->getMemberId())->getValue());
+      $defaults[$key] = MemberConfigPeer::retrieveByNameAndMemberId($key, $memberId)->getValue();
     }
 
     $this->setWidgets($widgets);
@@ -52,6 +46,45 @@ class MemberConfigForm extends OpenPNEFormAutoGenerate
     $this->widgetSchema->setNameFormat('member_config[%s]');
   }
 
+  public function setConfigWidgets($category = null, $memberId = 0)
+  {
+    $settings = array();
+
+    foreach ($this->getSettings($category) as $key => $value) {
+      if ($value['IsConfig']) {
+        $settings[$key] = $value;
+      }
+    }
+
+    $this->setMemberConfigWidgets($settings, $memberId);
+  }
+
+  public function setRegisterWidgets($category = null, $memberId = 0)
+  {
+    $settings = array();
+
+    foreach ($this->getSettings($category) as $key => $value) {
+      if ($value['IsRegist']) {
+        $settings[$key] = $value;
+      }
+    }
+
+    $this->setMemberConfigWidgets($settings, $memberId);
+  }
+
+  public function getSettings($category = null)
+  {
+    if (is_null($category)) {
+      $result = array();
+      foreach ($this->memberConfigSettings as $value) {
+        $result += $value;
+      }
+      return $result;
+    }
+
+    return $this->memberConfigSettings[$category];
+  }
+
   public function save($memberId)
   {
     foreach ($this->getValues() as $key => $value) {
@@ -59,5 +92,7 @@ class MemberConfigForm extends OpenPNEFormAutoGenerate
       $memberConfig->setValue($value);
       $memberConfig->save();
     }
+
+    return true;
   }
 }

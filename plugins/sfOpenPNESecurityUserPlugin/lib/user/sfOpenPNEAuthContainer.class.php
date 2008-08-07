@@ -46,9 +46,13 @@ abstract class sfOpenPNEAuthContainer
       $profile = $form->profileForm->save($memberId);
     }
 
+    if ($form->configForm) {
+      $config = $form->configForm->save($memberId);
+    }
+
     $auth = $this->registerData($memberId, $form);
 
-    if ($member && $profile && $auth) {
+    if ($member && $profile && $auth && $config) {
       return $memberId;
     }
 

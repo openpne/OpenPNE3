@@ -350,7 +350,7 @@ abstract class BaseMemberConfigPeer {
 
   static public function getUniqueColumnNames()
   {
-    return array(array('name'));
+    return array();
   }
 	
 	public static function getTableMap()
