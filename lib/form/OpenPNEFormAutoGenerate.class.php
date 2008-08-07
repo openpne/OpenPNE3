@@ -46,7 +46,7 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
     }
 
     $option = array('required' => $field['IsRequired']);
-    switch ($field['valueType']) {
+    switch ($field['ValueType']) {
       case 'datetime':
         $option['min'] = $field['ValueMin'];
         $option['max'] = $field['ValueMax'];
@@ -69,7 +69,7 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
         break;
       default:
         $option['min_length'] = $field['ValueMin'];
-        $option['max_length'] = $field['getValueMax'];
+        $option['max_length'] = $field['ValueMax'];
         $obj = new sfValidatorString($option);
     }
 

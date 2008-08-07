@@ -76,84 +76,11 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
   private function setProfileWidgets($profiles)
   {
     foreach ($profiles as $profile) {
-      $this->widgetSchema[$profile->getName()] = $this->_generateWidget($profile);
-      $this->validatorSchema[$profile->getName()] = $this->_generateValidator($profile);
+      $profile_i18n = $profile->getProfileI18ns();
+      $profileWithI18n = $profile->toArray() + $profile_i18n[0]->toArray();
+      $this->widgetSchema[$profile->getName()] = $this->generateWidget($profileWithI18n, $this->getFormOptionsValue($profile->getId()));
+      $this->validatorSchema[$profile->getName()] = $this->generateValidator($profileWithI18n, $this->getFormOptions($profile->getId()));
     }
-  }
-
-  private function _generateWidget($profile)
-  {
-    $option = array();
-    if ($profile->getCaption()) {
-      $this->widgetSchema->setLabel($profile->getName(), $profile->getCaption());
-    }
-
-    switch ($profile->getFormType()) {
-      case 'checkbox':
-        $choices = $this->getFormOptionsValue($profile->getId());
-        $obj = new sfWidgetFormInputCheckbox(array('choices' => $choices));
-        break;
-      case 'select':
-        $choices = $this->getFormOptionsValue($profile->getId());
-        $obj = new sfWidgetFormSelect(array('choices' => $choices));
-        break;
-      case 'radio':
-        $choices = $this->getFormOptionsValue($profile->getId());
-        $obj = new sfWidgetFormSelectRadio(array('choices' => $choices));
-        break;
-      case 'textarea':
-        $obj = new sfWidgetFormTextarea();
-        break;
-      case 'password':
-        $obj = new sfWidgetFormInputPassword();
-        break;
-      default:
-        $obj = new sfWidgetFormInput();
-    }
-
-    return $obj;
-  }
-
-  private function _generateValidator($profile)
-  {
-    $formType = $profile->getFormType();
-    $valueType = $profile->getValueType();
-
-    if ($formType == 'checkbox' || $formType == 'select' || $formType == 'radio') {
-      $choices = $this->getFormOptions($profile->getId());
-      $obj = new sfValidatorChoice(array('choices' => $choices));
-      return $obj;
-    }
-
-    $option = array('required' => $profile->getIsRequired());
-    switch ($valueType) {
-      case 'datetime':
-        $option['min'] = $profile->getValueMin();
-        $option['max'] = $profile->getValueMax();
-        $obj = new sfValidatorDatetime($option);
-        break;
-      case 'email':
-        $obj = new sfValidatorEmail($option);
-        break;
-      case 'integer':
-        $option['min'] = $profile->getValueMin();
-        $option['max'] = $profile->getValueMax();
-        $obj = new sfValidatorInteger($option);
-        break;
-      case 'regexp':
-        $option['pattern'] = $profile->geValueRegexp();
-        $obj = new sfValidatorInteger($option);
-        break;
-      case 'url':
-        $obj = new sfValidatorUrl($option);
-        break;
-      default:
-        $option['min_length'] = $profile->getValueMin();
-        $option['max_length'] = $profile->getValueMax();
-        $obj = new sfValidatorString($option);
-    }
-
-    return $obj;
   }
 
   private function getFormOptions($profileId)
