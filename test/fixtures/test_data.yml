@@ -1,0 +1,101 @@
+Member:
+  first_member:
+    id: 1
+    name: "Yamada"
+    is_active: 1
+  second_member:
+    id: 2
+    name: "Tanaka"
+    is_active: 1
+  third_member:
+    id: 3
+    name: "Sasaki"
+    is_active: 1
+
+Profile:
+  profile_sex:
+    is_required: 1
+    name: "sex"
+    form_type: "select"
+    value_type: "integer"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    sort_order: 110
+
+  profile_self_intro:
+    is_required: 1
+    name: "self_intro"
+    form_type: "textarea"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    sort_order: 120
+
+ProfileI18n:
+  profile_i18n_sex:
+    id: profile_sex
+    caption: "性別"
+    culture: "ja_JP"
+
+  profile_i18n_self_intro:
+    id: profile_self_intro
+    caption: "自己紹介"
+    culture: "ja_JP"
+
+ProfileOption:
+  profile_option_sex_man:
+    profile_id: profile_sex
+    sort_order: 0
+
+  profile_option_sex_woman:
+    profile_id: profile_sex
+    sort_order: 1
+
+ProfileOptionI18n:
+  profile_option_sex_man:
+    id: profile_option_sex_man
+    value: "男性"
+    culture: "ja_JP"
+
+  profile_option_sex_woman:
+    id: profile_option_sex_woman
+    value: "女性"
+    culture: "ja_JP"
+
+MemberProfile:
+  first_member_profile_sex:
+    member_id: first_member
+    profile_id: profile_sex
+    profile_option_id: profile_option_sex_man
+
+  first_member_profile_self_intro:
+    member_id: first_member
+    profile_id: profile_self_intro
+    value: "よろしくお願いします。"
+
+Community:
+  first_community:
+    name: "最初のコミュニティ"
+  second_community:
+    name: "2番目のコミュニティ"
+
+CommunityMember:
+  first_community_first_member:
+    community_id: first_community
+    member_id: first_member
+    position: "admin"
+  first_community_second_member:
+    community_id: first_community
+    member_id: second_member
+  second_community_second_member:
+    community_id: second_community
+    member_id: second_member
+    position: "admin"
+
+AdminUser:
+  first_admin:
+    id: 1
+    username: "admin"
+    password: <?php echo md5('password') . "\n"; ?>
