@@ -6,7 +6,7 @@ $databaseManager->loadConfiguration();
 
 // execute propel:insert-sql task
 $task = new sfPropelInsertSqlTask(new sfEventDispatcher(), new sfAnsiColorFormatter());
-$task->execute();
+$task->runFromCLI(new sfCommandManager(), '');
 
 $data = new sfPropelData();
 $data->loadData(dirname(__FILE__) . '/../fixtures');
