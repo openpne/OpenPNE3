@@ -33,6 +33,16 @@ Profile:
     is_disp_search: 1
     sort_order: 120
 
+  profile_example:
+    is_required: 1
+    name: "example"
+    form_type: "textarea"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    sort_order: 130
+
 ProfileI18n:
   profile_i18n_sex:
     id: profile_sex
