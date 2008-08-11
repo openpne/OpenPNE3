@@ -85,6 +85,14 @@ MemberProfile:
     profile_id: profile_self_intro
     value: "よろしくお願いします。"
 
+Friend:
+  first_member_second_member:
+    member_id_to: first_member
+    member_id_from: second_member
+  second_member_first_member:
+    member_id_to: second_member
+    member_id_from: first_member
+
 Community:
   first_community:
     name: "最初のコミュニティ"
