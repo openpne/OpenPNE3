@@ -1,6 +1,7 @@
 <?php
 
 $app_configuration = ProjectConfiguration::getApplicationConfiguration('pc_frontend', 'test', true);
+sfContext::createInstance($app_configuration);
 $databaseManager = new sfDatabaseManager($app_configuration);
 $databaseManager->loadConfiguration();
 

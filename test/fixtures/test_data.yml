@@ -20,7 +20,7 @@ Profile:
     value_type: "integer"
     is_disp_regist: 1
     is_disp_config: 1
-    is_disp_search: 1
+    is_disp_search: 0
     sort_order: 110
 
   profile_self_intro:
@@ -38,8 +38,8 @@ Profile:
     name: "example"
     form_type: "textarea"
     value_type: "string"
-    is_disp_regist: 1
-    is_disp_config: 1
+    is_disp_regist: 0
+    is_disp_config: 0
     is_disp_search: 1
     sort_order: 130
 
