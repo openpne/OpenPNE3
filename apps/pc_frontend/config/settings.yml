@@ -80,10 +80,10 @@ all:
 #    calendar_web_dir:       /sf/calendar
 #
 #    # Helpers included in all templates by default
-    standard_helpers:       [Partial, Cache, Form, I18N]
+    standard_helpers:       [Partial, Cache, Form, I18N, Parts]
 #
 #    # Activated modules from plugins or from the symfony core
-    enabled_modules:        [default, loginId]
+    enabled_modules:        [default, loginId, member]
 #
 #    # Charset used for the response
 #    charset:                utf-8

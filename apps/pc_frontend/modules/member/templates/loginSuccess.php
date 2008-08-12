@@ -1,10 +1,4 @@
-<form action="<?php echo url_for('member/login') ?>" method="post">
-<table>
-<?php echo $form ?>
-<tr>
-<td colspan="2"><input type="submit" value="ログイン" /></td>
-</tr>
-</table>
-</form>
+<?php
+include_login_parts('login', $form, url_for('member/login'));
+?>
 
-<?php echo link_to('新規登録', 'member/registerInput') ?>
