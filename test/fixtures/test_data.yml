@@ -85,6 +85,12 @@ MemberProfile:
     profile_id: profile_self_intro
     value: "よろしくお願いします。"
 
+MemberConfig:
+  first_member_config:
+    member_id: first_member
+    name: "example"
+    value: "test value"
+
 Friend:
   first_member_second_member:
     member_id_to: first_member
@@ -117,3 +123,8 @@ AdminUser:
     id: 1
     username: "admin"
     password: <?php echo md5('password') . "\n"; ?>
+
+SnsConfig:
+  first_sns_config:
+    name: "SNS_NAME"
+    value: "MySNS"
