@@ -1,3 +1,0 @@
-loginSuccess:
-  components:
-    loginBottom: [member, registerLink]

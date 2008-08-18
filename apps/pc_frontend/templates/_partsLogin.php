@@ -1,12 +1,8 @@
-<?php if (has_component_slot($id . 'Before')) : ?>
-<?php include_component_slot($id . 'Before'); ?>
-<?php endif; ?>
+<?php set_entry_point($id, 'Before') ?>
 
 <div id="<?php echo $id ?>">
 
-<?php if (has_component_slot($id . 'Top')) : ?>
-<?php include_component_slot($id . 'Top'); ?>
-<?php endif; ?>
+<?php set_entry_point($id, 'Top') ?>
 
 <form action="<?php echo $link_to ?>" method="post">
 <table>
@@ -17,12 +13,8 @@
 </table>
 </form>
 
-<?php if (has_component_slot($id . 'Bottom')) : ?>
-<?php include_component_slot($id . 'Bottom'); ?>
-<?php endif; ?>
+<?php set_entry_point($id, 'Bottom') ?>
 
 </div>
 
-<?php if (has_component_slot($id . 'After')) : ?>
-<?php include_component_slot($id . 'After'); ?>
-<?php endif; ?>
+<?php set_entry_point($id, 'After') ?>
