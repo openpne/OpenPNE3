@@ -60,6 +60,11 @@ function include_entry_points($id, $name)
 
   foreach ($directories as $directory) {
     $templatePath = $directory . DIRECTORY_SEPARATOR . $templateName;
+
+    if (_is_disabled_plugin_dir($directory)) {
+      continue;
+    }
+
     if (is_readable($templatePath)) {
       ob_start();
       ob_implicit_flush(0);
@@ -71,5 +76,16 @@ function include_entry_points($id, $name)
   slot($id . $name);
   echo $content;
   end_slot();
+}
+
+function _is_disabled_plugin_dir($directory)
+{
+  foreach (sfConfig::get('sf_openpne_disabled_plugins', array()) as $pluginName) {
+    if (0 === strpos($directory, sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . $pluginName)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
