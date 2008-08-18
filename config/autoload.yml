@@ -1,0 +1,6 @@
+autoload:
+  # OpenPNE Plugins
+  openpne_plugins_lib:
+    name:           plugins lib
+    path:           %SF_OPENPNE_PLUGINS_DIR%/*/lib
+    recursive:      on
