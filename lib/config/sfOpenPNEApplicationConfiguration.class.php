@@ -10,14 +10,6 @@
 abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfiguration
 {
   /**
-   * Configures the current configuration.
-   */
-  public function initialize()
-  {
-    sfConfig::set('sf_openpne_plugins_dir', sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.'op_plugins');
-  }
-
-  /**
    * Gets directories where controller classes are stored for a given module.
    *
    * @param string $moduleName The module name
@@ -28,9 +20,9 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $dirs = array();
 
-    if ($opPluginDirs = glob(sfConfig::get('sf_openpne_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/actions'))
+    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/actions'))
     {
-      $dirs = array_merge($dirs, array_combine($opPluginDirs, array_fill(0, count($opPluginDirs), false))); // OpenPNE plugins
+      $dirs = array_merge($dirs, array_combine($pluginDirs, array_fill(0, count($pluginDirs), false))); // plugin applications
     }
 
     $dirs = array_merge($dirs, parent::getControllerDirs($moduleName));
@@ -49,26 +41,12 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $dirs = array();
 
-    if ($opPluginDirs = glob(sfConfig::get('sf_openpne_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/templates'))
+    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/templates'))
     {
-      $dirs = array_merge($dirs, $opPluginDirs); // OpenPNE plugins
+      $dirs = array_merge($dirs, $pluginDirs); // plugin applications
     }
 
     $dirs = array_merge($dirs, parent::getTemplateDirs($moduleName));
-
-    return $dirs;
-  }
-
-  /**
-   * Gets the i18n directories to use globally.
-   *
-   * @return array An array of i18n directories
-   */
-  public function getI18NGlobalDirs()
-  {
-    $dirs = glob(sfConfig::get('sf_openpne_plugins_dir').'/*/i18n');
-
-    $dirs = array_merge($dirs, parent::getI18NGlobalDirs());
 
     return $dirs;
   }
@@ -84,13 +62,43 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $dirs = array();
 
-    if ($opPluginDirs = glob(sfConfig::get('sf_openpne_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/i18n'))
+    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/i18n'))
     {
-      $dirs = array_merge($dirs, $opPluginDirs); // OpenPNE plugins
+      $dirs = array_merge($dirs, $opPluginDirs); // plugin applications
     }
 
     $dirs = array_merge($dirs, parent::getI18NDirs($moduleName));
 
     return $dirs;
+  }
+
+  /**
+   * Gets the configuration file paths for a given relative configuration path.
+   *
+   * @param string $configPath The configuration path
+   *
+   * @return array An array of paths
+   */
+  public function getConfigPaths($configPath)
+  {
+    $globalConfigPath = basename(dirname($configPath)).'/'.basename($configPath);
+    $files = array();
+
+    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/'.sfConfig::get('sf_app').'/'.$configPath))
+    {
+      $files = array_merge($files, $pluginDirs); // plugin applications
+    }
+
+    $configs = array();
+    foreach (array_unique($files) as $file)
+    {
+      if (is_readable($file))
+      {
+        $configs[] = $file;
+      }
+    }
+
+    $configs = array_merge(parent::getConfigPaths($configPath), $configs);
+    return $configs;
   }
 }
