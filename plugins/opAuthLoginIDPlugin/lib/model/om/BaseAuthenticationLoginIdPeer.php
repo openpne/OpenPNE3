@@ -10,7 +10,7 @@ abstract class BaseAuthenticationLoginIdPeer {
 	const TABLE_NAME = 'authentication_login_id';
 
 	
-	const CLASS_DEFAULT = 'plugins.sfOpenPNEAuthLoginIDPlugin.lib.model.AuthenticationLoginId';
+	const CLASS_DEFAULT = 'plugins.opAuthLoginIDPlugin.lib.model.AuthenticationLoginId';
 
 	
 	const NUM_COLUMNS = 4;
@@ -54,7 +54,7 @@ abstract class BaseAuthenticationLoginIdPeer {
 	
 	public static function getMapBuilder()
 	{
-		return BasePeer::getMapBuilder('plugins.sfOpenPNEAuthLoginIDPlugin.lib.model.map.AuthenticationLoginIdMapBuilder');
+		return BasePeer::getMapBuilder('plugins.opAuthLoginIDPlugin.lib.model.map.AuthenticationLoginIdMapBuilder');
 	}
 	
 	public static function getPhpNameMap()
@@ -538,5 +538,5 @@ if (Propel::isInit()) {
 		Propel::log('Could not initialize Peer: ' . $e->getMessage(), Propel::LOG_ERR);
 	}
 } else {
-			Propel::registerMapBuilder('plugins.sfOpenPNEAuthLoginIDPlugin.lib.model.map.AuthenticationLoginIdMapBuilder');
+			Propel::registerMapBuilder('plugins.opAuthLoginIDPlugin.lib.model.map.AuthenticationLoginIdMapBuilder');
 }
