@@ -21,7 +21,7 @@ class pcAddressActions extends sfActions
 
       if ($this->form->isValid() && $this->getUser()->getAuthContainer()->registerEmailAddress($params['pc_address'], $hash)) {
         $subject = OpenPNEConfig::get('sns_name') . 'の招待状が届いています';
-        $this->sendMail($subject, 'requestRegisterURLMail', $params['pc_address'], 'kousuke@co3k.org', array('hash' => $hash));
+        $this->sendMail($subject, 'requestRegisterURLMail', $params['pc_address'], OpenPNEConfig::get('admin_mail_address'), array('hash' => $hash));
 
         return sfView::SUCCESS;
       }

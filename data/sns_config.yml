@@ -4,3 +4,11 @@ sns_name:
   default:  "MySNS"
   option:
     required: true
+
+admin_mail_address:
+  caption: "管理者メールアドレス"
+  type:    "input"
+  default: "sns@example.com"
+  option:
+    required: true
+
