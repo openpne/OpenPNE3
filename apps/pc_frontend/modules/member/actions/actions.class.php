@@ -51,7 +51,7 @@ class memberActions extends sfActions
   public function executeRegisterInput($request)
   {
     $this->form = $this->getUser()->getAuthForm();
-    $this->form->setForRegisterWidgets();
+    $this->form->setForRegisterWidgets($this->getUser()->getMember());
 
     if ($request->isMethod('post')) {
       $this->form->bindAll($request);

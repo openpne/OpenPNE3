@@ -50,6 +50,11 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     return $this->getAttribute('member_id', null, 'sfOpenPNESecurityUser');
   }
 
+  public function setMemberId($memberId)
+  {
+    return $this->setAttribute('member_id', $memberId, 'sfOpenPNESecurityUser');
+  }
+
   public function getMember()
   {
     return MemberPeer::retrieveByPk($this->getMemberId());
@@ -73,7 +78,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     if ($member_id) {
       $this->setAuthenticated(true);
       $this->setIsSNSMember(true);
-      $this->setAttribute('member_id', $member_id, 'sfOpenPNESecurityUser');
+      $this->setMemberId($member_id);
     }
 
     return $this->isAuthenticated();
@@ -124,7 +129,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
       $this->setIsSNSMember(true);
     }
 
-    $this->setIsSNSRegisterBegin($this->getAuthContainer()->isRegisterBegin());
+    $this->setIsSNSRegisterBegin($this->getAuthContainer()->isRegisterBegin($memberId));
   }
 
   public function setIsSNSMember($isSNSMember)

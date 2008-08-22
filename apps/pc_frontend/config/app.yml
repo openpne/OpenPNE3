@@ -1,2 +1,3 @@
 all:
-  openpne_auth_mode: LoginID
+  openpne_auth_mode: PCAddress
+#  openpne_auth_mode: LoginID

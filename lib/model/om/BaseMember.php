@@ -28,6 +28,18 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 	protected $updated_at;
 
 	
+	protected $collAuthenticationLoginIds;
+
+	
+	protected $lastAuthenticationLoginIdCriteria = null;
+
+	
+	protected $collAuthenticationPcAddresss;
+
+	
+	protected $lastAuthenticationPcAddressCriteria = null;
+
+	
 	protected $collMemberProfiles;
 
 	
@@ -56,12 +68,6 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 
 	
 	protected $lastMemberConfigCriteria = null;
-
-	
-	protected $collAuthenticationLoginIds;
-
-	
-	protected $lastAuthenticationLoginIdCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -303,6 +309,22 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 				}
 				$this->resetModified(); 			}
 
+			if ($this->collAuthenticationLoginIds !== null) {
+				foreach($this->collAuthenticationLoginIds as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collAuthenticationPcAddresss !== null) {
+				foreach($this->collAuthenticationPcAddresss as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collMemberProfiles !== null) {
 				foreach($this->collMemberProfiles as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -337,14 +359,6 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 
 			if ($this->collMemberConfigs !== null) {
 				foreach($this->collMemberConfigs as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collAuthenticationLoginIds !== null) {
-				foreach($this->collAuthenticationLoginIds as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -392,6 +406,22 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 			}
 
 
+				if ($this->collAuthenticationLoginIds !== null) {
+					foreach($this->collAuthenticationLoginIds as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collAuthenticationPcAddresss !== null) {
+					foreach($this->collAuthenticationPcAddresss as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 				if ($this->collMemberProfiles !== null) {
 					foreach($this->collMemberProfiles as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
@@ -426,14 +456,6 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 
 				if ($this->collMemberConfigs !== null) {
 					foreach($this->collMemberConfigs as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collAuthenticationLoginIds !== null) {
-					foreach($this->collAuthenticationLoginIds as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -584,6 +606,14 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
+			foreach($this->getAuthenticationLoginIds() as $relObj) {
+				$copyObj->addAuthenticationLoginId($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getAuthenticationPcAddresss() as $relObj) {
+				$copyObj->addAuthenticationPcAddress($relObj->copy($deepCopy));
+			}
+
 			foreach($this->getMemberProfiles() as $relObj) {
 				$copyObj->addMemberProfile($relObj->copy($deepCopy));
 			}
@@ -602,10 +632,6 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 
 			foreach($this->getMemberConfigs() as $relObj) {
 				$copyObj->addMemberConfig($relObj->copy($deepCopy));
-			}
-
-			foreach($this->getAuthenticationLoginIds() as $relObj) {
-				$copyObj->addAuthenticationLoginId($relObj->copy($deepCopy));
 			}
 
 		} 
@@ -631,6 +657,142 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 			self::$peer = new MemberPeer();
 		}
 		return self::$peer;
+	}
+
+	
+	public function initAuthenticationLoginIds()
+	{
+		if ($this->collAuthenticationLoginIds === null) {
+			$this->collAuthenticationLoginIds = array();
+		}
+	}
+
+	
+	public function getAuthenticationLoginIds($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAuthenticationLoginIds === null) {
+			if ($this->isNew()) {
+			   $this->collAuthenticationLoginIds = array();
+			} else {
+
+				$criteria->add(AuthenticationLoginIdPeer::MEMBER_ID, $this->getId());
+
+				AuthenticationLoginIdPeer::addSelectColumns($criteria);
+				$this->collAuthenticationLoginIds = AuthenticationLoginIdPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(AuthenticationLoginIdPeer::MEMBER_ID, $this->getId());
+
+				AuthenticationLoginIdPeer::addSelectColumns($criteria);
+				if (!isset($this->lastAuthenticationLoginIdCriteria) || !$this->lastAuthenticationLoginIdCriteria->equals($criteria)) {
+					$this->collAuthenticationLoginIds = AuthenticationLoginIdPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastAuthenticationLoginIdCriteria = $criteria;
+		return $this->collAuthenticationLoginIds;
+	}
+
+	
+	public function countAuthenticationLoginIds($criteria = null, $distinct = false, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(AuthenticationLoginIdPeer::MEMBER_ID, $this->getId());
+
+		return AuthenticationLoginIdPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addAuthenticationLoginId(AuthenticationLoginId $l)
+	{
+		$this->collAuthenticationLoginIds[] = $l;
+		$l->setMember($this);
+	}
+
+	
+	public function initAuthenticationPcAddresss()
+	{
+		if ($this->collAuthenticationPcAddresss === null) {
+			$this->collAuthenticationPcAddresss = array();
+		}
+	}
+
+	
+	public function getAuthenticationPcAddresss($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAuthenticationPcAddresss === null) {
+			if ($this->isNew()) {
+			   $this->collAuthenticationPcAddresss = array();
+			} else {
+
+				$criteria->add(AuthenticationPcAddressPeer::MEMBER_ID, $this->getId());
+
+				AuthenticationPcAddressPeer::addSelectColumns($criteria);
+				$this->collAuthenticationPcAddresss = AuthenticationPcAddressPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(AuthenticationPcAddressPeer::MEMBER_ID, $this->getId());
+
+				AuthenticationPcAddressPeer::addSelectColumns($criteria);
+				if (!isset($this->lastAuthenticationPcAddressCriteria) || !$this->lastAuthenticationPcAddressCriteria->equals($criteria)) {
+					$this->collAuthenticationPcAddresss = AuthenticationPcAddressPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastAuthenticationPcAddressCriteria = $criteria;
+		return $this->collAuthenticationPcAddresss;
+	}
+
+	
+	public function countAuthenticationPcAddresss($criteria = null, $distinct = false, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(AuthenticationPcAddressPeer::MEMBER_ID, $this->getId());
+
+		return AuthenticationPcAddressPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addAuthenticationPcAddress(AuthenticationPcAddress $l)
+	{
+		$this->collAuthenticationPcAddresss[] = $l;
+		$l->setMember($this);
 	}
 
 	
@@ -1072,74 +1234,6 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 	public function addMemberConfig(MemberConfig $l)
 	{
 		$this->collMemberConfigs[] = $l;
-		$l->setMember($this);
-	}
-
-	
-	public function initAuthenticationLoginIds()
-	{
-		if ($this->collAuthenticationLoginIds === null) {
-			$this->collAuthenticationLoginIds = array();
-		}
-	}
-
-	
-	public function getAuthenticationLoginIds($criteria = null, $con = null)
-	{
-				if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collAuthenticationLoginIds === null) {
-			if ($this->isNew()) {
-			   $this->collAuthenticationLoginIds = array();
-			} else {
-
-				$criteria->add(AuthenticationLoginIdPeer::MEMBER_ID, $this->getId());
-
-				AuthenticationLoginIdPeer::addSelectColumns($criteria);
-				$this->collAuthenticationLoginIds = AuthenticationLoginIdPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(AuthenticationLoginIdPeer::MEMBER_ID, $this->getId());
-
-				AuthenticationLoginIdPeer::addSelectColumns($criteria);
-				if (!isset($this->lastAuthenticationLoginIdCriteria) || !$this->lastAuthenticationLoginIdCriteria->equals($criteria)) {
-					$this->collAuthenticationLoginIds = AuthenticationLoginIdPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastAuthenticationLoginIdCriteria = $criteria;
-		return $this->collAuthenticationLoginIds;
-	}
-
-	
-	public function countAuthenticationLoginIds($criteria = null, $distinct = false, $con = null)
-	{
-				if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		$criteria->add(AuthenticationLoginIdPeer::MEMBER_ID, $this->getId());
-
-		return AuthenticationLoginIdPeer::doCount($criteria, $distinct, $con);
-	}
-
-	
-	public function addAuthenticationLoginId(AuthenticationLoginId $l)
-	{
-		$this->collAuthenticationLoginIds[] = $l;
 		$l->setMember($this);
 	}
 

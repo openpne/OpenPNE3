@@ -3,3 +3,6 @@ lib.model.schema.sql=propel
 plugins.sfOpenPNEAuthContainer_PCAddress.lib.model.schema.sql=propel
 plugins.sfOpenPNEAuthContainer_LoginID.lib.model.schema.sql=propel
 plugins.sfOpenPNEAuthLoginIDPlugin.lib.model.schema.sql=propel
+plugins.sfOpenPNEAuthPCAddressPlugin.lib.model.schema.sql=propel
+plugins.opAuthLoginIDPlugin.lib.model.schema.sql=propel
+plugins.opAuthPCAddressPlugin.lib.model.schema.sql=propel

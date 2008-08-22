@@ -24,4 +24,12 @@ class MemberConfigPeer extends BaseMemberConfigPeer
 
     return $result;
   }
+
+  public static function retrieveByNameAndValue($name, $value)
+  {
+    $c = new Criteria();
+    $c->add(self::NAME, $name);
+    $c->add(self::VALUE, $value);
+    return self::doSelectOne($c);
+  }
 }

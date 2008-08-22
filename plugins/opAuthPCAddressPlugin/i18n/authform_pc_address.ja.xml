@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="ja_JP" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+        <source>Pc Address</source>
+        <target>メールアドレス</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Password</source>
+        <target>パスワード</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>Password confirm</source>
+        <target>パスワード確認</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

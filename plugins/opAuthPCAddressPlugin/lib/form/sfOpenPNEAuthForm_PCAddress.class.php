@@ -1,27 +1,27 @@
 <?php
 
 /**
- * sfOpenPNEAuthForm_LoginID represents a form to login.
+ * sfOpenPNEAuthForm_PCAddress represents a form to login.
  *
  * @package    symfony
  * @subpackage user
  * @author     Kousuke Ebihara <ebihara@tejimaya.net>
  */
-class sfOpenPNEAuthForm_LoginID extends sfOpenPNEAuthForm
+class sfOpenPNEAuthForm_PCAddress extends sfOpenPNEAuthForm
 {
   public function configure()
   {
     $this->setWidgets(array(
-      'login_id' => new sfWidgetFormInput(),
+      'pc_address' => new sfWidgetFormInput(),
       'password' => new sfWidgetFormInputPassword(),
     ));
 
     $this->setValidatorSchema(new sfValidatorSchema(array(
-      'login_id' => new sfValidatorString(),
+      'pc_address' => new sfValidatorEmail(),
       'password' => new sfValidatorString(),
     )));
 
-    $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('authform_login_id');
+    $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('authform_pc_address');
 
     parent::configure();
   }
@@ -34,6 +34,11 @@ class sfOpenPNEAuthForm_LoginID extends sfOpenPNEAuthForm
     $this->widgetSchema['password_confirm'] = new sfWidgetFormInputPassword();
 
     $this->mergePostValidator(new sfValidatorSchemaCompare('password', '==', 'password_confirm'));
-    $this->mergePostValidator(new sfValidatorPropelUnique(array('model' => 'AuthenticationLoginId', 'column' => 'login_id')));
+
+    // FIXME
+    unset($this->configForm->validatorSchema['pc_address']);
+    unset($this->configForm->widgetSchema['pc_address']);
+    unset($this->validatorSchema['pc_address']);
+    unset($this->widgetSchema['pc_address']);
   }
 }

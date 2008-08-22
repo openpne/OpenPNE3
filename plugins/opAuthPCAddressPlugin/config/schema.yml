@@ -1,0 +1,8 @@
+propel:
+  _attributes: { package: plugins.opAuthPCAddressPlugin.lib.model }
+
+  authentication_pc_address:
+    id: ~
+    member_id: { type: integer, foreignTable: member, foreignReference: id }
+    password: { type: varchar(32) }
+    register_session: { type: varchar(32) }

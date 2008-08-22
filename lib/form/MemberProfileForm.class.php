@@ -73,7 +73,7 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
     $this->setProfileWidgets($profiles);
   }
 
-  private function setProfileWidgets($profiles)
+  protected function setProfileWidgets($profiles)
   {
     foreach ($profiles as $profile) {
       $profile_i18n = $profile->getProfileI18ns();

@@ -5,9 +5,14 @@ Member:
     is_active: 1
 
 AuthenticationLoginId:
-  first_pc_address:
+  first_login_id:
     member_id: first_member
     login_id: "openpne"
+    password: <?php echo md5('password') . "\n"; ?>
+
+AuthenticationPcAddress:
+  first_pc_address:
+    member_id: first_member
     password: <?php echo md5('password') . "\n"; ?>
 
 MemberProfile:
@@ -20,3 +25,9 @@ MemberProfile:
     member_id: first_member
     profile_id: profile_self_intro
     value: "よろしくお願いします。"
+
+MemberConfig:
+  first_member_pc_address:
+    member_id: first_member
+    name: "pc_address"
+    value: "sns@example.com"
