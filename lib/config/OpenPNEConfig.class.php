@@ -25,15 +25,20 @@ class OpenPNEConfig extends sfConfig
       return parent::get($config_name);
     }
 
+    $config = SnsConfigPeer::retrieveByName($name);
+    if ($config->getId()) {
+      self::set($config_name, $config->getValue());
+      return $config->getValue();
+    }
+
     $yaml = self::loadConfigYaml($type);
     if (isset($yaml[$name]['default']) && is_null($default)) {
       $default = $yaml[$name]['default'];
     }
 
     if (!is_null($default)) {
-      self::set($name, $default);
+      self::set($config_name, $default);
     }
-
     return $default;
   }
 

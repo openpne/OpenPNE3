@@ -2,6 +2,8 @@ rendering: ~
 security:  ~
 
 # insert your own filters here
+registerDisablePlugin:
+  class: sfRegisterDisablePluginsFilter
 
 cache:     ~
 common:    ~

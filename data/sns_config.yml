@@ -12,3 +12,11 @@ admin_mail_address:
   option:
     required: true
 
+pc_frontend_auth_mode:
+  caption:      "PC版認証方法"
+  type:         "select"
+  choices_type: "AuthMode"
+  default:      "PCAddress"
+  option:
+    required: true
+

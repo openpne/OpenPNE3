@@ -34,6 +34,9 @@ class SnsConfigForm extends sfForm
   public function generateWidget($config)
   {
     switch ($config['type']) {
+      case 'select':
+        $obj = new sfWidgetFormSelect(array('choices' => $this->generateChoices($config['choices_type'])));
+        break;
       case 'input':
       default:
         $obj = new sfWidgetFormInput();
@@ -45,6 +48,9 @@ class SnsConfigForm extends sfForm
   public function generateValidator($config)
   {
     switch ($config['type']) {
+      case 'select':
+        $obj = new sfValidatorChoice(array('choices' => $this->generateChoices($config['choices_type'])));
+        break;
       case 'input':
       default:
         $obj = new sfValidatorString($config['option']);
@@ -60,5 +66,27 @@ class SnsConfigForm extends sfForm
       $snsConfig->setValue($value);
       $snsConfig->save();
     }
+  }
+
+  public function generateChoices($mode)
+  {
+    if ($mode == 'AuthMode') {
+      return $this->generateAuthModeChoices();
+    }
+  }
+
+  private function generateAuthModeChoices()
+  {
+    $authModes = array();
+
+    $authPlugins = sfFinder::type('directory')->name('opAuth*Plugin')->in(sfConfig::get('sf_plugins_dir'));
+    foreach ($authPlugins as $authPlugin) {
+      $pluginName = basename($authPlugin);
+      $endPoint = strlen($pluginName) - strlen('opAuth') - strlen('Plugin');
+      $authMode = substr($pluginName, strlen('opAuth'), $endPoint);
+      $authModes[$authMode] = $authMode;
+    }
+
+    return $authModes;
   }
 }
