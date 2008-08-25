@@ -11,5 +11,13 @@ class NaviForm extends BaseNaviForm
 {
   public function configure()
   {
+    $this->setWidgets(array(
+      'id' => new sfWidgetFormInputHidden(),
+      'uri' => new sfWidgetFormInput(),
+      'type' => new sfWidgetFormInputHidden(),
+    ));
+
+    $this->widgetSchema->setNameFormat('navi[%s]');
+    $this->embedI18n(array('ja_JP'));
   }
 }

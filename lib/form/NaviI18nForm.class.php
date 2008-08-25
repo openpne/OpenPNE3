@@ -11,5 +11,8 @@ class NaviI18nForm extends BaseNaviI18nForm
 {
   public function configure()
   {
+    $this->setWidgets(array(
+      'caption' => new sfWidgetFormInput(),
+    ));
   }
 }

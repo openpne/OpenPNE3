@@ -15,4 +15,11 @@ class NaviPeer extends BaseNaviPeer
     $c->add(self::TYPE, $type);
     return self::doSelect($c);
   }
+
+  public static function retrieveTypes()
+  {
+    $c = new Criteria();
+    $c->addGroupByColumn(self::TYPE);
+    return self::doSelect($c);
+  }
 }
