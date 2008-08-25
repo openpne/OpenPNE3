@@ -1,0 +1,28 @@
+Navi:
+  secure_global_navi_home:
+    type: "secure_global"
+    uri: "@homepage"
+
+  secure_global_navi_config:
+    type: "secure_global"
+    uri: "member/config"
+
+  secure_global_navi_logout:
+    type: "secure_global"
+    uri: "member/logout"
+
+NaviI18n:
+  secure_global_navi_home_i18n:
+    id: secure_global_navi_home
+    caption: "マイホーム"
+    culture: "ja_JP"
+
+  secure_global_navi_config_i18n:
+    id: secure_global_navi_config
+    caption: "設定変更"
+    culture: "ja_JP"
+
+  secure_global_navi_logout_i18n:
+    id: secure_global_navi_logout
+    caption: "ログアウト"
+    culture: "ja_JP"

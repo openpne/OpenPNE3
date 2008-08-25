@@ -12,6 +12,10 @@
 </head>
 <body>
 
+<h1><?php echo link_to(OpenPNEConfig::get('sns_name'), '@homepage') ?></h1>
+
+<?php include_component('default', 'globalNavi') ?>
+
 <?php echo $sf_content ?>
 
 </body>

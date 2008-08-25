@@ -248,5 +248,40 @@ CREATE TABLE `member_config`
 		REFERENCES `member` (`id`)
 )Type=InnoDB;
 
+#-----------------------------------------------------------------------------
+#-- navi
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `navi`;
+
+
+CREATE TABLE `navi`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`type` VARCHAR(64)  NOT NULL,
+	`uri` TEXT,
+	PRIMARY KEY (`id`),
+	KEY `navi_I_1`(`type`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- navi_i18n
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `navi_i18n`;
+
+
+CREATE TABLE `navi_i18n`
+(
+	`caption` TEXT,
+	`id` INTEGER  NOT NULL,
+	`culture` VARCHAR(7)  NOT NULL,
+	PRIMARY KEY (`id`,`culture`),
+	CONSTRAINT `navi_i18n_FK_1`
+		FOREIGN KEY (`id`)
+		REFERENCES `navi` (`id`)
+		ON DELETE CASCADE
+)Type=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;
