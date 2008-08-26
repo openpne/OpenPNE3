@@ -21,19 +21,13 @@ class naviActions extends sfActions
 
     $types = NaviPeer::retrieveTypes();
 
-    $this->secureGlobal = array();
-    $navis = NaviPeer::retrieveByType('secure_global');
-    foreach ($navis as $navi) {
-      $this->secureGlobal[] = new NaviForm($navi);
+    foreach ($types as $type) {
+      $navis = NaviPeer::retrieveByType($type);
+      foreach ($navis as $navi) {
+        $this->list[$type][] = new NaviForm($navi);
+      }
+      $this->list[$type][] = new NaviForm();
     }
-    $this->secureGlobal[] = new NaviForm();
-
-    $this->insecureGlobal = array();
-    $navis = NaviPeer::retrieveByType('insecure_global');
-    foreach ($navis as $navi) {
-      $this->insecureGlobal[] = new NaviForm($navi);
-    }
-    $this->insecureGlobal[] = new NaviForm();
   }
 
  /**
