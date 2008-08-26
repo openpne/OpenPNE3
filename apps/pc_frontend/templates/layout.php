@@ -16,6 +16,12 @@
 
 <?php include_component('default', 'globalNavi') ?>
 
+<?php if (isset($naviType)) : ?>
+<?php include_component('default', 'localNavi', array('type' => $naviType)) ?>
+<?php else: ?>
+<?php include_component('default', 'localNavi') ?>
+<?php endif; ?>
+
 <?php echo $sf_content ?>
 
 </body>

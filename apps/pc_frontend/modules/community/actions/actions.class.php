@@ -43,6 +43,10 @@ class communityActions extends sfActions
     $this->community = CommunityPeer::retrieveByPk($this->id);
     $this->form = new CommunityForm($this->community);
 
+    if (!$this->community) {
+      sfConfig::set('sf_navi_type', 'default');
+    }
+
     if ($request->isMethod('post')) {
       $this->form->bind($request->getParameter('community'));
       if ($this->form->isValid()) {
@@ -121,7 +125,9 @@ class communityActions extends sfActions
   */
   public function executeJoin($request)
   {
-    $this->forwardIf($this->isCommunityMember, 'default', 'secure');
+    if ($this->isCommunityMember) {
+      return sfView::ERROR;
+    }
 
     CommunityMemberPeer::join($this->getUser()->getMemberId(), $this->id);
     $this->redirect('community/home?id=' . $this->id);
@@ -134,7 +140,9 @@ class communityActions extends sfActions
   */
   public function executeQuit($request)
   {
-    $this->forwardUnless($this->isCommunityMember, 'default', 'secure');
+    if (!$this->isCommunityMember || $this->isAdmin) {
+      return sfView::ERROR;
+    }
 
     CommunityMemberPeer::quit($this->getUser()->getMemberId(), $this->id);
     $this->redirect('community/home?id=' . $this->id);

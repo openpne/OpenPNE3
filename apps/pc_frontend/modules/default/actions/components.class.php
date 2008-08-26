@@ -4,13 +4,24 @@ class defaultComponents extends sfComponents
 {
   public function executeGlobalNavi()
   {
-    $action = sfContext::getInstance()->getActionStack()->getLastEntry()->getActionInstance();
-    $credential = $action->getCredential();
     $type = 'insecure_global';
-
     if ($this->isSecurePage()) {
       $type = 'secure_global';
     }
+    $this->navis = NaviPeer::retrieveByType($type);
+  }
+
+  public function executeLocalNavi()
+  {
+    if (!$this->isSecurePage()) {
+      return sfView::NONE;
+    }
+
+    $context = sfContext::getInstance();
+    $module = $context->getActionStack()->getLastEntry()->getModuleName();
+    $action = $context->getActionStack()->getLastEntry()->getActionName();
+
+    $type = sfConfig::get('sf_navi_type', sfConfig::get('mod_' . $module . '_default_navi', 'default'));
 
     $this->navis = NaviPeer::retrieveByType($type);
   }

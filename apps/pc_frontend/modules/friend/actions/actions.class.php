@@ -12,8 +12,11 @@ class friendActions extends sfActions
 {
   public function preExecute()
   {
-    $this->id = $this->getRequestParameter('id');
+    $this->id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
     $this->isFriend = FriendPeer::isFriend($this->getUser()->getMemberId(), $this->id);
+    if ($this->id == $this->getUser()->getMemberId()) {
+      sfConfig::set('sf_navi_type', 'default');
+    }
   }
 
  /**
@@ -33,7 +36,7 @@ class friendActions extends sfActions
   */
   public function executeList($request)
   {
-    $this->pager = FriendPeer::getFriendListPager($request->getParameter('member_id', $this->getUser()->getMemberId()), $request->getParameter('page', 1));
+    $this->pager = FriendPeer::getFriendListPager($this->id, $request->getParameter('page', 1));
 
     if (!$this->pager->getNbResults()) {
       return sfView::ERROR;
@@ -49,7 +52,9 @@ class friendActions extends sfActions
   */
   public function executeLink($request)
   {
-    $this->forwardIf($this->isFriend, 'default', 'secure');
+    if ($this->isFriend) {
+      return sfView::ERROR;
+    }
     $this->redirectToHomeIfIdIsNotValid();
     FriendPeer::link($this->getUser()->getMemberId(), $this->id);
     $this->redirect('member/profile?id=' . $this->id);
@@ -62,7 +67,9 @@ class friendActions extends sfActions
   */
   public function executeUnlink($request)
   {
-    $this->forwardUnless($this->isFriend, 'default', 'secure');
+    if (!$this->isFriend) {
+      return sfView::ERROR;
+    }
     $this->redirectToHomeIfIdIsNotValid();
     FriendPeer::unlink($this->getUser()->getMemberId(), $this->id);
     $this->redirect('member/profile?id=' . $this->id);

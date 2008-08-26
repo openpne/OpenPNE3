@@ -99,6 +99,10 @@ class memberActions extends sfActions
     $this->member = MemberPeer::retrieveByPk($id);
     $this->forward404Unless($this->member, 'Undefined member.');
 
+    if ($request->hasParameter('id')) {
+      sfConfig::set('sf_navi_type', 'friend');
+    }
+
     return sfView::SUCCESS;
   }
 

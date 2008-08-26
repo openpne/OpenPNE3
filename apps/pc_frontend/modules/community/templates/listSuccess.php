@@ -7,3 +7,7 @@
 <?php endforeach; ?>
 </ul>
 <?php echo pager_navigation($pager, 'community/list?page=%d'); ?>
+
+<ul>
+<li><?php echo link_to('コミュニティ追加', 'community/edit') ?></li>
+</ul>
