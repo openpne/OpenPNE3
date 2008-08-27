@@ -194,6 +194,14 @@ Navi:
     type: "community"
     uri: "community/quit"
 
+  test_navi_test_first:
+    type: "test"
+    uri: "member/home"
+
+  test_navi_test_second:
+    type: "test"
+    uri: "member/home"
+
 NaviI18n:
   secure_global_navi_home_i18n:
     id: secure_global_navi_home
@@ -273,4 +281,14 @@ NaviI18n:
   community_navi_quit_i18n:
     id: community_navi_quit
     caption: "コミュニティを退会"
+    culture: "ja_JP"
+
+  test_navi_test_first_i18n:
+    id: test_navi_test_first
+    caption: "テスト"
+    culture: "ja_JP"
+
+  test_navi_test_second_i18n:
+    id: test_navi_test_second
+    caption: "テスト"
     culture: "ja_JP"
