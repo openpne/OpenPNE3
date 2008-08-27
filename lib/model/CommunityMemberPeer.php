@@ -38,6 +38,10 @@ class CommunityMemberPeer extends BaseCommunityMemberPeer
 
   public static function join($memberId, $communityId)
   {
+    if (self::isMember($memberId, $communityId)) {
+      throw new Exception('This member has already joined this community.');
+    }
+
     $communityMember = new CommunityMember();
     $communityMember->setMemberId($memberId);
     $communityMember->setCommunityId($communityId);
@@ -46,6 +50,14 @@ class CommunityMemberPeer extends BaseCommunityMemberPeer
 
   public static function quit($memberId, $communityId)
   {
+    if (!self::isMember($memberId, $communityId)) {
+      throw new Exception('This member is not a member of this community.');
+    }
+
+    if (self::isAdmin($memberId, $communityId)) {
+      throw new Exception('This member is community admin.');
+    }
+
     $communityMember = self::retrieveByMemberIdAndCommunityId($memberId, $communityId);
     $communityMember->delete();
   }
