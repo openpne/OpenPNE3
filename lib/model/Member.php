@@ -21,6 +21,11 @@ class Member extends BaseMember
     $c->add(MemberProfilePeer::MEMBER_ID, $this->getId());
     $c->addJoin(MemberProfilePeer::PROFILE_ID, ProfilePeer::ID);
     $profile = MemberProfilePeer::doSelectOne($c);
+
+    if (!$profile) {
+      return null;
+    }
+
     return $profile->getValue();
   }
 }
