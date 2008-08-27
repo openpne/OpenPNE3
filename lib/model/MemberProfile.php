@@ -9,8 +9,8 @@
  */ 
 class MemberProfile extends BaseMemberProfile
 {
-  public $name;
-  public $caption;
+  private $name;
+  private $caption;
 
   public function __toString()
   {
