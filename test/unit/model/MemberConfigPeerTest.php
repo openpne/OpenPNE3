@@ -15,3 +15,13 @@ $t->is($memberConfig->getValue(), 'test value', 'MemberConfig::getValue() return
 $t->cmp_ok(MemberConfigPeer::retrieveByNameAndMemberId('example', 2), '===', NULL, 'retrieveByNameAndMemberId() returns NULL if member_config is not registered');
 $t->cmp_ok(MemberConfigPeer::retrieveByNameAndMemberId('example', 999), '===', NULL, 'retrieveByNameAndMemberId() returns NULL if member does not exist');
 $t->cmp_ok(MemberConfigPeer::retrieveByNameAndMemberId('unknown', 1), '===', NULL, 'retrieveByNameAndMemberId() returns NULL if name does not exist');
+
+//------------------------------------------------------------
+
+$t->diag('MemberConfigPeer::retrieveByNameAndValue()');
+$memberConfig = MemberConfigPeer::retrieveByNameAndValue('example', 'test value');
+$t->isa_ok($memberConfig, 'MemberConfig', 'retrieveByNameAndValue() returns a MemberConfig');
+$t->is($memberConfig->getMemberId(), 1, 'MemberConfig::getMemberId() returns a memberId');
+
+$t->cmp_ok(MemberConfigPeer::retrieveByNameAndValue('example', 'test'), '===', NULL, 'retrieveByNameAndValue() returns NULL if value is not registered');
+$t->cmp_ok(MemberConfigPeer::retrieveByNameAndValue('unknown', 'test value'), '===', NULL, 'retrieveByNameAndValue() returns NULL if name does not exist');
