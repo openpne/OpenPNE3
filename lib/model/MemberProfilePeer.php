@@ -48,8 +48,10 @@ class MemberProfilePeer extends BaseMemberProfilePeer
 
   public static function retrieveByMemberIdAndProfileName($memberId, $profileName)
   {
-    $profile = ProfilePeer::retrieveByName($profileName);
-
-    return self::retrieveByMemberIdAndProfileId($memberId, $profile->getId());
+    $c = new Criteria();
+    $c->add(ProfilePeer::NAME, $profileName);
+    $c->add(MemberProfilePeer::MEMBER_ID, $memberId);
+    $c->addJoin(MemberProfilePeer::PROFILE_ID, ProfilePeer::ID);
+    return MemberProfilePeer::doSelectOne($c);
   }
 }
