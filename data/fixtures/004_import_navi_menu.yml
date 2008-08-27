@@ -37,7 +37,7 @@ Navi:
 
   friend_navi_home:
     type: "friend"
-    uri: "friend/profile"
+    uri: "member/profile"
 
   friend_navi_friend_list:
     type: "friend"

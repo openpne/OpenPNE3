@@ -20,17 +20,17 @@ $t->cmp_ok(MemberProfilePeer::getProfileListByMemberId(999), '===', array(), 'ge
 //------------------------------------------------------------
 
 $t->diag('MemberProfilePeer::retrieveByMemberIdAndProfileId()');
-$memberProfile = MemberProfilePeer::retrieveByMemberIdAndProfileId(1, 3);
+$memberProfile = MemberProfilePeer::retrieveByMemberIdAndProfileId(1, 2);
 $t->isa_ok($memberProfile, 'MemberProfile', 'retrieveByMemberIdAndProfileId() returns a MemberProfile');
-$t->is($memberProfile->getValue(), 'test value', 'MemberProfile::getValue() returns a value');
+$t->is($memberProfile->getValue(), 'よろしくお願いします。', 'MemberProfile::getValue() returns a value');
 $t->cmp_ok(MemberProfilePeer::retrieveByMemberIdAndProfileId(1, 999), '===', NULL, 'retrieveByMemberIdAndProfileId() returns NULL if profile does not exist');
 $t->cmp_ok(MemberProfilePeer::retrieveByMemberIdAndProfileId(999, 1), '===', NULL, 'retrieveByNameAndMemberId() returns NULL if member does not exist');
 
 //------------------------------------------------------------
 
 $t->diag('MemberProfilePeer::retrieveByMemberIdAndProfileName()');
-$memberProfile = MemberProfilePeer::retrieveByMemberIdAndProfileName(1, 'example');
+$memberProfile = MemberProfilePeer::retrieveByMemberIdAndProfileName(1, 'self_intro');
 $t->isa_ok($memberProfile, 'MemberProfile', 'retrieveByMemberIdAndProfileName() returns a MemberProfile');
-$t->is($memberProfile->getValue(), 'test value', 'MemberProfile::getValue() returns a value');
+$t->is($memberProfile->getValue(), 'よろしくお願いします。', 'MemberProfile::getValue() returns a value');
 $t->cmp_ok(MemberProfilePeer::retrieveByMemberIdAndProfileName(1, 'unknown'), '===', NULL, 'retrieveByMemberIdAndProfileName() returns NULL if profile does not exist');
 $t->cmp_ok(MemberProfilePeer::retrieveByMemberIdAndProfileName(999, 'example'), '===', NULL, 'retrieveByNameAndMemberId() returns NULL if member does not exist');
