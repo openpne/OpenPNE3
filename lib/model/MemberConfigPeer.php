@@ -16,11 +16,6 @@ class MemberConfigPeer extends BaseMemberConfigPeer
     $c->add(self::MEMBER_ID, $memberId);
 
     $result = self::doSelectOne($c);
-    if (!$result) {
-      $result = new MemberConfig();
-      $result->setName($name);
-      $result->setMemberId($memberId);
-    }
 
     return $result;
   }

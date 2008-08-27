@@ -35,7 +35,10 @@ class MemberConfigForm extends OpenPNEFormAutoGenerate
       $widgets[$key] = $this->generateWidget($value);
       $validators[$key] = $this->generateValidator($value);
       $labels[$key] = $value['Caption'];
-      $defaults[$key] = MemberConfigPeer::retrieveByNameAndMemberId($key, $memberId)->getValue();
+      $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($key, $memberId);
+      if ($memberConfig) {
+        $defaults[$key] = $memberConfig->getValue();
+      }
     }
 
     $this->setWidgets($widgets);
@@ -89,6 +92,11 @@ class MemberConfigForm extends OpenPNEFormAutoGenerate
   {
     foreach ($this->getValues() as $key => $value) {
       $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($key, $memberId);
+      if ($memberConfig) {
+        $memberConfig = new MemberConfig();
+        $memberConfig->setName($name);
+        $memberConfig->setMemberId($memberId);
+      }
       $memberConfig->setValue($value);
       $memberConfig->save();
     }
