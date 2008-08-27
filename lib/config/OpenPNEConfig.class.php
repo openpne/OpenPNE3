@@ -26,7 +26,7 @@ class OpenPNEConfig extends sfConfig
     }
 
     $config = SnsConfigPeer::retrieveByName($name);
-    if ($config->getId()) {
+    if ($config) {
       self::set($config_name, $config->getValue());
       return $config->getValue();
     }

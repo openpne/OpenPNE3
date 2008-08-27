@@ -15,11 +15,6 @@ class SnsConfigPeer extends BaseSnsConfigPeer
     $c->add(self::NAME, $name);
 
     $result = self::doSelectOne($c);
-    if (!$result) {
-      $result = new SnsConfig();
-      $result->setName($name);
-    }
-
     return $result;
   }
 }
