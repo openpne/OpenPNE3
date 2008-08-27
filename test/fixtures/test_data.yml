@@ -85,6 +85,11 @@ MemberProfile:
     profile_id: profile_self_intro
     value: "よろしくお願いします。"
 
+  first_member_profile_example:
+    member_id: first_member
+    profile_id: profile_example
+    value: "test value"
+
 MemberConfig:
   first_member_config:
     member_id: first_member
