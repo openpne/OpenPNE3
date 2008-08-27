@@ -11,6 +11,10 @@ class FriendPeer extends BaseFriendPeer
 {
   public static function link($memberIdTo, $memberIdFrom)
   {
+    if (self::isFriend($memberIdTo, $memberIdFrom)) {
+      throw new Exception('These members have already linked.');
+    }
+
     $friend1 = new Friend();
     $friend1->setMemberIdTo($memberIdTo);
     $friend1->setMemberIdFrom($memberIdFrom);
@@ -24,6 +28,10 @@ class FriendPeer extends BaseFriendPeer
 
   public static function unlink($memberIdTo, $memberIdFrom)
   {
+    if (!self::isFriend($memberIdTo, $memberIdFrom)) {
+      throw new Exception('These members don\'t link each other.');
+    }
+
     $c = new Criteria();
     $c->add(self::MEMBER_ID_TO, $memberIdTo);
     $c->add(self::MEMBER_ID_FROM, $memberIdFrom);
