@@ -9,7 +9,7 @@
  */ 
 class ProfileOptionPeer extends BaseProfileOptionPeer
 {
-  public static function retrieveByIsProfileId($profileId)
+  public static function retrieveByProfileId($profileId)
   {
     $c = new Criteria();
     $c->add(self::PROFILE_ID, $profileId);

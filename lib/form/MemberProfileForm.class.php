@@ -86,7 +86,7 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
   private function getFormOptions($profileId)
   {
     $result = array();
-    $options = ProfileOptionPeer::retrieveByIsProfileId($profileId);
+    $options = ProfileOptionPeer::retrieveByProfileId($profileId);
 
     foreach ($options as $option) {
       $result[] = $option->getId();
@@ -98,7 +98,7 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
   private function getFormOptionsValue($profileId)
   {
     $result = array();
-    $options = ProfileOptionPeer::retrieveByIsProfileId($profileId);
+    $options = ProfileOptionPeer::retrieveByProfileId($profileId);
 
     foreach ($options as $option) {
       $result[$option->getId()] = $option->getValue();
