@@ -51,31 +51,24 @@ function set_entry_point($id, $name)
 function include_entry_points($id, $name)
 {
   $context = sfContext::getInstance();
+  $lastActionStack = $context->getActionStack()->getLastEntry();
+  $lastAction = $lastActionStack->getModuleName().'/'.$lastActionStack->getActionName();
+
+  $viewInstance = sfContext::getInstance()->get('view_instance');
+  $customizes = $viewInstance->getCustomize('', $id, $lastAction, $name);
+
   $content = '';
-  $extension = '.php';
-
-  $moduleName = $context->getActionStack()->getLastEntry()->getModuleName();
-  $templateName = '_' . $id . $name . $extension;
-  $directories = $context->getConfiguration()->getTemplateDirs($moduleName);
-
-  foreach ($directories as $directory) {
-    $templatePath = $directory . DIRECTORY_SEPARATOR . $templateName;
-
-    if (_is_disabled_plugin_dir($directory)) {
+  foreach ($customizes as $customize) {
+    $moduleName = $customize[0];
+    $actionName = '_'.$customize[1];
+    $view = new sfPartialView($context, $moduleName, $actionName, '');
+    if (_is_disabled_plugin_dir($view->getDirectory())) {
       continue;
     }
-
-    if (is_readable($templatePath)) {
-      ob_start();
-      ob_implicit_flush(0);
-      require $templatePath;
-      $content .= ob_get_clean();
-    }
+    $content .= $view->render();
   }
 
-  slot($id . $name);
   echo $content;
-  end_slot();
 }
 
 function _is_disabled_plugin_dir($directory)

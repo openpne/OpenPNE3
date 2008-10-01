@@ -1,0 +1,138 @@
+<?php
+
+/**
+ * A view for OpenPNE.
+ *
+ * @package    OpenPNE
+ * @subpackage view
+ * @author     Kousuke Ebihara <ebihara@tejimaya.net>
+ */
+
+class sfOpenPNEView extends sfPHPView
+{
+  public $customizeConditions = array(
+    'category' => array(
+      'all' => array(),
+    ),
+    'parts' => array(
+      'all' => array(),
+    ),
+    'action' => array(
+      'all' => array(),
+    ),
+    'target' => array(
+      'all' => array(),
+    ),
+  );
+
+  public $customizeTemplates = array();
+
+  /**
+   * Sets the customize.
+   *
+   * @param string $attributeName  A template attribute name
+   * @param string $moduleName     A module name
+   * @param string $templateName   A template name
+   * @param array  $categoryNames  Category names
+   * @param array  $partsNames     Parts names
+   * @param array  $actionNames    Action names
+   * @param array  $targetNames    Target names
+   */
+  public function setCustomize($attributeName, $moduleName, $templateName, $categoryNames, $partsNames, $actionNames, $targetNames)
+  {
+    if (empty($categoryNames))
+    {
+      $this->customizeConditions['category']['all'][] = $attributeName;
+    }
+    else
+    {
+      foreach ($categoryNames as $categoryName)
+      {
+        $this->customizeConditions['category'][$categoryName][] = $attributeName;
+      }
+    }
+
+    if (empty($partsNames))
+    {
+      $this->customizeConditions['parts']['all'][] = $attributeName;
+    }
+    else
+    {
+      foreach ($partsNames as $partsName)
+      {
+        $this->customizeConditions['parts'][$partsName][] = $attributeName;
+      }
+    }
+
+    if (empty($actionNames))
+    {
+      $this->customizeConditions['action']['all'][] = $attributeName;
+    }
+    else
+    {
+      foreach ($actionNames as $actionName)
+      {
+        $this->customizeConditions['action'][$actionName][] = $attributeName;
+      }
+    }
+
+    if (empty($targetNames))
+    {
+      $this->customizeConditions['target']['all'][] = $attributeName;
+    }
+    else
+    {
+      foreach ($targetNames as $targetName)
+      {
+        $this->customizeConditions['target'][$targetName][] = $attributeName;
+      }
+    }
+
+    $this->customizeTemplates[$attributeName] = array($moduleName, $templateName);
+  }
+
+  /**
+   * Gets the customize.
+   *
+   * @param array  $categoryName  A category name
+   * @param array  $partsName     A parts name
+   * @param array  $actionName    An action name
+   * @param array  $targetName    A target name
+   */
+  public function getCustomize($categoryName, $partsName, $actionName, $targetName)
+  {
+    $result = array();
+
+    $categoryCustomizes = $this->customizeConditions['category']['all'];
+    if ($categoryName && !empty($this->customizeConditions['category'][$categoryName]))
+    {
+      $categoryCustomizes = array_merge($categoryCustomizes, $this->customizeConditions['category'][$categoryName]);
+    }
+
+    $partsCustomizes = $this->customizeConditions['parts']['all'];
+    if ($partsName && !empty($this->customizeConditions['parts'][$partsName]))
+    {
+      $partsCustomizes = array_merge($partsCustomizes, $this->customizeConditions['parts'][$partsName]);
+    }
+
+    $actionCustomizes = $this->customizeConditions['action']['all'];
+    if ($actionName && !empty($this->customizeConditions['action'][$actionName]))
+    {
+      $actionCustomizes = array_merge($actionCustomizes, $this->customizeConditions['action'][$actionName]);
+    }
+
+    $targetCustomizes = $this->customizeConditions['target']['all'];
+    if ($targetName && !empty($this->customizeConditions['target'][$targetName]))
+    {
+      $targetCustomizes = array_merge($targetCustomizes, $this->customizeConditions['target'][$targetName]);
+    }
+
+    $customizes = array_intersect($categoryCustomizes, $partsCustomizes, $actionCustomizes, $targetCustomizes);
+    foreach ($customizes as $customize)
+    {
+      $result[] = $this->customizeTemplates[$customize];
+    }
+
+    return $result;
+  }
+}
