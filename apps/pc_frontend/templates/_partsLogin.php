@@ -1,8 +1,8 @@
-<?php set_entry_point($id, 'Before') ?>
+<?php include_customizes($id, 'before') ?>
 
 <div id="<?php echo $id ?>">
 
-<?php set_entry_point($id, 'Top') ?>
+<?php include_customizes($id, 'top') ?>
 
 <form action="<?php echo $link_to ?>" method="post">
 <table>
@@ -13,8 +13,8 @@
 </table>
 </form>
 
-<?php set_entry_point($id, 'Bottom') ?>
+<?php include_customizes($id, 'bottom') ?>
 
 </div>
 
-<?php set_entry_point($id, 'After') ?>
+<?php include_customizes($id, 'after') ?>

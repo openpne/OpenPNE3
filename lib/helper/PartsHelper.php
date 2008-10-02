@@ -28,27 +28,12 @@ function include_login_parts($id, $form, $link_to)
 }
 
 /**
- * Sets entry point.
+ * Includes customizes.
  *
  * @param string $id
  * @param string $name
  */
-function set_entry_point($id, $name)
-{
-  if (!has_slot($id . $name)) {
-    include_entry_points($id, $name);
-  }
-
-  include_slot($id . $name);
-}
-
-/**
- * Includes entry points.
- *
- * @param string $id
- * @param string $name
- */
-function include_entry_points($id, $name)
+function include_customizes($id, $name)
 {
   $context = sfContext::getInstance();
   $lastActionStack = $context->getActionStack()->getLastEntry();
@@ -60,6 +45,9 @@ function include_entry_points($id, $name)
   $content = '';
   foreach ($customizes as $customize) {
     $moduleName = $customize[0];
+    if (!$moduleName) {
+      $moduleName = $lastActionStack->getModuleName();
+    }
     $actionName = '_'.$customize[1];
     $view = new sfPartialView($context, $moduleName, $actionName, '');
     if (_is_disabled_plugin_dir($view->getDirectory())) {

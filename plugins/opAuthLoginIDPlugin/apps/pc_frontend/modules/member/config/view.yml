@@ -1,0 +1,5 @@
+loginSuccess:
+  customize:
+    linkToRegisterLoginID:
+      parts:  [login]
+      target: [bottom]

@@ -12,7 +12,6 @@ class sfOpenPNEViewConfigHandler extends sfViewConfigHandler
   public function execute($configFiles)
   {
     $result = parent::execute($configFiles);
-
     $data = array();
 
     $first = true;
@@ -58,8 +57,8 @@ class sfOpenPNEViewConfigHandler extends sfViewConfigHandler
         continue;
       }
 
-      $template = array(null, null);
-      if (is_array($customize['template']) && count($customize['template']) == 2)
+      $template = array(null, $name);
+      if (!empty($customize['template']) && is_array($customize['template']))
       {
         $template = $customize['template'];
       }
