@@ -36,17 +36,15 @@ function include_login_parts($id, $form, $link_to)
 function include_customizes($id, $name)
 {
   $context = sfContext::getInstance();
-  $lastActionStack = $context->getActionStack()->getLastEntry();
-  $lastAction = $lastActionStack->getModuleName().'/'.$lastActionStack->getActionName();
 
-  $viewInstance = sfContext::getInstance()->get('view_instance');
-  $customizes = $viewInstance->getCustomize('', $id, $lastAction, $name);
+  $viewInstance = $context->get('view_instance');
+  $customizes = $viewInstance->getCustomize('', $id, $name);
 
   $content = '';
   foreach ($customizes as $customize) {
     $moduleName = $customize[0];
     if (!$moduleName) {
-      $moduleName = $lastActionStack->getModuleName();
+      $moduleName = $context->getActionStack()->getLastEntry()->getModuleName();
     }
     $actionName = '_'.$customize[1];
     $view = new sfPartialView($context, $moduleName, $actionName, '');

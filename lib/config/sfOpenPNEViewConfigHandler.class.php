@@ -81,16 +81,6 @@ class sfOpenPNEViewConfigHandler extends sfViewConfigHandler
       }
       $parts .= ')';
 
-      $action = 'array(';
-      if (!empty($customize['action']) && is_array($customize['action']))
-      {
-        foreach ($customize['action'] as $value)
-        {
-          $action .= '\'' . $value . '\',';
-        }
-      }
-      $action .= ')';
-
       $target = 'array(';
       if (!empty($customize['target']) && is_array($customize['target']))
       {
@@ -100,7 +90,7 @@ class sfOpenPNEViewConfigHandler extends sfViewConfigHandler
       }
       $target .= ')';
 
-      $data .= "  \$this->setCustomize('$name', '{$template[0]}', '{$template[1]}', $category, $parts, $action, $target);\n";
+      $data .= "  \$this->setCustomize('$name', '{$template[0]}', '{$template[1]}', $category, $parts, $target);\n";
       $data .= "  if (sfConfig::get('sf_logging_enabled')) \$this->context->getEventDispatcher()->notify(new sfEvent(\$this, 'application.log', array(sprintf('Set customize \"%s\" (%s/%s)', '$name', '{$template[0]}', '{$template[1]}'))));\n";
     }
 

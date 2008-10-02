@@ -17,9 +17,6 @@ class sfOpenPNEView extends sfPHPView
     'parts' => array(
       'all' => array(),
     ),
-    'action' => array(
-      'all' => array(),
-    ),
     'target' => array(
       'all' => array(),
     ),
@@ -35,10 +32,9 @@ class sfOpenPNEView extends sfPHPView
    * @param string $templateName   A template name
    * @param array  $categoryNames  Category names
    * @param array  $partsNames     Parts names
-   * @param array  $actionNames    Action names
    * @param array  $targetNames    Target names
    */
-  public function setCustomize($attributeName, $moduleName, $templateName, $categoryNames, $partsNames, $actionNames, $targetNames)
+  public function setCustomize($attributeName, $moduleName, $templateName, $categoryNames, $partsNames, $targetNames)
   {
     if (empty($categoryNames))
     {
@@ -64,18 +60,6 @@ class sfOpenPNEView extends sfPHPView
       }
     }
 
-    if (empty($actionNames))
-    {
-      $this->customizeConditions['action']['all'][] = $attributeName;
-    }
-    else
-    {
-      foreach ($actionNames as $actionName)
-      {
-        $this->customizeConditions['action'][$actionName][] = $attributeName;
-      }
-    }
-
     if (empty($targetNames))
     {
       $this->customizeConditions['target']['all'][] = $attributeName;
@@ -96,10 +80,9 @@ class sfOpenPNEView extends sfPHPView
    *
    * @param array  $categoryName  A category name
    * @param array  $partsName     A parts name
-   * @param array  $actionName    An action name
    * @param array  $targetName    A target name
    */
-  public function getCustomize($categoryName, $partsName, $actionName, $targetName)
+  public function getCustomize($categoryName, $partsName, $targetName)
   {
     $result = array();
 
@@ -115,19 +98,13 @@ class sfOpenPNEView extends sfPHPView
       $partsCustomizes = array_merge($partsCustomizes, $this->customizeConditions['parts'][$partsName]);
     }
 
-    $actionCustomizes = $this->customizeConditions['action']['all'];
-    if ($actionName && !empty($this->customizeConditions['action'][$actionName]))
-    {
-      $actionCustomizes = array_merge($actionCustomizes, $this->customizeConditions['action'][$actionName]);
-    }
-
     $targetCustomizes = $this->customizeConditions['target']['all'];
     if ($targetName && !empty($this->customizeConditions['target'][$targetName]))
     {
       $targetCustomizes = array_merge($targetCustomizes, $this->customizeConditions['target'][$targetName]);
     }
 
-    $customizes = array_intersect($categoryCustomizes, $partsCustomizes, $actionCustomizes, $targetCustomizes);
+    $customizes = array_intersect($categoryCustomizes, $partsCustomizes, $targetCustomizes);
     foreach ($customizes as $customize)
     {
       $result[] = $this->customizeTemplates[$customize];
