@@ -81,10 +81,14 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
    */
   public function getConfigPaths($configPath)
   {
-    $globalConfigPath = basename(dirname($configPath)).'/'.basename($configPath);
     $files = array();
 
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/'.sfConfig::get('sf_app').'/'.$configPath))
+    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/'.$configPath))
+    {
+      $files = array_merge($files, $pluginDirs); // plugin configurations
+    }
+
+    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/'.$configPath))
     {
       $files = array_merge($files, $pluginDirs); // plugin applications
     }
