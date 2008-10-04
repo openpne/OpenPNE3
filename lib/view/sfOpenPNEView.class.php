@@ -5,7 +5,7 @@
  *
  * @package    OpenPNE
  * @subpackage view
- * @author     Kousuke Ebihara <ebihara@tejimaya.net>
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 
 class sfOpenPNEView extends sfPHPView

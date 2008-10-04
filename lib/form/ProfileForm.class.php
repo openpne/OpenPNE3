@@ -5,7 +5,7 @@
  *
  * @package    symfony
  * @subpackage form
- * @author     Kousuke Ebihara <ebihara@tejimaya.net>
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 class ProfileForm extends BaseProfileForm
 {

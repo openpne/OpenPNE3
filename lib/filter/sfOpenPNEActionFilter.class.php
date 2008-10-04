@@ -5,7 +5,7 @@
  *
  * @package    OpenPNE
  * @subpackage filter
- * @author     Kousuke Ebihara <ebihara@tejimaya.net>
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 class sfOpenPNEActionFilter extends sfFilter
 {

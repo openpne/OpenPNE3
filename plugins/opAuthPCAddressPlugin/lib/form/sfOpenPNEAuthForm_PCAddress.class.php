@@ -5,7 +5,7 @@
  *
  * @package    symfony
  * @subpackage user
- * @author     Kousuke Ebihara <ebihara@tejimaya.net>
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 class sfOpenPNEAuthForm_PCAddress extends sfOpenPNEAuthForm
 {

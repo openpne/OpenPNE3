@@ -5,7 +5,7 @@
  *
  * @package    OpenPNE
  * @subpackage config
- * @author     Kousuke Ebihara <ebihara@tejimaya.net>
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 class OpenPNEConfig extends sfConfig
 {

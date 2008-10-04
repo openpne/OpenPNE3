@@ -5,7 +5,7 @@
  *
  * @package    form
  * @subpackage member_config
- * @author     Kousuke Ebihara <ebihara@tejimaya.net>
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 class MemberConfigForm extends OpenPNEFormAutoGenerate
 {

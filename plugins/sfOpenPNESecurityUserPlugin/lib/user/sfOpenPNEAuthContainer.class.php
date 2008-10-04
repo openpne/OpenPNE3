@@ -5,7 +5,7 @@
  *
  * @package    OpenPNE
  * @subpackage user
- * @author     Kousuke Ebihara <ebihara@tejimaya.net>
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 abstract class sfOpenPNEAuthContainer
 {

@@ -5,7 +5,7 @@
  *
  * @package    OpenPNE
  * @subpackage form
- * @author     Kousuke Ebihara <ebihara@tejimaya.net>
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 class PCAddressForm extends MemberConfigForm
 {

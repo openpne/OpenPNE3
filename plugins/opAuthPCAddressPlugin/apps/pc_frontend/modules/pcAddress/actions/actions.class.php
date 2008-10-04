@@ -5,7 +5,7 @@
  *
  * @package    OpenPNE
  * @subpackage pcAddress
- * @author     Kousuke Ebihara <ebihara@tejimaya.net>
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  * @version    SVN: $Id: actions.class.php 9301 2008-05-27 01:08:46Z dwhittle $
  */
 class pcAddressActions extends sfActions
