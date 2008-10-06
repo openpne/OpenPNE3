@@ -14,26 +14,28 @@ class sfOpenPNEActionFilter extends sfFilter
    */
   final public function execute($filterChain)
   {
-    $this->preFilter();
+    // executes pre filter
+    $preFilterMethod = 'pre'.ucfirst($this->getCurrentAction()->getActionName());
+    if (is_callable(array($this, $preFilterMethod))) {
+      $this->$preFilterMethod();
+    }
+
     $filterChain->execute();
-    $this->postFilter();
+
+    // executes post filter
+    $postFilterMethod = 'post'.ucfirst($this->getCurrentAction()->getActionName());
+    if (is_callable(array($this, $postFilterMethod))) {
+      $this->$postFilterMethod();
+    }
   }
 
  /**
-  * Executes this filter before an action.
+  * Gets the current action instance.
   *
-  * If you want to do something before an action, you have to override the preFilter() method.
+  * @return sfAction
   */
-  protected function preFilter()
+  protected function getCurrentAction()
   {
-  }
-
- /**
-  * Executes this filter after an action.
-  *
-  * If you want to do something after an action, you have to override the postFilter() method.
-  */
-  protected function postFilter()
-  {
+    return $this->context->getController()->getActionStack()->getLastEntry()->getActionInstance();
   }
 }
