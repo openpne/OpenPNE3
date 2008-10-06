@@ -56,7 +56,9 @@ class sfOpenPNEFilterConfigHandler extends sfFilterConfigHandler
       preg_match_all($regex, file_get_contents($file), $classes);
       foreach ($classes[1] as $class) {
         $data .= <<<EOF
-if ('$moduleName' == \$actionInstance->getModuleName()) {  {$this->addFilter($class, $class, $parameters)}
+if ('$moduleName' == \$actionInstance->getModuleName()) {
+  require_once '$file';
+  {$this->addFilter($class, $class, $parameters)}
 }
 EOF;
       }
