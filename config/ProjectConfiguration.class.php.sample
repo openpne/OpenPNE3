@@ -7,5 +7,12 @@ class ProjectConfiguration extends sfProjectConfiguration
 {
   public function setup()
   {
+    $this->setIncludePath();
+  }
+
+  public function setIncludePath()
+  {
+    // PEAR
+    set_include_path(get_include_path().PATH_SEPARATOR.dirname(__FILE__).'/../lib/vendor/PEAR/');
   }
 }
