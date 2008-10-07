@@ -1,0 +1,7 @@
+modules/*/config/view.yml:
+  class:    sfOpenPNEViewConfigHandler
+  file:     %SF_LIB_DIR%/config/sfOpenPNEViewConfigHandler.class.php
+
+config/filters.yml:
+  class:    sfOpenPNEFilterConfigHandler
+  file:     %SF_LIB_DIR%/config/sfOpenPNEFilterConfigHandler.class.php
