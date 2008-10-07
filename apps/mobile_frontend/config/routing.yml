@@ -1,8 +1,9 @@
-# default rules
+# openpne rules
 homepage:
   url:   /
-  param: { module: default, action: index }
+  param: { module: member, action: home }
 
+# default rules
 default_symfony:
   url:   /symfony/:action/*
   param: { module: default }
