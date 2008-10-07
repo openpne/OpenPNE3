@@ -92,9 +92,9 @@ class MemberConfigForm extends OpenPNEFormAutoGenerate
   {
     foreach ($this->getValues() as $key => $value) {
       $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($key, $memberId);
-      if ($memberConfig) {
+      if (!$memberConfig) {
         $memberConfig = new MemberConfig();
-        $memberConfig->setName($name);
+        $memberConfig->setName($key);
         $memberConfig->setMemberId($memberId);
       }
       $memberConfig->setValue($value);

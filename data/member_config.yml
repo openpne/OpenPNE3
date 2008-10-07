@@ -19,3 +19,12 @@ pc_frontend:
       IsRegist:   true
       IsConfig:   true
       IsRequired: true
+
+    mobile_address:
+      Name:       "mobile_address"
+      Caption:    "携帯メールアドレス"
+      FormType:   "input"
+      ValueType:  "email"
+      IsRegist:   true
+      IsConfig:   true
+      IsRequired: true
