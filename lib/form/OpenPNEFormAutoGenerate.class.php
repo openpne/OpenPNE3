@@ -40,24 +40,45 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
 
   protected function generateValidator($field, $choices = array())
   {
-    if ($field['FormType'] == 'checkbox' || $field['FormType'] == 'select' || $field['FormType'] == 'radio') {
+    if ($field['FormType'] === 'checkbox' || $field['FormType'] === 'select' || $field['FormType'] === 'radio') {
       $obj = new sfValidatorChoice(array('choices' => $choices));
       return $obj;
     }
 
     $option = array('required' => $field['IsRequired']);
-    switch ($field['ValueType']) {
+
+    if ($field['ValueType'] === 'datetime' || $field['ValueType'] === 'integer')
+    {
+        if (isset($field['ValueMin']))
+        {
+          $option['min'] = $field['ValueMin'];
+        }
+        if (isset($field['ValueMax']))
+        {
+          $option['max'] = $field['ValueMax'];
+        }
+    }
+    else
+    {
+        if (isset($field['ValueMin']))
+        {
+          $option['min_length'] = $field['ValueMin'];
+        }
+        if (isset($field['ValueMax']))
+        {
+          $option['max_length'] = $field['ValueMax'];
+        }
+    }
+
+    switch ($field['ValueType'])
+    {
       case 'datetime':
-        $option['min'] = $field['ValueMin'];
-        $option['max'] = $field['ValueMax'];
         $obj = new sfValidatorDatetime($option);
         break;
       case 'email':
         $obj = new sfValidatorEmail($option);
         break;
       case 'integer':
-        $option['min'] = $field['ValueMin'];
-        $option['max'] = $field['ValueMax'];
         $obj = new sfValidatorInteger($option);
         break;
       case 'regexp':
@@ -67,9 +88,10 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
       case 'url':
         $obj = new sfValidatorUrl($option);
         break;
+      case 'password':
+        $obj = new sfValidatorPassword($option);
+        break;
       default:
-        $option['min_length'] = $field['ValueMin'];
-        $option['max_length'] = $field['ValueMax'];
         $obj = new sfValidatorString($option);
     }
 

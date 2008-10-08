@@ -27,4 +27,13 @@ pc_frontend:
       ValueType:  "email"
       IsRegist:   true
       IsConfig:   true
+      IsRequired: false
+
+    password:
+      Name:       "password"
+      Caption:    "パスワード"
+      FormType:   "password"
+      ValueType:  "password"
+      IsRegist:   true
+      IsConfig:   true
       IsRequired: true

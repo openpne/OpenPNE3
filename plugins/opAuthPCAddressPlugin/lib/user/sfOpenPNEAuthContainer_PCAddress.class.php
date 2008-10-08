@@ -21,14 +21,13 @@ class sfOpenPNEAuthContainer_PCAddress extends sfOpenPNEAuthContainer
     $password = $form->getValue('password');
 
     $data = MemberConfigPeer::retrieveByNameAndValue('pc_address', $pc_address);
-
     if (!$data) {
       return false;
     }
 
-    $authPCAddress = $data->getMember()->getAuthenticationPCAddresss();
-    if ($authPCAddress[0]->getPassword() == md5($password)) {
-      return $authPCAddress[0]->getMemberId();
+    $valid_password = MemberConfigPeer::retrieveByNameAndMemberId('password', $data->getMember()->getId())->getValue();
+    if (md5($password) === $valid_password) {
+      return $data->getMember()->getId();
     }
 
     return false;
