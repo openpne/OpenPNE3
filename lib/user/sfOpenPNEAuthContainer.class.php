@@ -9,6 +9,15 @@
  */
 abstract class sfOpenPNEAuthContainer
 {
+  public function __construct()
+  {
+    $this->configure();
+  }
+
+  public function configure()
+  {
+  }
+
   /**
    * Fetches data from storage container.
    *
