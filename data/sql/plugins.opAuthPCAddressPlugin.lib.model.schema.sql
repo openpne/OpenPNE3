@@ -14,7 +14,6 @@ CREATE TABLE `authentication_pc_address`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`member_id` INTEGER,
-	`password` VARCHAR(32),
 	`register_session` VARCHAR(32),
 	PRIMARY KEY (`id`),
 	INDEX `authentication_pc_address_FI_1` (`member_id`),

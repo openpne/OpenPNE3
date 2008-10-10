@@ -90,12 +90,7 @@ class sfOpenPNEAuthContainer_PCAddress extends sfOpenPNEAuthContainer
       return false;
     }
 
-    $password = md5($form->getValue('password'));
-
-    $authPCAddress = AuthenticationPcAddressPeer::retrieveByMemberId($memberId);
-    $authPCAddress->setPassword($password);
-
-    return $authPCAddress->save();
+    return true;
   }
 
   /**

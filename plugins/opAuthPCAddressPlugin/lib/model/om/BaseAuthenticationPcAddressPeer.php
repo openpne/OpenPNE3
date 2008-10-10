@@ -13,7 +13,7 @@ abstract class BaseAuthenticationPcAddressPeer {
 	const CLASS_DEFAULT = 'plugins.opAuthPCAddressPlugin.lib.model.AuthenticationPcAddress';
 
 	
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 3;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -26,9 +26,6 @@ abstract class BaseAuthenticationPcAddressPeer {
 	const MEMBER_ID = 'authentication_pc_address.MEMBER_ID';
 
 	
-	const PASSWORD = 'authentication_pc_address.PASSWORD';
-
-	
 	const REGISTER_SESSION = 'authentication_pc_address.REGISTER_SESSION';
 
 	
@@ -37,18 +34,18 @@ abstract class BaseAuthenticationPcAddressPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'MemberId', 'Password', 'RegisterSession', ),
-		BasePeer::TYPE_COLNAME => array (AuthenticationPcAddressPeer::ID, AuthenticationPcAddressPeer::MEMBER_ID, AuthenticationPcAddressPeer::PASSWORD, AuthenticationPcAddressPeer::REGISTER_SESSION, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'member_id', 'password', 'register_session', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'MemberId', 'RegisterSession', ),
+		BasePeer::TYPE_COLNAME => array (AuthenticationPcAddressPeer::ID, AuthenticationPcAddressPeer::MEMBER_ID, AuthenticationPcAddressPeer::REGISTER_SESSION, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'member_id', 'register_session', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'MemberId' => 1, 'Password' => 2, 'RegisterSession' => 3, ),
-		BasePeer::TYPE_COLNAME => array (AuthenticationPcAddressPeer::ID => 0, AuthenticationPcAddressPeer::MEMBER_ID => 1, AuthenticationPcAddressPeer::PASSWORD => 2, AuthenticationPcAddressPeer::REGISTER_SESSION => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'member_id' => 1, 'password' => 2, 'register_session' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'MemberId' => 1, 'RegisterSession' => 2, ),
+		BasePeer::TYPE_COLNAME => array (AuthenticationPcAddressPeer::ID => 0, AuthenticationPcAddressPeer::MEMBER_ID => 1, AuthenticationPcAddressPeer::REGISTER_SESSION => 2, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'member_id' => 1, 'register_session' => 2, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	
@@ -104,8 +101,6 @@ abstract class BaseAuthenticationPcAddressPeer {
 		$criteria->addSelectColumn(AuthenticationPcAddressPeer::ID);
 
 		$criteria->addSelectColumn(AuthenticationPcAddressPeer::MEMBER_ID);
-
-		$criteria->addSelectColumn(AuthenticationPcAddressPeer::PASSWORD);
 
 		$criteria->addSelectColumn(AuthenticationPcAddressPeer::REGISTER_SESSION);
 

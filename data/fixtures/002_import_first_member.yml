@@ -13,7 +13,6 @@ AuthenticationLoginId:
 AuthenticationPcAddress:
   first_pc_address:
     member_id: first_member
-    password: <?php echo md5('password') . "\n"; ?>
 
 MemberProfile:
   first_member_profile_sex:
@@ -31,3 +30,9 @@ MemberConfig:
     member_id: first_member
     name: "pc_address"
     value: "sns@example.com"
+
+  first_member_password:
+    member_id: first_member
+    name: "password"
+    value: <?php echo md5('password') . "\n"; ?>
+

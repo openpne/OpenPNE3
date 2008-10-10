@@ -36,8 +36,6 @@ class AuthenticationPcAddressMapBuilder {
 
 		$tMap->addForeignKey('MEMBER_ID', 'MemberId', 'int', CreoleTypes::INTEGER, 'member', 'ID', false, null);
 
-		$tMap->addColumn('PASSWORD', 'Password', 'string', CreoleTypes::VARCHAR, false, 32);
-
 		$tMap->addColumn('REGISTER_SESSION', 'RegisterSession', 'string', CreoleTypes::VARCHAR, false, 32);
 
 	} 

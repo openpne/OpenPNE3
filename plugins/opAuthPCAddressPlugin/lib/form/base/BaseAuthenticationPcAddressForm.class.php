@@ -14,14 +14,12 @@ class BaseAuthenticationPcAddressForm extends BaseFormPropel
     $this->setWidgets(array(
       'id'               => new sfWidgetFormInputHidden(),
       'member_id'        => new sfWidgetFormPropelSelect(array('model' => 'Member', 'add_empty' => true)),
-      'password'         => new sfWidgetFormInput(),
       'register_session' => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
       'id'               => new sfValidatorPropelChoice(array('model' => 'AuthenticationPcAddress', 'column' => 'id', 'required' => false)),
       'member_id'        => new sfValidatorPropelChoice(array('model' => 'Member', 'column' => 'id', 'required' => false)),
-      'password'         => new sfValidatorString(array('max_length' => 32, 'required' => false)),
       'register_session' => new sfValidatorString(array('max_length' => 32, 'required' => false)),
     ));
 

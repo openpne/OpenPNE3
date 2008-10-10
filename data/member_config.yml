@@ -25,7 +25,7 @@ pc_frontend:
       Caption:    "携帯メールアドレス"
       FormType:   "input"
       ValueType:  "email"
-      IsRegist:   true
+      IsRegist:   false
       IsConfig:   true
       IsRequired: false
 

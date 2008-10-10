@@ -30,15 +30,16 @@ class sfOpenPNEAuthForm_PCAddress extends sfOpenPNEAuthForm
   {
     parent::setForRegisterWidgets($member);
 
-    $this->validatorSchema['password_confirm'] = new sfValidatorString();
-    $this->widgetSchema['password_confirm'] = new sfWidgetFormInputPassword();
-
-    $this->mergePostValidator(new sfValidatorSchemaCompare('password', '==', 'password_confirm'));
-
     // FIXME
     unset($this->configForm->validatorSchema['pc_address']);
     unset($this->configForm->widgetSchema['pc_address']);
-    unset($this->validatorSchema['pc_address']);
-    unset($this->widgetSchema['pc_address']);
+    $this->unsetFormField('pc_address');
+    $this->unsetFormField('password');
+  }
+
+  private function unsetFormField($name)
+  {
+    unset($this->validatorSchema[$name]);
+    unset($this->widgetSchema[$name]);
   }
 }

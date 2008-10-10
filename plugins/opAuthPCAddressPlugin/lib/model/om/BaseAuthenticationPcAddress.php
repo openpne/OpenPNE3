@@ -17,10 +17,6 @@ abstract class BaseAuthenticationPcAddress extends BaseObject  implements Persis
 
 
 	
-	protected $password;
-
-
-	
 	protected $register_session;
 
 	
@@ -44,13 +40,6 @@ abstract class BaseAuthenticationPcAddress extends BaseObject  implements Persis
 	{
 
 		return $this->member_id;
-	}
-
-	
-	public function getPassword()
-	{
-
-		return $this->password;
 	}
 
 	
@@ -93,20 +82,6 @@ abstract class BaseAuthenticationPcAddress extends BaseObject  implements Persis
 
 	} 
 	
-	public function setPassword($v)
-	{
-
-						if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->password !== $v) {
-			$this->password = $v;
-			$this->modifiedColumns[] = AuthenticationPcAddressPeer::PASSWORD;
-		}
-
-	} 
-	
 	public function setRegisterSession($v)
 	{
 
@@ -129,15 +104,13 @@ abstract class BaseAuthenticationPcAddress extends BaseObject  implements Persis
 
 			$this->member_id = $rs->getInt($startcol + 1);
 
-			$this->password = $rs->getString($startcol + 2);
-
-			$this->register_session = $rs->getString($startcol + 3);
+			$this->register_session = $rs->getString($startcol + 2);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 4; 
+						return $startcol + 3; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating AuthenticationPcAddress object", $e);
 		}
@@ -288,9 +261,6 @@ abstract class BaseAuthenticationPcAddress extends BaseObject  implements Persis
 				return $this->getMemberId();
 				break;
 			case 2:
-				return $this->getPassword();
-				break;
-			case 3:
 				return $this->getRegisterSession();
 				break;
 			default:
@@ -305,8 +275,7 @@ abstract class BaseAuthenticationPcAddress extends BaseObject  implements Persis
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getMemberId(),
-			$keys[2] => $this->getPassword(),
-			$keys[3] => $this->getRegisterSession(),
+			$keys[2] => $this->getRegisterSession(),
 		);
 		return $result;
 	}
@@ -329,9 +298,6 @@ abstract class BaseAuthenticationPcAddress extends BaseObject  implements Persis
 				$this->setMemberId($value);
 				break;
 			case 2:
-				$this->setPassword($value);
-				break;
-			case 3:
 				$this->setRegisterSession($value);
 				break;
 		} 	}
@@ -343,8 +309,7 @@ abstract class BaseAuthenticationPcAddress extends BaseObject  implements Persis
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setMemberId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setPassword($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setRegisterSession($arr[$keys[3]]);
+		if (array_key_exists($keys[2], $arr)) $this->setRegisterSession($arr[$keys[2]]);
 	}
 
 	
@@ -354,7 +319,6 @@ abstract class BaseAuthenticationPcAddress extends BaseObject  implements Persis
 
 		if ($this->isColumnModified(AuthenticationPcAddressPeer::ID)) $criteria->add(AuthenticationPcAddressPeer::ID, $this->id);
 		if ($this->isColumnModified(AuthenticationPcAddressPeer::MEMBER_ID)) $criteria->add(AuthenticationPcAddressPeer::MEMBER_ID, $this->member_id);
-		if ($this->isColumnModified(AuthenticationPcAddressPeer::PASSWORD)) $criteria->add(AuthenticationPcAddressPeer::PASSWORD, $this->password);
 		if ($this->isColumnModified(AuthenticationPcAddressPeer::REGISTER_SESSION)) $criteria->add(AuthenticationPcAddressPeer::REGISTER_SESSION, $this->register_session);
 
 		return $criteria;
@@ -387,8 +351,6 @@ abstract class BaseAuthenticationPcAddress extends BaseObject  implements Persis
 	{
 
 		$copyObj->setMemberId($this->member_id);
-
-		$copyObj->setPassword($this->password);
 
 		$copyObj->setRegisterSession($this->register_session);
 
