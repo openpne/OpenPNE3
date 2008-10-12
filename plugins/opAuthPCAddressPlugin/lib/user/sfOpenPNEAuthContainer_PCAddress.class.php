@@ -46,7 +46,7 @@ class sfOpenPNEAuthContainer_PCAddress extends sfOpenPNEAuthContainer
       return false;
     }
 
-    if (!MemberConfigPeer::retrieveByNameAndMemberId('pc_address', $member->getId())) {
+    if (!MemberConfigPeer::retrieveByNameAndMemberId('pc_address_pre', $member->getId())) {
       return false;
     }
 
@@ -90,23 +90,23 @@ class sfOpenPNEAuthContainer_PCAddress extends sfOpenPNEAuthContainer
       return false;
     }
 
-    return true;
+    $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId('pc_address_pre', $memberId);
+    $memberConfig->setName('pc_address');
+    return $memberConfig->save();
   }
 
   /**
    * Registers E-mail address.
    *
    * @param  string $address
-   * @param  string $session
-   * @return int
+   * @return Member
    */
-  public function registerEmailAddress($address, $session)
+  public function registerEmailAddress($address)
   {
-    $memberConfig = MemberConfigPeer::retrieveByNameAndValue('pc_address', $address);
+    $memberConfig = MemberConfigPeer::retrieveByNameAndValue('pc_address_pre', $address);
     if ($memberConfig) {
-      $authPCAddress = AuthenticationPcAddressPeer::retrieveByMemberId($memberConfig->getMemberId());
-      $authPCAddress->setRegisterSession($session);
-      return $authPCAddress->save();
+      $memberConfig->saveToken();
+      return $memberConfig->getMember();
     }
 
     $member = new Member();
@@ -115,13 +115,10 @@ class sfOpenPNEAuthContainer_PCAddress extends sfOpenPNEAuthContainer
     $memberConfig = new MemberConfig();
     $memberConfig->setName('pc_address');
     $memberConfig->setValue($address);
+    $memberConfig->setMember($member);
+    $memberConfig->savePre();
+    $memberConfig->saveToken();
 
-    $member->addMemberConfig($memberConfig);
-    $member->save();
-
-    $authPCAddress = new AuthenticationPcAddress();
-    $authPCAddress->setMember($member);
-    $authPCAddress->setRegisterSession($session);
-    return $authPCAddress->save();
+    return $member;
   }
 }

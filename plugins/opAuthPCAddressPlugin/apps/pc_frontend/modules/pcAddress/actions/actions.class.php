@@ -16,12 +16,14 @@ class pcAddressActions extends sfActions
 
     if ($request->isMethod('post')) {
       $params = $request->getParameter('pc_address');
-      $hash = $this->createHash();
       $this->form->bind($params);
 
-      if ($this->form->isValid() && $this->getUser()->getAuthContainer()->registerEmailAddress($params['pc_address'], $hash)) {
+      if ($this->form->isValid()) {
+        $member = $this->getUser()->getAuthContainer()->registerEmailAddress($params['pc_address']);
+        $token = MemberConfigPeer::retrieveByNameAndMemberId('pc_address_token', $member->getId());
+
         $subject = OpenPNEConfig::get('sns_name') . 'の招待状が届いています';
-        $this->sendMail($subject, 'requestRegisterURLMail', $params['pc_address'], OpenPNEConfig::get('admin_mail_address'), array('hash' => $hash));
+        $this->sendMail($subject, 'requestRegisterURLMail', $params['pc_address'], OpenPNEConfig::get('admin_mail_address'), array('token' => $token->getValue()));
 
         return sfView::SUCCESS;
       }
@@ -32,11 +34,11 @@ class pcAddressActions extends sfActions
 
   public function executeRegister($request)
   {
-    $hash = $request->getParameter('hash');
-    $authPCAddress = AuthenticationPcAddressPeer::retrieveByRegisterSession($hash);
-    $this->forward404Unless($authPCAddress, 'This URL is invalid.');
+    $token = $request->getParameter('token');
+    $memberConfig = MemberConfigPeer::retrieveByNameAndValue('pc_address_token', $token);
+    $this->forward404Unless($memberConfig, 'This URL is invalid.');
 
-    $this->getUser()->setMemberId($authPCAddress->getMemberId());
+    $this->getUser()->setMemberId($memberConfig->getMemberId());
     $this->getUser()->setIsSNSRegisterBegin(true);
 
     $this->redirect('member/registerInput');
@@ -48,9 +50,8 @@ class pcAddressActions extends sfActions
     $member->setIsActive(true);
     $member->save();
 
-    $authPCAddress = AuthenticationPcAddressPeer::retrieveByMemberId($member->getId());
-    $authPCAddress->setRegisterSession('');
-    $authPCAddress->save();
+    $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId('pc_address_token', $member->getId());
+    $memberConfig->delete();
 
     $this->getUser()->setIsSNSMember(true);
     $this->redirect('member/home');
@@ -68,10 +69,5 @@ class pcAddressActions extends sfActions
     $msg->headers->setCharset('ISO-2022-JP');
 
     return $swift->send($msg, $to, $from);
-  }
-
-  private function createHash()
-  {
-    return md5(uniqid(mt_rand(), true));
   }
 }
