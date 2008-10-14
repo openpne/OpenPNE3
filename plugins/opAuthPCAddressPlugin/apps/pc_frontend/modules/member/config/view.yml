@@ -1,5 +1,0 @@
-loginSuccess:
-  customize:
-    linkToRegisterPCAddress:
-      parts:  [login]
-      target: [bottom]

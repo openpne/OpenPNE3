@@ -1,2 +1,0 @@
-all:
-  openpne_register_end_action: pcAddress/registerEnd
