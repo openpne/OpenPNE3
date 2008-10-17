@@ -9,7 +9,7 @@
 #       IsConfig:   true
 #       IsRequired: true
 
-pc_frontend:
+all:
   security:
     pc_address:
       Name:       "pc_address"
@@ -24,7 +24,7 @@ pc_frontend:
       Name:       "mobile_address"
       Caption:    "携帯メールアドレス"
       FormType:   "input"
-      ValueType:  "email"
+      ValueType:  "mobile_email"
       IsRegist:   false
       IsConfig:   true
       IsRequired: false
