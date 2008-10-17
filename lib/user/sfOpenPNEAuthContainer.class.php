@@ -9,6 +9,8 @@
  */
 abstract class sfOpenPNEAuthContainer
 {
+  protected $authModuleName = '';
+
   public function __construct()
   {
     $this->configure();
@@ -89,6 +91,6 @@ abstract class sfOpenPNEAuthContainer
    */
   public function getRegisterEndAction()
   {
-    return sfConfig::get('sf_openpne_register_end_action');
+    return $this->authModuleName.'/registerEnd';
   }
 }

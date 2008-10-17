@@ -24,6 +24,6 @@ mobile_frontend_auth_mode:
   caption:      "携帯版版認証方法"
   type:         "select"
   choices_type: "AuthMode"
-  default:      "PCAddress"
+  default:      "MobileAddress"
   option:
     required: true
