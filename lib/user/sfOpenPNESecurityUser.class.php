@@ -21,7 +21,6 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   {
     parent::initialize($dispatcher, $storage, $options);
 
-    $request = sfContext::getInstance()->getRequest();
     $authModes = OpenPNEConfig::get(sfConfig::get('sf_app') . '_auth_mode');
 
     $authMode = $_REQUEST['authMode'];
