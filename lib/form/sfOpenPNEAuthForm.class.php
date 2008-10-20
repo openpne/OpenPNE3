@@ -9,9 +9,12 @@
  */
 abstract class sfOpenPNEAuthForm extends sfForm
 {
-  public $memberForm;
-  public $profileForm;
-  public $configForm;
+  public
+    $memberForm,
+    $profileForm,
+    $configForm;
+
+  const AUTH_MODE_FIELD_NAME = 'authMode';
 
  /**
   * Configures the current form.
@@ -19,7 +22,15 @@ abstract class sfOpenPNEAuthForm extends sfForm
   public function configure()
   {
     $this->widgetSchema->setNameFormat('auth[%s]');
+    $this->addAuthModeField();
   }
+
+ /**
+  * Returns the current auth mode.
+  *
+  * The child class must be defined implementation to return the current auth mode.
+  */
+  abstract public function getAuthMode();
 
  /**
   * Returns the string representation of the form(s).
@@ -45,6 +56,16 @@ abstract class sfOpenPNEAuthForm extends sfForm
     }
 
     return $result;
+  }
+
+ /**
+  * Adds a field to identify the current auth mode.
+  */
+  public function addAuthModeField()
+  {
+    $this->validatorSchema[self::AUTH_MODE_FIELD_NAME] = new sfValidatorString();
+    $this->widgetSchema[self::AUTH_MODE_FIELD_NAME] = new sfWidgetFormInputHidden();
+    $this->setDefault(self::AUTH_MODE_FIELD_NAME, $this->getAuthMode());
   }
 
  /**

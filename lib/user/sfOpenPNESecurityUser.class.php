@@ -21,20 +21,32 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   {
     parent::initialize($dispatcher, $storage, $options);
 
-    $authModes = OpenPNEConfig::get(sfConfig::get('sf_app') . '_auth_mode');
+    $authModes = $this->getAuthModes();
 
-    $authMode = $_REQUEST['authMode'];
-    if (!in_array($authMode, $authModes)) {
+    $authMode = '';
+
+    if (isset($_REQUEST['authMode']))
+    {
+      $authMode = $_REQUEST['authMode'];
+    }
+
+    if (!$authMode || !in_array($authMode, $authModes))
+    {
       $authMode = array_shift($authModes);
     }
 
-    $containerClass = 'sfOpenPNEAuthContainer_' . $authMode;
+    $containerClass = self::getAuthContainerClassName($authMode);
     $this->authContainer = new $containerClass();
 
-    $formClass = 'sfOpenPNEAuthForm_' . $authMode;
+    $formClass = self::getAuthFormClassName($authMode);
     $this->authForm = new $formClass();
 
     $this->initializeCredentials();
+  }
+
+  public function getAuthModes()
+  {
+    return OpenPNEConfig::get(sfConfig::get('sf_app') . '_auth_mode');
   }
 
   public function getAuthContainer()
@@ -45,6 +57,29 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   public function getAuthForm()
   {
     return $this->authForm;
+  }
+
+  public function getAuthForms()
+  {
+    $result = array();
+
+    $authModes = $this->getAuthModes();
+    foreach ($authModes as $authMode) {
+      $formClass = self::getAuthFormClassName($authMode);
+      $result[] = new $formClass();
+    }
+
+    return $result;
+  }
+
+  public static function getAuthFormClassName($authMode)
+  {
+    return 'sfOpenPNEAuthForm_'.$authMode;
+  }
+
+  public static function getAuthContainerClassName($authMode)
+  {
+    return 'sfOpenPNEAuthContainer_'.$authMode;
   }
 
   public function getMemberId()
