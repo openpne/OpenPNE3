@@ -17,13 +17,16 @@ class SnsConfigForm extends sfForm
     $defaults = array();
 
     foreach (OpenPNEConfig::loadConfigYaml() as $key => $value) {
+      $default = $value['default'];
+      $config = SnsConfigPeer::retrieveByName($key);
+      if ($config) {
+        $default = $config->getValue();
+      }
+
       $widgets[$key] = $this->generateWidget($value);
       $validators[$key] = $this->generateValidator($value);
       $labels[$key] = $value['caption'];
-      $config = SnsConfigPeer::retrieveByName($key);
-      if ($config) {
-        $defaults[$key] = OpenPNEConfig::get($key, 'sns', $config->getValue());
-      }
+      $defaults[$key] = OpenPNEConfig::get($key, 'sns', $default);
     }
 
     $this->setWidgets($widgets);
