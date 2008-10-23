@@ -4,6 +4,9 @@ security:  ~
 deny:
   class: sfDenyFromNonMobileFilter
 
+io:
+  class: sfMobileIOFilter
+
 cache:     ~
 common:    ~
 execution: ~

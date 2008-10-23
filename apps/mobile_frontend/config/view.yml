@@ -1,6 +1,6 @@
 default:
   http_metas:
-    content-type: text/html
+    content-type: text/html; charset=Shift_JIS
 
   metas:
     #title:        symfony project
