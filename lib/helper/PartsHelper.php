@@ -59,7 +59,7 @@ function include_customizes($id, $name)
 
 function _is_disabled_plugin_dir($directory)
 {
-  foreach (sfConfig::get('sf_openpne_disabled_plugins', array()) as $pluginName) {
+  foreach (sfConfig::get('sf_'.sfConfig::get('sf_app').'_openpne_disabled_plugins', array()) as $pluginName) {
     if (0 === strpos($directory, sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . $pluginName)) {
       return true;
     }
