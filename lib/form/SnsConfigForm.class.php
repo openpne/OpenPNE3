@@ -43,6 +43,9 @@ class SnsConfigForm extends sfForm
       case 'select':
         $obj = new sfWidgetFormSelect(array('choices' => $this->generateChoices($config['choices_type'])));
         break;
+      case 'selectMany':
+        $obj = new sfWidgetFormSelectMany(array('choices' => $this->generateChoices($config['choices_type'])));
+        break;
       case 'input':
       default:
         $obj = new sfWidgetFormInput();
@@ -55,7 +58,8 @@ class SnsConfigForm extends sfForm
   {
     switch ($config['type']) {
       case 'select':
-        $obj = new sfValidatorChoice(array('choices' => $this->generateChoices($config['choices_type'])));
+      case 'selectMany':
+        $obj = new sfValidatorChoiceMany(array('choices' => $this->generateChoices($config['choices_type'])));
         break;
       case 'input':
       default:
@@ -67,12 +71,14 @@ class SnsConfigForm extends sfForm
 
   public function save()
   {
+    $config = OpenPNEConfig::loadConfigYaml();
     foreach ($this->getValues() as $key => $value) {
       $snsConfig = SnsConfigPeer::retrieveByName($key);
       if (!$snsConfig) {
         $snsConfig = new SnsConfig();
         $snsConfig->setName($key);
       }
+
       $snsConfig->setValue($value);
       $snsConfig->save();
     }

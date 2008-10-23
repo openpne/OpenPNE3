@@ -14,7 +14,7 @@ admin_mail_address:
 
 pc_frontend_auth_mode:
   caption:      "PC版認証方法"
-  type:         "select"
+  type:         "selectMany"
   choices_type: "AuthMode"
   default:      ["PCAddress"]
   option:
@@ -22,7 +22,7 @@ pc_frontend_auth_mode:
 
 mobile_frontend_auth_mode:
   caption:      "携帯版版認証方法"
-  type:         "select"
+  type:         "selectMany"
   choices_type: "AuthMode"
   default:      ["MobileUID", "MobileAddress"]
   option:
