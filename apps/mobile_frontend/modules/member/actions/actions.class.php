@@ -19,12 +19,15 @@ class memberActions extends sfActions
   {
     $this->getUser()->logout();
 
-    $this->form = $this->getUser()->getAuthForm();
+    $this->forms = $this->getUser()->getAuthForms();
 
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getParameter('auth'));
-      if ($this->form->isValid()) {
-        $this->redirectIf($this->getUser()->login($this->form), 'member/home');
+    if ($request->isMethod('post'))
+    {
+      $authForm = $this->getUser()->getAuthForm();
+      $authForm->bind($request->getParameter('auth'.$authForm->getAuthMode()));
+      if ($authForm->isValid())
+      {
+        $this->redirectIf($this->getUser()->login($authForm), 'member/home');
       }
       return sfView::ERROR;
     }
@@ -71,6 +74,33 @@ class memberActions extends sfActions
   */
   public function executeHome($request)
   {
+    return sfView::SUCCESS;
+  }
+
+ /**
+  * Executes configUID action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeConfigUID($request)
+  {
+    $option = array('member' => $this->getUser()->getMember());
+    $this->passwordForm = new sfOpenPNEPasswordForm(array(), $option);
+
+    if ($request->isMethod('post')) {
+      $this->passwordForm->bind($request->getParameter('password'));
+      if ($this->passwordForm->isValid()) {
+        $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId('mobile_uid', $this->getUser()->getMemberId());
+        if (!$memberConfig) {
+          $memberConfig = new MemberConfig();
+          $memberConfig->setMember($this->getUser()->getMember());
+          $memberConfig->setName('mobile_uid');
+        }
+        $memberConfig->setValue($request->getMobileUID());
+        $this->redirectIf($memberConfig->save(), 'member/configUID');
+      }
+    }
+
     return sfView::SUCCESS;
   }
 }

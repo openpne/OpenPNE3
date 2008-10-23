@@ -4,7 +4,7 @@
 
 <?php include_customizes($id, 'top') ?>
 
-<form action="<?php echo $link_to ?>" method="post">
+<form action="<?php echo $link_to ?>" method="post"<?php if($form->isUtn()): ?> utn<?php endif; ?>>
 <table>
 <?php echo $form ?>
 <tr>

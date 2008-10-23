@@ -21,8 +21,7 @@ abstract class sfOpenPNEAuthForm extends sfForm
   */
   public function configure()
   {
-    $this->widgetSchema->setNameFormat('auth[%s]');
-    $this->addAuthModeField();
+    $this->widgetSchema->setNameFormat('auth'.$this->getAuthMode().'[%s]');
   }
 
  /**
@@ -56,16 +55,6 @@ abstract class sfOpenPNEAuthForm extends sfForm
     }
 
     return $result;
-  }
-
- /**
-  * Adds a field to identify the current auth mode.
-  */
-  public function addAuthModeField()
-  {
-    $this->validatorSchema[self::AUTH_MODE_FIELD_NAME] = new sfValidatorString();
-    $this->widgetSchema[self::AUTH_MODE_FIELD_NAME] = new sfWidgetFormInputHidden();
-    $this->setDefault(self::AUTH_MODE_FIELD_NAME, $this->getAuthMode());
   }
 
  /**
@@ -128,5 +117,13 @@ abstract class sfOpenPNEAuthForm extends sfForm
     }
 
     return $this->isValid();
+  }
+
+ /**
+  * @todo removes this method.
+  */
+  public function isUtn()
+  {
+    return false;
   }
 }

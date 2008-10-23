@@ -21,14 +21,10 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   {
     parent::initialize($dispatcher, $storage, $options);
 
+    $request = sfContext::getInstance()->getRequest();
+    $authMode = $request->getUrlParameter('authMode');
+
     $authModes = $this->getAuthModes();
-
-    $authMode = '';
-
-    if (isset($_REQUEST['authMode']))
-    {
-      $authMode = $_REQUEST['authMode'];
-    }
 
     if (!$authMode || !in_array($authMode, $authModes))
     {
