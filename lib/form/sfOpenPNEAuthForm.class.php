@@ -7,7 +7,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-abstract class sfOpenPNEAuthForm extends sfForm
+abstract class sfOpenPNEAuthForm extends sfForm implements IteratorAggregate
 {
   public
     $memberForm,
@@ -125,5 +125,10 @@ abstract class sfOpenPNEAuthForm extends sfForm
   public function isUtn()
   {
     return false;
+  }
+
+  public function getIterator()
+  {
+    return $this->getFormFieldSchema();
   }
 }
