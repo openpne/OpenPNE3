@@ -19,12 +19,15 @@ class memberActions extends sfActions
   {
     $this->getUser()->logout();
 
-    $this->form = $this->getUser()->getAuthForm();
+    $this->forms = $this->getUser()->getAuthForms();
 
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getParameter('auth'));
-      if ($this->form->isValid()) {
-        $this->redirectIf($this->getUser()->login($this->form), 'member/home');
+    if ($request->isMethod('post'))
+    {
+      $authForm = $this->getUser()->getAuthForm();
+      $authForm->bind($request->getParameter('auth'.$authForm->getAuthMode()));
+      if ($authForm->isValid())
+      {
+        $this->redirectIf($this->getUser()->login($authForm), 'member/home');
       }
       return sfView::ERROR;
     }
