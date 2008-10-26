@@ -86,7 +86,8 @@ class memberActions extends sfActions
   {
     $id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
     $this->member = MemberPeer::retrieveByPk($id);
-    $this->friend = FriendPeer::getFriendListPager($id, 1, 5);
+    $this->friends = FriendPeer::retrievesByMemberId($id);
+    $this->communities = CommunityPeer::retrievesByMemberId($id);
     $this->forward404Unless($this->member, 'Undefined member.');
 
     return sfView::SUCCESS;

@@ -66,6 +66,16 @@ class FriendPeer extends BaseFriendPeer
     return false;
   }
 
+  public static function retrievesByMemberId($memberId, $size = 5)
+  {
+    $c = new Criteria();
+    $c->add(self::MEMBER_ID_FROM, $memberId);
+    $c->addJoin(MemberPeer::ID, self::MEMBER_ID_TO);
+    $c->setLimit($size);
+
+    return self::doSelect($c);
+  }
+
   public static function getFriendListPager($memberId, $page = 1, $size = 20)
   {
     $c = new Criteria();
