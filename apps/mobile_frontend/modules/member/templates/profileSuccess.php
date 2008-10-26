@@ -1,9 +1,11 @@
 <?php include_page_title($member->getName().'さん')?>
 
+<?php if ($member == $sf_user->getMember()) : ?>
 <font color="#ff0000">
 ※他のﾒﾝﾊﾞｰから見たあなたのﾍﾟｰｼﾞはこのようになります。<br>
 ﾌﾟﾛﾌｨｰﾙを変更する場合は<?php echo link_to('「ﾌﾟﾛﾌｨｰﾙ変更」', 'member/editProfile') ?>よりおこなえます。
 </font>
+<?php endif; ?>
 
 <table width="100%" bgcolor="#EEEEFF">
 <tr><td colspan="2" align="center">
@@ -53,7 +55,7 @@ $options = array(
   'title' => '参加ｺﾐｭﾆﾃｨﾘｽﾄ',
   'border' => true,
   'moreInfo' => array(
-    link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'community/memberList?id='.$community->getId())
+    link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'community/memberList?id='.$member->getId())
   ),
 );
 include_list_box('profileEdit', $list, $options);
