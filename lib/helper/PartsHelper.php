@@ -17,7 +17,7 @@
  *
  * @see    include_partial
  */
-function include_login_parts($id, $form, $link_to)
+:unction include_login_parts($id, $form, $link_to)
 {
   $params = array(
     'id' => $form->getAuthMode().$id,
@@ -25,16 +25,6 @@ function include_login_parts($id, $form, $link_to)
     'link_to' => url_for(sprintf($link_to.'?%s=%s', sfOpenPNEAuthForm::AUTH_MODE_FIELD_NAME, $form->getAuthMode())),
   );
   include_partial('global/partsLogin', $params);
-}
-
-function include_home_header_box_parts($id, $info = array(), $menu = array())
-{
-  $params = array(
-    'id' => $id,
-    'info' => $info,
-    'menu' => $menu,
-  );
-  include_partial('global/partsHomeHeaderBox', $params);
 }
 
 function include_page_title($title)

@@ -1,21 +1,34 @@
 <?php include_page_title(OpenPNEConfig::get('sns_name')) ?>
 
-<?php
-$info = array(
-  'name' => $sf_user->getMember()->getName(),
-);
+<table width="100%" bgcolor="#EEEEFF">
+<tr><td colspan="2" align="center">
+<hr color="#0D6DDF" size="3">
+</td></tr>
 
-$menu = array(
-  'C' => array(
-    'friend/list' => sprintf('ﾏｲﾌﾚﾝﾄﾞ(%s)', $sf_user->getMember()->countFriendsRelatedByMemberIdTo()),
-    'community/joinlist' => sprintf('参加ｺﾐｭﾆﾃｨ(%s)', $sf_user->getMember()->countCommunityMembers()),
-  ),
-  'D' => array(
-    'member/profile' => 'ﾌﾟﾛﾌｨｰﾙ'
-  ),
-);
-include_home_header_box_parts('menu', $info, $menu)
-?>
+<tr><td align="center" width="50%" valign="top">
+<?php echo $sf_user->getMember()->getName() ?>さん<br>
+</td>
+
+<td valign="top">
+</td>
+</tr>
+
+<tr><td colspan="2" align="center">
+<hr color="#0d6ddf" size="3">
+</td></tr>
+
+<tr><td colspan="2">
+<?php echo link_to(sprintf('ﾏｲﾌﾚﾝﾄﾞ(%s)', $sf_user->getMember()->countFriendsRelatedByMemberIdTo()), 'friend/list'); ?><br>
+<?php echo link_to(sprintf('参加ｺﾐｭﾆﾃｨ(%s)', $sf_user->getMember()->countCommunityMembers()), 'community/joinlist'); ?><br>
+<hr color="#0d6ddf" size="3">
+</td></tr>
+
+<tr><td colspan="2" align="center">
+<?php echo link_to('ﾌﾟﾛﾌｨｰﾙ', 'member/profile') ?>
+<hr color="#0d6ddf" size="3">
+</td></tr>
+
+</table>
 
 <br>
 
