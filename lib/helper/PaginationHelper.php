@@ -16,7 +16,7 @@
                              "%d" will be converted to number of page.
  * @return string  A navigation for paginated list.
  */
-function pager_navigation($pager, $link_to)
+function pager_navigation($pager, $link_to, $is_total = true)
 {
   $navigation = '';
 
@@ -26,7 +26,9 @@ function pager_navigation($pager, $link_to)
     }
   }
 
-  $navigation .= sprintf('%d件〜%d件を表示', $pager->getFirstIndice(), $pager->getLastIndice());
+  if ($is_total) {
+    $navigation .= pager_total($pager);
+  }
 
   if ($pager->haveToPaginate()) {
     if ($pager->getNextPage() != $pager->getPage()) {
@@ -35,4 +37,9 @@ function pager_navigation($pager, $link_to)
   }
 
   return $navigation;
+}
+
+function pager_total($pager)
+{
+  return sprintf('%d件〜%d件を表示', $pager->getFirstIndice(), $pager->getLastIndice());
 }

@@ -3,6 +3,10 @@
 <tr><td bgcolor="#7ddadf">
 <font color="#000000"><?php echo $options['title'] ?></font><br>
 </td></tr>
+<?php else : ?>
+<tr><td bgcolor="#ffffff">
+<hr color="#b3ceef">
+</td></tr>
 <?php endif; ?>
 
 <?php foreach ($list as $key => $value) : ?>
