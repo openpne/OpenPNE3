@@ -8,16 +8,7 @@
 <?php foreach ($list as $key => $value) : ?>
 <tr><td bgcolor="#e0eaef">
 <?php
-$str = $sf_data->getRaw('format');
-
-foreach ($value as $search => $replace) {
-  if ($search === 'link') {
-    $replace = link_to($replace, $key);
-  }
-  $str = str_replace('%'.$search.'%', $replace, $str);
-}
-
-echo $str.'<br>';
+echo $list->getRaw($key).'<br>';
 ?>
 </td></tr>
 <?php endforeach; ?>

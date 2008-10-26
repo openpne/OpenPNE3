@@ -78,6 +78,21 @@ class memberActions extends sfActions
   }
 
  /**
+  * Executes profile action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeProfile($request)
+  {
+    $id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
+    $this->member = MemberPeer::retrieveByPk($id);
+    $this->friend = FriendPeer::getFriendListPager($id, 1, 5);
+    $this->forward404Unless($this->member, 'Undefined member.');
+
+    return sfView::SUCCESS;
+  }
+
+ /**
   * Executes configUID action
   *
   * @param sfRequest $request A request object

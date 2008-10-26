@@ -17,7 +17,7 @@
  *
  * @see    include_partial
  */
-:unction include_login_parts($id, $form, $link_to)
+function include_login_parts($id, $form, $link_to)
 {
   $params = array(
     'id' => $form->getAuthMode().$id,
@@ -35,12 +35,11 @@ function include_page_title($title)
   include_partial('global/partsPageTitle', $params);
 }
 
-function include_list_box($id, $list, $format, $options = array())
+function include_list_box($id, $list, $options = array())
 {
   $params = array(
     'id' => $id,
     'list' => $list,
-    'format' => $format,
     'options' => $options,
   );
   include_partial('global/partsListBox', $params);

@@ -34,18 +34,14 @@
 
 <?php
 $list = array(
-  'member/editProfile' => array(
-    'link' => 'ﾌﾟﾛﾌｨｰﾙ変更',
-  ),
+  link_to('ﾌﾟﾛﾌｨｰﾙ変更', 'member/editProfile'),
 );
-include_list_box('profileEdit', $list, '%link%', array('title' => 'ﾌﾟﾛﾌｨｰﾙ変更'))
+include_list_box('profileEdit', $list, array('title' => 'ﾌﾟﾛﾌｨｰﾙ変更'))
 ?>
 
 <?php
 $list = array(
-  'member/configUID' => array(
-    'link' => 'かんたんﾛｸﾞｲﾝ設定',
-  ),
+  link_to('かんたんﾛｸﾞｲﾝ設定', 'member/configUID'),
 );
-include_list_box('configEdit', $list, '%link%', array('title' => '設定変更'))
+include_list_box('configEdit', $list, array('title' => '設定変更'))
 ?>
