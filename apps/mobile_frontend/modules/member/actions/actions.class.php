@@ -94,6 +94,34 @@ class memberActions extends sfActions
   }
 
  /**
+  * Executes editProfile action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeEditProfile($request)
+  {
+    $this->memberForm = new MemberForm($this->getUser()->getMember());
+    $this->memberForm->setMobileFormFormatter();
+
+    $profiles = $this->getUser()->getMember()->getProfiles();
+    $this->profileForm = new MemberProfileForm($profiles);
+    $this->profileForm->setMobileFormFormatter();
+    $this->profileForm->setConfigWidgets();
+
+    if ($request->isMethod('post')) {
+      $this->memberForm->bind($request->getParameter('member'));
+      $this->profileForm->bind($request->getParameter('profile'));
+      if ($this->memberForm->isValid() && $this->profileForm->isValid()) {
+        $this->memberForm->save();
+        $this->profileForm->save($this->getUser()->getMemberId());
+        $this->redirect('member/profile');
+      }
+    }
+
+    return sfView::SUCCESS;
+  }
+
+ /**
   * Executes configUID action
   *
   * @param sfRequest $request A request object

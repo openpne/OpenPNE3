@@ -23,6 +23,11 @@ class MemberForm extends BaseMemberForm
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_member');
   }
 
+  public function setMobileFormFormatter()
+  {
+    $this->widgetSchema->setFormFormatterName('mobile');
+  }
+
   protected function doSave($con = null)
   {
     if ($this->isNew()) {
