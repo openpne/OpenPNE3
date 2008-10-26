@@ -27,6 +27,35 @@ function include_login_parts($id, $form, $link_to)
   include_partial('global/partsLogin', $params);
 }
 
+function include_home_header_box_parts($id, $info = array(), $menu = array())
+{
+  $params = array(
+    'id' => $id,
+    'info' => $info,
+    'menu' => $menu,
+  );
+  include_partial('global/partsHomeHeaderBox', $params);
+}
+
+function include_page_title($title)
+{
+  $params = array(
+    'title' => $title,
+  );
+  include_partial('global/partsPageTitle', $params);
+}
+
+function include_list_box($id, $list, $format, $options = array())
+{
+  $params = array(
+    'id' => $id,
+    'list' => $list,
+    'format' => $format,
+    'options' => $options,
+  );
+  include_partial('global/partsListBox', $params);
+}
+
 /**
  * Includes customizes.
  *
