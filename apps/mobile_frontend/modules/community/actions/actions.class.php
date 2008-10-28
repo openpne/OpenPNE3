@@ -20,6 +20,17 @@ class communityActions extends sfActions
   }
 
  /**
+  * Executes home action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeHome($request)
+  {
+    $this->community = CommunityPeer::retrieveByPk($this->id);
+    $this->forward404Unless($this->community, 'Undefined community.');
+  }
+
+ /**
   * Executes joinlist action
   *
   * @param sfRequest $request A request object
