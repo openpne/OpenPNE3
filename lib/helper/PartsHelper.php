@@ -27,10 +27,11 @@ function include_login_parts($id, $form, $link_to)
   include_partial('global/partsLogin', $params);
 }
 
-function include_page_title($title)
+function include_page_title($title, $subtitle = '')
 {
   $params = array(
     'title' => $title,
+    'subtitle' => $subtitle,
   );
   include_partial('global/partsPageTitle', $params);
 }

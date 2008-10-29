@@ -50,4 +50,28 @@ class communityActions extends sfActions
 
     return sfView::SUCCESS;
   }
+
+ /**
+  * Executes edit action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeEdit($request)
+  {
+    if ($this->id && !$this->isEditCommunity) {
+      $this->forward('default', 'secure');
+    }
+
+    $this->community = CommunityPeer::retrieveByPk($this->id);
+    $this->form = new CommunityForm($this->community);
+
+    if ($request->isMethod('post')) {
+      $this->form->bind($request->getParameter('community'));
+      if ($this->form->isValid()) {
+        $community = $this->form->save();
+
+        $this->redirect('community/home?id=' . $community->getId());
+      }
+    }
+  }
 }
