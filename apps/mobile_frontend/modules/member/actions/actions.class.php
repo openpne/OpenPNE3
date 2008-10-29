@@ -101,11 +101,9 @@ class memberActions extends sfActions
   public function executeEditProfile($request)
   {
     $this->memberForm = new MemberForm($this->getUser()->getMember());
-    $this->memberForm->setMobileFormFormatter();
 
     $profiles = $this->getUser()->getMember()->getProfiles();
     $this->profileForm = new MemberProfileForm($profiles);
-    $this->profileForm->setMobileFormFormatter();
     $this->profileForm->setConfigWidgets();
 
     if ($request->isMethod('post')) {

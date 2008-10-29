@@ -112,9 +112,4 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
     $this->setDefaults(array_merge($this->getDefaults(), $obj->toArray(BasePeer::TYPE_FIELDNAME)));
     var_dump($obj->toArray(BasePeer::TYPE_FIELDNAME));
   }
-
-  public function setMobileFormFormatter()
-  {
-    $this->widgetSchema->setFormFormatterName('mobile');
-  }
 }

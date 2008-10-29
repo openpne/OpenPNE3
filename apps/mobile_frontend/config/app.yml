@@ -1,2 +1,3 @@
 # default values
-#all:
+all:
+  is_mobile: true

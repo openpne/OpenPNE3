@@ -7,4 +7,7 @@ registerDisablePlugin:
 
 cache:     ~
 common:    ~
-execution: ~
+execution:
+  class: sfOpenPNEExecutionFilter
+  param:
+    type: execution
