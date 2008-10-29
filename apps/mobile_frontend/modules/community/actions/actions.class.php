@@ -74,4 +74,34 @@ class communityActions extends sfActions
       }
     }
   }
+
+ /**
+  * Executes join action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeJoin($request)
+  {
+    if ($this->isCommunityMember) {
+      return sfView::ERROR;
+    }
+
+    CommunityMemberPeer::join($this->getUser()->getMemberId(), $this->id);
+    $this->redirect('community/home?id=' . $this->id);
+  }
+
+ /**
+  * Executes quit action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeQuit($request)
+  {
+    if (!$this->isCommunityMember || $this->isAdmin) {
+      return sfView::ERROR;
+    }
+
+    CommunityMemberPeer::quit($this->getUser()->getMemberId(), $this->id);
+    $this->redirect('community/home?id=' . $this->id);
+  }
 }
