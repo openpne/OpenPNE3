@@ -45,7 +45,7 @@ $options = array(
   'title' => 'ｺﾐｭﾆﾃｨﾒﾝﾊﾞｰ',
   'border' => true,
   'moreInfo' => array(
-    link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'community/memberList?id='.$member->getId()),
+    link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'community/memberList?id='.$community->getId()),
   ),
 );
 include_list_box('communityMember', $list, $options);

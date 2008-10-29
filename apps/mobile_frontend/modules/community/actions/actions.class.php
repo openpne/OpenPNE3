@@ -104,4 +104,21 @@ class communityActions extends sfActions
     CommunityMemberPeer::quit($this->getUser()->getMemberId(), $this->id);
     $this->redirect('community/home?id=' . $this->id);
   }
+
+ /**
+  * Executes memberList action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeMemberList($request)
+  {
+    $this->community = CommunityPeer::retrieveByPk($this->id);
+    $this->pager = CommunityPeer::getCommunityMemberListPager($this->id, $request->getParameter('page', 1));
+
+    if (!$this->pager->getNbResults()) {
+      return sfView::ERROR;
+    }
+
+    return sfView::SUCCESS;
+  }
 }
