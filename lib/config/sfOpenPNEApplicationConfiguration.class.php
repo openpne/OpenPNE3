@@ -9,6 +9,24 @@
  */
 abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfiguration
 {
+  public function initialize()
+  {
+    $this->dispatcher->connect('task.cache.clear', array($this, 'clearPluginCache'));
+  }
+
+  public function clearPluginCache($params = array())
+  {
+    $appConfiguration = $params['app'];
+    $environment = $params['env'];
+    $subDir = sfConfig::get('sf_cache_dir').'/'.$appConfiguration->getApplication().'/'.$environment.'/plugins';
+
+    if (is_dir($subDir))
+    {
+      $filesystem = new sfFilesystem();
+      $filesystem->remove(sfFinder::type('any')->discard('.sf')->in($subDir));
+    }
+  }
+
   /**
    * Gets directories where controller classes are stored for a given module.
    *
