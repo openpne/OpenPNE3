@@ -31,4 +31,29 @@ class friendActions extends sfActions
 
     return sfView::SUCCESS;
   }
+
+ /**
+  * Executes link action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeLink($request)
+  {
+    if ($this->isFriend)
+    {
+      return sfView::ERROR;
+    }
+    $this->redirectToHomeIfIdIsNotValid();
+    FriendPeer::link($this->getUser()->getMemberId(), $this->id);
+    $this->redirect('member/profile?id='.$this->id);
+  }
+
+ /**
+  * Redirects to your home if ID is yours or it is empty.
+  */
+  private function redirectToHomeIfIdIsNotValid()
+  {
+    $this->redirectUnless($this->id, 'member/home');
+    $this->redirectIf(($this->id == $this->getUser()->getMemberId()), 'member/home');
+  }
 }

@@ -28,7 +28,11 @@
 
 </table>
 
-<br>
+<?php if ($member != $sf_user->getMember()) : ?>
+<?php if (!FriendPeer::isFriend($sf_user->getMemberId(), $member->getId())) : ?>
+<?php echo link_to('ﾌﾚﾝﾄﾞに加える', 'friend/link?id='.$member->getId()) ?><br>
+<?php endif; ?>
+<?php endif; ?>
 
 <?php
 $list = array();
