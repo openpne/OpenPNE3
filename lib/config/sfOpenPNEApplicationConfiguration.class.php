@@ -41,13 +41,36 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $dirs = array();
 
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/templates'))
+    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/templates/'))
     {
       $dirs = array_merge($dirs, $pluginDirs); // plugin applications
     }
 
+    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/templates'))
+    {
+      $dirs = array_merge($dirs, $pluginDirs); // plugin modules
+    }
+
     $dirs = array_merge($dirs, parent::getTemplateDirs($moduleName));
 
+    return $dirs;
+  }
+
+  /**
+   * Gets the decorator directories.
+   *
+   * @return array  An array of the decorator directories
+   */
+  public function getDecoratorDirs()
+  {
+    $dirs = array();
+
+    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/templates/'))
+    {
+      $dirs = array_merge($dirs, $pluginDirs); // plugin applications
+    }
+
+    $dirs = array_merge($dirs, parent::getDecoratorDirs());
     return $dirs;
   }
 
