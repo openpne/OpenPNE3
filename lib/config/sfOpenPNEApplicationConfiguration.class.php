@@ -65,7 +65,7 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $dirs = array();
 
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/templates/'))
+    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/templates'))
     {
       $dirs = array_merge($dirs, $pluginDirs); // plugin applications
     }
