@@ -34,10 +34,14 @@ class snsActions extends sfActions
   */
   public function executeInformationConfig($request)
   {
-    $this->form = new InformationConfigForm();
+    $this->target = $request->getParameter('target', 'pc_home');
+    $this->form = new InformationConfigForm(array(), array('target' => $this->target));
 
     if ($request->isMethod('post')) {
-      $this->form->bind($request->getParameter('sns_config'));
+      $this->form->bind(array(
+        'information' => $request->getparameter('information'),
+        'target' => $request->getparameter('target'),
+      ));
       if ($this->form->isValid()) {
         $this->form->save();
       }

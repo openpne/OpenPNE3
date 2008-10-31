@@ -1,4 +1,10 @@
-<?php include_information_box('information', $sf_data->getRaw('information')->getValue()) ?>
+<?php
+$body = '';
+if ($information) {
+  $body = $sf_data->getRaw('information')->getValue();
+}
+include_information_box('information', $body)
+?>
 
 あなたのホームです。(メンバーID:<?php echo $sf_user->getMemberId() ?>, ニックネーム:<?php echo $sf_user->getMember()->getName() ?>)
 <ul>

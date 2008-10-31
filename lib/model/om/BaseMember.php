@@ -34,6 +34,18 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 	protected $lastAuthenticationLoginIdCriteria = null;
 
 	
+	protected $collApplicationSettingss;
+
+	
+	protected $lastApplicationSettingsCriteria = null;
+
+	
+	protected $collMemberApplicationss;
+
+	
+	protected $lastMemberApplicationsCriteria = null;
+
+	
 	protected $collMemberProfiles;
 
 	
@@ -311,6 +323,22 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collApplicationSettingss !== null) {
+				foreach($this->collApplicationSettingss as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collMemberApplicationss !== null) {
+				foreach($this->collMemberApplicationss as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collMemberProfiles !== null) {
 				foreach($this->collMemberProfiles as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -394,6 +422,22 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 
 				if ($this->collAuthenticationLoginIds !== null) {
 					foreach($this->collAuthenticationLoginIds as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collApplicationSettingss !== null) {
+					foreach($this->collApplicationSettingss as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collMemberApplicationss !== null) {
+					foreach($this->collMemberApplicationss as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -588,6 +632,14 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 				$copyObj->addAuthenticationLoginId($relObj->copy($deepCopy));
 			}
 
+			foreach($this->getApplicationSettingss() as $relObj) {
+				$copyObj->addApplicationSettings($relObj->copy($deepCopy));
+			}
+
+			foreach($this->getMemberApplicationss() as $relObj) {
+				$copyObj->addMemberApplications($relObj->copy($deepCopy));
+			}
+
 			foreach($this->getMemberProfiles() as $relObj) {
 				$copyObj->addMemberProfile($relObj->copy($deepCopy));
 			}
@@ -699,6 +751,210 @@ abstract class BaseMember extends BaseObject  implements Persistent {
 	{
 		$this->collAuthenticationLoginIds[] = $l;
 		$l->setMember($this);
+	}
+
+	
+	public function initApplicationSettingss()
+	{
+		if ($this->collApplicationSettingss === null) {
+			$this->collApplicationSettingss = array();
+		}
+	}
+
+	
+	public function getApplicationSettingss($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collApplicationSettingss === null) {
+			if ($this->isNew()) {
+			   $this->collApplicationSettingss = array();
+			} else {
+
+				$criteria->add(ApplicationSettingsPeer::MEMBER_ID, $this->getId());
+
+				ApplicationSettingsPeer::addSelectColumns($criteria);
+				$this->collApplicationSettingss = ApplicationSettingsPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(ApplicationSettingsPeer::MEMBER_ID, $this->getId());
+
+				ApplicationSettingsPeer::addSelectColumns($criteria);
+				if (!isset($this->lastApplicationSettingsCriteria) || !$this->lastApplicationSettingsCriteria->equals($criteria)) {
+					$this->collApplicationSettingss = ApplicationSettingsPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastApplicationSettingsCriteria = $criteria;
+		return $this->collApplicationSettingss;
+	}
+
+	
+	public function countApplicationSettingss($criteria = null, $distinct = false, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ApplicationSettingsPeer::MEMBER_ID, $this->getId());
+
+		return ApplicationSettingsPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addApplicationSettings(ApplicationSettings $l)
+	{
+		$this->collApplicationSettingss[] = $l;
+		$l->setMember($this);
+	}
+
+
+	
+	public function getApplicationSettingssJoinApplications($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collApplicationSettingss === null) {
+			if ($this->isNew()) {
+				$this->collApplicationSettingss = array();
+			} else {
+
+				$criteria->add(ApplicationSettingsPeer::MEMBER_ID, $this->getId());
+
+				$this->collApplicationSettingss = ApplicationSettingsPeer::doSelectJoinApplications($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(ApplicationSettingsPeer::MEMBER_ID, $this->getId());
+
+			if (!isset($this->lastApplicationSettingsCriteria) || !$this->lastApplicationSettingsCriteria->equals($criteria)) {
+				$this->collApplicationSettingss = ApplicationSettingsPeer::doSelectJoinApplications($criteria, $con);
+			}
+		}
+		$this->lastApplicationSettingsCriteria = $criteria;
+
+		return $this->collApplicationSettingss;
+	}
+
+	
+	public function initMemberApplicationss()
+	{
+		if ($this->collMemberApplicationss === null) {
+			$this->collMemberApplicationss = array();
+		}
+	}
+
+	
+	public function getMemberApplicationss($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collMemberApplicationss === null) {
+			if ($this->isNew()) {
+			   $this->collMemberApplicationss = array();
+			} else {
+
+				$criteria->add(MemberApplicationsPeer::MEMBER_ID, $this->getId());
+
+				MemberApplicationsPeer::addSelectColumns($criteria);
+				$this->collMemberApplicationss = MemberApplicationsPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(MemberApplicationsPeer::MEMBER_ID, $this->getId());
+
+				MemberApplicationsPeer::addSelectColumns($criteria);
+				if (!isset($this->lastMemberApplicationsCriteria) || !$this->lastMemberApplicationsCriteria->equals($criteria)) {
+					$this->collMemberApplicationss = MemberApplicationsPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastMemberApplicationsCriteria = $criteria;
+		return $this->collMemberApplicationss;
+	}
+
+	
+	public function countMemberApplicationss($criteria = null, $distinct = false, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(MemberApplicationsPeer::MEMBER_ID, $this->getId());
+
+		return MemberApplicationsPeer::doCount($criteria, $distinct, $con);
+	}
+
+	
+	public function addMemberApplications(MemberApplications $l)
+	{
+		$this->collMemberApplicationss[] = $l;
+		$l->setMember($this);
+	}
+
+
+	
+	public function getMemberApplicationssJoinApplications($criteria = null, $con = null)
+	{
+				if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collMemberApplicationss === null) {
+			if ($this->isNew()) {
+				$this->collMemberApplicationss = array();
+			} else {
+
+				$criteria->add(MemberApplicationsPeer::MEMBER_ID, $this->getId());
+
+				$this->collMemberApplicationss = MemberApplicationsPeer::doSelectJoinApplications($criteria, $con);
+			}
+		} else {
+									
+			$criteria->add(MemberApplicationsPeer::MEMBER_ID, $this->getId());
+
+			if (!isset($this->lastMemberApplicationsCriteria) || !$this->lastMemberApplicationsCriteria->equals($criteria)) {
+				$this->collMemberApplicationss = MemberApplicationsPeer::doSelectJoinApplications($criteria, $con);
+			}
+		}
+		$this->lastMemberApplicationsCriteria = $criteria;
+
+		return $this->collMemberApplicationss;
 	}
 
 	

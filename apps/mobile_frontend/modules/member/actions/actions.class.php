@@ -74,6 +74,7 @@ class memberActions extends sfActions
   */
   public function executeHome($request)
   {
+    $this->information = SnsConfigPeer::retrieveByName('mobile_home_information');
     return sfView::SUCCESS;
   }
 

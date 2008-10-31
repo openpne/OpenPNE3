@@ -1,5 +1,13 @@
 <?php include_page_title(OpenPNEConfig::get('sns_name')) ?>
 
+<?php
+$body = '';
+if ($information) {
+  $body = $sf_data->getRaw('information')->getValue();
+}
+include_information_box('information', $body)
+?>
+
 <table width="100%" bgcolor="#EEEEFF">
 <tr><td colspan="2" align="center">
 <hr color="#0D6DDF" size="3">

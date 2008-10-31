@@ -12,31 +12,45 @@ class InformationConfigForm extends sfForm
   public function configure()
   {
     $this->setWidgets(array(
-      'information' => new sfWidgetFormTextarea()
+      'information' => new sfWidgetFormTextarea(),
+      'target' => new sfWidgetFormInputHidden(),
     ));
     $this->setValidators(array(
-      'information' => new sfValidatorString(array('required' => false))
+      'information' => new sfValidatorString(array('required' => false)),
+      'target' => new sfValidatorString(array('required' => false)),
     ));
 
-    $config = SnsConfigPeer::retrieveByName('information');
+    $defaults = array(
+      'target' => $this->getTarget(),
+    );
+
+    $config = SnsConfigPeer::retrieveByName($this->getTargetInformation());
     if ($config) {
-      $this->setDefaults(array(
-        'information' => $config->getValue(),
-      ));
+      $defaults['information'] = $config->getValue();
     }
 
-    $this->widgetSchema->setNameFormat('sns_config[%s]');
+    $this->setDefaults($defaults);
   }
 
   public function save()
   {
-    $config = SnsConfigPeer::retrieveByName('information');
+    $config = SnsConfigPeer::retrieveByName($this->getTargetInformation());
     if (!$config) {
       $config = new SnsConfig();
-      $config->setName('information');
+      $config->setName($this->getTargetInformation());
     }
 
     $config->setValue($this->getValue('information'));
     $config->save();
+  }
+
+  private function getTarget()
+  {
+    return $this->getOption('target', 'pc_home');
+  }
+
+  private function getTargetInformation()
+  {
+    return $this->getTarget().'_information';
   }
 }
