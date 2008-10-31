@@ -44,7 +44,7 @@ class SnsConfig extends BaseSnsConfig
   public function getConfig()
   {
     $name = $this->getName();
-    if ($name) {
+    if ($name && isset($this->snsConfigSettings[$name])) {
       return $this->snsConfigSettings[$name];
     }
 

@@ -26,4 +26,21 @@ class snsActions extends sfActions
       }
     }
   }
+
+ /**
+  * Executes configInformation action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeInformationConfig($request)
+  {
+    $this->form = new InformationConfigForm();
+
+    if ($request->isMethod('post')) {
+      $this->form->bind($request->getParameter('sns_config'));
+      if ($this->form->isValid()) {
+        $this->form->save();
+      }
+    }
+  }
 }
