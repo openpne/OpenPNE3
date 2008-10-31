@@ -59,7 +59,7 @@ $options = array(
   'title' => '参加ｺﾐｭﾆﾃｨﾘｽﾄ',
   'border' => true,
   'moreInfo' => array(
-    link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'community/memberList?id='.$member->getId())
+    link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'community/joinlist?member_id='.$member->getId())
   ),
 );
 include_list_box('profileEdit', $list, $options);
