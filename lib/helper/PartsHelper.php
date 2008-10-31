@@ -46,6 +46,15 @@ function include_list_box($id, $list, $options = array())
   include_partial('global/partsListBox', $params);
 }
 
+function include_information_box($id, $body)
+{
+  $params = array(
+    'id' => $id,
+    'body' => $body,
+  );
+  include_partial('global/partsInformationBox', $params);
+}
+
 /**
  * Includes customizes.
  *
