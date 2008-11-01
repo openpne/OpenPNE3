@@ -1,0 +1,17 @@
+/*==============================================================================
+ * informationBox
+ *----------------------------------------------------------------------------*/
+.informationBox {
+	padding-left: 102px;
+	border: 1px solid #CCCCCC;
+	background: #EEEEEE url(../images/icon_information.gif) no-repeat 5px 50%;
+}
+.informationBox div.body {
+	min-height: 1.2em;
+	padding: 5px;
+	border-left: 1px solid #CCCCCC;
+	background: #FFFFFF;
+}
+.informationBox .caution {
+	color: #FF0000;
+}
