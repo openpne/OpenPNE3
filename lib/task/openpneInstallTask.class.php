@@ -22,6 +22,7 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
+    @$this->fixPerms();
     $this->clearCache();
     $this->configureDatabase($arguments['dsn']);
     $this->buildDb();
@@ -76,5 +77,11 @@ EOF;
 
     $buildAllLoad = new sfPropelBuildAllLoadTask($this->dispatcher, $this->formatter);
     $buildAllLoad->run(array('application' => 'pc_frontend'));
+  }
+
+  protected function fixPerms()
+  {
+    $permissions = new sfProjectPermissionsTask($this->dispatcher, $this->formatter);
+    $permissions->run();
   }
 }
