@@ -47,17 +47,19 @@ EOF;
 
     // update propel.ini
     $propelini = sfConfig::get('sf_config_dir').'/propel.ini';
-    if (file_exists($propelini))
-    {
-      $content = file_get_contents($propelini);
-      if (preg_match('/^(.+?):\/\//', $dsn, $match))
-      {
-        $content = preg_replace('/^propel\.database(\s*)=(\s*)(.+?)$/m', 'propel.database$1=$2'.$match[1], $content);
-        $content = preg_replace('/^propel\.database\.createUrl(\s*)=(\s*)(.+?)$/m', 'propel.database.createUrl$1=$2'.$dsn, $content);
-        $content = preg_replace('/^propel\.database\.url(\s*)=(\s*)(.+?)$/m', 'propel.database.url$1=$2'.$dsn, $content);
 
-        file_put_contents($propelini, $content);
-      }
+    if (!file_exists($propelini)) {
+      copy($propelini.'.sample', $propelini);
+    }
+
+    $content = file_get_contents($propelini);
+    if (preg_match('/^(.+?):\/\//', $dsn, $match))
+    {
+      $content = preg_replace('/^propel\.database(\s*)=(\s*)(.+?)$/m', 'propel.database$1=$2'.$match[1], $content);
+      $content = preg_replace('/^propel\.database\.createUrl(\s*)=(\s*)(.+?)$/m', 'propel.database.createUrl$1=$2'.$dsn, $content);
+      $content = preg_replace('/^propel\.database\.url(\s*)=(\s*)(.+?)$/m', 'propel.database.url$1=$2'.$dsn, $content);
+
+      file_put_contents($propelini, $content);
     }
   }
 
