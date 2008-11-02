@@ -72,11 +72,6 @@ EOF;
     $this->schemaToXML(self::DO_NOT_CHECK_SCHEMA, 'generated-');
     $this->copyXmlSchemaFromPlugins('generated-');
 
-/*
-    $buildDb = new sfPropelBuildDbTask($this->dispatcher, $this->formatter);
-    $buildDb->run();
-    */
-
     $buildAllLoad = new sfPropelBuildAllLoadTask($this->dispatcher, $this->formatter);
     $buildAllLoad->run(array('application' => 'pc_frontend'));
   }
