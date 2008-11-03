@@ -1,12 +1,11 @@
-<?php if ($form->isNew()) : ?>
-<form action="<?php echo url_for('community/edit') ?>" method="post">
-<?php else : ?>
-<form action="<?php echo url_for('community/edit?id=' . $community->getId()) ?>" method="post">
-<?php endif; ?>
-<table>
-<?php echo $form ?>
-<tr>
-<td colspan="2"><input type="submit" value="登録" /></td>
-</tr>
-</table>
-</form>
+<?php
+$options = array('form' => array($form));
+if ($form->isNew()) {
+  $title = 'コミュニティ作成';
+  $options['url'] = 'community/edit';
+} else {
+  $title = 'コミュニティ編集';
+  $options['url'] = 'community/edit?id=' . $community->getId();
+}
+include_box('formCommunity', $title, '', $options);
+?>

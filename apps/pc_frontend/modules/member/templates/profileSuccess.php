@@ -1,11 +1,10 @@
-<dl>
-<dt>ニックネーム</dt>
-<dd><?php echo $member->getName() ?></dd>
-<?php foreach ($member->getProfiles() as $profile) : ?>
-<dt><?php echo $profile->getCaption() ?></dt>
-<dd><?php echo $profile ?></dd>
-<?php endforeach; ?>
-</dl>
+<?php
+$list = array('ニックネーム' => $member->getName());
+foreach ($member->getProfiles() as $profile) {
+  $list[$profile->getCaption()] = $profile;
+}
+include_list_box('profile', $list, array('title' => 'プロフィール'))
+?>
 
 <ul>
 <li><?php echo link_to(sprintf('フレンド一覧(%d)', $member->countFriendsRelatedByMemberIdTo()), 'friend/list?id=' . $member->getId()) ?></li>

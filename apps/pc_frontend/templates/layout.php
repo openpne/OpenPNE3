@@ -24,8 +24,11 @@
 </div><!-- localNav -->
 </div><!-- Header -->
 
-
+<div id="LayoutC">
+<div id="Center">
 <?php echo $sf_content ?>
+</div>
+</div>
 
 </div><!-- Container -->
 </div><!-- Body -->

@@ -1,4 +1,4 @@
-<?php echo $community->getName() ?>コミュニティのホームです。
+<?php include_box('communityHome', $community->getName().'コミュニティ', 'コミュニティホームです。') ?>
 
 <ul>
 <li><?php echo link_to(sprintf('コミュニティメンバー一覧(%d)', $community->countCommunityMembers()), 'community/memberList?id=' . $community->getId()) ?></li>

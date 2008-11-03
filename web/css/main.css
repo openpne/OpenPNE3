@@ -174,12 +174,11 @@ div.parts tr td.first-child {
 #localNav {
   margin: 10px 0;
   padding-left: 10px;
-  background-color: #36B3D1;
+  background-color: #58B5F3;
 }
 #localNav li {
   display: inline;
   line-height: 30px;
-  background-color: #36B3D1;
   padding-right: 10px;
   border-right: 1px solid #CCCCCC;
 }
@@ -187,6 +186,12 @@ div.parts tr td.first-child {
   color: #000000;
   text-decoration: none;
 }
+
+#LayoutC #Center {
+  width: 650px;
+  margin-left: 30px;
+}
+
 
 /*==============================================================================
  * informationBox
@@ -238,13 +243,13 @@ div.ditem {
  *--------------------------------------------*/
 .partsHeading {
   padding: 2px 8px 2px 36px;
-  background: #36B3D1 url(./skin/default/img/content_header_1.gif) no-repeat 0 0;
+  background: #36B3D1 url(../images/content_header_1.gif) no-repeat 0 0;
   text-align: left;
   font-size: 100%;
 }
 #LayoutA #Left .partsHeading {
   padding-left: 24px;
-  background-image: url(./skin/default/img/icon_title_1.gif);
+  background-image: url(../images/icon_title_1.gif);
 }
 .partsHeading h3 {
   display: inline;
@@ -313,3 +318,34 @@ div.operation ul.moreInfo li {
   display: inline;
   background-position: 0 50%;
 }
+
+/*==============================================================================
+ * box
+ *----------------------------------------------------------------------------*/
+.box .body {
+  padding: 10px 1em;
+}
+
+.box form th, .box form td {
+  padding: 5px;
+}
+.box form th {
+  width: 140px;
+  border-left: medium none;
+}
+
+.box form .operation {
+  padding: 10px 0;
+}
+
+/*==============================================================================
+ * listBox
+ *----------------------------------------------------------------------------*/
+.listBox th {
+  width: 83px;
+  background-color: #FFFFFF;
+}
+.listBox th, .listBox td {
+  padding: 5px;
+}
+

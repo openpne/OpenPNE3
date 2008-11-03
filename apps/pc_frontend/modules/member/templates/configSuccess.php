@@ -1,10 +1,8 @@
 <?php foreach ($forms as $category => $form) : ?>
-<form action="<?php echo url_for('member/config?category=' . $category) ?>" method="post">
-<table id="<?php echo $category ?>">
-<?php echo $form ?>
-<tr>
-<td colspan="2"><input type="submit" value="変更" /></td>
-</tr>
-</table>
-</form>
+
+<?php include_box('form'.$category, $category, '', array(
+  'form' => array($form),
+  'url' => 'member/config?category=' . $category)
+) ?>
+
 <?php endforeach; ?>
