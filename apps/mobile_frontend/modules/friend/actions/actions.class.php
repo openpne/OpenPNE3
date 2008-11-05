@@ -14,6 +14,7 @@ class friendActions extends sfActions
   {
     $this->id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
     $this->isFriend = FriendPeer::isFriend($this->getUser()->getMemberId(), $this->id);
+    $this->isFriendPre = FriendPrePeer::isFriendPre($this->getUser()->getMemberId(), $this->id);
   }
 
  /**
@@ -43,9 +44,63 @@ class friendActions extends sfActions
     {
       return sfView::ERROR;
     }
+
+    if ($this->isFriendPre)
+    {
+      return sfView::ERROR;
+    }
+
     $this->redirectToHomeIfIdIsNotValid();
-    FriendPeer::link($this->getUser()->getMemberId(), $this->id);
+
+    $friendPre = new FriendPre();
+    $friendPre->setMemberIdFrom($this->getUser()->getMemberId());
+    $friendPre->setMemberIdTo($this->id);
+    $friendPre->save();
+
     $this->redirect('member/profile?id='.$this->id);
+  }
+
+ /**
+  * Executes linkAccept action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeLinkAccept($request)
+  {
+    if (!$this->isFriendPre) {
+      return sfView::ERROR;
+    }
+
+    $this->redirectToHomeIfIdIsNotValid();
+
+    $friendPre = FriendPrePeer::retrieveByMemberIdToAndMemberIdFrom($this->getUser()->getMemberId(), $this->id);
+    $this->forward404Unless($friendPre);
+
+    FriendPeer::link($friendPre->getMemberIdTo(), $friendPre->getMemberIdFrom());
+    $friendPre->delete();
+
+    $this->redirect('member/profile?id=' . $this->id);
+  }
+
+ /**
+  * Executes linkReject action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeLinkReject($request)
+  {
+    if (!$this->isFriendPre) {
+      return sfView::ERROR;
+    }
+
+    $this->redirectToHomeIfIdIsNotValid();
+
+    $friendPre = FriendPrePeer::retrieveByMemberIdToAndMemberIdFrom($this->getUser()->getMemberId(), $this->id);
+    $this->forward404Unless($friendPre);
+
+    $friendPre->delete();
+
+    $this->redirect('@homepage');
   }
 
  /**
