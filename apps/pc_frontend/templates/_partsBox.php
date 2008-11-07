@@ -29,7 +29,7 @@
 <div class="operation">
 <ul class="moreInfo button">
 <li>
-<input class="input_submit" type="submit" value="変更" />
+<input class="input_submit" type="submit" value="<?php echo $option['button'] ?>" />
 </li>
 </ul>
 </div>

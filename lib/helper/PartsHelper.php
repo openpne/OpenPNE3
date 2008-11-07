@@ -57,6 +57,10 @@ function include_information_box($id, $body)
 
 function include_box($id, $title = '', $body = '', $option = array())
 {
+  if (!empty($option['form']) && !isset($option['button'])) {
+    $option['button'] = '変更';
+  }
+
   $params = array(
     'id' => $id,
     'title' => $title,

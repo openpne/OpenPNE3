@@ -15,6 +15,10 @@ Navi:
     type: "secure_global"
     uri: "member/config"
 
+  secure_global_navi_invite:
+    type: "secure_global"
+    uri: "member/invite"
+
   secure_global_navi_logout:
     type: "secure_global"
     uri: "member/logout"
@@ -82,6 +86,11 @@ NaviI18n:
   secure_global_navi_config_i18n:
     id: secure_global_navi_config
     caption: "設定変更"
+    culture: "ja_JP"
+
+  secure_global_navi_invite_i18n:
+    id: secure_global_navi_invite
+    caption: "友人を招待する"
     culture: "ja_JP"
 
   secure_global_navi_logout_i18n:

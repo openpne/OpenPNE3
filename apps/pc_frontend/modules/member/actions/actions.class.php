@@ -75,4 +75,29 @@ class memberActions extends sfOpenPNEMemberAction
 
     return sfView::SUCCESS;
   }
+
+ /**
+  * Executes invite action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeInvite($request)
+  {
+    $this->form = new InviteForm();
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('pc_address'));
+      if ($this->form->isValid())
+      {
+        $token = $this->form->register();
+        $subject = OpenPNEConfig::get('sns_name').'の招待状が届いています';
+        $body = $this->getPartial('global/requestRegisterURLMail', array('token' => $token->getValue()));
+        sfOpenPNEMailSend::execute($subject, $this->form->getValue('pc_address'), OpenPNEConfig::get('admin_mail_address'), $body);
+
+        return sfView::SUCCESS;
+      }
+    }
+
+    return sfView::INPUT;
+  }
 }
