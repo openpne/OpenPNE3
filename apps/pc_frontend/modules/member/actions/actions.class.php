@@ -6,67 +6,9 @@
  * @package    OpenPNE
  * @subpackage member
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
- * @version    SVN: $Id: actions.class.php 9301 2008-05-27 01:08:46Z dwhittle $
  */
-class memberActions extends sfActions
+class memberActions extends sfOpenPNEMemberAction
 {
- /**
-  * Executes login action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeLogin($request)
-  {
-    $this->getUser()->logout();
-
-    $this->forms = $this->getUser()->getAuthForms();
-
-    if ($request->isMethod('post'))
-    {
-      $authForm = $this->getUser()->getAuthForm();
-      $authForm->bind($request->getParameter('auth'.$authForm->getAuthMode()));
-      if ($authForm->isValid())
-      {
-        $this->redirectIf($this->getUser()->login($authForm), 'member/home');
-      }
-      return sfView::ERROR;
-    }
-
-    return sfView::SUCCESS;
-  }
-
- /**
-  * Executes logout action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeLogout($request)
-  {
-    $this->getUser()->logout();
-    $this->redirect('member/login');
-  }
-
- /**
-  * Executes register action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeRegisterInput($request)
-  {
-    $this->form = $this->getUser()->getAuthForm();
-    $this->form->setForRegisterWidgets($this->getUser()->getMember());
-
-    if ($request->isMethod('post')) {
-      $this->form->bindAll($request);
-      if ($this->form->isValidAll()) {
-        $result = $this->getUser()->register($this->form);
-        $this->redirectIf($result, $this->getUser()->getRegisterEndAction());
-      }
-    }
-
-    return sfView::SUCCESS;
-  }
-
  /**
   * Executes home action
   *
@@ -75,8 +17,7 @@ class memberActions extends sfActions
   public function executeHome($request)
   {
     $this->information = SnsConfigPeer::retrieveByName('pc_home_information');
-
-    return sfView::SUCCESS;
+    return parent::executeHome($request);
   }
 
  /**
@@ -100,41 +41,12 @@ class memberActions extends sfActions
   */
   public function executeProfile($request)
   {
-    $id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
-    $this->member = MemberPeer::retrieveByPk($id);
-    $this->forward404Unless($this->member, 'Undefined member.');
-
-    if ($request->hasParameter('id')) {
+    if ($request->hasParameter('id') && $request->getParameter('id') != $this->getUser()->getMemberId())
+    {
       sfConfig::set('sf_navi_type', 'friend');
     }
 
-    return sfView::SUCCESS;
-  }
-
- /**
-  * Executes editProfile action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeEditProfile($request)
-  {
-    $this->memberForm = new MemberForm($this->getUser()->getMember());
-
-    $profiles = $this->getUser()->getMember()->getProfiles();
-    $this->profileForm = new MemberProfileForm($profiles);
-    $this->profileForm->setConfigWidgets();
-
-    if ($request->isMethod('post')) {
-      $this->memberForm->bind($request->getParameter('member'));
-      $this->profileForm->bind($request->getParameter('profile'));
-      if ($this->memberForm->isValid() && $this->profileForm->isValid()) {
-        $this->memberForm->save();
-        $this->profileForm->save($this->getUser()->getMemberId());
-        $this->redirect('member/profile');
-      }
-    }
-
-    return sfView::SUCCESS;
+    return parent::executeProfile($request);
   }
 
  /**
