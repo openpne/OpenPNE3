@@ -6,29 +6,9 @@
  * @package    OpenPNE
  * @subpackage community
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
- * @version    SVN: $Id: actions.class.php 9301 2008-05-27 01:08:46Z dwhittle $
  */
-class communityActions extends sfActions
+class communityActions extends sfOpenPNECommunityAction
 {
-  public function preExecute()
-  {
-    $this->id = $this->getRequestParameter('id');
-
-    $this->isCommunityMember = CommunityMemberPeer::isMember($this->getUser()->getMemberId(), $this->id);
-    $this->isAdmin = CommunityMemberPeer::isAdmin($this->getUser()->getMemberId(), $this->id);
-    $this->isEditCommunity = $this->isAdmin;
-  }
-
- /**
-  * Executes index action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeIndex($request)
-  {
-    $this->forward404();
-  }
-
  /**
   * Executes edit action
   *
@@ -36,36 +16,13 @@ class communityActions extends sfActions
   */
   public function executeEdit($request)
   {
-    if ($this->id && !$this->isEditCommunity) {
-      $this->forward('default', 'secure');
-    }
-
-    $this->community = CommunityPeer::retrieveByPk($this->id);
-    $this->form = new CommunityForm($this->community);
+    $result = parent::executeEdit($request);
 
     if (!$this->community) {
       sfConfig::set('sf_navi_type', 'default');
     }
 
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getParameter('community'));
-      if ($this->form->isValid()) {
-        $community = $this->form->save();
-
-        $this->redirect('community/home?id=' . $community->getId());
-      }
-    }
-  }
-
- /**
-  * Executes home action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeHome($request)
-  {
-    $this->community = CommunityPeer::retrieveByPk($this->id);
-    $this->forward404Unless($this->community, 'Undefined community.');
+    return $result;
   }
 
  /**
@@ -79,7 +36,8 @@ class communityActions extends sfActions
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
 
-    if (!$this->pager->getNbResults()) {
+    if (!$this->pager->getNbResults())
+    {
       return sfView::ERROR;
     }
 
@@ -93,58 +51,14 @@ class communityActions extends sfActions
   */
   public function executeJoinlist($request)
   {
-    $this->pager = CommunityPeer::getJoinCommunityListPager($request->getParameter('member_id', $this->getUser()->getMemberId()), $request->getParameter('page', 1));
+    sfConfig::set('sf_navi_type', 'default');
 
-    if (!$this->pager->getNbResults()) {
-      return sfView::ERROR;
+    if ($request->hasParameter('id') && $request->getParameter('id') != $this->getUser()->getMemberId())
+    {
+      sfConfig::set('sf_navi_type', 'friend');
     }
 
-    return sfView::SUCCESS;
+    return parent::executeJoinlist($request);
   }
 
- /**
-  * Executes memberList action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeMemberList($request)
-  {
-    $this->pager = CommunityPeer::getCommunityMemberListPager($this->id, $request->getParameter('page', 1));
-
-    if (!$this->pager->getNbResults()) {
-      return sfView::ERROR;
-    }
-
-    return sfView::SUCCESS;
-  }
-
- /**
-  * Executes join action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeJoin($request)
-  {
-    if ($this->isCommunityMember) {
-      return sfView::ERROR;
-    }
-
-    CommunityMemberPeer::join($this->getUser()->getMemberId(), $this->id);
-    $this->redirect('community/home?id=' . $this->id);
-  }
-
- /**
-  * Executes quit action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeQuit($request)
-  {
-    if (!$this->isCommunityMember || $this->isAdmin) {
-      return sfView::ERROR;
-    }
-
-    CommunityMemberPeer::quit($this->getUser()->getMemberId(), $this->id);
-    $this->redirect('community/home?id=' . $this->id);
-  }
 }
