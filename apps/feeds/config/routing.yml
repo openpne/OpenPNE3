@@ -1,3 +1,13 @@
+#api rules
+api_entry:
+  url:   /:module
+  param: { action: entry }
+
+api_entry_id:
+  url:   /:module/:id
+  param: { action: entry }
+  requirements: { id: \d+ }
+
 # default rules
 homepage:
   url:   /
@@ -6,10 +16,6 @@ homepage:
 default_symfony:
   url:   /symfony/:action/*
   param: { module: default }
-
-default_index:
-  url:   /:module
-  param: { action: index }
 
 default:
   url:   /:module/:action/*
