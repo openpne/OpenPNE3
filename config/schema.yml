@@ -6,6 +6,16 @@ propel:
     created_at: ~
     updated_at: ~
 
+  member_relationship:
+    id: ~
+    member_id_to: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
+    member_id_from: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
+    is_friend: { type: boolean }
+    is_friend_pre: { type: boolean }
+    _uniques:
+      member_id_to_from: [ member_id_to, member_id_from ]
+      member_id_from_to: [ member_id_from, member_id_to ]
+
   profile:
     id: ~
     name: { type: varchar(64), index: unique, required: true }
@@ -39,21 +49,6 @@ propel:
     profile_id: ~
     profile_option_id: ~
     value: { type: longvarchar }
-
-  friend_pre:
-    id: ~
-    member_id_to: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
-    member_id_from: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
-    _uniques: 
-      member_id_to_from: [ member_id_to, member_id_from ]
-
-  friend:
-    id: ~
-    member_id_to: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
-    member_id_from: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
-    _uniques: 
-      member_id_to_from: [ member_id_to, member_id_from ]
-      member_id_from_to: [ member_id_from, member_id_to ]
 
   community:
     id: ~

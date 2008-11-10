@@ -110,6 +110,5 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
   private function updateDefaultsFromObject($obj)
   {
     $this->setDefaults(array_merge($this->getDefaults(), $obj->toArray(BasePeer::TYPE_FIELDNAME)));
-    var_dump($obj->toArray(BasePeer::TYPE_FIELDNAME));
   }
 }

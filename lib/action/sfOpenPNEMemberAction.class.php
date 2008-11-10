@@ -9,6 +9,18 @@
  */
 abstract class sfOpenPNEMemberAction extends sfActions
 {
+  public function preExecute()
+  {
+    $this->id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
+
+    $this->relation = MemberRelationshipPeer::retrieveByFromAndTo($this->getUser()->getMemberId(), $this->id);
+    if (!$this->relation) {
+      $this->relation = new MemberRelationship();
+      $this->relation->setMemberIdFrom($this->getUser()->getMemberId());
+      $this->relation->setMemberIdTo($this->id);
+    }
+  }
+
  /**
   * Executes login action
   *
@@ -87,7 +99,6 @@ abstract class sfOpenPNEMemberAction extends sfActions
   {
     $id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
     $this->member = MemberPeer::retrieveByPk($id);
-    $this->friends = FriendPeer::retrievesByMemberId($id);
     $this->communities = CommunityPeer::retrievesByMemberId($id);
     $this->forward404Unless($this->member, 'Undefined member.');
 

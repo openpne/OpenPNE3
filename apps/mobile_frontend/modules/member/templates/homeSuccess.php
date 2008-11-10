@@ -26,7 +26,7 @@ include_information_box('information', $body)
 </td></tr>
 
 <tr><td colspan="2">
-<?php echo link_to(sprintf('ﾏｲﾌﾚﾝﾄﾞ(%s)', $sf_user->getMember()->countFriendsRelatedByMemberIdTo()), 'friend/list'); ?><br>
+<?php echo link_to(sprintf('ﾏｲﾌﾚﾝﾄﾞ(%s)', $sf_user->getMember()->countFriends()), 'friend/list'); ?><br>
 <?php echo link_to(sprintf('参加ｺﾐｭﾆﾃｨ(%s)', $sf_user->getMember()->countCommunityMembers()), 'community/joinlist'); ?><br>
 <hr color="#0d6ddf" size="3">
 </td></tr>

@@ -28,17 +28,15 @@
 
 </table>
 
-<?php if ($member != $sf_user->getMember()) : ?>
-<?php if (!FriendPeer::isFriend($sf_user->getMemberId(), $member->getId())) : ?>
+<?php if (!$relation->isFriend() && !$relation->isSelf()) : ?>
 <?php echo link_to('ﾌﾚﾝﾄﾞに加える', 'friend/link?id='.$member->getId()) ?><br>
-<?php endif; ?>
 <?php endif; ?>
 
 <?php
 $list = array();
-foreach ($friends as $friend) {
+foreach ($member->getFriends(5) as $friend) {
   $friendMember = $friend->getMemberRelatedByMemberIdTo();
-  $list[] = link_to(sprintf('%s(%d)', $friendMember->getName(), $friendMember->countFriendsRelatedByMemberIdTo()), 'member/profile?id='.$friendMember->getId());
+  $list[] = link_to(sprintf('%s(%d)', $friendMember->getName(), $friendMember->countFriends()), 'member/profile?id='.$friendMember->getId());
 }
 $options = array(
   'title' => 'ﾌﾚﾝﾄﾞﾘｽﾄ',

@@ -2,10 +2,10 @@
 
 
 
-class FriendPreMapBuilder {
+class MemberRelationshipMapBuilder {
 
 	
-	const CLASS_NAME = 'lib.model.map.FriendPreMapBuilder';
+	const CLASS_NAME = 'lib.model.map.MemberRelationshipMapBuilder';
 
 	
 	private $dbMap;
@@ -27,8 +27,8 @@ class FriendPreMapBuilder {
 	{
 		$this->dbMap = Propel::getDatabaseMap('propel');
 
-		$tMap = $this->dbMap->addTable('friend_pre');
-		$tMap->setPhpName('FriendPre');
+		$tMap = $this->dbMap->addTable('member_relationship');
+		$tMap->setPhpName('MemberRelationship');
 
 		$tMap->setUseIdGenerator(true);
 
@@ -37,6 +37,10 @@ class FriendPreMapBuilder {
 		$tMap->addForeignKey('MEMBER_ID_TO', 'MemberIdTo', 'int', CreoleTypes::INTEGER, 'member', 'ID', true, null);
 
 		$tMap->addForeignKey('MEMBER_ID_FROM', 'MemberIdFrom', 'int', CreoleTypes::INTEGER, 'member', 'ID', true, null);
+
+		$tMap->addColumn('IS_FRIEND', 'IsFriend', 'boolean', CreoleTypes::BOOLEAN, false, null);
+
+		$tMap->addColumn('IS_FRIEND_PRE', 'IsFriendPre', 'boolean', CreoleTypes::BOOLEAN, false, null);
 
 	} 
 } 

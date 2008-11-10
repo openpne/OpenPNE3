@@ -1,4 +1,4 @@
-<?php foreach ($sf_user->getMember()->getFriendPresRelatedByMemberIdTo() as $key => $value) : ?>
+<?php foreach ($sf_user->getMember()->getFriendPreTo() as $key => $value) : ?>
 <p class="caution">
 <?php
 $member = $value->getMemberRelatedByMemberIdFrom();

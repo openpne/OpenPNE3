@@ -1,7 +1,7 @@
 <?php
 
 
-abstract class BaseFriend extends BaseObject  implements Persistent {
+abstract class BaseMemberRelationship extends BaseObject  implements Persistent {
 
 
 	
@@ -18,6 +18,14 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 
 	
 	protected $member_id_from;
+
+
+	
+	protected $is_friend;
+
+
+	
+	protected $is_friend_pre;
 
 	
 	protected $aMemberRelatedByMemberIdTo;
@@ -53,6 +61,20 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 	}
 
 	
+	public function getIsFriend()
+	{
+
+		return $this->is_friend;
+	}
+
+	
+	public function getIsFriendPre()
+	{
+
+		return $this->is_friend_pre;
+	}
+
+	
 	public function setId($v)
 	{
 
@@ -62,7 +84,7 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = FriendPeer::ID;
+			$this->modifiedColumns[] = MemberRelationshipPeer::ID;
 		}
 
 	} 
@@ -76,7 +98,7 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 
 		if ($this->member_id_to !== $v) {
 			$this->member_id_to = $v;
-			$this->modifiedColumns[] = FriendPeer::MEMBER_ID_TO;
+			$this->modifiedColumns[] = MemberRelationshipPeer::MEMBER_ID_TO;
 		}
 
 		if ($this->aMemberRelatedByMemberIdTo !== null && $this->aMemberRelatedByMemberIdTo->getId() !== $v) {
@@ -94,11 +116,31 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 
 		if ($this->member_id_from !== $v) {
 			$this->member_id_from = $v;
-			$this->modifiedColumns[] = FriendPeer::MEMBER_ID_FROM;
+			$this->modifiedColumns[] = MemberRelationshipPeer::MEMBER_ID_FROM;
 		}
 
 		if ($this->aMemberRelatedByMemberIdFrom !== null && $this->aMemberRelatedByMemberIdFrom->getId() !== $v) {
 			$this->aMemberRelatedByMemberIdFrom = null;
+		}
+
+	} 
+	
+	public function setIsFriend($v)
+	{
+
+		if ($this->is_friend !== $v) {
+			$this->is_friend = $v;
+			$this->modifiedColumns[] = MemberRelationshipPeer::IS_FRIEND;
+		}
+
+	} 
+	
+	public function setIsFriendPre($v)
+	{
+
+		if ($this->is_friend_pre !== $v) {
+			$this->is_friend_pre = $v;
+			$this->modifiedColumns[] = MemberRelationshipPeer::IS_FRIEND_PRE;
 		}
 
 	} 
@@ -113,13 +155,17 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 
 			$this->member_id_from = $rs->getInt($startcol + 2);
 
+			$this->is_friend = $rs->getBoolean($startcol + 3);
+
+			$this->is_friend_pre = $rs->getBoolean($startcol + 4);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
-						return $startcol + 3; 
+						return $startcol + 5; 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating Friend object", $e);
+			throw new PropelException("Error populating MemberRelationship object", $e);
 		}
 	}
 
@@ -131,12 +177,12 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(FriendPeer::DATABASE_NAME);
+			$con = Propel::getConnection(MemberRelationshipPeer::DATABASE_NAME);
 		}
 
 		try {
 			$con->begin();
-			FriendPeer::doDelete($this, $con);
+			MemberRelationshipPeer::doDelete($this, $con);
 			$this->setDeleted(true);
 			$con->commit();
 		} catch (PropelException $e) {
@@ -153,7 +199,7 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(FriendPeer::DATABASE_NAME);
+			$con = Propel::getConnection(MemberRelationshipPeer::DATABASE_NAME);
 		}
 
 		try {
@@ -192,12 +238,12 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = FriendPeer::doInsert($this, $con);
+					$pk = MemberRelationshipPeer::doInsert($this, $con);
 					$affectedRows += 1; 										 										 
 					$this->setId($pk);  
 					$this->setNew(false);
 				} else {
-					$affectedRows += FriendPeer::doUpdate($this, $con);
+					$affectedRows += MemberRelationshipPeer::doUpdate($this, $con);
 				}
 				$this->resetModified(); 			}
 
@@ -251,7 +297,7 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 			}
 
 
-			if (($retval = FriendPeer::doValidate($this, $columns)) !== true) {
+			if (($retval = MemberRelationshipPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
@@ -266,7 +312,7 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 	
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = FriendPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = MemberRelationshipPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->getByPosition($pos);
 	}
 
@@ -283,6 +329,12 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 			case 2:
 				return $this->getMemberIdFrom();
 				break;
+			case 3:
+				return $this->getIsFriend();
+				break;
+			case 4:
+				return $this->getIsFriendPre();
+				break;
 			default:
 				return null;
 				break;
@@ -291,11 +343,13 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 	
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = FriendPeer::getFieldNames($keyType);
+		$keys = MemberRelationshipPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getMemberIdTo(),
 			$keys[2] => $this->getMemberIdFrom(),
+			$keys[3] => $this->getIsFriend(),
+			$keys[4] => $this->getIsFriendPre(),
 		);
 		return $result;
 	}
@@ -303,7 +357,7 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 	
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = FriendPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = MemberRelationshipPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -320,26 +374,36 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 			case 2:
 				$this->setMemberIdFrom($value);
 				break;
+			case 3:
+				$this->setIsFriend($value);
+				break;
+			case 4:
+				$this->setIsFriendPre($value);
+				break;
 		} 	}
 
 	
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = FriendPeer::getFieldNames($keyType);
+		$keys = MemberRelationshipPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setMemberIdTo($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setMemberIdFrom($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setIsFriend($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setIsFriendPre($arr[$keys[4]]);
 	}
 
 	
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(FriendPeer::DATABASE_NAME);
+		$criteria = new Criteria(MemberRelationshipPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(FriendPeer::ID)) $criteria->add(FriendPeer::ID, $this->id);
-		if ($this->isColumnModified(FriendPeer::MEMBER_ID_TO)) $criteria->add(FriendPeer::MEMBER_ID_TO, $this->member_id_to);
-		if ($this->isColumnModified(FriendPeer::MEMBER_ID_FROM)) $criteria->add(FriendPeer::MEMBER_ID_FROM, $this->member_id_from);
+		if ($this->isColumnModified(MemberRelationshipPeer::ID)) $criteria->add(MemberRelationshipPeer::ID, $this->id);
+		if ($this->isColumnModified(MemberRelationshipPeer::MEMBER_ID_TO)) $criteria->add(MemberRelationshipPeer::MEMBER_ID_TO, $this->member_id_to);
+		if ($this->isColumnModified(MemberRelationshipPeer::MEMBER_ID_FROM)) $criteria->add(MemberRelationshipPeer::MEMBER_ID_FROM, $this->member_id_from);
+		if ($this->isColumnModified(MemberRelationshipPeer::IS_FRIEND)) $criteria->add(MemberRelationshipPeer::IS_FRIEND, $this->is_friend);
+		if ($this->isColumnModified(MemberRelationshipPeer::IS_FRIEND_PRE)) $criteria->add(MemberRelationshipPeer::IS_FRIEND_PRE, $this->is_friend_pre);
 
 		return $criteria;
 	}
@@ -347,9 +411,9 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 	
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(FriendPeer::DATABASE_NAME);
+		$criteria = new Criteria(MemberRelationshipPeer::DATABASE_NAME);
 
-		$criteria->add(FriendPeer::ID, $this->id);
+		$criteria->add(MemberRelationshipPeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -374,6 +438,10 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 
 		$copyObj->setMemberIdFrom($this->member_id_from);
 
+		$copyObj->setIsFriend($this->is_friend);
+
+		$copyObj->setIsFriendPre($this->is_friend_pre);
+
 
 		$copyObj->setNew(true);
 
@@ -393,7 +461,7 @@ abstract class BaseFriend extends BaseObject  implements Persistent {
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new FriendPeer();
+			self::$peer = new MemberRelationshipPeer();
 		}
 		return self::$peer;
 	}

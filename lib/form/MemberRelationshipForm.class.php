@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Friend form.
+ * MemberRelationship form.
  *
  * @package    form
- * @subpackage friend
+ * @subpackage member_relationship
  * @version    SVN: $Id: sfPropelFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
  */
-class FriendForm extends BaseFriendForm
+class MemberRelationshipForm extends BaseMemberRelationshipForm
 {
   public function configure()
   {

@@ -12,9 +12,13 @@ abstract class sfOpenPNEFriendAction extends sfActions
   public function preExecute()
   {
     $this->id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
-    $this->isFriend = FriendPeer::isFriend($this->getUser()->getMemberId(), $this->id);
-    $this->isFriendPreFrom = FriendPrePeer::isFriendPre($this->id, $this->getUser()->getMemberId());
-    $this->isFriendPreTo = FriendPrePeer::isFriendPre($this->getUser()->getMemberId(), $this->id);
+
+    $this->relation = MemberRelationshipPeer::retrieveByFromAndTo($this->getUser()->getMemberId(), $this->id);
+    if (!$this->relation) {
+      $this->relation = new MemberRelationship();
+      $this->relation->setMemberIdFrom($this->getUser()->getMemberId());
+      $this->relation->setMemberIdTo($this->id);
+    }
   }
 
  /**
@@ -24,7 +28,7 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeList($request)
   {
-    $this->pager = FriendPeer::getFriendListPager($this->id, $request->getParameter('page', 1));
+    $this->pager = MemberRelationshipPeer::getFriendListPager($this->id, $request->getParameter('page', 1));
 
     if (!$this->pager->getNbResults()) {
       return sfView::ERROR;
@@ -40,22 +44,14 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeLink($request)
   {
-    if ($this->isFriend)
-    {
-      return sfView::ERROR;
-    }
-
-    if ($this->isFriendPreTo)
+    if ($this->relation->isFriend() || $this->relation->isFriendPreFrom())
     {
       return sfView::ERROR;
     }
 
     $this->redirectToHomeIfIdIsNotValid();
 
-    $friendPre = new FriendPre();
-    $friendPre->setMemberIdFrom($this->getUser()->getMemberId());
-    $friendPre->setMemberIdTo($this->id);
-    $friendPre->save();
+    $this->relation->setFriendPre();
 
     $this->redirect('member/profile?id='.$this->id);
   }
@@ -67,20 +63,16 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeLinkAccept($request)
   {
-    if (!$this->isFriendPreFrom)
+    if (!$this->relation->isFriendPreTo())
     {
       return sfView::ERROR;
     }
 
     $this->redirectToHomeIfIdIsNotValid();
 
-    $friendPre = FriendPrePeer::retrieveByMemberIdToAndMemberIdFrom($this->getUser()->getMemberId(), $this->id);
-    $this->forward404Unless($friendPre);
+    $this->relation->setFriend();
 
-    FriendPeer::link($friendPre->getMemberIdTo(), $friendPre->getMemberIdFrom());
-    $friendPre->delete();
-
-    $this->redirect('member/profile?id=' . $this->id);
+    $this->redirect('member/profile?id='.$this->id);
   }
 
  /**
@@ -90,17 +82,14 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeLinkReject($request)
   {
-    if (!$this->isFriendPreFrom)
+    if (!$this->relation->isFriendPreTo())
     {
       return sfView::ERROR;
     }
 
     $this->redirectToHomeIfIdIsNotValid();
 
-    $friendPre = FriendPrePeer::retrieveByMemberIdToAndMemberIdFrom($this->getUser()->getMemberId(), $this->id);
-    $this->forward404Unless($friendPre);
-
-    $friendPre->delete();
+    $this->relation->removeFriend();
 
     $this->redirect('@homepage');
   }
@@ -112,11 +101,11 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeUnlink($request)
   {
-    if (!$this->isFriend) {
+    if (!$this->relation->isFriend()) {
       return sfView::ERROR;
     }
     $this->redirectToHomeIfIdIsNotValid();
-    FriendPeer::unlink($this->getUser()->getMemberId(), $this->id);
+    $this->relation->removeFriend();
     $this->redirect('member/profile?id=' . $this->id);
   }
 
