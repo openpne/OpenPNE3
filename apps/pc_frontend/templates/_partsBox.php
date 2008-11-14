@@ -19,7 +19,8 @@
 <?php endif; ?>
 
 <?php if (isset($option['form'])) : ?>
-<form action="<?php echo url_for($option['url']) ?>" method="post">
+<?php $option_raw = $sf_data->getRaw('option') ?>
+<form action="<?php echo url_for($option_raw['url']) ?>" method="post">
 <?php include_customizes($id, 'formTop') ?>
 <table>
 <?php foreach ($option['form'] as $form) : ?>

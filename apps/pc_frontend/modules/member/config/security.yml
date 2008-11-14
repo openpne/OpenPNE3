@@ -4,3 +4,6 @@ all:
 
 registerInput:
   credentials: SNSRegisterBegin
+
+configComplete:
+  is_secure: off

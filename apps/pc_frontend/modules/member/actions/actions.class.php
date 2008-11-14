@@ -57,11 +57,11 @@ class memberActions extends sfOpenPNEMemberAction
   public function executeConfig($request)
   {
     $this->forms = array();
-    $categories = array('security');
+    $categories = sfConfig::get('openpne_member_category');
 
-    foreach ($categories as $category) {
-      $this->forms[$category] = new MemberConfigForm();
-      $this->forms[$category]->setConfigWidgets($category, $this->getUser()->getMemberId());
+    foreach ($categories as $category => $config) {
+      $formClass = 'MemberConfig'.ucfirst($category).'Form';
+      $this->forms[$category] = new $formClass($this->getUser()->getMember());
     }
 
     if ($request->isMethod('post')) {
@@ -70,6 +70,51 @@ class memberActions extends sfOpenPNEMemberAction
       if ($targetForm->isValid()) {
         $targetForm->save($this->getUser()->getMemberId());
         $this->redirect('member/config');
+      }
+    }
+
+    return sfView::SUCCESS;
+  }
+
+ /**
+  * Executes config complete action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeConfigComplete($request)
+  {
+    $type = $request->getParameter('type');
+    $this->forward404Unless($type);
+
+    $memberId = $request->getParameter('id');
+
+    $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($type.'_token', $memberId);
+    $this->forward404Unless($memberConfig);
+    $this->forward404Unless((bool)$request->getParameter('token') !== $memberConfig->getValue());
+
+    $option = array('member' => $memberConfig->getMember());
+    $this->form = new sfOpenPNEPasswordForm(array(), $option);
+
+    if ($request->isMethod('post')) {
+      $this->form->bind($request->getParameter('password'));
+      if ($this->form->isValid()) {
+        $config = MemberConfigPeer::retrieveByNameAndMemberId($type, $memberId);
+        $pre = MemberConfigPeer::retrieveByNameAndMemberId($type.'_pre', $memberId);
+
+        if (!$config) {
+          $config = new MemberConfig();
+          $config->setName($type);
+        }
+
+        $config->setValue($pre->getValue());
+
+        if ($config->save()) {
+          $pre->delete();
+          $token = MemberConfigPeer::retrieveByNameAndMemberId($type.'_token', $memberId);
+          $token->delete();
+        }
+
+        $this->redirect('member/home');
       }
     }
 
@@ -86,13 +131,15 @@ class memberActions extends sfOpenPNEMemberAction
     $this->form = new InviteForm();
     if ($request->isMethod('post'))
     {
-      $this->form->bind($request->getParameter('pc_address'));
+      $this->form->bind($request->getParameter('member_config'));
       if ($this->form->isValid())
       {
-        $token = $this->form->register();
-        $subject = OpenPNEConfig::get('sns_name').'の招待状が届いています';
-        $body = $this->getPartial('global/requestRegisterURLMail', array('token' => $token->getValue()));
-        sfOpenPNEMailSend::execute($subject, $this->form->getValue('pc_address'), OpenPNEConfig::get('admin_mail_address'), $body);
+        $this->form->save();
+
+        $mail = new sfOpenPNEMailSend();
+        $mail->setSubject(OpenPNEConfig::get('sns_name').'の招待状が届いています');
+        $mail->setTemplate('global/requestRegisterURLMail', array('token' => $this->form->getToken()));
+        $mail->send($this->form->getMailAddress(), OpenPNEConfig::get('admin_mail_address'));
 
         return sfView::SUCCESS;
       }

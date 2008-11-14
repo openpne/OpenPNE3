@@ -9,27 +9,21 @@
  */ 
 class MemberConfig extends BaseMemberConfig
 {
-  var $memberConfigSettings = array();
-
-  public function __construct()
-  {
-    $config = OpenPNEConfig::loadConfigYaml('member');
-
-    if (array_key_exists('all', $config)) {
-      $this->memberConfigSettings += $config['all'];
-    }
-
-    if (array_key_exists(sfConfig::get('sf_app'), $config)) {
-      $this->memberConfigSettings += $config[sfConfig::get('sf_app')];
-    }
-  }
-
   public function savePre()
   {
-    $pre = new self();
-    $pre->setName($this->getName().'_pre');
+    $name = $this->getName();
+    if (strrpos($name, '_pre') === false) {
+      $name = $name.'_pre';
+    }
+
+    $pre = MemberConfigPeer::retrieveByNameAndMemberId($name, $this->getMemberId());
+    if (!$pre) {
+      $pre = new self();
+      $pre->setName($name);
+      $pre->setMember($this->getMember());
+    }
+
     $pre->setValue($this->getValue());
-    $pre->setMember($this->getMember());
     return $pre->save();
   }
 

@@ -1,0 +1,30 @@
+general:
+  sns_name:
+    caption:  "SNS名"
+    type:     "input"
+    default:  "MySNS"
+    option:
+      required: true
+
+  admin_mail_address:
+    caption: "管理者メールアドレス"
+    type:    "input"
+    default: "sns@example.com"
+    option:
+      required: true
+
+  pc_frontend_auth_mode:
+    caption:      "PC版認証方法"
+    type:         "selectMany"
+    choices_type: "AuthMode"
+    default:      ["PCAddress"]
+    option:
+      required: true
+
+  mobile_frontend_auth_mode:
+    caption:      "携帯版版認証方法"
+    type:         "selectMany"
+    choices_type: "AuthMode"
+    default:      ["MobileUID", "MobileAddress"]
+    option:
+      required: true

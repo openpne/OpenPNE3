@@ -1,0 +1,45 @@
+# category_name:
+#   setting_name:
+#     Name:       "sample"
+#     Caption:    "Sample"
+#     FormType:   "input"
+#     ValueType:  "string"
+#     IsRegist:   true
+#     IsConfig:   true
+#     IsRequired: true
+
+pcAddress:
+  pc_address:
+    Name:       "pc_address"
+    Caption:    "PCメールアドレス"
+    FormType:   "input"
+    ValueType:  "email"
+    IsRegist:   false
+    IsConfig:   true
+    IsRequired: true
+    IsUnique:   true
+    IsConfirm:  true
+
+mobileAddress:
+  mobile_address:
+    Name:       "mobile_address"
+    Caption:    "携帯メールアドレス"
+    FormType:   "input"
+    ValueType:  "mobile_email"
+    IsRegist:   false
+    IsConfig:   true
+    IsRequired: true
+    IsUnique:   true
+    IsConfirm:  true
+
+password:
+  password:
+    Name:       "password"
+    Caption:    "パスワード"
+    FormType:   "password"
+    ValueType:  "password"
+    IsRegist:   true
+    IsConfig:   true
+    IsUnique:   false
+    IsRequired: true
+    IsConfirm:  true

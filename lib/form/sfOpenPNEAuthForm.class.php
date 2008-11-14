@@ -71,8 +71,7 @@ abstract class sfOpenPNEAuthForm extends sfForm implements IteratorAggregate
     $this->profileForm = new MemberProfileForm($member->getMemberProfiles());
     $this->profileForm->setRegisterWidgets();
 
-    $this->configForm = new MemberConfigForm($member->getMemberConfigs());
-    $this->configForm->setRegisterWidgets();
+    $this->configForm = new MemberConfigForm($member);
   }
 
  /**

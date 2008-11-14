@@ -12,6 +12,12 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   public function initialize()
   {
     $this->dispatcher->connect('task.cache.clear', array($this, 'clearPluginCache'));
+
+    $this->getConfigCache()->registerConfigHandler('config/sns_config.yml', 'sfOpenPNESNSConfigHandler', array('application' => $this));
+    include($this->getConfigCache()->checkConfig('config/sns_config.yml'));
+
+    $this->getConfigCache()->registerConfigHandler('config/member_config.yml', 'sfOpenPNEMemberConfigHandler', array());
+    include($this->getConfigCache()->checkConfig('config/member_config.yml'));
   }
 
   public function clearPluginCache($params = array())
@@ -123,6 +129,10 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   public function getConfigPaths($configPath)
   {
     $files = array();
+
+    if ($libDirs = glob(sfConfig::get('sf_lib_dir').'/config/'.$configPath)) {
+      $files = array_merge($files, $libDirs); // library configurations
+    }
 
     if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/'.$configPath))
     {

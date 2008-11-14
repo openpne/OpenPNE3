@@ -9,98 +9,161 @@
  */
 class MemberConfigForm extends OpenPNEFormAutoGenerate
 {
-  private $memberConfigSettings = array();
+  protected $memberConfigSettings = array();
+  protected $category = '';
+  protected $member;
+  protected $isNew = false;
+  protected $isAutoGenerate = true;
 
-  public function configure()
+  public function __construct(Member $member = null, $options = array(), $CSRFSecret = null)
   {
-    $config = OpenPNEConfig::loadConfigYaml('member');
+    $this->setMemberConfigSettings();
 
-    if (array_key_exists('all', $config)) {
-      $this->memberConfigSettings += $config['all'];
+    $this->member = $member;
+    if (is_null($this->member)) {
+      $this->isNew = true;
+      $this->member = new Member();
+      $this->member->setIsActive(false);
+    } elseif (!$this->member->getIsActive()) {
+      $this->isNew = true;
     }
 
-    if (array_key_exists(sfConfig::get('sf_app'), $config)) {
-      $this->memberConfigSettings += $config[sfConfig::get('sf_app')];
+    parent::__construct(array(), $options, $CSRFSecret);
+
+    if ($this->isAutoGenerate) {
+      $this->generateConfigWidgets();
     }
-  }
-
-  public function setMemberConfigWidgets($settings, $memberId)
-  {
-    $widgets = array();
-    $validators = array();
-    $labels = array();
-    $defaults = array();
-
-    foreach ($settings as $key => $value) {
-      $widgets[$key] = $this->generateWidget($value);
-      $validators[$key] = $this->generateValidator($value);
-      $labels[$key] = $value['Caption'];
-      $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($key, $memberId);
-      if ($memberConfig) {
-        $defaults[$key] = $memberConfig->getValue();
-      }
-    }
-
-    $this->setWidgets($widgets);
-    $this->setValidators($validators);
-    $this->widgetSchema->setLabels($labels);
-    $this->setDefaults($defaults);
 
     $this->widgetSchema->setNameFormat('member_config[%s]');
   }
 
-  public function setConfigWidgets($category = null, $memberId = 0)
+  public function generateConfigWidgets()
   {
-    $settings = array();
+    foreach ($this->memberConfigSettings as $key => $value) {
+      if ($this->isNew && $value['IsRegist'] || !$this->isNew && $value['IsConfig']) {
+        $this->setMemberConfigWidget($key);
+      }
+    }
+  }
 
-    foreach ($this->getSettings($category) as $key => $value) {
-      if ($value['IsConfig']) {
-        $settings[$key] = $value;
+  public function setMemberConfigSettings()
+  {
+    $categories = sfConfig::get('openpne_member_category');
+    $configs = sfConfig::get('openpne_member_config');
+
+    if (!$this->category) {
+      $this->memberConfigSettings = $configs;
+      return true;
+    }
+
+    foreach ($categories[$this->category] as $value)
+    {
+      $this->memberConfigSettings[$value] = $configs[$value];
+    }
+  }
+
+  public function setMemberConfigWidget($name)
+  {
+    $config = $this->memberConfigSettings[$name];
+    $this->widgetSchema[$name] = $this->generateWidget($config);
+    $this->widgetSchema->setLabel($name, $config['Caption']);
+    $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($name, $this->member->getId());
+    if ($memberConfig) {
+      $this->setDefault($name, $memberConfig->getValue());
+    }
+    $this->validatorSchema[$name] = $this->generateValidator($config);
+
+    if (!empty($config['IsConfirm'])) {
+      $this->validatorSchema[$name.'_confirm'] = $this->validatorSchema[$name];
+      $this->widgetSchema[$name.'_confirm'] = $this->widgetSchema[$name];
+      $this->widgetSchema->setLabel($name.'_confirm', $config['Caption'].'(確認)');
+
+      $this->mergePostValidator(new sfValidatorSchemaCompare($name, '==', $name.'_confirm'));
+    }
+
+    if (!empty($config['IsUnique'])) {
+      $this->mergePostValidator(new sfValidatorCallback(array(
+        'callback' => array($this, 'isUnique'),
+        'arguments' => array('name' => $name),
+      )));
+    }
+  }
+
+  public function isUnique($validator, $value, $arguments = array())
+  {
+    if (empty($arguments['name'])) {
+      throw new InvalidArgumentException('Invalid argument');
+    }
+
+    $name = $arguments['name'];
+    $data = MemberConfigPeer::retrieveByNameAndValue($name, $value[$name]);
+    if (!$data || !$data->getMember()->getIsActive() || $data->getMember()->getId() == $this->member->getId()) {
+      return $value;
+    }
+
+    throw new sfValidatorError($validator, 'This '.$name.' address already exists.');
+  }
+
+  public function isValid()
+  {
+    foreach ($this->getValues() as $key => $value)
+    {
+      if ($this->memberConfigSettings[$key]['IsUnique'])
+      {
+        $memberConfig = MemberConfigPeer::retrieveByNameAndValue($key.'_pre', $value);
+        if ($memberConfig)
+        {
+          $member = $memberConfig->getMember();
+          if (!$member->getIsActive())
+          {
+            $this->member = $member;
+          }
+        }
       }
     }
 
-    $this->setMemberConfigWidgets($settings, $memberId);
+    return parent::isValid();
   }
 
-  public function setRegisterWidgets($category = null, $memberId = 0)
+  public function save()
   {
-    $settings = array();
-
-    foreach ($this->getSettings($category) as $key => $value) {
-      if ($value['IsRegist']) {
-        $settings[$key] = $value;
+    foreach ($this->getValues() as $key => $value)
+    {
+      if (strrpos($key, '_confirm'))
+      {
+        continue;
       }
-    }
 
-    $this->setMemberConfigWidgets($settings, $memberId);
-  }
-
-  public function getSettings($category = null)
-  {
-    if (is_null($category)) {
-      $result = array();
-      foreach ($this->memberConfigSettings as $value) {
-        $result += $value;
-      }
-      return $result;
-    }
-
-    return $this->memberConfigSettings[$category];
-  }
-
-  public function save($memberId)
-  {
-    foreach ($this->getValues() as $key => $value) {
-      $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($key, $memberId);
-      if (!$memberConfig) {
-        $memberConfig = new MemberConfig();
-        $memberConfig->setName($key);
-        $memberConfig->setMemberId($memberId);
-      }
-      $memberConfig->setValue($value);
-      $memberConfig->save();
+      $this->saveConfig($key, $value);
     }
 
     return true;
+  }
+
+  public function saveConfig($name, $value)
+  {
+    $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($name, $this->member->getId());
+    if (!$memberConfig) {
+      $memberConfig = new MemberConfig();
+      $memberConfig->setName($name);
+      $memberConfig->setMember($this->member);
+    }
+    $memberConfig->setValue($value);
+
+    $memberConfig->save();
+  }
+
+  public function savePreConfig($name, $value)
+  {
+    $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($name.'_pre', $this->member->getId());
+    if (!$memberConfig) {
+      $memberConfig = new MemberConfig();
+      $memberConfig->setName($name);
+      $memberConfig->setMember($this->member);
+    }
+
+    $memberConfig->setValue($value);
+    $memberConfig->savePre();
+    $memberConfig->saveToken();
   }
 }
