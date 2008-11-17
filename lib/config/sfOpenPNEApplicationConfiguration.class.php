@@ -44,7 +44,7 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $dirs = array();
 
-    $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/actions'));
+    $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/actions', true));
     $dirs = array_merge($dirs, parent::getControllerDirs($moduleName));
 
     return $dirs;
@@ -131,7 +131,7 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     return $configs;
   }
 
-  public function globEnablePlugin($pattern)
+  public function globEnablePlugin($pattern, $isControllerPath = false)
   {
     $dirs = array();
     $pluginPaths = $this->getPluginPaths();
@@ -140,7 +140,14 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     {
       if ($pluginDirs = glob($pluginPath.$pattern))
       {
-        $dirs = array_merge($dirs, array_combine($pluginDirs, array_fill(0, count($pluginDirs), false)));
+        if ($isControllerPath)
+        {
+          $dirs = array_merge($dirs, array_combine($pluginDirs, array_fill(0, count($pluginDirs), false)));
+        }
+        else
+        {
+          $dirs = array_merge($dirs, $pluginDirs);
+        }
       }
     }
 
