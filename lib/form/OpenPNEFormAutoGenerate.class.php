@@ -11,19 +11,27 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
 {
   protected function generateWidget($field, $choices = array())
   {
-    if ($field['Caption']) {
-      $this->widgetSchema->setLabel($field['Name'], $field['Caption']);
+    $params = array();
+
+    if ($field['Caption'])
+    {
+      $params['label'] = $field['Caption'];
+    }
+
+    if ($choices)
+    {
+      $params['choices'] = $choices;
     }
 
     switch ($field['FormType']) {
       case 'checkbox':
-        $obj = new sfWidgetFormInputCheckbox(array('choices' => $choices));
+        $obj = new sfWidgetFormInputCheckbox($params);
         break;
       case 'select':
-        $obj = new sfWidgetFormSelect(array('choices' => $choices));
+        $obj = new sfWidgetFormSelect($params);
         break;
       case 'radio':
-        $obj = new sfWidgetFormSelectRadio(array('choices' => $choices));
+        $obj = new sfWidgetFormSelectRadio($params);
         break;
       case 'textarea':
         $obj = new sfWidgetFormTextarea();

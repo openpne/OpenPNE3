@@ -5,12 +5,7 @@
 
 <tr><td bgcolor="#EEEEFF">
 <form action="<?php echo $link_to ?>" method="post"<?php if($form->isUtn()): ?> utn<?php endif; ?>>
-<?php foreach ($form as $key => $row) : ?>
-<?php if (!$row->isHidden()) : ?>
-<?php echo $row->renderLabel(); ?><br>
-<?php echo $row->render(); ?><br>
-<?php endif; ?>
-<?php endforeach; ?>
+<?php echo $form ?>
 <center>
 <input type="submit" value="ログイン">
 </center>

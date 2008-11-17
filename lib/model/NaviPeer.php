@@ -33,9 +33,9 @@ class NaviPeer extends BaseNaviPeer
     $c->addSelectColumn(self::TYPE);
     $c->addGroupByColumn(self::TYPE);
     $c->addAscendingOrderByColumn(self::ID);
-    $rs = self::doSelectRS($c);
-    while ($rs->next()) {
-      $result[] = $rs->get(1);
+    $stmt = self::doSelectStmt($c);
+    while ($res = $stmt->fetchColumn(1)) {
+      $result[] = $res;
     }
 
     return array_unique(array_merge($defaultTypes, $result));

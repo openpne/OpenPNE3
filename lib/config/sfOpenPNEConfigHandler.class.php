@@ -16,27 +16,26 @@ abstract class sfOpenPNEConfigHandler extends sfYamlConfigHandler
     $config = $this->parseYamls($configFiles);
 
     $data = "array(\n";
-    $category_list = "array(\n";
+    $categoryList = "array(\n";
 
     foreach ($config as $category => $keys)
     {
-      $category_list .= sprintf("'%s' => array(\n", $category);
-      foreach ($keys as $key => $value) {
-        $value = $this->convertConfig($key, $value);
+      $categoryList .= sprintf("'%s' => array(\n", $category);
+      foreach ($keys as $key => $value)
+      {
         $data .= sprintf("'%s' => %s,\n", $key, var_export($value, true));
-        $category_list .= sprintf("'%s',\n", $key);
+        $categoryList .= sprintf("'%s',\n", $key);
       }
-      $category_list .= "),\n";
+      $categoryList .= "),\n";
     }
 
     $data .= "),\n";
-    $category_list .= "),\n";
+    $categoryList .= "),\n";
 
-    return sprintf("<?php sfConfig::add(array('%s' => %s));\nsfConfig::add(array('%s' => %s));", $this->prefix.'config', $data, $this->prefix.'category', $category_list);
-  }
+    $format = "<?php\n"
+            . "sfConfig::add(array('%s' => %s));\n"
+            . "sfConfig::add(array('%s' => %s));";
 
-  protected function convertConfig($key, $value)
-  {
-    return $value;
+    return sprintf($format, $this->prefix.'config', $data, $this->prefix.'category', $categoryList);
   }
 }

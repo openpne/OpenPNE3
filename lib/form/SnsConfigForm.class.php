@@ -16,7 +16,7 @@ class SnsConfigForm extends sfForm
     $labels = array();
     $defaults = array();
 
-    foreach (OpenPNEConfig::loadConfigYaml() as $key => $value) {
+    foreach (sfConfig::get('openpne_sns_config') as $key => $value) {
       $default = $value['default'];
       $config = SnsConfigPeer::retrieveByName($key);
       if ($config) {
@@ -71,7 +71,7 @@ class SnsConfigForm extends sfForm
 
   public function save()
   {
-    $config = OpenPNEConfig::loadConfigYaml();
+    $config = sfConfig::get('openpne_sns_config');
     foreach ($this->getValues() as $key => $value) {
       $snsConfig = SnsConfigPeer::retrieveByName($key);
       if (!$snsConfig) {

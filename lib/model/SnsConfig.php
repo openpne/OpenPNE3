@@ -13,7 +13,7 @@ class SnsConfig extends BaseSnsConfig
 
   public function __construct()
   {
-    $this->snsConfigSettings = OpenPNEConfig::loadConfigYaml('sns');
+    $this->snsConfigSettings = sfConfig::get('openpne_sns_config');
   }
 
   public function getValue()
@@ -50,5 +50,4 @@ class SnsConfig extends BaseSnsConfig
 
     return false;
   }
-
 }

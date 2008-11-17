@@ -3,9 +3,10 @@
 /**
  * CommunityMember form base class.
  *
- * @package    form
- * @subpackage community_member
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 8807 2008-05-06 14:12:28Z fabien $
+ * @package    OpenPNE
+ * @subpackage form
+ * @author     Your name here
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
  */
 class BaseCommunityMemberForm extends BaseFormPropel
 {
@@ -13,8 +14,8 @@ class BaseCommunityMemberForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'           => new sfWidgetFormInputHidden(),
-      'community_id' => new sfWidgetFormPropelSelect(array('model' => 'Community', 'add_empty' => false)),
-      'member_id'    => new sfWidgetFormPropelSelect(array('model' => 'Member', 'add_empty' => false)),
+      'community_id' => new sfWidgetFormPropelChoice(array('model' => 'Community', 'add_empty' => false)),
+      'member_id'    => new sfWidgetFormPropelChoice(array('model' => 'Member', 'add_empty' => false)),
       'position'     => new sfWidgetFormInput(),
     ));
 

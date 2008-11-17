@@ -44,11 +44,7 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $dirs = array();
 
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/actions'))
-    {
-      $dirs = array_merge($dirs, array_combine($pluginDirs, array_fill(0, count($pluginDirs), false))); // plugin applications
-    }
-
+    $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/actions'));
     $dirs = array_merge($dirs, parent::getControllerDirs($moduleName));
 
     return $dirs;
@@ -65,16 +61,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $dirs = array();
 
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/templates/'))
-    {
-      $dirs = array_merge($dirs, $pluginDirs); // plugin applications
-    }
-
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/templates'))
-    {
-      $dirs = array_merge($dirs, $pluginDirs); // plugin modules
-    }
-
+    $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/templates'));
+    $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/templates'));
     $dirs = array_merge($dirs, parent::getTemplateDirs($moduleName));
 
     return $dirs;
@@ -89,12 +77,9 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $dirs = array();
 
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/templates'))
-    {
-      $dirs = array_merge($dirs, $pluginDirs); // plugin applications
-    }
-
+    $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/templates'));
     $dirs = array_merge($dirs, parent::getDecoratorDirs());
+
     return $dirs;
   }
 
@@ -109,11 +94,7 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $dirs = array();
 
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/i18n'))
-    {
-      $dirs = array_merge($dirs, $opPluginDirs); // plugin applications
-    }
-
+    $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/i18n'));
     $dirs = array_merge($dirs, parent::getI18NDirs($moduleName));
 
     return $dirs;
@@ -134,15 +115,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
       $files = array_merge($files, $libDirs); // library configurations
     }
 
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/'.$configPath))
-    {
-      $files = array_merge($files, $pluginDirs); // plugin configurations
-    }
-
-    if ($pluginDirs = glob(sfConfig::get('sf_plugins_dir').'/*/apps/'.sfConfig::get('sf_app').'/'.$configPath))
-    {
-      $files = array_merge($files, $pluginDirs); // plugin applications
-    }
+    $files = array_merge($files, $this->globEnablePlugin($configPath));
+    $files = array_merge($files, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/'.$configPath));
 
     $configs = array();
     foreach (array_unique($files) as $file)
@@ -155,5 +129,21 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
     $configs = array_merge(parent::getConfigPaths($configPath), $configs);
     return $configs;
+  }
+
+  public function globEnablePlugin($pattern)
+  {
+    $dirs = array();
+    $pluginPaths = $this->getPluginPaths();
+
+    foreach ($pluginPaths as $pluginPath)
+    {
+      if ($pluginDirs = glob($pluginPath.$pattern))
+      {
+        $dirs = array_merge($dirs, array_combine($pluginDirs, array_fill(0, count($pluginDirs), false)));
+      }
+    }
+
+    return $dirs;
   }
 }

@@ -25,11 +25,10 @@ class MemberProfilePeer extends BaseMemberProfilePeer
     $c->addJoin(ProfilePeer::ID, MemberProfilePeer::PROFILE_ID);
     $c->addAscendingOrderByColumn(ProfilePeer::SORT_ORDER);
 
-    $rs = self::doSelectRS($c);
-
-    while ($rs->next()) {
+    $stmt = self::doSelectStmt($c);
+    while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
       $obj = new MemberProfile();
-      $obj->hydrateProfiles($rs);
+      $obj->hydrateProfiles($row);
       $profiles[] = $obj;
     }
 

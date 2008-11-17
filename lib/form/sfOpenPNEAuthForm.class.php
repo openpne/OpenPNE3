@@ -7,7 +7,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-abstract class sfOpenPNEAuthForm extends sfForm implements IteratorAggregate
+abstract class sfOpenPNEAuthForm extends sfForm
 {
   public
     $memberForm,

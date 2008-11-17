@@ -4,12 +4,6 @@ Member:
     name: "OpenPNE君"
     is_active: 1
 
-AuthenticationLoginId:
-  first_login_id:
-    member_id: first_member
-    login_id: "openpne"
-    password: <?php echo md5('password') . "\n"; ?>
-
 MemberProfile:
   first_member_profile_sex:
     member_id: first_member

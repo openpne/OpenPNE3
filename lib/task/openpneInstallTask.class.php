@@ -7,10 +7,6 @@ class openpneInstallTask extends sfPropelBaseTask
     $this->namespace        = 'openpne';
     $this->name             = 'install';
 
-    $this->addArguments(array(
-      new sfCommandArgument('dsn', sfCommandArgument::REQUIRED, 'The database dsn'),
-    ));
-
     $this->briefDescription = 'Install OpenPNE';
     $this->detailedDescription = <<<EOF
 The [openpne:install|INFO] task installs and configures OpenPNE.
@@ -22,17 +18,70 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
+    while (
+      !($dbms = $this->ask('Choose DBMS (mysql, pgsql or sqlite)'))
+      || !in_array($dbms, array('mysql', 'pgsql', 'sqlite'))
+    );
+
+    while (
+      !($username = $this->ask('Type database username'))
+    );
+
+    $password = $this->ask('Type database password (optional)');
+
+    while (
+      !($hostname = $this->ask('Type database hostname'))
+    );
+
+    while (
+      !($dbname = $this->ask('Type database name'))
+    );
+
+    $sock = '';
+    if ($dbms == 'mysql' && $hostname == 'localhost') {
+      $sock = $this->ask('Type database socket path (optional)');
+    }
+
     @$this->fixPerms();
-    $this->clearCache();
-    $this->configureDatabase($arguments['dsn']);
+    @$this->clearCache();
+    $this->configureDatabase($dbms, $username, $password, $hostname, $dbname, $sock);
     $this->buildDb();
     $this->clearCache();
   }
 
-  protected function configureDatabase($dsn)
+  protected function createDSN($dbms, $hostname, $dbname, $sock)
   {
+    $result = $dbms.':';
+
+    $data = array();
+
+    if ($dbname)
+    {
+      $data[] = 'dbname='.$dbname;
+    }
+
+    if ($hostname)
+    {
+      $data[] = 'hostname='.$hostname;
+    }
+
+    if ($sock)
+    {
+      $data[] = 'unix_socket='.$sock;
+    }
+
+    $result .= implode(';', $data);
+    return $result;
+  }
+
+  protected function configureDatabase($dbms, $username, $password, $hostname, $dbname, $sock)
+  {
+    $dsn = $this->createDSN($dbms, $hostname, $dbname, $sock);
+
     $file = sfConfig::get('sf_config_dir').'/databases.yml';
-    $config = array();
+    $config = array('dev' => array('propel' => array('param' => array(
+      'classname' => 'DebugPDO',
+    ))));
 
     if (file_exists($file))
     {
@@ -41,27 +90,39 @@ EOF;
 
     $config['all']['propel'] = array(
       'class' => 'sfPropelDatabase',
-      'param' => array('dsn' => $dsn, 'encoding' => 'utf8'),
+      'param' => array(
+        'dsn'        => $dsn,
+        'username'   => $username,
+        'encoding'   => 'utf8',
+        'classname'  => 'PropelPDO',
+        'persistent' => true,
+        'pooling'    => true,
+      ),
     );
+
+    if ($password)
+    {
+      $config['all']['propel']['param']['password'] = $password;
+    }
 
     file_put_contents($file, sfYaml::dump($config, 4));
 
     // update propel.ini
     $propelini = sfConfig::get('sf_config_dir').'/propel.ini';
 
+
     if (!file_exists($propelini)) {
       copy($propelini.'.sample', $propelini);
     }
 
     $content = file_get_contents($propelini);
-    if (preg_match('/^(.+?):\/\//', $dsn, $match))
-    {
-      $content = preg_replace('/^propel\.database(\s*)=(\s*)(.+?)$/m', 'propel.database$1=$2'.$match[1], $content);
-      $content = preg_replace('/^propel\.database\.createUrl(\s*)=(\s*)(.+?)$/m', 'propel.database.createUrl$1=$2'.$dsn, $content);
-      $content = preg_replace('/^propel\.database\.url(\s*)=(\s*)(.+?)$/m', 'propel.database.url$1=$2'.$dsn, $content);
+    $content = preg_replace('/^propel\.database(\s*)=(\s*)(.+?)$/m', 'propel.database$1=$2'.$dbms, $content);
+    $content = preg_replace('/^propel\.driver(\s*)=(\s*)(.+?)$/m', 'propel.driver$1=$2'.$dbms, $content);
+    $content = preg_replace('/^propel\.database\.url(\s*)=(\s*)(.+?)$/m', 'propel.database.url$1=$2'.$dsn, $content);
+    $content = preg_replace('/^propel\.user(\s*)=(\s*)(.+?)$/m', 'propel.user$1=$2'.$username, $content);
+    $content = preg_replace('/^propel\.password(\s*)=(\s*)(.+?)$/m', 'propel.password$1=$2'.$password, $content);
 
-      file_put_contents($propelini, $content);
-    }
+    file_put_contents($propelini, $content);
   }
 
   protected function clearCache()
@@ -72,11 +133,8 @@ EOF;
 
   protected function buildDb()
   {
-    $this->schemaToXML(self::DO_NOT_CHECK_SCHEMA, 'generated-');
-    $this->copyXmlSchemaFromPlugins('generated-');
-
     $buildAllLoad = new sfPropelBuildAllLoadTask($this->dispatcher, $this->formatter);
-    $buildAllLoad->run(array('application' => 'pc_frontend'));
+    $buildAllLoad->run();
   }
 
   protected function fixPerms()

@@ -3,9 +3,10 @@
 /**
  * MemberProfile form base class.
  *
- * @package    form
- * @subpackage member_profile
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 8807 2008-05-06 14:12:28Z fabien $
+ * @package    OpenPNE
+ * @subpackage form
+ * @author     Your name here
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
  */
 class BaseMemberProfileForm extends BaseFormPropel
 {
@@ -13,9 +14,9 @@ class BaseMemberProfileForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'                => new sfWidgetFormInputHidden(),
-      'member_id'         => new sfWidgetFormPropelSelect(array('model' => 'Member', 'add_empty' => true)),
-      'profile_id'        => new sfWidgetFormPropelSelect(array('model' => 'Profile', 'add_empty' => true)),
-      'profile_option_id' => new sfWidgetFormPropelSelect(array('model' => 'ProfileOption', 'add_empty' => true)),
+      'member_id'         => new sfWidgetFormPropelChoice(array('model' => 'Member', 'add_empty' => true)),
+      'profile_id'        => new sfWidgetFormPropelChoice(array('model' => 'Profile', 'add_empty' => true)),
+      'profile_option_id' => new sfWidgetFormPropelChoice(array('model' => 'ProfileOption', 'add_empty' => true)),
       'value'             => new sfWidgetFormTextarea(),
     ));
 

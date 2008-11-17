@@ -31,12 +31,12 @@ class MemberProfile extends BaseMemberProfile
     return parent::getValue();
   }
 
-  public function hydrateProfiles($rs)
+  public function hydrateProfiles($row)
   {
     try {
-      $col = parent::hydrate($rs);
-      $this->name = $rs->getString($col+0);
-      $this->caption = $rs->getString($col+1);
+      $col = parent::hydrate($row);
+      $this->name = $row[$col+0];
+      $this->caption = $row[$col+1];
     } catch (Exception $e) {
       throw new PropelException("Error populating MemberProfile object", $e);
     }

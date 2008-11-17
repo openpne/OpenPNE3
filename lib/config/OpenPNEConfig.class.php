@@ -20,13 +20,27 @@ class OpenPNEConfig extends sfConfig
   public static function get($name, $type = 'sns', $default = null)
   {
     $config_name = 'openpne_' . $type . '_config';
+    $result = null;
 
-    if (isset(parent::$config[$config_name][$name])) {
-      $ebi = parent::get($config_name);
-      return $ebi[$name]['value'];
+    if (isset(parent::$config[$config_name][$name]))
+    {
+      if ($type == 'sns')
+      {
+        $obj = SnsConfigPeer::retrieveByName($name);
+        if ($obj)
+        {
+          $result = $obj->getValue();
+        }
+      }
+
+      if (is_null($result))
+      {
+        $config = parent::get($config_name);
+        $result = $config[$name]['default'];
+      }
     }
 
-    return null;
+    return $result;
   }
 
   public static function loadConfigYaml($type = 'sns')
