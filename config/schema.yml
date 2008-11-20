@@ -16,6 +16,15 @@ propel:
       member_id_to_from: [ member_id_to, member_id_from ]
       member_id_from_to: [ member_id_from, member_id_to ]
 
+  file:
+    id: ~
+    name: { type: varchar(64), index: unique, required: true }
+    original_filename: { type: longvarchar }
+    bin: { type: blob }
+    type: { type: varchar(64), required: true, index: true }
+    created_at: ~
+    updated_at: ~
+
   profile:
     id: ~
     name: { type: varchar(64), index: unique, required: true }
