@@ -61,6 +61,11 @@ function include_box($id, $title = '', $body = '', $option = array())
     $option['button'] = '変更';
   }
 
+  if (!empty($option['form']) && !isset($option['url'])) {
+    $request = sfContext::getInstance()->getRequest();
+    $option['url'] = $request->getParameter('module').'/'.$request->getParameter('action');
+  }
+
   $params = array(
     'id' => $id,
     'title' => $title,

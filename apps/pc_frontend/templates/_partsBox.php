@@ -23,9 +23,13 @@
 <form action="<?php echo url_for($option_raw['url']) ?>" method="post">
 <?php include_customizes($id, 'formTop') ?>
 <table>
+<?php if ($option['form']  instanceof sfOutputEscaperArrayDecorator) : ?>
 <?php foreach ($option['form'] as $form) : ?>
 <?php echo $form ?>
 <?php endforeach; ?>
+<?php else : ?>
+<?php echo $option['form'] ?>
+<?php endif; ?>
 </table>
 <div class="operation">
 <ul class="moreInfo button">
