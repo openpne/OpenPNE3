@@ -36,7 +36,8 @@ class MemberConfig extends BaseMemberConfig
       $tokenName = $baseName.'_token';
     }
 
-    if ($this->isNew()) {
+    $pre = MemberConfigPeer::retrieveByNameAndMemberId($tokenName, $this->getMemberId());
+    if (!$pre) {
       $pre = new self();
       $pre->setName($tokenName);
       $pre->setMember($this->getMember());
