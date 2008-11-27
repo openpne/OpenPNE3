@@ -6,11 +6,15 @@ Member:
 
 MemberProfile:
   first_member_profile_sex:
+    lft_key: 1
+    rht_key: 2
     member_id: first_member
     profile_id: profile_sex
     profile_option_id: profile_option_sex_man
 
   first_member_profile_self_intro:
+    lft_key: 1
+    rht_key: 2
     member_id: first_member
     profile_id: profile_self_intro
     value: "よろしくお願いします。"

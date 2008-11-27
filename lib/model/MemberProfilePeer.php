@@ -7,7 +7,7 @@
  *
  * @package lib.model
  */ 
-class MemberProfilePeer extends BaseMemberProfilePeer
+class MemberProfilePeer extends BaseMemberProfileNestedSetPeer
 {
   public static function getProfileListByMemberId($memberId)
   {
@@ -21,6 +21,7 @@ class MemberProfilePeer extends BaseMemberProfilePeer
     $c->addSelectColumn(ProfileI18nPeer::CAPTION);
 
     $c->add(self::MEMBER_ID, $memberId);
+    $c->add(self::LFT_KEY, 1);
     $c->addJoin(ProfilePeer::ID, ProfileI18nPeer::ID);
     $c->addJoin(ProfilePeer::ID, MemberProfilePeer::PROFILE_ID);
     $c->addAscendingOrderByColumn(ProfilePeer::SORT_ORDER);

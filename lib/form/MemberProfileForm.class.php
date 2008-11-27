@@ -37,19 +37,54 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
       $formType = $profile->getFormType();
 
       $memberProfile = MemberProfilePeer::retrieveByMemberIdAndProfileId($memberId, $profile->getId());
-      if (!$memberProfile) {
+
+      if ($formType == 'checkbox')
+      {
+        if (!is_array($value))
+        {
+          continue;
+        }
+        if ($memberProfile)
+        {
+          $c = new Criteria();
+          $c->add(MemberProfilePeer::TREE_KEY, $memberProfile->getTreeKey());
+          MemberProfilePeer::doDelete($c);
+        }
+
         $memberProfile = new MemberProfile();
-      }
+        $memberProfile->makeRoot();
+        $memberProfile->setMemberId($memberId);
+        $memberProfile->setProfileId($profile->getId());
+        $memberProfile->save();
+        $memberProfile->setScopeIdValue($memberProfile->getId());
+        $memberProfile->save();
 
-      $memberProfile->setMemberId($memberId);
-      $memberProfile->setProfileId($profile->getId());
-      if ($formType == 'checkbox' || $formType == 'select' || $formType == 'radio') {
-        $memberProfile->setProfileOptionId($value);
-      } else {
-        $memberProfile->setValue($value);
+        foreach ($value as $v)
+        {
+          $mp = new MemberProfile();
+          $mp->setMemberId($memberId);
+          $mp->setProfileId($profile->getId());
+          $mp->setProfileOptionId($v);
+          $mp->insertAsLastChildOf($memberProfile);
+          $mp->save();
+        }
       }
+      else{
+        if (!$memberProfile)
+        {
+          $memberProfile = new MemberProfile();
+          $memberProfile->makeRoot(); 
+        }
 
-      $memberProfile->save();
+        $memberProfile->setMemberId($memberId);
+        $memberProfile->setProfileId($profile->getId());
+        if ($formType == 'select' || $formType == 'radio') {
+          $memberProfile->setProfileOptionId($value);
+        } else {
+          $memberProfile->setValue($value);
+        }
+        $memberProfile->save();
+      }
     }
 
     return true;
