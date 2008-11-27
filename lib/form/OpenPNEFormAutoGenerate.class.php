@@ -25,7 +25,7 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
 
     switch ($field['FormType']) {
       case 'checkbox':
-        $obj = new sfWidgetFormInputCheckbox($params);
+        $obj = new sfWidgetFormSelectCheckbox($params);
         break;
       case 'select':
         $obj = new sfWidgetFormSelect($params);
@@ -34,13 +34,13 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
         $obj = new sfWidgetFormSelectRadio($params);
         break;
       case 'textarea':
-        $obj = new sfWidgetFormTextarea();
+        $obj = new sfWidgetFormTextarea($params);
         break;
       case 'password':
-        $obj = new sfWidgetFormInputPassword();
+        $obj = new sfWidgetFormInputPassword($params);
         break;
       default:
-        $obj = new sfWidgetFormInput();
+        $obj = new sfWidgetFormInput($params);
     }
 
     return $obj;
@@ -48,7 +48,12 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
 
   protected function generateValidator($field, $choices = array())
   {
-    if ($field['FormType'] === 'checkbox' || $field['FormType'] === 'select' || $field['FormType'] === 'radio') {
+    if ($field['FormType'] === 'checkbox')
+    {
+      $obj = new sfValidatorChoiceMany(array('choices' => $choices));
+      return $obj;
+    }
+    if ($field['FormType'] === 'select' || $field['FormType'] === 'radio') {
       $obj = new sfValidatorChoice(array('choices' => $choices));
       return $obj;
     }
