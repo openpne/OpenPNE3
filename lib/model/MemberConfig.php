@@ -11,13 +11,17 @@ class MemberConfig extends BaseMemberConfig
 {
   public function savePre()
   {
+    $this->getMember()->clearMemberConfigs();
+
     $name = $this->getName();
-    if (strrpos($name, '_pre') === false) {
+    if (strrpos($name, '_pre') === false)
+    {
       $name = $name.'_pre';
     }
 
     $pre = MemberConfigPeer::retrieveByNameAndMemberId($name, $this->getMemberId());
-    if (!$pre) {
+    if (!$pre)
+    {
       $pre = new self();
       $pre->setName($name);
       $pre->setMember($this->getMember());
@@ -29,19 +33,27 @@ class MemberConfig extends BaseMemberConfig
 
   public function saveToken()
   {
+    $this->getMember()->clearMemberConfigs();
+
     $baseName = $this->getName();
-    if (strrpos($baseName, '_pre')) {
+    if (strrpos($baseName, '_pre'))
+    {
       $tokenName = str_replace('_pre', '_token', $baseName);
-    } else {
+    }
+    else
+    {
       $tokenName = $baseName.'_token';
     }
 
     $pre = MemberConfigPeer::retrieveByNameAndMemberId($tokenName, $this->getMemberId());
-    if (!$pre) {
+    if (!$pre)
+    {
       $pre = new self();
       $pre->setName($tokenName);
       $pre->setMember($this->getMember());
-    } else {
+    }
+    else
+    {
       $pre = MemberConfigPeer::retrieveByNameAndMemberId($tokenName, $this->getMemberId());
     }
 
