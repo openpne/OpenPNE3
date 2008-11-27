@@ -5,6 +5,8 @@ propel:
     is_active: { type: boolean, required: true }
     created_at: ~
     updated_at: ~
+    _behaviors:
+      activate: {}
 
   member_relationship:
     id: ~
