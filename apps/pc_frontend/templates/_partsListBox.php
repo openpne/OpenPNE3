@@ -13,10 +13,21 @@
 <?php foreach ($list as $key => $value): ?>
 <tr>
 <th><?php echo $key ?></th>
-<td><?php echo $value ?></th>
+<td><?php echo $list->getRaw($key) ?></th>
 </tr>
 <?php endforeach; ?>
 </table>
+
+<?php if(isset($options['moreInfo'])) : ?>
+<div class="block moreInfo">
+<ul class="moreInfo">
+<?php foreach ($options['moreInfo'] as $key => $value) : ?>
+<li><?php echo $options['moreInfo']->getRaw($key); ?></li>
+<?php endforeach; ?>
+</ul>
+</div>
+<?php endif; ?>
+
 </div>
 <?php include_customizes($id, 'after') ?>
 </div>
