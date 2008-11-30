@@ -20,7 +20,7 @@
 
 <?php if (isset($option['form'])) : ?>
 <?php $option_raw = $sf_data->getRaw('option') ?>
-<form action="<?php echo url_for($option_raw['url']) ?>" method="post">
+<form action="<?php echo url_for($option_raw['url']) ?>" method="post"<?php if (!empty($option['isMultipart'])) : ?> enctype="multipart/form-data"<?php endif; ?>>
 <?php include_customizes($id, 'formTop') ?>
 <table>
 <?php if ($option['form']  instanceof sfOutputEscaperArrayDecorator) : ?>
