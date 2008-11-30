@@ -18,11 +18,24 @@ class Member extends BaseMember
   {
     $profile = MemberProfilePeer::retrieveByMemberIdAndProfileName($this->getId(), $profileName);
 
-    if (!$profile) {
+    if (!$profile)
+    {
       return null;
     }
 
     return $profile->getValue();
+  }
+
+  public function getConfig($configName)
+  {
+    $config = MemberConfigPeer::retrieveByNameAndMemberId($configName, $this->getId());
+
+    if (!$config)
+    {
+      return null;
+    }
+
+    return $config->getValue();
   }
 
   public function getFriends($limit = null)
