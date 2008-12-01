@@ -29,5 +29,5 @@
 <?php endif; ?>
 
 </div>
-<?php include_customizes($id, 'after') ?>
 </div>
+<?php include_customizes($id, 'after') ?>
