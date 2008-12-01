@@ -1,0 +1,3 @@
+config/plugin.yml:
+  class:    sfOpenPNEPluginConfigHandler
+  file:     %SF_LIB_DIR%/config/sfOpenPNEPluginConfigHandler.class.php

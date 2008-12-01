@@ -29,6 +29,46 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     ));
   }
 
+  public function setup()
+  {
+    $result = parent::setup();
+    $configCache = $this->getConfigCache();
+    $file = $configCache->checkConfig('config/plugin.yml');
+    if ($file)
+    {
+      include($file);
+    }
+
+    if (sfConfig::get('op_plugin_activation'))
+    {
+      $pluginActivations = array_merge(array_fill_keys($this->getPlugins(), true), sfConfig::get('op_plugin_activation'));
+      $this->enablePlugins(array_keys($pluginActivations, true));
+      $this->disablePlugins(array_keys($pluginActivations, false));
+    }
+
+    return $result;
+  }
+
+  public function getAllPlugins()
+  {
+    return array_keys($this->getAllPluginPaths());
+  }
+
+  public function isPluginExists($pluginName)
+  {
+    return in_array($pluginName, $this->getAllPlugins());
+  }
+
+  public function isEnabledPlugin($pluginName)
+  {
+    return in_array($pluginName, $this->getPlugins());
+  }
+
+  public function isDisabledPlugin($pluginName)
+  {
+    return (bool)(!$this->isEnabledPlugin($pluginName) && in_array($pluginName, $this->getAllPlugins()));
+  }
+
   public function clearPluginCache($params = array())
   {
     $appConfiguration = $params['app'];
