@@ -68,6 +68,8 @@ propel:
   community:
     id: ~
     name: { type: varchar(64), index: unique, required: true }
+    _behaviors:
+      check_privilage_belong: { class_name: CommunityMember }
 
   community_member:
     id: ~

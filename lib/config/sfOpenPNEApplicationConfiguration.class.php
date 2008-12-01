@@ -18,9 +18,14 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
     $this->getConfigCache()->registerConfigHandler('config/member_config.yml', 'sfOpenPNEMemberConfigHandler', array());
     include($this->getConfigCache()->checkConfig('config/member_config.yml'));
+
     sfPropelBehavior::registerHooks('activate', array (
       'Peer:doSelectStmt' => array ('opActivateBehavior', 'doSelectStmt'),
       'Peer:doCount' => array ('opActivateBehavior', 'doCount'),
+    ));
+
+    sfPropelBehavior::registerMethods('check_privilage_belong', array (
+      array ('opCheckPrivilageBelongBehavior', 'checkPrivilageBelong'),
     ));
   }
 
