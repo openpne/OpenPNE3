@@ -33,7 +33,7 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $result = parent::setup();
     $configCache = $this->getConfigCache();
-    $file = $configCache->checkConfig('config/plugin.yml');
+    $file = $configCache->checkConfig('config/plugin.yml', true);
     if ($file)
     {
       include($file);
