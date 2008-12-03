@@ -37,5 +37,4 @@ class opPearRest extends sfPearRest
     $parser->parse($content);
     return $parser->getData();
   }
-
 }

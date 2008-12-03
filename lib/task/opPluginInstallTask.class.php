@@ -27,28 +27,11 @@ Call it with:
 EOF;
   }
 
-  protected function execute($arguments = array(), $options = array())
-  {
-    $environment = $this->getPluginManager()->getEnvironment();
-
-    // register OpenPNE plugin channel
-    $environment->registerChannel('plugins.openpne.jp', true);
-
-    return parent::execute($arguments, $options);
-  }
-
   public function getPluginManager()
   {
     if (is_null($this->pluginManager))
     {
-      $environment = new sfPearEnvironment($this->dispatcher, array(
-        'plugin_dir' => sfConfig::get('sf_plugins_dir'),
-        'cache_dir'  => sfConfig::get('sf_cache_dir').'/.pear',
-        'web_dir'    => sfConfig::get('sf_web_dir'),
-        'rest_base_class' => 'opPearRest',
-      ));
-
-      $this->pluginManager = new sfSymfonyPluginManager($this->dispatcher, $environment);
+      $this->pluginManager = new opPluginManager($this->dispatcher);
     }
 
     return $this->pluginManager;
