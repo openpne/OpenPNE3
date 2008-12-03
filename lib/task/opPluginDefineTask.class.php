@@ -42,7 +42,6 @@ EOF;
       'packagedirectory'  => sfConfig::get('sf_plugins_dir').'/'.$pluginName.'/',
       'filelistgenerator' => 'file',
       'baseinstalldir'    => '/',
-      'simpleoutput'      => true,
     );
     $e = $packageXml->setOptions($options);
     if (PEAR::isError($e))
