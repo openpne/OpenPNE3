@@ -41,8 +41,8 @@ EOF;
     $options = array(
       'packagedirectory'  => sfConfig::get('sf_plugins_dir').'/'.$pluginName.'/',
       'filelistgenerator' => 'file',
-      'dir_roles'         => array('tutorials' => 'doc'),
       'baseinstalldir'    => '/',
+      'simpleoutput'      => true,
     );
     $e = $packageXml->setOptions($options);
     if (PEAR::isError($e))
