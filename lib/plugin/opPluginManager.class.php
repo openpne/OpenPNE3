@@ -33,11 +33,15 @@ class opPluginManager extends sfSymfonyPluginManager
     return $this->getEnvironment()->getRegistry()->getChannel(self::OPENPNE_PLUGIN_CHANNEL);
   }
 
+  public function getBaseURL()
+  {
+    return $this->getChannel()->getBaseURL('REST1.1');
+  }
+
   public function retrieveChannelData($path)
   {
     $rest = $this->getEnvironment()->getRest();
-    $baseUrl = $this->getChannel()->getBaseURL('REST1.1');
-    return $rest->_rest->retrieveData($baseUrl.$path);
+    return $rest->_rest->retrieveData($this->getBaseURL().$path);
   }
 
   public function getPluginInfo($plugin)
