@@ -48,17 +48,18 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
 
   protected function generateValidator($field, $choices = array())
   {
+    $option = array('required' => $field['IsRequired']);
+
     if ($field['FormType'] === 'checkbox')
     {
-      $obj = new sfValidatorChoiceMany(array('choices' => $choices));
+      $option['choices'] = $choices;
+      $obj = new sfValidatorChoiceMany($option);
       return $obj;
     }
     if ($field['FormType'] === 'select' || $field['FormType'] === 'radio') {
       $obj = new sfValidatorChoice(array('choices' => $choices));
       return $obj;
     }
-
-    $option = array('required' => $field['IsRequired']);
 
     if ($field['ValueType'] === 'datetime' || $field['ValueType'] === 'integer')
     {
