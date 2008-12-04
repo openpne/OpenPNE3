@@ -1,5 +1,5 @@
 <?php include_customizes($id, 'before') ?>
-<div class="dparts listBox"><div class="parts">
+<div id="<?php echo $id ?>" class="dparts listBox"><div class="parts">
 
 <?php if (isset($options['title'])) : ?>
 <div class="partsHeading">
