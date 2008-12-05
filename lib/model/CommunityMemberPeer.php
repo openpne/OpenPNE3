@@ -61,4 +61,12 @@ class CommunityMemberPeer extends BaseCommunityMemberPeer
     $communityMember = self::retrieveByMemberIdAndCommunityId($memberId, $communityId);
     $communityMember->delete();
   }
+
+  public static function getCommunityAdmin($communityId)
+  {
+    $c = new Criteria();
+    $c->add(self::COMMUNITY_ID, $communityId);
+    $c->add(self::POSITION, 'admin');
+    return self::doSelectOne($c);
+  }
 }

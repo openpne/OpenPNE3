@@ -27,6 +27,8 @@ abstract class sfOpenPNECommunityAction extends sfActions
   {
     $this->community = CommunityPeer::retrieveByPk($this->id);
     $this->forward404Unless($this->community, 'Undefined community.');
+    $this->community_admin = CommunityMemberPeer::getCommunityAdmin($this->id);
+    $this->community_admin = MemberPeer::retrieveByPk($this->community_admin->getMemberId());
   }
 
  /**
