@@ -54,6 +54,22 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     return array_keys($this->getAllPluginPaths());
   }
 
+  public function getAllOpenPNEPlugins()
+  {
+    $list = $this->getAllPlugins();
+    $result = array();
+
+    foreach ($list as $value)
+    {
+      if (!strncmp($value, 'op', 2))
+      {
+        $result[] = $value;
+      }
+    }
+
+    return $result;
+  }
+
   public function isPluginExists($pluginName)
   {
     return in_array($pluginName, $this->getAllPlugins());

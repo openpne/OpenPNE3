@@ -5,8 +5,7 @@
  *
  * @package    OpenPNE
  * @subpackage plugin
- * @author     Your name here
- * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 class pluginActions extends sfActions
 {
@@ -17,6 +16,20 @@ class pluginActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->forward('default', 'module');
+  }
+
+ /**
+  * Executes list action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeList(sfWebRequest $request)
+  {
+    $config = $this->getContext()->getConfiguration();
+
+    $pluginManager = new opPluginManager($this->getContext()->getEventDispatcher());
+    $this->plugins = $pluginManager->getInstalledPlugins();
+
+    return sfView::SUCCESS;
   }
 }
