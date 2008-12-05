@@ -10,9 +10,9 @@ class opPluginDeactivateTask extends sfBaseTask
 
     $this->namespace        = 'opPlugin';
     $this->name             = 'deactivate';
-    $this->briefDescription = '';
+    $this->briefDescription = 'Deactivates the installed plugin.';
     $this->detailedDescription = <<<EOF
-The [opPlugin:deactivate|INFO] task deactivates an installed plugin.
+The [opPlugin:deactivate|INFO] task deactivates the installed plugin.
 Call it with:
 
   [./symfony opPlugin:deactivate opSamplePlugin|INFO]

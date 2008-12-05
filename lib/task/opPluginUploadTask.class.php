@@ -10,9 +10,9 @@ class opPluginUploadTask extends sfBaseTask
 
     $this->namespace        = 'opPlugin';
     $this->name             = 'upload';
-    $this->briefDescription = '';
+    $this->briefDescription = 'Uploads the OpenPNE plugin.';
     $this->detailedDescription = <<<EOF
-The [opPlugin:upload|INFO] task does things.
+The [opPlugin:upload|INFO] task uploads the OpenPNE plugin.
 Call it with:
 
   [./symfony opPlugin:upload|INFO]

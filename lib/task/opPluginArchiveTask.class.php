@@ -12,12 +12,12 @@ class opPluginArchiveTask extends sfBaseTask
 
     $this->namespace        = 'opPlugin';
     $this->name             = 'archive';
-    $this->briefDescription = '';
+    $this->briefDescription = 'Creates the OpenPNE plugin archive for a later upload.';
     $this->detailedDescription = <<<EOF
-The [opPlugin:archive|INFO] task creates the plugin archive.
+The [opPlugin:archive|INFO] task creates the OpenPNE plugin archive.
 Call it with:
 
-  [php symfony opPlugin:archive name|INFO]
+  [./symfony opPlugin:archive opSamplePlugin|INFO]
 EOF;
   }
 

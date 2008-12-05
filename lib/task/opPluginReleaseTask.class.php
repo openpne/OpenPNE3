@@ -10,12 +10,12 @@ class opPluginReleaseTask extends sfBaseTask
 
     $this->namespace        = 'opPlugin';
     $this->name             = 'release';
-    $this->briefDescription = '';
+    $this->briefDescription = 'Creates the plugin definition file, archive, and uploads the OpenPNE plugin.';
     $this->detailedDescription = <<<EOF
-The [opPlugin:release|INFO] task does things.
+The [opPlugin:release|INFO] task creates the plugin definition file, archive, and uploads the OpenPNE plugin.
 Call it with:
 
-  [./symfony opPlugin:release name|INFO]
+  [./symfony opPlugin:release opSamplePlugin|INFO]
 EOF;
   }
 

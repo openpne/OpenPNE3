@@ -9,8 +9,8 @@ class opPluginDefineTask extends sfBaseTask
     $this->addArguments(array(
       new sfCommandArgument('name', sfCommandArgument::REQUIRED, 'The plugin name'),
       new sfCommandArgument('version', sfCommandArgument::REQUIRED, 'The plugin version'),
-      new sfCommandArgument('stability', sfCommandArgument::REQUIRED, 'THe plugin stability'),
-      new sfCommandArgument('note', sfCommandArgument::REQUIRED, 'THe plugin release note'),
+      new sfCommandArgument('stability', sfCommandArgument::REQUIRED, 'The plugin stability'),
+      new sfCommandArgument('note', sfCommandArgument::REQUIRED, 'The plugin release note'),
     ));
 
     $this->namespace        = 'opPlugin';
@@ -20,7 +20,7 @@ class opPluginDefineTask extends sfBaseTask
 The [opPlugin:define|INFO] task creates the plugin definition file "package.xml".
 Call it with:
 
-  [./symfony opPlugin:define|INFO]
+  [./symfony opPlugin:define opSamplePlugin|INFO]
 EOF;
   }
 

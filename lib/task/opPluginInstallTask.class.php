@@ -18,9 +18,9 @@ class opPluginInstallTask extends sfPluginInstallTask
 
     $this->namespace        = 'opPlugin';
     $this->name             = 'install';
-    $this->briefDescription = 'Installs an OpenPNE plugin';
+    $this->briefDescription = 'Installs the OpenPNE plugin';
     $this->detailedDescription = <<<EOF
-The [plugin:install|INFO] task installs an OpenPNE plugin:
+The [plugin:install|INFO] task installs the OpenPNE plugin:
 Call it with:
 
   [./symfony opPlugin:install opSamplePlugin|INFO]

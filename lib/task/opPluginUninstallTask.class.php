@@ -15,9 +15,9 @@ class opPluginUninstallTask extends sfPluginUninstallTask
 
     $this->namespace        = 'opPlugin';
     $this->name             = 'uninstall';
-    $this->briefDescription = 'Uninstalls an OpenPNE plugin';
+    $this->briefDescription = 'Uninstalls the OpenPNE plugin';
     $this->detailedDescription = <<<EOF
-The [opPlugin:uninstall|INFO] task does things.
+The [opPlugin:uninstall|INFO] task uninstalls the OpenPNE plugin.
 Call it with:
 
   [./symfony opPlugin:uninstall opSamplePlugin|INFO]

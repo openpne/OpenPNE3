@@ -10,9 +10,9 @@ class opPluginActivateTask extends sfBaseTask
 
     $this->namespace        = 'opPlugin';
     $this->name             = 'activate';
-    $this->briefDescription = '';
+    $this->briefDescription = 'Activates the installed plugin.';
     $this->detailedDescription = <<<EOF
-The [opPlugin:activate|INFO] task activates an installed plugin.
+The [opPlugin:activate|INFO] task activates the installed plugin.
 Call it with:
 
   [./symfony opPlugin:activate opSamplePlugin|INFO]
