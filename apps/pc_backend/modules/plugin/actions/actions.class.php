@@ -27,7 +27,12 @@ class pluginActions extends sfActions
   {
     $config = $this->getContext()->getConfiguration();
 
-    $pluginManager = new opPluginManager($this->getContext()->getEventDispatcher());
+    try
+    {
+      $pluginManager = new opPluginManager($this->getContext()->getEventDispatcher());
+    }
+    catch (sfPluginException $e) {}
+
     $this->plugins = $pluginManager->getInstalledPlugins();
 
     return sfView::SUCCESS;
