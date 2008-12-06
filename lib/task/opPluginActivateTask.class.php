@@ -34,17 +34,7 @@ EOF;
       throw new sfException(sprintf('Plugin "%s" is already activated', $name));
     }
 
-    $file = sfConfig::get('sf_config_dir').'/plugin.yml';
-    $config = array('activation' => array());
-
-    if (file_exists($file))
-    {
-      $config = array_merge($config, sfYaml::load($file));
-    }
-
-    $config['activation'][$name] = true;
-
-    file_put_contents($file, sfYaml::dump($config, 4));
+    opPlugin::getInstance($name)->setIsActive(true);
 
     $cc = new sfCacheClearTask($this->dispatcher, $this->formatter);
     $cc->run();

@@ -25,8 +25,6 @@ class pluginActions extends sfActions
   */
   public function executeList(sfWebRequest $request)
   {
-    $config = $this->getContext()->getConfiguration();
-
     try
     {
       $pluginManager = new opPluginManager($this->getContext()->getEventDispatcher());
@@ -34,6 +32,14 @@ class pluginActions extends sfActions
     catch (sfPluginException $e) {}
 
     $this->plugins = $pluginManager->getInstalledPlugins();
+
+    $this->form = new PluginActivationForm(array(), array('plugins' => $this->plugins));
+
+    if ($request->isMethod(sfRequest::POST))
+    {
+      $this->form->bind($this->request->getParameter('plugin_activation'));
+      $this->redirectIf($this->form->save(), 'plugin/list');
+    }
 
     return sfView::SUCCESS;
   }

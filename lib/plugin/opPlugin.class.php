@@ -74,4 +74,20 @@ class opPlugin
     }
     return simplexml_load_file($xmlPath);
   }
+
+  public function setIsActive($isActive)
+  {
+    $file = sfConfig::get('sf_data_dir').'/config/plugin.yml';
+    $config = array('activation' => array());
+
+    if (file_exists($file))
+    {
+      $config = array_merge($config, sfYaml::load($file));
+    }
+
+    $config['activation'][$this->getName()] = $isActive;
+
+    file_put_contents($file, sfYaml::dump($config, 4));
+    chmod($file, 0777);
+  }
 }
