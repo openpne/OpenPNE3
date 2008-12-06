@@ -2,8 +2,8 @@
 
 class File extends BaseFile
 {
-  function __toString()
+  public function __toString()
   {
-    return $this->getName();
+    return (string)$this->getName();
   }
 }

@@ -34,10 +34,10 @@ class MemberProfile extends BaseMemberProfileNestedSet
 
     if ($this->getProfileOptionId()) {
       $option = ProfileOptionPeer::retrieveByPk($this->getProfileOptionId());
-      return $option->getValue();
+      return (string)$option->getValue();
     }
 
-    return $this->getValue();
+    return (string)$this->getValue();
   }
 
   public function getValue()
