@@ -3,29 +3,99 @@ body
   background: #FFFFFF url(../images/test.png) repeat-y scroll 0 0;
 }
 
+body#security_login
+{
+  background-image: none;
+}
+
 #header
 {
   background-color: #333;
   padding: 10px;
+  position: fixed;
+  height: 20px;
+  width: 100%;
+  top: 0px;
 }
 
 #header h1
 {
-  color: #fff;
-  font-size: 130%;
+  color: #FFFFFF;
+  font-size: 18px;
   font-weight: bold;
 }
 
 #menu
 {
-  float: left;
-  margin: 0px 0;
-  position: relative;
-  width: 210px;
+  margin-left: 10px;
+  position: fixed;
+  width: 200px;
+  line-height: 150%;
+}
+
+#menu a
+{
+  color: #000000;
+  text-decoration: none;
+}
+
+#menu a:hover
+{
+  color: #004A95;
 }
 
 #body
 {
-  float: left;
-  width: 600px;
+  margin-top: 50px;
+  padding-left: 230px;
 }
+
+#body h2
+{
+  width: 100%;
+  background-color: #BDC0CE;
+  position: relative;
+  margin: 0 0 15px -20px;
+  padding: 10px;
+  font-weight: bold;
+}
+
+#body h3
+{
+  color: #004A95;
+  font-weight: bold;
+  font-size: 110%;
+}
+
+#body h4
+{
+  font-weight: bold;
+}
+
+h3, h4, p
+{
+  margin-bottom: 5px;
+}
+
+table
+{
+  border-color: #D9D9D9;
+  border-style: solid;
+  border-width: 1px 0;
+  margin-bottom: 15px;
+}
+
+th, td
+{
+  border-color: #D9D9D9;
+  border-style: solid;
+  border-width: 0 1px 1px;
+  padding: 5px;
+}
+
+th
+{
+  background-color: #EEEEEE;
+  font-weight: bold;
+}
+

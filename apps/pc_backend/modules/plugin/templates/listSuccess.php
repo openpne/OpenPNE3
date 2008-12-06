@@ -19,8 +19,12 @@
 <td><?php if ($plugin->hasBackend()) : ?><?php echo link_to(__('設定'), $plugin->getName().'/index') ?><?php endif; ?></td>
 </tr>
 <?php endforeach; ?>
-</table>
+<tr>
+<td colspan="5">
 <input type="submit" value="<?php echo __('設定変更') ?>" />
+</td>
+</tr>
+</table>
 </form>
 <?php endif; ?>
 
