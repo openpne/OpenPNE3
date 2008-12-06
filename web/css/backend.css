@@ -62,6 +62,18 @@ body#security_login
   margin-left: 10px;
 }
 
+ul.contents_menu
+{
+  margin-bottom: 15px;
+}
+
+ul.contents_menu li
+{
+  display: inline;
+  line-height: 200%;
+  list-style-type: none;
+}
+
 #body
 {
   margin-top: 40px;

@@ -4,7 +4,7 @@
 <?php end_slot() ?>
 <h2><?php echo __('お知らせ設定') ?></h2>
 
-<ul>
+<ul class="contents_menu">
   <li><?php echo link_to('PC版ホームのお知らせ', 'sns/informationConfig?target=pc_home') ?></li>
   <li><?php echo link_to('携帯版ホームのお知らせ', 'sns/informationConfig?target=mobile_home') ?></li>
 </ul>
