@@ -1,17 +1,3 @@
-Member:
-  first_member:
-    id: 1
-    name: "Yamada"
-    is_active: 1
-  second_member:
-    id: 2
-    name: "Tanaka"
-    is_active: 1
-  third_member:
-    id: 3
-    name: "Sasaki"
-    is_active: 1
-
 Profile:
   profile_sex:
     is_required: 1
@@ -20,7 +6,7 @@ Profile:
     value_type: "integer"
     is_disp_regist: 1
     is_disp_config: 1
-    is_disp_search: 0
+    is_disp_search: 1
     sort_order: 110
 
   profile_self_intro:
@@ -32,16 +18,6 @@ Profile:
     is_disp_config: 1
     is_disp_search: 1
     sort_order: 120
-
-  profile_example:
-    is_required: 1
-    name: "example"
-    form_type: "textarea"
-    value_type: "string"
-    is_disp_regist: 0
-    is_disp_config: 0
-    is_disp_search: 1
-    sort_order: 130
 
 ProfileI18n:
   profile_i18n_sex:
@@ -74,61 +50,49 @@ ProfileOptionI18n:
     value: "女性"
     culture: "ja_JP"
 
+Member:
+  first_member:
+    id: ~
+    name: "OpenPNE君"
+    is_active: 1
+  second_member:
+    name: "Tanaka"
+    is_active: 1
+  third_member:
+    name: "Sasaki"
+    is_active: 1
+
 MemberProfile:
   first_member_profile_sex:
+    lft_key: 1
+    rht_key: 2
     member_id: first_member
     profile_id: profile_sex
     profile_option_id: profile_option_sex_man
 
   first_member_profile_self_intro:
+    lft_key: 1
+    rht_key: 2
     member_id: first_member
     profile_id: profile_self_intro
     value: "よろしくお願いします。"
 
 MemberConfig:
-  first_member_config:
+  first_member_pc_address:
     member_id: first_member
-    name: "example"
-    value: "test value"
+    name: "pc_address"
+    value: "sns@example.com"
 
-Friend:
-  first_member_second_member:
-    member_id_to: first_member
-    member_id_from: second_member
-  second_member_first_member:
-    member_id_to: second_member
-    member_id_from: first_member
-
-Community:
-  first_community:
-    name: "最初のコミュニティ"
-  second_community:
-    name: "2番目のコミュニティ"
-
-CommunityMember:
-  first_community_first_member:
-    community_id: first_community
+  first_member_password:
     member_id: first_member
-    position: "admin"
-  first_community_second_member:
-    community_id: first_community
-    member_id: second_member
-  second_community_second_member:
-    community_id: second_community
-    member_id: second_member
-    position: "admin"
+    name: "password"
+    value: <?php echo md5('password') . "\n"; ?>
 
 AdminUser:
   first_admin:
-    id: 1
+    id: ~
     username: "admin"
     password: <?php echo md5('password') . "\n"; ?>
-
-SnsConfig:
-  first_sns_config:
-    name: "SNS_NAME"
-    value: "MySNS"
-
 Navi:
   secure_global_navi_home:
     type: "secure_global"
@@ -145,6 +109,10 @@ Navi:
   secure_global_navi_config:
     type: "secure_global"
     uri: "member/config"
+
+  secure_global_navi_invite:
+    type: "secure_global"
+    uri: "member/invite"
 
   secure_global_navi_logout:
     type: "secure_global"
@@ -194,14 +162,6 @@ Navi:
     type: "community"
     uri: "community/quit"
 
-  test_navi_test_first:
-    type: "test"
-    uri: "member/home"
-
-  test_navi_test_second:
-    type: "test"
-    uri: "member/home"
-
 NaviI18n:
   secure_global_navi_home_i18n:
     id: secure_global_navi_home
@@ -221,6 +181,11 @@ NaviI18n:
   secure_global_navi_config_i18n:
     id: secure_global_navi_config
     caption: "設定変更"
+    culture: "ja_JP"
+
+  secure_global_navi_invite_i18n:
+    id: secure_global_navi_invite
+    caption: "友人を招待する"
     culture: "ja_JP"
 
   secure_global_navi_logout_i18n:
@@ -283,12 +248,29 @@ NaviI18n:
     caption: "コミュニティを退会"
     culture: "ja_JP"
 
-  test_navi_test_first_i18n:
-    id: test_navi_test_first
-    caption: "テスト"
-    culture: "ja_JP"
+MemberRelationship:
+  first_member_second_member:
+    member_id_to: first_member
+    member_id_from: second_member
+  second_member_first_member:
+    member_id_to: second_member
+    member_id_from: first_member
 
-  test_navi_test_second_i18n:
-    id: test_navi_test_second
-    caption: "テスト"
-    culture: "ja_JP"
+Community:
+  first_community:
+    name: "最初のコミュニティ"
+  second_community:
+    name: "2番目のコミュニティ"
+
+CommunityMember:
+  first_community_first_member:
+    community_id: first_community
+    member_id: first_member
+    position: "admin"
+  first_community_second_member:
+    community_id: first_community
+    member_id: second_member
+  second_community_second_member:
+    community_id: second_community
+    member_id: second_member
+    position: "admin"

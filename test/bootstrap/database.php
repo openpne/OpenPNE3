@@ -1,13 +1,10 @@
 <?php
 
-$app_configuration = ProjectConfiguration::getApplicationConfiguration('pc_frontend', 'test', true);
-sfContext::createInstance($app_configuration);
-$databaseManager = new sfDatabaseManager($app_configuration);
-$databaseManager->loadConfiguration();
+new sfDatabaseManager(ProjectConfiguration::getApplicationConfiguration('pc_frontend', 'test', true));
 
 // execute propel:insert-sql task
 $task = new sfPropelInsertSqlTask(new sfEventDispatcher(), new sfAnsiColorFormatter());
-$task->runFromCLI(new sfCommandManager(), '');
+$task->run(array(), array('no-confirmation'));
 
-$data = new sfPropelData();
-$data->loadData(dirname(__FILE__) . '/../fixtures');
+$loader = new sfPropelData();
+$loader->loadData(dirname(__FILE__).'/../fixtures');
