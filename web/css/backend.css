@@ -1,0 +1,31 @@
+body
+{
+  background: #FFFFFF url(../images/test.png) repeat-y scroll 0 0;
+}
+
+#header
+{
+  background-color: #333;
+  padding: 10px;
+}
+
+#header h1
+{
+  color: #fff;
+  font-size: 130%;
+  font-weight: bold;
+}
+
+#menu
+{
+  float: left;
+  margin: 0px 0;
+  position: relative;
+  width: 210px;
+}
+
+#body
+{
+  float: left;
+  width: 600px;
+}
