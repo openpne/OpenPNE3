@@ -274,3 +274,8 @@ CommunityMember:
     community_id: second_community
     member_id: second_member
     position: "admin"
+
+SnsConfig:
+  first_sns_config:
+    name: "SNS_NAME"
+    value: "MySNS"
