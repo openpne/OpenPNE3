@@ -8,6 +8,7 @@
 <th><?php echo __('プラグイン名') ?></th>
 <th><?php echo __('バージョン') ?></th>
 <th><?php echo __('プラグインの説明') ?></th>
+<th><?php echo __('操作') ?></th>
 </tr>
 <?php foreach ($plugins as $plugin) : ?>
 <tr>
@@ -15,6 +16,7 @@
 <td><?php echo $form[$plugin->getName()]->renderLabel() ?></td>
 <td><?php echo $plugin->getVersion() ?></td>
 <td><?php echo $plugin->getSummary() ?></td>
+<td><?php if ($plugin->hasBackend()) : ?><?php echo link_to(__('設定'), $plugin->getName().'/index') ?><?php endif; ?></td>
 </tr>
 <?php endforeach; ?>
 </table>

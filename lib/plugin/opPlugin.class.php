@@ -65,6 +65,12 @@ class opPlugin
     return $this->summary;
   }
 
+  public function hasBackend()
+  {
+    $path = '/apps/pc_backend/modules/'.$this->getName().'/actions';
+    return (bool)sfContext::getInstance()->getConfiguration()->globEnablePlugin($path);
+  }
+
   protected function getPackageInfo()
   {
     $xmlPath = sfConfig::get('sf_plugins_dir').'/'.$this->getName().'/package.xml';
