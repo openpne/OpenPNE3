@@ -31,6 +31,7 @@ body#security_login
   position: fixed;
   width: 200px;
   line-height: 150%;
+  padding-top: 10px;
 }
 
 #menu a
@@ -44,9 +45,26 @@ body#security_login
   color: #004A95;
 }
 
+#submenu
+{
+  background-color: #EEEEEE;
+  border-bottom: 1px solid #CCCCCC;
+  height: auto;
+  margin-left: -20px;
+  padding-left: 10px;
+}
+
+#submenu li
+{
+  display: inline;
+  line-height: 200%;
+  list-style-type: none;
+  margin-left: 10px;
+}
+
 #body
 {
-  margin-top: 50px;
+  margin-top: 40px;
   padding-left: 230px;
 }
 

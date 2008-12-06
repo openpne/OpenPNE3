@@ -1,3 +1,7 @@
+<?php slot('submenu') ?>
+<li>お知らせ設定</li>
+<li>ナビ設定</li>
+<?php end_slot() ?>
 <h2><?php echo __('お知らせ設定') ?></h2>
 
 <ul>

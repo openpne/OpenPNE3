@@ -31,6 +31,11 @@
 <?php endif; ?>
 
 <div id="body">
+<?php if (has_slot('submenu')): ?>
+<ul id="submenu">
+<?php include_slot('submenu') ?>
+</ul>
+<?php endif; ?>
 <?php echo $sf_content ?>
 </div>
 
