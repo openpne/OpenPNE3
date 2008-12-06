@@ -5,31 +5,26 @@ class opGeneratePluginTask extends sfBaseTask
   protected function configure()
   {
     $this->addArguments(array(
-      new sfCommandArgument('opPlugin', sfCommandArgument::REQUIRED, 'The OpenPNE plugin name'),
+      new sfCommandArgument('plugin', sfCommandArgument::REQUIRED, 'The OpenPNE plugin name'),
     ));
       
     $this->namespace        = 'opGenerate';
     $this->name             = 'plugin';
-    $this->briefDescription = 'Generates a new OpenPNE Plugin';
+    $this->briefDescription = 'Generates a new OpenPNE plugin';
     $this->detailedDescription = <<<EOF
 The [opGenerate:plugin|INFO] task creates the basic directory structure
 for a new plugin in the OpenPNE project:
 
-  [./symfony opGenerate:plugin opMessagePlugin |INFO]
+  [./symfony opGenerate:plugin opSamplePlugin|INFO]
 
-If an plugin with the same name already exists,
+If a plugin with the same name already exists,
 it throws a [sfCommandException|COMMENT].
-  
 EOF;
-    // add arguments here, like the following:
-    //$this->addArgument('application', sfCommandArgument::REQUIRED, 'The application name');
-    // add options here, like the following:
-    //$this->addOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev');
   }
 
   protected function execute($arguments = array(), $options = array())
   {
-    $plugin = $arguments['opPlugin'];
+    $plugin = $arguments['plugin'];
 
     // Validate the application name
     if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $plugin))

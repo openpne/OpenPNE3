@@ -5,30 +5,27 @@ class opGenerateAppTask extends sfBaseTask
   protected function configure()
   {
     $this->addArguments(array(
-      new sfCommandArgument('opPlugin', sfCommandArgument::REQUIRED, 'The OpenPNE plugin name'),
-      new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The opPlugin application name'),
+      new sfCommandArgument('plugin', sfCommandArgument::REQUIRED, 'The OpenPNE plugin name'),
+      new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'),
     ));
 
     $this->namespace = 'opGenerate';
     $this->name = 'app';
-
-    $this->briefDescription = 'Generates a new application for opPlugin';
-
+    $this->briefDescription = 'Generates a new application for OpenPNE plugin';
     $this->detailedDescription = <<<EOF
 The [opGenerate:app|INFO] task creates the basic directory structure
-for a new application in in an existing opPlugin:
+for a new application in an existing OpenPNE plugin:
 
-  [./symfony opGenerate:app opMessagePlugin pc_frontend |INFO]
+  [./symfony opGenerate:app opSamplePlugin pc_frontend|INFO]
 
-If an application with the same name already exists in the opPlugin,
+If an application with the same name already exists in the plugin,
 it throws a [sfCommandException|COMMENT].
-
 EOF;
   }
 
   protected function execute($arguments = array(), $options = array())
   {
-    $plugin = $arguments['opPlugin'];
+    $plugin = $arguments['plugin'];
     $app = $arguments['application'];
 
     // Validate the application name
@@ -41,7 +38,7 @@ EOF;
 
     if (is_dir($appDir))
     {
-      throw new sfCommandException(sprintf('The application "%s" already exists in the "%s" opPlugin.', $appDir, $plugin));
+      throw new sfCommandException(sprintf('The application "%s" already exists in the "%s" plugin.', $appDir, $plugin));
     }
 
     // Create basic application structure

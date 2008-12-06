@@ -5,26 +5,27 @@ class opGenerateModuleTask extends sfBaseTask
   protected function configure()
   {
     $this->addArguments(array(
-      new sfCommandArgument('opPlugin', sfCommandArgument::REQUIRED, 'The OpenPNE plugin name'),
-      new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The opPlugin application name'),
-      new sfCommandArgument('module', sfCommandArgument::REQUIRED, 'The opPlugin module name'),
+      new sfCommandArgument('plugin', sfCommandArgument::REQUIRED, 'The OpenPNE plugin name'),
+      new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'),
+      new sfCommandArgument('module', sfCommandArgument::REQUIRED, 'The module name'),
     ));
 
     $this->namespace = 'opGenerate';
     $this->name = 'module';
-    $this->briefDescription = 'Generates a new module for opPlugin';
+    $this->briefDescription = 'Generates a new module for OpenPNE plugin';
     $this->detailedDescription = <<<EOF
 The [opGenerate:module|INFO] task creates the basic directory structure
-for a new module in an existing opPlugin application:
+for a new module in an existing OpenPNE plugin application:
 
-  [./symfony opGenerate:module opMessagePlugin pc_frontend friend|INFO]
+  [./symfony opGenerate:module opSamplePlugin pc_frontend sample|INFO]
 
 The task can also change the author name found in the [actions.class.php|COMMENT]
-if you have configure it in [config/properties.ini|COMMENT]:
+if you have configured it in [config/properties.ini|COMMENT] or
+[%sf_plugins_dir%/config/properties.ini|COMMENT]:
 
-  [symfony]
-    name=blog
-    author=Fabien Potencier <fabien.potencier@sensio.com>
+  [[symfony]|NONE]
+    name=OpenPNE
+    author=Your Name <youremail@example.com>
 
 You can customize the default skeleton used by the task by creating a
 [/lib/task/skeleton/module|COMMENT] directory.
@@ -36,9 +37,11 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
-    $plugin = $arguments['opPlugin'];
+    $plugin = $arguments['plugin'];
     $app    = $arguments['application'];
     $module = $arguments['module'];
+
+    $pluginsDir = sfConfig::get('sf_plugins_dir').'/'.$plugin;
 
     // Validate the module name
     if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $module))
@@ -46,15 +49,20 @@ EOF;
       throw new sfCommandException(sprintf('The module name "%s" is invalid.', $module));
     }
 
-    $moduleDir = sfConfig::get('sf_plugins_dir').'/'.$plugin.'/apps/'.$app.'/modules/'.$module;
+    $moduleDir = $pluginsDir.'/apps/'.$app.'/modules/'.$module;
 
     if (is_dir($moduleDir))
     {
-      throw new sfCommandException(sprintf('The module "%s" already exists in the "%s" application.in the "%s" opPlugin', 
+      throw new sfCommandException(sprintf('The module "%s" already exists in the "%s" application.in the "%s" plugin', 
                                                                     $moduleDir, $app, $plugin));
     }
 
     $properties = parse_ini_file(sfConfig::get('sf_config_dir').'/properties.ini', true);
+    if (is_readable($pluginsDir.'/config/properties.ini'))
+    {
+      $pluginProperties = parse_ini_file($pluginsDir.'/config/properties.ini', true);
+      $properties = array_merge($properties, $pluginProperties);
+    }
 
     $constants = array(
       'PROJECT_NAME' => isset($properties['symfony']['name']) ? $properties['symfony']['name'] : 'symfony',
