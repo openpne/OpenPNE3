@@ -1,4 +1,5 @@
 homeSuccess:
+  layout: layoutA
   customize:
     cautionAboutFriendPre:
       template: [friend, cautionAboutFriendPre]

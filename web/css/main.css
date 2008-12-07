@@ -138,9 +138,25 @@ div.parts tr td.first-child {
   border-left-width: 0;
 }
 
-/*==============================================================================
- * header
- *----------------------------------------------------------------------------*/
+/*----------------------------------------------
+ * clearfix, overflow: hidden
+ *--------------------------------------------*/
+div#LayoutA,
+div#LayoutB,
+div#LayoutC {
+	zoom: 1;
+	overflow: hidden;
+	overflow: -moz-scrollbars-none;
+}
+#Sidemenu,
+#Contents,
+#Top {
+	overflow: hidden;
+}
+
+/*----------------------------------------------
+ * base layout
+ *--------------------------------------------*/
 #Header h1 {
   background:#ffffff url(../images/skin_header_logo.jpg) no-repeat scroll 0 0;
   height: 45px;
@@ -157,6 +173,37 @@ div.parts tr td.first-child {
   text-decoration:none;
   text-indent:-9999px;
   width: 100%;
+}
+
+#Container {
+  position: relative;
+  width: 720px;
+}
+#Header {
+  position: relative;
+}
+
+#LayoutA #Top {
+  padding-left: 5px;
+}
+#LayoutA #Top .infoBox,
+#LayoutA #Top .descriptionBox {
+  margin-right: 20px;
+  margin-left: 20px;
+}
+#LayoutA #Sidemenu {
+  float: left;
+  width: 270px;
+  padding: 0 5px;
+}
+#LayoutA #Contents {
+  float: right;
+  width: 440px;
+}
+
+#LayoutC #Center {
+  width: 650px;
+  margin-left: 30px;
 }
 
 /*==============================================================================
@@ -185,12 +232,6 @@ div.parts tr td.first-child {
   color: #000000;
   text-decoration: none;
 }
-
-#LayoutC #Center {
-  width: 650px;
-  margin-left: 30px;
-}
-
 
 /*==============================================================================
  * informationBox
