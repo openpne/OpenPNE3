@@ -201,9 +201,39 @@ div#LayoutC {
   width: 440px;
 }
 
+#LayoutB #Sidemenu {
+	float: left;
+	width: 180px;
+}
+#LayoutB #Contents {
+	float: right;
+	width: 540px;
+}
+
 #LayoutC #Contents {
   width: 650px;
   margin-left: 30px;
+}
+
+
+/*----------------------------------------------
+ * Sidemenu
+ *--------------------------------------------*/
+#LayoutB #Sidemenu div {
+  background-color: #FFFFFF;
+  border: 8px solid #CCCCCC;
+  margin: 0 auto 10px;
+  width: 150px;
+}
+#LayoutB #Sidemenu .pageNav ul {
+  margin: 1px;
+}
+#LayoutB #Sidemenu .pageNav li {
+  background: transparent url(../images/icon_1.gif) no-repeat scroll 8px 50%;
+  padding: 4px 0 4px 18px;
+}
+#LayoutB #Sidemenu .pageNav li.current {
+  background-color: #EEEEEE;
 }
 
 /*==============================================================================
@@ -388,4 +418,3 @@ div.operation ul.moreInfo li {
 .listBox th, .listBox td {
   padding: 5px;
 }
-

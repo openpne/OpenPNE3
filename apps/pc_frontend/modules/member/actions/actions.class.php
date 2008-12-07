@@ -56,19 +56,17 @@ class memberActions extends sfOpenPNEMemberAction
   */
   public function executeConfig($request)
   {
-    $this->forms = array();
-    $categories = sfConfig::get('openpne_member_category');
+    $this->categories = sfConfig::get('openpne_member_category');
+    $this->categoryName = $request->getParameter('category', 'general');
+    $this->forward404Unless(array_key_exists($this->categoryName, $this->categories), 'Undefined category');
 
-    foreach ($categories as $category => $config) {
-      $formClass = 'MemberConfig'.ucfirst($category).'Form';
-      $this->forms[$category] = new $formClass($this->getUser()->getMember());
-    }
+    $formClass = 'MemberConfig'.ucfirst($this->categoryName).'Form';
+    $this->form = new $formClass($this->getUser()->getMember());
 
     if ($request->isMethod('post')) {
-      $targetForm = $this->forms[$request->getParameter('category')];
-      $targetForm->bind($request->getParameter('member_config'));
-      if ($targetForm->isValid()) {
-        $targetForm->save($this->getUser()->getMemberId());
+      $this->form->bind($request->getParameter('member_config'));
+      if ($this->form->isValid()) {
+        $this->form->save($this->getUser()->getMemberId());
         $this->redirect('member/config');
       }
     }

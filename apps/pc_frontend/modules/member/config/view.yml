@@ -5,3 +5,6 @@ homeSuccess:
       template: [friend, cautionAboutFriendPre]
       parts   : [information]
       target  : [bottom]
+
+configSuccess:
+  layout: layoutB

@@ -76,6 +76,15 @@ function include_box($id, $title = '', $body = '', $option = array())
   include_partial('global/partsBox', $params);
 }
 
+function include_parts($parts_name, $id, $option = array())
+{
+  $params = array(
+    'id'     => $id,
+    'option' => $option,
+  );
+  include_partial('global/parts'.ucfirst($parts_name), $params);
+}
+
 /**
  * Includes customizes.
  *
