@@ -3,7 +3,8 @@ body
   background: #FFFFFF url(../images/test.png) repeat-y scroll 0 0;
 }
 
-body#security_login
+body#security_login,
+body#default_index
 {
   background-image: none;
 }
@@ -81,7 +82,8 @@ ul.contents_menu li
   padding-left: 230px;
 }
 
-body#security_login #body
+body#security_login #body,
+body#default_index #body
 {
   margin-top: 50px;
   padding-left: 10px;

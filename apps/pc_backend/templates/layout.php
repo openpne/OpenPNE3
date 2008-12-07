@@ -23,6 +23,7 @@
     <li><?php echo link_to(__('お知らせ設定'), 'sns/informationConfig'); ?></li>
   </ul>
 </li>
+<li><?php echo link_to(__('デザイン変更'), 'design/index'); ?>
 <li><?php echo link_to(__('ナビ設定'), 'navi/index'); ?></li>
 <li><?php echo link_to(__('プロフィール項目設定'), 'profile/list'); ?></li>
 <li><?php echo link_to(__('プラグイン設定'), 'plugin/list'); ?></li>
