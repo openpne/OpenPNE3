@@ -1,16 +1,13 @@
-body
-{
+body {
   background: #FFFFFF url(../images/test.png) repeat-y scroll 0 0;
 }
 
 body#security_login,
-body#default_index
-{
+body#default_index {
   background-image: none;
 }
 
-#header
-{
+#header {
   background-color: #333;
   padding: 10px;
   position: fixed;
@@ -20,15 +17,13 @@ body#default_index
   z-index: 1988;
 }
 
-#header h1
-{
+#header h1 {
   color: #FFFFFF;
   font-size: 18px;
   font-weight: bold;
 }
 
-#menu
-{
+#menu {
   margin-left: 10px;
   position: fixed;
   width: 200px;
@@ -36,19 +31,16 @@ body#default_index
   padding-top: 10px;
 }
 
-#menu a
-{
+#menu a {
   color: #000000;
   text-decoration: none;
 }
 
-#menu a:hover
-{
+#menu a:hover {
   color: #004A95;
 }
 
-#submenu
-{
+#submenu {
   background-color: #EEEEEE;
   border-bottom: 1px solid #CCCCCC;
   height: auto;
@@ -56,41 +48,35 @@ body#default_index
   padding-left: 10px;
 }
 
-#submenu li
-{
+#submenu li {
   display: inline;
   line-height: 200%;
   list-style-type: none;
   margin-left: 10px;
 }
 
-ul.contents_menu
-{
+ul.contents_menu {
   margin-bottom: 15px;
 }
 
-ul.contents_menu li
-{
+ul.contents_menu li {
   display: inline;
   line-height: 200%;
   list-style-type: none;
 }
 
-#body
-{
+#body {
   margin-top: 40px;
   padding-left: 230px;
 }
 
 body#security_login #body,
-body#default_index #body
-{
+body#default_index #body {
   margin-top: 50px;
   padding-left: 10px;
 }
 
-#body h2
-{
+#body h2 {
   width: 100%;
   background-color: #BDC0CE;
   position: relative;
@@ -99,42 +85,45 @@ body#default_index #body
   font-weight: bold;
 }
 
-#body h3
-{
+#body h3 {
   color: #004A95;
   font-weight: bold;
   font-size: 110%;
 }
 
-#body h4
-{
+#body h4 {
   font-weight: bold;
 }
 
-h3, h4, p
-{
+h3, h4, p {
   margin-bottom: 5px;
 }
 
-table
-{
+table {
   border-color: #D9D9D9;
   border-style: solid;
   border-width: 1px 0;
   margin-bottom: 15px;
 }
 
-th, td
-{
+th, td {
   border-color: #D9D9D9;
   border-style: solid;
   border-width: 0 1px 1px;
   padding: 5px;
 }
 
-th
-{
+th {
   background-color: #EEEEEE;
   font-weight: bold;
+}
+
+.layoutSelection {
+  margin-top: 20px;
+}
+
+.layoutSelection dl {
+  float: left;
+  width: 240px;
 }
 

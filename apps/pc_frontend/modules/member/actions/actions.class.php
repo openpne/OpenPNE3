@@ -17,6 +17,12 @@ class memberActions extends sfOpenPNEMemberAction
   public function executeHome($request)
   {
     $this->information = SnsConfigPeer::retrieveByName('pc_home_information');
+    $layout = SnsConfigPeer::retrieveByName('home_layout');
+    if ($layout)
+    {
+      $this->setLayout($layout->getValue());
+    }
+
     return parent::executeHome($request);
   }
 
