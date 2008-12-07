@@ -21,10 +21,13 @@ abstract class sfOpenPNEConfigHandler extends sfYamlConfigHandler
     foreach ($config as $category => $keys)
     {
       $categoryList .= sprintf("'%s' => array(\n", $category);
-      foreach ($keys as $key => $value)
+      if ($keys)
       {
-        $data .= sprintf("'%s' => %s,\n", $key, var_export($value, true));
-        $categoryList .= sprintf("'%s',\n", $key);
+        foreach ($keys as $key => $value)
+        {
+          $data .= sprintf("'%s' => %s,\n", $key, var_export($value, true));
+          $categoryList .= sprintf("'%s',\n", $key);
+        }
       }
       $categoryList .= "),\n";
     }
