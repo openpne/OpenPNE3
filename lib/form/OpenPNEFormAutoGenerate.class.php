@@ -39,6 +39,11 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
       case 'password':
         $obj = new sfWidgetFormInputPassword($params);
         break;
+      case 'date':
+        $params['culture'] = sfContext::getInstance()->getUser()->getCulture();
+        $params['month_format'] = 'number';
+        $obj = new opWidgetFormDate($params);
+        break;
       default:
         $obj = new sfWidgetFormInput($params);
     }
@@ -56,12 +61,18 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
       $obj = new sfValidatorChoiceMany($option);
       return $obj;
     }
-    if ($field['FormType'] === 'select' || $field['FormType'] === 'radio') {
+    if ($field['FormType'] === 'select' || $field['FormType'] === 'radio')
+    {
       $obj = new sfValidatorChoice(array('choices' => $choices));
       return $obj;
     }
+    if ($field['FormType'] === 'date')
+    {
+      $obj = new opValidatorDate();
+      return $obj;
+    }
 
-    if ($field['ValueType'] === 'datetime' || $field['ValueType'] === 'integer')
+    if ($field['ValueType'] === 'integer')
     {
         if (isset($field['ValueMin']))
         {
@@ -86,9 +97,6 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
 
     switch ($field['ValueType'])
     {
-      case 'datetime':
-        $obj = new sfValidatorDatetime($option);
-        break;
       case 'email':
         $obj = new sfValidatorEmail($option);
         break;

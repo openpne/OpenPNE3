@@ -9,6 +9,16 @@ Profile:
     is_disp_search: 1
     sort_order: 110
 
+  profile_birthday:
+    is_required: 1
+    name: "birthday"
+    form_type: "date"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    sort_order: 120
+
   profile_self_intro:
     is_required: 1
     name: "self_intro"
@@ -17,12 +27,17 @@ Profile:
     is_disp_regist: 1
     is_disp_config: 1
     is_disp_search: 1
-    sort_order: 120
+    sort_order: 130
 
 ProfileI18n:
   profile_i18n_sex:
     id: profile_sex
     caption: "性別"
+    culture: "ja_JP"
+
+  profile_i18n_birthday:
+    id: profile_birthday
+    caption: "誕生日"
     culture: "ja_JP"
 
   profile_i18n_self_intro:

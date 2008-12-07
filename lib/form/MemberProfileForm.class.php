@@ -28,9 +28,11 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
   {
     $values = $this->getValues();
 
-    foreach ($values as $key => $value) {
+    foreach ($values as $key => $value)
+    {
       $profile = ProfilePeer::retrieveByName($key);
-      if (!$profile) {
+      if (!$profile)
+      {
         continue;
       }
 
@@ -69,7 +71,8 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
           $mp->save();
         }
       }
-      else{
+      else
+      {
         if (!$memberProfile)
         {
           $memberProfile = new MemberProfile();
@@ -78,9 +81,12 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
 
         $memberProfile->setMemberId($memberId);
         $memberProfile->setProfileId($profile->getId());
-        if ($formType == 'select' || $formType == 'radio') {
+        if ($formType == 'select' || $formType == 'radio')
+        {
           $memberProfile->setProfileOptionId($value);
-        } else {
+        }
+        else
+        {
           $memberProfile->setValue($value);
         }
         $memberProfile->save();

@@ -19,11 +19,12 @@ class ProfileForm extends BaseProfileForm
       'is_disp_config' => new sfWidgetFormSelectRadio($isDispOption),
       'is_disp_search' => new sfWidgetFormSelectRadio($isDispOption),
       'form_type' => new sfWidgetFormSelect(array('choices' => array(
-        'input' => 'テキスト',
+        'input'    => 'テキスト',
         'textarea' => 'テキスト(複数行)',
-        'select' => '単一選択(プルダウン)',
-        'radio' => '単一選択(ラジオボタン)',
+        'select'   => '単一選択(プルダウン)',
+        'radio'    => '単一選択(ラジオボタン)',
         'checkbox' => '複数選択(チェックボックス)',
+        'date'     => '日付',
       ))),
       'value_type' => new sfWidgetFormSelect(array('choices' => array(
         'string' => '文字列',
