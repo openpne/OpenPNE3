@@ -3,8 +3,14 @@ body {
 }
 
 body#security_login,
-body#default_index {
+body.insecure {
   background-image: none;
+}
+
+body#security_login #body,
+body.insecure #body {
+  margin-top: 50px;
+  padding-left: 10px;
 }
 
 #header {
@@ -68,12 +74,6 @@ ul.contents_menu li {
 #body {
   margin-top: 40px;
   padding-left: 230px;
-}
-
-body#security_login #body,
-body#default_index #body {
-  margin-top: 50px;
-  padding-left: 10px;
 }
 
 #body h2 {

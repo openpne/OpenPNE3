@@ -1,3 +1,7 @@
+<?php slot('submenu') ?>
+<?php include_partial('design/submenu'); ?>
+<?php end_slot() ?>
+
 <h2>ナビ設定</h2>
 
 <?php foreach ($list as $type => $navi) : ?>
