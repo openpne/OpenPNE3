@@ -163,9 +163,8 @@ div.parts tr td.first-child {
  * navi
  *----------------------------------------------------------------------------*/
 #globalNav {
-  width: 100%;
   text-align: right;
-  margin-left: 30px;
+  padding-left: 30px;
 }
 #globalNav li {
   display: inline;
