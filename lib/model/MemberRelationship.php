@@ -46,6 +46,11 @@ class MemberRelationship extends BaseMemberRelationship
     return (bool)($this->getMemberIdTo() == $this->getMemberIdFrom());
   }
 
+  public function isAccessBlocked()
+  {
+    return (bool)$this->getToInstance()->getIsAccessBlock();
+  }
+
   public function setFriendPre()
   {
     $this->setIsFriendPre(true);

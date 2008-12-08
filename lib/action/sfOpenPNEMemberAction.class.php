@@ -97,6 +97,8 @@ abstract class sfOpenPNEMemberAction extends sfActions
   */
   public function executeProfile($request)
   {
+    $this->redirectIf($this->relation->isAccessBlocked(), '@error');
+
     $id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
     $this->member = MemberPeer::retrieveByPk($id);
     $this->communities = CommunityPeer::retrievesByMemberId($id);

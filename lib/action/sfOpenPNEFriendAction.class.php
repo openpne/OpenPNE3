@@ -28,6 +28,8 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeList($request)
   {
+    $this->redirectIf($this->relation->isAccessBlocked(), '@error');
+
     $this->pager = MemberRelationshipPeer::getFriendListPager($this->id, $request->getParameter('page', 1));
 
     if (!$this->pager->getNbResults()) {
@@ -44,6 +46,8 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeLink($request)
   {
+    $this->redirectIf($this->relation->isAccessBlocked(), '@error');
+
     if ($this->relation->isFriend() || $this->relation->isFriendPreFrom())
     {
       return sfView::ERROR;

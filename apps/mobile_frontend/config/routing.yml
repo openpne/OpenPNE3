@@ -3,6 +3,10 @@ homepage:
   url:   /
   param: { module: member, action: home }
 
+error:
+  url: /default/error
+  param: { module: default, action: error }
+
 # default rules
 default_symfony:
   url:   /symfony/:action/*
