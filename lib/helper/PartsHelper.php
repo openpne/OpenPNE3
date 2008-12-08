@@ -97,15 +97,18 @@ function include_customizes($id, $name)
 
   $viewInstance = $context->get('view_instance');
   $customizes = $viewInstance->getCustomize('', $id, $name);
+  $lastActionStack = $context->getActionStack()->getLastEntry();
+
 
   $content = '';
   foreach ($customizes as $customize) {
     $moduleName = $customize[0];
     if (!$moduleName) {
-      $moduleName = $context->getActionStack()->getLastEntry()->getModuleName();
+      $moduleName = $lastActionStack->getModuleName();
     }
     $actionName = '_'.$customize[1];
     $view = new sfPartialView($context, $moduleName, $actionName, '');
+    $view->setPartialVars($lastActionStack->getActionInstance()->getVarHolder()->getAll());
     if (_is_disabled_plugin_dir($view->getDirectory())) {
       continue;
     }
