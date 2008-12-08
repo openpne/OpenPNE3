@@ -22,7 +22,11 @@ class opPluginManager extends sfSymfonyPluginManager
         'rest_base_class' => 'opPearRest',
       ));
 
-      $environment->registerChannel(self::OPENPNE_PLUGIN_CHANNEL, true);
+      try
+      {
+        $environment->registerChannel(self::OPENPNE_PLUGIN_CHANNEL, true);
+      }
+      catch (sfPluginException $e) {}
     }
 
     parent::__construct($dispatcher, $environment);
