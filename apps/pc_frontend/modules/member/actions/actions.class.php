@@ -69,11 +69,13 @@ class memberActions extends sfOpenPNEMemberAction
     $formClass = 'MemberConfig'.ucfirst($this->categoryName).'Form';
     $this->form = new $formClass($this->getUser()->getMember());
 
-    if ($request->isMethod('post')) {
+    if ($request->isMethod('post'))
+    {
       $this->form->bind($request->getParameter('member_config'));
-      if ($this->form->isValid()) {
+      if ($this->form->isValid())
+      {
         $this->form->save($this->getUser()->getMemberId());
-        $this->redirect('member/config');
+        $this->redirect('member/config?category='.$this->categoryName);
       }
     }
 

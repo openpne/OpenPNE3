@@ -44,6 +44,9 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
         $params['month_format'] = 'number';
         $obj = new opWidgetFormDate($params);
         break;
+      case 'increased_input':
+        $obj = new opWidgetFormInputIncreased($params);
+        break;
       default:
         $obj = new sfWidgetFormInput($params);
     }
@@ -115,6 +118,9 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
         break;
       case 'password':
         $obj = new sfValidatorPassword($option);
+        break;
+      case 'pass':
+        $obj = new sfValidatorPass($option);
         break;
       default:
         $obj = new sfValidatorString($option);

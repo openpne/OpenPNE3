@@ -11,6 +11,16 @@ class MemberRelationship extends BaseMemberRelationship
 {
   private $toInstance;
 
+  public function save(PropelPDO $con = null)
+  {
+    if ($this->isSelf())
+    {
+      throw new LogicException('Cannot save an object because member_id_to is equal to member_id_from');
+    }
+
+    return parent::save($con);
+  }
+
   public function isFriend()
   {
     return (bool)$this->getIsFriend();

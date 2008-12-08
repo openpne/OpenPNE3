@@ -45,3 +45,15 @@ password:
     IsUnique:   false
     IsRequired: true
     IsConfirm:  true
+
+accessBlock:
+  access_block:
+    Name:       "access_block"
+    Caption:    "アクセスブロック"
+    FormType:   "increased_input"
+    ValueType:  "pass"
+    IsRegist:   false
+    IsConfig:   true
+    IsUnique:   false
+    IsRequired: false
+    IsConfirm:  false
