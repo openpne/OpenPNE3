@@ -159,6 +159,7 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $dirs = array();
 
+    $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/i18n'));
     $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/i18n'));
     $dirs = array_merge($dirs, parent::getI18NDirs($moduleName));
 
