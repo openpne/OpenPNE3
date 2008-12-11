@@ -38,4 +38,21 @@ class MemberRelationshipPeer extends BaseMemberRelationshipPeer
 
     return $pager;
   }
+
+  public static function getFriendMemberIds($memberId)
+  {
+    $ids = array();
+
+    $c = new Criteria();
+    $c->clearSelectColumns()->addSelectColumn(self::MEMBER_ID_FROM);
+    $c->add(self::MEMBER_ID_TO, $memberId);
+    $c->add(self::IS_FRIEND, true);
+
+    $stmt = self::doSelectStmt($c);
+    while ($row = $stmt->fetch(PDO::FETCH_NUM))
+    {
+      $ids[] = (int)$row[0];
+    }
+    return $ids;
+  }
 }
