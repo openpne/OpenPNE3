@@ -24,6 +24,11 @@ class defaultComponents extends sfComponents
     $type = sfConfig::get('sf_navi_type', sfConfig::get('mod_' . $module . '_default_navi', 'default'));
 
     $this->navis = NaviPeer::retrieveByType($type);
+
+    if ('default' !== $type)
+    {
+      $this->naviId = sfConfig::get('sf_navi_id', $context->getRequest()->getParameter('id'));
+    }
   }
 
   private function isSecurePage()
