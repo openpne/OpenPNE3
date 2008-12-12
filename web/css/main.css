@@ -156,6 +156,17 @@ div#LayoutC {
 #Top {
 	overflow: hidden;
 }
+dd div, dt, ul, ol, td, th, p,
+h1, h2, h3, h4, h5, h6, .partsHeading,
+fieldset, label {
+  overflow: hidden;
+}
+dd div div {
+  overflow: visible;
+}
+pre {
+  overflow: auto;
+}
 
 /*----------------------------------------------
  * base layout
@@ -428,3 +439,89 @@ div.operation ul.moreInfo li {
 .listBox th, .listBox td {
   padding: 5px;
 }
+
+/*==============================================================================
+ * memberImageBox
+ *----------------------------------------------------------------------------*/
+.memberImageBox * {
+	text-align: center;
+}
+.memberImageBox p.friendLink {
+	margin-bottom: 3px;
+}
+.memberImageBox .parts {
+	padding: 7px;
+}
+.memberImageBox ul.moreInfo {
+	margin: 2px 0 -5px;
+}
+.memberImageBox ul.moreInfo li {
+	padding: 1px 0;
+	background: none;
+}
+.memberImageBox ul.moreInfo li img {
+	vertical-align: bottom;
+}
+.memberImageBox p.rank {
+	margin-top: 6px;
+}
+.memberImageBox p.point {
+	margin-top: 2px;
+}
+.memberImageBox p.text {
+	margin-top: 4px;
+}
+.memberImageBox p.loginTime {
+	margin-top: 0px;
+}
+
+/*==============================================================================
+ * memberImageUploadBox
+ *----------------------------------------------------------------------------*/
+.memberImageUploadBox table {
+  border-top: 1px solid #CCCCCC;
+}
+#Body .memberImageUploadBox td {
+  padding: 8px 0;
+  border: none;
+  text-align: center;
+}
+.memberImageUploadBox form {
+  float: left;
+  width: 230px;
+}
+.memberImageUploadBox form p {
+  margin: 8px 0;
+  text-align: center;
+}
+.memberImageUploadBox ul {
+  zoom: 1;
+  margin: 8px 0 8px 230px;
+}
+.memberImageUploadBox li {
+  padding-left: 12px;
+  background: url(./skin/default/img/marker.gif) no-repeat 3px 3px;
+}
+
+/*==============================================================================
+ * modalBox
+ *----------------------------------------------------------------------------*/
+.modalWall {
+  background-color: #000000;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  background-repeat: repeat;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
+
+.modalBox {
+  background-color: #ffffff;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 30;
+}
+

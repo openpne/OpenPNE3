@@ -1,7 +1,8 @@
 <?php slot('op_top') ?>
 <?php
 $body = '';
-if ($information) {
+if ($information)
+{
   $body = $sf_data->getRaw('information')->getValue();
 }
 include_information_box('information', $body)
@@ -9,6 +10,11 @@ include_information_box('information', $body)
 <?php end_slot() ?>
 
 <?php slot('op_sidemenu') ?>
+<?php include_parts('memberImageBox', 'image', array(
+  'name'     => $sf_user->getMember()->getName(),
+  'image'    => $sf_user->getMember()->getImage(),
+  'moreInfo' => array(link_to('写真を編集', 'member/configImage')),
+)) ?>
 <ul>
 <li><?php echo link_to(sprintf('フレンド一覧(%d)', $sf_user->getMember()->countFriends()), 'friend/list') ?></li>
 <li><?php echo link_to(sprintf('参加コミュニティ一覧(%d)', $sf_user->getMember()->countCommunityMembers()), 'community/joinlist') ?></li>

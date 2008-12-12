@@ -38,6 +38,19 @@ class Member extends BaseMember
     return $config->getValue();
   }
 
+  public function setConfig($configName, $value)
+  {
+    $config = MemberConfigPeer::retrieveByNameAndMemberId($configName, $this->getId());
+    if (!$config)
+    {
+      $config = new MemberConfig();
+      $config->setMember($this);
+      $config->setName($configName);
+    }
+    $config->setValue($value);
+    $config->save();
+  }
+
   public function getFriends($limit = null)
   {
     $c = new Criteria();
@@ -81,5 +94,19 @@ class Member extends BaseMember
     $c = new Criteria();
     $c->add(MemberRelationshipPeer::IS_FRIEND_PRE, true);
     return $this->countMemberRelationshipsRelatedByMemberIdFrom($c);
+  }
+
+  public function getImage()
+  {
+    $c = new Criteria();
+    $c->addDescendingOrderByColumn(MemberImagePeer::IS_PRIMARY, true);
+    $result = $this->getMemberImages($c);
+
+    if ($result)
+    {
+      return array_shift($result);
+    }
+
+    return false;
   }
 }

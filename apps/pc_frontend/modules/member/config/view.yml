@@ -6,5 +6,8 @@ homeSuccess:
       parts   : [information]
       target  : [bottom]
 
+profileSuccess:
+  layout: layoutA
+
 configSuccess:
   layout: layoutB

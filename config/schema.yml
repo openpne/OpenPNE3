@@ -19,6 +19,12 @@ propel:
       member_id_to_from: [ member_id_to, member_id_from ]
       member_id_from_to: [ member_id_from, member_id_to ]
 
+  member_image:
+    id: ~
+    member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
+    file_id: { type: integer, required: true, foreignTable: file, foreignReference: id, OnDelete: cascade }
+    is_primary: { type: boolean }
+
   file:
     id: ~
     name: { type: varchar(64), index: unique, required: true }

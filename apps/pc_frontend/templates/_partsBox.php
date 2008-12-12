@@ -13,7 +13,7 @@
 <?php if (empty($option['form'])) : ?>
 <div class="body">
 <?php include_customizes($id, 'bodyTop') ?>
-<?php echo $body ?>
+<?php echo $sf_data->getRaw('body') ?>
 <?php include_customizes($id, 'bodyBottom') ?>
 </div>
 <?php endif; ?>

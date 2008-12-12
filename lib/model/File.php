@@ -37,4 +37,12 @@ class File extends BaseFile
 
     return false;
   }
+
+  public function setFromValidatedFile(sfValidatedFile $obj)
+  {
+    $this->setType($obj->getType());
+    $this->setOriginalFilename($obj->getOriginalName());
+    $this->setBin(file_get_contents($obj->getTempName()));
+    $this->setName(strtr($obj->generateFilename(), '.', '_'));
+  }
 }

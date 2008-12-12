@@ -21,7 +21,7 @@
 <?php echo $form['is_disp_search']->renderRow() ?>
 <?php echo $form['form_type']->renderRow() ?>
 
-<tr><th colspan="2">以下の項目はフォームタイプが「テキスト」、「テキスト(複数行)」の場合のみ有効です。</th></tr>
+<tr><th colspan="2"><?php echo __('以下の項目はフォームタイプが「テキスト」、「テキスト(複数行)」の場合のみ有効です。') ?></th></tr>
 <?php echo $form['value_type']->renderRow() ?>
 <tr>
 <th><?php echo $form['value_min']->renderLabel() ?>〜<?php echo $form['value_max']->renderLabel() ?></th>
@@ -30,7 +30,7 @@
 <?php echo $form['value_regexp']->renderRow() ?>
 
 <tr>
-<td colspan="2"><input type="submit" value="追加する" /></td>
+<td colspan="2"><input type="submit" value="<?php echo __('追加する') ?>" /></td>
 </tr>
 </table>
 </form>
