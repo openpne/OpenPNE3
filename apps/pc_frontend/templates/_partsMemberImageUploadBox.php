@@ -16,7 +16,7 @@
 <?php endif; ?>
 ]
 <?php else: ?>
-<img src="({t_img_url_skin filename=no_image w=180 h=180})" alt="" />
+<?php echo image_tag('no_image.gif', array('size' => '180x180', 'alt' => '')) ?>
 <?php endif; ?>
 </td>
 <?php endfor; ?>
