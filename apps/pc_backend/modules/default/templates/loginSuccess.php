@@ -1,5 +1,5 @@
 管理用のアカウント名とパスワードを入力してください。
-<form action="<?php echo url_for('security/login') ?>" method="post">
+<form action="<?php echo url_for('default/login') ?>" method="post">
 <table>
 <?php echo $form ?>
 <tr>

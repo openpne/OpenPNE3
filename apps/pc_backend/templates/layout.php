@@ -17,7 +17,7 @@
 <?php if ($sf_user->isAuthenticated()) : ?>
 <div id="menu">
 <ul>
-<li><?php echo link_to(__('管理画面トップ'), 'security/top'); ?></li>
+<li><?php echo link_to(__('管理画面トップ'), 'default/top'); ?></li>
 <li><?php echo link_to(__('SNS設定'), 'sns/config'); ?></li>
 <li><?php echo link_to(__('デザイン設定'), 'design/index'); ?></li>
 <li><?php echo link_to(__('プロフィール項目設定'), 'profile/list'); ?></li>
