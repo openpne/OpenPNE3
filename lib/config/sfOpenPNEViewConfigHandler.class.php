@@ -90,7 +90,13 @@ class sfOpenPNEViewConfigHandler extends sfViewConfigHandler
       }
       $target .= ')';
 
-      $data .= "  \$this->setCustomize('$name', '{$template[0]}', '{$template[1]}', $category, $parts, $target);\n";
+      $isComponent = 'false';
+      if (!empty($customize['is_component']))
+      {
+        $isComponent = 'true';
+      }
+
+      $data .= "  \$this->setCustomize('$name', '{$template[0]}', '{$template[1]}', $category, $parts, $target, $isComponent);\n";
       $data .= "  if (sfConfig::get('sf_logging_enabled')) \$this->context->getEventDispatcher()->notify(new sfEvent(\$this, 'application.log', array(sprintf('Set customize \"%s\" (%s/%s)', '$name', '{$template[0]}', '{$template[1]}'))));\n";
     }
 

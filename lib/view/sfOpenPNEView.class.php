@@ -24,6 +24,8 @@ class sfOpenPNEView extends sfPHPView
 
   public $customizeTemplates = array();
 
+  protected $customizeComponents = array();
+
   /**
    * Sets the customize.
    *
@@ -33,8 +35,9 @@ class sfOpenPNEView extends sfPHPView
    * @param array  $categoryNames  Category names
    * @param array  $partsNames     Parts names
    * @param array  $targetNames    Target names
+   * @param bool   $isComponent
    */
-  public function setCustomize($attributeName, $moduleName, $templateName, $categoryNames, $partsNames, $targetNames)
+  public function setCustomize($attributeName, $moduleName, $templateName, $categoryNames, $partsNames, $targetNames, $isComponent = false)
   {
     if (empty($categoryNames))
     {
@@ -72,7 +75,7 @@ class sfOpenPNEView extends sfPHPView
       }
     }
 
-    $this->customizeTemplates[$attributeName] = array($moduleName, $templateName);
+    $this->customizeTemplates[$attributeName] = array($moduleName, $templateName, $isComponent);
   }
 
   /**
