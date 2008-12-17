@@ -34,7 +34,7 @@ class snsActions extends sfActions
   */
   public function executeInformationConfig($request)
   {
-    $this->target = $request->getParameter('target', 'pc_home');
+    $this->target = $request->getParameter('target', 'mobile_home');
     $this->form = new InformationConfigForm(array(), array('target' => $this->target));
 
     if ($request->isMethod('post')) {

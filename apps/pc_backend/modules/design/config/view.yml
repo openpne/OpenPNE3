@@ -1,0 +1,16 @@
+homeWidgetSuccess:
+  javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype, util]
+
+homeWidgetPlotSuccess:
+  layout: plain
+  stylesheets: [-backend, widgetPlot]
+
+homeAddWidgetSuccess:
+  layout: plain
+  stylesheets: [-backend]
+  javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype, util]
+
+homeEditWidgetSuccess:
+  layout: plain
+  stylesheets: [-backend]
+  javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype, util]

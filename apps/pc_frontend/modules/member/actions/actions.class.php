@@ -16,12 +16,22 @@ class memberActions extends sfOpenPNEMemberAction
   */
   public function executeHome($request)
   {
-    $this->information = SnsConfigPeer::retrieveByName('pc_home_information');
+    $this->widgetConfig = sfConfig::get('op_widget_list');
     $layout = SnsConfigPeer::retrieveByName('home_layout');
     if ($layout)
     {
       $this->setLayout($layout->getValue());
     }
+
+    if (!$layout || $layout->getValue() === 'layoutA')
+    {
+      $this->topWidgets = HomeWidgetPeer::retrieveTopWidgets();
+    }
+    if (!$layout || $layout->getValue() === 'layoutA' || $layout->getValue() === 'layoutB')
+    {
+      $this->sideMenuWidgets = HomeWidgetPeer::retrieveSideMenuWidgets();
+    }
+    $this->contentsWidgets = HomeWidgetPeer::retrieveContentsWidgets();
 
     return parent::executeHome($request);
   }

@@ -36,4 +36,102 @@ class designActions extends sfActions
 
     return sfView::SUCCESS;
   }
+
+ /**
+  * Executes home widget action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeHomeWidget(sfWebRequest $request)
+  {
+    $this->topWidgets = HomeWidgetPeer::retrieveTopWidgets();
+    $this->sideMenuWidgets = HomeWidgetPeer::retrieveSideMenuWidgets();
+    $this->contentsWidgets = HomeWidgetPeer::retrieveContentsWidgets();
+    $this->widgetConfig = sfConfig::get('op_widget_list');
+
+    if ($request->isMethod(sfRequest::POST))
+    {
+      $sortForm = new HomeWidgetSortForm();
+      $addForm = new HomeWidgetAddForm();
+      $sortForm->bind($request->getParameter('widget'));
+      $addForm->bind($request->getParameter('new'));
+      if ($sortForm->isValid() && $addForm->isValid())
+      {
+        $sortForm->save();
+        $addForm->save();
+        $this->redirect('design/homeWidget');
+      }
+    }
+    return sfView::SUCCESS;
+  }
+
+ /**
+  * Executes home widget plot action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeHomeWidgetPlot(sfWebRequest $request)
+  {
+    $this->layoutPattern = 'layoutA';
+    $this->topWidgets = HomeWidgetPeer::retrieveTopWidgets();
+    $this->sideMenuWidgets = HomeWidgetPeer::retrieveSideMenuWidgets();
+    $this->contentsWidgets = HomeWidgetPeer::retrieveContentsWidgets();
+    $this->widgetConfig = sfConfig::get('op_widget_list');
+
+    $layout = SnsConfigPeer::retrieveByName('home_layout');
+    if ($layout)
+    {
+      $this->layoutPattern = $layout->getValue();
+    }
+
+    return sfView::SUCCESS;
+  }
+
+ /**
+  * Executes home add widget action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeHomeAddWidget(sfWebRequest $request)
+  {
+    $this->config = sfConfig::get('op_widget_list', array());
+    $this->type = 'top';
+    if (in_array($request->getParameter('type'), array('top', 'sideMenu', 'contents')))
+    {
+      $this->type = $request->getParameter('type');
+    }
+
+    return sfView::SUCCESS;
+  }
+
+ /**
+  * Executes home edit widget action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeHomeEditWidget(sfWebRequest $request)
+  {
+    $this->widget = HomeWidgetPeer::retrieveByPK($request->getParameter('id'));
+    $config = sfConfig::get('op_widget_list', array());
+    $this->forward404Unless($this->widget && $config);
+
+    $this->config = $config[$this->widget->getName()];
+
+    if (!empty($this->config['config']))
+    {
+      $this->form = new HomeWidgetConfigForm($this->widget);
+
+      if ($request->isMethod(sfRequest::POST))
+      {
+        $this->form->bind($request->getParameter('home_widget_config'));
+        if ($this->form->isValid())
+        {
+          $this->form->save();
+          $this->redirect('design/homeEditWidget?id='.$this->widget->getId());
+        }
+      }
+    }
+
+    return sfView::SUCCESS;
+  }
 }

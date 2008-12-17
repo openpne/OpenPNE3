@@ -46,6 +46,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
       $this->disablePlugins(array_keys($pluginActivations, false));
     }
 
+    include($this->getConfigCache()->checkConfig('config/widget.yml'));
+
     return $result;
   }
 

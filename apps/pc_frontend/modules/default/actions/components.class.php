@@ -31,6 +31,11 @@ class defaultComponents extends sfComponents
     }
   }
 
+  public function executeInformationBox()
+  {
+    $this->information = SnsConfigPeer::retrieveByName('pc_home_information');
+  }
+
   private function isSecurePage()
   {
     $context = sfContext::getInstance();

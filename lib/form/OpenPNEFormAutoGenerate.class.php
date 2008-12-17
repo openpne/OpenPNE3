@@ -36,6 +36,13 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
       case 'textarea':
         $obj = new sfWidgetFormTextarea($params);
         break;
+      case 'rich_textarea':
+        $params['config'] = 'theme_advanced_buttons1: "bold, italic, underline, forecolor, hr", theme_advanced_buttons2:"", theme_advanced_buttons3:"", ';
+        $params['width'] = '200px';
+        $jsPath = 'tiny_mce/tiny_mce';
+        sfContext::getInstance()->getResponse()->addJavascript($jsPath);
+        $obj = new sfWidgetFormTextareaTinyMCE($params, array('class' => 'tinymce'));
+        break;
       case 'password':
         $obj = new sfWidgetFormInputPassword($params);
         break;
