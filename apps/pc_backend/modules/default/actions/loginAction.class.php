@@ -1,21 +1,20 @@
 <?php
 
 /**
- * security actions.
+ * login action.
  *
  * @package    OpenPNE
- * @subpackage security
+ * @subpackage default
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
- * @version    SVN: $Id: actions.class.php 9301 2008-05-27 01:08:46Z dwhittle $
  */
-class securityActions extends sfActions
+class loginAction extends sfAction
 {
  /**
-  * Executes login action
+  * Executes this action
   *
   * @param sfRequest $request A request object
   */
-  public function executeLogin($request)
+  public function execute($request)
   {
     $this->getUser()->setAuthenticated(false);
 
@@ -33,14 +32,4 @@ class securityActions extends sfActions
 
     return sfView::SUCCESS;
   }
-
- /**
-  * Executes top action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeTop($request)
-  {
-  }
-
 }
