@@ -42,11 +42,29 @@ EOF;
       $sock = $this->ask('Type database socket path (optional)');
     }
 
-    @$this->fixPerms();
-    @$this->clearCache();
-    $this->configureDatabase($dbms, $username, $password, $hostname, $dbname, $sock);
-    $this->buildDb();
-    $this->clearCache();
+    $maskedPassword = '******';
+    if (!$password)
+    {
+      $maskedPassword = '';
+    }
+
+    $this->log($this->formatList(array(
+      'The DBMS             ' => $dbms,
+      'The Database Username' => $username,
+      'The Database Password' => $maskedPassword,
+      'The Database Hostname' => $hostname,
+      'The Database Name    ' => $dbname,
+      'The Database Socket  ' => $sock,
+    )));
+
+    if ($this->askConfirmation('Is it OK to start this task? (y/n)'))
+    {
+      @$this->fixPerms();
+      @$this->clearCache();
+      $this->configureDatabase($dbms, $username, $password, $hostname, $dbname, $sock);
+      $this->buildDb();
+      $this->clearCache();
+    }
   }
 
   protected function createDSN($dbms, $hostname, $dbname, $sock)
@@ -134,12 +152,25 @@ EOF;
   protected function buildDb()
   {
     $buildAllLoad = new sfPropelBuildAllLoadTask($this->dispatcher, $this->formatter);
-    $buildAllLoad->run();
+    $buildAllLoad->run(array(), array('--no-confirmation'));
   }
 
   protected function fixPerms()
   {
     $permissions = new sfProjectPermissionsTask($this->dispatcher, $this->formatter);
     $permissions->run();
+  }
+
+  protected function formatList($list)
+  {
+    $result = '';
+
+    foreach ($list as $key => $value)
+    {
+      $result .= $this->formatter->format($key, 'INFO')."\t";
+      $result .= $value."\n";
+    }
+
+    return $result;
   }
 }
