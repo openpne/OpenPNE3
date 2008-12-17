@@ -112,6 +112,10 @@ class Member extends BaseMember
   
   public function getImageFileName()
   {
-    return $this->getImage()->getFile();
+    if($this->getImage())
+    {
+      return $this->getImage()->getFile();
+    }
+    return false;
   }
 }
