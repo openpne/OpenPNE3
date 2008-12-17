@@ -34,7 +34,7 @@ all:
 #    error_404_module:       default   # To be called when a 404 error is raised
 #    error_404_action:       error404  # Or when the requested URL doesn't match any route
 #
-    login_module:           security   # To be called when a non-authenticated user
+    login_module:           default   # To be called when a non-authenticated user
     login_action:           login     # Tries to access a secure page
 #
 #    secure_module:          default   # To be called when a user doesn't have
