@@ -24,7 +24,7 @@ class loginAction extends sfAction
       $this->form->bind($request->getParameter('admin_user'));
       if ($this->form->isValid()) {
         $this->getUser()->setAuthenticated(true);
-        $this->redirect('security/top');
+        $this->redirect('default/top');
       }
 
       return sfView::ERROR;
