@@ -1,5 +1,5 @@
 <?php slot('op_sidemenu'); ?>
-<?php include_parts('memberImageBox', 'image', array('name' => $member->getName(), 'image' => $member->getImage())) ?>
+<?php include_parts('memberImageBox', 'image', array('name' => $member->getName(), 'image' => $member->getImageFileName())) ?>
 
 <ul>
 <li><?php echo link_to(sprintf('フレンド一覧(%d)', $member->countFriends()), 'friend/list?id=' . $member->getId()) ?></li>

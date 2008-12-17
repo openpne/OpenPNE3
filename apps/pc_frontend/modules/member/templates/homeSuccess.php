@@ -12,7 +12,7 @@ include_information_box('information', $body)
 <?php slot('op_sidemenu') ?>
 <?php include_parts('memberImageBox', 'image', array(
   'name'     => $sf_user->getMember()->getName(),
-  'image'    => $sf_user->getMember()->getImage(),
+  'image'    => $sf_user->getMember()->getImageFileName(),
   'moreInfo' => array(link_to('写真を編集', 'member/configImage')),
 )) ?>
 <ul>

@@ -2,11 +2,6 @@
 
 class MemberImage extends BaseMemberImage
 {
-  public function __toString()
-  {
-    return $this->getFile()->getName();
-  }
-
   public function getIsPrimary()
   {
     if (parent::getIsPrimary())

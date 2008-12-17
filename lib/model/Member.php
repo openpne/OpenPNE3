@@ -109,4 +109,9 @@ class Member extends BaseMember
 
     return false;
   }
+  
+  public function getImageFileName()
+  {
+    return $this->getImage()->getFile();
+  }
 }
