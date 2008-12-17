@@ -43,7 +43,7 @@ propel.builder.nodepeerstub.class      = propel.engine.builder.om.php5.PHP5Exten
 propel.builder.addIncludes = false
 propel.builder.addComments = false
 
-propel.builder.addBehaviors = false
+propel.builder.addBehaviors = true
 
 propel.mysql.tableType = InnoDB
 
