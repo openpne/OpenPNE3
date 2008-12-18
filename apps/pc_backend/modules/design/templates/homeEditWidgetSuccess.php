@@ -40,6 +40,8 @@ function deleteWidget(type, id)
       break;
     }
   }
+
+  parent.document.getElementById('modal').onclick();
 }
 ");
 ?>
