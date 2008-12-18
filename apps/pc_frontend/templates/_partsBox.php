@@ -30,6 +30,7 @@
 <?php else : ?>
 <?php echo $option['form'] ?>
 <?php endif; ?>
+<?php include_customizes($id, 'lastRaw') ?>
 </table>
 <div class="operation">
 <ul class="moreInfo button">

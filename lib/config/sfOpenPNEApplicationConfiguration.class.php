@@ -24,8 +24,9 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
       'Peer:doCount' => array ('opActivateBehavior', 'doCount'),
     ));
 
-    sfPropelBehavior::registerMethods('check_privilage_belong', array (
-      array ('opCheckPrivilageBelongBehavior', 'checkPrivilageBelong'),
+    sfPropelBehavior::registerMethods('check_privilege_belong', array (
+      array ('opCheckPrivilegeBelongBehavior', 'checkPrivilegeBelong'),
+      array ('opCheckPrivilegeBelongBehavior', 'isPrivilegeBelong'),
     ));
   }
 

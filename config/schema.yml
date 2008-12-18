@@ -78,7 +78,7 @@ propel:
     created_at: ~
     updated_at: ~
     _behaviors:
-      check_privilage_belong: { class_name: CommunityMember }
+      check_privilege_belong: { class_name: CommunityMember }
 
   community_member:
     id: ~
@@ -99,6 +99,12 @@ propel:
   member_config:
     id: ~
     member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
+    name: { type: varchar(64), required: true }
+    value: { type: longvarchar }
+
+  community_config:
+    id: ~
+    community_id: { type: integer, required: true, foreignTable: community, foreignReference: id, OnDelete:     cascade }
     name: { type: varchar(64), required: true }
     value: { type: longvarchar }
 

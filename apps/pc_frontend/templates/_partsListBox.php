@@ -13,9 +13,10 @@
 <?php foreach ($list as $key => $value): ?>
 <tr>
 <th><?php echo $key ?></th>
-<td><?php echo $list->getRaw($key) ?></th>
+<td><?php echo $list->getRaw($key) ?></td>
 </tr>
 <?php endforeach; ?>
+<?php include_customizes($id, 'lastRaw') ?>
 </table>
 
 <?php if(isset($options['moreInfo'])) : ?>
