@@ -21,6 +21,11 @@ class HomeWidgetSortForm extends sfForm
     foreach ($this->values as $type => $widgets)
     {
       $ids = HomeWidgetPeer::getWidgetsIds($type);
+      if (!$widgets)
+      {
+        $widgets = array();
+      }
+
       foreach ($ids as $id)
       {
         $widget = HomeWidgetPeer::retrieveByPk($id);
