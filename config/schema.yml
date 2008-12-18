@@ -110,7 +110,7 @@ propel:
 
   home_widget_config:
     id: ~
-    home_widget_id: { type: integer, required: true, foreignTable: home_widget, foreignReference: id, OnDelete: cascade }
+    home_widget_id: { type: integer, required: true, foreignTable: home_widget, foreignReference: id }
     name: { type: varchar(64), required: true }
     value: { type: longvarchar }
 
