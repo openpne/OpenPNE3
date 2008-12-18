@@ -40,4 +40,23 @@ class InviteForm extends MemberConfigPcAddressForm
     $mail->setTemplate('global/requestRegisterURLMail', array('token' => $token));
     $mail->send($to, OpenPNEConfig::get('admin_mail_address'));
   }
+
+  public function save()
+  {
+    parent::save();
+
+    if ($this->getOption('is_link'))
+    {
+      $fromMemberId = sfContext::getInstance()->getUser()->getMemberId();
+      $toMemberId = $this->member->getId();
+      $relation = MemberRelationshipPeer::retrieveByFromAndTo($fromMemberId, $toMemberId);
+      if (!$relation)
+      {
+        $relation = new MemberRelationship();
+        $relation->setMemberIdFrom($fromMemberId);
+        $relation->setMemberIdTo($toMemberId);
+      }
+      $relation->setFriend();
+    }
+  }
 }

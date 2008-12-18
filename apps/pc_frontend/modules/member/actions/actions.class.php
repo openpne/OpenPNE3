@@ -145,6 +145,7 @@ class memberActions extends sfOpenPNEMemberAction
   public function executeInvite($request)
   {
     $this->form = new InviteForm();
+    $this->form->setOption('is_link', true);
     if ($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('member_config'));
