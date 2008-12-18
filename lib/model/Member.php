@@ -51,9 +51,12 @@ class Member extends BaseMember
     $config->save();
   }
 
-  public function getFriends($limit = null)
+  public function getFriends($limit = null, Criteria $c = null)
   {
-    $c = new Criteria();
+    if (!$c)
+    {
+      $c = new Criteria();
+    }
     $c->add(MemberRelationshipPeer::IS_FRIEND, true);
     if (!is_null($limit)) {
       $c->setLimit($limit);
@@ -61,37 +64,52 @@ class Member extends BaseMember
     return $this->getMemberRelationshipsRelatedByMemberIdTo($c);
   }
 
-  public function countFriends()
+  public function countFriends(Criteria $c = null)
   {
-    $c = new Criteria();
+    if (!$c)
+    {
+      $c = new Criteria();
+    }
     $c->add(MemberRelationshipPeer::IS_FRIEND, true);
     return $this->countMemberRelationshipsRelatedByMemberIdTo($c);
   }
 
-  public function getFriendPreTo()
+  public function getFriendPreTo(Criteria $c = null)
   {
-    $c = new Criteria();
+    if (!$c)
+    {
+      $c = new Criteria();
+    }
     $c->add(MemberRelationshipPeer::IS_FRIEND_PRE, true);
     return $this->getMemberRelationshipsRelatedByMemberIdTo($c);
   }
 
-  public function countFriendPreTo()
+  public function countFriendPreTo(Criteria $c = null)
   {
-    $c = new Criteria();
+    if (!$c)
+    {
+      $c = new Criteria();
+    }
     $c->add(MemberRelationshipPeer::IS_FRIEND_PRE, true);
     return $this->countMemberRelationshipsRelatedByMemberIdTo($c);
   }
 
-  public function getFriendPreFrom()
+  public function getFriendPreFrom(Criteria $c = null)
   {
-    $c = new Criteria();
+    if (!$c)
+    {
+      $c = new Criteria();
+    }
     $c->add(MemberRelationshipPeer::IS_FRIEND_PRE, true);
     return $this->getMemberRelationshipsRelatedByMemberIdFrom($c);
   }
 
-  public function countFriendPreFrom()
+  public function countFriendPreFrom(Criteria $c = null)
   {
-    $c = new Criteria();
+    if (!$c)
+    {
+      $c = new Criteria();
+    }
     $c->add(MemberRelationshipPeer::IS_FRIEND_PRE, true);
     return $this->countMemberRelationshipsRelatedByMemberIdFrom($c);
   }
