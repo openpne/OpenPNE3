@@ -18,19 +18,24 @@ class MemberConfigPcAddressForm extends MemberConfigForm
 
       $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId('pc_address_token', $this->member->getId());
       $token = $memberConfig->getValue();
-
-      $mail = new sfOpenPNEMailSend();
-      $mail->setSubject('メールアドレス変更ページのお知らせ');
-      $mail->setTemplate('global/changeMailAddressMail', array(
-        'token' => $token,
-        'id'    => $this->member->getId(),
-        'type'  => $name,
+      $this->sendConfirmMail($token, $value, array(
+        'id'   => $this->member->getId(),
+        'type' => $name,
       ));
-      $mail->send($value, OpenPNEConfig::get('admin_mail_address'));
 
       return true;
     }
 
     parent::saveConfig($name, $value);
+  }
+
+  protected function sendConfirmMail($token, $to, $params = array())
+  {
+    $options = array_merge(array('token' => $token), $params);
+
+    $mail = new sfOpenPNEMailSend();
+    $mail->setSubject('メールアドレス変更ページのお知らせ');
+    $mail->setTemplate('global/changeMailAddressMail', $options);
+    $mail->send($to, OpenPNEConfig::get('admin_mail_address'));
   }
 }

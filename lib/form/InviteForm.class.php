@@ -32,4 +32,12 @@ class InviteForm extends MemberConfigPcAddressForm
       return $memberConfig->getValue();
     }
   }
+
+  protected function sendConfirmMail($token, $to, $params = array())
+  {
+    $mail = new sfOpenPNEMailSend();
+    $mail->setSubject(OpenPNEConfig::get('sns_name').'の招待状が届いています');
+    $mail->setTemplate('global/requestRegisterURLMail', array('token' => $token));
+    $mail->send($to, OpenPNEConfig::get('admin_mail_address'));
+  }
 }

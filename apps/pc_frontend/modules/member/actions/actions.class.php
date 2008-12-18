@@ -152,11 +152,6 @@ class memberActions extends sfOpenPNEMemberAction
       {
         $this->form->save();
 
-        $mail = new sfOpenPNEMailSend();
-        $mail->setSubject(OpenPNEConfig::get('sns_name').'の招待状が届いています');
-        $mail->setTemplate('global/requestRegisterURLMail', array('token' => $this->form->getToken()));
-        $mail->send($this->form->getMailAddress(), OpenPNEConfig::get('admin_mail_address'));
-
         return sfView::SUCCESS;
       }
     }
