@@ -11,3 +11,10 @@ informationBox:
       FormType:   "rich_textarea"
       ValueType:  "text"
       IsRequired: false
+
+memberImageBox:
+  caption:
+    ja_JP: "プロフィール写真"
+  description:
+    ja_JP: "メンバーの登録した写真をホームに表示します"
+  component: [default, memberImageBox]

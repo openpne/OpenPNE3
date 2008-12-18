@@ -16,11 +16,6 @@
 <?php endif; ?>
 <?php endforeach; ?>
 <?php endif; ?>
-<?php include_parts('memberImageBox', 'image', array(
-  'name'     => $sf_user->getMember()->getName(),
-  'image'    => $sf_user->getMember()->getImageFileName(),
-  'moreInfo' => array(link_to('写真を編集', 'member/configImage')),
-)) ?>
 <ul>
 <li><?php echo link_to(sprintf('フレンド一覧(%d)', $sf_user->getMember()->countFriends()), 'friend/list') ?></li>
 <li><?php echo link_to(sprintf('参加コミュニティ一覧(%d)', $sf_user->getMember()->countCommunityMembers()), 'community/joinlist') ?></li>

@@ -1,0 +1,10 @@
+HomeWidget:
+  home_widget_information:
+    type: "top"
+    name: "informationBox"
+    sort_order: 10
+
+  home_widget_member_image:
+    type: "sideMenu"
+    name: "memberImageBox"
+    sort_order: 10
