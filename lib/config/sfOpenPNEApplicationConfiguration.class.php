@@ -28,6 +28,11 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
       array ('opCheckPrivilegeBelongBehavior', 'checkPrivilegeBelong'),
       array ('opCheckPrivilegeBelongBehavior', 'isPrivilegeBelong'),
     ));
+
+    sfPropelBehavior::registerMethods('check_privilege_owner', array (
+      array ('opCheckPrivilegeOwnerBehavior', 'checkPrivilegeOwner'),
+      array ('opCheckPrivilegeOwnerBehavior', 'isPrivilegeOwner'),
+    ));
   }
 
   public function setup()

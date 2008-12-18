@@ -79,6 +79,7 @@ propel:
     updated_at: ~
     _behaviors:
       check_privilege_belong: { class_name: CommunityMember }
+      check_privilege_owner: { class_name: CommunityMember }
 
   community_member:
     id: ~
