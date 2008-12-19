@@ -9,12 +9,15 @@
  */ 
 class CommunityPeer extends BaseCommunityPeer
 {
-  public static function retrievesByMemberId($memberId, $size = 5)
+  public static function retrievesByMemberId($memberId, $limit = 5, Criteria $c = null)
   {
-    $c = new Criteria();
+    if (!$c)
+    {
+      $c = new Criteria();
+    }
     $c->add(CommunityMemberPeer::MEMBER_ID, $memberId);
     $c->addJoin(self::ID, CommunityMemberPeer::COMMUNITY_ID);
-    $c->setLimit($size);
+    $c->setLimit($limit);
 
     return self::doSelect($c);
   }

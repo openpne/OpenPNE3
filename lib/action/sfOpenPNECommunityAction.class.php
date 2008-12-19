@@ -48,12 +48,12 @@ abstract class sfOpenPNECommunityAction extends sfActions
 
     if ($request->isMethod('post'))
     {
-      $this->form->bind($request->getParameter('community'));
+      $this->form->bind($request->getParameter('community'), $request->getFiles('community'));
       if ($this->form->isValid())
       {
         $community = $this->form->save();
 
-        $this->redirect('community/home?id=' . $community->getId());
+        $this->redirect('community/home?id='.$community->getId());
       }
     }
   }

@@ -75,6 +75,7 @@ propel:
   community:
     id: ~
     name: { type: varchar(64), index: unique, required: true }
+    file_id: { type: integer, required: false, foreignTable: file, foreignReference: id, onDelete: cascade }
     created_at: ~
     updated_at: ~
     _behaviors:

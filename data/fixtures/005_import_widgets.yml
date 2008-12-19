@@ -13,3 +13,8 @@ HomeWidget:
     type: "sideMenu"
     name: "friendListBox"
     sort_order: 20
+
+  home_widget_community_table:
+    type: "sideMenu"
+    name: "communityJoinListBox"
+    sort_order: 30

@@ -1,9 +1,9 @@
-<?php if ($option['list']) : ?>
+<?php if (count($option['list'])) : ?>
 <div class="parts nineTable">
 <div class="partsHeading"><h3><?php echo __($option['title']) ?></h3></div>
 <table>
-<?php for ($i = 1; $option['row'] >= $i; $i++) : ?>
-<?php if (count($option['list']) >= $i) : ?>
+<?php for ($i = $j = 1; $option['row'] >= $i; $i++) : ?>
+<?php if (count($option['list']) >= $j && $j % $option['row']) : ?>
 <?php if ($option['type'] === 'full' || $option['type'] === 'only_image') : ?>
 <tr class="photo">
 <?php for ($j = ($i * $option['col']) - $option['col']; ($i * $option['col']) > $j; $j++) : ?>

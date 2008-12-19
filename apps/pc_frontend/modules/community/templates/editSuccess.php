@@ -1,5 +1,9 @@
 <?php
-$options = array('form' => array($form));
+$options = array(
+  'form' => array($form),
+  'isMultipart' => true,
+);
+
 if ($form->isNew()) {
   $title = 'コミュニティ作成';
   $options['url'] = 'community/edit';

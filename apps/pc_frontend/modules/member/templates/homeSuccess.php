@@ -16,9 +16,6 @@
 <?php endif; ?>
 <?php endforeach; ?>
 <?php endif; ?>
-<ul>
-<li><?php echo link_to(sprintf('参加コミュニティ一覧(%d)', $sf_user->getMember()->countCommunityMembers()), 'community/joinlist') ?></li>
-</ul>
 <?php end_slot() ?>
 
 <?php if ($contentsWidgets) : ?>

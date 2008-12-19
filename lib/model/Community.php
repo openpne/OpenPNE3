@@ -9,4 +9,12 @@
  */ 
 class Community extends BaseCommunity
 {
+  public function getImageFileName()
+  {
+    if ($this->getFile())
+    {
+      return $this->getFile()->getName();
+    }
+    return '';
+  }
 }
