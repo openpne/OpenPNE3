@@ -9,10 +9,6 @@ class opActivateBehavior
     {
       $criteria->add(call_user_func(array($class, 'translateFieldName'), 'is_active', BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_COLNAME), 0, Criteria::NOT_EQUAL);
     }
-    else
-    {
-      self::enable();
-    }
   }
 
   public function doCount($class, Criteria $criteria, $con = null)
@@ -20,10 +16,6 @@ class opActivateBehavior
     if (self::$enabled)
     {
       $criteria->add(call_user_func(array($class, 'translateFieldName'), 'is_active', BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_COLNAME), 0, Criteria::NOT_EQUAL);
-    }
-    else
-    {
-      self::enable();
     }
   }
 

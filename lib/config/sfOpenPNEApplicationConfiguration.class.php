@@ -19,20 +19,7 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     $this->getConfigCache()->registerConfigHandler('config/member_config.yml', 'sfOpenPNEMemberConfigHandler', array());
     include($this->getConfigCache()->checkConfig('config/member_config.yml'));
 
-    sfPropelBehavior::registerHooks('activate', array (
-      'Peer:doSelectStmt' => array ('opActivateBehavior', 'doSelectStmt'),
-      'Peer:doCount' => array ('opActivateBehavior', 'doCount'),
-    ));
-
-    sfPropelBehavior::registerMethods('check_privilege_belong', array (
-      array ('opCheckPrivilegeBelongBehavior', 'checkPrivilegeBelong'),
-      array ('opCheckPrivilegeBelongBehavior', 'isPrivilegeBelong'),
-    ));
-
-    sfPropelBehavior::registerMethods('check_privilege_owner', array (
-      array ('opCheckPrivilegeOwnerBehavior', 'checkPrivilegeOwner'),
-      array ('opCheckPrivilegeOwnerBehavior', 'isPrivilegeOwner'),
-    ));
+    $this->setBehaviors();
   }
 
   public function setup()
@@ -226,5 +213,23 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     }
 
     return $dirs;
+  }
+
+  protected function setBehaviors()
+  {
+    sfPropelBehavior::registerHooks('activate', array (
+      'Peer:doSelectStmt:doSelectStmt' => array('opActivateBehavior', 'doSelectStmt'),
+      'Peer:doCount:doCount'           => array('opActivateBehavior', 'doCount'),
+    ));
+
+    sfPropelBehavior::registerMethods('check_privilege_belong', array (
+      array ('opCheckPrivilegeBelongBehavior', 'checkPrivilegeBelong'),
+      array ('opCheckPrivilegeBelongBehavior', 'isPrivilegeBelong'),
+    ));
+
+    sfPropelBehavior::registerMethods('check_privilege_owner', array (
+      array ('opCheckPrivilegeOwnerBehavior', 'checkPrivilegeOwner'),
+      array ('opCheckPrivilegeOwnerBehavior', 'isPrivilegeOwner'),
+    ));
   }
 }
