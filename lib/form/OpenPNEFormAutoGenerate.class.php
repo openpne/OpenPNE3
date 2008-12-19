@@ -27,7 +27,7 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
       $params['choices'] = $field['Choices'];
     }
 
-    if ($field['Default'])
+    if (!empty($field['Default']))
     {
       $params['default'] = $field['Default'];
     }
