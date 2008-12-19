@@ -3,9 +3,9 @@ Navi:
     type: "secure_global"
     uri: "@homepage"
 
-  secure_global_navi_member_list:
+  secure_global_navi_member_search:
     type: "secure_global"
-    uri: "member/list"
+    uri: "member/search"
 
   secure_global_navi_community_list:
     type: "secure_global"
@@ -73,9 +73,9 @@ NaviI18n:
     caption: "マイホーム"
     culture: "ja_JP"
 
-  secure_global_navi_member_list_i18n:
-    id: secure_global_navi_member_list
-    caption: "メンバー一覧"
+  secure_global_navi_member_search_i18n:
+    id: secure_global_navi_member_search
+    caption: "メンバー検索"
     culture: "ja_JP"
 
   secure_global_navi_community_list_i18n:

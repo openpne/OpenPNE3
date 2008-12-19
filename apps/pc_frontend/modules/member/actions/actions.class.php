@@ -37,18 +37,23 @@ class memberActions extends sfOpenPNEMemberAction
   }
 
  /**
-  * Executes list action
+  * Executes search action
   *
   * @param sfRequest $request A request object
   */
-  public function executeList($request)
+  public function executeSearch($request)
   {
+    $this->filters = new MemberFormFilter();
+    $this->filters->bind($request->getParameter('member'));
+
     $this->pager = new sfPropelPager('Member', 20);
+    $this->pager->setCriteria($this->filters->getCriteria());
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
 
     return sfView::SUCCESS;
   }
+
 
  /**
   * Executes profile action

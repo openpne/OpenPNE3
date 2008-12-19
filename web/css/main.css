@@ -548,3 +548,58 @@ div.operation ul.moreInfo li {
 	padding: 6px 0;
 }
 
+/*==============================================================================
+ * searchResultList
+ *----------------------------------------------------------------------------*/
+.searchResultList .partsInfo {
+	background: #EEEEEE;
+}
+.searchResultList .ditem {
+	margin: 8px 34px;
+}
+.searchResultList td.photo {
+	width: 90px;
+	padding: 0;
+	border-left: none;
+	text-align: center;
+}
+.searchResultList th, .searchResultList td {
+	padding: 5px;
+}
+.searchResultList th {
+	width: 75px;
+}
+#Body .searchResultList th:first-child,
+#Body .searchResultList th.first-child {
+	border-left-width: 1px;
+}
+.searchResultList tr.operation th {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.searchResultList tr.operation td {
+	padding: 0;
+}
+.searchResultList tr.operation span.text {
+	float: left;
+	display: block;
+	width: 110px;
+	padding: 5px;
+	border-right: 1px solid #CCCCCC;
+}
+.searchResultList tr.operation span.moreInfo{
+	zoom: 1;
+	display: block;
+	margin-left: 121px;
+	padding: 4px 0 3px;
+	text-align: center;
+}
+.searchResultList div.operation {
+	text-align: center;
+}
+.searchResultList tr.operation span.moreInfo img,
+.searchResultList div.operation form,
+.searchResultList div.operation fieldset {
+	display: inline;
+	vertical-align: top;
+}

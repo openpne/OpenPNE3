@@ -17,13 +17,7 @@ class Member extends BaseMember
   public function getProfile($profileName)
   {
     $profile = MemberProfilePeer::retrieveByMemberIdAndProfileName($this->getId(), $profileName);
-
-    if (!$profile)
-    {
-      return null;
-    }
-
-    return $profile->getValue();
+    return $profile;
   }
 
   public function getConfig($configName)
@@ -139,5 +133,15 @@ class Member extends BaseMember
       return $this->getImage()->getFile();
     }
     return false;
+  }
+
+  public function updateLastLoginTime()
+  {
+    $this->setConfig('lastLogin', time());
+  }
+
+  public function getLastLoginTime()
+  {
+    return $this->getConfig('lastLogin');
   }
 }

@@ -75,6 +75,10 @@ class MemberProfile extends BaseMemberProfileNestedSet
 
   public function getCaption()
   {
+    if (is_null($this->caption))
+    {
+      $this->caption = $this->getProfile()->getCaption();
+    }
     return $this->caption;
   }
 }

@@ -87,6 +87,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
   */
   public function executeHome($request)
   {
+    $this->getUser()->getMember()->updateLastLoginTime();
     return sfView::SUCCESS;
   }
 
