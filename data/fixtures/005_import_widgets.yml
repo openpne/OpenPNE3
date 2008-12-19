@@ -8,3 +8,8 @@ HomeWidget:
     type: "sideMenu"
     name: "memberImageBox"
     sort_order: 10
+
+  home_widget_friend_table:
+    type: "sideMenu"
+    name: "friendListBox"
+    sort_order: 20

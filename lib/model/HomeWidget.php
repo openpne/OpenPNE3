@@ -59,11 +59,16 @@ class HomeWidget extends BaseHomeWidget
   public function getConfig($name)
   {
     $result = null;
+    $list = sfConfig::get('op_widget_list');
 
     $config = HomeWidgetConfigPeer::retrieveByWidgetIdAndName($this->getId(), $name);
     if ($config)
     {
       $result = $config->getValue();
+    }
+    elseif (isset($list[$this->getName()]['config'][$name]['Default']))
+    {
+      $result = $list[$this->getName()]['config'][$name]['Default'];
     }
 
     return $result;

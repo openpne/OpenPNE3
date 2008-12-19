@@ -301,7 +301,9 @@ pre {
 div.dparts,
 div.dparts div.parts,
 div.ditem,
-#LayoutA #Left div.parts {
+#Sidemenu div.parts,
+#Contents div.parts,
+#Top div.parts {
   border: 1px solid #CCCCCC;
 }
 div.ditem div.item {
@@ -331,7 +333,7 @@ div.ditem {
   text-align: left;
   font-size: 100%;
 }
-#LayoutA #Left .partsHeading {
+#LayoutA #Sidemenu .partsHeading {
   padding-left: 24px;
   background-image: url(../images/icon_title_1.gif);
 }
@@ -523,5 +525,26 @@ div.operation ul.moreInfo li {
   top: 0px;
   left: 0px;
   z-index: 30;
+}
+
+/*==============================================================================
+ * nineTable
+ *----------------------------------------------------------------------------*/
+.nineTable tr.photo td {
+	height: 80px;
+	padding: 2px 0;
+	text-align: center;
+}
+.nineTable tr.photo td p.crown {
+	text-align: center;
+}
+.nineTable tr.text td {
+	padding: 2px;
+	text-align: center;
+}
+.nineTable div.moreInfo ul.moreInfo {
+	width: 11em;
+	margin-left: auto;
+	padding: 6px 0;
 }
 

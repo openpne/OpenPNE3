@@ -22,6 +22,15 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
     {
       $params['choices'] = $choices;
     }
+    elseif (!empty($field['Choices']))
+    {
+      $params['choices'] = $field['Choices'];
+    }
+
+    if ($field['Default'])
+    {
+      $params['default'] = $field['Default'];
+    }
 
     switch ($field['FormType']) {
       case 'checkbox':
@@ -64,6 +73,10 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
   protected function generateValidator($field, $choices = array())
   {
     $option = array('required' => $field['IsRequired']);
+    if (!$choices && !empty($field['Choices']))
+    {
+      $choices = array_keys($field['Choices']);
+    }
 
     if ($field['FormType'] === 'checkbox')
     {

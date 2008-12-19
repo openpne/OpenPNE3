@@ -17,7 +17,6 @@
 <?php endforeach; ?>
 <?php endif; ?>
 <ul>
-<li><?php echo link_to(sprintf('フレンド一覧(%d)', $sf_user->getMember()->countFriends()), 'friend/list') ?></li>
 <li><?php echo link_to(sprintf('参加コミュニティ一覧(%d)', $sf_user->getMember()->countCommunityMembers()), 'community/joinlist') ?></li>
 </ul>
 <?php end_slot() ?>

@@ -10,8 +10,8 @@ propel:
 
   member_relationship:
     id: ~
-    member_id_to: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
-    member_id_from: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
+    member_id_to: { type: integer, required: true, foreignTable: member, foreignReference: id, onDelete: cascade }
+    member_id_from: { type: integer, required: true, foreignTable: member, foreignReference: id, onDelete: cascade }
     is_friend: { type: boolean }
     is_friend_pre: { type: boolean }
     is_access_block: { type: boolean }
@@ -21,8 +21,8 @@ propel:
 
   member_image:
     id: ~
-    member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
-    file_id: { type: integer, required: true, foreignTable: file, foreignReference: id, OnDelete: cascade }
+    member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, onDelete: cascade }
+    file_id: { type: integer, required: true, foreignTable: file, foreignReference: id, onDelete: cascade }
     is_primary: { type: boolean }
 
   file:
@@ -83,8 +83,8 @@ propel:
 
   community_member:
     id: ~
-    community_id: { type: integer, required: true, foreignTable: community, foreignReference: id, OnDelete: cascade }
-    member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
+    community_id: { type: integer, required: true, foreignTable: community, foreignReference: id, onDelete: cascade }
+    member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, onDelete: cascade }
     position: { type: varchar(32), index: true }
 
   admin_user:
@@ -99,13 +99,13 @@ propel:
 
   member_config:
     id: ~
-    member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, OnDelete: cascade }
+    member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, onDelete: cascade }
     name: { type: varchar(64), required: true }
     value: { type: longvarchar }
 
   community_config:
     id: ~
-    community_id: { type: integer, required: true, foreignTable: community, foreignReference: id, OnDelete:     cascade }
+    community_id: { type: integer, required: true, foreignTable: community, foreignReference: id, onDelete: cascade }
     name: { type: varchar(64), required: true }
     value: { type: longvarchar }
 
@@ -117,7 +117,7 @@ propel:
 
   home_widget_config:
     id: ~
-    home_widget_id: { type: integer, required: true, foreignTable: home_widget, foreignReference: id }
+    home_widget_id: { type: integer, foreignTable: home_widget, foreignReference: id, onDelete: cascade }
     name: { type: varchar(64), required: true }
     value: { type: longvarchar }
 

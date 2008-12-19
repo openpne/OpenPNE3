@@ -34,7 +34,6 @@ class HomeWidgetSortForm extends sfForm
         if ($key === false)
         {
           $widget->delete();
-          var_dump($widget, $widgets);
           continue;
         }
 

@@ -57,11 +57,13 @@ class Member extends BaseMember
     {
       $c = new Criteria();
     }
-    $c->add(MemberRelationshipPeer::IS_FRIEND, true);
     if (!is_null($limit)) {
       $c->setLimit($limit);
     }
-    return $this->getMemberRelationshipsRelatedByMemberIdTo($c);
+    $c->add(MemberRelationshipPeer::MEMBER_ID_TO, $this->getId());
+    $c->add(MemberRelationshipPeer::IS_FRIEND, true);
+    $c->addJoin(MemberPeer::ID, MemberRelationshipPeer::MEMBER_ID_FROM);
+    return MemberPeer::doSelect($c);
   }
 
   public function countFriends(Criteria $c = null)
@@ -70,8 +72,10 @@ class Member extends BaseMember
     {
       $c = new Criteria();
     }
+    $c->add(MemberRelationshipPeer::MEMBER_ID_TO, $this->getId());
     $c->add(MemberRelationshipPeer::IS_FRIEND, true);
-    return $this->countMemberRelationshipsRelatedByMemberIdTo($c);
+    $c->addJoin(MemberPeer::ID, MemberRelationshipPeer::MEMBER_ID_FROM);
+    return MemberPeer::doCount($c);
   }
 
   public function getFriendPreTo(Criteria $c = null)
