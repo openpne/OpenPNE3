@@ -13,12 +13,7 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $this->dispatcher->connect('task.cache.clear', array($this, 'clearPluginCache'));
 
-    $this->getConfigCache()->registerConfigHandler('config/sns_config.yml', 'sfOpenPNESNSConfigHandler', array('application' => $this));
-    include($this->getConfigCache()->checkConfig('config/sns_config.yml'));
-
-    $this->getConfigCache()->registerConfigHandler('config/member_config.yml', 'sfOpenPNEMemberConfigHandler', array());
-    include($this->getConfigCache()->checkConfig('config/member_config.yml'));
-
+    $this->setConfigHandlers();
     $this->setBehaviors();
   }
 
@@ -231,5 +226,17 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
       array ('opCheckPrivilegeOwnerBehavior', 'checkPrivilegeOwner'),
       array ('opCheckPrivilegeOwnerBehavior', 'isPrivilegeOwner'),
     ));
+  }
+
+  protected function setConfigHandlers()
+  {
+    $this->getConfigCache()->registerConfigHandler('config/sns_config.yml', 'opConfigConfigHandler', array('prefix' => 'openpne_sns_'));
+    include($this->getConfigCache()->checkConfig('config/sns_config.yml'));
+
+    $this->getConfigCache()->registerConfigHandler('config/member_config.yml', 'opConfigConfigHandler', array('prefix' => 'openpne_member_'));
+    include($this->getConfigCache()->checkConfig('config/member_config.yml'));
+
+    $this->getConfigCache()->registerConfigHandler('config/community_config.yml', 'opConfigConfigHandler', array('prefix' => 'openpne_community_'));
+    include($this->getConfigCache()->checkConfig('config/community_config.yml'));
   }
 }

@@ -1,18 +1,19 @@
 <?php
 
 /**
- * sfOpenPNEConfigHandler
+ * opConfigConfigHandler
  *
  * @package    OpenPNE
  * @subpackage config
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-abstract class sfOpenPNEConfigHandler extends sfYamlConfigHandler
+class opConfigConfigHandler extends sfYamlConfigHandler
 {
-  protected $prefix = 'openpne_';
-
   public function execute($configFiles)
   {
+    // get our prefix
+    $prefix = strtolower($this->getParameterHolder()->get('prefix', 'openpne_'));
+
     $config = $this->parseYamls($configFiles);
 
     $data = "array(\n";
@@ -39,6 +40,6 @@ abstract class sfOpenPNEConfigHandler extends sfYamlConfigHandler
             . "sfConfig::add(array('%s' => %s));\n"
             . "sfConfig::add(array('%s' => %s));";
 
-    return sprintf($format, $this->prefix.'config', $data, $this->prefix.'category', $categoryList);
+    return sprintf($format, $prefix.'config', $data, $prefix.'category', $categoryList);
   }
 }
