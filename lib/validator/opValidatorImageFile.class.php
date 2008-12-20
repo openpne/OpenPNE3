@@ -11,7 +11,7 @@ class opValidatorImageFile extends sfValidatorFile
 {
   protected function configure($options = array(), $messages = array())
   {
-    $options['mime_types'] = 'web_images';
     parent::configure($options, $messages);
+    $this->setOption('mime_types', 'web_images');
   }
 }
