@@ -88,3 +88,10 @@ communityJoinListBox:
         full:       "画像と名前の両方を表示"
         only_image: "画像のみ表示"
         only_name:  "名前のみ表示"
+
+searchBox:
+  caption:
+    ja_JP: "検索ボックス"
+  description:
+    ja_JP: "検索用のフォームを表示します"
+  component: [default, searchBox]

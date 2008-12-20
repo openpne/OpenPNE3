@@ -1,8 +1,13 @@
 HomeWidget:
+  home_widget_search:
+    type: "top"
+    name: "searchBox"
+    sort_order: 10
+
   home_widget_information:
     type: "top"
     name: "informationBox"
-    sort_order: 10
+    sort_order: 20
 
   home_widget_member_image:
     type: "sideMenu"

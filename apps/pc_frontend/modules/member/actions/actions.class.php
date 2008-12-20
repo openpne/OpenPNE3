@@ -43,8 +43,14 @@ class memberActions extends sfOpenPNEMemberAction
   */
   public function executeSearch($request)
   {
+    $params = $request->getParameter('member', array());
+    if ($request->hasParameter('search_query'))
+    {
+      $params['name']['text'] = $request->getParameter('search_query');
+    }
+
     $this->filters = new MemberFormFilter();
-    $this->filters->bind($request->getParameter('member'));
+    $this->filters->bind($params);
 
     $this->pager = new sfPropelPager('Member', 20);
     $this->pager->setCriteria($this->filters->getCriteria());

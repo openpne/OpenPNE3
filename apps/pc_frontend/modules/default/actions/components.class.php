@@ -40,6 +40,14 @@ class defaultComponents extends sfComponents
   {
   }
 
+  public function executeSearchBox()
+  {
+    $this->searchActions = array(
+      'メンバー' => 'member',
+      'コミュニティ' => 'community',
+    );
+  }
+
   private function isSecurePage()
   {
     $context = sfContext::getInstance();

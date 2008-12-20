@@ -603,3 +603,28 @@ div.operation ul.moreInfo li {
 	display: inline;
 	vertical-align: top;
 }
+
+/*==============================================================================
+ * searchFormLine
+ *----------------------------------------------------------------------------*/
+#Top div.searchFormLine,
+#Sidemenu div.searchFormLine,
+#Contents div.searchFormLine {
+  border-width: 0;
+}
+
+.searchFormLine ul {
+	text-align: center;
+	padding: 1px 0;
+}
+.searchFormLine ul li {
+	display: inline;
+}
+.searchFormLine ul li * {
+	vertical-align: middle;
+}
+.searchFormLine ul li label {
+	margin-right: 2px;
+	padding: 1px 13px 0 0;
+	background: url(../images/icon_arrow_2.gif); ?>) no-repeat 100% 0;
+}

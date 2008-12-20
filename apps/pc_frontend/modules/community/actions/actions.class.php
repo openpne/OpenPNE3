@@ -32,8 +32,14 @@ class communityActions extends sfOpenPNECommunityAction
   */
   public function executeSearch($request)
   {
+    $params = $request->getParameter('community', array());
+    if ($request->hasParameter('search_query'))
+    {
+      $params['name']['text'] = $request->getParameter('search_query');
+    }
+
     $this->filters = new CommunityFormFilter();
-    $this->filters->bind($request->getParameter('community'));
+    $this->filters->bind($params);
 
     $this->pager = new sfPropelPager('Community', 20);
     $this->pager->setCriteria($this->filters->getCriteria());
