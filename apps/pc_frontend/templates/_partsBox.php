@@ -32,6 +32,15 @@
 <?php endif; ?>
 <?php include_customizes($id, 'lastRaw') ?>
 </table>
+<?php if (!empty($option['moreInfo'])) : ?>
+<div class="block moreInfo">
+<ul class="moreInfo">
+<?php foreach ($option['moreInfo'] as $key => $value) : ?>
+<li><?php echo $option['moreInfo']->getRaw($key); ?></li>
+<?php endforeach; ?>
+</ul>
+</div>
+<?php endif; ?>
 <div class="operation">
 <ul class="moreInfo button">
 <li>

@@ -26,20 +26,19 @@ class communityActions extends sfOpenPNECommunityAction
   }
 
  /**
-  * Executes list action
+  * Executes search action
   *
   * @param sfRequest $request A request object
   */
-  public function executeList($request)
+  public function executeSearch($request)
   {
+    $this->filters = new CommunityFormFilter();
+    $this->filters->bind($request->getParameter('community'));
+
     $this->pager = new sfPropelPager('Community', 20);
+    $this->pager->setCriteria($this->filters->getCriteria());
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
-
-    if (!$this->pager->getNbResults())
-    {
-      return sfView::ERROR;
-    }
 
     return sfView::SUCCESS;
   }
