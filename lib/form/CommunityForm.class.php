@@ -9,13 +9,15 @@
  */
 class CommunityForm extends BaseCommunityForm
 {
+  protected $configForm;
+
   public function configure()
   {
-    $this->setWidget('file', new sfWidgetFormInputFile());
-
     unset($this['created_at'], $this['updated_at'], $this['file_id']);
 
-    $this->setValidator('config', new sfValidatorPass());
+    $this->setConfigForm();
+
+    $this->setWidget('file', new sfWidgetFormInputFile());
     $this->setValidator('file', new opValidatorImageFile(array('required' => false)));
   }
 
@@ -39,29 +41,46 @@ class CommunityForm extends BaseCommunityForm
     $object = parent::updateObject($values);
 
     $this->saveMember($object);
-    $this->saveConfig($object);
+    if ($this->configForm->isValid())
+    {
+      $this->configForm->save();
+    }
 
     return $object;
   }
 
-  public function saveConfig(Community $community)
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
+    parent::bind($taintedValues, $taintedFiles);
+
     $configs = $this->getValue('config');
     if (!$configs)
     {
-      return false;
+      $configs = array();
     }
 
+    $params = array();
     foreach ($configs as $key => $value)
     {
-      $config = CommunityConfigPeer::retrieveByNameAndCommunityId($key, $community->getId());
-      if (!$config)
-      {
-        $config->setCommunity($community);
-        $config->setName($key);
-      }
-      $config->setValue($value);
+      $params['config['.$key.']'] = $value;
     }
+
+    $this->configForm->bind($params);
+    foreach ($this->configForm->getErrorSchema() as $key => $value)
+    {
+      $this->getErrorSchema()->addError($value, $key);
+    }
+  }
+
+  public function setConfigForm()
+  {
+    $this->configForm = new CommunityConfigForm(array(), array('community' => $this->getObject()));
+    $this->mergeForm($this->configForm);
+    foreach ($this->configForm->getValidatorSchema()->getFields() as $field => $validator)
+    {
+      $this->validatorSchema[$field] = new sfValidatorPass();
+    }
+    $this->validatorSchema['config'] = new sfValidatorPass();
   }
 
   public function saveMember(Community $community)

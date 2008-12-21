@@ -1,9 +1,10 @@
 <?php
 $list = array(
   'コミュニティ名' => $community->getName(),
-  '開設日' => $community->getCreatedAt(),
-  '管理者' => $community_admin->getName(),
-  'メンバー数' => $community->countCommunityMembers(),
+  '開設日'         => $community->getCreatedAt(),
+  '管理者'         => $community_admin->getName(),
+  'メンバー数'     => $community->countCommunityMembers(),
+  '説明文'         => nl2br($community->getConfig('description')),
 );
 include_list_box('communityHome', $list, array('title' => 'コミュニティ'))
 ?>

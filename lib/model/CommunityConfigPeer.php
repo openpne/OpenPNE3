@@ -8,7 +8,7 @@ class CommunityConfigPeer extends BaseCommunityConfigPeer
     $c->add(self::NAME, $name);
     $c->add(self::COMMUNITY_ID, $communityId);
 
-    $result = self::doselectOne($c);
+    $result = self::doSelectOne($c);
 
     return $result;
   }

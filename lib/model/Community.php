@@ -17,4 +17,16 @@ class Community extends BaseCommunity
     }
     return '';
   }
+
+  public function getConfig($configName)
+  {
+    $config = CommunityConfigPeer::retrieveByNameAndCommunityId($configName, $this->getId());
+
+    if (!$config)
+    {
+      return null;
+    }
+
+    return $config->getValue();
+  }
 }
