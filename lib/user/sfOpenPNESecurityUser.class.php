@@ -108,11 +108,13 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   {
     $member_id = $this->getAuthContainer()->fetchData($form);
 
-    if ($member_id) {
-      $this->setAuthenticated(true);
-      $this->setIsSNSMember(true);
+    if ($member_id)
+    {
       $this->setMemberId($member_id);
+      $this->setAuthenticated(true);
     }
+
+    $this->initializeCredentials();
 
     return $this->isAuthenticated();
   }
@@ -152,17 +154,23 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   {
     $memberId = $this->getMemberId();
     $isRegisterFinish = $this->getAuthContainer()->isRegisterFinish($memberId);
+    $isRegisterBegin = $this->getAuthContainer()->isRegisterBegin($memberId);
 
     $this->setIsSNSMember(false);
     $this->setIsSNSRegisterFinish(false);
 
-    if ($memberId && $isRegisterFinish) {
+    if ($memberId && $isRegisterFinish)
+    {
       $this->setIsSNSRegisterFinish(true);
-    } elseif ($memberId) {
+    }
+    elseif ($isRegisterBegin)
+    {
+      $this->setIsSNSRegisterBegin(true);
+    }
+    elseif ($memberId)
+    {
       $this->setIsSNSMember(true);
     }
-
-    $this->setIsSNSRegisterBegin($this->getAuthContainer()->isRegisterBegin($memberId));
   }
 
   public function setIsSNSMember($isSNSMember)

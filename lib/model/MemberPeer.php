@@ -9,4 +9,12 @@
  */ 
 class MemberPeer extends BaseMemberPeer
 {
+  public static function createPre()
+  {
+    $member = new Member();
+    $member->setIsActive(false);
+    $member->save();
+
+    return $member;
+  }
 }

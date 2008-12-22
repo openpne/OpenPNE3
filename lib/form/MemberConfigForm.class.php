@@ -108,7 +108,7 @@ class MemberConfigForm extends OpenPNEFormAutoGenerate
   {
     foreach ($this->getValues() as $key => $value)
     {
-      if ($this->memberConfigSettings[$key]['IsUnique'])
+      if (!empty($this->memberConfigSettings[$key]['IsUnique']))
       {
         $memberConfig = MemberConfigPeer::retrieveByNameAndValue($key.'_pre', $value);
         if ($memberConfig)

@@ -9,7 +9,8 @@
  */
 abstract class sfOpenPNEAuthContainer
 {
-  protected $authModuleName = '';
+  protected
+    $authModuleName = '';
 
   public function __construct()
   {

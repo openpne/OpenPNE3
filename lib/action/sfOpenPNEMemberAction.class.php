@@ -38,7 +38,11 @@ abstract class sfOpenPNEMemberAction extends sfActions
       $authForm->bind($request->getParameter('auth'.$authForm->getAuthMode()));
       if ($authForm->isValid())
       {
-        $this->redirectIf($this->getUser()->login($authForm), 'member/home');
+        $this->getUser()->login($authForm);
+
+        $this->redirectIf($this->getUser()->hasCredential('SNSRegisterBegin'), 'member/registerInput');
+        $this->redirectIf($this->getUser()->hasCredential('SNSRegisterFinish'), $this->getUser()->getRegisterEndAction());
+        $this->redirectIf($this->getUser()->hasCredential('SNSMember'), 'member/home');
       }
       return sfView::ERROR;
     }
