@@ -1,0 +1,9 @@
+propel:
+  _attributes: { package: plugins.opIntroEssayPlugin.lib.model }
+
+  intro_essay:
+     id: ~
+     from_id:   { type: integer, foreignTable: member, foreignReference: id }
+     to_id:     { type: integer, foreignTable: member, foreignReference: id }
+     content:   { type: longvarchar }
+     updated_at: ~

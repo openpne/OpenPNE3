@@ -1,0 +1,10 @@
+Navi:
+  introessay_navi_index:
+    type: "friend"
+    uri: "introessay/index"
+
+NaviI18n:
+  introessay_navi_index_i18n:
+    id: introessay_navi_index
+    caption: "紹介文を書く"
+    culture: "ja_JP"
