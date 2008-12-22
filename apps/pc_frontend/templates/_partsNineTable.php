@@ -2,8 +2,8 @@
 <div class="parts nineTable">
 <div class="partsHeading"><h3><?php echo __($option['title']) ?></h3></div>
 <table>
-<?php for ($i = $j = 1; $option['row'] >= $i; $i++) : ?>
-<?php if (count($option['list']) >= $j && $j % $option['row']) : ?>
+<?php $row = ceil(count($option['list']) / $option['row']) ?>
+<?php for ($i = $j = 1; $row >= $i; $i++) : ?>
 <?php if ($option['type'] === 'full' || $option['type'] === 'only_image') : ?>
 <tr class="photo">
 <?php for ($j = ($i * $option['col']) - $option['col']; ($i * $option['col']) > $j; $j++) : ?>
@@ -21,7 +21,6 @@
 <?php endif; ?></td>
 <?php endfor; ?>
 </tr>
-<?php endif; ?>
 <?php endif; ?>
 <?php endfor; ?>
 </table>
