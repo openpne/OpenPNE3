@@ -1,6 +1,0 @@
-profileSuccess:
-  customize:
-    showParts:
-      template: [member, showParts]
-      parts: [profile]
-      target: [after] 
