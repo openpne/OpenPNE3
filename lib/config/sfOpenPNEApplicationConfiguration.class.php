@@ -9,6 +9,8 @@
  */
 abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfiguration
 {
+  static protected $zendLoaded = false;
+
   public function initialize()
   {
     $this->dispatcher->connect('task.cache.clear', array($this, 'clearPluginCache'));
@@ -238,5 +240,21 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
     $this->getConfigCache()->registerConfigHandler('config/community_config.yml', 'opConfigConfigHandler', array('prefix' => 'openpne_community_'));
     include($this->getConfigCache()->checkConfig('config/community_config.yml'));
+  }
+
+  static public function registerZend()
+  {
+    if (self::$zendLoaded)
+    {
+      return true;
+    }
+
+    $DS = DIRECTORY_SEPARATOR;  // Alias
+    $zendPath = sfConfig::get('sf_lib_dir').$DS.'vendor'.$DS.'Zend'.$DS;  // ##PROJECT_LIB_DIR##/vendor/Zend/
+
+    set_include_path($zendPath.PATH_SEPARATOR.get_include_path());
+    require_once 'Loader.php';
+    Zend_Loader::registerAutoLoad();
+    self::$zendLoaded = true;
   }
 }
