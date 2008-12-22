@@ -250,10 +250,10 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     }
 
     $DS = DIRECTORY_SEPARATOR;  // Alias
-    $zendPath = sfConfig::get('sf_lib_dir').$DS.'vendor'.$DS.'Zend'.$DS;  // ##PROJECT_LIB_DIR##/vendor/Zend/
+    $zendPath = sfConfig::get('sf_lib_dir').$DS.'vendor'.$DS;  // ##PROJECT_LIB_DIR##/vendor/
 
     set_include_path($zendPath.PATH_SEPARATOR.get_include_path());
-    require_once 'Loader.php';
+    require_once 'Zend/Loader.php';
     Zend_Loader::registerAutoLoad();
     self::$zendLoaded = true;
   }
