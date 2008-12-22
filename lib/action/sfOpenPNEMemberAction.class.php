@@ -32,7 +32,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
 
     $this->forms = $this->getUser()->getAuthForms();
 
-    if ($request->isMethod('post'))
+    if ($request->hasParameter('authMode'))
     {
       $authForm = $this->getUser()->getAuthForm();
       $authForm->bind($request->getParameter('auth'.$authForm->getAuthMode()));
