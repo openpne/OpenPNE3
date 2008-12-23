@@ -14,11 +14,11 @@
 </head>
 <body>
 
-<a name="#top">
+<a name="#top"></a>
 
 <?php echo $sf_content ?>
 
-<a name="#bottom">
+<a name="#bottom"></a>
 
 <hr color="#0d6ddf">
 
