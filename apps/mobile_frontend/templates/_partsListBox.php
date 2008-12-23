@@ -1,4 +1,5 @@
-<table width="100%">
+<?php include_customizes($id, 'before') ?>
+<table id="<?php echo $id ?>" width="100%">
 <?php if (isset($options['title'])) : ?>
 <tr><td bgcolor="#7ddadf">
 <font color="#000000"><?php echo $options['title'] ?></font><br>
@@ -30,3 +31,4 @@
 
 </table>
 <br>
+<?php include_customizes($id, 'after') ?>
