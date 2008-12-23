@@ -5,7 +5,7 @@ $option = array(
   'link_to' => 'community/home?id=',
   'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $member->countCommunityMembers()) => 'community/joinlist'),
   'type' => $sf_data->getRaw('widget')->getConfig('type'),
-  'col' => $sf_data->getRaw('widget')->getConfig('col'),
-  'row' => $sf_data->getRaw('widget')->getConfig('row'),
+  'row' => $row,
+  'col' => $col,
 );
 include_parts('nineTable', 'communityList', $option);
