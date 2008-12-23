@@ -34,8 +34,8 @@
 
 <?php
 $list = array();
-foreach ($member->getFriends(5) as $friend) {
-  $friendMember = $friend->getMemberRelatedByMemberIdTo();
+foreach ($member->getFriends(5) as $friendMember)
+{
   $list[] = link_to(sprintf('%s(%d)', $friendMember->getName(), $friendMember->countFriends()), 'member/profile?id='.$friendMember->getId());
 }
 $options = array(
@@ -45,12 +45,13 @@ $options = array(
     link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'friend/list?id='.$member->getId())
   ),
 );
-include_list_box('profileEdit', $list, $options);
+include_list_box('friendList', $list, $options);
 ?>
 
 <?php
 $list = array();
-foreach ($communities as $community) {
+foreach ($communities as $community)
+{
   $list[] = link_to($community->getName(), 'community/home?id='.$community->getId());
 }
 $options = array(
@@ -60,5 +61,5 @@ $options = array(
     link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'community/joinlist?member_id='.$member->getId())
   ),
 );
-include_list_box('profileEdit', $list, $options);
+include_list_box('communityList', $list, $options);
 ?>
