@@ -49,4 +49,22 @@ class CommunityPeer extends BaseCommunityPeer
 
     return $pager;
   }
+
+  static public function getIdsByMemberId($memberId)
+  {
+    $result = array();
+
+    $c = new Criteria();
+    $c->clearSelectColumns()->addSelectColumn(self::ID);
+    $c->add(CommunityMemberPeer::MEMBER_ID, $memberId);
+    $c->addJoin(self::ID, CommunityMemberPeer::COMMUNITY_ID);
+    $stmt = self::doSelectStmt($c);
+
+    while ($row = $stmt->fetch(PDO::FETCH_NUM))
+    {
+      $result[] = $row[0];
+    }
+
+    return $result;
+  }
 }

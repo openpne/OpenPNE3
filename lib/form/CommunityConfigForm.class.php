@@ -89,6 +89,7 @@ class CommunityConfigForm extends OpenPNEFormAutoGenerate
         $config->setName($key);
       }
       $config->setValue($value);
+      $config->save();
     }
   }
 
