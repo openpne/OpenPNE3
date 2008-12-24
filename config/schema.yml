@@ -55,7 +55,7 @@ propel:
 
   profile_option:
     id: ~
-    profile_id: ~
+    profile_id: { type: integer, required: true, foreignTable: profile, foreignReference: id, onDelete: cascade }
     sort_order: { type: integer }
 
   profile_option_i18n:
@@ -67,15 +67,15 @@ propel:
     lft_key: { type: integer, nestedSetLeftKey: true ,index: true }
     rht_key: { type: integer, nestedSetRightKey: true ,index: true }
     tree_key : { type: integer, treeScopeKey: true ,index: true }
-    member_id: ~
-    profile_id: ~
-    profile_option_id: ~
+    member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, onDelete: cascade }
+    profile_id: { type: integer, required: true, foreignTable: profile, foreignReference: id, onDelete: cascade }
+    profile_option_id: { type: integer, required: false, foreignTable: profile_option, foreignReference: id, onDelete: cascade }
     value: { type: longvarchar }
 
   community:
     id: ~
     name: { type: varchar(64), index: unique, required: true }
-    file_id: { type: integer, required: false, foreignTable: file, foreignReference: id, onDelete: cascade }
+    file_id: { type: integer, required: false, foreignTable: file, foreignReference: id, onDelete: setnull }
     created_at: ~
     updated_at: ~
     _behaviors:
