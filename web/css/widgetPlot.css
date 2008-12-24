@@ -73,3 +73,6 @@
   border-style: dashed;
 }
 
+.widget{
+  cursor: move;
+}
