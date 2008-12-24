@@ -106,7 +106,15 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   */
   public function login($form)
   {
-    $memberId = $form->getValue('member_id');
+    if ($member = $form->getMember())
+    {
+      $memberId = $member->getId();
+    }
+    else  // deprecated
+    {
+      $memberId = $form->getValue('member_id');
+    }
+
     if ($memberId)
     {
       $this->setMemberId($memberId);

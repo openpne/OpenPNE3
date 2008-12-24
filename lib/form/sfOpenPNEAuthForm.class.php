@@ -24,6 +24,17 @@ abstract class sfOpenPNEAuthForm extends sfForm
     $this->widgetSchema->setNameFormat('auth'.$this->getAuthMode().'[%s]');
   }
 
+  public function getMember()
+  {
+    $member = $this->getValue('member');
+    if ($member instanceof Member)
+    {
+      return $member;
+    }
+
+    return false;
+  }
+
  /**
   * Returns the current auth mode.
   *
