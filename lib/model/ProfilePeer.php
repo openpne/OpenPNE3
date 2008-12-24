@@ -47,4 +47,17 @@ class ProfilePeer extends BaseProfilePeer
     $result = self::doSelectOne($c);
     return $result;
   }
+
+  public static function getMaxSortOrder()
+  {
+    $c = new Criteria();
+    $c->addDescendingOrderByColumn(self::SORT_ORDER);
+
+    $result = self::doSelectOne($c);
+    if ($result)
+    {
+      return $result->getSortOrder();
+    }
+    return 0;
+  }
 }

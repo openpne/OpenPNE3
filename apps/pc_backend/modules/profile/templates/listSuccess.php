@@ -12,7 +12,6 @@
 <th>必須</th>
 <th>重複の可否</th>
 <th>フォームタイプ</th>
-<th>並び順（昇順）</th>
 <th>選択肢</th>
 <th>登録</th>
 <th>変更</th>
@@ -29,7 +28,6 @@
 <td><?php echo ($value->getIsRequired() ? '○' : '×') ?></td>
 <td><?php echo ($value->getIsUnique() ? '×' :'○') ?></td>
 <td><?php echo $value->getFormType() ?></td>
-<td><?php echo $value->getSortOrder() ?></td>
 <td></td>
 <td><?php echo ($value->getIsDispRegist() ? '○' : '×') ?></td>
 <td><?php echo ($value->getIsDispConfig() ? '○' : '×') ?></td>
@@ -52,7 +50,6 @@
 <thead><tr>
 <th>ID</th>
 <th>項目名(ja_JP)</th>
-<th>並び順（昇順）</th>
 <th colspan="2">操作</th>
 </tr></thead>
 <?php foreach ($option_form[$value->getId()] as $form) : ?>
@@ -67,9 +64,6 @@
 <td>
 <?php echo $form['ja_JP']['value']->render() ?>
 </td>
-<td>
-<?php echo $form['sort_order']->render() ?>
-</td>
 <?php if ($form->getObject()->isNew()) : ?>
 <td colspan="2">
 <?php echo $form['profile_id']->render() ?>
@@ -80,6 +74,7 @@
 <td>
 <?php echo $form['id']->render() ?>
 <?php echo $form['profile_id']->render() ?>
+<?php echo $form['sort_order']->render() ?>
 <input type="submit" value="変更" />
 </td>
 </form>

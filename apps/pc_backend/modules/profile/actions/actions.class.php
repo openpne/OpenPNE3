@@ -46,7 +46,12 @@ class profileActions extends sfActions
     $this->form = new ProfileForm($this->profile);
 
     if ($request->isMethod('post')) {
-      $this->form->bind($request->getParameter('profile'));
+      $parameter = $request->getParameter('profile');
+      if ($this->form->getObject()->isNew())
+      {
+        $parameter['sort_order'] = ProfilePeer::getMaxSortOrder();
+      }
+      $this->form->bind($parameter);
       if ($this->form->isValid()) {
         $this->form->save();
         $this->redirect('profile/list');
@@ -65,7 +70,12 @@ class profileActions extends sfActions
     $this->form = new ProfileOptionForm($this->profileOption);
 
     if ($request->isMethod('post')) {
-      $this->form->bind($request->getParameter('profile_option'));
+      $parameter = $request->getParameter('profile_option');
+      if ($this->form->getObject()->isNew())
+      {
+        $parameter['sort_order'] = ProfileOptionPeer::getMaxSortOrder();
+      }
+      $this->form->bind($parameter);
       if ($this->form->isValid()) {
         $this->form->save();
       }

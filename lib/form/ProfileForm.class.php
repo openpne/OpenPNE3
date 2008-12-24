@@ -34,6 +34,7 @@ class ProfileForm extends BaseProfileForm
         'regexp' => '正規表現',
       ))),
       'is_unique' => new sfWidgetFormSelectRadio(array('choices' => array('0' => '重複可', '1' => '重複不可'))),
+      'sort_order' => new sfWidgetFormInputHidden(),
     ) + $this->getWidgetSchema()->getFields());
 
     $this->widgetSchema->setNameFormat('profile[%s]');
@@ -54,7 +55,6 @@ class ProfileForm extends BaseProfileForm
       'is_disp_regist' => '新規登録',
       'is_disp_config' => 'プロフィール変更',
       'is_disp_search' => 'メンバー検索',
-      'sort_order' => '並び順',
     ));
 
     $this->setDefaults($this->getDefaults() + array(
