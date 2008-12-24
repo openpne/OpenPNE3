@@ -1,13 +1,13 @@
 <?php
 
 /**
- * sfOpenPNEAuthContainer will handle authentication for OpenPNE.
+ * opAuthAdapter will handle authentication for OpenPNE.
  *
  * @package    OpenPNE
  * @subpackage user
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-abstract class sfOpenPNEAuthContainer
+abstract class opAuthAdapter
 {
   protected
     $authModuleName = '';

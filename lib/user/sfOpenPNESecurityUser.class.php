@@ -9,7 +9,7 @@
  */
 class sfOpenPNESecurityUser extends sfBasicSecurityUser
 {
-  protected $authContainer = null;
+  protected $authAdapter = null;
   protected $authForm = null;
 
   /**
@@ -31,8 +31,8 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
       $authMode = array_shift($authModes);
     }
 
-    $containerClass = self::getAuthContainerClassName($authMode);
-    $this->authContainer = new $containerClass();
+    $containerClass = self::getAuthAdapterClassName($authMode);
+    $this->authAdapter = new $containerClass();
 
     $formClass = self::getAuthFormClassName($authMode);
     $this->authForm = new $formClass();
@@ -45,9 +45,9 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     return OpenPNEConfig::get(sfConfig::get('sf_app') . '_auth_mode');
   }
 
-  public function getAuthContainer()
+  public function getAuthAdapter()
   {
-    return $this->authContainer;
+    return $this->authAdapter;
   }
 
   public function getAuthForm()
@@ -73,9 +73,9 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     return 'sfOpenPNEAuthForm_'.$authMode;
   }
 
-  public static function getAuthContainerClassName($authMode)
+  public static function getAuthAdapterClassName($authMode)
   {
-    return 'sfOpenPNEAuthContainer_'.$authMode;
+    return 'opAuthAdapter'.ucfirst($authMode);
   }
 
   public function getMemberId()
@@ -95,7 +95,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
   public function getRegisterEndAction()
   {
-    return $this->getAuthContainer()->getRegisterEndAction();
+    return $this->getAuthAdapter()->getRegisterEndAction();
   }
 
  /**
@@ -144,7 +144,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   */
   public function register($form = null)
   {
-    $result = $this->getAuthContainer()->register($form);
+    $result = $this->getAuthAdapter()->register($form);
     if ($result) {
       $this->setAuthenticated(true);
       $this->setAttribute('member_id', $result, 'sfOpenPNESecurityUser');
@@ -160,8 +160,8 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   public function initializeCredentials()
   {
     $memberId = $this->getMemberId();
-    $isRegisterFinish = $this->getAuthContainer()->isRegisterFinish($memberId);
-    $isRegisterBegin = $this->getAuthContainer()->isRegisterBegin($memberId);
+    $isRegisterFinish = $this->getAuthAdapter()->isRegisterFinish($memberId);
+    $isRegisterBegin = $this->getAuthAdapter()->isRegisterBegin($memberId);
 
     $this->setIsSNSMember(false);
     $this->setIsSNSRegisterFinish(false);
