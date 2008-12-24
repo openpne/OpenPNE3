@@ -22,14 +22,6 @@ abstract class sfOpenPNEAuthContainer
   }
 
   /**
-   * Fetches data from storage container.
-   *
-   * @param  sfForm $form
-   * @return int    the member id
-   */
-  abstract public function fetchData($form);
-
-  /**
    * Registers data to storage container.
    *
    * @param  int    $memberId
