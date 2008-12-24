@@ -42,16 +42,16 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
 
       if ($formType == 'checkbox')
       {
-        if (!is_array($value))
-        {
-          continue;
-        }
         if ($memberProfile)
         {
           $c = new Criteria();
           $c->add(MemberProfilePeer::TREE_KEY, $memberProfile->getTreeKey());
           MemberProfilePeer::doDelete($c);
         }
+        if (!is_array($value))
+        {
+          continue;
+        } 
 
         $memberProfile = new MemberProfile();
         $memberProfile->makeRoot();
