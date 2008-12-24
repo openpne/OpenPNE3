@@ -10,15 +10,73 @@
 abstract class opAuthAdapter
 {
   protected
-    $authModuleName = '';
+    $authModuleName = '',
+    $authModeName = '',
+    $authForm = null;
 
-  public function __construct()
+  public function __construct($name)
   {
+    $this->setAuthModeName($name);
+    $formClass = sfOpenPNESecurityUser::getAuthFormClassName($this->authModeName);
+    $this->authForm = new $formClass;
+
     $this->configure();
   }
 
   public function configure()
   {
+  }
+
+  public function getAuthParameters()
+  {
+    $params = $this->getRequest()->getParameter('auth'.$this->authModeName);
+    return $params;
+  }
+
+  public function getAuthForm()
+  {
+    return $this->authForm;
+  }
+
+  public function authenticate()
+  {
+    $memberId = null;
+
+    $authForm = $this->getAuthForm();
+    $authForm->bind($this->getAuthParameters());
+    if ($authForm->isValid())
+    {
+      if ($member = $authForm->getMember())
+      {
+        $memberId = $member->getId();
+      }
+      else  // deprecated
+      {
+        $memberId = $authForm->getValue('member_id');
+      }
+    }
+
+    return $memberId;
+  }
+
+ /**
+  * Names this authentication method.
+  *
+  * @param string $name
+  */
+ public function setAuthModeName($name)
+ {
+  $this->authModeName = $name;
+ }
+
+ /**
+  * Gets sfRequest instance.
+  *
+  * @return sfRequest
+  */
+  protected function getRequest()
+  {
+    return sfContext::getInstance()->getRequest();
   }
 
   /**

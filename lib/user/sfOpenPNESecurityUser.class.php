@@ -32,17 +32,15 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     }
 
     $containerClass = self::getAuthAdapterClassName($authMode);
-    $this->authAdapter = new $containerClass();
-
-    $formClass = self::getAuthFormClassName($authMode);
-    $this->authForm = new $formClass();
+    $this->authAdapter = new $containerClass($authMode);
+    $this->authForm = $this->authAdapter->getAuthForm();
 
     $this->initializeCredentials();
   }
 
   public function getAuthModes()
   {
-    return OpenPNEConfig::get(sfConfig::get('sf_app') . '_auth_mode');
+    return OpenPNEConfig::get(sfConfig::get('sf_app').'_auth_mode');
   }
 
   public function getAuthAdapter()
@@ -101,19 +99,11 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
  /**
   * Login
   *
-  * @param  sfForm $form
   * @return bool   returns true if the current user is authenticated, false otherwise
   */
-  public function login($form)
+  public function login()
   {
-    if ($member = $form->getMember())
-    {
-      $memberId = $member->getId();
-    }
-    else  // deprecated
-    {
-      $memberId = $form->getValue('member_id');
-    }
+    $memberId = $this->getAuthAdapter()->authenticate();
 
     if ($memberId)
     {
