@@ -14,7 +14,27 @@ abstract class sfOpenPNEAuthForm extends sfForm
     $profileForm,
     $configForm;
 
+  protected
+    $adapter = null;
+
   const AUTH_MODE_FIELD_NAME = 'authMode';
+
+  /**
+   * Constructor.
+   *
+   * @param opAuthAdapter $adapter  An opAuthAdapter object
+   * @param array  $defaults    An array of field default values
+   * @param array  $options     An array of options
+   * @param string $CRFSSecret  A CSRF secret (false to disable CSRF protection, null to use the global CSRF secret)
+   *
+   * @see sfForm
+   */
+  public function __construct(opAuthAdapter $adapter, $defaults = array(), $options = array(), $CSRFSecret = null)
+  {
+    $this->adapter = $adapter;
+
+    parent::__construct($defaults, $options, $CSRFSecret);
+  }
 
  /**
   * Configures the current form.
@@ -33,6 +53,11 @@ abstract class sfOpenPNEAuthForm extends sfForm
     }
 
     return false;
+  }
+
+  public function getAuthAdapter()
+  {
+    return $this->adapter;
   }
 
  /**

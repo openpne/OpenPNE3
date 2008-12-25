@@ -18,7 +18,7 @@ abstract class opAuthAdapter
   {
     $this->setAuthModeName($name);
     $formClass = sfOpenPNESecurityUser::getAuthFormClassName($this->authModeName);
-    $this->authForm = new $formClass;
+    $this->authForm = new $formClass($this);
 
     $this->configure();
   }

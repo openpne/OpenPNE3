@@ -59,8 +59,9 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
     $authModes = $this->getAuthModes();
     foreach ($authModes as $authMode) {
-      $formClass = self::getAuthFormClassName($authMode);
-      $result[] = new $formClass();
+      $adapterClass = self::getAuthAdapterClassName($authMode);
+      $adapter = new $adapterClass($authMode);
+      $result[] = $adapter->getAuthForm();
     }
 
     return $result;
