@@ -40,23 +40,17 @@ abstract class opAuthAdapter
 
   public function authenticate()
   {
-    $memberId = null;
-
     $authForm = $this->getAuthForm();
     $authForm->bind($this->getAuthParameters());
     if ($authForm->isValid())
     {
       if ($member = $authForm->getMember())
       {
-        $memberId = $member->getId();
-      }
-      else  // deprecated
-      {
-        $memberId = $authForm->getValue('member_id');
+        return $member->getId();
       }
     }
 
-    return $memberId;
+    return false;
   }
 
  /**
