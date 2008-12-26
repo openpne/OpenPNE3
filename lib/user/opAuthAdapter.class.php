@@ -17,7 +17,7 @@ abstract class opAuthAdapter
   public function __construct($name)
   {
     $this->setAuthModeName($name);
-    $formClass = sfOpenPNESecurityUser::getAuthFormClassName($this->authModeName);
+    $formClass = self::getAuthFormClassName($this->authModeName);
     $this->authForm = new $formClass($this);
 
     $this->configure();
@@ -38,6 +38,28 @@ abstract class opAuthAdapter
     return $this->authForm;
   }
 
+  public function getAuthRegisterForm()
+  {
+    $form = null;
+
+    $formClass = self::getAuthRegisterFormClassName($this->authModeName);
+    $member = sfContext::getInstance()->getUser()->getMember();
+
+    if (class_exists($formClass))
+    {
+      $form = new $formClass(array(), array('member' => $member));
+    }
+    // deprecated
+    else
+    {
+      $form = $this->getAuthForm();
+      $form->setForRegisterWidgets($member);
+      sfContext::getInstance()->getConfiguration()->getEventDispatcher()->notify(new sfEvent(null, 'application.log', array('The '.self::getAuthFormClassName($this->authModeName).' is deprecated. Please create the class is named '.self::getAuthRegisterFormClassName($this->authModeName), 'priority' => sfLogger::ERR)));
+    }
+
+    return $form;
+  }
+
   public function authenticate()
   {
     $authForm = $this->getAuthForm();
@@ -53,6 +75,27 @@ abstract class opAuthAdapter
     return false;
   }
 
+  public static function getAuthRegisterFormClassName($authMode)
+  {
+    return 'opAuthRegisterForm'.ucfirst($authMode);
+  }
+
+ /**
+  * @deprecated
+  */
+  public static function getAuthFormClassName($authMode)
+  {
+    return 'sfOpenPNEAuthForm_'.$authMode;
+  }
+
+ /**
+  * Gets name of this authentication method
+  */
+  public function getAuthModeName()
+  {
+    return $this->authModeName;
+  }
+
  /**
   * Names this authentication method.
   *
@@ -60,7 +103,7 @@ abstract class opAuthAdapter
   */
  public function setAuthModeName($name)
  {
-  $this->authModeName = $name;
+   $this->authModeName = $name;
  }
 
  /**

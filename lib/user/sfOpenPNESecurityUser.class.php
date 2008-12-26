@@ -67,11 +67,6 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     return $result;
   }
 
-  public static function getAuthFormClassName($authMode)
-  {
-    return 'sfOpenPNEAuthForm_'.$authMode;
-  }
-
   public static function getAuthAdapterClassName($authMode)
   {
     return 'opAuthAdapter'.ucfirst($authMode);

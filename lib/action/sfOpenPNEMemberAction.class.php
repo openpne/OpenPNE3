@@ -64,8 +64,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
   */
   public function executeRegisterInput($request)
   {
-    $this->form = $this->getUser()->getAuthForm();
-    $this->form->setForRegisterWidgets($this->getUser()->getMember());
+    $this->form = $this->getUser()->getAuthAdapter()->getAuthRegisterForm();
 
     if ($request->isMethod('post'))
     {
