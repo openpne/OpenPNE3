@@ -1,5 +1,4 @@
 <?php include_page_title('ﾌﾚﾝﾄﾞﾘｽﾄ') ?>
-<?php use_helper('Pagination'); ?>
 
 <center>
 <?php echo pager_total($pager); ?>

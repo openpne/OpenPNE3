@@ -1,5 +1,3 @@
-<?php use_helper('Pagination'); ?>
-
 <?php echo pager_navigation($pager, 'community/memberList?page=%d&id=' . $sf_params->get('id')); ?>
 <ul>
 <?php foreach ($pager->getResults() as $member) : ?>

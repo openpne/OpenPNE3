@@ -1,6 +1,4 @@
 <?php include_page_title($member->getName()) ?>
-<?php use_helper('Pagination'); ?>
-
 <center>
 <?php echo pager_total($pager); ?>
 </center>

@@ -1,5 +1,3 @@
-<?php use_helper('Pagination'); ?>
-
 <?php $raw_option = $sf_data->getRaw('option'); ?>
 
 <div class="dparts searchResultList"><div class="parts">
