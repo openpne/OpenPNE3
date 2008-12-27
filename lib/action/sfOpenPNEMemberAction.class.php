@@ -134,4 +134,54 @@ abstract class sfOpenPNEMemberAction extends sfActions
 
     return sfView::SUCCESS;
   }
+
+ /**
+  * Executes config complete action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeConfigComplete($request)
+  {
+    $type = $request->getParameter('type');
+    $this->forward404Unless($type);
+
+    $memberId = $request->getParameter('id');
+
+    $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($type.'_token', $memberId);
+    $this->forward404Unless($memberConfig);
+    $this->forward404Unless((bool)$request->getParameter('token') !== $memberConfig->getValue());
+
+    $option = array('member' => $memberConfig->getMember());
+    $this->form = new sfOpenPNEPasswordForm(array(), $option);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('password'));
+      if ($this->form->isValid())
+      {
+        $config = MemberConfigPeer::retrieveByNameAndMemberId($type, $memberId);
+        $pre = MemberConfigPeer::retrieveByNameAndMemberId($type.'_pre', $memberId);
+
+        if (!$config)
+        {
+          $config = new MemberConfig();
+          $config->setName($type);
+        }
+
+        $config->setValue($pre->getValue());
+
+        if ($config->save())
+        {
+          $pre->delete();
+          $token = MemberConfigPeer::retrieveByNameAndMemberId($type.'_token', $memberId);
+          $token->delete();
+        }
+
+        $this->redirect('member/home');
+      }
+    }
+
+    return sfView::SUCCESS;
+  }
+
 }
