@@ -35,7 +35,26 @@ abstract class opAuthAdapter
 
   public function getAuthForm()
   {
+    $form = $this->getAuthLoginForm();
+    if ($form)
+    {
+      return $form;
+    }
+
     return $this->authForm;
+  }
+
+  public function getAuthLoginForm()
+  {
+    $form = null;
+
+    $formClass = self::getAuthLoginFormClassName($this->authModeName);
+    if (class_exists($formClass))
+    {
+      $form = new $formClass($this);
+    }
+
+    return $form;
   }
 
   public function getAuthRegisterForm()
@@ -78,6 +97,11 @@ abstract class opAuthAdapter
   public static function getAuthRegisterFormClassName($authMode)
   {
     return 'opAuthRegisterForm'.ucfirst($authMode);
+  }
+
+  public static function getAuthLoginFormClassName($authMode)
+  {
+    return 'opAuthLoginForm'.ucfirst($authMode);
   }
 
  /**
