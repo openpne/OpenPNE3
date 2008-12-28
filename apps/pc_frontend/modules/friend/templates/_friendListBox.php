@@ -8,4 +8,10 @@ $option = array(
   'row' => $row,
   'col' => $col,
 );
+
+if ($member->getId() == $sf_user->getMember()->getId())
+{
+  $option['moreInfo'][__('フレンド管理')] = 'friend/manage';
+}
+
 include_parts('nineTable', 'frendList', $option);

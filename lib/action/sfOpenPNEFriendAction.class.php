@@ -110,7 +110,7 @@ abstract class sfOpenPNEFriendAction extends sfActions
     }
     $this->redirectToHomeIfIdIsNotValid();
     $this->relation->removeFriend();
-    $this->redirect('member/profile?id=' . $this->id);
+    $this->redirect('friend/manage');
   }
 
  /**
@@ -120,5 +120,19 @@ abstract class sfOpenPNEFriendAction extends sfActions
   {
     $this->redirectUnless($this->id, 'member/home');
     $this->redirectIf(($this->id == $this->getUser()->getMemberId()), 'member/home');
+  }
+
+ /**
+  * Executes manage action
+  */
+  public function executeManage($request)
+  {
+    $this->pager = MemberRelationshipPeer::getFriendListPager($this->getUser()->getMemberId(), $request->getParameter('page', 1));
+
+    if (!$this->pager->getNbResults()) {
+      return sfView::ERROR;
+    }
+
+    return sfView::SUCCESS;
   }
 }
