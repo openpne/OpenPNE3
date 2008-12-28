@@ -1,10 +1,25 @@
 <?php slot('op_sidemenu'); ?>
 <?php include_parts('memberImageBox', 'image', array('name' => $member->getName(), 'image' => $member->getImageFileName())) ?>
 
-<ul>
-<li><?php echo link_to(sprintf('フレンド一覧(%d)', $member->countFriends()), 'friend/list?id=' . $member->getId()) ?></li>
-<li><?php echo link_to(sprintf('参加コミュニティ一覧(%d)', $member->countCommunityMembers()), 'community/joinlist?member_id=' . $member->getId()) ?></li>
-</ul>
+<?php
+$option = array(
+  'title' => __('フレンドリスト'),
+  'list' => $member->getFriends(9),
+  'link_to' => 'member/profile?id=',
+  'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $member->countFriends()) => 'friend/list?id='.$member->getId()),
+);
+include_parts('nineTable', 'frendList', $option);
+?>
+
+<?php
+$option = array(
+  'title' => __('コミュニティリスト'),
+  'list' => $communities,
+  'link_to' => 'community/home?id=',
+  'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $member->countCommunityMembers()) => 'community/joinlist'),
+);
+include_parts('nineTable', 'communityList', $option);
+?>
 <?php end_slot(); ?>
 
 <?php

@@ -1,3 +1,18 @@
+<?php slot('op_sidemenu'); ?>
+<?php include_parts('memberImageBox', 'image', array('name' => $community->getName(), 'image' => $community->getImageFileName())) ?>
+
+<?php
+$option = array(
+  'title' => __('コミュニティメンバー'),
+  'list' => $community->getMembers(9),
+  'link_to' => 'member/profile?id=',
+  'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $community->countCommunityMembers()) => 'community/memberList?id=' . $community->getId()),
+);
+include_parts('nineTable', 'frendList', $option);
+?>
+
+<?php end_slot(); ?>
+
 <?php
 $list = array(
   'コミュニティ名' => $community->getName(),
@@ -10,8 +25,6 @@ include_list_box('communityHome', $list, array('title' => 'コミュニティ'))
 ?>
 
 <ul>
-<li><?php echo link_to(sprintf('コミュニティメンバー一覧(%d)', $community->countCommunityMembers()), 'community/memberList?id=' . $community->getId()) ?></li>
-
 <?php if ($isEditCommunity) : ?>
 <li><?php echo link_to('このコミュニティを編集する', 'community/edit?id=' . $community->getId()) ?></li>
 <?php endif; ?>

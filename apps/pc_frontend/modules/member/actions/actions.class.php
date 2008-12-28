@@ -73,7 +73,9 @@ class memberActions extends sfOpenPNEMemberAction
       sfConfig::set('sf_navi_type', 'friend');
     }
 
-    return parent::executeProfile($request);
+    $result = parent::executeProfile($request);
+    $this->communities = CommunityPeer::retrievesByMemberId($this->getUser()->getMemberId(), 9);
+    return $result;
   }
 
  /**

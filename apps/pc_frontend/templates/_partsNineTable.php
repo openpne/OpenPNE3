@@ -1,3 +1,11 @@
+<?php
+$option = array_merge(array(
+  'row' => 3,
+  'col' => 3,
+  'type' => 'full',
+), $sf_data->getRaw('option'));
+?>
+
 <?php if (count($option['list'])) : ?>
 <div class="parts nineTable">
 <div class="partsHeading"><h3><?php echo __($option['title']) ?></h3></div>

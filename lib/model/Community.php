@@ -29,4 +29,19 @@ class Community extends BaseCommunity
 
     return $config->getValue();
   }
+
+  public function getMembers($limit = null, Criteria $c = null)
+  {
+    if (!$c)
+    {
+      $c = new Criteria();
+    }
+    if (!is_null($limit)) {
+      $c->setLimit($limit);
+    }
+    $c->add(CommunityMemberPeer::COMMUNITY_ID, $this->getId());
+    $c->addJoin(MemberPeer::ID, CommunityMemberPeer::MEMBER_ID);
+    return MemberPeer::doSelect($c);
+  }
+
 }
