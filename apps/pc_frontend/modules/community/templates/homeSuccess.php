@@ -8,6 +8,12 @@ $option = array(
   'link_to' => 'member/profile?id=',
   'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $community->countCommunityMembers()) => 'community/memberList?id=' . $community->getId()),
 );
+
+if ($isAdmin)
+{
+  $option['moreInfo'][__('メンバー管理')] = 'community/memberManage?id='.$community->getId();
+}
+
 include_parts('nineTable', 'frendList', $option);
 ?>
 

@@ -119,11 +119,53 @@ abstract class sfOpenPNECommunityAction extends sfActions
   */
   public function executeQuit($request)
   {
-    if (!$this->isCommunityMember || $this->isAdmin) {
+    if (!$this->isCommunityMember || $this->isAdmin)
+    {
       return sfView::ERROR;
     }
 
     CommunityMemberPeer::quit($this->getUser()->getMemberId(), $this->id);
     $this->redirect('community/home?id=' . $this->id);
   }
+
+ /**
+  * Executes memberManage action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeMemberManage($request)
+  {
+    $this->redirectUnless($this->isAdmin, '@error');
+
+    $this->community = CommunityPeer::retrieveByPk($this->id);
+    $this->pager = CommunityPeer::getCommunityMemberListPager($this->id, $request->getParameter('page', 1));
+
+    if (!$this->pager->getNbResults())
+    {
+      return sfView::ERROR;
+    }
+
+    return sfView::SUCCESS;
+  }
+
+ /**
+  * Executes dropMember action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeDropMember($request)
+  {
+    $this->redirectUnless($this->isAdmin, '@error');
+    $member = MemberPeer::retrieveByPk($request->getParameter('member_id'));
+    $this->forward404Unless($member);
+
+    $isCommunityMember = CommunityMemberPeer::isMember($member->getId(), $this->id);
+    $this->redirectUnless($this->isAdmin, '@error');
+    $isAdmin = CommunityMemberPeer::isAdmin($member->getId(), $this->id);
+    $this->redirectIf($isAdmin, '@error');
+
+    CommunityMemberPeer::quit($member->getId(), $this->id);
+    $this->redirect('community/memberManage?id='.$this->id);
+  }
+
 }
