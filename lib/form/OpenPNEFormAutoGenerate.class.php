@@ -123,6 +123,9 @@ abstract class OpenPNEFormAutoGenerate extends sfForm
       case 'email':
         $obj = new sfValidatorEmail($option);
         break;
+      case 'pc_email':
+        $obj = new opValidatorPCEmail($option);
+        break;
       case 'mobile_email':
         $obj = new sfValidatorMobileEmail($option);
         break;

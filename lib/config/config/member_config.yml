@@ -15,7 +15,7 @@ pcAddress:
     Name:       "pc_address"
     Caption:    "PCメールアドレス"
     FormType:   "input"
-    ValueType:  "email"
+    ValueType:  "pc_email"
     IsRegist:   false
     IsConfig:   true
     IsRequired: true
