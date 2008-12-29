@@ -1,7 +1,9 @@
 rendering: ~
 security:  ~
 
-# insert your own filters here
+emoji:
+  class: opEmojiFilter
+
 registerDisablePlugin:
   class: sfRegisterDisablePluginsFilter
 

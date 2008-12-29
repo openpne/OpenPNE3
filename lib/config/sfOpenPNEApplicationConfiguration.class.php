@@ -21,6 +21,10 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
   public function setup()
   {
+    $DS = DIRECTORY_SEPARATOR;
+    $OpenPNE2Path = sfConfig::get('sf_lib_dir').$DS.'vendor'.$DS;  // ##PROJECT_LIB_DIR##/vendor/
+    set_include_path($OpenPNE2Path.PATH_SEPARATOR.get_include_path());
+
     $result = parent::setup();
     $configCache = $this->getConfigCache();
     $file = $configCache->checkConfig('data/config/plugin.yml', true);

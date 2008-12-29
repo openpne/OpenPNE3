@@ -7,6 +7,9 @@ deny:
 io:
   class: sfMobileIOFilter
 
+emoji:
+  class: opEmojiFilter
+
 cache:     ~
 common:    ~
 execution:

@@ -33,4 +33,48 @@ class opToolkit
     
     return in_array($domain, self::getMobileMailAddressDomains());
   }
+
+ /**
+  * Takes a text that matched pattern and replaces it to a marker.
+  *
+  * Replaces text that matched $pattern to a marker.
+  * This method returns replaced text and a correspondence table of marker and pre-convert text
+  *
+  * @param string $subject
+  * @param array  $patterns
+  *
+  * @return array
+  */
+  public static function replacePatternsToMarker($subject, $patterns = array())
+  {
+    $i = 0;
+    $list = array();
+
+    if (empty($patterns))
+    {
+      $patterns = array(
+        '/<input[^>]+>/is',
+        '/<textarea.*?<\/textarea>/is',
+        '/<option.*?<\/option>/is',
+        '/<img[^>]+>/is',
+        '/<head.*?<\/head>/is',
+      );
+    }
+
+    foreach ($patterns as $pattern)
+    {
+      if (preg_match_all($pattern, $subject, $matches))
+      {
+        foreach ($matches[0] as $match)
+        {
+          $replacement = '<<<MARKER:'.$i.'>>>';
+          $list[$replacement] = $match;
+          $i++;
+        }
+      }
+    }
+
+    $subject = str_replace(array_values($list), array_keys($list), $subject);
+    return array($list, $subject);
+  }
 }
