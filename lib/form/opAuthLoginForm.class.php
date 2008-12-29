@@ -30,6 +30,9 @@ abstract class opAuthLoginForm extends sfForm
 
     parent::__construct($defaults, $options, $CSRFSecret);
 
+    $this->setWidget('next_uri', new opWidgetFormInputHiddenNextUri());
+    $this->setValidator('next_uri', new opValidatorNextUri());
+
     $this->widgetSchema->setNameFormat('auth'.$this->adapter->getAuthModeName().'[%s]');
   }
 

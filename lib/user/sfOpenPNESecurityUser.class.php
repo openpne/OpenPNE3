@@ -109,7 +109,13 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
     $this->initializeCredentials();
 
-    return $this->isAuthenticated();
+    if ($this->isAuthenticated())
+    {
+      $uri = $this->getAuthAdapter()->getAuthForm()->getValue('next_uri');
+      return $uri;
+    }
+
+    return false;
   }
 
  /**

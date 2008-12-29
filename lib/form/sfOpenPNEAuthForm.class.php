@@ -34,6 +34,9 @@ abstract class sfOpenPNEAuthForm extends sfForm
     $this->adapter = $adapter;
 
     parent::__construct($defaults, $options, $CSRFSecret);
+
+    $this->setWidget('next_uri', new opWidgetFormInputHiddenNextUri());
+    $this->setValidator('next_uri', new opValidatorNextUri());
   }
 
  /**
@@ -98,7 +101,10 @@ abstract class sfOpenPNEAuthForm extends sfForm
   */
   public function setForRegisterWidgets($member = null)
   {
-    if (!$member) {
+    unset($this['next_uri']);
+
+    if (!$member)
+    {
       $member = new Member();
     }
 
