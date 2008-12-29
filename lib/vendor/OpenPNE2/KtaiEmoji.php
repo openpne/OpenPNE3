@@ -2916,7 +2916,7 @@ class OpenPNE_KtaiEmoji
     }
   }
 
-  protected static function convertDoCoMoEmojiToOpenPNEFormat($bin)
+  public static function convertDoCoMoEmojiToOpenPNEFormat($bin)
   {
     $iemoji = '\xF8[\x9F-\xFC]|\xF9[\x40-\xFC]';
     if (preg_match('/'.$iemoji.'/', $bin))
@@ -2929,7 +2929,7 @@ class OpenPNE_KtaiEmoji
     return '';
   }
 
-  protected static function convertEZwebEmojiToOpenPNEFormat($bin)
+  public static function convertEZwebEmojiToOpenPNEFormat($bin)
   {
     $sjis = (ord($bin[0]) << 8) + ord($bin[1]);
     if ($sjis >= 0xF340 && $sjis <= 0xF493)
@@ -2995,7 +2995,7 @@ class OpenPNE_KtaiEmoji
     return '['.$code.']';
   }
 
-  protected static function convertSoftBankEmojiToOpenPNEFormat($bin)
+  public static function convertSoftBankEmojiToOpenPNEFormat($bin)
   {
     $sjis1 = ord($bin[0]);
     $sjis2 = ord($bin[1]);
