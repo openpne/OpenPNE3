@@ -14,6 +14,11 @@ class opMobileFrontWebController extends sfFrontWebController
   */
   public function genUrl($parameters = array(), $absolute = false)
   {
+    if (empty(SID))
+    {
+      return parent::genUrl($parameters, $absolute);
+    }
+
     $isSid = false;
 
     if (is_string($parameters) && false !== ($sidPos = strpos($parameters, SID)))
