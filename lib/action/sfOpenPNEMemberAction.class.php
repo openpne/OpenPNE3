@@ -166,8 +166,8 @@ abstract class sfOpenPNEMemberAction extends sfActions
         {
           $config = new MemberConfig();
           $config->setName($type);
+          $config->setMemberId($memberId);
         }
-
         $config->setValue($pre->getValue());
 
         if ($config->save())
