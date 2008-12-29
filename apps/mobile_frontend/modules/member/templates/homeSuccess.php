@@ -14,6 +14,8 @@ include_information_box('information', $body)
 </td></tr>
 
 <tr><td align="center" width="50%" valign="top">
+<?php echo image_tag_sf_image($sf_user->getMember()->getImageFileName(), array('size' => '120x120', 'format' => 'jpg')) ?>
+<br>
 <?php echo $sf_user->getMember()->getName() ?>さん<br>
 </td>
 
