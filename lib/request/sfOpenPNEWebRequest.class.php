@@ -94,4 +94,21 @@ class sfOpenPNEWebRequest extends sfWebRequest
 
     return false;
   }
+
+  public function isCookie()
+  {
+    if ($this->getMobile()->isDoCoMo())
+    {
+      return false;
+    }
+    elseif ($this->getMobile()->isSoftBank())
+    {
+      if (!$this->getMobile()->isType3GC() && !$this->getMobile()->isTypeW())
+      {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }

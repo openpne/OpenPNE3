@@ -25,9 +25,9 @@ test:
       session_path: %SF_TEST_CACHE_DIR%/sessions
 
 all:
-#  controller:
-#    class: sfFrontWebController
-#
+  controller:
+    class: opMobileFrontWebController
+
   request:
     class: sfOpenPNEWebRequest
     param:
@@ -55,9 +55,10 @@ all:
 #      default_culture: %SF_DEFAULT_CULTURE%
 #
   storage:
-    class: sfSessionStorage
+    class: opMobileSessionStorage
     param:
       session_name: OpenPNE_mobile_frontend
+
 #
 #  view_cache:
 #    class: sfFileCache
