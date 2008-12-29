@@ -150,7 +150,13 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     $isRegisterBegin = $this->getAuthAdapter()->isRegisterBegin($memberId);
 
     $this->setIsSNSMember(false);
+    $this->setIsSNSRegisterBegin(false);
     $this->setIsSNSRegisterFinish(false);
+
+    if (!$this->getMember())
+    {
+      return false;
+    }
 
     if ($memberId && $isRegisterFinish)
     {
