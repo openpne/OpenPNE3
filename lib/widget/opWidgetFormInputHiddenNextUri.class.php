@@ -14,7 +14,12 @@ class opWidgetFormInputHiddenNextUri extends sfWidgetFormInputHidden
     parent::configure($options, $attributes);
 
     $routing = sfContext::getInstance()->getRouting();
+    $request = sfContext::getInstance()->getRequest();
 
-    $this->setAttribute('value', $routing->getCurrentInternalUri());
+    // FIXME
+    $params = http_build_query($request->getGetParameters());
+    $value = $routing->getCurrentInternalUri().'?'.str_replace('openid_', 'openid.', $params);
+
+    $this->setAttribute('value', $value);
   }
 }
