@@ -35,9 +35,14 @@ class InviteForm extends MemberConfigPcAddressForm
 
   protected function sendConfirmMail($token, $to, $params = array())
   {
+    $param = array(
+      'token'    => $token,
+      'authMode' => sfContext::getInstance()->getUser()->getCurrentAuthMode(),
+    );
+
     $mail = new sfOpenPNEMailSend();
     $mail->setSubject(OpenPNEConfig::get('sns_name').'の招待状が届いています');
-    $mail->setTemplate('global/requestRegisterURLMail', array('token' => $token));
+    $mail->setTemplate('global/requestRegisterURLMail', $param);
     $mail->send($to, OpenPNEConfig::get('admin_mail_address'));
   }
 
@@ -45,9 +50,13 @@ class InviteForm extends MemberConfigPcAddressForm
   {
     parent::save();
 
+    $user = sfContext::getInstance()->getUser();
+
+    $this->member->setConfig('register_auth_mode', $user->getCurrentAuthMode());
+
     if ($this->getOption('is_link'))
     {
-      $fromMemberId = sfContext::getInstance()->getUser()->getMemberId();
+      $fromMemberId = $user->getMemberId();
       $toMemberId = $this->member->getId();
       $relation = MemberRelationshipPeer::retrieveByFromAndTo($fromMemberId, $toMemberId);
       if (!$relation)

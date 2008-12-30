@@ -106,6 +106,8 @@ class MemberConfigForm extends OpenPNEFormAutoGenerate
 
   public function isValid()
   {
+    opActivateBehavior::disable();
+
     foreach ($this->getValues() as $key => $value)
     {
       if (!empty($this->memberConfigSettings[$key]['IsUnique']))
@@ -122,6 +124,7 @@ class MemberConfigForm extends OpenPNEFormAutoGenerate
       }
     }
 
+    opActivateBehavior::enable();
     return parent::isValid();
   }
 
