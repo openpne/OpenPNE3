@@ -23,16 +23,13 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
     $request = sfContext::getInstance()->getRequest();
     $authMode = $request->getUrlParameter('authMode');
-
-    $authModes = $this->getAuthModes();
-
-    if (!$authMode || !in_array($authMode, $authModes))
+    if ($authMode)
     {
-      $authMode = array_shift($authModes);
+      $this->setCurrentAuthMode($authMode);
     }
 
-    $containerClass = self::getAuthAdapterClassName($authMode);
-    $this->authAdapter = new $containerClass($authMode);
+    $containerClass = self::getAuthAdapterClassName($this->getCurrentAuthMode());
+    $this->authAdapter = new $containerClass($this->getCurrentAuthMode());
     $this->authForm = $this->authAdapter->getAuthForm();
 
     $this->initializeCredentials();
@@ -80,6 +77,25 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   public function setMemberId($memberId)
   {
     return $this->setAttribute('member_id', $memberId, 'sfOpenPNESecurityUser');
+  }
+
+  public function setCurrentAuthMode($authMode)
+  {
+    $this->setAttribute('auth_mode', $authMode, 'sfOpenPNESecurityUser');
+  }
+
+  public function getCurrentAuthMode()
+  {
+    $authMode = $this->getAttribute('auth_mode', null, 'sfOpenPNESecurityUser');
+
+    $authModes = $this->getAuthModes();
+    if (!in_array($authMode, $authModes))
+    {
+      $authMode = array_shift($authModes);
+      $this->setCurrentAuthMode($authMode);
+    }
+
+    return $authMode;
   }
 
   public function getMember()
