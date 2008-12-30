@@ -9,16 +9,18 @@
  */
 class opValidatorNextUri extends sfValidatorString
 {
+  protected function configure($options = array(), $messages = array())
+  {
+    parent::configure($options, $messages);
+    $this->setOption('required', false);
+    $this->setOption('empty_value', '@homepage');
+  }
+
   /**
    * @see sfValidatorString
    */
   protected function doClean($value)
   {
-    if (!$value)
-    {
-      return '@homepage';
-    }
-
     $routing = sfContext::getInstance()->getRouting();
     $routeInfo = $routing->findRoute($value);
 

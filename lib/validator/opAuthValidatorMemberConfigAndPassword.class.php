@@ -23,9 +23,11 @@ class opAuthValidatorMemberConfigAndPassword extends opAuthValidatorMemberConfig
    */
   protected function doClean($values)
   {
+    opActivateBehavior::disable();
     $values = parent::doClean($values);
 
     $valid_password = MemberConfigPeer::retrieveByNameAndMemberId('password', $values['member']->getId())->getValue();
+    opActivateBehavior::enable();
     if (md5($values['password']) !== $valid_password)
     {
       throw new sfValidatorError($this, 'invalid');

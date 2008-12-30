@@ -42,14 +42,15 @@ class opAuthValidatorMemberConfig extends sfValidatorSchema
    */
   protected function doClean($values)
   {
+    opActivateBehavior::disable();
     $configName = $this->getOption('config_name');
     $memberConfig = MemberConfigPeer::retrieveByNameAndValue($configName, $values[$configName]);
-    if (!$memberConfig)
+    if ($memberConfig)
     {
-      throw new sfValidatorError($this, 'Invalid.');
+      $values['member'] = $memberConfig->getMember();
     }
 
-    $values['member'] = $memberConfig->getMember();
+    opActivateBehavior::enable();
     return $values;
   }
 }
