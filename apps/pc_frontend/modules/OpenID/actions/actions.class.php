@@ -74,6 +74,10 @@ class OpenIDActions extends sfActions
 
   public function executeTrust(sfWebRequest $request)
   {
+    sfOpenPNEApplicationConfiguration::registerJanRainOpenID();
+    require_once 'Auth/OpenID/Server.php';
+    require_once 'Auth/OpenID/FileStore.php';
+
     $info = unserialize($_SESSION['request']);
     $this->forward404Unless($info);
 
