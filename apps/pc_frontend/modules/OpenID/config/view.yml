@@ -1,0 +1,6 @@
+all:
+  has_layout: false
+
+indexTrust:
+  has_layout: true
+  layout: layoutC
