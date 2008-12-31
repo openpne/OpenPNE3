@@ -16,6 +16,8 @@
 <?php foreach ($contentsWidgets as $key => $contentsWidget) : ?>
 <input class="contentsWidget" type="hidden" name="widget[contents][<?php echo $key ?>]" value="<?php echo $contentsWidget->getId() ?>" />
 <?php endforeach; ?>
+<?php echo $sortForm->renderHiddenFields(); ?>
+<?php echo $addForm->renderHiddenFields(); ?>
 <input type="submit" value="<?php echo __('設定変更') ?>" />
 </form>
 </div>

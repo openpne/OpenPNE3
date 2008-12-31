@@ -66,15 +66,13 @@
 </td>
 <?php if ($form->getObject()->isNew()) : ?>
 <td colspan="2">
-<?php echo $form['profile_id']->render() ?>
+<?php echo $form->renderHiddenFields() ?>
 <input type="submit" value="項目追加" />
 </td>
 </form>
 <?php else : ?>
 <td>
-<?php echo $form['id']->render() ?>
-<?php echo $form['profile_id']->render() ?>
-<?php echo $form['sort_order']->render() ?>
+<?php echo $form->renderHiddenFields() ?>
 <input type="submit" value="変更" />
 </td>
 </form>

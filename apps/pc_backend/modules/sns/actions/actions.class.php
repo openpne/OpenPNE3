@@ -37,12 +37,11 @@ class snsActions extends sfActions
     $this->target = $request->getParameter('target', 'mobile_home');
     $this->form = new InformationConfigForm(array(), array('target' => $this->target));
 
-    if ($request->isMethod('post')) {
-      $this->form->bind(array(
-        'information' => $request->getparameter('information'),
-        'target' => $request->getparameter('target'),
-      ));
-      if ($this->form->isValid()) {
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('information'));
+      if ($this->form->isValid())
+      {
         $this->form->save();
       }
     }

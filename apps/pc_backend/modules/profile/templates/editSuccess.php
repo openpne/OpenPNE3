@@ -3,7 +3,6 @@
 <form action="<?php echo url_for('profile/edit') ?>" method="post">
 <?php else : ?>
 <form action="<?php echo url_for('profile/edit?id=' . $profile->getId()) ?>" method="post">
-<?php echo $form['id']->render() ?>
 <?php endif; ?>
 <table>
 
@@ -30,7 +29,7 @@
 
 <tr>
 <td colspan="2">
-<?php echo $form['sort_order']->render() ?>
+<?php echo $form->renderHiddenFields() ?>
 <input type="submit" value="<?php echo __('追加する') ?>" /></td>
 </tr>
 </table>

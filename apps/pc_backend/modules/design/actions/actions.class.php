@@ -49,16 +49,16 @@ class designActions extends sfActions
     $this->contentsWidgets = HomeWidgetPeer::retrieveContentsWidgets();
     $this->widgetConfig = sfConfig::get('op_widget_list');
 
+    $this->sortForm = new HomeWidgetSortForm();
+    $this->addForm = new HomeWidgetAddForm();
     if ($request->isMethod(sfRequest::POST))
     {
-      $sortForm = new HomeWidgetSortForm();
-      $addForm = new HomeWidgetAddForm();
-      $sortForm->bind($request->getParameter('widget'));
-      $addForm->bind($request->getParameter('new'));
-      if ($sortForm->isValid() && $addForm->isValid())
+      $this->sortForm->bind($request->getParameter('widget'));
+      $this->addForm->bind($request->getParameter('new'));
+      if ($this->sortForm->isValid() && $this->addForm->isValid())
       {
-        $sortForm->save();
-        $addForm->save();
+        $this->sortForm->save();
+        $this->addForm->save();
         $this->redirect('design/homeWidget');
       }
     }

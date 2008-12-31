@@ -14,6 +14,8 @@ class HomeWidgetAddForm extends sfForm
     $this->setValidator('top', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
     $this->setValidator('sideMenu', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
     $this->setValidator('contents', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
+
+    $this->getWidgetSchema()->setNameFormat('new[%s]');
   }
 
   public function save()

@@ -16,6 +16,7 @@
 <?php foreach ($navi as $form) : ?>
 <tr>
 <td><form action="<?php echo url_for('navi/edit') ?>" method="post">
+<?php echo $form->renderHiddenFields() ?>
 <?php echo $form['uri']->render() ?></td>
 <td><?php echo $form['ja_JP']['caption']->render() ?><?php echo $form['type']->render(array('value' => $type)) ?></td>
 <?php if ($form->isNew()) : ?>

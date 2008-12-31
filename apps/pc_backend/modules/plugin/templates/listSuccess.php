@@ -21,6 +21,7 @@
 <?php endforeach; ?>
 <tr>
 <td colspan="5">
+<?php echo $form->renderHiddenFields() ?>
 <input type="submit" value="<?php echo __('設定変更') ?>" />
 </td>
 </tr>

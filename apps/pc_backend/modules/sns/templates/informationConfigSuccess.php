@@ -14,9 +14,9 @@
 
 <form action="<?php echo url_for('sns/informationConfig') ?>" method="post">
 <table>
-<?php echo $form['target']->render() ?>
 <?php echo $form['information']->render() ?>
 <tr>
+<?php echo $form->renderHiddenFields() ?>
 <td colspan="2"><input type="submit" value="設定変更する" /></td>
 </tr>
 </table>

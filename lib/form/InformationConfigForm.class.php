@@ -30,6 +30,8 @@ class InformationConfigForm extends sfForm
     }
 
     $this->setDefaults($defaults);
+
+    $this->getWidgetSchema()->setNameFormat('information[%s]');
   }
 
   public function save()
