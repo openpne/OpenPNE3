@@ -32,17 +32,11 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
       return parent::saveConfig($name, $value);
     }
 
-    $memberIds = array_merge($this->blockedId, $value);
-    foreach ($memberIds as $memberId)
+    foreach ($value as $memberId)
     {
       $relation = MemberRelationshipPeer::retrieveByFromAndTo($this->member->getId(), $memberId);
       if (!$relation)
       {
-        if (!MemberPeer::retrieveByPK($memberId))
-        {
-          continue;
-        }
-
         $relation = new MemberRelationship();
         $relation->setMemberIdFrom($this->member->getId());
         $relation->setMemberIdTo($memberId);
@@ -60,8 +54,43 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
     if ($name === 'access_block')
     {
       $this->setDefault($name, $this->blockedId);
+
+      $this->mergePostValidator(new sfValidatorCallback(array(
+        'callback'  => array('MemberConfigAccessBlockForm', 'validate'),
+        'arguments' => array('ids' => $this->blockedId),
+      )));
     }
 
     return $result;
+  }
+
+  public static function validate($validator, $values, $arguments = array())
+  {
+    $result = array();
+
+    $memberIds = array_merge($arguments['ids'], $values['access_block']);
+
+    if (in_array(sfContext::getInstance()->getUser()->getMemberId(), $memberIds))
+    {
+      throw new sfValidatorError($validator, 'invalid');
+    }
+
+    foreach ($memberIds as $memberId)
+    {
+      if (!$memberId)
+      {
+        continue;
+      }
+
+      if (!MemberPeer::retrieveByPK($memberId))
+      {
+        throw new sfValidatorError($validator, 'invalid');
+      }
+
+      $result[] = $memberId;
+    }
+
+    $values['access_block'] = $result;
+    return $values;
   }
 }
