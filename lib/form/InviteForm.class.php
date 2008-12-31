@@ -11,25 +11,41 @@ class InviteForm extends MemberConfigPcAddressForm
 {
   public function configure()
   {
-    parent::configure();
-    $this->isAutoGenerate = false;
-    $this->memberConfigSettings['pc_address']['IsConfirm'] = false;
-    $this->setMemberConfigWidget('pc_address');
+    $this->setWidget('mail_address', new sfWidgetFormInput());
+    $this->setValidator('mail_address', new sfValidatorEmail());
+
+    $this->validatorSchema->setPostValidator(new sfValidatorCallback(array(
+        'callback' => array($this, 'validate'),
+    )));
   }
 
-  public function getToken()
+  public function validate($validator, $values, $arguments = array())
   {
-    $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId('pc_address_token', $this->member->getId());
-    if ($memberConfig) {
-      return $memberConfig->getValue();
+    if (opToolkit::isMobileEmailAddress($values['mail_address']))
+    {
+      $mailValidator = new sfValidatorMobileEmail();
+      $values['mobile_address'] = $mailValidator->clean($values['mail_address']);
     }
+    else
+    {
+      $mailValidator = new opValidatorPCEmail();
+      $values['pc_address'] = $mailValidator->clean($values['mail_address']);
+    }
+
+    return $values;
   }
 
-  public function getMailAddress()
+  public function saveConfig($name, $value)
   {
-    $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId('pc_address_pre', $this->member->getId());
-    if ($memberConfig) {
-      return $memberConfig->getValue();
+    if ('pc_address' === $name || 'mobile_address' === $name)
+    {
+      $this->savePreConfig($name, $value);
+      $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($name.'_token', $this->member->getId());
+      $token = $memberConfig->getValue();
+      $this->sendConfirmMail($token, $value, array(
+        'id'   => $this->member->getId(),
+        'type' => $name,
+      ));
     }
   }
 
@@ -38,6 +54,7 @@ class InviteForm extends MemberConfigPcAddressForm
     $param = array(
       'token'    => $token,
       'authMode' => sfContext::getInstance()->getUser()->getCurrentAuthMode(),
+      'isMobile' => opToolkit::isMobileEmailAddress($to),
     );
 
     $mail = new sfOpenPNEMailSend();
