@@ -5,11 +5,15 @@
  *
  * @package    OpenPNE
  * @subpackage filter
- * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterTemplate.php 11675 2008-09-19 15:21:38Z fabien $
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 class CommunityFormFilter extends BaseCommunityFormFilter
 {
+  public function __construct($defaults = array(), $options = array(), $CSRFSecret = null)
+  {
+    return parent::__construct($defaults, $options, false);
+  }
+
   public function configure()
   {
     $this->setWidgets(array(

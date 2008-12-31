@@ -233,4 +233,61 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
       $this->removeCredential('SNSRegisterFinish');
     }
   }
+
+
+ /**
+  * @deprecated This method overrides sfBasicSecurityUser::removeCredential() bacause
+  * we want to remove a function call sfSessionStorage::regenerate() for CSRF protection
+  * becomes working correctly.
+  * But this solution is a very stupid. We must decrease this function call.
+  */
+  public function removeCredential($credential)
+  {
+    if ($this->hasCredential($credential))
+    {
+      foreach ($this->credentials as $key => $value)
+      {
+        if ($credential == $value)
+        {
+          if ($this->options['logging'])
+          {
+            $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Remove credential "%s"', $credential))));
+          }
+
+          unset($this->credentials[$key]);
+
+          return;
+        }
+      }
+    }
+  }
+
+ /**
+  * @deprecated This method overrides sfBasicSecurityUser::addCredentials() bacause
+  * we want to remove a function call sfSessionStorage::regenerate() for CSRF protection
+  * becomes working correctly.
+  * But this solution is a very stupid. We must decrease this function call.
+  */
+  public function addCredentials()
+  {
+    if (func_num_args() == 0) return;
+
+    // Add all credentials
+    $credentials = (is_array(func_get_arg(0))) ? func_get_arg(0) : func_get_args();
+
+    if ($this->options['logging'])
+    {
+      $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Add credential(s) "%s"', implode(', ', $credentials)))));
+    }
+
+    $added = false;
+    foreach ($credentials as $aCredential)
+    {
+      if (!in_array($aCredential, $this->credentials))
+      {
+        $added = true;
+        $this->credentials[] = $aCredential;
+      }
+    }
+  }
 }
