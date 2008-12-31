@@ -19,3 +19,10 @@
 <?php include_component('default', 'localNavi') ?>
 </div><!-- localNav -->
 </div><!-- Header -->
+
+<?php if ($sf_user->hasFlash('error')): ?>
+<?php include_alert_box('flashError', $sf_user->getFlash('error')) ?>
+<?php endif; ?>
+<?php if ($sf_user->hasFlash('notice')): ?>
+<?php include_alert_box('flashNotice', $sf_user->getFlash('notice')) ?>
+<?php endif; ?>

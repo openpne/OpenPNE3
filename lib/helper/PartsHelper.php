@@ -55,6 +55,15 @@ function include_information_box($id, $body)
   include_partial('global/partsInformationBox', $params);
 }
 
+function include_alert_box($id, $body)
+{
+  $params = array(
+    'id' => $id,
+    'body' => $body,
+  );
+  include_partial('global/partsAlertBox', $params);
+}
+
 function include_box($id, $title = '', $body = '', $option = array())
 {
   if (!empty($option['form']) && !isset($option['button'])) {
