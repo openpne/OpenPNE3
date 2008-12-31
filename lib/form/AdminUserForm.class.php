@@ -17,8 +17,8 @@ class AdminUserForm extends BaseAdminUserForm
     ));
 
     $this->setValidators(array(
-      'username' => new sfValidatorString(array('max_length' => 64)),
-      'password' => new sfValidatorString(array('max_length' => 40)),
+      'username' => new sfValidatorString(array('max_length' => 64, 'trim' => true)),
+      'password' => new sfValidatorString(array('max_length' => 40, 'trim' => true)),
     ));
 
     $this->widgetSchema->setNameFormat('admin_user[%s]');
