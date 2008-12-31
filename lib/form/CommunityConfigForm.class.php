@@ -17,6 +17,11 @@ class CommunityConfigForm extends OpenPNEFormAutoGenerate
     $isAutoGenerate = true,
     $fieldName = 'config[%s]';
 
+  public function __construct($defaults = array(), $options = array(), $CSRFSecret = null)
+  {
+    return parent::__construct($defaults, $options, false);
+  }
+
   public function configure()
   {
     $this->setCommunity($this->getOption('community'));

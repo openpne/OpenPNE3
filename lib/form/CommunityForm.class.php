@@ -15,6 +15,8 @@ class CommunityForm extends BaseCommunityForm
   {
     unset($this['created_at'], $this['updated_at'], $this['file_id']);
 
+    $this->setValidator('name', new sfValidatorString(array('max_length' => 64, 'trim' => true)));
+
     $this->setConfigForm();
 
     $this->setWidget('file', new sfWidgetFormInputFile());
