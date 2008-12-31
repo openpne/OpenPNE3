@@ -53,7 +53,7 @@ class InviteForm extends MemberConfigPcAddressForm
   {
     $param = array(
       'token'    => $token,
-      'authMode' => sfContext::getInstance()->getUser()->getCurrentAuthMode(),
+      'authMode' => $this->getOption('authMode', sfContext::getInstance()->getUser()->getCurrentAuthMode()),
       'isMobile' => opToolkit::isMobileEmailAddress($to),
     );
 
@@ -69,7 +69,7 @@ class InviteForm extends MemberConfigPcAddressForm
 
     $user = sfContext::getInstance()->getUser();
 
-    $this->member->setConfig('register_auth_mode', $user->getCurrentAuthMode());
+    $this->member->setConfig('register_auth_mode', $this->getOption('authMode', $user->getCurrentAuthMode()));
 
     if ($this->getOption('is_link'))
     {
