@@ -41,7 +41,7 @@ function pager_navigation($pager, $link_to, $is_total = true)
 
 function pager_total($pager)
 {
-  return sprintf('%d件〜%d件を表示', $pager->getFirstIndice(), $pager->getLastIndice());
+  return sprintf('%d件～%d件を表示', $pager->getFirstIndice(), $pager->getLastIndice());
 }
 
 /**
