@@ -7,9 +7,6 @@ emoji:
 registerDisablePlugin:
   class: sfRegisterDisablePluginsFilter
 
-AshiatoSet:
-  class: AshiatoSetFilter
-
 cache:     ~
 common:    ~
 execution:
