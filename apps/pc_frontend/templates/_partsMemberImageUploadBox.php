@@ -25,7 +25,10 @@
 
 <div class="block">
 <?php echo $option['form']->renderFormTag(url_for('member/configImage')) ?>
-<p><?php echo $option['form']['file'] ?></p>
+<p>
+<?php echo $option['form']['file'] ?>
+<?php echo $option['form']->renderHiddenFields(); ?>
+</p>
 <p><input type="submit" value="<?php echo __('アップロードする') ?>" /></p>
 </form>
 <ul>
