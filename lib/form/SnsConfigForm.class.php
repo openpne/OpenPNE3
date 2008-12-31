@@ -63,7 +63,7 @@ class SnsConfigForm extends sfForm
         break;
       case 'input':
       default:
-        $obj = new sfValidatorString($config['option'], 'trim' => true);
+        $obj = new sfValidatorString(array_merge($config['option'], array('trim' => true)));
     }
 
     return $obj;
