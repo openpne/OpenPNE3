@@ -12,7 +12,7 @@ class opPluginReleaseTask extends sfBaseTask
     $this->name             = 'release';
     $this->briefDescription = 'Creates the plugin definition file, archive, and uploads the OpenPNE plugin.';
     $this->detailedDescription = <<<EOF
-The [opPlugin:release|INFO] task creates the plugin definition file, archive, and uploads the OpenPNE plugin.
+The [opPlugin:release|INFO] task creates the plugin definition file, and archive the OpenPNE plugin.
 Call it with:
 
   [./symfony opPlugin:release opSamplePlugin|INFO]
@@ -22,6 +22,7 @@ EOF;
   protected function execute($arguments = array(), $options = array())
   {
     $name = $arguments['name'];
+    $dir = $arguments['dir'];
 
     while (
       !($version = $this->ask('Type plugin version'))
@@ -39,9 +40,7 @@ EOF;
       $this->logBlock('invalid format.', 'ERROR');
     }
 
-    while (
-      !($note = $this->ask('Type release note'))
-    );
+    while (!($note = $this->ask('Type release note')));
 
     $this->logBlock('These informations are inputed:', 'COMMENT');
     $this->log($this->formatList(array(
@@ -63,9 +62,7 @@ EOF;
     $defineTask = new opPluginDefineTask($this->dispatcher, $this->formatter);
     $defineTask->run(array('name' => $name, 'version' => $version, 'stability' => $stability, 'note' => '"'.$note.'"'));
     $archiveTask = new opPluginArchiveTask($this->dispatcher, $this->formatter);
-    $archiveTask->run(array('name' => $name));
-    $uploadTask = new opPluginUploadTask($this->dispatcher, $this->formatter);
-    $uploadTask->run(array('name' => $name));
+    $archiveTask->run(array('name' => $name, $dir));
   }
 
   protected function clearCache()

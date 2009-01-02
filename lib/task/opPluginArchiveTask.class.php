@@ -8,16 +8,17 @@ class opPluginArchiveTask extends sfBaseTask
   {
     $this->addArguments(array(
       new sfCommandArgument('name', sfCommandArgument::REQUIRED, 'The plugin name'),
+      new sfCommandArgument('dir', sfCommandArgument::OPTIONAL, 'The output dir', sfConfig::get('sf_cache_dir')),
     ));
 
     $this->namespace        = 'opPlugin';
     $this->name             = 'archive';
-    $this->briefDescription = 'Creates the OpenPNE plugin archive for a later upload.';
+    $this->briefDescription = 'Creates the OpenPNE plugin archive.';
     $this->detailedDescription = <<<EOF
 The [opPlugin:archive|INFO] task creates the OpenPNE plugin archive.
 Call it with:
 
-  [./symfony opPlugin:archive opSamplePlugin|INFO]
+  [./symfony opPlugin:archive opSamplePlugin ~/Documents/myPlugins|INFO]
 EOF;
   }
 
@@ -34,7 +35,7 @@ EOF;
     $filename = sprintf('%s-%s.tgz', (string)$infoXml->name, (string)$infoXml->version->release);
     $dirPath = sfConfig::get('sf_plugins_dir').'/'.$pluginName;
 
-    $tar = new Archive_Tar(sfConfig::get('sf_cache_dir').'/'.$filename, true);
+    $tar = new Archive_Tar($arguments['dir'].'/'.$filename, true);
     foreach ($infoXml->contents->dir->file as $file)
     {
       $attributes = $file->attributes();
