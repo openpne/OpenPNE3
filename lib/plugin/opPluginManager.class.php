@@ -67,22 +67,4 @@ class opPluginManager extends sfSymfonyPluginManager
   {
     return (bool)$this->getPluginInfo($plugin);
   }
-
-  public function getInstalledPlugins()
-  {
-    $result = array();
-
-    $plugins = sfContext::getInstance()->getConfiguration()->getAllOpenPNEPlugins();
-    foreach ($plugins as $pluginName)
-    {
-      $result[$pluginName] = $this->getPluginInstance($pluginName);
-    }
-
-    return $result;
-  }
-
-  public function getPluginInstance($plugin)
-  {
-    return opPlugin::getInstance($plugin);
-  }
 }

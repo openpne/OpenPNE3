@@ -6,6 +6,7 @@ class opPluginReleaseTask extends sfBaseTask
   {
     $this->addArguments(array(
       new sfCommandArgument('name', sfCommandArgument::REQUIRED, 'The plugin name'),
+      new sfCommandArgument('dir', sfCommandArgument::OPTIONAL, 'The output dir', sfConfig::get('sf_cache_dir')),
     ));
 
     $this->namespace        = 'opPlugin';
@@ -52,12 +53,12 @@ EOF;
 
     if ($this->askConfirmation('Is it OK to start this task? (y/n)'))
     {
-      $this->doRelease($name, $version, $stability, $note);
+      $this->doRelease($name, $version, $stability, $note, $dir);
       $this->clearCache();
     }
   }
 
-  protected function doRelease($name, $version, $stability, $note)
+  protected function doRelease($name, $version, $stability, $note, $dir)
   {
     $defineTask = new opPluginDefineTask($this->dispatcher, $this->formatter);
     $defineTask->run(array('name' => $name, 'version' => $version, 'stability' => $stability, 'note' => '"'.$note.'"'));

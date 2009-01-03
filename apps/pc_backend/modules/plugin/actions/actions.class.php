@@ -25,7 +25,7 @@ class pluginActions extends sfActions
   */
   public function executeList(sfWebRequest $request)
   {
-    $pluginManager = new opPluginManager($this->getContext()->getEventDispatcher());
+    $pluginManager = new opInstalledPluginManager();
 
     $this->plugins = $pluginManager->getInstalledPlugins();
 
