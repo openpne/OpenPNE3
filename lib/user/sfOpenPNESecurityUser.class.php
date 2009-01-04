@@ -37,7 +37,28 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
   public function getAuthModes()
   {
-    return OpenPNEConfig::get(sfConfig::get('sf_app').'_auth_mode');
+    $is_mobile = sfConfig::get('app_is_mobile', false);
+    $plugins = sfContext::getInstance()->getConfiguration()->getEnabledAuthPlugin();
+
+    $result = array();
+
+    foreach ($plugins as $pluginName)
+    {
+      $endPoint = strlen($pluginName) - strlen('opAuth') - strlen('Plugin');
+      $authMode = substr($pluginName, strlen('opAuth'), $endPoint);
+
+      $adapterClass = self::getAuthAdapterClassName($authMode);
+      $adapter = new $adapterClass($authMode);
+      if (($is_mobile && !$adapter->getAuthConfig('enable_mobile'))
+        || (!$is_mobile && !$adapter->getAuthConfig('enable_pc')))
+      {
+        continue;
+      }
+
+      $result[] = $authMode;
+    }
+
+    return $result;
   }
 
   public function getAuthAdapter()
@@ -58,7 +79,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     foreach ($authModes as $authMode) {
       $adapterClass = self::getAuthAdapterClassName($authMode);
       $adapter = new $adapterClass($authMode);
-      $result[] = $adapter->getAuthForm();
+      $result[$authMode] = $adapter->getAuthForm();
     }
 
     return $result;

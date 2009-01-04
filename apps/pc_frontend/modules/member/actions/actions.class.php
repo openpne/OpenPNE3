@@ -112,6 +112,11 @@ class memberActions extends sfOpenPNEMemberAction
   */
   public function executeInvite($request)
   {
+    if (!$this->getUser()->getAuthAdapter()->getAuthConfig('invite_mode'))
+    {
+      return sfView::ERROR;
+    }
+
     $this->form = new InviteForm();
     $this->form->setOption('is_link', true);
     if ($request->isMethod('post'))

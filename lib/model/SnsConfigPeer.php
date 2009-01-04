@@ -23,4 +23,16 @@ class SnsConfigPeer extends BaseSnsConfigPeer
     $config = self::retrieveByName($name);
     return ($config) ? $config->getValue() : $default;
   }
+
+  public static function set($name, $value)
+  {
+    $config = self::retrieveByName($name);
+    if (!$config)
+    {
+      $config = new SnsConfig();
+      $config->setName($name);
+    }
+    $config->setValue($value);
+    return $config->save();
+  }
 }

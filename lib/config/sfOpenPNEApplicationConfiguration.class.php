@@ -66,6 +66,22 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     return $result;
   }
 
+  public function getEnabledAuthPlugin()
+  {
+    $list = $this->getPlugins();
+    $result = array();
+
+    foreach ($list as $value)
+    {
+      if (!strncmp($value, 'opAuth', 6))
+      {
+        $result[] = $value;
+      }
+    }
+
+    return $result;
+  }
+
   public function isPluginExists($pluginName)
   {
     return in_array($pluginName, $this->getAllPlugins());

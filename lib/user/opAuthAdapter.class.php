@@ -33,6 +33,78 @@ abstract class opAuthAdapter
     return $params;
   }
 
+  public function getAuthConfigSettings($name = '')
+  {
+    if (!sfConfig::has('op_auth_'.$this->getAuthModeName()))
+    {
+      // default
+      $configPath = 'lib/config/config/auth.yml';
+      $default = include(sfContext::getInstance()->getConfigCache()->checkConfig($configPath));
+
+      // plugins
+      $configPath = sfConfig::get('sf_plugins_dir').'/opAuth'.$this->getAuthModeName().'Plugin/config/auth.yml';
+      if (is_readable($configPath))
+      {
+        $plugins = sfYaml::load($configPath);
+      }
+      else
+      {
+        $plugins = array();
+      }
+
+      sfConfig::set('op_auth_'.$this->getAuthModeName(), sfToolkit::arrayDeepMerge($default, $plugins));
+    }
+
+    $configs = sfConfig::get('op_auth_'.$this->getAuthModeName());
+    if (!$name)
+    {
+      return $configs;
+    }
+    elseif (!empty($configs[$name]))
+    {
+      return $configs[$name];
+    }
+
+    return null;
+  }
+
+  public function getAuthConfig($name)
+  {
+    $setting = $this->getAuthConfigSettings($name);
+    if (!$setting)
+    {
+      return null;
+    }
+
+    if (!isset($setting['Default']))
+    {
+      $setting['Default'] = null;
+    }
+
+    if (isset($setting['IsConfig']) && !$setting['IsConfig'])
+    {
+      return $setting['Default'];
+    }
+
+    return SnsConfigPeer::get('op_auth_'.$this->authModeName.'_plugin_'.$name, $setting['Default']);
+  }
+
+  public function setAuthConfig($name, $value)
+  {
+    $setting = $this->getAuthConfigSettings($name);
+    if (!$setting)
+    {
+      return null;
+    }
+
+    if (isset($setting['IsConfig']) && !$setting['IsConfig'])
+    {
+      return false;
+    }
+
+    return SnsConfigPeer::set('op_auth_'.$this->authModeName.'_plugin_'.$name, $value);
+  }
+
   public function getAuthForm()
   {
     $form = $this->getAuthLoginForm();
@@ -49,6 +121,19 @@ abstract class opAuthAdapter
     $form = null;
 
     $formClass = self::getAuthLoginFormClassName($this->authModeName);
+    if (class_exists($formClass))
+    {
+      $form = new $formClass($this);
+    }
+
+    return $form;
+  }
+
+  public function getAuthConfigForm()
+  {
+    $form = null;
+
+    $formClass = self::getAuthConfigFormClassName($this->authModeName);
     if (class_exists($formClass))
     {
       $form = new $formClass($this);
@@ -102,6 +187,11 @@ abstract class opAuthAdapter
   public static function getAuthLoginFormClassName($authMode)
   {
     return 'opAuthLoginForm'.ucfirst($authMode);
+  }
+
+  public static function getAuthConfigFormClassName($authMode)
+  {
+    return 'opAuthConfigForm'.ucfirst($authMode);
   }
 
  /**
