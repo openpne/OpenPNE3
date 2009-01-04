@@ -36,6 +36,13 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     if (sfConfig::get('op_plugin_activation'))
     {
       $pluginActivations = array_merge(array_fill_keys($this->getPlugins(), true), sfConfig::get('op_plugin_activation'));
+      foreach ($pluginActivations as $key => $value)
+      {
+        if (!in_array($key, $this->getPlugins()))
+        {
+          unset($pluginActivations[$key]);
+        }
+      }
       $this->enablePlugins(array_keys($pluginActivations, true));
       $this->disablePlugins(array_keys($pluginActivations, false));
     }
