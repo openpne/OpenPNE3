@@ -11,6 +11,10 @@
 </center>
 </form>
 
+<?php if ($form->getAuthAdapter()->getAuthConfig('invite_mode') == 2) : ?>
+<?php echo link_to('新規登録', $form->getAuthAdapter()->getAuthConfig('self_invite_action')) ?>
+<?php endif; ?>
+
 <?php include_customizes($id, 'bottom') ?>
 </td></tr>
 
