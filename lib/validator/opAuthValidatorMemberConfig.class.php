@@ -33,6 +33,7 @@ class opAuthValidatorMemberConfig extends sfValidatorSchema
    */
   protected function configure($options = array(), $messages = array())
   {
+    $this->addOption('field_name');
     $this->addRequiredOption('config_name');
     $this->setMessage('invalid', 'ID is not a valid.');
   }
@@ -44,7 +45,8 @@ class opAuthValidatorMemberConfig extends sfValidatorSchema
   {
     opActivateBehavior::disable();
     $configName = $this->getOption('config_name');
-    $memberConfig = MemberConfigPeer::retrieveByNameAndValue($configName, $values[$configName]);
+    $fieldName = $this->getOption('field_name', $configName);
+    $memberConfig = MemberConfigPeer::retrieveByNameAndValue($configName, $values[$fieldName]);
     if ($memberConfig)
     {
       $values['member'] = $memberConfig->getMember();
