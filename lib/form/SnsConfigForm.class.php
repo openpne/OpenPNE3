@@ -86,23 +86,5 @@ class SnsConfigForm extends sfForm
 
   public function generateChoices($mode)
   {
-    if ($mode == 'AuthMode') {
-      return $this->generateAuthModeChoices();
-    }
-  }
-
-  private function generateAuthModeChoices()
-  {
-    $authModes = array();
-
-    $authPlugins = sfFinder::type('directory')->name('opAuth*Plugin')->in(sfConfig::get('sf_plugins_dir'));
-    foreach ($authPlugins as $authPlugin) {
-      $pluginName = basename($authPlugin);
-      $endPoint = strlen($pluginName) - strlen('opAuth') - strlen('Plugin');
-      $authMode = substr($pluginName, strlen('opAuth'), $endPoint);
-      $authModes[$authMode] = $authMode;
-    }
-
-    return $authModes;
   }
 }

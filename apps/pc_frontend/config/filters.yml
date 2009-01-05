@@ -4,9 +4,6 @@ security:  ~
 emoji:
   class: opEmojiFilter
 
-registerDisablePlugin:
-  class: sfRegisterDisablePluginsFilter
-
 AshiatoSet:
   class: AshiatoSetFilter
 
