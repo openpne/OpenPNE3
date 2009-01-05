@@ -6,7 +6,7 @@ prod:
 
 dev:
   .settings:
-    error_reporting:        <?php echo (E_ALL | E_STRICT)."\n" ?>
+    error_reporting:        <?php echo (E_ALL)."\n" ?>
     web_debug:              on
     cache:                  off
     no_script_name:         off
