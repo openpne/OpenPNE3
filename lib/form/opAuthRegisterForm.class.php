@@ -94,6 +94,28 @@ abstract class opAuthRegisterForm extends sfForm
     $this->bind($request->getParameter('auth'));
   }
 
+  public function save()
+  {
+    $member = $this->memberForm->save();
+    $this->setMember($member);
+
+    $profile = $this->profileForm->save($this->getMember()->getId());
+    $config = $this->configForm->save($this->getMember()->getId());
+    $auth = $this->doSave();
+
+    if ($member && $profile && $auth && $config)
+    {
+      return $this->getMember()->getId();
+    }
+
+    return false;
+  }
+
+  public function doSave()
+  {
+    return true;
+  }
+
  /**
   * Returns true if the form is valid.
   *

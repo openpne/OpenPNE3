@@ -241,11 +241,16 @@ abstract class opAuthAdapter
   /**
    * Registers data to storage container.
    *
+   * @deprecated
+   *
    * @param  int    $memberId
    * @param  sfForm $form
+   *
    * @return bool   true if the data has already been saved, false otherwise
    */
-  abstract public function registerData($memberId, $form);
+  public function registerData($memberId, $form)
+  {
+  }
 
  /**
   * Registers the current user with OpenPNE
@@ -255,6 +260,11 @@ abstract class opAuthAdapter
   */
   public function register($form)
   {
+    if ($form instanceof opAuthRegisterForm)
+    {
+      return $form->save();
+    }
+
     $member = true;
     $profile = true;
 
