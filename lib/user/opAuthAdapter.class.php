@@ -43,19 +43,14 @@ abstract class opAuthAdapter
     if (!sfConfig::has('op_auth_'.$this->getAuthModeName()))
     {
       // default
-      $configPath = 'lib/config/config/auth.yml';
+      $configPath = sfConfig::get('sf_lib_dir').'/config/config/auth.yml';
+      sfContext::getInstance()->getConfigCache()->registerConfigHandler($configPath, 'sfSimpleYamlConfigHandler', array());
       $default = include(sfContext::getInstance()->getConfigCache()->checkConfig($configPath));
 
       // plugins
       $configPath = sfConfig::get('sf_plugins_dir').'/opAuth'.$this->getAuthModeName().'Plugin/config/auth.yml';
-      if (is_readable($configPath))
-      {
-        $plugins = sfYaml::load($configPath);
-      }
-      else
-      {
-        $plugins = array();
-      }
+      sfContext::getInstance()->getConfigCache()->registerConfigHandler($configPath, 'sfSimpleYamlConfigHandler', array());
+      $plugins = include(sfContext::getInstance()->getConfigCache()->checkConfig($configPath));
 
       sfConfig::set('op_auth_'.$this->getAuthModeName(), sfToolkit::arrayDeepMerge($default, $plugins));
     }

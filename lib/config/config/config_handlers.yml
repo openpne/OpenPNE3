@@ -8,6 +8,3 @@ config/widget.yml:
 
 config/mobile_mail_domain.yml:
   class: sfSimpleYamlConfigHandler
-
-config/auth.yml:
-  class: sfSimpleYamlConfigHandler
