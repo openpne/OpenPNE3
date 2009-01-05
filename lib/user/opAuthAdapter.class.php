@@ -20,7 +20,10 @@ abstract class opAuthAdapter
   {
     $this->setAuthModeName($name);
     $formClass = self::getAuthFormClassName($this->authModeName);
-    $this->authForm = new $formClass($this);
+    if (class_exists($formClass))
+    {
+      $this->authForm = new $formClass($this);
+    }
 
     $this->configure();
   }
