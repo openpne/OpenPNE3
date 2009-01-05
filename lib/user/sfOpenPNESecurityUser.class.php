@@ -10,7 +10,6 @@
 class sfOpenPNESecurityUser extends sfBasicSecurityUser
 {
   protected $authAdapter = null;
-  protected $authForm = null;
 
   /**
    * Initializes the current user.
@@ -30,7 +29,6 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
     $containerClass = self::getAuthAdapterClassName($this->getCurrentAuthMode());
     $this->authAdapter = new $containerClass($this->getCurrentAuthMode());
-    $this->authForm = $this->authAdapter->getAuthForm();
 
     $this->initializeCredentials();
   }
@@ -68,7 +66,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
   public function getAuthForm()
   {
-    return $this->authForm;
+    return $this->getAuthAdapter()->getAuthForm();
   }
 
   public function getAuthForms()
