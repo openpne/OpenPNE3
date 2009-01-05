@@ -126,6 +126,7 @@ propel:
     id: ~
     type: { type: varchar(64), required: true, index: true }
     uri: { type: longvarchar }
+    sort_order: { type: integer }
 
   navi_i18n:
     caption: { type: longvarchar }

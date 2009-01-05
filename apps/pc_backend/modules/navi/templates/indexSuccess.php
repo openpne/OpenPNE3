@@ -2,18 +2,21 @@
 <?php include_partial('design/submenu'); ?>
 <?php end_slot() ?>
 
+<?php use_helper('Javascript'); ?>
+
 <h2>ナビ設定</h2>
 
 <?php foreach ($list as $type => $navi) : ?>
 <h3><?php echo $type ?></h3>
 
-<table>
+<table id="type_<?php echo str_replace(' ', '_', $type) ?>">
 <tr>
 <th>URL</th>
 <th>項目名(ja_JP)</th>
 <th colspan="2">操作</th>
 </tr>
 <?php foreach ($navi as $form) : ?>
+<tbody id="type_<?php echo str_replace(' ', '_', $type) ?>_<?php echo $form->getObject()->getId() ?>"<?php if (!$form->isNew()) : ?> class="sortable"<?php endif; ?>>
 <tr>
 <td><form action="<?php echo url_for('navi/edit') ?>" method="post">
 <?php echo $form->renderHiddenFields() ?>
@@ -27,7 +30,14 @@
 <td><form action="<?php echo url_for('navi/delete?id=' . $form->getObject()->getId()) ?>" method="post" /><input type="submit" value="削除" /></form></td>
 <?php endif; ?>
 </tr>
+</tbody>
 <?php endforeach; ?>
 </table>
+
+<?php echo sortable_element('type_'.str_replace(' ', '_', $type), array(
+  'tag'  => 'tbody',
+  'only' => 'sortable',
+  'url' => 'navi/sort'
+)) ?>
 
 <?php endforeach; ?>

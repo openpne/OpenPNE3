@@ -66,4 +66,38 @@ class naviActions extends sfActions
 
     $this->redirect('navi/index');
   }
+
+  /**
+   * Executes sort action
+   *
+   * @param sfRequest $request A request object
+   */
+  public function executeSort($request)
+  {
+    if (!$request->isXmlHttpRequest())
+    {
+      $this->forward404();
+    }
+
+    $parameters = $request->getParameterHolder();
+    $keys = $parameters->getNames();
+    foreach ($keys as $key)
+    {
+      if (strpos($key, 'type_') === 0)
+      {
+        $order = $parameters->get($key);
+        for ($i = 0; $i < count($order); $i++)
+        {
+          $navi = NaviPeer::retrieveByPk($order[$i]);
+          if ($navi)
+          {
+            $navi->setSortOrder($i * 10);
+            $navi->save();
+          }
+        }
+        break;
+      }
+    }
+    return sfView::NONE;
+  }
 }
