@@ -9,6 +9,30 @@
  */
 class sfOpenPNEExecutionFilter extends sfExecutionFilter
 {
+  protected function handleAction($filterChain, $actionInstance)
+  {
+    $moduleName = $actionInstance->getModuleName();
+    $actionName = $actionInstance->getActionName();
+    $dispatcher = sfContext::getInstance()->getEventDispatcher();
+
+    $dispatcher->notify(new sfEvent($this, 'op_action.pre_execute_'.$moduleName.'_'.$actionName, array(
+      'moduleName'     => $moduleName,
+      'actionName'     => $actionName,
+      'actionInstance' => $actionInstance,
+    )));
+
+    $result = parent::handleAction($filterChain, $actionInstance);
+
+    $dispatcher->notify(new sfEvent($this, 'op_action.post_execute_'.$moduleName.'_'.$actionName, array(
+      'moduleName'     => $moduleName,
+      'actionName'     => $actionName,
+      'actionInstance' => $actionInstance,
+      'result'         => $result,
+    )));
+
+    return $result;
+  }
+
   protected function executeView($moduleName, $actionName, $viewName, $viewAttributes)
   {
     if (sfConfig::get('app_is_mobile'))
@@ -28,7 +52,8 @@ class sfOpenPNEExecutionFilter extends sfExecutionFilter
     if (is_array($form))
     {
       array_map(array($this, 'setFormFormatterForMobile'), $form);
-    } elseif ($form instanceof sfForm)
+    }
+    elseif ($form instanceof sfForm)
     {
       $form->getWidgetSchema()->setFormFormatterName('mobile');
     }
