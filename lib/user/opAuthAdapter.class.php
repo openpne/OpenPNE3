@@ -107,10 +107,10 @@ abstract class opAuthAdapter
     return SnsConfigPeer::set('op_auth_'.$this->authModeName.'_plugin_'.$name, $value);
   }
 
-  public function getAuthForm()
+  public function getAuthForm($forceAuthForm = false)
   {
     $form = $this->getAuthLoginForm();
-    if ($form)
+    if ($form && !$forceAuthForm)
     {
       return $form;
     }
@@ -161,7 +161,7 @@ abstract class opAuthAdapter
     // deprecated
     else
     {
-      $form = $this->getAuthForm();
+      $form = $this->getAuthForm(true);
       $form->setForRegisterWidgets($member);
       sfContext::getInstance()->getConfiguration()->getEventDispatcher()->notify(new sfEvent(null, 'application.log', array('The '.self::getAuthFormClassName($this->authModeName).' is deprecated. Please create the class is named '.self::getAuthRegisterFormClassName($this->authModeName), 'priority' => sfLogger::ERR)));
     }
