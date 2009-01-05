@@ -4,9 +4,6 @@ security:  ~
 emoji:
   class: opEmojiFilter
 
-AshiatoSet:
-  class: AshiatoSetFilter
-
 cache:     ~
 common:    ~
 execution:
