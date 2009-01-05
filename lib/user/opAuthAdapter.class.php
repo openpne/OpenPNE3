@@ -113,6 +113,8 @@ abstract class opAuthAdapter
       return $form;
     }
 
+    sfContext::getInstance()->getConfiguration()->getEventDispatcher()->notify(new sfEvent(null, 'application.log', array('The '.self::getAuthFormClassName($this->authModeName).' is deprecated. Please create the class is named '.self::getAuthLoginFormClassName($this->authModeName), 'priority' => sfLogger::ERR)));
+
     return $this->authForm;
   }
 
