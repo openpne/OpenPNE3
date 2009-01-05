@@ -12,7 +12,9 @@ abstract class opAuthAdapter
   protected
     $authModuleName = '',
     $authModeName = '',
-    $authForm = null;
+    $authForm = null,
+
+    $authLoginForm = null;
 
   public function __construct($name)
   {
@@ -120,15 +122,16 @@ abstract class opAuthAdapter
 
   public function getAuthLoginForm()
   {
-    $form = null;
-
-    $formClass = self::getAuthLoginFormClassName($this->authModeName);
-    if (class_exists($formClass))
+    if (!$this->authLoginForm)
     {
-      $form = new $formClass($this);
+      $formClass = self::getAuthLoginFormClassName($this->authModeName);
+      if (class_exists($formClass))
+      {
+        $this->authLoginForm = new $formClass($this);
+      }
     }
 
-    return $form;
+    return $this->authLoginForm;
   }
 
   public function getAuthConfigForm()

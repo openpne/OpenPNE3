@@ -20,15 +20,14 @@ abstract class opAuthLoginForm extends sfForm
    * @param opAuthAdapter $adapter    An opAuthAdapter object
    * @param array         $defaults   An array of field default values
    * @param array         $options    An array of options
-   * @param string        $CRFSSecret A CSRF secret (false to disable CSRF protection, null to use the global CSRF secret)
    *
    * @see sfForm
    */
-  public function __construct(opAuthAdapter $adapter, $defaults = array(), $options = array(), $CSRFSecret = null)
+  public function __construct(opAuthAdapter $adapter, $defaults = array(), $options = array())
   {
     $this->adapter = $adapter;
 
-    parent::__construct($defaults, $options, $CSRFSecret);
+    parent::__construct($defaults, $options, false);
 
     $this->setWidget('next_uri', new opWidgetFormInputHiddenNextUri());
     $this->setValidator('next_uri', new opValidatorNextUri());
@@ -47,6 +46,16 @@ abstract class opAuthLoginForm extends sfForm
   }
 
   /**
+   * Returns the current authentication adapter
+   *
+   * @return string
+   */
+  public function getAuthAdapter()
+  {
+    return $this->adapter;
+  }
+
+  /**
    * Returns the logined member.
    *
    * @return Member
@@ -59,6 +68,14 @@ abstract class opAuthLoginForm extends sfForm
       return $member;
     }
 
+    return false;
+  }
+
+ /**
+  * @todo removes this method.
+  */
+  public function isUtn()
+  {
     return false;
   }
 }
