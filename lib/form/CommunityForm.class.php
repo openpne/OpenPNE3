@@ -13,7 +13,7 @@ class CommunityForm extends BaseCommunityForm
 
   public function configure()
   {
-    unset($this['created_at'], $this['updated_at'], $this['file_id']);
+    unset($this['created_at'], $this['updated_at'], $this['file_id'], $this['id']);
 
     $this->setValidator('name', new sfValidatorString(array('max_length' => 64, 'trim' => true)));
 
