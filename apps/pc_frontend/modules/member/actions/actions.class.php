@@ -79,35 +79,6 @@ class memberActions extends sfOpenPNEMemberAction
   }
 
  /**
-  * Executes config action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeConfig($request)
-  {
-    $this->categories = sfConfig::get('openpne_member_category');
-    $this->categoryName = $request->getParameter('category', null);
-    if ($this->categoryName)
-    {
-      $this->forward404Unless(array_key_exists($this->categoryName, $this->categories), 'Undefined category');
-      $formClass = 'MemberConfig'.ucfirst($this->categoryName).'Form';
-      $this->form = new $formClass($this->getUser()->getMember());
-    }
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getParameter('member_config'));
-      if ($this->form->isValid())
-      {
-        $this->form->save($this->getUser()->getMemberId());
-        $this->redirect('member/config?category='.$this->categoryName);
-      }
-    }
-
-    return sfView::SUCCESS;
-  }
-
- /**
   * Executes invite action
   *
   * @param sfRequest $request A request object

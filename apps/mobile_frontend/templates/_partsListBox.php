@@ -11,7 +11,7 @@
 <?php endif; ?>
 
 <?php foreach ($list as $key => $value) : ?>
-<tr><td bgcolor="#e0eaef">
+<tr><td bgcolor="<?php echo cycle_vars($id, '#e0eaef,#ffffff') ?>">
 <?php echo $list->getRaw($key); ?><br>
 </td></tr>
 <?php if (!empty($options['border'])) : ?>

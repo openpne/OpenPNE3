@@ -50,8 +50,14 @@ include_list_box('profileEdit', $list, array('title' => 'ﾌﾟﾛﾌｨｰﾙ�
 ?>
 
 <?php
-$list = array(
-  link_to('かんたんﾛｸﾞｲﾝ設定', 'member/configUID'),
-);
+$list = array();
+foreach (sfConfig::get('openpne_member_category') as $key => $value)
+{
+  if (count($value))
+  {
+    $list[] = link_to($key, 'member/config?category='.$key);
+  }
+}
+$list[] = link_to('かんたんﾛｸﾞｲﾝ設定', 'member/configUID');
 include_list_box('configEdit', $list, array('title' => '設定変更'))
 ?>

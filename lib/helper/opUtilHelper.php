@@ -44,6 +44,30 @@ function pager_total($pager)
   return sprintf('%d件～%d件を表示', $pager->getFirstIndice(), $pager->getLastIndice());
 }
 
+function cycle_vars($name, $items, $delimiter = ',')
+{
+  static $cycles = array();
+  if (!isset($cycles[$name]))
+  {
+    $cycles[$name] = array(
+      'count' => 0,
+      'items' => explode($delimiter, $items),
+    );
+  }
+
+  $items = $cycles[$name]['items'];
+
+  $result = $items[$cycles[$name]['count']];
+  $cycles[$name]['count']++;
+
+  if ($cycles[$name]['count'] >= count($items))
+  {
+    $cycles[$name]['count'] = 0;
+  }
+
+  return $result;
+}
+
 /**
  * Returns a project URL is over an application.
  *
