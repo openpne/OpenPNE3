@@ -1,5 +1,19 @@
 <?php slot('op_sidemenu'); ?>
-<?php include_parts('memberImageBox', 'image', array('name' => $member->getName(), 'image' => $member->getImageFileName())) ?>
+<?php use_helper('Date'); ?>
+<?php
+$moreInfo = array(
+  '('.__('最終ログイン').':'.distance_of_time_in_words($member->getLastLoginTime()).')'
+);
+if ($relation->isSelf())
+{
+  $moreInfo[] = link_to(__('写真を編集'), 'member/configImage');
+}
+
+include_parts('memberImageBox', 'image', array(
+  'name'     => $member->getName(),
+  'image'    => $member->getImageFileName(),
+  'moreInfo' => $moreInfo,
+)) ?>
 
 <?php
 $option = array(
