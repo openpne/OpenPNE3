@@ -15,4 +15,10 @@ class AdminUserPeer extends BaseAdminUserPeer
     $c->add(self::USERNAME, $username);
     return self::doSelectOne($c);
   }
+
+  public static function retrievesAll()
+  {
+    $c = new Criteria();
+    return self::doSelect($c);
+  }
 }

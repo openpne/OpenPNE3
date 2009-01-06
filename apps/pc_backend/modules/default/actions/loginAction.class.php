@@ -18,15 +18,16 @@ class loginAction extends sfAction
   {
     $this->getUser()->setAuthenticated(false);
 
-    $this->form = new AdminUserForm();
+    $this->form = new opAdminLoginForm();
 
-    if ($request->isMethod('post')) {
+    if ($request->isMethod('post'))
+    {
       $this->form->bind($request->getParameter('admin_user'));
-      if ($this->form->isValid()) {
+      if ($this->form->isValid())
+      {
         $this->getUser()->setAuthenticated(true);
         $this->redirect('default/top');
       }
-
       return sfView::ERROR;
     }
 

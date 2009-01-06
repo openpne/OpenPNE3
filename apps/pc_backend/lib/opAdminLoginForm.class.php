@@ -1,13 +1,13 @@
 <?php
 
 /**
- * AdminUser form.
+ * opAdminLoginForm
  *
  * @package    OpenPNE
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class AdminUserForm extends BaseAdminUserForm
+class opAdminLoginForm extends sfForm
 {
   public function configure()
   {
@@ -30,8 +30,18 @@ class AdminUserForm extends BaseAdminUserForm
       'password' => 'パスワード',
     ));
 
-    $this->mergePostValidator(new sfValidatorPropelUnique(array(
-      'model' => 'AdminUser', 'column' => array('username')
+    $this->validatorSchema->setPostValidator(new sfValidatorCallback(array(
+      'callback' => array('opAdminLoginForm', 'validate'),
     )));
+  }
+
+  public function validate($validator, $values, $arguments = array())
+  {
+    $admin_user = AdminUserPeer::retrieveByUsername($values['username']);
+    if (!$admin_user) {
+      return false;
+    }
+
+    return $admin_user->getPassword() === md5($values['password']);
   }
 }

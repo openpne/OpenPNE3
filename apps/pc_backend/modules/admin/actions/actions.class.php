@@ -5,8 +5,7 @@
  *
  * @package    OpenPNE
  * @subpackage admin
- * @author     Your name here
- * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 class adminActions extends sfActions
 {
@@ -17,6 +16,31 @@ class adminActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->forward('default', 'module');
+    $this->forward('admin', 'manageUser');
+  }
+
+ /**
+  * Executes manageUser action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeManageUser(sfWebRequest $request)
+  {
+    $this->users = AdminUserPeer::retrievesAll();
+  }
+
+ /**
+  * Executes adminUser action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeAddUser(sfWebRequest $request)
+  {
+    $this->form = new AdminUserForm();
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $params = $request->getParameter('admin_user');
+      $this->redirectIf($this->form->bindAndSave($params), 'admin/manageUser');
+    }
   }
 }
