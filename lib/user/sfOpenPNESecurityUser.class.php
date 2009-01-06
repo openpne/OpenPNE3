@@ -146,6 +146,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
     if ($this->isAuthenticated())
     {
+      $this->setCurrentAuthMode($this->getAuthAdapter()->getAuthModeName());
       $uri = $this->getAuthAdapter()->getAuthForm()->getValue('next_uri');
       return $uri;
     }

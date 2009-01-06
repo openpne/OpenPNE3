@@ -45,7 +45,11 @@ class opAuthValidatorMemberConfig extends sfValidatorSchema
   {
     opActivateBehavior::disable();
     $configName = $this->getOption('config_name');
-    $fieldName = $this->getOption('field_name', $configName);
+    $fieldName = $this->getOption('field_name');
+    if (!$fieldName)
+    {
+      $fieldName = $configName;
+    }
     $memberConfig = MemberConfigPeer::retrieveByNameAndValue($configName, $values[$fieldName]);
     if ($memberConfig)
     {
