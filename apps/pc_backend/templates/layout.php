@@ -22,6 +22,7 @@
 <li><?php echo link_to(__('デザイン設定'), 'design/index'); ?></li>
 <li><?php echo link_to(__('プロフィール項目設定'), 'profile/list'); ?></li>
 <li><?php echo link_to(__('プラグイン設定'), 'plugin/list'); ?></li>
+<li><?php echo link_to(__('管理画面設定'), 'admin/index'); ?></li>
 </ul>
 </div>
 <?php endif; ?>
