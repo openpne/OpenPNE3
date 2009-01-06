@@ -63,6 +63,7 @@ EOF;
       @$this->clearCache();
       $this->configureDatabase($dbms, $username, $password, $hostname, $dbname, $sock);
       $this->buildDb();
+      $this->publishAssets();
       $this->clearCache();
     }
   }
@@ -147,6 +148,12 @@ EOF;
   {
     $cc = new sfCacheClearTask($this->dispatcher, $this->formatter);
     $cc->run();
+  }
+
+  protected function publishAssets()
+  {
+    $publishAssets = new sfPluginPublishAssetsTask($this->dispatcher, $this->formatter);
+    $publishAssets->run();
   }
 
   protected function buildDb()
