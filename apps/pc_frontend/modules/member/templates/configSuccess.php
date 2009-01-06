@@ -3,15 +3,20 @@
 $list = array();
 foreach ($categories as $key => $value)
 {
-  $list[$key] = link_to($key, 'member/config?category='.$key);
+  if (count($value))
+  {
+    $list[$key] = link_to($key, 'member/config?category='.$key);
+  }
 }
 include_parts('pageNav', 'pagenavi', array('list' => $list, 'current' => $categoryName));
 ?>
 <?php end_slot(); ?>
 
-<?php if (count($form)) : ?>
+<?php if ($categoryName) : ?>
 <?php include_box('form'.$categoryName, $categoryName, '', array(
   'form' => array($form),
   'url' => 'member/config?category='.$categoryName)
 ) ?>
+<?php else: ?>
+<?php include_box('configInformation', __('設定変更'), __('メニューから設定したい項目を選択してください。')); ?>
 <?php endif; ?>

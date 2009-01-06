@@ -86,11 +86,13 @@ class memberActions extends sfOpenPNEMemberAction
   public function executeConfig($request)
   {
     $this->categories = sfConfig::get('openpne_member_category');
-    $this->categoryName = $request->getParameter('category', 'general');
-    $this->forward404Unless(array_key_exists($this->categoryName, $this->categories), 'Undefined category');
-
-    $formClass = 'MemberConfig'.ucfirst($this->categoryName).'Form';
-    $this->form = new $formClass($this->getUser()->getMember());
+    $this->categoryName = $request->getParameter('category', null);
+    if ($this->categoryName)
+    {
+      $this->forward404Unless(array_key_exists($this->categoryName, $this->categories), 'Undefined category');
+      $formClass = 'MemberConfig'.ucfirst($this->categoryName).'Form';
+      $this->form = new $formClass($this->getUser()->getMember());
+    }
 
     if ($request->isMethod('post'))
     {
