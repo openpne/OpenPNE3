@@ -92,7 +92,7 @@ AdminUser:
   first_admin:
     id: ~
     username: "admin"
-    password: <?php echo md5('password') . "\n"; ?>
+    password: "password"
 Navi:
   secure_global_navi_home:
     type: "secure_global"
