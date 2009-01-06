@@ -20,4 +20,25 @@ class NaviForm extends BaseNaviForm
     $this->widgetSchema->setNameFormat('navi[%s]');
     $this->embedI18n(array('ja_JP'));
   }
+
+  public function updateObject($values = null)
+  {
+    $navi = parent::updateObject($values);
+
+    if (!$navi->getSortOrder())
+    {
+      $maxSortOrder = 0;
+
+      $navis = NaviPeer::retrieveByType($navi->getType());
+      $finalNavi = array_pop($navis);
+      if ($finalNavi)
+      {
+        $maxSortOrder = $finalNavi->getSortOrder();
+      }
+
+      $navi->setSortOrder($maxSortOrder + 10);
+    }
+
+    return $navi;
+  }
 }

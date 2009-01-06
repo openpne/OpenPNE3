@@ -2,87 +2,87 @@ Navi:
   secure_global_navi_home:
     type: "secure_global"
     uri: "@homepage"
-    sort_order: 0;
+    sort_order: 0
 
   secure_global_navi_member_search:
     type: "secure_global"
     uri: "member/search"
-    sort_order: 10;
+    sort_order: 10
 
   secure_global_navi_community_search:
     type: "secure_global"
     uri: "community/search"
-    sort_order: 20;
+    sort_order: 20
 
   secure_global_navi_config:
     type: "secure_global"
     uri: "member/config"
-    sort_order: 30;
+    sort_order: 30
 
   secure_global_navi_invite:
     type: "secure_global"
     uri: "member/invite"
-    sort_order: 40;
+    sort_order: 40
 
   secure_global_navi_logout:
     type: "secure_global"
     uri: "member/logout"
-    sort_order: 50;
+    sort_order: 50
 
   default_navi_home:
     type: "default"
     uri: "@homepage"
-    sort_order: 0;
+    sort_order: 0
 
   default_navi_friend_list:
     type: "default"
     uri: "friend/list"
-    sort_order: 10;
+    sort_order: 10
 
   default_navi_profile_confirm:
     type: "default"
     uri: "member/profile"
-    sort_order: 20;
+    sort_order: 20
 
   default_navi_profile_edit:
     type: "default"
     uri: "member/editProfile"
-    sort_order: 30;
+    sort_order: 30
 
   friend_navi_home:
     type: "friend"
     uri: "member/profile"
-    sort_order: 10;
+    sort_order: 10
 
   friend_navi_friend_list:
     type: "friend"
     uri: "friend/list"
-    sort_order: 20;
+    sort_order: 20
 
   friend_navi_link:
     type: "friend"
     uri: "friend/link"
-    sort_order: 30;
+    sort_order: 30
 
   friend_navi_unlink:
     type: "friend"
     uri: "friend/unlink"
-    sort_order: 40;
+    sort_order: 40
 
   community_navi_home:
     type: "community"
     uri: "community/home"
-    sort_order: 0;
+    sort_order: 0
 
   community_navi_join:
     type: "community"
     uri: "community/join"
-    sort_order: 10;
+    sort_order: 10
 
   community_navi_quit:
     type: "community"
     uri: "community/quit"
-    sort_order: 20;
+    sort_order: 20
 
 NaviI18n:
   secure_global_navi_home_i18n:
