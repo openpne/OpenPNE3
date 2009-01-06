@@ -13,6 +13,7 @@
 </td></tr>
 
 <tr><td align="center" width="50%" valign="top">
+<?php echo image_tag_sf_image($member->getImageFileName(), array('size' => '120x120', 'format' => 'jpg')) ?>
 </td>
 <td valign="top">
 <?php foreach ($member->getProfiles() as $profile) : ?>
