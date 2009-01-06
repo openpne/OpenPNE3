@@ -22,6 +22,21 @@ include_parts('nineTable', 'communityList', $option);
 ?>
 <?php end_slot(); ?>
 
+<?php slot('op_top'); ?>
+<?php if ($relation->isSelf()): ?>
+<?php
+$option = array(
+  'body' => '
+<p>※他のメンバーから見たあなたのページはこのようになります。</p>
+<p>他のメンバーにあなたのページを教える場合は、以下のURLを使ってください。<br />
+'.url_for('member/profile?id='.$member->getId(), true).'</p>
+<p>プロフィールを変更する場合は「'.link_to(__('プロフィール変更'), 'member/editProfile').'」よりおこなってください。</p>
+');
+include_parts('descriptionBox', 'informationAboutThisIsYourProfilePage', $option);
+?>
+<?php endif; ?>
+<?php end_slot(); ?>
+
 <?php
 $list = array();
 foreach ($member->getProfiles() as $profile)

@@ -646,3 +646,10 @@ div.operation ul.moreInfo li {
 	padding: 1px 13px 0 0;
 	background: url(../images/icon_arrow_2.gif); ?>) no-repeat 100% 0;
 }
+
+/*==============================================================================
+ * descriptionBox
+ *----------------------------------------------------------------------------*/
+.descriptionBox p {
+  margin: 12px;
+}
