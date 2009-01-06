@@ -1,3 +1,0 @@
-modules/*/config/view.yml:
-  class:    sfOpenPNEViewConfigHandler
-  file:     %SF_LIB_DIR%/config/sfOpenPNEViewConfigHandler.class.php

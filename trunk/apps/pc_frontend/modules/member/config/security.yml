@@ -1,9 +1,0 @@
-all:
-  is_secure: on
-  credentials: SNSMember
-
-registerInput:
-  credentials: SNSRegisterBegin
-
-configComplete:
-  is_secure: off

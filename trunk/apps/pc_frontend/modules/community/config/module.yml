@@ -1,5 +1,0 @@
-all:
-  default_navi: community
-  navi:
-    list: default
-    joinlist: default
