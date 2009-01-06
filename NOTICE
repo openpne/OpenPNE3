@@ -20,3 +20,7 @@ This product includes also software developed by :
     - Apache License 2.0
   - Chris Corbyn (http://www.swiftmailer.org/)
     - GNU Lesser General Public License
+
+This product needs the third-party softwares listed blow to run.
+  - PHP: Hypertext Preprocessor (5.2.x)
+  - symfony (1.2.x)
