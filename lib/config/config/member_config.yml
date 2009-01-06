@@ -9,8 +9,12 @@
 #     IsRequired: true
 
 general:
+  _attributes:
+    caption: "一般設定"
 
 pcAddress:
+  _attributes:
+    caption: "PCメールアドレス設定"
   pc_address:
     Name:       "pc_address"
     Caption:    "PCメールアドレス"
@@ -23,6 +27,8 @@ pcAddress:
     IsConfirm:  true
 
 mobileAddress:
+  _attributes:
+    caption: "携帯メールアドレス設定"
   mobile_address:
     Name:       "mobile_address"
     Caption:    "携帯メールアドレス"
@@ -35,6 +41,8 @@ mobileAddress:
     IsConfirm:  true
 
 password:
+  _attributes:
+    caption: "パスワード設定"
   password:
     Name:       "password"
     Caption:    "パスワード"
@@ -47,6 +55,8 @@ password:
     IsConfirm:  true
 
 accessBlock:
+  _attributes:
+    caption: "アクセスブロック設定"
   access_block:
     Name:       "access_block"
     Caption:    "アクセスブロック"

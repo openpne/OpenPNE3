@@ -51,11 +51,18 @@ include_list_box('profileEdit', $list, array('title' => 'ﾌﾟﾛﾌｨｰﾙ�
 
 <?php
 $list = array();
+$attributes = sfConfig::get('openpne_member_category_attribute');
 foreach (sfConfig::get('openpne_member_category') as $key => $value)
 {
+  $title = $key;
+  if (!empty($attributes[$key]['caption']))
+  {
+    $title = $attributes[$key]['caption'];
+  }
+
   if (count($value))
   {
-    $list[] = link_to($key, 'member/config?category='.$key);
+    $list[] = link_to($title, 'member/config?category='.$key);
   }
 }
 $list[] = link_to('かんたんﾛｸﾞｲﾝ設定', 'member/configUID');

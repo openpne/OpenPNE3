@@ -18,28 +18,41 @@ class opConfigConfigHandler extends sfYamlConfigHandler
 
     $data = "array(\n";
     $categoryList = "array(\n";
+    $categoryAttributeList = "array(\n";
 
     foreach ($config as $category => $keys)
     {
       $categoryList .= sprintf("'%s' => array(\n", $category);
+      $categoryAttributeList .= '';
+
       if ($keys)
       {
         foreach ($keys as $key => $value)
         {
-          $data .= sprintf("'%s' => %s,\n", $key, var_export($value, true));
-          $categoryList .= sprintf("'%s',\n", $key);
+          if ($key === '_attributes')
+          {
+            $categoryAttributeList .= sprintf("'%s' => %s,\n", $category, var_export($value, true));
+          }
+          else
+          {
+            $categoryList .= sprintf("'%s',\n", $key);
+            $data .= sprintf("'%s' => %s,\n", $key, var_export($value, true));
+          }
         }
       }
+
       $categoryList .= "),\n";
     }
 
     $data .= "),\n";
     $categoryList .= "),\n";
+    $categoryAttributeList .= "),\n";
 
     $format = "<?php\n"
             . "sfConfig::add(array('%s' => %s));\n"
+            . "sfConfig::add(array('%s' => %s));\n"
             . "sfConfig::add(array('%s' => %s));";
 
-    return sprintf($format, $prefix.'config', $data, $prefix.'category', $categoryList);
+    return sprintf($format, $prefix.'config', $data, $prefix.'category', $categoryList, $prefix.'category_attribute', $categoryAttributeList);
   }
 }

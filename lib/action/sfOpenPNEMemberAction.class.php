@@ -192,6 +192,21 @@ abstract class sfOpenPNEMemberAction extends sfActions
   public function executeConfig($request)
   {
     $this->categories = sfConfig::get('openpne_member_category');
+
+    $this->categoryCaptions = array();
+    $categoryAttributes = sfConfig::get('openpne_member_category_attribute');
+    foreach ($this->categories as $key => $value)
+    {
+      $title = $key;
+
+      if (!empty($categoryAttributes[$key]['caption']))
+      {
+        $title = $categoryAttributes[$key]['caption'];
+      }
+
+      $this->categoryCaptions[$key] = $title;
+    }
+
     $this->categoryName = $request->getParameter('category', null);
     if ($this->categoryName)
     {

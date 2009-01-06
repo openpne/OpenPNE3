@@ -5,7 +5,7 @@ foreach ($categories as $key => $value)
 {
   if (count($value))
   {
-    $list[$key] = link_to($key, 'member/config?category='.$key);
+    $list[$key] = link_to($categoryCaptions[$key], 'member/config?category='.$key);
   }
 }
 include_parts('pageNav', 'pagenavi', array('list' => $list, 'current' => $categoryName));
@@ -13,7 +13,7 @@ include_parts('pageNav', 'pagenavi', array('list' => $list, 'current' => $catego
 <?php end_slot(); ?>
 
 <?php if ($categoryName) : ?>
-<?php include_box('form'.$categoryName, $categoryName, '', array(
+<?php include_box('form'.$categoryName, $categoryCaptions[$categoryName], '', array(
   'form' => array($form),
   'url' => 'member/config?category='.$categoryName)
 ) ?>
