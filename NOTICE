@@ -8,9 +8,15 @@ Copyright 2005-2009 OpenPNE Project
 
 This product includes software developed at
 OpenPNE Project (http://www.openpne.jp/).
+  - Apache License 2.0
+  - PHP License 3.01 (OpenPNE2)
 
 This product includes also software developed by :
   - the symfony project (http://www.symfony-project.org/)
+    - MIT License
   - Zend Technologies USA Inc. (http://www.zend.com/)
+    - New BSD License
   - JanRain, Inc. (http://www.janrain.com/)
+    - Apache License 2.0
   - Chris Corbyn (http://www.swiftmailer.org/)
+    - GNU Lesser General Public License
