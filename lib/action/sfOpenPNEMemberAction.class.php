@@ -227,4 +227,33 @@ abstract class sfOpenPNEMemberAction extends sfActions
 
     return sfView::SUCCESS;
   }
+
+ /**
+  * Executes invite action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeInvite($request)
+  {
+    if (!$this->getUser()->getAuthAdapter()->getAuthConfig('invite_mode'))
+    {
+      return sfView::ERROR;
+    }
+
+    $this->form = new InviteForm();
+    $this->form->setOption('is_link', true);
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('member_config'));
+      if ($this->form->isValid())
+      {
+        $this->form->save();
+
+        return sfView::SUCCESS;
+      }
+    }
+
+    return sfView::INPUT;
+  }
+
 }
