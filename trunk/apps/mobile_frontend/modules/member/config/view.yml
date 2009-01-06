@@ -1,0 +1,6 @@
+homeSuccess:
+  customize:
+    cautionAboutFriendPre:
+      template: [friend, cautionAboutFriendPre]
+      parts   : [information]
+      target  : [bottom]

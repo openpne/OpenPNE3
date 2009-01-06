@@ -1,0 +1,12 @@
+rendering: ~
+security:  ~
+
+emoji:
+  class: opEmojiFilter
+
+cache:     ~
+common:    ~
+execution:
+  class: sfOpenPNEExecutionFilter
+  param:
+    type: execution

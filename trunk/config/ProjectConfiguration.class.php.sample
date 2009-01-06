@@ -1,0 +1,19 @@
+<?php
+
+require_once '##SYMFONY_LIB_DIR##/autoload/sfCoreAutoload.class.php';
+sfCoreAutoload::register();
+
+class ProjectConfiguration extends sfProjectConfiguration
+{
+  public function setup()
+  {
+    $this->enableAllPluginsExcept(array('sfDoctrinePlugin', 'sfCompat10Plugin'));
+    $this->setIncludePath();
+  }
+
+  public function setIncludePath()
+  {
+    // PEAR
+    set_include_path(get_include_path().PATH_SEPARATOR.dirname(__FILE__).'/../lib/vendor/PEAR/');
+  }
+}

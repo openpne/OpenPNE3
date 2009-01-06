@@ -1,0 +1,13 @@
+homeSuccess:
+  layout: layoutA
+  customize:
+    cautionAboutFriendPre:
+      template: [friend, cautionAboutFriendPre]
+      parts   : [information]
+      target  : [bottom]
+
+profileSuccess:
+  layout: layoutA
+
+configSuccess:
+  layout: layoutB

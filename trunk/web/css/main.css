@@ -1,0 +1,655 @@
+@charset "UTF-8";
+
+/*==============================================================================
+ * デフォルトスタイルシートの上書き
+ *----------------------------------------------------------------------------*/
+body, div, p, pre, blockquote, th, td,
+dl, dt, dd, ul, ol, li,
+h1, h2, h3, h4, h5, h6,
+iframe, object, embed {
+  margin: 0;
+  padding: 0;
+  border: none;
+  text-align: left;
+}
+ul, ol {
+  list-style-position: outside;
+  list-style-type: none;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  empty-cells: show;
+  margin: 0;
+  font-size: 1em;
+}
+* {
+  word-break: break-all;
+}
+*:first-child+html table {
+  border-collapse: collapse;
+}
+* html table {
+  border-collapse: collapse;
+}
+th, td {
+  vertical-align: middle;
+}
+address, cite, caption, th, del, ins,
+abbr, acronym, dfn, em, strong,
+code, kbd, samp, var {
+  border: none;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  text-align: left;
+  text-decoration: none;
+}
+img {
+  border: none;
+  vertical-align: baseline;
+}
+a img {
+  vertical-align: text-bottom;
+}
+* html a img {
+  vertical-align: baseline;
+}
+br {
+  letter-spacing: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+q:before, q:after {
+  content: "";
+}
+form, fieldset, input, textarea {
+  margin: 0;
+}
+form, fieldset {
+  padding: 0;
+}
+fieldset {
+  border: none;
+}
+form p {
+  margin: 0;
+  padding: 0;
+}
+
+/*==============================================================================
+ * OpenPNE全共通指定
+ *----------------------------------------------------------------------------*/
+body {
+  font: normal normal normal 10pt/1.2 "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", "MS PGothic", Osaka, sans-serif;
+}
+input,
+textarea,
+select {
+  color: #333333;
+  font-size: inherit;
+  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", "MS PGothic", Osaka, sans-serif;
+}
+a:link {
+  color: #026cd1;
+}
+a:visited {
+  color: #004a95;
+}
+a:hover, a:active {
+  color: #76afe6;
+}
+.input_text,
+.input_password,
+textarea {
+  background-color: #f8f8f8;
+}
+.input_text,
+.input_password,
+textarea,
+select {
+  border: 1px solid #888888;
+}
+.input_image {
+  border: none;
+}
+strong {
+  font-weight: bold;
+}
+.sortable {
+  cursor: move;
+}
+/*----------------------------------------------
+ * テーブル
+ *--------------------------------------------*/
+div.parts table {
+  table-layout: fixed;
+  width: 100%;
+}
+div.parts th,
+div.parts td {
+  border-width: 1px 0 0 1px;
+  border-style: solid;
+  border-color: #CCCCCC;
+}
+div.parts tr th:first-child,
+div.parts tr td:first-child,
+div.parts tr th.first-child,
+div.parts tr td.first-child {
+  border-left-width: 0;
+}
+
+/*----------------------------------------------
+ * clearfix, overflow: hidden
+ *--------------------------------------------*/
+div#LayoutA,
+div#LayoutB,
+div#LayoutC {
+	zoom: 1;
+	overflow: hidden;
+	overflow: -moz-scrollbars-none;
+}
+#Sidemenu,
+#Contents,
+#Top {
+	overflow: hidden;
+}
+dd div, dt, ul, ol, td, th, p,
+h1, h2, h3, h4, h5, h6, .partsHeading,
+fieldset, label {
+  overflow: hidden;
+}
+dd div div {
+  overflow: visible;
+}
+pre {
+  overflow: auto;
+}
+
+/*----------------------------------------------
+ * base layout
+ *--------------------------------------------*/
+#Header h1 {
+  background:#ffffff url(../images/skin_header_logo.jpg) no-repeat scroll 0 0;
+  height: 45px;
+  margin: 0;
+  width: 220px;
+}
+
+#Header h1 a {
+  border: medium none;
+  display: block;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  text-decoration:none;
+  text-indent:-9999px;
+  width: 100%;
+}
+
+#Container {
+  position: relative;
+  width: 720px;
+}
+#Header {
+  position: relative;
+}
+
+#LayoutA #Top {
+  padding-left: 5px;
+}
+#LayoutA #Top .infoBox,
+#LayoutA #Top .descriptionBox {
+  margin-right: 20px;
+  margin-left: 20px;
+}
+#LayoutA #Sidemenu {
+  float: left;
+  width: 270px;
+  padding: 0 5px;
+}
+#LayoutA #Contents {
+  float: right;
+  width: 440px;
+}
+
+#LayoutB #Sidemenu {
+	float: left;
+	width: 180px;
+}
+#LayoutB #Contents {
+	float: right;
+	width: 540px;
+}
+
+#LayoutC #Contents {
+  width: 650px;
+  margin-left: 30px;
+}
+
+
+/*----------------------------------------------
+ * Sidemenu
+ *--------------------------------------------*/
+#LayoutB #Sidemenu div {
+  background-color: #FFFFFF;
+  border: 8px solid #CCCCCC;
+  margin: 0 auto 10px;
+  width: 150px;
+}
+#LayoutB #Sidemenu .pageNav ul {
+  margin: 1px;
+}
+#LayoutB #Sidemenu .pageNav li {
+  background: transparent url(../images/icon_1.gif) no-repeat scroll 8px 50%;
+  padding: 4px 0 4px 18px;
+}
+#LayoutB #Sidemenu .pageNav li.current {
+  background-color: #EEEEEE;
+}
+
+/*==============================================================================
+ * navi
+ *----------------------------------------------------------------------------*/
+#globalNav {
+  text-align: right;
+  padding-left: 30px;
+}
+#globalNav li {
+  display: inline;
+}
+
+#localNav {
+  margin: 10px 0;
+  padding-left: 10px;
+  background-color: #58B5F3;
+}
+#localNav li {
+  display: inline;
+  line-height: 30px;
+  padding-right: 10px;
+  border-right: 1px solid #CCCCCC;
+}
+#localNav li a {
+  color: #000000;
+  text-decoration: none;
+}
+
+/*==============================================================================
+ * informationBox
+ *----------------------------------------------------------------------------*/
+.informationBox {
+  padding-left: 102px;
+  border: 1px solid #CCCCCC;
+  background: #EEEEEE url(../images/icon_information.gif) no-repeat 5px 50%;
+}
+.informationBox div.body {
+  min-height: 1.2em;
+  padding: 5px;
+  border-left: 1px solid #CCCCCC;
+  background: #FFFFFF;
+}
+.informationBox .caution {
+  color: #FF0000;
+}
+
+/*==============================================================================
+ * alertBox
+ *----------------------------------------------------------------------------*/
+.alertBox {
+  width: 564px;
+}
+#Body .alertBox th {
+  width: 148px;
+  padding: 8px 0;
+  border: none;
+  text-align: center;
+}
+#Body .alertBox td {
+  padding: 6px;
+  border-width: 0 0 0 1px;
+  color: #ff0000;
+}
+
+/*----------------------------------------------
+ * パーツ枠
+ *--------------------------------------------*/
+div.dparts,
+div.dparts div.parts,
+div.ditem,
+#Sidemenu div.parts,
+#Contents div.parts,
+#Top div.parts {
+  border: 1px solid #CCCCCC;
+}
+div.ditem div.item {
+  border-width: 0 1px 1px;
+  border-style: solid;
+  border-color: #CCCCCC;
+}
+div.dparts {
+  margin: 0 auto 10px;
+  padding: 7px;
+}
+div.dparts div.parts {
+  margin: 0;
+}
+div.parts {
+  margin: 0 auto 10px;
+}
+div.ditem {
+  padding: 5px 6px;
+}
+/*----------------------------------------------
+ * パーツ見出し
+ *--------------------------------------------*/
+.partsHeading {
+  padding: 2px 8px 2px 36px;
+  background: #36B3D1 url(../images/content_header_1.gif) no-repeat 0 0;
+  text-align: left;
+  font-size: 100%;
+}
+#LayoutA #Sidemenu .partsHeading {
+  padding-left: 24px;
+  background-image: url(../images/icon_title_1.gif);
+}
+.partsHeading h3 {
+  display: inline;
+  font-weight: bold;
+}
+.partsHeading p {
+  display: inline;
+  margin-left: 0.5em;
+}
+
+.partsHeading p.link {
+  float: right;
+  top: 2px;
+  right: 8px;
+}
+
+/*----------------------------------------------
+ * パーツ内上下の部分（1件～20件を表示など）
+ *--------------------------------------------*/
+div.block,
+div.partsInfo,
+div.pagerAbsolute,
+div.pagerRelative,
+div.pagerRelativeMulti,
+div.operation {
+  border-top: 1px solid #CCCCCC;
+}
+div.partsInfo {
+  padding: 10px 40px;
+}
+div.pagerAbsolute {
+  padding: 4px;
+  text-align: center;
+}
+div.pagerAbsolute p {
+  display: inline;
+}
+div.pagerRelative {
+  padding: 4px;
+  text-align: right;
+}
+div.pagerRelativeMulti {
+  padding: 4px;
+}
+div.pagerRelative p,
+div.pagerRelativeMulti div.pager p {
+  display: inline;
+  margin-left: 10px;
+}
+div.pagerRelative p:first-child,
+div.pagerRelativeMulti div.pager p:first-child,
+div.pagerRelative p.first-child,
+div.pagerRelativeMulti div.pager p.first-child {
+  margin-left: 0;
+}
+div.pagerRelativeMulti div.text {
+  float: left;
+  width: 55%;
+}
+div.pagerRelativeMulti div.pager {
+  float: right;
+  width: 45%;
+  margin-top: 0.5em;
+  text-align: right;
+}
+div.operation {
+  padding: 4px;
+}
+div.operation ul.moreInfo {
+  text-align: center;
+}
+div.operation ul.moreInfo li {
+  display: inline;
+  background-position: 0 50%;
+}
+
+/*==============================================================================
+ * box
+ *----------------------------------------------------------------------------*/
+.box .body {
+  padding: 10px 1em;
+}
+
+.box form th, .box form td {
+  padding: 5px;
+}
+.box form th {
+  width: 140px;
+  border-left: medium none;
+}
+
+.box form .operation {
+  padding: 10px 0;
+}
+
+/*==============================================================================
+ * listBox
+ *----------------------------------------------------------------------------*/
+.listBox th {
+  width: 83px;
+  background-color: #FFFFFF;
+}
+.listBox th, .listBox td {
+  padding: 5px;
+}
+
+/*==============================================================================
+ * memberImageBox
+ *----------------------------------------------------------------------------*/
+.memberImageBox * {
+	text-align: center;
+}
+.memberImageBox p.friendLink {
+	margin-bottom: 3px;
+}
+.memberImageBox .parts {
+	padding: 7px;
+}
+.memberImageBox ul.moreInfo {
+	margin: 2px 0 -5px;
+}
+.memberImageBox ul.moreInfo li {
+	padding: 1px 0;
+	background: none;
+}
+.memberImageBox ul.moreInfo li img {
+	vertical-align: bottom;
+}
+.memberImageBox p.rank {
+	margin-top: 6px;
+}
+.memberImageBox p.point {
+	margin-top: 2px;
+}
+.memberImageBox p.text {
+	margin-top: 4px;
+}
+.memberImageBox p.loginTime {
+	margin-top: 0px;
+}
+
+/*==============================================================================
+ * memberImageUploadBox
+ *----------------------------------------------------------------------------*/
+.memberImageUploadBox table {
+  border-top: 1px solid #CCCCCC;
+}
+#Body .memberImageUploadBox td {
+  padding: 8px 0;
+  border: none;
+  text-align: center;
+}
+.memberImageUploadBox form {
+  float: left;
+  width: 230px;
+}
+.memberImageUploadBox form p {
+  margin: 8px 0;
+  text-align: center;
+}
+.memberImageUploadBox ul {
+  zoom: 1;
+  margin: 8px 0 8px 230px;
+}
+.memberImageUploadBox li {
+  padding-left: 12px;
+  background: url(./skin/default/img/marker.gif) no-repeat 3px 3px;
+}
+
+/*==============================================================================
+ * modalBox
+ *----------------------------------------------------------------------------*/
+.modalWall {
+  background-color: #000000;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  background-repeat: repeat;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
+
+.modalBox {
+  background-color: #ffffff;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 30;
+}
+
+/*==============================================================================
+ * nineTable
+ *----------------------------------------------------------------------------*/
+.nineTable tr.photo td {
+	height: 80px;
+	padding: 2px 0;
+	text-align: center;
+}
+.nineTable tr.photo td p.crown {
+	text-align: center;
+}
+.nineTable tr.text td {
+	padding: 2px;
+	text-align: center;
+}
+.nineTable div.moreInfo ul.moreInfo {
+	width: 11em;
+	margin-left: auto;
+	padding: 6px 0;
+}
+
+/*==============================================================================
+ * searchResultList
+ *----------------------------------------------------------------------------*/
+.searchResultList .partsInfo {
+	background: #EEEEEE;
+}
+.searchResultList .ditem {
+	margin: 8px 34px;
+}
+.searchResultList td.photo {
+	width: 90px;
+	padding: 0;
+	border-left: none;
+	text-align: center;
+}
+.searchResultList th, .searchResultList td {
+	padding: 5px;
+}
+.searchResultList th {
+	width: 75px;
+}
+#Body .searchResultList th:first-child,
+#Body .searchResultList th.first-child {
+	border-left-width: 1px;
+}
+.searchResultList tr.operation th {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.searchResultList tr.operation td {
+	padding: 0;
+}
+.searchResultList tr.operation span.text {
+	float: left;
+	display: block;
+	width: 110px;
+	padding: 5px;
+	border-right: 1px solid #CCCCCC;
+}
+.searchResultList tr.operation span.moreInfo{
+	zoom: 1;
+	display: block;
+	margin-left: 121px;
+	padding: 4px 0 3px;
+	text-align: center;
+}
+.searchResultList div.operation {
+	text-align: center;
+}
+.searchResultList tr.operation span.moreInfo img,
+.searchResultList div.operation form,
+.searchResultList div.operation fieldset {
+	display: inline;
+	vertical-align: top;
+}
+
+/*==============================================================================
+ * searchFormLine
+ *----------------------------------------------------------------------------*/
+#Top div.searchFormLine,
+#Sidemenu div.searchFormLine,
+#Contents div.searchFormLine {
+  border-width: 0;
+}
+
+.searchFormLine ul {
+	text-align: center;
+	padding: 1px 0;
+}
+.searchFormLine ul li {
+	display: inline;
+}
+.searchFormLine ul li * {
+	vertical-align: middle;
+}
+.searchFormLine ul li label {
+	margin-right: 2px;
+	padding: 1px 13px 0 0;
+	background: url(../images/icon_arrow_2.gif); ?>) no-repeat 100% 0;
+}
+
+/*==============================================================================
+ * descriptionBox
+ *----------------------------------------------------------------------------*/
+.descriptionBox p {
+  margin: 12px;
+}

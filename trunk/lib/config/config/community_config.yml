@@ -1,0 +1,8 @@
+general:
+  description:
+    Name:       "description"
+    Caption:    "説明文"
+    FormType:   "textarea"
+    ValueType:  "string"
+    IsUnique:   false
+    IsRequired: true

@@ -1,0 +1,18 @@
+rendering: ~
+security:  ~
+
+deny:
+  class: sfDenyFromNonMobileFilter
+
+emoji:
+  class: opEmojiFilter
+
+io:
+  class: sfMobileIOFilter
+
+cache:     ~
+common:    ~
+execution:
+  class: sfOpenPNEExecutionFilter
+  param:
+    type: execution

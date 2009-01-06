@@ -1,0 +1,66 @@
+Profile:
+  profile_sex:
+    is_required: 1
+    name: "sex"
+    form_type: "select"
+    value_type: "integer"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    sort_order: 110
+
+  profile_birthday:
+    is_required: 1
+    name: "birthday"
+    form_type: "date"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    sort_order: 120
+
+  profile_self_intro:
+    is_required: 1
+    name: "self_intro"
+    form_type: "textarea"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    sort_order: 130
+
+ProfileI18n:
+  profile_i18n_sex:
+    id: profile_sex
+    caption: "性別"
+    culture: "ja_JP"
+
+  profile_i18n_birthday:
+    id: profile_birthday
+    caption: "誕生日"
+    culture: "ja_JP"
+
+  profile_i18n_self_intro:
+    id: profile_self_intro
+    caption: "自己紹介"
+    culture: "ja_JP"
+
+ProfileOption:
+  profile_option_sex_man:
+    profile_id: profile_sex
+    sort_order: 0
+
+  profile_option_sex_woman:
+    profile_id: profile_sex
+    sort_order: 1
+
+ProfileOptionI18n:
+  profile_option_sex_man:
+    id: profile_option_sex_man
+    value: "男性"
+    culture: "ja_JP"
+
+  profile_option_sex_woman:
+    id: profile_option_sex_woman
+    value: "女性"
+    culture: "ja_JP"

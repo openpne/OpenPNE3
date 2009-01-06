@@ -1,0 +1,281 @@
+Profile:
+  profile_sex:
+    is_required: 1
+    name: "sex"
+    form_type: "select"
+    value_type: "integer"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    sort_order: 110
+
+  profile_self_intro:
+    is_required: 1
+    name: "self_intro"
+    form_type: "textarea"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    sort_order: 120
+
+ProfileI18n:
+  profile_i18n_sex:
+    id: profile_sex
+    caption: "性別"
+    culture: "ja_JP"
+
+  profile_i18n_self_intro:
+    id: profile_self_intro
+    caption: "自己紹介"
+    culture: "ja_JP"
+
+ProfileOption:
+  profile_option_sex_man:
+    profile_id: profile_sex
+    sort_order: 0
+
+  profile_option_sex_woman:
+    profile_id: profile_sex
+    sort_order: 1
+
+ProfileOptionI18n:
+  profile_option_sex_man:
+    id: profile_option_sex_man
+    value: "男性"
+    culture: "ja_JP"
+
+  profile_option_sex_woman:
+    id: profile_option_sex_woman
+    value: "女性"
+    culture: "ja_JP"
+
+Member:
+  first_member:
+    id: ~
+    name: "OpenPNE君"
+    is_active: 1
+  second_member:
+    name: "Tanaka"
+    is_active: 1
+  third_member:
+    name: "Sasaki"
+    is_active: 1
+
+MemberProfile:
+  first_member_profile_sex:
+    lft_key: 1
+    rht_key: 2
+    member_id: first_member
+    profile_id: profile_sex
+    profile_option_id: profile_option_sex_man
+
+  first_member_profile_self_intro:
+    lft_key: 1
+    rht_key: 2
+    member_id: first_member
+    profile_id: profile_self_intro
+    value: "よろしくお願いします。"
+
+MemberConfig:
+  first_member_pc_address:
+    member_id: first_member
+    name: "pc_address"
+    value: "sns@example.com"
+
+  first_member_password:
+    member_id: first_member
+    name: "password"
+    value: <?php echo md5('password') . "\n"; ?>
+
+AdminUser:
+  first_admin:
+    id: ~
+    username: "admin"
+    password: "password"
+Navi:
+  secure_global_navi_home:
+    type: "secure_global"
+    uri: "@homepage"
+
+  secure_global_navi_member_list:
+    type: "secure_global"
+    uri: "member/list"
+
+  secure_global_navi_community_list:
+    type: "secure_global"
+    uri: "community/list"
+
+  secure_global_navi_config:
+    type: "secure_global"
+    uri: "member/config"
+
+  secure_global_navi_invite:
+    type: "secure_global"
+    uri: "member/invite"
+
+  secure_global_navi_logout:
+    type: "secure_global"
+    uri: "member/logout"
+
+  default_navi_home:
+    type: "default"
+    uri: "@homepage"
+
+  default_navi_friend_list:
+    type: "default"
+    uri: "friend/list"
+
+  default_navi_profile_confirm:
+    type: "default"
+    uri: "member/profile"
+
+  default_navi_profile_edit:
+    type: "default"
+    uri: "member/editProfile"
+
+  friend_navi_home:
+    type: "friend"
+    uri: "member/profile"
+
+  friend_navi_friend_list:
+    type: "friend"
+    uri: "friend/list"
+
+  friend_navi_link:
+    type: "friend"
+    uri: "friend/link"
+
+  friend_navi_unlink:
+    type: "friend"
+    uri: "friend/unlink"
+
+  community_navi_home:
+    type: "community"
+    uri: "community/home"
+
+  community_navi_join:
+    type: "community"
+    uri: "community/join"
+
+  community_navi_quit:
+    type: "community"
+    uri: "community/quit"
+
+NaviI18n:
+  secure_global_navi_home_i18n:
+    id: secure_global_navi_home
+    caption: "マイホーム"
+    culture: "ja_JP"
+
+  secure_global_navi_member_list_i18n:
+    id: secure_global_navi_member_list
+    caption: "メンバー一覧"
+    culture: "ja_JP"
+
+  secure_global_navi_community_list_i18n:
+    id: secure_global_navi_community_list
+    caption: "コミュニティ一覧"
+    culture: "ja_JP"
+
+  secure_global_navi_config_i18n:
+    id: secure_global_navi_config
+    caption: "設定変更"
+    culture: "ja_JP"
+
+  secure_global_navi_invite_i18n:
+    id: secure_global_navi_invite
+    caption: "友人を招待する"
+    culture: "ja_JP"
+
+  secure_global_navi_logout_i18n:
+    id: secure_global_navi_logout
+    caption: "ログアウト"
+    culture: "ja_JP"
+
+  default_navi_home_i18n:
+    id: default_navi_home
+    caption: "ホーム"
+    culture: "ja_JP"
+
+  default_navi_friend_list_i18n:
+    id: default_navi_friend_list
+    caption: "マイフレンド"
+    culture: "ja_JP"
+
+  default_navi_profile_confirm_i18n:
+    id: default_navi_profile_confirm
+    caption: "プロフィール確認"
+    culture: "ja_JP"
+
+  default_navi_profile_edit_i18n:
+    id: default_navi_profile_edit
+    caption: "プロフィール編集"
+    culture: "ja_JP"
+
+  friend_navi_home_i18n:
+    id: friend_navi_home
+    caption: "ホーム"
+    culture: "ja_JP"
+
+  friend_navi_friend_list_i18n:
+    id: friend_navi_friend_list
+    caption: "フレンドリスト"
+    culture: "ja_JP"
+
+  friend_navi_link_i18n:
+    id: friend_navi_link
+    caption: "マイフレンドになる"
+    culture: "ja_JP"
+
+  friend_navi_unlink_i18n:
+    id: friend_navi_unlink
+    caption: "マイフレンドをやめる"
+    culture: "ja_JP"
+
+  community_navi_home_i18n:
+    id: community_navi_home
+    caption: "コミュニティトップ"
+    culture: "ja_JP"
+
+  community_navi_join_i18n:
+    id: community_navi_join
+    caption: "コミュニティに参加"
+    culture: "ja_JP"
+
+  community_navi_quit_i18n:
+    id: community_navi_quit
+    caption: "コミュニティを退会"
+    culture: "ja_JP"
+
+MemberRelationship:
+  first_member_second_member:
+    member_id_to: first_member
+    member_id_from: second_member
+  second_member_first_member:
+    member_id_to: second_member
+    member_id_from: first_member
+
+Community:
+  first_community:
+    name: "最初のコミュニティ"
+  second_community:
+    name: "2番目のコミュニティ"
+
+CommunityMember:
+  first_community_first_member:
+    community_id: first_community
+    member_id: first_member
+    position: "admin"
+  first_community_second_member:
+    community_id: first_community
+    member_id: second_member
+  second_community_second_member:
+    community_id: second_community
+    member_id: second_member
+    position: "admin"
+
+SnsConfig:
+  first_sns_config:
+    name: "SNS_NAME"
+    value: "MySNS"

@@ -1,0 +1,31 @@
+tinyMCE.addI18n('ja', {  // 共通
+    apply : '決定'
+});
+
+tinyMCE.addI18n('ja.openpne', {  // エディタ本体
+    op_b : '太字',
+    op_u : '下線',
+    op_s : '取り消し線',
+    op_i : '斜体',
+    op_large : '大きめの文字',
+    op_small : '小さめの文字',
+    op_color : '文字色変更',
+    op_image : 'アルバム画像挿入',
+    op_emoji_docomo : '絵文字挿入（DoCoMo）',
+    op_emoji_au : '絵文字挿入（au）',
+    op_emoji_softbank : '絵文字挿入（SoftBank）',
+    op_cmd : '小窓紹介'
+});
+
+tinyMCE.addI18n('ja.advanced_dlg', {  // カラーピッカー
+    colorpicker_title : 'カラーピッカー',
+    colorpicker_name : '色名称',
+    colorpicker_picker_tab : 'カラーピッカー',
+    colorpicker_palette_tab : 'カラーパレット',
+    colorpicker_named_tab : '名前付きカラーパレット',
+    colorpicker_picker_title : 'カラーピッカー',
+    colorpicker_palette_title : 'カラーパレット',
+    colorpicker_named_title : '名前付きカラーパレット',
+    colorpicker_color : '選択した色'
+});
+

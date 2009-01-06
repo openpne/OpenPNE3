@@ -1,0 +1,23 @@
+<?php slot('submenu') ?>
+<?php include_partial('design/submenu'); ?>
+<?php end_slot() ?>
+
+<h2><?php echo __('お知らせ設定') ?></h2>
+
+<ul class="contents_menu">
+  <li><?php echo link_to('携帯版ホームのお知らせ', 'sns/informationConfig?target=mobile_home') ?></li>
+</ul>
+
+<?php if ($target === 'mobile_home') : ?>
+<h3>携帯版ホームのお知らせ</h3>
+<?php endif; ?>
+
+<form action="<?php echo url_for('sns/informationConfig') ?>" method="post">
+<table>
+<?php echo $form['information']->render() ?>
+<tr>
+<?php echo $form->renderHiddenFields() ?>
+<td colspan="2"><input type="submit" value="設定変更する" /></td>
+</tr>
+</table>
+</form>
