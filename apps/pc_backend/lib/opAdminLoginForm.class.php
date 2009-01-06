@@ -35,13 +35,20 @@ class opAdminLoginForm extends sfForm
     )));
   }
 
-  public function validate($validator, $values, $arguments = array())
+  public static function validate($validator, $values, $arguments = array())
   {
-    $admin_user = AdminUserPeer::retrieveByUsername($values['username']);
-    if (!$admin_user) {
-      return false;
+    $adminUser = AdminUserPeer::retrieveByUsername($values['username']);
+    if (!$adminUser)
+    {
+      throw new sfValidatorError($validator, 'invalid');
     }
 
-    return $admin_user->getPassword() === md5($values['password']);
+    if ($adminUser->getPassword() === md5($values['password']))
+    {
+      $values['adminUser'] = $adminUser;
+      return $values;
+    }
+
+    throw new sfValidatorError($validator, 'invalid');
   }
 }

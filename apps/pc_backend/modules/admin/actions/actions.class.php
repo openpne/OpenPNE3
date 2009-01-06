@@ -43,4 +43,20 @@ class adminActions extends sfActions
       $this->redirectIf($this->form->bindAndSave($params), 'admin/manageUser');
     }
   }
+
+ /**
+  * Executes editPassword action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeEditPassword(sfWebRequest $request)
+  {
+    $user = AdminUserPeer::retrieveByPk($this->getUser()->getAttribute('adminUserId', null, 'adminUser'));
+    $this->form = new AdminUserEditPasswordForm($user);
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $params = $request->getParameter('admin_user');
+      $this->redirectIf($this->form->bindAndSave($params), 'admin/manageUser');
+    }
+  }
 }
