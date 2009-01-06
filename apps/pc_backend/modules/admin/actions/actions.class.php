@@ -45,13 +45,38 @@ class adminActions extends sfActions
   }
 
  /**
+  * Executes deleteUser action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeDeleteUser(sfWebRequest $request)
+  {
+    $this->user = AdminUserPeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($this->user);
+    $this->forward404If($this->user->getId() == $this->getUser()->getId());
+    $this->forward404If($this->user->getId() == 1);
+
+    $this->form = new sfForm();
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $field = $this->form->getCSRFFieldName();
+      $this->form->bind(array($field => $request->getParameter($field)));
+      if ($this->form->isValid())
+      {
+        $this->user->delete();
+        $this->redirect('admin/manageUser');
+      }
+    }
+  }
+
+ /**
   * Executes editPassword action
   *
   * @param sfRequest $request A request object
   */
   public function executeEditPassword(sfWebRequest $request)
   {
-    $user = AdminUserPeer::retrieveByPk($this->getUser()->getAttribute('adminUserId', null, 'adminUser'));
+    $user = AdminUserPeer::retrieveByPk($this->getUser()->getId());
     $this->form = new AdminUserEditPasswordForm($user);
     if ($request->isMethod(sfWebRequest::POST))
     {

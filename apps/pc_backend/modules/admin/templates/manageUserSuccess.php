@@ -17,7 +17,9 @@
 <tr>
 <th><?php echo $user->getId() ?></th>
 <td><?php echo $user->getUsername() ?></td>
-<td><?php if ($user->getId() != 1) : ?><?php echo link_to(__('削除'), 'admin/deleteUser') ?><?php endif; ?></td>
+<td><?php if ($user->getId() != 1 && $user->getId() != $sf_user->getId()) : ?>
+<?php echo link_to(__('削除'), 'admin/deleteUser?id='.$user->getId()) ?>
+<?php endif; ?></td>
 </tr>
 <?php endforeach; ?>
 </table>
