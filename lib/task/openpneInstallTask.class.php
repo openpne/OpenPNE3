@@ -164,7 +164,7 @@ EOF;
 
   protected function fixPerms()
   {
-    $permissions = new sfProjectPermissionsTask($this->dispatcher, $this->formatter);
+    $permissions = new openpnePermissionTask($this->dispatcher, $this->formatter);
     $permissions->run();
   }
 
