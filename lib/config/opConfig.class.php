@@ -15,16 +15,16 @@
  * @subpackage config
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class opConfig extends sfConfig
+class opConfig extends sfConfig implements ArrayAccess
 {
-  /**
-   * Retrieves a config parameter.
-   *
-   * @param  string $name    A config parameter name
-   * @param  mixed  $default A default config parameter value
-   *
-   * @return mixed A config parameter value
-   */
+ /**
+  * Retrieves a config parameter.
+  *
+  * @param  string $name    A config parameter name
+  * @param  mixed  $default A default config parameter value
+  *
+  * @return mixed A config parameter value
+  */
   public static function get($name, $default = null)
   {
     $setting = parent::$config['openpne_sns_config'];
@@ -39,6 +39,45 @@ class opConfig extends sfConfig
       }
     }
 
-    return $result;
+    sfContext::getInstance()->getConfiguration()->loadHelpers('Escaping');
+    return sfOutputEscaper::escape(sfConfig::get('sf_escaping_method'), $result);
+  }
+
+ /**
+  * Returns if the offset exists
+  *
+  * @see ArrayAccess::offsetExists()
+  */
+  public function offsetExists($offset)
+  {
+    return(is_null(self::get($offset)));
+  }
+
+ /**
+  * Returns value at given offset
+  *
+  * @see ArrayAccess::offsetGet()
+  */
+  public function offsetGet($offset)
+  {
+    return self::get($offset);
+  }
+
+ /**
+  * @see ArrayAccess::offsetSet()
+  */
+  public function offsetSet($offset, $value)
+  {
+    // Nothing to do.
+    // This class is a read-only.
+  }
+
+ /**
+  * @see ArrayAccess::offsetUnSet()
+  */
+  public function offsetUnSet($offset)
+  {
+    // Nothing to do.
+    // This class is a read-only.
   }
 }

@@ -22,6 +22,7 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   public function initialize()
   {
     $this->dispatcher->connect('task.cache.clear', array($this, 'clearPluginCache'));
+    $this->dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
 
     $this->setConfigHandlers();
     $this->setBehaviors();
@@ -123,6 +124,21 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
       $filesystem = new sfFilesystem();
       $filesystem->remove(sfFinder::type('any')->discard('.sf')->in($subDir));
     }
+  }
+
+  /**
+   * Listens to the template.filter_parameters event.
+   *
+   * @param  sfEvent $event       An sfEvent instance
+   * @param  array   $parameters  An array of template parameters to filter
+   *
+   * @return array   The filtered parameters array
+   */
+  public function filterTemplateParameters(sfEvent $event, $parameters)
+  {
+    $parameters['op_config']  = new opConfig();
+    sfOutputEscaper::markClassAsSafe('opConfig');
+    return $parameters;
   }
 
   /**
