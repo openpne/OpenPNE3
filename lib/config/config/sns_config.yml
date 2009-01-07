@@ -15,3 +15,26 @@ general:
     Default:    "sns@example.com"
     IsRequired: true
 
+  enable_pc:
+    Name:      "enable_pc"
+    Caption:   "PC版使用設定"
+    FormType:  "radio"
+    ValueType: "text"
+    IsConfig:   true
+    IsRequired: true
+    Default:    1
+    Choices:
+      - "使用しない"
+      - "使用する"
+
+  enable_mobile:
+    Name:      "enable_mobile"
+    Caption:   "携帯版使用設定"
+    FormType:  "radio"
+    ValueType: "text"
+    IsConfig:   true
+    IsRequired: true
+    Default:    1
+    Choices:
+      - "使用しない"
+      - "使用する"

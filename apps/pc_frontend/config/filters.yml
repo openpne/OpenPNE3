@@ -1,4 +1,8 @@
 rendering: ~
+
+enable_app:
+  class: opCheckEnabledApplicationFilter
+
 security:  ~
 
 emoji:

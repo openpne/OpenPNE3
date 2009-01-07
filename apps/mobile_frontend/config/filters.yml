@@ -1,4 +1,10 @@
 rendering: ~
+
+enable_app:
+  class: opCheckEnabledApplicationFilter
+  param:
+    app: mobile
+
 security:  ~
 
 deny:
