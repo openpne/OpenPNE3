@@ -20,7 +20,9 @@ include_information_box('information', $body)
 </td>
 
 <td valign="top">
+<?php include_customizes('invite', 'before') ?>
 <?php echo link_to(__('友人を誘う'), 'member/invite') ?><br>
+<?php include_customizes('invite', 'after') ?>
 </td>
 </tr>
 
