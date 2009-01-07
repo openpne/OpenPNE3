@@ -19,15 +19,11 @@
 <?php echo $sf_content ?>
 
 <a name="#bottom"></a>
-
-<hr color="#0d6ddf">
-
-■<?php echo link_to('ﾛｸﾞｱｳﾄ', 'member/logout') ?><br>
-
+<?php if(!include_slot('op_mobile_footer')): ?>
 <table width="100%">
 <tbody><tr><td align="center" bgcolor="#0d6ddf">
-<font color="#eeeeee"><font color="#eeeeee"><?php echo link_to('ﾎｰﾑ', 'member/home') ?></font> / <a href="#top"><font color="#eeeeee">↑上へ</font></a> / <a href="#bottom"><font color="#eeeeee">下へ</font></a></font><br>
+<font color="#eeeeee"><a href="<?php echo url_for('member/home') ?>" accesskey="0"><font color="#eeeeee">0.ﾎｰﾑ</font></a> / <a href="#top" accesskey="2"><font color="#eeeeee">2.上へ</font></a> / <a href="#bottom" accesskey="8"><font color="#eeeeee">8.下へ</font></a></font><br>
 </td></tr></tbody></table>
-
+<?php endif; ?>
 </body>
 </html>
