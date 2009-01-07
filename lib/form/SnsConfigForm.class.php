@@ -11,83 +11,38 @@
 /**
  * SnsConfig form.
  *
- * @package    form
- * @subpackage sns_config
+ * @package    OpenPNE
+ * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class SnsConfigForm extends sfForm
+class SnsConfigForm extends OpenPNEFormAutoGenerate
 {
   public function configure()
   {
-    $widgets = array();
-    $validators = array();
-    $labels = array();
-    $defaults = array();
-
     foreach (sfConfig::get('openpne_sns_config') as $key => $value)
     {
-      $widgets[$key] = $this->generateWidget($value);
-      $validators[$key] = $this->generateValidator($value);
-      $labels[$key] = $value['caption'];
-      $defaults[$key] = opConfig::get($key);
+      $this->setWidget($key, $this->generateWidget($value));
+      $this->setValidator($key, $this->generateValidator($value));
+      $this->widgetSchema->setLabel($key, $value['Caption']);
+      $this->setDefault($key, opConfig::get($key));
     }
-
-    $this->setWidgets($widgets);
-    $this->setValidators($validators);
-    $this->widgetSchema->setLabels($labels);
-    $this->setDefaults($defaults);
 
     $this->widgetSchema->setNameFormat('sns_config[%s]');
-  }
-
-  public function generateWidget($config)
-  {
-    switch ($config['type']) {
-      case 'select':
-        $obj = new sfWidgetFormSelect(array('choices' => $this->generateChoices($config['choices_type'])));
-        break;
-      case 'selectMany':
-        $obj = new sfWidgetFormSelectMany(array('choices' => $this->generateChoices($config['choices_type'])));
-        break;
-      case 'input':
-      default:
-        $obj = new sfWidgetFormInput();
-    }
-
-    return $obj;
-  }
-
-  public function generateValidator($config)
-  {
-    switch ($config['type']) {
-      case 'select':
-      case 'selectMany':
-        $obj = new sfValidatorChoiceMany(array('choices' => $this->generateChoices($config['choices_type'])));
-        break;
-      case 'input':
-      default:
-        $obj = new sfValidatorString(array_merge($config['option'], array('trim' => true)));
-    }
-
-    return $obj;
   }
 
   public function save()
   {
     $config = sfConfig::get('openpne_sns_config');
-    foreach ($this->getValues() as $key => $value) {
+    foreach ($this->getValues() as $key => $value)
+    {
       $snsConfig = SnsConfigPeer::retrieveByName($key);
-      if (!$snsConfig) {
+      if (!$snsConfig)
+      {
         $snsConfig = new SnsConfig();
         $snsConfig->setName($key);
       }
-
       $snsConfig->setValue($value);
       $snsConfig->save();
     }
-  }
-
-  public function generateChoices($mode)
-  {
   }
 }

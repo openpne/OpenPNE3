@@ -1,14 +1,17 @@
 general:
   sns_name:
-    caption:  "SNS名"
-    type:     "input"
-    default:  "MySNS"
-    option:
-      required: true
+    Name:     "sns_name"
+    Caption:  "SNS名"
+    FormType: "input"
+    ValueType: "text"
+    Default:   "MySNS"
+    IsRequired: true
 
   admin_mail_address:
-    caption: "管理者メールアドレス"
-    type:    "input"
-    default: "sns@example.com"
-    option:
-      required: true
+    Name:      "admin_mail_address"
+    Caption:   "管理者メールアドレス"
+    FormType:  "input"
+    ValueType:  "mail_address"
+    Default:    "sns@example.com"
+    IsRequired: true
+
