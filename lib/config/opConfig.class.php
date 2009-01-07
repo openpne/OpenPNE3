@@ -35,7 +35,7 @@ class opConfig extends sfConfig implements ArrayAccess
       $result = SnsConfigPeer::get($name, $default);
       if (is_null($result))
       {
-        $result = $setting[$name]['default'];
+        $result = $setting[$name]['Default'];
       }
     }
 
