@@ -1,4 +1,4 @@
-<?php include_page_title(OpenPNEConfig::get('sns_name')) ?>
+<?php include_page_title(opConfig::get('sns_name')) ?>
 
 <?php
 $body = '';

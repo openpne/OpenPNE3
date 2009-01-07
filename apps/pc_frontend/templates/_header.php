@@ -3,13 +3,13 @@
 <head>
 <?php include_http_metas() ?>
 <?php include_metas() ?>
-<title><?php echo OpenPNEConfig::get('sns_name') ?></title>
+<title><?php echo opConfig::get('sns_name') ?></title>
 </head>
 <body><div id="Body">
 <div id="Container">
 
 <div id="Header">
-<h1><?php echo link_to(OpenPNEConfig::get('sns_name'), '@homepage') ?></h1>
+<h1><?php echo link_to(opConfig::get('sns_name'), '@homepage') ?></h1>
 
 <div id="globalNav">
 <?php include_component('default', 'globalNavi') ?>

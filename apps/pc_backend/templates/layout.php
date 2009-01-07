@@ -5,13 +5,13 @@
 <?php include_http_metas() ?>
 <?php include_metas() ?>
 
-<title><?php echo OpenPNEConfig::get('sns_name') ?>管理画面</title>
+<title><?php echo opConfig::get('sns_name') ?>管理画面</title>
 
 </head>
 <body id="<?php echo $sf_request->getParameter('module').'_'.$sf_request->getParameter('action') ?>"<?php if (!$sf_user->isAuthenticated()) : ?> class="insecure"<?php endif; ?>>
 
 <div id="header">
-<h1><?php echo OpenPNEConfig::get('sns_name') ?>管理画面</h1>
+<h1><?php echo opConfig::get('sns_name') ?>管理画面</h1>
 </div>
 
 <?php if ($sf_user->isAuthenticated()) : ?>

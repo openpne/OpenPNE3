@@ -45,6 +45,6 @@ class MemberConfigPcAddressForm extends MemberConfigForm
     $mail = new sfOpenPNEMailSend();
     $mail->setSubject('メールアドレス変更ページのお知らせ');
     $mail->setTemplate('global/changePCAddressMail', $options);
-    $mail->send($to, OpenPNEConfig::get('admin_mail_address'));
+    $mail->send($to, opConfig::get('admin_mail_address'));
   }
 }
