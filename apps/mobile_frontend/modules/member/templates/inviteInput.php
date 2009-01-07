@@ -1,4 +1,4 @@
-<?php include_page_title('友人を'.opConfig::get('sns_name').'に招待する') ?>
+<?php include_page_title('友人を'.$op_config['sns_name'].'に招待する') ?>
 
 <form action="<?php echo url_for('member/invite') ?>" method="post">
 <?php echo $form ?>

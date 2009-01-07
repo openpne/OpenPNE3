@@ -1,7 +1,7 @@
 <html>
 <head>
 <?php include_http_metas() ?>
-<title><?php echo opConfig::get('sns_name') ?></title>
+<title><?php echo $op_config['sns_name'] ?></title>
 <?php if ($sf_request->getMobile()->isSoftBank()) : ?>
 <style type="text/css">
 *{font-size:small;}

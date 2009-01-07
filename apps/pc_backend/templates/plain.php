@@ -3,7 +3,7 @@
 <head>
 <?php include_http_metas() ?>
 <?php include_metas() ?>
-<title><?php echo opConfig::get('sns_name') ?></title>
+<title><?php echo $op_config['sns_name'] ?></title>
 </head>
 <body>
 
