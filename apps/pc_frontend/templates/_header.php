@@ -3,7 +3,11 @@
 <head>
 <?php include_http_metas() ?>
 <?php include_metas() ?>
+<?php if ($op_config['sns_title']) : ?>
+<title><?php echo $op_config['sns_title'] ?></title>
+<?php else: ?>
 <title><?php echo $op_config['sns_name'] ?></title>
+<?php endif; ?>
 </head>
 <body><div id="Body">
 <div id="Container">

@@ -24,6 +24,10 @@ class SnsConfigForm extends OpenPNEFormAutoGenerate
       $this->setWidget($key, $this->generateWidget($value));
       $this->setValidator($key, $this->generateValidator($value));
       $this->widgetSchema->setLabel($key, $value['Caption']);
+      if (isset($value['Help']))
+      {
+        $this->widgetSchema->setHelp($key, $value['Help']);
+      }
       $this->setDefault($key, opConfig::get($key));
     }
 
