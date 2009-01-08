@@ -85,4 +85,30 @@ class opToolkit
     $subject = str_replace(array_values($list), array_keys($list), $subject);
     return array($list, $subject);
   }
+
+  public static function isEnabledRegistration($mode = '')
+  {
+    $registration = opConfig::get('enable_registration');
+    if ($registration == 3)
+    {
+      return true;
+    }
+
+    if (!$mode && $registration)
+    {
+      return true;
+    }
+
+    if ($mode == 'mobile' && $registration == 1)
+    {
+      return true;
+    }
+
+    if ($mode == 'pc' && $registration == 2)
+    {
+      return true;
+    }
+
+    return false;
+  }
 }

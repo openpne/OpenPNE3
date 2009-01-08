@@ -72,6 +72,9 @@ abstract class sfOpenPNEMemberAction extends sfActions
   */
   public function executeRegisterInput($request)
   {
+    $mode = (sfConfig::get('app_is_mobile') ? 'mobile' : 'pc');
+    $this->forward404Unless(opToolkit::isEnabledRegistration($mode));
+
     $this->form = $this->getUser()->getAuthAdapter()->getAuthRegisterForm();
 
     if ($request->isMethod('post'))
@@ -243,7 +246,10 @@ abstract class sfOpenPNEMemberAction extends sfActions
   */
   public function executeInvite($request)
   {
-    if (!$this->getUser()->getAuthAdapter()->getAuthConfig('invite_mode'))
+    if (
+      !$this->getUser()->getAuthAdapter()->getAuthConfig('invite_mode')
+      || !opToolkit::isEnabledRegistration()
+    )
     {
       return sfView::ERROR;
     }

@@ -19,16 +19,28 @@ class SnsConfigForm extends OpenPNEFormAutoGenerate
 {
   public function configure()
   {
-    foreach (sfConfig::get('openpne_sns_config') as $key => $value)
+    $snsConfig = sfConfig::get('openpne_sns_config');
+    $category = sfConfig::get('openpne_sns_category');
+    if (empty($category[$this->getOption('category')]))
     {
-      $this->setWidget($key, $this->generateWidget($value));
-      $this->setValidator($key, $this->generateValidator($value));
-      $this->widgetSchema->setLabel($key, $value['Caption']);
-      if (isset($value['Help']))
+      return false;
+    }
+
+    foreach ($category[$this->getOption('category')] as $configName)
+    {
+      if (empty($snsConfig[$configName]))
       {
-        $this->widgetSchema->setHelp($key, $value['Help']);
+        continue;
       }
-      $this->setDefault($key, opConfig::get($key));
+
+      $this->setWidget($configName, $this->generateWidget($snsConfig[$configName]));
+      $this->setValidator($configName, $this->generateValidator($snsConfig[$configName]));
+      $this->widgetSchema->setLabel($configName, $snsConfig[$configName]['Caption']);
+      if (isset($snsConfig[$configName]['Help']))
+      {
+        $this->widgetSchema->setHelp($configName, $snsConfig[$configName]['Help']);
+      }
+      $this->setDefault($configName, opConfig::get($configName));
     }
 
     $this->widgetSchema->setNameFormat('sns_config[%s]');

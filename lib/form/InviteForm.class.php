@@ -33,11 +33,18 @@ class InviteForm extends MemberConfigPcAddressForm
     {
       $mailValidator = new sfValidatorMobileEmail();
       $values['mobile_address'] = $mailValidator->clean($values['mail_address']);
+      $mode = 'mobile';
     }
     else
     {
       $mailValidator = new opValidatorPCEmail();
       $values['pc_address'] = $mailValidator->clean($values['mail_address']);
+      $mode = 'pc';
+    }
+
+    if (!opToolkit::isEnabledRegistration($mode))
+    {
+      throw new sfValidatorError($validator, 'invalid');
     }
 
     return $values;

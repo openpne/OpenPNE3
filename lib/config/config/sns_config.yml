@@ -29,7 +29,6 @@ general:
     Caption:   "PC版使用設定"
     FormType:  "radio"
     ValueType: "text"
-    IsConfig:   true
     IsRequired: true
     Default:    1
     Choices:
@@ -41,9 +40,23 @@ general:
     Caption:   "携帯版使用設定"
     FormType:  "radio"
     ValueType: "text"
-    IsConfig:   true
     IsRequired: true
     Default:    1
     Choices:
       - "使用しない"
       - "使用する"
+
+authentication:
+  enable_registration:
+    Name:      "enable_registration"
+    Caption:   "登録の可否"
+    FormType:  "radio"
+    ValueType: "integer"
+    IsRequired: true
+    Default:    3
+    Choices:
+      3: "PC・携帯両方から登録可"
+      2: "PCからのみ登録可"
+      1: "携帯からのみ登録可"
+      0: "登録一時停止"
+

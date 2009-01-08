@@ -25,11 +25,13 @@ class snsActions extends sfActions
   */
   public function executeConfig($request)
   {
-    $this->form = new SnsConfigForm();
-
-    if ($request->isMethod('post')) {
+    $category = $request->getParameter('category', 'general');
+    $this->form = new SnsConfigForm(array(), array('category' => $category));
+    if ($request->isMethod('post'))
+    {
       $this->form->bind($request->getParameter('sns_config'));
-      if ($this->form->isValid()) {
+      if ($this->form->isValid())
+      {
         $this->form->save();
       }
     }
