@@ -5,20 +5,20 @@
 
 <div class="item"><table><tbody>
 <?php foreach ($pager->getResults() as $member): ?>
-<?php $sf_user->setAttribute('id', $member->getId()) ?>
+<?php $comp_vars = array('id' => $member->getId()) ?>
 
 <tr>
 
-<?php include_customizes('id_photo', 'before') ?>
+<?php include_customizes('id_photo', 'before', $comp_vars) ?>
 <td class="photo">
 <?php echo link_to(image_tag_sf_image($member->getImageFilename(), array('size' => '76x76')), 'member/profile?id=' . $member->getId()); ?><br />
 <?php echo link_to( $member->getName(), 'member/profile?id=' . $member->getId()) ?>
 </td>
-<?php include_customizes('id_photo', 'after') ?>
+<?php include_customizes('id_photo', 'after', $comp_vars) ?>
 
-<?php include_customizes('id_friend', 'before') ?>
+<?php include_customizes('id_friend', 'before', $comp_vars) ?>
 <td><?php echo link_to(__('フレンドから外す'), 'friend/unlink?id='.$member->getId()) ?></td>
-<?php include_customizes('id_friend', 'after') ?>
+<?php include_customizes('id_friend', 'after', $comp_vars) ?>
 </tr>
 <?php endforeach; ?>
 </tbody></table></div>

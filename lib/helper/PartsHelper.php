@@ -103,12 +103,12 @@ function include_parts($parts_name, $id, $option = array())
 }
 
 /**
- * Includes customizes.
+ * Gets customizes.
  *
  * @param string $id
  * @param string $name
  */
-function include_customizes($id, $name)
+function get_customizes($id, $name, $vars = null)
 {
   $context = sfContext::getInstance();
 
@@ -123,8 +123,10 @@ function include_customizes($id, $name)
       $moduleName = $lastActionStack->getModuleName();
     }
     $actionName = $customize[1];
-    $vars = $lastActionStack->getActionInstance()->getVarHolder()->getAll();
-
+    if (!isset($vars))
+    {
+      $vars = $lastActionStack->getActionInstance()->getVarHolder()->getAll();
+    }
     if ($customize[2])
     {
       $content .= get_component($moduleName, $actionName, $vars);
@@ -136,7 +138,18 @@ function include_customizes($id, $name)
     }
   }
 
-  echo $content;
+  return $content;
+}
+
+/**
+ * Includes customizes.
+ *
+ * @param string $id
+ * @param string $name
+ */
+function include_customizes($id, $name, $vars = null)
+{
+  echo get_customizes($id, $name, $vars);
 }
 
 function _is_disabled_plugin_dir($directory)
