@@ -40,6 +40,8 @@ class communityActions extends sfOpenPNECommunityAction
   */
   public function executeSearch($request)
   {
+    sfConfig::set('sf_navi_type', 'default');
+
     $params = $request->getParameter('community', array());
     if ($request->hasParameter('search_query'))
     {
