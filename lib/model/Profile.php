@@ -17,7 +17,28 @@
  */ 
 class Profile extends BaseProfile
 {
-	public function hydrate($row, $startcol = 0, $rehydrate = false)
+  public function getOptionsArray()
+  {
+    $result = array();
+
+    $options = $this->getProfileOptions();
+
+    foreach ($options as $option)
+    {
+      $result[$option->getId()] = $option->getValue();
+    }
+
+    return $result;
+  }
+
+  public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
+  {
+    $result = parent::toArray($keyType, $includeLazyLoadColumns);
+    $result = $result + $this->getCurrentProfileI18n()->toArray($keyType, $includeLazyLoadColumns);
+    return $result;
+  }
+
+  public function hydrate($row, $startcol = 0, $rehydrate = false)
   {
     $this->setCulture(sfContext::getInstance()->getUser()->getCulture());
     return parent::hydrate($row, $startcol, $rehydrate);

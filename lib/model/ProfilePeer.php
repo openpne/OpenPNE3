@@ -17,6 +17,13 @@
  */ 
 class ProfilePeer extends BaseProfilePeer
 {
+  public static function retrievesAll()
+  {
+    $c = new Criteria();
+    $c->addAscendingOrderByColumn(ProfilePeer::SORT_ORDER);
+    return self::doSelect($c);
+  }
+
   public static function retrieveByIsDispRegist()
   {
     $c = new Criteria();

@@ -17,7 +17,7 @@
  */
 class opFormItemGenerator
 {
-  public static function generateWidget($field, $choices = array())
+  public static function generateWidgetParams($field, $choices = array())
   {
     $params = array();
 
@@ -40,7 +40,15 @@ class opFormItemGenerator
       $params['default'] = $field['Default'];
     }
 
-    switch ($field['FormType']) {
+    return $params;
+  }
+
+  public static function generateWidget($field, $choices = array())
+  {
+    $params = self::generateWidgetParams($field, $choices);
+
+    switch ($field['FormType'])
+    {
       case 'checkbox':
         $obj = new sfWidgetFormSelectCheckbox($params);
         break;
@@ -64,6 +72,7 @@ class opFormItemGenerator
         $obj = new sfWidgetFormInputPassword($params);
         break;
       case 'date':
+        unset($params['choices']);
         $params['culture'] = sfContext::getInstance()->getUser()->getCulture();
         $params['month_format'] = 'number';
         $obj = new opWidgetFormDate($params);
@@ -158,5 +167,81 @@ class opFormItemGenerator
     }
 
     return $obj;
+  }
+
+  public static function generateSearchWidget($field, $choices = array())
+  {
+    $params = self::generateWidgetParams($field, $choices);
+
+    switch ($field['FormType'])
+    {
+      // selection
+      case 'checkbox':
+      case 'select':
+      case 'radio':
+        $obj = new sfWidgetFormSelectCheckbox($params);
+        break;
+      // doesn't allow searching
+      case 'increased_input':
+      case 'password':
+        $obj = null;
+        break;
+      // date
+      case 'date':
+        unset($params['choices']);
+        $params['culture'] = sfContext::getInstance()->getUser()->getCulture();
+        $params['month_format'] = 'number';
+        $params['can_be_empty'] = true;
+        $obj = new opWidgetFormDate($params);
+        break;
+      // text and something else
+      default:
+        $obj = new sfWidgetFormInput($params);
+    }
+
+    return $obj;
+  }
+
+  public static function filterSearchCriteria($c, $column, $value, $field, $choices = array())
+  {
+    if (!$c)
+    {
+      $c = new Criteria();
+    }
+
+    if (empty($value))
+    {
+      return $c;
+    }
+
+    switch ($field['FormType'])
+    {
+      // selection
+      case 'checkbox':
+      case 'select':
+      case 'radio':
+        if (count($value) == 1)
+        {
+          $c->add($column, array_shift($value));
+        }
+        else
+        {
+          foreach ($value as $item)
+          {
+            $c->addOr($column, $item);
+          }
+        }
+        break;
+      // doesn't allow searching
+      case 'increased_input':
+      case 'password':
+        // pass
+        break;
+      // text and something else
+      default:
+        $c->add($column, '%'.$value.'%', Criteria::LIKE);
+    }
+
+    return $c;
   }
 }

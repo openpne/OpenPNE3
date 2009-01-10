@@ -11,10 +11,9 @@
 /**
  * MemberProfile form.
  *
- * @package    form
- * @subpackage member_profile
+ * @package    OpenPNE
+ * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
- * @version    SVN: $Id: sfPropelFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
  */
 class MemberProfileForm extends OpenPNEFormAutoGenerate
 {
@@ -22,7 +21,8 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
   {
     parent::__construct(array(), $options, $CSRFSecret);
 
-    foreach ($profileMember as $profile) {
+    foreach ($profileMember as $profile)
+    {
       $this->setDefault($profile->getName(), $profile->getValue());
     }
   }
@@ -48,7 +48,7 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
 
       $memberProfile = MemberProfilePeer::retrieveByMemberIdAndProfileId($memberId, $profile->getId());
 
-      if ($formType == 'checkbox')
+      if ($formType === 'checkbox')
       {
         if ($memberProfile)
         {
@@ -56,11 +56,6 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
           $c->add(MemberProfilePeer::TREE_KEY, $memberProfile->getTreeKey());
           MemberProfilePeer::doDelete($c);
         }
-        if (!is_array($value))
-        {
-          continue;
-        } 
-
         $memberProfile = new MemberProfile();
         $memberProfile->makeRoot();
         $memberProfile->setMemberId($memberId);
@@ -68,6 +63,11 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
         $memberProfile->save();
         $memberProfile->setScopeIdValue($memberProfile->getId());
         $memberProfile->save();
+
+        if (!is_array($value))
+        {
+          continue;
+        }
 
         foreach ($value as $v)
         {
@@ -77,6 +77,43 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
           $mp->setProfileOptionId($v);
           $mp->insertAsLastChildOf($memberProfile);
           $mp->save();
+        }
+      }
+      elseif ($formType === 'date')
+      {
+        $pieces = explode('-', $value);
+
+        if ($memberProfile)
+        {
+          $c = new Criteria();
+          $c->add(MemberProfilePeer::TREE_KEY, $memberProfile->getTreeKey());
+          MemberProfilePeer::doDelete($c);
+        }
+        $memberProfile = new MemberProfile();
+        $memberProfile->makeRoot();
+        $memberProfile->setMemberId($memberId);
+        $memberProfile->setProfileId($profile->getId());
+        $memberProfile->save();
+        $memberProfile->setScopeIdValue($memberProfile->getId());
+        $memberProfile->save();
+
+        $c = new Criteria();
+        $c->addAscendingOrderByColumn(ProfileOptionPeer::SORT_ORDER);
+        $options = $profile->getProfileOptions($c);
+        foreach ($options as $i => $option)
+        {
+          $_value = null;
+          if (isset($pieces[$i]))
+          {
+            $_value = (int)$pieces[$i];
+          }
+          $childProfile = new MemberProfile();
+          $childProfile->setMemberId($memberId);
+          $childProfile->setProfileId($profile->getId());
+          $childProfile->setProfileOptionId($option->getId());
+          $childProfile->setValue($_value);
+          $childProfile->insertAsLastChildOf($memberProfile);
+          $childProfile->save();
         }
       }
       else
@@ -89,7 +126,7 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
 
         $memberProfile->setMemberId($memberId);
         $memberProfile->setProfileId($profile->getId());
-        if ($formType == 'select' || $formType == 'radio')
+        if ($formType === 'select' || $formType === 'radio')
         {
           $memberProfile->setProfileOptionId($value);
         }
@@ -122,9 +159,16 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
     $this->setProfileWidgets($profiles);
   }
 
+  public function setAllWidgets()
+  {
+    $profiles = ProfilePeer::retrievesAll();
+    $this->setProfileWidgets($profiles);
+  }
+
   protected function setProfileWidgets($profiles)
   {
-    foreach ($profiles as $profile) {
+    foreach ($profiles as $profile)
+    {
       $profile_i18n = $profile->getProfileI18ns();
       $profileWithI18n = $profile->toArray() + $profile_i18n[0]->toArray();
       $this->widgetSchema[$profile->getName()] = $this->generateWidget($profileWithI18n, $this->getFormOptionsValue($profile->getId()));
@@ -137,7 +181,8 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
     $result = array();
     $options = ProfileOptionPeer::retrieveByProfileId($profileId);
 
-    foreach ($options as $option) {
+    foreach ($options as $option)
+    {
       $result[] = $option->getId();
     }
 
@@ -149,7 +194,8 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
     $result = array();
     $options = ProfileOptionPeer::retrieveByProfileId($profileId);
 
-    foreach ($options as $option) {
+    foreach ($options as $option)
+    {
       $result[$option->getId()] = $option->getValue();
     }
 

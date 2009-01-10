@@ -119,4 +119,9 @@ class sfOpenPNEWebRequest extends sfWebRequest
 
     return true;
   }
+
+  public function getCurrentQueryString()
+  {
+    return http_build_query($this->getGetParameters());
+  }
 }

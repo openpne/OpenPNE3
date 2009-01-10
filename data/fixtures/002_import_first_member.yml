@@ -14,10 +14,37 @@ MemberProfile:
 
   first_member_profile_birthday:
     lft_key: 1
-    rht_key: 2
+    rht_key: 8
+    tree_key: 2
     member_id: first_member
     profile_id: profile_birthday
-    value: "1988-04-23"
+
+  first_member_profile_birthday_year:
+    lft_key: 2
+    rht_key: 3
+    tree_key: 2
+    member_id: first_member
+    profile_id: profile_birthday
+    profile_option_id: profile_option_birthday_year
+    value: "1988"
+
+  first_member_profile_birthday_month:
+    lft_key: 4
+    rht_key: 5
+    tree_key: 2
+    member_id: first_member
+    profile_id: profile_birthday
+    profile_option_id: profile_option_birthday_month
+    value: "4"
+
+  first_member_profile_birthday_day:
+    lft_key: 6
+    rht_key: 7
+    tree_key: 2
+    member_id: first_member
+    profile_id: profile_birthday
+    profile_option_id: profile_option_birthday_day
+    value: "23"
 
   first_member_profile_self_intro:
     lft_key: 1

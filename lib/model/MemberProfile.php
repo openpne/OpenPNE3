@@ -8,13 +8,6 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-/**
- * Subclass for representing a row from the 'member_profile' table.
- *
- * 
- *
- * @package lib.model
- */ 
 class MemberProfile extends BaseMemberProfileNestedSet
 {
   private $name;
@@ -22,25 +15,30 @@ class MemberProfile extends BaseMemberProfileNestedSet
 
   public function __toString()
   {
+    if ($this->getProfile()->getFormType() === 'date')
+    {
+      return (string)$this->getValue();
+    }
 
-    if ($this->getRhtKey() != 2) {
-      $string = "";
+    if ($this->getRhtKey() != 2)
+    {
+      $pieces = array();
       $children = $this->getChildren();
 
-      foreach ($children as $child) {
-        if ($child->getProfileOptionId()) {
+      foreach ($children as $child)
+      {
+        if ($child->getProfileOptionId())
+        {
           $option = ProfileOptionPeer::retrieveByPk($child->getProfileOptionId());
-          if (!empty($string)) {
-            $string .= ", ";
-          }
-          $string .= $option->getValue();
+          $pieces[] = $option->getValue();
         }
       }
 
-      return $string;
+      return implode(', ', $pieces);
     }
 
-    if ($this->getProfileOptionId()) {
+    if ($this->getProfileOptionId())
+    {
       $option = ProfileOptionPeer::retrieveByPk($this->getProfileOptionId());
       return (string)$option->getValue();
     }
@@ -50,15 +48,39 @@ class MemberProfile extends BaseMemberProfileNestedSet
 
   public function getValue()
   {
-    if ($this->getRhtKey() != 2) {
+    if ($this->getProfile()->getFormType() === 'date' && !$this->isRoot())
+    {
+      return parent::getValue();
+    }
+
+    if ($this->getRhtKey() != 2)
+    {
       $children = $this->getChildren();
       $value = array();
-      foreach ($children as $child) {
-        $value[] = $child->getProfileOptionId();
+      foreach ($children as $child)
+      {
+        if ($child->getProfile()->getFormType() === 'date')
+        {
+          $value[] = $child->getValue();
+        }
+        elseif ($child->getProfileOptionId())
+        {
+          $option = ProfileOptionPeer::retrieveByPk($child->getProfileOptionId());
+          $value[] = $option->getValue();
+        }
       }
+
+      if ($this->getProfile()->getFormType() === 'date' && $this->isRoot())
+      {
+        $obj = new DateTime();
+        $obj->setDate($value[0], $value[1], $value[2]);
+        return $obj->format('Y-m-d');
+      }
+
       return $value;
     }
-    if ($this->getProfileOptionId()) {
+    if ($this->getProfileOptionId())
+    {
       return $this->getProfileOptionId();
     }
 

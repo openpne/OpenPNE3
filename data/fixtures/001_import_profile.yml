@@ -54,6 +54,18 @@ ProfileOption:
     profile_id: profile_sex
     sort_order: 1
 
+  profile_option_birthday_year:
+    profile_id: profile_birthday
+    sort_order: 0
+
+  profile_option_birthday_month:
+    profile_id: profile_birthday
+    sort_order: 1
+
+  profile_option_birthday_day:
+    profile_id: profile_birthday
+    sort_order: 2
+
 ProfileOptionI18n:
   profile_option_sex_man:
     id: profile_option_sex_man

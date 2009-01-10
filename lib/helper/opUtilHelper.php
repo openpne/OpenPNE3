@@ -24,13 +24,13 @@
                              "%d" will be converted to number of page.
  * @return string  A navigation for paginated list.
  */
-function pager_navigation($pager, $link_to, $is_total = true)
+function pager_navigation($pager, $link_to, $is_total = true, $query_string = '')
 {
   $navigation = '';
 
   if ($pager->haveToPaginate()) {
     if ($pager->getPreviousPage() != $pager->getPage()) {
-      $navigation .= link_to('&lt;前', sprintf($link_to, $pager->getPreviousPage())) . '&nbsp;';
+      $navigation .= link_to('&lt;前', sprintf($link_to, $pager->getPreviousPage()), array('query_string' => $query_string)) . '&nbsp;';
     }
   }
 
@@ -40,7 +40,7 @@ function pager_navigation($pager, $link_to, $is_total = true)
 
   if ($pager->haveToPaginate()) {
     if ($pager->getNextPage() != $pager->getPage()) {
-      $navigation .= '&nbsp;' . link_to('次&gt;', sprintf($link_to, $pager->getNextPage()));
+      $navigation .= '&nbsp;' . link_to('次&gt;', sprintf($link_to, $pager->getNextPage()), array('query_string' => $query_string));
     }
   }
 

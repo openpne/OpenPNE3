@@ -25,9 +25,7 @@ class profileActions extends sfActions
   */
   public function executeList($request)
   {
-    $criteria = new Criteria();
-    $criteria->addAscendingOrderByColumn(ProfilePeer::SORT_ORDER);
-    $this->profiles = ProfilePeer::doSelect($criteria);
+    $this->profiles = ProfilePeer::retrievesAll();
     $this->option_form = array();
 
     $criteria = new Criteria();
