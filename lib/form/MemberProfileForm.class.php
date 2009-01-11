@@ -76,14 +76,7 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
       }
       else
       {
-        if ($profile->isSingleSelect())
-        {
-          $memberProfile->setProfileOptionId($value);
-        }
-        else
-        {
-          $memberProfile->setValue($value);
-        }
+        $memberProfile->setValue($value);
         $memberProfile->save();
       }
     }

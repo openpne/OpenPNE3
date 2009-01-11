@@ -119,4 +119,14 @@ class MemberProfile extends BaseMemberProfileNestedSet
     }
     return $this->caption;
   }
+
+  public function setValue($v)
+  {
+    if ($this->getProfile()->isSingleSelect())
+    {
+      return $this->setProfileOptionId((int)$v);
+    }
+
+    return parent::setValue($v);
+  }
 }
