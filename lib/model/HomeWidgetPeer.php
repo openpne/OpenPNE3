@@ -10,6 +10,8 @@
 
 class HomeWidgetPeer extends BaseHomeWidgetPeer
 {
+  static protected $results;
+
   static public function retrieveTopWidgets()
   {
     return self::retrieveByType('top');
@@ -42,10 +44,9 @@ class HomeWidgetPeer extends BaseHomeWidgetPeer
 
   static public function retrieveByType($type)
   {
-    $c = new Criteria();
-    $c->add(self::TYPE, $type);
-    $c->addAscendingOrderByColumn(self::SORT_ORDER);
-    return self::doSelect($c);
+    $results = self::getResults();
+
+    return (isset($results[$type])) ? $results[$type] : null;
   }
 
   static public function getWidgetsIds($type)
@@ -64,5 +65,22 @@ class HomeWidgetPeer extends BaseHomeWidgetPeer
     }
 
     return $result;
+  }
+
+  static protected function getResults()
+  {
+    if (is_null(self::$results))
+    {
+      $criteria = new Criteria();
+      $criteria->addAscendingOrderByColumn(self::SORT_ORDER);
+
+      self::$results = array();
+      foreach (self::doSelect($criteria) as $object)
+      {
+        self::$results[$object->getType()][] = $object;
+      }
+    }
+
+    return self::$results;
   }
 }

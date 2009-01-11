@@ -10,11 +10,26 @@
 
 class HomeWidgetConfigPeer extends BaseHomeWidgetConfigPeer
 {
+  static protected $results;
+
   static public function retrieveByWidgetIdAndName($widgetId, $name)
   {
-    $c = new Criteria();
-    $c->add(HomeWidgetConfigPeer::HOME_WIDGET_ID, $widgetId);
-    $c->add(HomeWidgetConfigPeer::NAME, $name);
-    return self::doSelectOne($c);
+    $results = self::getResults();
+
+    return (isset($results[$widgetId][$name])) ? $results[$widgetId][$name] : null;
+  }
+
+  static protected function getResults()
+  {
+    if (is_null(self::$results))
+    {
+      self::$results = array();
+      foreach (self::doSelect(new Criteria()) as $object)
+      {
+        self::$results[$object->getHomeWidgetId()][$object->getName()] = $object;
+      }
+    }
+
+    return self::$results;
   }
 }

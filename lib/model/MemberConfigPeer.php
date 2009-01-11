@@ -17,15 +17,13 @@
  */ 
 class MemberConfigPeer extends BaseMemberConfigPeer
 {
+  static protected $results;
+
   public static function retrieveByNameAndMemberId($name, $memberId)
   {
-    $c = new Criteria();
-    $c->add(self::NAME, $name);
-    $c->add(self::MEMBER_ID, $memberId);
+    $results = self::getResultsByMemberId($memberId);
 
-    $result = self::doSelectOne($c);
-
-    return $result;
+    return (isset($results[$name])) ? $results[$name] : null;
   }
 
   public static function retrieveByNameAndValue($name, $value)
@@ -62,5 +60,22 @@ class MemberConfigPeer extends BaseMemberConfigPeer
         }
       }
     }
+  }
+
+  static protected function getResultsByMemberId($memberId)
+  {
+    if (is_null(self::$results[$memberId]))
+    {
+      $criteria = new Criteria();
+      $criteria->add(self::MEMBER_ID, $memberId);
+
+      self::$results[$memberId] = array();
+      foreach (self::doSelect($criteria) as $object)
+      {
+        self::$results[$memberId][$object->getName()] = $object;
+      }
+    }
+
+    return self::$results[$memberId];
   }
 }
