@@ -97,6 +97,8 @@ class MemberProfilePeer extends BaseMemberProfileNestedSetPeer
 
   public static function filterMemberIdByProfile($ids, $column, $value, Profile $item, $choices)
   {
+    $_result = array();
+
     $c = opFormItemGenerator::filterSearchCriteria(null, $column, $value, $item->toArray(), array());
     $c->clearSelectColumns()->addSelectColumn(self::MEMBER_ID);
     $c->setIgnoreCase(false);
