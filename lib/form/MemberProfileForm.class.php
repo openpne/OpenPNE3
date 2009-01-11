@@ -47,18 +47,14 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
       $formType = $profile->getFormType();
 
       $memberProfile = MemberProfilePeer::retrieveByMemberIdAndProfileId($memberId, $profile->getId());
+      if ($memberProfile)
+      {
+        $memberProfile->clearChildren();
+      }
+      $memberProfile = MemberProfilePeer::makeRoot($memberId, $profile->getId());
 
       if ($formType === 'checkbox')
       {
-        if ($memberProfile)
-        {
-          $c = new Criteria();
-          $c->add(MemberProfilePeer::TREE_KEY, $memberProfile->getTreeKey());
-          MemberProfilePeer::doDelete($c);
-        }
-
-        $root = MemberProfilePeer::makeRoot($memberId, $profile->getId());
-
         if (!is_array($value))
         {
           continue;
@@ -70,21 +66,13 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
           $mp->setMemberId($memberId);
           $mp->setProfileId($profile->getId());
           $mp->setProfileOptionId($v);
-          $mp->insertAsLastChildOf($root);
+          $mp->insertAsLastChildOf($memberProfile);
           $mp->save();
         }
       }
       elseif ($formType === 'date')
       {
         $pieces = explode('-', $value);
-
-        if ($memberProfile)
-        {
-          $c = new Criteria();
-          $c->add(MemberProfilePeer::TREE_KEY, $memberProfile->getTreeKey());
-          MemberProfilePeer::doDelete($c);
-        }
-        $root = MemberProfilePeer::makeRoot($memberId, $profile->getId());
 
         $c = new Criteria();
         $c->addAscendingOrderByColumn(ProfileOptionPeer::SORT_ORDER);
@@ -101,19 +89,12 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
           $childProfile->setProfileId($profile->getId());
           $childProfile->setProfileOptionId($option->getId());
           $childProfile->setValue($_value);
-          $childProfile->insertAsLastChildOf($root);
+          $childProfile->insertAsLastChildOf($memberProfile);
           $childProfile->save();
         }
       }
       else
       {
-        if (!$memberProfile)
-        {
-          $memberProfile = MemberProfilePeer::makeRoot();
-        }
-        $memberProfile->setMemberId($memberId);
-        $memberProfile->setProfileId($profile->getId());
-
         if ($formType === 'select' || $formType === 'radio')
         {
           $memberProfile->setProfileOptionId($value);

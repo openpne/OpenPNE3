@@ -80,6 +80,13 @@ class MemberProfile extends BaseMemberProfileNestedSet
     return $values;
   }
 
+  public function clearChildren()
+  {
+    $c = new Criteria();
+    $c->add(MemberProfilePeer::TREE_KEY, $this->getTreeKey());
+    MemberProfilePeer::doDelete($c);
+  }
+
   public function getFormType()
   {
     return $this->getProfile()->getFormType();

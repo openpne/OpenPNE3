@@ -147,21 +147,12 @@ class MemberProfilePeer extends BaseMemberProfileNestedSetPeer
     return $ids;
   }
 
-  public static function makeRoot($memberId = null, $profileId = null)
+  public static function makeRoot($memberId, $profileId)
   {
     $root = new MemberProfile();
     $root->makeRoot();
-
-    if ($memberId)
-    {
-      $root->setMemberId($memberId);
-    }
-
-    if ($profileId)
-    {
-      $root->setProfileId($profileId);
-    }
-
+    $root->setMemberId($memberId);
+    $root->setProfileId($profileId);
     $root->save();
 
     $root->setScopeIdValue($root->getId());
