@@ -20,7 +20,7 @@ class MemberProfile extends BaseMemberProfileNestedSet
       return (string)$this->getValue();
     }
 
-    if ($this->getRhtKey() != 2)
+    if ($this->hasChildren())
     {
       $pieces = array();
       $children = $this->getChildren();
@@ -53,7 +53,7 @@ class MemberProfile extends BaseMemberProfileNestedSet
       return parent::getValue();
     }
 
-    if ($this->getRhtKey() != 2)
+    if ($this->hasChildren())
     {
       $children = $this->getChildren();
       $value = array();
