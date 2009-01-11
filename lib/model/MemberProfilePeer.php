@@ -147,7 +147,7 @@ class MemberProfilePeer extends BaseMemberProfileNestedSetPeer
     return $ids;
   }
 
-  public static makeRoot($memberId = null, $profileId = null)
+  public static function makeRoot($memberId = null, $profileId = null)
   {
     $root = new MemberProfile();
     $root->makeRoot();
