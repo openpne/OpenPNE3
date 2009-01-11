@@ -29,10 +29,13 @@ propel:
     id: ~
     name: { type: varchar(64), index: unique, required: true }
     original_filename: { type: longvarchar }
-    bin: { type: blob }
     type: { type: varchar(64), required: true, index: true }
     created_at: ~
     updated_at: ~
+
+  file_bin:
+    file_id: { type: integer, required: true, primaryKey: true, foreignTable: file, foreignReference: id, onDelete: cascade }
+    bin: { type: blob }
 
   profile:
     id: ~

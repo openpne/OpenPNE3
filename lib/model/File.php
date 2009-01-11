@@ -50,7 +50,10 @@ class File extends BaseFile
   {
     $this->setType($obj->getType());
     $this->setOriginalFilename($obj->getOriginalName());
-    $this->setBin(file_get_contents($obj->getTempName()));
     $this->setName(strtr($obj->generateFilename(), '.', '_'));
+
+    $bin = new FileBin();
+    $bin->setBin(file_get_contents($obj->getTempName()));
+    $this->setFileBin($bin);
   }
 }
