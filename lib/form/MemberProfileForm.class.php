@@ -53,38 +53,30 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
       }
       $memberProfile = MemberProfilePeer::makeRoot($memberId, $profile->getId());
 
-      if ($formType === 'checkbox')
+      if ($profile->isMultipleSelect())
       {
-        if (!is_array($value))
+        $ids = array();
+        $_values = array();
+        if ('date' === $formType)
         {
-          continue;
-        }
-
-        foreach ($value as $v)
-        {
-          MemberProfilePeer::createChild($memberProfile, $memberId, $profile->getId(), $v);
-        }
-      }
-      elseif ($formType === 'date')
-      {
-        $pieces = explode('-', $value);
-
-        $c = new Criteria();
-        $c->addAscendingOrderByColumn(ProfileOptionPeer::SORT_ORDER);
-        $options = $profile->getProfileOptions($c);
-        foreach ($options as $i => $option)
-        {
-          $_value = null;
-          if (isset($pieces[$i]))
+          $_values = explode('-', $value);
+          $c = new Criteria();
+          $c->addAscendingOrderByColumn(ProfileOptionPeer::SORT_ORDER);
+          $options = $profile->getProfileOptions($c);
+          foreach ($options as $option)
           {
-            $_value = (int)$pieces[$i];
+            $ids[] = $option->getId();
           }
-          MemberProfilePeer::createChild($memberProfile, $memberId, $profile->getId(), $option->getId(), $_value);
         }
+        else
+        {
+          $ids = $value;
+        }
+        MemberProfilePeer::createChild($memberProfile, $memberId, $profile->getId(), $ids, $_values);
       }
       else
       {
-        if ($formType === 'select' || $formType === 'radio')
+        if ($profile->isSingleSelect())
         {
           $memberProfile->setProfileOptionId($value);
         }

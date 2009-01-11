@@ -161,19 +161,20 @@ class MemberProfilePeer extends BaseMemberProfileNestedSetPeer
     return $root;
   }
 
-  public static function createChild(MemberProfile $parent, $memberId, $profileId, $optionId, $value = null)
+  public static function createChild(MemberProfile $parent, $memberId, $profileId, $optionIds, $values = array())
   {
-    $childProfile = new MemberProfile();
-    $childProfile->setMemberId($memberId);
-    $childProfile->setProfileId($profileId);
-    $childProfile->setProfileOptionId($optionId);
-    $childProfile->insertAsLastChildOf($parent);
-    if ($value)
+    foreach ($optionIds as $i => $optionId)
     {
-      $childProfile->setValue($value);
+      $childProfile = new MemberProfile();
+      $childProfile->setMemberId($memberId);
+      $childProfile->setProfileId($profileId);
+      $childProfile->setProfileOptionId($optionId);
+      $childProfile->insertAsLastChildOf($parent);
+      if (isset($values[$i]))
+      {
+        $childProfile->setValue($values[$i]);
+      }
+      $childProfile->save();
     }
-
-    $childProfile->save();
-    return $childProfile;
   }
 }

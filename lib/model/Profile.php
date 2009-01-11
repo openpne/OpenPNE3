@@ -43,4 +43,14 @@ class Profile extends BaseProfile
     $this->setCulture(sfContext::getInstance()->getUser()->getCulture());
     return parent::hydrate($row, $startcol, $rehydrate);
   }
+
+  public function isMultipleSelect()
+  {
+    return (bool)('date' === $this->getFormType() || 'checkbox' === $this->getFormType());
+  }
+
+  public function isSingleSelect()
+  {
+    return (bool)('radio' === $this->getFormType() || 'select' === $this->getFormType());
+  }
 }
