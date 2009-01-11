@@ -10,37 +10,25 @@
 
 class MemberProfile extends BaseMemberProfileNestedSet
 {
-  private $name;
-  private $caption;
+  protected
+    $name,
+    $caption;
 
   public function __toString()
   {
-    if ($this->getProfile()->getFormType() === 'date')
+    if ('date' !== $this->getFormType())
     {
-      return (string)$this->getValue();
-    }
-
-    if ($this->hasChildren())
-    {
-      $pieces = array();
-      $children = $this->getChildren();
-
-      foreach ($children as $child)
+      if ($this->getProfileOptionId())
       {
-        if ($child->getProfileOptionId())
-        {
-          $option = ProfileOptionPeer::retrieveByPk($child->getProfileOptionId());
-          $pieces[] = $option->getValue();
-        }
+        $option = ProfileOptionPeer::retrieveByPk($this->getProfileOptionId());
+        return (string)$option->getValue();
       }
 
-      return implode(', ', $pieces);
-    }
-
-    if ($this->getProfileOptionId())
-    {
-      $option = ProfileOptionPeer::retrieveByPk($this->getProfileOptionId());
-      return (string)$option->getValue();
+      $children = $this->getChildrenValues();
+      if ($children)
+      {
+        return implode(', ', $children);
+      }
     }
 
     return (string)$this->getValue();
@@ -48,52 +36,65 @@ class MemberProfile extends BaseMemberProfileNestedSet
 
   public function getValue()
   {
-    if ($this->getProfile()->getFormType() === 'date' && !$this->isRoot())
-    {
-      return parent::getValue();
-    }
-
-    if ($this->hasChildren())
-    {
-      $children = $this->getChildren();
-      $value = array();
-      foreach ($children as $child)
-      {
-        if ($child->getProfile()->getFormType() === 'date')
-        {
-          $value[] = $child->getValue();
-        }
-        elseif ($child->getProfileOptionId())
-        {
-          $option = ProfileOptionPeer::retrieveByPk($child->getProfileOptionId());
-          $value[] = $option->getValue();
-        }
-      }
-
-      if ($this->getProfile()->getFormType() === 'date' && $this->isRoot())
-      {
-        $obj = new DateTime();
-        $obj->setDate($value[0], $value[1], $value[2]);
-        return $obj->format('Y-m-d');
-      }
-
-      return $value;
-    }
-    if ($this->getProfileOptionId())
+    if ('date' !== $this->getFormType() && $this->getProfileOptionId())
     {
       return $this->getProfileOptionId();
+    }
+
+    $children = $this->getChildrenValues();
+    if ($children)
+    {
+      if ('date' === $this->getFormType())
+      {
+        $obj = new DateTime();
+        $obj->setDate($children[0], $children[1], $children[2]);
+        return $obj->format('Y-m-d');
+      }
+      return $children;
     }
 
     return parent::getValue();
   }
 
+  protected function getChildrenValues()
+  {
+    $values = array();
+
+    if ($this->hasChildren())
+    {
+      $children = $this->getChildren();
+      foreach ($children as $child)
+      {
+        if ('date' === $child->getFormType())
+        {
+          $values[] = $child->getValue();
+        }
+        elseif ($child->getProfileOptionId())
+        {
+          $option = ProfileOptionPeer::retrieveByPk($child->getProfileOptionId());
+          $values[] = $option->getValue();
+        }
+      }
+    }
+
+    return $values;
+  }
+
+  public function getFormType()
+  {
+    return $this->getProfile()->getFormType();
+  }
+
   public function hydrateProfiles($row)
   {
-    try {
+    try
+    {
       $col = parent::hydrate($row);
       $this->name = $row[$col+0];
       $this->caption = $row[$col+1];
-    } catch (Exception $e) {
+    }
+    catch (Exception $e)
+    {
       throw new PropelException("Error populating MemberProfile object", $e);
     }
   }
