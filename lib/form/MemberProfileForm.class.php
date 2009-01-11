@@ -62,12 +62,7 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
 
         foreach ($value as $v)
         {
-          $mp = new MemberProfile();
-          $mp->setMemberId($memberId);
-          $mp->setProfileId($profile->getId());
-          $mp->setProfileOptionId($v);
-          $mp->insertAsLastChildOf($memberProfile);
-          $mp->save();
+          MemberProfilePeer::createChild($memberProfile, $memberId, $profile->getId(), $v);
         }
       }
       elseif ($formType === 'date')
@@ -84,13 +79,7 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
           {
             $_value = (int)$pieces[$i];
           }
-          $childProfile = new MemberProfile();
-          $childProfile->setMemberId($memberId);
-          $childProfile->setProfileId($profile->getId());
-          $childProfile->setProfileOptionId($option->getId());
-          $childProfile->setValue($_value);
-          $childProfile->insertAsLastChildOf($memberProfile);
-          $childProfile->save();
+          MemberProfilePeer::createChild($memberProfile, $memberId, $profile->getId(), $option->getId(), $_value);
         }
       }
       else
