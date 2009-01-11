@@ -17,19 +17,18 @@
  */ 
 class SnsConfigPeer extends BaseSnsConfigPeer
 {
+  protected static $configs;
+
   public static function retrieveByName($name)
   {
-    $c = new Criteria();
-    $c->add(self::NAME, $name);
+    $configs = self::getConfigs();
 
-    $result = self::doSelectOne($c);
-    return $result;
+    return (isset($configs[$name])) ? $configs[$name] : null;
   }
 
   public static function get($name, $default = null)
   {
-    $config = self::retrieveByName($name);
-    return ($config) ? $config->getValue() : $default;
+    return (!is_null($config = self::retrieveByName($name))) ? $configs->getValue() : $default;
   }
 
   public static function set($name, $value)
@@ -42,5 +41,19 @@ class SnsConfigPeer extends BaseSnsConfigPeer
     }
     $config->setValue($value);
     return $config->save();
+  }
+
+  protected static function getConfigs()
+  {
+    if (is_null(self::$configs))
+    {
+      self::$configs = array();
+      foreach (self::doSelect(new Criteria()) as $config)
+      {
+        self::$configs[$config->getName()] = $config;
+      }
+    }
+
+    return self::$configs;
   }
 }

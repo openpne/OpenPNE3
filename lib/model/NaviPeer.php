@@ -22,7 +22,8 @@ class NaviPeer extends BaseNaviPeer
     $c = new Criteria();
     $c->add(self::TYPE, $type);
     $c->addAscendingOrderByColumn(self::SORT_ORDER);
-    return self::doSelect($c);
+
+    return self::doSelectWithI18n($c);
   }
 
   public static function retrieveTypes()
