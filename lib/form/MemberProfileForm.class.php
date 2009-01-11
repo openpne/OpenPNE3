@@ -56,13 +56,8 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
           $c->add(MemberProfilePeer::TREE_KEY, $memberProfile->getTreeKey());
           MemberProfilePeer::doDelete($c);
         }
-        $memberProfile = new MemberProfile();
-        $memberProfile->makeRoot();
-        $memberProfile->setMemberId($memberId);
-        $memberProfile->setProfileId($profile->getId());
-        $memberProfile->save();
-        $memberProfile->setScopeIdValue($memberProfile->getId());
-        $memberProfile->save();
+
+        $root = MemberProfilePeer::makeRoot($memberId, $profile->getId());
 
         if (!is_array($value))
         {
@@ -75,7 +70,7 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
           $mp->setMemberId($memberId);
           $mp->setProfileId($profile->getId());
           $mp->setProfileOptionId($v);
-          $mp->insertAsLastChildOf($memberProfile);
+          $mp->insertAsLastChildOf($root);
           $mp->save();
         }
       }
@@ -89,13 +84,7 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
           $c->add(MemberProfilePeer::TREE_KEY, $memberProfile->getTreeKey());
           MemberProfilePeer::doDelete($c);
         }
-        $memberProfile = new MemberProfile();
-        $memberProfile->makeRoot();
-        $memberProfile->setMemberId($memberId);
-        $memberProfile->setProfileId($profile->getId());
-        $memberProfile->save();
-        $memberProfile->setScopeIdValue($memberProfile->getId());
-        $memberProfile->save();
+        $root = MemberProfilePeer::makeRoot($memberId, $profile->getId());
 
         $c = new Criteria();
         $c->addAscendingOrderByColumn(ProfileOptionPeer::SORT_ORDER);
@@ -112,7 +101,7 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
           $childProfile->setProfileId($profile->getId());
           $childProfile->setProfileOptionId($option->getId());
           $childProfile->setValue($_value);
-          $childProfile->insertAsLastChildOf($memberProfile);
+          $childProfile->insertAsLastChildOf($root);
           $childProfile->save();
         }
       }
@@ -120,12 +109,11 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
       {
         if (!$memberProfile)
         {
-          $memberProfile = new MemberProfile();
-          $memberProfile->makeRoot(); 
+          $memberProfile = MemberProfilePeer::makeRoot();
         }
-
         $memberProfile->setMemberId($memberId);
         $memberProfile->setProfileId($profile->getId());
+
         if ($formType === 'select' || $formType === 'radio')
         {
           $memberProfile->setProfileOptionId($value);
