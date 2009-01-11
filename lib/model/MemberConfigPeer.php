@@ -64,7 +64,7 @@ class MemberConfigPeer extends BaseMemberConfigPeer
 
   static protected function getResultsByMemberId($memberId)
   {
-    if (is_null(self::$results[$memberId]))
+    if (!isset(self::$results[$memberId]))
     {
       $criteria = new Criteria();
       $criteria->add(self::MEMBER_ID, $memberId);
