@@ -34,4 +34,28 @@ class opInstalledPluginManager
   {
     return opPlugin::getInstance($plugin);
   }
+
+  static public function getAdminInviteAuthPlugins()
+  {
+    $plugins = sfContext::getInstance()->getConfiguration()->getEnabledAuthPlugin();
+    $plugins = array_unique($plugins);
+    $result = array();
+
+    foreach ($plugins as $pluginName)
+    {
+      $endPoint = strlen($pluginName) - strlen('opAuth') - strlen('Plugin');
+      $authMode = substr($pluginName, strlen('opAuth'), $endPoint);
+
+      $adapterClass = sfOpenPNESecurityUser::getAuthAdapterClassName($authMode);
+      $adapter = new $adapterClass($authMode);
+      if (!$adapter->getAuthConfig('admin_invite'))
+      {
+        continue;
+      }
+
+      $result[] = $authMode;
+    }
+
+    return $result;
+  }
 }

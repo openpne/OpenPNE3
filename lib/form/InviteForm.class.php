@@ -55,7 +55,7 @@ class InviteForm extends MemberConfigPcAddressForm
     if ('pc_address' === $name || 'mobile_address' === $name)
     {
       $this->savePreConfig($name, $value);
-      $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($name.'_token', $this->member->getId());
+      $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($name.'_token', $this->member->getId(), true);
       $token = $memberConfig->getValue();
       $this->sendConfirmMail($token, $value, array(
         'id'   => $this->member->getId(),
@@ -66,9 +66,15 @@ class InviteForm extends MemberConfigPcAddressForm
 
   protected function sendConfirmMail($token, $to, $params = array())
   {
+    $authMode = $this->getOption('authMode', null);
+    if (!$authMode)
+    {
+      $authMode = sfContext::getInstance()->getUser()->getCurrentAuthMode();
+    }
+
     $param = array(
       'token'    => $token,
-      'authMode' => $this->getOption('authMode', sfContext::getInstance()->getUser()->getCurrentAuthMode()),
+      'authMode' => $authMode,
       'isMobile' => opToolkit::isMobileEmailAddress($to),
     );
 

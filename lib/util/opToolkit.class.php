@@ -111,4 +111,33 @@ class opToolkit
 
     return false;
   }
+
+ /**
+  * Unifys EOL characters in the string.
+  *
+  * @param string $string
+  * @param string $eol
+  *
+  * @return string
+  */
+  public static function unifyEOLCharacter($string, $eol = "\n")
+  {
+    $eols = array("\r\n", "\r", "\n");
+    if (!in_array($eol, $eols))
+    {
+      return $string;
+    }
+
+    // first, unifys to LF
+    $string = str_replace("\r\n", "\n", $string);
+    $string = str_replace("\r", "\n", $string);
+
+    // second, unifys to specify EOL character
+    if ($eol !== "\n")
+    {
+      $string = str_replace("\n", $eol, $string);
+    }
+
+    return $string;
+  }
 }

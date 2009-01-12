@@ -51,4 +51,36 @@ class memberActions extends sfActions
 
     return sfView::SUCCESS;
   }
+
+ /**
+  * Executes invite action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeInvite(sfWebRequest $request)
+  {
+    $this->plugins = opInstalledPluginManager::getAdminInviteAuthPlugins();
+    if (empty($this->plugins))
+    {
+      return sfView::ERROR;
+    }
+
+    $options = array(
+      'authModes' => $this->plugins,
+      'is_link' => false,
+    );
+    $this->form = new AdminInviteForm(null, $options);
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $this->form->bind($request->getParameter('member_config'));
+      if ($this->form->isValid())
+      {
+        $this->form->save();
+        $this->redirect('member/invite');
+      }
+    }
+
+    return sfView::SUCCESS;
+  }
 }

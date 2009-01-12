@@ -19,10 +19,9 @@ class MemberConfigPeer extends BaseMemberConfigPeer
 {
   static protected $results;
 
-  public static function retrieveByNameAndMemberId($name, $memberId)
+  public static function retrieveByNameAndMemberId($name, $memberId, $force = false)
   {
-    $results = self::getResultsByMemberId($memberId);
-
+    $results = self::getResultsByMemberId($memberId, $force);
     return (isset($results[$name])) ? $results[$name] : null;
   }
 
@@ -62,9 +61,9 @@ class MemberConfigPeer extends BaseMemberConfigPeer
     }
   }
 
-  static protected function getResultsByMemberId($memberId)
+  static protected function getResultsByMemberId($memberId, $force = false)
   {
-    if (!isset(self::$results[$memberId]))
+    if (!isset(self::$results[$memberId]) || $force)
     {
       $criteria = new Criteria();
       $criteria->add(self::MEMBER_ID, $memberId);
