@@ -147,14 +147,14 @@ div.parts tr td.first-child {
 div#LayoutA,
 div#LayoutB,
 div#LayoutC {
-	zoom: 1;
-	overflow: hidden;
-	overflow: -moz-scrollbars-none;
+  zoom: 1;
+  overflow: hidden;
+  overflow: -moz-scrollbars-none;
 }
 #Sidemenu,
 #Contents,
 #Top {
-	overflow: hidden;
+  overflow: hidden;
 }
 dd div, dt, ul, ol, td, th, p,
 h1, h2, h3, h4, h5, h6, .partsHeading,
@@ -216,12 +216,12 @@ pre {
 }
 
 #LayoutB #Sidemenu {
-	float: left;
-	width: 180px;
+  float: left;
+  width: 180px;
 }
 #LayoutB #Contents {
-	float: right;
-	width: 540px;
+  float: right;
+  width: 540px;
 }
 
 #LayoutC #Contents {
@@ -233,11 +233,11 @@ pre {
 /*----------------------------------------------
  * Sidemenu
  *--------------------------------------------*/
-#LayoutB #Sidemenu div {
+#LayoutB #Sidemenu div.pageNav,
+#LayoutB #Sidemenu div.parts {
   background-color: #FFFFFF;
-  border: 8px solid #CCCCCC;
-  margin: 0 auto 10px;
-  width: 150px;
+  border: 1px solid #CCCCCC;
+  margin: 0 5px 10px;
 }
 #LayoutB #Sidemenu .pageNav ul {
   margin: 1px;
@@ -249,6 +249,38 @@ pre {
 #LayoutB #Sidemenu .pageNav li.current {
   background-color: #EEEEEE;
 }
+
+#Sidemenu .calendar .partsHeading {
+  padding: 4px 0;
+  border: none;
+  background: none;
+  text-align: center;
+}
+#Sidemenu .calendar th {
+  background-color: #EEEEEE;
+  text-align: center;
+}
+#Sidemenu .calendar td {
+  padding: 1px 2px;
+  text-align: right;
+}
+#Sidemenu .calendar td,
+#Sidemenu .calendar td * {
+  word-break: normal;
+  letter-spacing: -1px;
+}
+#Sidemenu .partsHeading {
+  border-bottom: 1px solid #CCCCCC;
+}
+
+#Body .calendar .holiday,
+.calendar .sun {
+    color: #d92c49;
+}
+.calendar .sat {
+    color: #2c65d9;
+}
+
 
 /*==============================================================================
  * navi
@@ -464,35 +496,35 @@ div.operation ul.moreInfo li {
  * memberImageBox
  *----------------------------------------------------------------------------*/
 .memberImageBox * {
-	text-align: center;
+  text-align: center;
 }
 .memberImageBox p.friendLink {
-	margin-bottom: 3px;
+  margin-bottom: 3px;
 }
 .memberImageBox .parts {
-	padding: 7px;
+  padding: 7px;
 }
 .memberImageBox ul.moreInfo {
-	margin: 2px 0 -5px;
+  margin: 2px 0 -5px;
 }
 .memberImageBox ul.moreInfo li {
-	padding: 1px 0;
-	background: none;
+  padding: 1px 0;
+  background: none;
 }
 .memberImageBox ul.moreInfo li img {
-	vertical-align: bottom;
+  vertical-align: bottom;
 }
 .memberImageBox p.rank {
-	margin-top: 6px;
+  margin-top: 6px;
 }
 .memberImageBox p.point {
-	margin-top: 2px;
+  margin-top: 2px;
 }
 .memberImageBox p.text {
-	margin-top: 4px;
+  margin-top: 4px;
 }
 .memberImageBox p.loginTime {
-	margin-top: 0px;
+  margin-top: 0px;
 }
 
 /*==============================================================================
@@ -549,77 +581,77 @@ div.operation ul.moreInfo li {
  * nineTable
  *----------------------------------------------------------------------------*/
 .nineTable tr.photo td {
-	height: 80px;
-	padding: 2px 0;
-	text-align: center;
+  height: 80px;
+  padding: 2px 0;
+  text-align: center;
 }
 .nineTable tr.photo td p.crown {
-	text-align: center;
+  text-align: center;
 }
 .nineTable tr.text td {
-	padding: 2px;
-	text-align: center;
+  padding: 2px;
+  text-align: center;
 }
 .nineTable div.moreInfo ul.moreInfo {
-	width: 11em;
-	margin-left: auto;
-	padding: 6px 0;
+  width: 11em;
+  margin-left: auto;
+  padding: 6px 0;
 }
 
 /*==============================================================================
  * searchResultList
  *----------------------------------------------------------------------------*/
 .searchResultList .partsInfo {
-	background: #EEEEEE;
+  background: #EEEEEE;
 }
 .searchResultList .ditem {
-	margin: 8px 34px;
+  margin: 8px 34px;
 }
 .searchResultList td.photo {
-	width: 90px;
-	padding: 0;
-	border-left: none;
-	text-align: center;
+  width: 90px;
+  padding: 0;
+  border-left: none;
+  text-align: center;
 }
 .searchResultList th, .searchResultList td {
-	padding: 5px;
+  padding: 5px;
 }
 .searchResultList th {
-	width: 75px;
+  width: 75px;
 }
 #Body .searchResultList th:first-child,
 #Body .searchResultList th.first-child {
-	border-left-width: 1px;
+  border-left-width: 1px;
 }
 .searchResultList tr.operation th {
-	padding-top: 0;
-	padding-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 .searchResultList tr.operation td {
-	padding: 0;
+  padding: 0;
 }
 .searchResultList tr.operation span.text {
-	float: left;
-	display: block;
-	width: 110px;
-	padding: 5px;
-	border-right: 1px solid #CCCCCC;
+  float: left;
+  display: block;
+  width: 110px;
+  padding: 5px;
+  border-right: 1px solid #CCCCCC;
 }
 .searchResultList tr.operation span.moreInfo{
-	zoom: 1;
-	display: block;
-	margin-left: 121px;
-	padding: 4px 0 3px;
-	text-align: center;
+  zoom: 1;
+  display: block;
+  margin-left: 121px;
+  padding: 4px 0 3px;
+  text-align: center;
 }
 .searchResultList div.operation {
-	text-align: center;
+  text-align: center;
 }
 .searchResultList tr.operation span.moreInfo img,
 .searchResultList div.operation form,
 .searchResultList div.operation fieldset {
-	display: inline;
-	vertical-align: top;
+  display: inline;
+  vertical-align: top;
 }
 
 /*==============================================================================
@@ -632,19 +664,19 @@ div.operation ul.moreInfo li {
 }
 
 .searchFormLine ul {
-	text-align: center;
-	padding: 1px 0;
+  text-align: center;
+  padding: 1px 0;
 }
 .searchFormLine ul li {
-	display: inline;
+  display: inline;
 }
 .searchFormLine ul li * {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 .searchFormLine ul li label {
-	margin-right: 2px;
-	padding: 1px 13px 0 0;
-	background: url(../images/icon_arrow_2.gif); ?>) no-repeat 100% 0;
+  margin-right: 2px;
+  padding: 1px 13px 0 0;
+  background: url(../images/icon_arrow_2.gif); ?>) no-repeat 100% 0;
 }
 
 /*==============================================================================
