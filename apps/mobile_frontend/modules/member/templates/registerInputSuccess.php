@@ -1,4 +1,4 @@
-<form action="<?php echo url_for('member/registerInput') ?>" method="post">
+<?php echo $form->renderFormTag(url_for('member/registerInput')) ?>
 <table>
 <?php echo $form ?>
 <tr>

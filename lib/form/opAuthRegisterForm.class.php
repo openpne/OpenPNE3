@@ -55,6 +55,22 @@ abstract class opAuthRegisterForm extends sfForm
     $this->widgetSchema->setNameFormat('auth[%s]');
   }
 
+  public function renderFormTag($url, array $attributes = array())
+  {
+    $result = parent::renderFormTag($url, $attributes);
+
+    if (sfConfig::get('app_is_mobile') && opConfig::get('retrieve_uid'))
+    {
+      $pos = strpos($result, '>');
+      $head = substr($result, 0, $pos);
+      $foot = substr($result, $pos);
+
+      $result = $head.' utn'.$foot;
+    }
+
+    return $result;
+  }
+
   /**
    * Returns the current member.
    *
@@ -113,6 +129,14 @@ abstract class opAuthRegisterForm extends sfForm
 
     if ($member && $profile && $auth && $config)
     {
+      if (opConfig::get('retrieve_uid'))
+      {
+        $request = sfContext::getInstance()->getRequest();
+        if (sfConfig::get('app_is_mobile', false))
+        {
+          $this->getMember()->setConfig('mobile_uid', $request->getMobileUID());
+        }
+      }
       return $this->getMember()->getId();
     }
 
