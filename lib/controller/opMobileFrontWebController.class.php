@@ -36,7 +36,7 @@ class opMobileFrontWebController extends sfFrontWebController
       $paramFoot = substr($parameters, $sidPos + strlen(SID) + 1);
       $parameters = $paramHead.$paramFoot;
     }
-    elseif (is_array($parameters) && in_array($parameters, session_name()))
+    elseif (is_array($parameters) && in_array(session_name(), $parameters))
     {
       $isSid = true;
       unset($parameters[session_name()]);
