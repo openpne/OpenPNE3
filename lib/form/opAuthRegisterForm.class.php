@@ -52,6 +52,8 @@ abstract class opAuthRegisterForm extends sfForm
 
     parent::__construct($defaults, $options, $CSRFSecret);
 
+    $this->mergePostValidator(new sfValidatorCallback(array('callback' => array($this, 'validateMobileUID'))));
+
     $this->widgetSchema->setNameFormat('auth[%s]');
   }
 
@@ -118,6 +120,28 @@ abstract class opAuthRegisterForm extends sfForm
     $this->bind($request->getParameter('auth'));
   }
 
+  public function validateMobileUID($validator, $values, $arguments = array())
+  {
+    if (!opConfig::get('retrieve_uid'))
+    {
+      return $values;
+    }
+
+    if (sfConfig::get('app_is_mobile', false))
+    {
+      $request = sfContext::getInstance()->getRequest();
+      $uid = $request->getMobileUID();
+      if (!$uid && opConfig::get('retrieve_uid') >= 2)
+      {
+        throw new sfValidatorError($validator, 'A mobile UID is required. Please check settings of your mobile phone and retry.');
+      }
+
+      $values['mobile_uid'] = $uid;
+    }
+
+    return $values;
+  }
+
   public function save()
   {
     $member = $this->memberForm->save();
@@ -129,14 +153,11 @@ abstract class opAuthRegisterForm extends sfForm
 
     if ($member && $profile && $auth && $config)
     {
-      if (opConfig::get('retrieve_uid'))
+      if ($this->getValue('mobile_uid'))
       {
-        $request = sfContext::getInstance()->getRequest();
-        if (sfConfig::get('app_is_mobile', false))
-        {
-          $this->getMember()->setConfig('mobile_uid', $request->getMobileUID());
-        }
+        $this->getMember()->setConfig('mobile_uid', $this->getValue('mobile_uid'));
       }
+
       return $this->getMember()->getId();
     }
 
