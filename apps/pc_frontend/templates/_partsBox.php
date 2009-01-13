@@ -1,5 +1,5 @@
 <?php include_customizes($id, 'before') ?>
-<div id="<?php echo $id ?>" class="dparts box"><div class="parts">
+<div id="<?php echo $id ?>" class="dparts box"><div class="parts <?php echo isset($option['parts']) ? $option['parts'] : '' ?>">
 
 <?php if ($title) : ?>
 <div class="partsHeading">
@@ -11,7 +11,7 @@
 
 <div class="block">
 <?php if (empty($option['form'])) : ?>
-<div class="body">
+<div <?php echo $option['padding'] ? 'class="body"' : '' ?> >
 <?php include_customizes($id, 'bodyTop') ?>
 <?php echo $sf_data->getRaw('body') ?>
 <?php include_customizes($id, 'bodyBottom') ?>

@@ -477,8 +477,58 @@ div.operation ul.moreInfo li {
   border-left: medium none;
 }
 
-.box form .operation {
+.box  .operation {
   padding: 10px 0;
+}
+
+/*==============================================================================
+ * news
+ *----------------------------------------------------------------------------*/
+.newsParts th, div.newsParts td {
+  border-color:#CCCCCC;
+  border-style:solid;
+  border-width:1px 0 0 1px;
+  padding: 5px;
+}
+
+.newsParts th {
+  width: 83px;
+}
+
+.newsParts .block {
+  border-width: 0;
+}
+
+.newsParts div.moreInfo ul.moreInfo {
+  margin: 0 2px 0 auto;
+  width: 10em;
+  padding-left: 85px;
+  text-indent: -72px;
+}
+
+/*==============================================================================
+ * news pager
+ *----------------------------------------------------------------------------*/
+.newsPager .block {
+  border-top-width: 0;
+}
+
+.newsPager dl {
+  border-top: 1px solid #CCCCCC;
+  overflow: hidden;
+}
+
+.newsPager dt {
+  float: left;
+  padding: 5px;
+  text-align: center;
+  width: 170px;
+}
+
+.newsPager dd {
+  border-left: 1px solid #CCCCCC;
+  margin-left: 180px;
+  padding: 5px;
 }
 
 /*==============================================================================

@@ -83,6 +83,11 @@ function include_box($id, $title = '', $body = '', $option = array())
     $option['url'] = $request->getParameter('module').'/'.$request->getParameter('action');
   }
 
+  if (!isset($option['padding']))
+  {
+    $option['padding'] = true;
+  }
+
   $params = array(
     'id' => $id,
     'title' => $title,
@@ -161,5 +166,37 @@ function _is_disabled_plugin_dir($directory)
   }
 
   return false;
+}
+
+/**
+ * Include news box
+ *
+ */
+function include_news($id, $title = '', $list, $option = array())
+{
+  $option['padding'] = false;
+  $option['parts'] = 'newsParts';
+  $params = array(
+    'list' => $list,
+  );
+
+ include_box( $id, $title, get_partial('global/partsNews', $params), $option);
+}
+
+/**
+ * Include news pager
+ *
+ */
+function include_news_pager($id, $title = '', $pager, $list, $link_to_detail)
+{
+  $params = array(
+    'id' => $id,
+    'title' => $title,
+    'pager' => $pager,
+    'list' => $list,
+    'link_to_detail' => $link_to_detail,
+  );
+
+ include_partial('global/partsNewsPager', $params);
 }
 
