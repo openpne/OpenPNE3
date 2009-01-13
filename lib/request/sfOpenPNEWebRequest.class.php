@@ -67,7 +67,8 @@ class sfOpenPNEWebRequest extends sfWebRequest
       }
     }
 
-    return $uid;
+    // OpenPNE doesn't need to know a plain mobile UID
+    return md5($uid);
   }
 
  /**
@@ -81,7 +82,8 @@ class sfOpenPNEWebRequest extends sfWebRequest
   */
   public function isValidMobileUID($hashedUid)
   {
-    if (!$this->isMobile()) {
+    if (!$this->isMobile())
+    {
       return false;
     }
 
