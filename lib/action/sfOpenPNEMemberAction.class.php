@@ -269,5 +269,4 @@ abstract class sfOpenPNEMemberAction extends sfActions
 
     return sfView::INPUT;
   }
-
 }

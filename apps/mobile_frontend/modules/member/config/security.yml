@@ -7,3 +7,6 @@ registerInput:
 
 configComplete:
   is_secure: off
+
+registerMobileToRegisterEnd:
+  is_secure: off

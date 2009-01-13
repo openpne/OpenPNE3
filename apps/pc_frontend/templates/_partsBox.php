@@ -19,6 +19,13 @@
 <?php endif; ?>
 
 <?php if (isset($option['form'])) : ?>
+<?php if (!empty($body)) : ?>
+<div class="body">
+<?php include_customizes($id, 'bodyTop') ?>
+<?php echo $sf_data->getRaw('body') ?>
+<?php include_customizes($id, 'bodyBottom') ?>
+</div>
+<?php endif; ?>
 <?php $option_raw = $sf_data->getRaw('option') ?>
 <form action="<?php echo url_for($option_raw['url']) ?>" method="post"<?php if (!empty($option['isMultipart'])) : ?> enctype="multipart/form-data"<?php endif; ?>>
 <?php include_customizes($id, 'formTop') ?>

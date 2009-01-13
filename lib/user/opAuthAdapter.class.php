@@ -293,6 +293,16 @@ abstract class opAuthAdapter
     return false;
   }
 
+ /**
+  * Activates the member
+  */
+  public function activate()
+  {
+    $member = sfContext::getInstance()->getUser()->getMember();
+    $member->setIsActive(true);
+    return $member->save();
+  }
+
   /**
    * Returns true if the current state is a beginning of register.
    *

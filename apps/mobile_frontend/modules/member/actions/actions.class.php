@@ -54,4 +54,39 @@ class memberActions extends sfOpenPNEMemberAction
 
     return sfView::SUCCESS;
   }
+
+ /**
+  * Executes registerMobileToRegisterEnd action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeRegisterMobileToRegisterEnd(sfWebRequest $request)
+  {
+
+    $id = $request->getParameter('id');
+    $token = $request->getParameter('token');
+
+    $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId('register_mobile_token', $id);
+
+    $this->forward404Unless($memberConfig && $token === $memberConfig->getValue());
+
+    opActivateBehavior::disable();
+    $this->form = new sfOpenPNEPasswordForm(null, array('member' => $memberConfig->getMember()));
+    opActivateBehavior::enable();
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $this->form->bind($request->getParameter('password'));
+      if ($this->form->isValid())
+      {
+        $memberConfig->getMember()->setConfig('mobile_uid', $request->getMobileUID());
+
+        $this->getUser()->setCurrentAuthMode($memberConfig->getMember()->getConfig('register_auth_mode'));
+        $this->getUser()->setMemberId($id);
+        $this->redirect($this->getUser()->getRegisterEndAction());
+      }
+    }
+
+    return sfView::SUCCESS;
+  }
 }

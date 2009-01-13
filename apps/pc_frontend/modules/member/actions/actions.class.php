@@ -143,4 +143,25 @@ class memberActions extends sfOpenPNEMemberAction
 
     $this->redirect('member/configImage');
   }
+
+ /**
+  * Executes registerMobileToRegisterEnd action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeRegisterMobileToRegisterEnd(sfWebRequest $request)
+  {
+    $this->form = new registerMobileForm($this->getUser()->getMember());
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $this->form->bind($request->getParameter('member_config'));
+      if ($this->form->isValid())
+      {
+        $this->form->save();
+        $this->redirect('member/registerMobileToRegisterEnd');
+      }
+    }
+
+    return sfView::SUCCESS;
+  }
 }
