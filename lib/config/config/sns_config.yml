@@ -60,3 +60,17 @@ authentication:
       1: "携帯からのみ登録可"
       0: "登録一時停止"
 
+mobile:
+  retrieve_uid:
+    Name:      "retrieve_uid"
+    Caption:   "メンバー登録時の携帯個体識別番号取得設定"
+    FormType:  "radio"
+    ValueType: "integer"
+    IsRequired: true
+    Default:    1
+    Choices:
+      3: "PC・携帯登録時に携帯個体識別番号の登録を必須にする"
+      2: "携帯登録時に携帯個体識別番号の登録を必須にする"
+      1: "携帯登録時に携帯個体識別番号を取得する（任意）"
+      0: "携帯登録時には携帯個体識別番号を取得しない"
+

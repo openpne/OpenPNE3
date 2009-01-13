@@ -83,6 +83,8 @@ class AdminInviteForm extends InviteForm
       $this->saveConfig('mobile_address', $value);
     }
 
+    $this->member->setConfig('register_auth_mode', $authMode);
+
     return true;
   }
 }
