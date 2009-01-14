@@ -73,4 +73,14 @@ mobile:
       2: "携帯登録時に携帯個体識別番号の登録を必須にする"
       1: "携帯登録時に携帯個体識別番号を取得する（任意）"
       0: "携帯登録時には携帯個体識別番号を取得しない"
+  font_size:
+    Name:    "font_size"
+    Caption: "携帯版フォントサイズ指定設定"
+    FormType:  "radio"
+    ValueType: "integer"
+    IsRequired: true
+    Default:    0
+    Choices:
+      1: "フォントサイズを指定する"
+      0: "フォントサイズを指定しない"
 

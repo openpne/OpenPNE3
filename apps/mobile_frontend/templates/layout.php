@@ -6,11 +6,11 @@
 <?php else: ?>
 <title><?php echo $op_config['sns_name'] ?></title>
 <?php endif; ?>
-<?php if ($sf_request->getMobile()->isSoftBank()) : ?>
+<?php if ($sf_request->getMobile()->isSoftBank() && $op_config['font_size']) : ?>
 <style type="text/css">
 *{font-size:small;}
 </style>
-<?php elseif ($sf_request->getMobile()->isEZWeb()) : ?>
+<?php elseif ($sf_request->getMobile()->isEZWeb() && $op_config['font_size']) : ?>
 <style type="text/css">
 *{font-size:xx-small;}
 </style>
