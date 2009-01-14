@@ -36,24 +36,4 @@ class snsActions extends sfActions
       }
     }
   }
-
- /**
-  * Executes configInformation action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeInformationConfig($request)
-  {
-    $this->target = $request->getParameter('target', 'mobile_home');
-    $this->form = new InformationConfigForm(array(), array('target' => $this->target));
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getParameter('information'));
-      if ($this->form->isValid())
-      {
-        $this->form->save();
-      }
-    }
-  }
 }

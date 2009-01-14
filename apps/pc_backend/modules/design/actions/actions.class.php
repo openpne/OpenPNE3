@@ -102,11 +102,19 @@ class designActions extends sfActions
   */
   public function executeHomeAddWidget(sfWebRequest $request)
   {
+    $validTypes = array('top', 'sideMenu', 'contents', 'mobileTop', 'mobileContents', 'mobileBottom');
+    $mobileTypes = array('mobileTop', 'mobileContents', 'mobileBottom');
+
     $this->config = sfConfig::get('op_widget_list', array());
     $this->type = 'top';
-    if (in_array($request->getParameter('type'), array('top', 'sideMenu', 'contents')))
+    if (in_array($request->getParameter('type'), $validTypes))
     {
       $this->type = $request->getParameter('type');
+    }
+
+    if (in_array($this->type, $mobileTypes))
+    {
+      $this->config = sfConfig::get('op_mobile_widget_list', array());
     }
 
     return sfView::SUCCESS;
@@ -139,6 +147,49 @@ class designActions extends sfActions
         }
       }
     }
+
+    return sfView::SUCCESS;
+  }
+
+ /**
+  * Executes mobile home widget action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeMobileHomeWidget(sfWebRequest $request)
+  {
+    $this->mobileTopWidgets = (array)HomeWidgetPeer::retrieveMobileTopWidgets();
+    $this->mobileContentsWidgets = (array)HomeWidgetPeer::retrieveMobileContentsWidgets();
+    $this->mobileBottomWidgets = (array)HomeWidgetPeer::retrieveMobileBottomWidgets();
+    $this->widgetConfig = sfConfig::get('op_mobile_widget_list');
+
+    $this->sortForm = new HomeWidgetSortForm(array(), array('is_mobile' => true));
+    $this->addForm = new HomeWidgetAddForm();
+    if ($request->isMethod(sfRequest::POST))
+    {
+      $this->sortForm->bind($request->getParameter('widget'));
+      $this->addForm->bind($request->getParameter('new'));
+      if ($this->sortForm->isValid() && $this->addForm->isValid())
+      {
+        $this->sortForm->save();
+        $this->addForm->save();
+        $this->redirect('design/mobileHomeWidget');
+      }
+    }
+    return sfView::SUCCESS;
+  }
+
+ /**
+  * Executes mobile home widget plot action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeMobileHomeWidgetPlot(sfWebRequest $request)
+  {
+    $this->mobileTopWidgets = (array)HomeWidgetPeer::retrieveMobileTopWidgets();
+    $this->mobileContentsWidgets = (array)HomeWidgetPeer::retrieveMobileContentsWidgets();
+    $this->mobileBottomWidgets = (array)HomeWidgetPeer::retrieveMobileBottomWidgets();
+    $this->widgetConfig = sfConfig::get('op_mobile_widget_list');
 
     return sfView::SUCCESS;
   }

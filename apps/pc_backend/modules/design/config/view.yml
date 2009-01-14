@@ -1,7 +1,7 @@
-homeWidgetSuccess:
+homeWidgetSuccess: &homeWidgetSuccess
   javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype, util]
 
-homeWidgetPlotSuccess:
+homeWidgetPlotSuccess: &homeWidgetPlotSuccess
   layout: plain
   stylesheets: [-backend, widgetPlot]
 
@@ -14,3 +14,9 @@ homeEditWidgetSuccess:
   layout: plain
   stylesheets: [-backend]
   javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype, util]
+
+mobileHomeWidgetSuccess:
+  <<: *homeWidgetSuccess
+
+mobileHomeWidgetPlotSuccess:
+  <<: *homeWidgetPlotSuccess

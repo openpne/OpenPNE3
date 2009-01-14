@@ -19,9 +19,18 @@ class HomeWidgetSortForm extends sfForm
 {
   public function configure()
   {
-    $this->setValidator('top', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
-    $this->setValidator('sideMenu', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
-    $this->setValidator('contents', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
+    if ($this->getOption('is_mobile', false))
+    {
+      $this->setValidator('mobileTop', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
+      $this->setValidator('mobileContents', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
+      $this->setValidator('mobileBottom', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
+    }
+    else
+    {
+      $this->setValidator('top', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
+      $this->setValidator('sideMenu', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
+      $this->setValidator('contents', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
+    }
 
     $this->getWidgetSchema()->setNameFormat('widget[%s]');
   }
@@ -64,9 +73,13 @@ class HomeWidgetSortForm extends sfForm
     foreach ($value as $id)
     {
       $widget = HomeWidgetPeer::retrieveByPk($id);
-      if ($widget && array_key_exists($widget->getName(), sfConfig::get('op_widget_list')))
+      if ($widget) 
       {
-        $result[] = $id;
+        if (array_key_exists($widget->getName(), sfConfig::get('op_widget_list'))
+          || array_key_exists($widget->getName(), sfConfig::get('op_mobile_widget_list')))
+        {
+          $result[] = $id;
+        }
       }
     }
 

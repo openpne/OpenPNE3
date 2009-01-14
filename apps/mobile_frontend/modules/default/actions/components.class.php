@@ -14,4 +14,8 @@ class defaultComponents extends sfComponents
   {
     $this->navis = NaviPeer::retrieveByType($this->type);
   }
+
+  public function executeInformationBox()
+  {
+  }
 }

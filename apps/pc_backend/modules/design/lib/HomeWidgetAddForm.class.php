@@ -23,6 +23,10 @@ class HomeWidgetAddForm extends sfForm
     $this->setValidator('sideMenu', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
     $this->setValidator('contents', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
 
+    $this->setValidator('mobileTop', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
+    $this->setValidator('mobileContents', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
+    $this->setValidator('mobileBottom', new sfValidatorCallback(array('callback' => array($this, 'validate'))));
+
     $this->getWidgetSchema()->setNameFormat('new[%s]');
   }
 
@@ -51,7 +55,8 @@ class HomeWidgetAddForm extends sfForm
 
     foreach ($value as $key => $item)
     {
-      if (array_key_exists($item, sfConfig::get('op_widget_list')))
+      if (array_key_exists($item, sfConfig::get('op_widget_list'))
+        || array_key_exists($item, sfConfig::get('op_mobile_widget_list')))
       {
         $result[] = $item;
       }

@@ -1,12 +1,12 @@
 <?php include_page_title($op_config['sns_name']) ?>
 
-<?php
-$body = '';
-if ($information) {
-  $body = $sf_data->getRaw('information')->getValue();
-}
-include_information_box('information', $body)
-?>
+<?php if ($mobileTopWidgets) : ?>
+<?php foreach ($mobileTopWidgets as $widget) : ?>
+<?php if ($widget->isEnabled()) : ?>
+<?php include_component($widget->getComponentModule(), $widget->getComponentAction(), array('widget' => $widget)); ?>
+<?php endif; ?>
+<?php endforeach; ?>
+<?php endif; ?>
 
 <table width="100%" bgcolor="#EEEEFF">
 <tr><td colspan="2" align="center">
@@ -41,6 +41,14 @@ include_information_box('information', $body)
 
 </table>
 
+<?php if ($mobileContentsWidgets) : ?>
+<?php foreach ($mobileContentsWidgets as $widget) : ?>
+<?php if ($widget->isEnabled()) : ?>
+<?php include_component($widget->getComponentModule(), $widget->getComponentAction(), array('widget' => $widget)); ?>
+<?php endif; ?>
+<?php endforeach; ?>
+<?php endif; ?>
+
 <br>
 
 <?php
@@ -69,6 +77,14 @@ foreach (sfConfig::get('openpne_member_category') as $key => $value)
 $list[] = link_to('かんたんﾛｸﾞｲﾝ設定', 'member/configUID');
 include_list_box('configEdit', $list, array('title' => '設定変更'))
 ?>
+
+<?php if ($mobileBottomWidgets) : ?>
+<?php foreach ($mobileBottomWidgets as $widget) : ?>
+<?php if ($widget->isEnabled()) : ?>
+<?php include_component($widget->getComponentModule(), $widget->getComponentAction(), array('widget' => $widget)); ?>
+<?php endif; ?>
+<?php endforeach; ?>
+<?php endif; ?>
 
 <hr color="#0d6ddf">
 

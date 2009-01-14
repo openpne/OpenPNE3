@@ -23,3 +23,8 @@ HomeWidget:
     type: "sideMenu"
     name: "communityJoinListBox"
     sort_order: 30
+
+  mobile_home_widget_information:
+    type: "mobileTop"
+    name: "informationBox"
+    sort_order: 10

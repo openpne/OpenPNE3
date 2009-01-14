@@ -19,11 +19,14 @@ class sfOpenPNEWidgetConfigHandler extends sfYamlConfigHandler
 {
   public function execute($configFiles)
   {
+    // get our prefix
+    $prefix = strtolower($this->getParameterHolder()->get('prefix', ''));
+
     $config = $this->parseYamls($configFiles);
 
     $format = "<?php\n"
             . "sfConfig::add(array('%s' => %s));";
-    $result = sprintf($format, 'op_widget_list', var_export($config, true));
+    $result = sprintf($format, 'op_'.$prefix.'widget_list', var_export($config, true));
     return $result;
   }
 }
