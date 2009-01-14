@@ -91,11 +91,17 @@ class memberActions extends sfActions
   */
   public function executeBlacklist(sfWebRequest $request)
   {
+    $uid = $request->getParameter('uid');
+
     $this->pager = new sfPropelPager('Blacklist', 20);
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
 
     $this->form = new BlacklistForm();
+    if ($uid)
+    {
+      $this->form->setDefault('uid', $uid);
+    }
     if ($request->isMethod(sfWebRequest::POST))
     {
       $result = $this->form->bindAndSave($request->getParameter('blacklist'));
