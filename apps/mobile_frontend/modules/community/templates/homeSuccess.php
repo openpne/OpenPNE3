@@ -2,6 +2,7 @@
 
 <table width="100%" bgcolor="#EEEEFF">
 <tr><td colspan="2" align="center">
+<?php include_customizes('menu', 'top') ?>
 <hr color="#0D6DDF" size="3">
 </td></tr>
 
@@ -31,6 +32,8 @@
 <?php endif; ?>
 <?php include_component('default', 'navi', array('type' => 'mobile_community', 'id' => $community->getId())) ?>
 <hr color="#0d6ddf" size="3">
+
+<?php include_customizes('menu', 'bottom') ?>
 </td></tr>
 </table>
 

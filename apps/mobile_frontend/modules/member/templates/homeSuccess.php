@@ -10,6 +10,7 @@ include_information_box('information', $body)
 
 <table width="100%" bgcolor="#EEEEFF">
 <tr><td colspan="2" align="center">
+<?php include_customizes('menu', 'top') ?>
 <hr color="#0D6DDF" size="3">
 </td></tr>
 
@@ -20,13 +21,13 @@ include_information_box('information', $body)
 </td>
 
 <td valign="top">
-<?php include_customizes('invite', 'before') ?>
 <?php include_component('default', 'navi', array('type' => 'mobile_home_side')) ?>
-<?php include_customizes('invite', 'after') ?>
 </td>
 </tr>
 
 <tr><td colspan="2" align="center">
+<hr color="#0d6ddf" size="3">
+<?php echo link_to('ﾌﾟﾛﾌｨｰﾙ', 'member/profile') ?>
 <hr color="#0d6ddf" size="3">
 </td></tr>
 
@@ -35,8 +36,7 @@ include_information_box('information', $body)
 </td></tr>
 
 <tr><td colspan="2" align="center">
-<?php echo link_to('ﾌﾟﾛﾌｨｰﾙ', 'member/profile') ?>
-<hr color="#0d6ddf" size="3">
+<?php include_customizes('menu', 'bottom') ?>
 </td></tr>
 
 </table>
