@@ -34,7 +34,6 @@
 <?php endif; ?>
 
 <?php include_component('default', 'navi', array('type' => 'mobile_community', 'id' => $member->getId())) ?>
-<hr color="#0d6ddf" size="3">
 </td></tr>
 </table>
 

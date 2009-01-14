@@ -32,7 +32,6 @@ include_information_box('information', $body)
 
 <tr><td colspan="2">
 <?php include_component('default', 'navi', array('type' => 'mobile_home')) ?>
-<hr color="#0d6ddf" size="3">
 </td></tr>
 
 <tr><td colspan="2" align="center">
