@@ -1,15 +1,18 @@
+<?php $rawList = $sf_data->getRaw('list') ?>
+
 <table>
 <tbody>
+<?php $listCnt = 0 ?>
 <?php foreach($list as $one_list): ?>
 <tr>
-<th><?php echo $one_list['caption'] ?></th>
+<th><?php echo $rawList[$listCnt]['caption'] ?></th>
 <td>
 
-<ul>
+<ul class="articleList">
 <?php foreach($one_list['content'] as $content): ?>
 <li>
-<span><?php echo date( __('m/d'), strtotime($content['date'])) ?></span>
- ... 
+<span class="date"><?php echo date( __('m/d'), strtotime($content['date'])) ?></span>
+<?php image_tag('articleList_maker.gif', array('alf' => '')) ?> 
 <?php
 if (isset($one_list['link_to_detail']))
 {
@@ -25,7 +28,7 @@ else
 ?>
  (<?php echo $content['name'] ?>)
 <?php if ($content['image']): ?>
-<img alt="<?php echo __('Those with a photograph') ?>" src="/images/icon_camera.gif" />
+<?php echo image_tag('icon_camera.gif', array( 'alt' => __('Those with a photograph'))) ?>
 <?php endif; ?>
 </li>
 <?php endforeach; ?>
@@ -39,6 +42,8 @@ else
 
 </td>
 </tr>
+
+<?php $listCnt++ ?>
 <?php endforeach; ?>
 </tbody>
 </table>

@@ -1,5 +1,5 @@
 <div class="<?php echo $id ?>">
-<div class="dparts searchResultList"><div class="parts newsPager">
+<div class="dparts searchResultList"><div class="parts partsNewsPager">
 <div class="partsHeading"><h3><?php echo $title ?></h3></div>
 
 <div class="pagerRelative"><p class="number"><?php echo pager_navigation($pager, 'friend/list?page=%d&id=' . $sf_params->get('id')); ?></p></div>
@@ -24,7 +24,7 @@ else
 ?>
  (<?php echo $res['name'] ?>)
 <?php if ($res['image']): ?>
-<img alt="<?php echo __('Those with a photograph') ?>" src="/images/icon_camera.gif" />
+<?php echo image_tag( 'icon_camera.gif', array( 'alt' => __('Those with a photograph'))) ?>
 <?php endif; ?>
 </dd>
 </dl>
