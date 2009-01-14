@@ -19,7 +19,7 @@
 <table>
 
 <tr>
-<td colspan="<?php echo 3 + count($profiles) + 2 ?>">
+<td colspan="<?php echo 3 + count($profiles) + 3 ?>">
 <?php echo pager_navigation($pager, 'member/list?page=%d', true, '?'.$sf_request->getCurrentQueryString()) ?>
 </td>
 </tr>
@@ -33,6 +33,7 @@
 <?php endforeach; ?>
 <th><?php echo __('PCメールアドレス') ?></th>
 <th><?php echo __('携帯メールアドレス') ?></th>
+<th><?php echo __('携帯電話個体識別番号（暗号化済）') ?></th>
 </tr>
 
 <?php foreach ($pager->getResults() as $i => $member): ?>
@@ -45,6 +46,7 @@
 <?php endforeach; ?>
 <td><?php echo $member->getConfig('pc_address') ?></td>
 <td><?php echo $member->getConfig('mobile_address') ?></td>
+<td><?php echo $member->getConfig('mobile_uid') ?></td>
 </tr>
 <?php endforeach; ?>
 

@@ -133,3 +133,8 @@ propel:
 
   navi_i18n:
     caption: { type: longvarchar, required: true }
+
+  blacklist:
+    id: ~
+    uid: { type: varchar(32), index: unique, required: true }
+    memo: { type: longvarchar }

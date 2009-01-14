@@ -135,6 +135,10 @@ abstract class opAuthRegisterForm extends sfForm
       {
         throw new sfValidatorError($validator, 'A mobile UID is required. Please check settings of your mobile phone and retry.');
       }
+      elseif (BlacklistPeer::retrieveByUid($uid))
+      {
+        throw new sfValidatorError($validator, 'A mobile UID is invalid.');
+      }
 
       $values['mobile_uid'] = $uid;
     }

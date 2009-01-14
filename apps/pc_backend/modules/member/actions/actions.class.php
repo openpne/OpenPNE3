@@ -83,4 +83,50 @@ class memberActions extends sfActions
 
     return sfView::SUCCESS;
   }
+
+ /**
+  * Executes blacklist action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeBlacklist(sfWebRequest $request)
+  {
+    $this->pager = new sfPropelPager('Blacklist', 20);
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
+
+    $this->form = new BlacklistForm();
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $result = $this->form->bindAndSave($request->getParameter('blacklist'));
+      $this->redirectIf($result, 'member/blacklist');
+    }
+
+    return sfView::SUCCESS;
+  }
+
+ /**
+  * Executes blacklistDelete action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeBlacklistDelete(sfWebRequest $request)
+  {
+    $this->blacklist = BlacklistPeer::retrieveByPK($request->getParameter('id'));
+    $this->forward404Unless($this->blacklist);
+
+    $this->form = new sfForm();
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $field = sfForm::getCSRFFieldName();
+      $this->form->bind(array($field => $request->getParameter($field)));
+      if ($this->form->isValid())
+      {
+        $this->blacklist->delete();
+        $this->redirect('member/blacklist');
+      }
+    }
+
+    return sfView::SUCCESS;
+  }
 }

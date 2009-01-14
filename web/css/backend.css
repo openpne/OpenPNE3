@@ -20,7 +20,7 @@ body.insecure #body {
   height: 20px;
   width: 100%;
   top: 0px;
-  z-index: 1988;
+  z-index: 10;
 }
 
 #header h1 {

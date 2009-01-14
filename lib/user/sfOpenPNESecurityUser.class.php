@@ -147,6 +147,13 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     if ($memberId)
     {
       $this->setMemberId($memberId);
+
+      if ($this->getMember()->isOnBlacklist())
+      {
+        $this->logout();
+        return false;
+      }
+
       $this->setAuthenticated(true);
     }
 

@@ -152,4 +152,15 @@ class Member extends BaseMember
   {
     return $this->getConfig('lastLogin');
   }
+
+  public function isOnBlackList()
+  {
+    $uid = $this->getConfig('mobile_uid');
+    if ($uid)
+    {
+      return (bool)BlacklistPeer::retrieveByUid($uid);
+    }
+
+    return false;
+  }
 }
