@@ -21,7 +21,6 @@ include_information_box('information', $body)
 
 <td valign="top">
 <?php include_customizes('invite', 'before') ?>
-<?php echo link_to(__('友人を誘う'), 'member/invite') ?><br>
 <?php include_component('default', 'navi', array('type' => 'mobile_home_side')) ?>
 <?php include_customizes('invite', 'after') ?>
 </td>
@@ -32,8 +31,6 @@ include_information_box('information', $body)
 </td></tr>
 
 <tr><td colspan="2">
-<?php echo link_to(sprintf('ﾏｲﾌﾚﾝﾄﾞ(%s)', $sf_user->getMember()->countFriends()), 'friend/list'); ?><br>
-<?php echo link_to(sprintf('参加ｺﾐｭﾆﾃｨ(%s)', $sf_user->getMember()->countCommunityMembers()), 'community/joinlist'); ?><br>
 <?php include_component('default', 'navi', array('type' => 'mobile_home')) ?>
 <hr color="#0d6ddf" size="3">
 </td></tr>
