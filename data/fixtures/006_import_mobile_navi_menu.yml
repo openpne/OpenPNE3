@@ -12,7 +12,7 @@ Navi:
   mobile_home_navi_community:
     type: "mobile_home"
     uri: "community/joinlist"
-    sort_order: 0
+    sort_order: 10
 
 NaviI18n:
   mobile_home_side_navi_invite_i18n:
