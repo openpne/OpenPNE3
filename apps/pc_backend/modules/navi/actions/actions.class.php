@@ -14,7 +14,6 @@
  * @package    OpenPNE
  * @subpackage navi
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
- * @version    SVN: $Id: actions.class.php 9301 2008-05-27 01:08:46Z dwhittle $
  */
 class naviActions extends sfActions
 {
@@ -25,13 +24,18 @@ class naviActions extends sfActions
   */
   public function executeIndex($request)
   {
+    $this->app = $request->getParameter('app', 'pc');
+    $isMobile = (bool)('mobile' === $this->app);
+
     $this->list = array();
 
-    $types = NaviPeer::retrieveTypes();
+    $types = NaviPeer::retrieveTypes($isMobile);
 
-    foreach ($types as $type) {
+    foreach ($types as $type)
+    {
       $navis = NaviPeer::retrieveByType($type);
-      foreach ($navis as $navi) {
+      foreach ($navis as $navi)
+      {
         $this->list[$type][] = new NaviForm($navi);
       }
       $this->list[$type][] = new NaviForm();
@@ -46,17 +50,20 @@ class naviActions extends sfActions
   public function executeEdit($request)
   {
     $navi = $request->getParameter('navi');
+    $app = $request->getParameter('app', 'pc');
 
     $model = NaviPeer::retrieveByPk($navi['id']);
     $this->form = new NaviForm($model);
-    if ($request->isMethod('post')) {
+    if ($request->isMethod('post'))
+    {
        $this->form->bind($navi);
-       if ($this->form->isValid()) {
+       if ($this->form->isValid())
+       {
          $this->form->save();
        }
     }
 
-    $this->redirect('navi/index');
+    $this->redirect('navi/index?app='.$app);
   }
 
  /**
@@ -66,13 +73,16 @@ class naviActions extends sfActions
   */
   public function executeDelete($request)
   {
-    if ($request->isMethod('post')) {
+    $app = $request->getParameter('app', 'pc');
+
+    if ($request->isMethod('post'))
+    {
       $model = NaviPeer::retrieveByPk($request->getParameter('id'));
       $this->forward404Unless($model);
       $model->delete();
     }
 
-    $this->redirect('navi/index');
+    $this->redirect('navi/index?app='.$app);
   }
 
   /**

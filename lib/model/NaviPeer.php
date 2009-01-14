@@ -26,17 +26,30 @@ class NaviPeer extends BaseNaviPeer
     return self::doSelectWithI18n($c);
   }
 
-  public static function retrieveTypes()
+  public static function retrieveTypes($isMobile)
   {
     $result = array();
 
-    $defaultTypes = array(
-      'insecure_global',
-      'secure_global',
-      'default',
-      'friend',
-      'community',
-    );
+    if ($isMobile)
+    {
+      $defaultTypes = array(
+        'mobile_global',
+        'mobile_home',
+        'mobile_home_side',
+        'mobile_friend',
+        'mobile_community',
+      );
+    }
+    else
+    {
+      $defaultTypes = array(
+        'insecure_global',
+        'secure_global',
+        'default',
+        'friend',
+        'community',
+      );
+    }
 
     $c = new Criteria();
     $c->clearSelectColumns();
@@ -44,7 +57,8 @@ class NaviPeer extends BaseNaviPeer
     $c->addGroupByColumn(self::TYPE);
     $c->addAscendingOrderByColumn(self::SORT_ORDER);
     $stmt = self::doSelectStmt($c);
-    while ($res = $stmt->fetchColumn(1)) {
+    while ($res = $stmt->fetchColumn(1))
+    {
       $result[] = $res;
     }
 

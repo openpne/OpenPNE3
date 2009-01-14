@@ -27,11 +27,18 @@
 <hr color="#0d6ddf" size="3">
 </td></tr>
 
-</table>
+<tr><td colspan="2">
 
 <?php if (!$relation->isFriend() && !$relation->isSelf()) : ?>
 <?php echo link_to('ﾌﾚﾝﾄﾞに加える', 'friend/link?id='.$member->getId()) ?><br>
 <?php endif; ?>
+
+<?php include_component('default', 'navi', array('type' => 'mobile_community')) ?>
+<hr color="#0d6ddf" size="3">
+</td></tr>
+</table>
+
+<br>
 
 <?php
 $list = array();

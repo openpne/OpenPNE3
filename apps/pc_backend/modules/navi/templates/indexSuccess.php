@@ -18,7 +18,7 @@
 <?php foreach ($navi as $form) : ?>
 <tbody id="type_<?php echo str_replace(' ', '_', $type) ?>_<?php echo $form->getObject()->getId() ?>"<?php if (!$form->isNew()) : ?> class="sortable"<?php endif; ?>>
 <tr>
-<td><form action="<?php echo url_for('navi/edit') ?>" method="post">
+<td><form action="<?php echo url_for('navi/edit?app='.$app) ?>" method="post">
 <?php echo $form->renderHiddenFields() ?>
 <?php echo $form['uri']->render() ?></td>
 <td><?php echo $form['ja_JP']['caption']->render() ?><?php echo $form['type']->render(array('value' => $type)) ?></td>

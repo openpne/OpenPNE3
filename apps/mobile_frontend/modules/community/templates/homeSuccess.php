@@ -29,6 +29,7 @@
 <?php echo link_to('このｺﾐｭﾆﾃｨに参加する', 'community/join?id=' . $community->getId()) ?><br>
 <?php endif; ?>
 <?php endif; ?>
+<?php include_component('default', 'navi', array('type' => 'mobile_community')) ?>
 <hr color="#0d6ddf" size="3">
 </td></tr>
 </table>
