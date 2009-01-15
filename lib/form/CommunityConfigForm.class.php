@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class CommunityConfigForm extends OpenPNEFormAutoGenerate
+class CommunityConfigForm extends sfForm
 {
   protected
     $configSettings = array(),
@@ -62,14 +62,14 @@ class CommunityConfigForm extends OpenPNEFormAutoGenerate
   public function setConfigWidget($name)
   {
     $config = $this->configSettings[$name];
-    $this->widgetSchema[sprintf($this->fieldName, $name)] = $this->generateWidget($config);
+    $this->widgetSchema[sprintf($this->fieldName, $name)] = opFormItemGenerator::generateWidget($config);
     $this->widgetSchema->setLabel(sprintf($this->fieldName, $name), $config['Caption']);
     $communityConfig = CommunityConfigPeer::retrieveByNameAndCommunityId($name, $this->community->getId());
     if ($communityConfig)
     {
       $this->setDefault(sprintf($this->fieldName, $name), $communityConfig->getValue());
     }
-    $this->validatorSchema[sprintf($this->fieldName, $name)] = $this->generateValidator($config);
+    $this->validatorSchema[sprintf($this->fieldName, $name)] = opFormItemGenerator::generateValidator($config);
   }
 
   public function setConfigSettings($category = '')

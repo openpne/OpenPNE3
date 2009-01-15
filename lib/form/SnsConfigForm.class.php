@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class SnsConfigForm extends OpenPNEFormAutoGenerate
+class SnsConfigForm extends sfForm
 {
   public function configure()
   {
@@ -33,8 +33,8 @@ class SnsConfigForm extends OpenPNEFormAutoGenerate
         continue;
       }
 
-      $this->setWidget($configName, $this->generateWidget($snsConfig[$configName]));
-      $this->setValidator($configName, $this->generateValidator($snsConfig[$configName]));
+      $this->setWidget($configName, opFormItemGenerator::generateWidget($snsConfig[$configName]));
+      $this->setValidator($configName, opFormItemGenerator::generateValidator($snsConfig[$configName]));
       $this->widgetSchema->setLabel($configName, $snsConfig[$configName]['Caption']);
       if (isset($snsConfig[$configName]['Help']))
       {

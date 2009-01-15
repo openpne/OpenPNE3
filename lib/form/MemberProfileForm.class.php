@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class MemberProfileForm extends OpenPNEFormAutoGenerate
+class MemberProfileForm extends sfForm
 {
   public function __construct($profileMember = array(), $options = array(), $CSRFSecret = null)
   {
@@ -114,8 +114,8 @@ class MemberProfileForm extends OpenPNEFormAutoGenerate
     {
       $profile_i18n = $profile->getProfileI18ns();
       $profileWithI18n = $profile->toArray() + $profile_i18n[0]->toArray();
-      $this->widgetSchema[$profile->getName()] = $this->generateWidget($profileWithI18n, $this->getFormOptionsValue($profile->getId()));
-      $this->validatorSchema[$profile->getName()] = $this->generateValidator($profileWithI18n, $this->getFormOptions($profile->getId()));
+      $this->widgetSchema[$profile->getName()] = opFormItemGenerator::generateWidget($profileWithI18n, $this->getFormOptionsValue($profile->getId()));
+      $this->validatorSchema[$profile->getName()] = opFormItemGenerator::generateValidator($profileWithI18n, $this->getFormOptions($profile->getId()));
     }
   }
 

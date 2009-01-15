@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class HomeWidgetConfigForm extends OpenPNEFormAutoGenerate
+class HomeWidgetConfigForm extends sfForm
 {
   protected $homeWidget;
 
@@ -34,8 +34,8 @@ class HomeWidgetConfigForm extends OpenPNEFormAutoGenerate
     $widgetConfig = $config[$homeWidget->getName()]['config'];
     foreach ($widgetConfig as $key => $value)
     {
-      $this->setWidget($key, $this->generateWidget($value));
-      $this->setValidator($key, $this->generateValidator($value));
+      $this->setWidget($key, opFormItemGenerator::generateWidget($value));
+      $this->setValidator($key, opFormItemGenerator::generateValidator($value));
 
       $config = HomeWidgetConfigPeer::retrieveByWidgetIdAndName($homeWidget->getId(), $key);
       if ($config)

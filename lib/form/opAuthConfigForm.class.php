@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-abstract class opAuthConfigForm extends OpenPNEFormAutoGenerate
+abstract class opAuthConfigForm extends sfForm
 {
   protected
     $adapter = null;
@@ -66,9 +66,9 @@ abstract class opAuthConfigForm extends OpenPNEFormAutoGenerate
         continue;
       }
 
-      $obj = $this->generateWidget($value);
+      $obj = opFormItemGenerator::generateWidget($value);
       $this->setWidget($key, $obj);
-      $this->setValidator($key, $this->generateValidator($value));
+      $this->setValidator($key, opFormItemGenerator::generateValidator($value));
     }
 
     $this->widgetSchema->setNameFormat('auth'.$this->adapter->getAuthModeName().'[%s]');

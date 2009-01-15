@@ -15,7 +15,7 @@
  * @subpackage member_config
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class MemberConfigForm extends OpenPNEFormAutoGenerate
+class MemberConfigForm extends sfForm
 {
   protected $memberConfigSettings = array();
   protected $category = '';
@@ -73,13 +73,13 @@ class MemberConfigForm extends OpenPNEFormAutoGenerate
   public function setMemberConfigWidget($name)
   {
     $config = $this->memberConfigSettings[$name];
-    $this->widgetSchema[$name] = $this->generateWidget($config);
+    $this->widgetSchema[$name] = opFormItemGenerator::generateWidget($config);
     $this->widgetSchema->setLabel($name, $config['Caption']);
     $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($name, $this->member->getId());
     if ($memberConfig) {
       $this->setDefault($name, $memberConfig->getValue());
     }
-    $this->validatorSchema[$name] = $this->generateValidator($config);
+    $this->validatorSchema[$name] = opFormItemGenerator::generateValidator($config);
 
     if (!empty($config['IsConfirm'])) {
       $this->validatorSchema[$name.'_confirm'] = $this->validatorSchema[$name];
