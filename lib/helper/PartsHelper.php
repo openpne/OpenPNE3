@@ -72,6 +72,27 @@ function include_alert_box($id, $body)
   include_partial('global/partsAlertBox', $params);
 }
 
+function include_simple_box($id, $title = '', $block = '', $option = array())
+{
+  if(!isset($option['border']))
+  {
+    $option['border'] = true;
+  }
+  if(!isset($option['class']))
+  {
+    $option['class'] = '';
+  }
+
+  $params = array(
+    'id' => $id,
+    'title' => $title,
+    'block' => $block,
+    'option' => $option,
+  );
+
+  include_partial('global/partsSimpleBox', $params);
+}
+
 function include_box($id, $title = '', $body = '', $option = array())
 {
   if (!empty($option['form']) && !isset($option['button'])) {
@@ -83,19 +104,12 @@ function include_box($id, $title = '', $body = '', $option = array())
     $option['url'] = $request->getParameter('module').'/'.$request->getParameter('action');
   }
 
-  if (!isset($option['padding']))
-  {
-    $option['padding'] = true;
-  }
-
   $params = array(
     'id' => $id,
-    'title' => $title,
     'body' => $body,
     'option' => $option,
   );
-
-  include_partial('global/partsBox', $params);
+  include_simple_box($id, $title, get_partial('global/partsBox', $params), array('class' => 'box'));
 }
 
 function include_parts($parts_name, $id, $option = array())
@@ -169,18 +183,17 @@ function _is_disabled_plugin_dir($directory)
 }
 
 /**
- * Include news box
+ * Include news
  *
  */
 function include_news($id, $title = '', $list, $option = array())
 {
-  $option['padding'] = false;
-  $option['parts'] = 'newsParts';
+  $option['class'] = 'partsNews';
   $params = array(
     'list' => $list,
   );
 
- include_box( $id, $title, get_partial('global/partsNews', $params), $option);
+ include_simple_box( $id, $title, get_partial('global/partsNews', $params), $option);
 }
 
 /**
@@ -197,6 +210,6 @@ function include_news_pager($id, $title = '', $pager, $list, $link_to_detail)
     'link_to_detail' => $link_to_detail,
   );
 
- include_partial('global/partsNewsPager', $params);
+ include_simple_box( $id, $title, get_partial('global/partsNewsPager', $params), array('class' => 'partsNewsPager'));
 }
 

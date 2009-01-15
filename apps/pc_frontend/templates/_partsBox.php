@@ -1,17 +1,5 @@
-<?php include_customizes($id, 'before') ?>
-<div id="<?php echo $id ?>" class="dparts box"><div class="parts <?php echo isset($option['parts']) ? $option['parts'] : '' ?>">
-
-<?php if ($title) : ?>
-<div class="partsHeading">
-<?php include_customizes($id, 'headTop') ?>
-<h3><?php echo $title ?></h3>
-<?php include_customizes($id, 'headBottom') ?>
-</div>
-<?php endif; ?>
-
-<div class="block">
 <?php if (empty($option['form'])) : ?>
-<div <?php echo $option['padding'] ? 'class="body"' : '' ?> >
+<div class="body">
 <?php include_customizes($id, 'bodyTop') ?>
 <?php echo $sf_data->getRaw('body') ?>
 <?php include_customizes($id, 'bodyBottom') ?>
@@ -20,7 +8,7 @@
 
 <?php if (isset($option['form'])) : ?>
 <?php if (!empty($body)) : ?>
-<div <?php echo $option['padding'] ? 'class="body"' : '' ?> >
+<div class="body">
 <?php include_customizes($id, 'bodyTop') ?>
 <?php echo $sf_data->getRaw('body') ?>
 <?php include_customizes($id, 'bodyBottom') ?>
@@ -58,8 +46,3 @@
 <?php include_customizes($id, 'formBottom') ?>
 </form>
 <?php endif; ?>
-
-</div>
-
-</div></div>
-<?php include_customizes($id, 'after') ?>
