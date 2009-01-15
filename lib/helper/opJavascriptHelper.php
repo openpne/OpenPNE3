@@ -25,6 +25,7 @@ require_once sfConfig::get('sf_symfony_lib_dir').'/plugins/sfProtoculousPlugin/l
  */
 function make_modal_box($id, $contents, $width, $height)
 {
+  sfContext::getInstance()->getResponse()->addJavascript('util');
   $div = '<div id="'.$id.'" class="modalWall" style="display:none" onclick="this.style.display=\'none\'; document.getElementById(\''.$id.'_contents\').style.display=\'none\'"></div>'
        . '<div id="'.$id.'_contents" class="modalBox" style="display: none;">'
        . $contents
