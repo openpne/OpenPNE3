@@ -20,7 +20,7 @@
 
 <?php if (isset($option['form'])) : ?>
 <?php if (!empty($body)) : ?>
-<div class="body">
+<div <?php echo $option['padding'] ? 'class="body"' : '' ?> >
 <?php include_customizes($id, 'bodyTop') ?>
 <?php echo $sf_data->getRaw('body') ?>
 <?php include_customizes($id, 'bodyBottom') ?>
