@@ -1,6 +1,0 @@
-default:
-  http_metas:
-    content-type: text/xml
-
-  has_layout:     on
-  layout:         layout_atom
