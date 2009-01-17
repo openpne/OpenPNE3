@@ -140,4 +140,29 @@ class opToolkit
 
     return $string;
   }
+
+  function extractEnclosedStrings($string, $enclosure = '"')
+  {
+    $result = array('base' => $string, 'enclosed' => array());
+    $enclosureCount = substr_count($string, $enclosure);
+
+    for ($i = 0; $i < $enclosureCount; $i++)
+    {
+      $begin = strpos($string, $enclosure);
+      $finish = strpos($string, $enclosure, $begin + 1);
+      if ($begin !== false && $finish !== false)
+      {
+        $head = substr($string, 0, $begin - 1);
+        $body = substr($string, $begin + 1, $finish - $begin - 1);
+        $foot = substr($string, $finish + 1);
+
+        $string = $head.$foot;
+        $result['enclosed'][] = $body;
+        $i++;
+      }
+    }
+
+    $result['base'] = $string;
+    return $result;
+  }
 }
