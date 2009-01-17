@@ -121,6 +121,7 @@ strong {
 .sortable {
   cursor: move;
 }
+
 /*----------------------------------------------
  * テーブル
  *--------------------------------------------*/
@@ -151,8 +152,8 @@ div#LayoutC {
   overflow: hidden;
   overflow: -moz-scrollbars-none;
 }
-#Sidemenu,
-#Contents,
+#Left,
+#Center,
 #Top {
   overflow: hidden;
 }
@@ -191,10 +192,34 @@ pre {
 
 #Container {
   position: relative;
-  width: 720px;
+  width: 950px;
+  margin: 0 auto;
 }
+
 #Header {
   position: relative;
+}
+
+#Contents {
+  width: 720px;
+  float: left;
+}
+
+#sideBanner {
+  width: 220px;
+  float: right;
+  padding: 0 5px;
+  background-color: #ff9999;
+}
+
+#Footer {
+  clear: both;
+  padding: 0 10px;
+  background-color: #58B5F3;
+}
+#Footer p {
+  text-align: right;
+  line-height: 30px;
 }
 
 #LayoutA #Top {
@@ -205,71 +230,71 @@ pre {
   margin-right: 20px;
   margin-left: 20px;
 }
-#LayoutA #Sidemenu {
+#LayoutA #Left {
   float: left;
   width: 270px;
   padding: 0 5px;
 }
-#LayoutA #Contents {
+#LayoutA #Center {
   float: right;
   width: 440px;
 }
 
-#LayoutB #Sidemenu {
+#LayoutB #Left {
   float: left;
   width: 180px;
 }
-#LayoutB #Contents {
+#LayoutB #Center {
   float: right;
   width: 540px;
 }
 
-#LayoutC #Contents {
+#LayoutC #Center {
   width: 650px;
   margin-left: 30px;
 }
 
 
 /*----------------------------------------------
- * Sidemenu
+ * Left
  *--------------------------------------------*/
-#LayoutB #Sidemenu div.pageNav,
-#LayoutB #Sidemenu div.parts {
+#LayoutB #Left div.pageNav,
+#LayoutB #Left div.parts {
   background-color: #FFFFFF;
   border: 1px solid #CCCCCC;
   margin: 0 5px 10px;
 }
-#LayoutB #Sidemenu .pageNav ul {
+#LayoutB #Left .pageNav ul {
   margin: 1px;
 }
-#LayoutB #Sidemenu .pageNav li {
+#LayoutB #Left .pageNav li {
   background: transparent url(../images/icon_1.gif) no-repeat scroll 8px 50%;
   padding: 4px 0 4px 18px;
 }
-#LayoutB #Sidemenu .pageNav li.current {
+#LayoutB #Left .pageNav li.current {
   background-color: #EEEEEE;
 }
 
-#Sidemenu .calendar .partsHeading {
+#Left .calendar .partsHeading {
   padding: 4px 0;
   border: none;
   background: none;
   text-align: center;
 }
-#Sidemenu .calendar th {
+#Left .calendar th {
   background-color: #EEEEEE;
   text-align: center;
 }
-#Sidemenu .calendar td {
+#Left .calendar td {
   padding: 1px 2px;
   text-align: right;
 }
-#Sidemenu .calendar td,
-#Sidemenu .calendar td * {
+#Left .calendar td,
+#Left .calendar td * {
   word-break: normal;
   letter-spacing: -1px;
 }
-#Sidemenu .partsHeading {
+#Left .partsHeading {
   border-bottom: 1px solid #CCCCCC;
 }
 
@@ -351,8 +376,8 @@ pre {
 div.dparts,
 div.dparts div.parts,
 div.ditem,
-#Sidemenu div.parts,
-#Contents div.parts,
+#Left div.parts,
+#Center div.parts,
 #Top div.parts {
   border: 1px solid #CCCCCC;
 }
@@ -383,7 +408,7 @@ div.ditem {
   text-align: left;
   font-size: 100%;
 }
-#LayoutA #Sidemenu .partsHeading {
+#LayoutA #Left .partsHeading {
   padding-left: 24px;
   background-image: url(../images/icon_title_1.gif);
 }
@@ -724,8 +749,8 @@ div.operation ul.moreInfo li {
  * searchFormLine
  *----------------------------------------------------------------------------*/
 #Top div.searchFormLine,
-#Sidemenu div.searchFormLine,
-#Contents div.searchFormLine {
+#Left div.searchFormLine,
+#Center div.searchFormLine {
   border-width: 0;
 }
 
@@ -780,4 +805,3 @@ div.operation ul.moreInfo li {
 *:first-child+html .manageList colgroup.operation col {
   width: 76px;
 }
-

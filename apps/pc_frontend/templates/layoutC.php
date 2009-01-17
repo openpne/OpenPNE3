@@ -1,9 +1,1 @@
-<?php include_partial('global/header'); ?>
-<div id="LayoutC">
-
-<div id="Contents">
-<?php echo $sf_content ?>
-</div>
-
-</div>
-<?php include_partial('global/footer'); ?>
+<?php include_partial('global/layout', array('sf_content' => $sf_data->getRaw('sf_content'), 'layout' => 'C')) ?>
