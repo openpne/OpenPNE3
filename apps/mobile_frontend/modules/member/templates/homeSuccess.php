@@ -55,7 +55,7 @@
 $list = array(
   link_to('ﾌﾟﾛﾌｨｰﾙ変更', 'member/editProfile'),
 );
-include_list_box('profileEdit', $list, array('title' => 'ﾌﾟﾛﾌｨｰﾙ変更'))
+include_mobile_parts('list', 'profileEdit', $list, array('title' => 'ﾌﾟﾛﾌｨｰﾙ変更'))
 ?>
 
 <?php
@@ -75,7 +75,7 @@ foreach (sfConfig::get('openpne_member_category') as $key => $value)
   }
 }
 $list[] = link_to('かんたんﾛｸﾞｲﾝ設定', 'member/configUID');
-include_list_box('configEdit', $list, array('title' => '設定変更'))
+include_mobile_parts('list', 'configEdit', $list, array('title' => '設定変更'))
 ?>
 
 <?php if ($mobileBottomWidgets) : ?>

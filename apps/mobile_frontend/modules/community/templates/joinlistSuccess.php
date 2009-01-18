@@ -8,10 +8,10 @@ $list = array();
 foreach ($pager->getResults() as $community) {
   $list[] = link_to(sprintf('%s(%d)', $community->getName(), $community->countCommunityMembers()), 'community/home?id='.$community->getId());
 }
-$options = array(
+$option = array(
   'border' => true,
 );
-include_list_box('communityList', $list, $options);
+include_mobile_parts('list', 'communityList', $list, $option);
 ?>
 
 <?php echo pager_navigation($pager, 'community/joinlist?page=%d&member_id=' . $sf_params->get('member_id'), false); ?>

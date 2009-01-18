@@ -9,10 +9,10 @@ $list = array();
 foreach ($pager->getResults() as $member) {
   $list[] = link_to(sprintf('%s(%d)', $member->getName(), $member->countFriends()), 'member/profile?id='.$member->getId());
 }
-$options = array(
+$option = array(
   'border' => true,
 );
-include_list_box('memberList', $list, $options);
+include_mobile_parts('list', 'memberList', $list, $option);
 ?>
 
 <?php echo pager_navigation($pager, 'friend/list?page=%d&id=' . $sf_params->get('id'), false); ?>

@@ -17,11 +17,11 @@ foreach ($pager->getResults() as $member)
           . get_customizes('id_friend', 'after', $vars);
 }
 
-$options = array(
+$option = array(
   'border' => true,
 );
 
-include_list_box('friendList', $list, $options);
+include_mobile_parts('list', 'friendList', $list, $option);
 ?>
 
 <?php echo pager_navigation($pager, 'friend/list?page=%d&id=' . $sf_params->get('id'), false); ?>

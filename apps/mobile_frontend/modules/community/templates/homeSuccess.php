@@ -45,14 +45,14 @@ foreach ($community->getCommunityMembers() as $communityMember) {
   $member = $communityMember->getMember();
   $list[] = link_to($member->getName(), 'member/profile?id='.$member->getId());
 }
-$options = array(
+$option = array(
   'title' => 'ｺﾐｭﾆﾃｨﾒﾝﾊﾞｰ',
   'border' => true,
   'moreInfo' => array(
     link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'community/memberList?id='.$community->getId()),
   ),
 );
-include_list_box('communityMember', $list, $options);
+include_mobile_parts('list', 'communityMember', $list, $option);
 ?>
 
 <?php slot('op_mobile_footer') ?>
