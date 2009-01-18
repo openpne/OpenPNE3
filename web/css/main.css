@@ -932,3 +932,31 @@ div.operation ul.moreInfo li {
 *:first-child+html .manageList colgroup.operation col {
   width: 76px;
 }
+
+/*==============================================================================
+ * homeRecentList
+ *----------------------------------------------------------------------------*/
+.homeRecentList div.block {
+  padding: 5px;
+}
+
+.homeRecentList ul.articleList {
+  line-height: 1.3;
+}
+
+.homeRecentList ul.articleList li {
+  padding-bottom: 5px;
+  padding-left: 85px;
+  background: url(../images/icon_1.gif) 3px 0.4em no-repeat scroll;
+  text-indent: -72px;
+}
+
+.homeRecentList span.date {
+  padding-right: 18px;
+  background: url(../images/articleList_marker.gif) 92% 0.3em no-repeat scroll;
+}
+
+.homeRecentList div.moreInfo ul.moreInfo {
+  margin: 0 2px 0 auto;
+  width: 10em;
+}
