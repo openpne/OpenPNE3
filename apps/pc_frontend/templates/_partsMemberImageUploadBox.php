@@ -29,7 +29,7 @@
 <?php echo $option['form']['file'] ?>
 <?php echo $option['form']->renderHiddenFields(); ?>
 </p>
-<p><input type="submit" value="<?php echo __('アップロードする') ?>" /></p>
+<p><input type="submit" class="input_submit" value="<?php echo __('アップロードする') ?>" /></p>
 </form>
 <ul>
 <li><?php echo __('写真は最大3枚までアップロードできます。') ?></li>

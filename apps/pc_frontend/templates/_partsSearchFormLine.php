@@ -6,7 +6,7 @@
 <li><?php echo image_tag('icon_search.gif', array('alt' => 'search')) ?></li>
 <li>
 <input type="hidden" value="action" name="search" />
-<input type="text" size="30" value="" name="search_query" />
+<input type="text" class="input_text" size="30" value="" name="search_query" />
 </li>
 <li>
 <select name="search_module">
@@ -18,7 +18,7 @@
 </select>
 </li>
 <li>
-<input type="submit" value="<?php echo $option['button'] ?>" />
+<input type="submit" class="input_submit" value="<?php echo $option['button'] ?>" />
 </li>
 </ul>
 </form>

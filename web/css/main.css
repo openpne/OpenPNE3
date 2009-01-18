@@ -140,6 +140,16 @@ select {
   border: none;
 }
 
+.input_submit {
+  border: 1px solid #888888;
+  background: #dadce6 url(../images/bg_button.gif) repeat-x scroll 50% 0;
+  letter-spacing: 0;
+}
+
+.input_file {
+  background: none;
+}
+
 strong {
   font-weight: bold;
 }

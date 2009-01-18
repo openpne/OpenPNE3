@@ -70,7 +70,7 @@ foreach ($forms as $form)
 <div class="operation">
 <ul class="moreInfo button">
 <li>
-<?php foreach ($forms as $form) echo $form->renderHiddenFields() ?><input class="input_submit" type="submit" value="<?php echo $option['button'] ?>" />
+<?php foreach ($forms as $form) echo $form->renderHiddenFields() ?><input type="submit" class="input_submit" value="<?php echo $option['button'] ?>" />
 </li>
 </ul>
 </div>
