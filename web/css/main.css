@@ -181,6 +181,27 @@ div.parts tr td.first-child {
 }
 
 /*----------------------------------------------
+ * List Marker
+ *--------------------------------------------*/
+ul.moreInfo li {
+  padding: 2px 0 2px 20px;
+  background: url(../images/icon_arrow_1.gif) no-repeat 0 0.4em;
+}
+
+ul.moreInfo.button li {
+  padding: 0;
+  background: none;
+}
+
+ul.moreInfo.button li form {
+  display: inline;
+}
+
+ul.moreInfo.button li form .input_submit {
+  margin: 0 5px;
+}
+
+/*----------------------------------------------
  * clearfix, overflow: hidden
  *--------------------------------------------*/
 div#LayoutA,
