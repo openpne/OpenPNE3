@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /*==============================================================================
- * デフォルトスタイルシートの上書き
+ * Reset Default Style
  *----------------------------------------------------------------------------*/
 body, div, p, pre, blockquote, th, td,
 dl, dt, dd, ul, ol, li,
@@ -12,10 +12,12 @@ iframe, object, embed {
   border: none;
   text-align: left;
 }
+
 ul, ol {
   list-style-position: outside;
   list-style-type: none;
 }
+
 table {
   border-collapse: separate;
   border-spacing: 0;
@@ -23,18 +25,23 @@ table {
   margin: 0;
   font-size: 1em;
 }
+
 * {
   word-break: break-all;
 }
+
 *:first-child+html table {
   border-collapse: collapse;
 }
+
 * html table {
   border-collapse: collapse;
 }
+
 th, td {
   vertical-align: middle;
 }
+
 address, cite, caption, th, del, ins,
 abbr, acronym, dfn, em, strong,
 code, kbd, samp, var {
@@ -45,46 +52,57 @@ code, kbd, samp, var {
   text-align: left;
   text-decoration: none;
 }
+
 img {
   border: none;
   vertical-align: baseline;
 }
+
 a img {
   vertical-align: text-bottom;
 }
+
 * html a img {
   vertical-align: baseline;
 }
+
 br {
   letter-spacing: 0;
 }
+
 h1, h2, h3, h4, h5, h6 {
   font-size: 100%;
   font-weight: normal;
 }
+
 q:before, q:after {
   content: "";
 }
+
 form, fieldset, input, textarea {
   margin: 0;
 }
+
 form, fieldset {
   padding: 0;
 }
+
 fieldset {
   border: none;
 }
+
 form p {
   margin: 0;
   padding: 0;
 }
 
 /*==============================================================================
- * OpenPNE全共通指定
+ * OpenPNE Common Style
  *----------------------------------------------------------------------------*/
 body {
   font: normal normal normal 10pt/1.2 "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", "MS PGothic", Osaka, sans-serif;
 }
+
 input,
 textarea,
 select {
@@ -92,49 +110,59 @@ select {
   font-size: inherit;
   font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", "MS PGothic", Osaka, sans-serif;
 }
+
 a:link {
   color: #026cd1;
 }
+
 a:visited {
   color: #004a95;
 }
+
 a:hover, a:active {
   color: #76afe6;
 }
+
 .input_text,
 .input_password,
 textarea {
   background-color: #f8f8f8;
 }
+
 .input_text,
 .input_password,
 textarea,
 select {
   border: 1px solid #888888;
 }
+
 .input_image {
   border: none;
 }
+
 strong {
   font-weight: bold;
 }
+
 .sortable {
   cursor: move;
 }
 
 /*----------------------------------------------
- * テーブル
+ * Table
  *--------------------------------------------*/
 div.parts table {
   table-layout: fixed;
   width: 100%;
 }
+
 div.parts th,
 div.parts td {
   border-width: 1px 0 0 1px;
   border-style: solid;
   border-color: #CCCCCC;
 }
+
 div.parts tr th:first-child,
 div.parts tr td:first-child,
 div.parts tr th.first-child,
@@ -152,48 +180,33 @@ div#LayoutC {
   overflow: hidden;
   overflow: -moz-scrollbars-none;
 }
+
 #Left,
 #Center,
 #Top {
   overflow: hidden;
 }
+
 dd div, dt, ul, ol, td, th, p,
 h1, h2, h3, h4, h5, h6, .partsHeading,
 fieldset, label {
   overflow: hidden;
 }
+
 dd div div {
   overflow: visible;
 }
+
 pre {
   overflow: auto;
 }
 
 /*----------------------------------------------
- * base layout
+ * Base Layout
  *--------------------------------------------*/
-#Header h1 {
-  background:#ffffff url(../images/skin_header_logo.jpg) no-repeat scroll 0 0;
-  height: 45px;
-  margin: 0;
-  width: 220px;
-}
-
-#Header h1 a {
-  border: medium none;
-  display: block;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  text-decoration:none;
-  text-indent:-9999px;
-  width: 100%;
-}
-
 #Container {
-  position: relative;
-  width: 950px;
   margin: 0 auto;
+  width: 950px;
 }
 
 #Header {
@@ -201,137 +214,316 @@ pre {
 }
 
 #Contents {
-  width: 720px;
   float: left;
+  width: 720px;
 }
 
 #sideBanner {
-  width: 220px;
   float: right;
-  padding: 0 5px;
-  background-color: #ff9999;
+  width: 225px;
 }
 
 #Footer {
   clear: both;
-  padding: 0 10px;
   background-color: #58B5F3;
 }
-#Footer p {
-  text-align: right;
-  line-height: 30px;
+
+/*----------------------------------------------
+ * Header
+ *--------------------------------------------*/
+#Header h1 {
+  margin: 0;
+  width: 220px;
+  height: 45px;
+  background: transparent url(../images/skin_header_logo.jpg) no-repeat scroll 0 0;
 }
 
-#LayoutA #Top {
-  padding-left: 5px;
+#Header h1 a {
+  margin: 0;
+  padding: 0;
+  border: medium none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-indent: -9999px;
+  text-decoration: none;
 }
-#LayoutA #Top .infoBox,
-#LayoutA #Top .descriptionBox {
-  margin-right: 20px;
-  margin-left: 20px;
-}
+
+/*----------------------------------------------
+ * Contents
+ *--------------------------------------------*/
 #LayoutA #Left {
   float: left;
-  width: 270px;
-  padding: 0 5px;
+  width: 275px;
 }
+
 #LayoutA #Center {
   float: right;
   width: 440px;
 }
 
+#LayoutA #Bottom {
+  clear: both;
+}
+
 #LayoutB #Left {
   float: left;
-  width: 180px;
+  width: 175px;
 }
+
 #LayoutB #Center {
   float: right;
   width: 540px;
 }
 
+#LayoutB #Bottom {
+  clear: both;
+}
+
 #LayoutC #Center {
   width: 650px;
-  margin-left: 30px;
+  margin: 0 auto;
 }
-
 
 /*----------------------------------------------
- * Left
+ * Footer
  *--------------------------------------------*/
-#LayoutB #Left div.pageNav,
-#LayoutB #Left div.parts {
-  background-color: #FFFFFF;
-  border: 1px solid #CCCCCC;
-  margin: 0 5px 10px;
-}
-#LayoutB #Left .pageNav ul {
-  margin: 1px;
-}
-#LayoutB #Left .pageNav li {
-  background: transparent url(../images/icon_1.gif) no-repeat scroll 8px 50%;
-  padding: 4px 0 4px 18px;
-}
-#LayoutB #Left .pageNav li.current {
-  background-color: #EEEEEE;
+#Footer p {
+  padding: 0 10px;
+  line-height: 30px;
+  text-align: right;
 }
 
+/*----------------------------------------------
+ * Navigation
+ *--------------------------------------------*/
+#globalNav {
+  padding-left: 30px;
+  text-align: right;
+}
+
+#globalNav li {
+  padding: 0 5px;
+  display: inline;
+}
+
+#localNav {
+  margin: 10px 0;
+  background-color: #58B5F3;
+}
+
+#localNav li {
+  border-right: 1px solid #CCCCCC;
+  display: inline;
+  line-height: 30px;
+}
+
+#localNav li a {
+  padding: 0 10px;
+  color: #000000;
+  text-decoration: none;
+}
+
+/*----------------------------------------------
+ * Parts
+ *--------------------------------------------*/
+div.parts,
+div.dparts {
+  margin: 0 auto 10px;
+}
+
+div.dparts div.parts {
+  margin: 0;
+}
+
+div.parts,
+div.dparts,
+div.item,
+div.ditem {
+  border: 1px solid #CCCCCC;
+}
+
+div.ditem div.item {
+  border-top-width: 0;
+}
+
+div.dparts {
+  padding: 7px;
+}
+
+div.ditem {
+  padding: 5px 6px;
+}
+
+#Left div.dparts {
+  padding: 0;
+  border: none;
+}
+
+/*----------------------------------------------
+ * Parts Heading
+ *--------------------------------------------*/
+div.partsHeading {
+  padding: 2px 8px 2px 36px;
+  background: #36B3D1 url(../images/content_header_1.gif) no-repeat 0 0;
+  font-size: 100%;
+  text-align: left;
+}
+
+#Left div.partsHeading {
+  padding-left: 24px;
+  background-image: url(../images/icon_title_1.gif);
+}
+
+div.partsHeading h3 {
+  display: inline;
+  font-weight: bold;
+}
+
+div.partsHeading p {
+  margin-left: 0.5em;
+  display: inline;
+}
+
+div.partsHeading p.link {
+  top: 2px;
+  right: 8px;
+  float: right;
+}
+
+/*----------------------------------------------
+ * Parts Items
+ *--------------------------------------------*/
+div.block,
+div.partsInfo,
+div.pagerAbsolute,
+div.pagerRelative,
+div.pagerRelativeMulti,
+div.operation {
+  border-top: 1px solid #CCCCCC;
+}
+
+div.partsInfo {
+  padding: 10px 40px;
+}
+
+div.pagerAbsolute {
+  padding: 4px;
+  text-align: center;
+}
+
+div.pagerAbsolute p {
+  display: inline;
+}
+
+div.pagerRelative {
+  padding: 4px;
+  text-align: right;
+}
+
+div.pagerRelativeMulti {
+  padding: 4px;
+}
+
+div.pagerRelative p,
+div.pagerRelativeMulti div.pager p {
+  display: inline;
+  margin-left: 10px;
+}
+
+div.pagerRelative p:first-child,
+div.pagerRelativeMulti div.pager p:first-child,
+div.pagerRelative p.first-child,
+div.pagerRelativeMulti div.pager p.first-child {
+  margin-left: 0;
+}
+
+div.pagerRelativeMulti div.text {
+  float: left;
+  width: 55%;
+}
+
+div.pagerRelativeMulti div.pager {
+  float: right;
+  width: 45%;
+  margin-top: 0.5em;
+  text-align: right;
+}
+
+div.operation {
+  padding: 4px;
+}
+
+div.operation ul.moreInfo {
+  text-align: center;
+}
+
+div.operation ul.moreInfo li {
+  display: inline;
+  background-position: 0 50%;
+}
+
+/*----------------------------------------------
+ * Calendar
+ *--------------------------------------------*/
 #Left .calendar .partsHeading {
   padding: 4px 0;
   border: none;
   background: none;
   text-align: center;
 }
-#Left .calendar th {
+
+.calendar th {
   background-color: #EEEEEE;
   text-align: center;
 }
-#Left .calendar td {
+
+.calendar td {
   padding: 1px 2px;
   text-align: right;
 }
-#Left .calendar td,
-#Left .calendar td * {
-  word-break: normal;
+
+.calendar td,
+.calendar td * {
   letter-spacing: -1px;
-}
-#Left .partsHeading {
-  border-bottom: 1px solid #CCCCCC;
+  word-break: normal;
 }
 
 #Body .calendar .holiday,
 .calendar .sun {
-    color: #d92c49;
-}
-.calendar .sat {
-    color: #2c65d9;
+  color: #d92c49;
 }
 
+.calendar .sat {
+  color: #2c65d9;
+}
+
+/*----------------------------------------------
+ * Page Navigation
+ *--------------------------------------------*/
+#Left .pageNav {
+  border: 1px solid #CCCCCC;
+  background-color: #FFFFFF;
+}
+
+#Left .pageNav ul {
+  margin: 1px;
+}
+
+#Left .pageNav li {
+  padding: 4px 0 4px 18px;
+  background: transparent url(../images/icon_1.gif) no-repeat scroll 8px 50%;
+}
+
+#Left .pageNav li.current {
+  background-color: #EEEEEE;
+}
 
 /*==============================================================================
- * navi
+ * descriptionBox
  *----------------------------------------------------------------------------*/
-#globalNav {
-  text-align: right;
-  padding-left: 30px;
-}
-#globalNav li {
-  display: inline;
-}
-
-#localNav {
-  margin: 10px 0;
-  padding-left: 10px;
-  background-color: #58B5F3;
-}
-#localNav li {
-  display: inline;
-  line-height: 30px;
-  padding-right: 10px;
-  border-right: 1px solid #CCCCCC;
-}
-#localNav li a {
-  color: #000000;
-  text-decoration: none;
+.descriptionBox p {
+  margin: 12px;
 }
 
 /*==============================================================================
@@ -370,123 +562,6 @@ pre {
   color: #ff0000;
 }
 
-/*----------------------------------------------
- * パーツ枠
- *--------------------------------------------*/
-div.dparts,
-div.dparts div.parts,
-div.ditem,
-#Left div.parts,
-#Center div.parts,
-#Top div.parts {
-  border: 1px solid #CCCCCC;
-}
-div.ditem div.item {
-  border-width: 0 1px 1px;
-  border-style: solid;
-  border-color: #CCCCCC;
-}
-div.dparts {
-  margin: 0 auto 10px;
-  padding: 7px;
-}
-div.dparts div.parts {
-  margin: 0;
-}
-div.parts {
-  margin: 0 auto 10px;
-}
-div.ditem {
-  padding: 5px 6px;
-}
-/*----------------------------------------------
- * パーツ見出し
- *--------------------------------------------*/
-.partsHeading {
-  padding: 2px 8px 2px 36px;
-  background: #36B3D1 url(../images/content_header_1.gif) no-repeat 0 0;
-  text-align: left;
-  font-size: 100%;
-}
-#LayoutA #Left .partsHeading {
-  padding-left: 24px;
-  background-image: url(../images/icon_title_1.gif);
-}
-.partsHeading h3 {
-  display: inline;
-  font-weight: bold;
-}
-.partsHeading p {
-  display: inline;
-  margin-left: 0.5em;
-}
-
-.partsHeading p.link {
-  float: right;
-  top: 2px;
-  right: 8px;
-}
-
-/*----------------------------------------------
- * パーツ内上下の部分（1件～20件を表示など）
- *--------------------------------------------*/
-div.block,
-div.partsInfo,
-div.pagerAbsolute,
-div.pagerRelative,
-div.pagerRelativeMulti,
-div.operation {
-  border-top: 1px solid #CCCCCC;
-}
-div.partsInfo {
-  padding: 10px 40px;
-}
-div.pagerAbsolute {
-  padding: 4px;
-  text-align: center;
-}
-div.pagerAbsolute p {
-  display: inline;
-}
-div.pagerRelative {
-  padding: 4px;
-  text-align: right;
-}
-div.pagerRelativeMulti {
-  padding: 4px;
-}
-div.pagerRelative p,
-div.pagerRelativeMulti div.pager p {
-  display: inline;
-  margin-left: 10px;
-}
-div.pagerRelative p:first-child,
-div.pagerRelativeMulti div.pager p:first-child,
-div.pagerRelative p.first-child,
-div.pagerRelativeMulti div.pager p.first-child {
-  margin-left: 0;
-}
-div.pagerRelativeMulti div.text {
-  float: left;
-  width: 55%;
-}
-div.pagerRelativeMulti div.pager {
-  float: right;
-  width: 45%;
-  margin-top: 0.5em;
-  text-align: right;
-}
-div.operation {
-  padding: 4px;
-}
-div.operation ul.moreInfo {
-  text-align: center;
-}
-div.operation ul.moreInfo li {
-  display: inline;
-  background-position: 0 50%;
-}
-
 /*==============================================================================
  * box
  *----------------------------------------------------------------------------*/
@@ -502,7 +577,7 @@ div.operation ul.moreInfo li {
   border-left: medium none;
 }
 
-.box  .operation {
+.box .operation {
   padding: 10px 0;
 }
 
@@ -589,31 +664,45 @@ div.operation ul.moreInfo li {
 .memberImageBox * {
   text-align: center;
 }
+
+.memberImageBox {
+  padding: 7px;
+}
+
+.memberImageBox p.photo {
+  padding: 7px;
+  border: 1px solid #CCCCCC;
+}
+
 .memberImageBox p.friendLink {
   margin-bottom: 3px;
 }
-.memberImageBox .parts {
-  padding: 7px;
-}
+
 .memberImageBox ul.moreInfo {
   margin: 2px 0 -5px;
 }
+
 .memberImageBox ul.moreInfo li {
   padding: 1px 0;
   background: none;
 }
+
 .memberImageBox ul.moreInfo li img {
   vertical-align: bottom;
 }
+
 .memberImageBox p.rank {
   margin-top: 6px;
 }
+
 .memberImageBox p.point {
   margin-top: 2px;
 }
+
 .memberImageBox p.text {
   margin-top: 4px;
 }
+
 .memberImageBox p.loginTime {
   margin-top: 0px;
 }
@@ -767,7 +856,7 @@ div.operation ul.moreInfo li {
 .searchFormLine ul li label {
   margin-right: 2px;
   padding: 1px 13px 0 0;
-  background: url(../images/icon_arrow_2.gif); ?>) no-repeat 100% 0;
+  background: url(../images/icon_arrow_2.gif) no-repeat 100% 0;
 }
 
 /*==============================================================================

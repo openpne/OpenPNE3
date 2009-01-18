@@ -1,5 +1,5 @@
 <?php include_customizes($id, 'before') ?>
-<div class="pageNav">
+<div class="parts pageNav">
 <?php include_customizes($id, 'top') ?>
 <ul>
 <?php include_customizes($id, 'listBegin') ?>

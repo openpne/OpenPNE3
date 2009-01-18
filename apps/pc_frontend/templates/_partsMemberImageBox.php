@@ -1,5 +1,4 @@
-<div class="dparts memberImageBox">
-<div class="parts">
+<div class="parts memberImageBox">
 <p class="photo">
 <?php $imgParam = array('size' => '180x180', 'alt' => $option['name']) ?>
 <?php if ($option['image']) : ?>
@@ -8,7 +7,6 @@
 <?php echo image_tag('no_image.gif', $imgParam) ?>
 <?php endif; ?>
 </p>
-</div>
 <p class="text"><?php echo $option['name'] ?></p>
 <?php if (!empty($option['moreInfo'])) : ?>
 <ul>
@@ -18,4 +16,3 @@
 </ul>
 <?php endif; ?>
 </div>
-

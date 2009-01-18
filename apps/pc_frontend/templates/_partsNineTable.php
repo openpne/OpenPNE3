@@ -7,7 +7,7 @@ $option = array_merge(array(
 ?>
 
 <?php if (count($option['list'])) : ?>
-<div class="parts nineTable">
+<div class="dparts nineTable"><div class="parts">
 <div class="partsHeading"><h3><?php echo __($option['title']) ?></h3></div>
 <table>
 <?php $row = ceil(count($option['list']) / $option['row']) ?>
@@ -41,5 +41,5 @@ $option = array_merge(array(
 </ul>
 </div>
 <?php endif; ?>
-</div>
+</div></div>
 <?php endif; ?>
