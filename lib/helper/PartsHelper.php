@@ -121,6 +121,20 @@ function include_parts($parts_name, $id, $option = array())
   include_partial('global/parts'.ucfirst($parts_name), $params);
 }
 
+function include_mobile_parts($parts_name, $id, $contents, $option = array())
+{
+  $parts_option = array(
+    'id'     => $id,
+    'contents' => $contents,
+    'option' => $option,
+  );
+  $params = array(
+    'parts_name'     => $parts_name,
+    'parts_option' => $parts_option,
+  );
+  include_partial('global/partsLayout', $params);
+}
+
 /**
  * Gets customizes.
  *
