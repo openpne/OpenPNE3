@@ -17,6 +17,13 @@
  */
 class opWidgetFormInputIncreased extends sfWidgetForm
 {
+  public function __construct($options = array(), $attributes = array())
+  {
+    $this->addOption('type', 'text');
+
+    parent::__construct($options, $attributes);
+  }
+
   /**
    * Renders this widget
    *
@@ -50,6 +57,7 @@ class opWidgetFormInputIncreased extends sfWidgetForm
         'type'  => $this->getOption('type'),
         'name'  => $name.'['.$key.']',
         'value' => $item,
+        'class' => 'input_'.$this->getOption('type'),
       );
       $input_tag = $this->renderTag('input', array_merge($params, $attributes));
       $result .= $this->renderContentTag('li', $input_tag);

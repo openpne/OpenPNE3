@@ -76,7 +76,7 @@ class opWidgetFormDate extends sfWidgetFormI18nDate
 
     // years
     $attributes['size'] = '5';
-    $widget = new sfWidgetFormInput(array(), array_merge($this->attributes, $attributes));
+    $widget = new sfWidgetFormInput(array(), array_merge(array('class' => 'input_text'), $this->attributes, $attributes));
     $date['%input_year%'] = $widget->render($name.'[year]', $year);
 
     return strtr($this->getOption('format'), $date);

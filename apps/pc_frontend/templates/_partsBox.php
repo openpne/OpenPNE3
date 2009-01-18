@@ -17,16 +17,47 @@
 <?php $option_raw = $sf_data->getRaw('option') ?>
 <form action="<?php echo url_for($option_raw['url']) ?>" method="post"<?php if (!empty($option['isMultipart'])) : ?> enctype="multipart/form-data"<?php endif; ?>>
 <?php include_customizes($id, 'formTop') ?>
-<table>
-<?php if ($option['form']  instanceof sfOutputEscaperArrayDecorator) : ?>
-<?php foreach ($option['form'] as $form) : ?>
-<?php echo $form ?>
-<?php endforeach; ?>
-<?php else : ?>
-<?php echo $option['form'] ?>
-<?php endif; ?>
+
+<table class="formTable">
+<?php
+$forms = ($option['form'] instanceof sfForm) ? array($option['form']) : $option['form'];
+foreach ($forms as $form)
+{
+  foreach ($form as $field)
+  {
+    if ($field->isHidden()) continue;
+
+    $widget = $field->getWidget();
+    if ($widget instanceof sfWidgetFormInput)
+    {
+      $widget->setAttribute('class', sprintf('input_%s', $widget->getOption('type')));
+    }
+    elseif ($widget instanceof sfWidgetFormChoice)
+    {
+      if ($widget->getRenderer() instanceof sfWidgetFormSelectRadio)
+      {
+        echo '<tr>'."\n"
+           . '  <th>'.$field->renderLabel().'</th>'."\n"
+           . '  <td><div id="'.$field->renderId().'">'.$field->render(array('class' => 'input_radio')).'</div></td>'."\n"
+           . '</tr>'."\n";
+        continue;
+      }
+    }
+    elseif ($widget instanceof opWidgetFormDate)
+    {
+      echo '<tr>'."\n"
+         . '  <th>'.$field->renderLabel().'</th>'."\n"
+         . '  <td><div id="'.$field->renderId().'">'.$field->render().'</div></td>'."\n"
+         . '</tr>'."\n";
+      continue;
+    }
+    echo $field->renderRow();
+  }
+}
+?>
 <?php include_customizes($id, 'lastRaw') ?>
 </table>
+
 <?php if (!empty($option['moreInfo'])) : ?>
 <div class="block moreInfo">
 <ul class="moreInfo">
@@ -39,7 +70,7 @@
 <div class="operation">
 <ul class="moreInfo button">
 <li>
-<input class="input_submit" type="submit" value="<?php echo $option['button'] ?>" />
+<?php foreach ($forms as $form) echo $form->renderHiddenFields() ?><input class="input_submit" type="submit" value="<?php echo $option['button'] ?>" />
 </li>
 </ul>
 </div>
