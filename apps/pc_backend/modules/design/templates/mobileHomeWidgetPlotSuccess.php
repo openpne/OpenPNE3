@@ -73,7 +73,7 @@ echo link_to_function($widgetConfig[$widget->getName()]['caption']['ja_JP'], 'sh
 <?php echo sortable_element('plotMobileTop', array(
   'only' => 'widget',
   'tag'  => 'div',
-  'onUpdate' => 'function(s){insertHiddenTags(\'contents\', Sortable.sequence(s, s.id))}',
+  'onUpdate' => 'function(s){insertHiddenTags(\'mobileTop\', Sortable.sequence(s, s.id))}',
 )) ?>
 
 <div class="fixedWidget">
@@ -95,7 +95,7 @@ echo link_to_function($widgetConfig[$widget->getName()]['caption']['ja_JP'], 'sh
 <?php echo sortable_element('plotMobileContents', array(
   'only' => 'widget',
   'tag'  => 'div',
-  'onUpdate' => 'function(s){insertHiddenTags(\'contents\', Sortable.sequence(s, s.id))}',
+  'onUpdate' => 'function(s){insertHiddenTags(\'mobileContents\', Sortable.sequence(s, s.id))}',
 )) ?>
 
 <div class="fixedWidget">
@@ -117,7 +117,7 @@ echo link_to_function($widgetConfig[$widget->getName()]['caption']['ja_JP'], 'sh
 <?php echo sortable_element('plotMobileBottom', array(
   'only' => 'widget',
   'tag'  => 'div',
-  'onUpdate' => 'function(s){insertHiddenTags(\'contents\', Sortable.sequence(s, s.id))}',
+  'onUpdate' => 'function(s){insertHiddenTags(\'mobileBottom\', Sortable.sequence(s, s.id))}',
 )) ?>
 
 </div>
