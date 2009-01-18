@@ -62,6 +62,11 @@ class designActions extends sfActions
           'mobileBottom'   => HomeWidgetPeer::retrieveMobileBottomWidgets(),
         );
         break;
+      case 'sideBanner':
+        $this->widgets = array(
+          'sideBannerContents' => HomeWidgetPeer::retrieveSideBannerContentsWidgets(),
+        );
+        break;
       default:
         $this->widgets = array(
           'top'      => HomeWidgetPeer::retrieveTopWidgets(),
@@ -72,7 +77,6 @@ class designActions extends sfActions
 
     $this->sortForm = new WidgetSortForm(array(), array('current_widgets' => $this->widgets));
     $this->addForm = new WidgetAddForm(array(), array('current_widgets' => $this->widgets));
-
     if ($request->isMethod(sfRequest::POST))
     {
       $this->sortForm->bind($request->getParameter('widget'));
@@ -115,8 +119,9 @@ class designActions extends sfActions
   */
   public function executeHomeAddWidget(sfWebRequest $request)
   {
-    $validTypes = array('top', 'sideMenu', 'contents', 'mobileTop', 'mobileContents', 'mobileBottom');
+    $validTypes = array('top', 'sideMenu', 'contents', 'mobileTop', 'mobileContents', 'mobileBottom', 'sideBannerContents');
     $mobileTypes = array('mobileTop', 'mobileContents', 'mobileBottom');
+    $sideBannerTypes = array('sideBannerContents');
 
     $this->config = sfConfig::get('op_widget_list', array());
     $this->type = 'top';
@@ -128,6 +133,10 @@ class designActions extends sfActions
     if (in_array($this->type, $mobileTypes))
     {
       $this->config = sfConfig::get('op_mobile_widget_list', array());
+    }
+    elseif (in_array($this->type, $sideBannerTypes))
+    {
+      $this->config = sfConfig::get('op_side_banner_widget_list', array());
     }
 
     return sfView::SUCCESS;
@@ -175,6 +184,19 @@ class designActions extends sfActions
     $this->mobileContentsWidgets = (array)HomeWidgetPeer::retrieveMobileContentsWidgets();
     $this->mobileBottomWidgets = (array)HomeWidgetPeer::retrieveMobileBottomWidgets();
     $this->widgetConfig = sfConfig::get('op_mobile_widget_list');
+
+    return sfView::SUCCESS;
+  }
+
+ /**
+  * Executes side banner home widget plot action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeSideBannerWidgetPlot(sfWebRequest $request)
+  {
+    $this->sideBannerContentsWidgets = (array)HomeWidgetPeer::retrieveSideBannerContentsWidgets();
+    $this->widgetConfig = sfConfig::get('op_side_banner_widget_list');
 
     return sfView::SUCCESS;
   }

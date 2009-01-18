@@ -49,6 +49,7 @@
 </div><!-- Contents -->
 
 <div id="sideBanner">
+<?php include_component('default', 'sideBannerWidgets'); ?>
 </div><!-- sideBanner -->
 
 </div><!-- LayoutA -->

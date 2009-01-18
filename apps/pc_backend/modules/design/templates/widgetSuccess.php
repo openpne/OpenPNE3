@@ -6,6 +6,8 @@
 <?php switch ($type): ?>
 <?php case 'mobileHome': ?>
 <?php echo __('携帯版ホーム画面ウィジェット設定'); break; ?>
+<?php case 'sideBanner': ?>
+<?php echo __('サイドバナー領域ウィジェット設定'); break; ?>
 <?php default: ?>
 <?php echo __('ホーム画面ウィジェット設定'); ?>
 <?php endswitch; ?>
@@ -15,6 +17,7 @@
 
 <ul>
 <li><?php echo link_to(__('ホーム画面ウィジェット設定'), 'design/widget?type=home') ?></li>
+<li><?php echo link_to(__('サイドバナー領域ウィジェット設定'), 'design/widget?type=sideBanner') ?></li>
 <li><?php echo link_to(__('携帯版ホーム画面ウィジェット設定'), 'design/widget?type=mobileHome') ?></li>
 </ul>
 
@@ -28,9 +31,9 @@
 <?php foreach ($item as $key => $widget): ?>
 <input class="<?php echo $widgetType ?>Widget" type="hidden" name="widget[<?php echo $widgetType ?>][<?php echo $key ?>]" value="<?php echo $widget->getId() ?>" />
 <?php endforeach; ?>
+<?php endif; ?>
 <?php echo $sortForm->renderHiddenFields(); ?>
 <?php echo $addForm->renderHiddenFields(); ?>
-<?php endif; ?>
 <?php endforeach; ?>
 <input type="submit" value="<?php echo __('設定変更') ?>" />
 </form>

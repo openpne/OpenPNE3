@@ -70,7 +70,8 @@ class WidgetSortForm extends sfForm
       if ($widget) 
       {
         if (array_key_exists($widget->getName(), sfConfig::get('op_widget_list'))
-          || array_key_exists($widget->getName(), sfConfig::get('op_mobile_widget_list')))
+          || array_key_exists($widget->getName(), sfConfig::get('op_mobile_widget_list'))
+          || array_key_exists($widget->getName(), sfConfig::get('op_side_banner_widget_list')))
         {
           $result[] = $id;
         }

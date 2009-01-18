@@ -15,5 +15,8 @@ homeEditWidgetSuccess:
   stylesheets: [-backend]
   javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
 
+sideBannerWidgetPlotSuccess:
+  <<: *homeWidgetPlotSuccess
+
 mobileHomeWidgetPlotSuccess:
   <<: *homeWidgetPlotSuccess

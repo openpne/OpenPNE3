@@ -6,6 +6,12 @@ config/widget.yml:
   class: sfOpenPNEWidgetConfigHandler
   file:  %SF_LIB_DIR%/config/sfOpenPNEWidgetConfigHandler.class.php
 
+config/side_banner_widget.yml:
+  class: sfOpenPNEWidgetConfigHandler
+  file:  %SF_LIB_DIR%/config/sfOpenPNEWidgetConfigHandler.class.php
+  param:
+    prefix: side_banner_
+
 config/mobile_widget.yml:
   class: sfOpenPNEWidgetConfigHandler
   file:  %SF_LIB_DIR%/config/sfOpenPNEWidgetConfigHandler.class.php

@@ -55,7 +55,8 @@ class WidgetAddForm extends sfForm
     foreach ($value as $key => $item)
     {
       if (array_key_exists($item, sfConfig::get('op_widget_list'))
-        || array_key_exists($item, sfConfig::get('op_mobile_widget_list')))
+        || array_key_exists($item, sfConfig::get('op_mobile_widget_list'))
+        || array_key_exists($item, sfConfig::get('op_side_banner_widget_list')))
       {
         $result[] = $item;
       }

@@ -55,6 +55,7 @@
 #plotTop div,
 #plotSideMenu div,
 #plotContents div,
+#plotSideBannerContents div,
 #plotMobileTop div,
 #plotMobileContents div,
 #plotMobileBottom div
@@ -71,6 +72,7 @@
 #plotTop div.emptyWidget,
 #plotSideMenu div.emptyWidget,
 #plotContents div.emptyWidget,
+#plotSideBannerContents div.emptyWidget,
 #plotMobileTop div.emptyWidget,
 #plotMobileContents div.emptyWidget,
 #plotMobileBottom div.emptyWidget

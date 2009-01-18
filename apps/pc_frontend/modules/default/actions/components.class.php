@@ -39,6 +39,11 @@ class defaultComponents extends sfComponents
     }
   }
 
+  public function executeSideBannerWidgets()
+  {
+    $this->widgets = HomeWidgetPeer::retrieveSideBannerContentsWidgets();
+  }
+
   public function executeInformationBox()
   {
     $this->information = SnsConfigPeer::retrieveByName('pc_home_information');
