@@ -46,19 +46,33 @@ class designActions extends sfActions
   }
 
  /**
-  * Executes home widget action
+  * Executes widget action
   *
   * @param sfRequest $request A request object
   */
-  public function executeHomeWidget(sfWebRequest $request)
+  public function executeWidget(sfWebRequest $request)
   {
-    $this->topWidgets = HomeWidgetPeer::retrieveTopWidgets();
-    $this->sideMenuWidgets = HomeWidgetPeer::retrieveSideMenuWidgets();
-    $this->contentsWidgets = HomeWidgetPeer::retrieveContentsWidgets();
-    $this->widgetConfig = sfConfig::get('op_widget_list');
+    $this->type = $request->getParameter('type', 'home');
+    switch ($this->type)
+    {
+      case 'mobileHome':
+        $this->widgets = array(
+          'mobileTop'      => HomeWidgetPeer::retrieveMobileTopWidgets(),
+          'mobileContents' => HomeWidgetPeer::retrieveMobileContentsWidgets(),
+          'mobileBottom'   => HomeWidgetPeer::retrieveMobileBottomWidgets(),
+        );
+        break;
+      default:
+        $this->widgets = array(
+          'top'      => HomeWidgetPeer::retrieveTopWidgets(),
+          'sideMenu'     => HomeWidgetPeer::retrieveSideMenuWidgets(),
+          'contents' => HomeWidgetPeer::retrieveContentsWidgets(),
+        );
+    }
 
-    $this->sortForm = new HomeWidgetSortForm();
-    $this->addForm = new HomeWidgetAddForm();
+    $this->sortForm = new WidgetSortForm(array(), array('current_widgets' => $this->widgets));
+    $this->addForm = new WidgetAddForm(array(), array('current_widgets' => $this->widgets));
+
     if ($request->isMethod(sfRequest::POST))
     {
       $this->sortForm->bind($request->getParameter('widget'));
@@ -67,10 +81,9 @@ class designActions extends sfActions
       {
         $this->sortForm->save();
         $this->addForm->save();
-        $this->redirect('design/homeWidget');
+        $this->redirect('design/widget?type='.$this->type);
       }
     }
-    return sfView::SUCCESS;
   }
 
  /**
@@ -148,34 +161,6 @@ class designActions extends sfActions
       }
     }
 
-    return sfView::SUCCESS;
-  }
-
- /**
-  * Executes mobile home widget action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeMobileHomeWidget(sfWebRequest $request)
-  {
-    $this->mobileTopWidgets = (array)HomeWidgetPeer::retrieveMobileTopWidgets();
-    $this->mobileContentsWidgets = (array)HomeWidgetPeer::retrieveMobileContentsWidgets();
-    $this->mobileBottomWidgets = (array)HomeWidgetPeer::retrieveMobileBottomWidgets();
-    $this->widgetConfig = sfConfig::get('op_mobile_widget_list');
-
-    $this->sortForm = new HomeWidgetSortForm(array(), array('is_mobile' => true));
-    $this->addForm = new HomeWidgetAddForm();
-    if ($request->isMethod(sfRequest::POST))
-    {
-      $this->sortForm->bind($request->getParameter('widget'));
-      $this->addForm->bind($request->getParameter('new'));
-      if ($this->sortForm->isValid() && $this->addForm->isValid())
-      {
-        $this->sortForm->save();
-        $this->addForm->save();
-        $this->redirect('design/mobileHomeWidget');
-      }
-    }
     return sfView::SUCCESS;
   }
 

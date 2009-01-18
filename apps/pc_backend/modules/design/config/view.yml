@@ -1,3 +1,6 @@
+widgetSuccess:
+  javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
+
 homeWidgetSuccess: &homeWidgetSuccess
   javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
 
