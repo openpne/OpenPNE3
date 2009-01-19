@@ -21,6 +21,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
   public function initialize()
   {
+    require sfConfig::get('sf_data_dir').'/version.php';
+
     $this->dispatcher->connect('task.cache.clear', array($this, 'clearPluginCache'));
     $this->dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
 

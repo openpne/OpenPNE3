@@ -127,3 +127,17 @@ th {
   width: 240px;
 }
 
+#versionInformation p {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  padding: 1em;
+  margin-bottom: 10px;
+}
+#versionInformation p.info {
+  background-color: #CADDCA;
+}
+#versionInformation p.warn {
+  background-color: #FF7777;
+}
+
