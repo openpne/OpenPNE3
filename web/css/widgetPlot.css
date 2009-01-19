@@ -1,9 +1,13 @@
+body
+{
+  background-color: #eeeeee;
+}
+
 #plotBody
 {
-  width: 600px;
-  height: 400px;
-  background-color: #eeeeee;
+  width: 610px;
   padding: 5px;
+  overflow: visible;
 }
 
 #container
@@ -52,9 +56,16 @@
   float: left;
 }
 
+#plotBottom
+{
+  width: 100%;
+  float: left;
+}
+
 #plotTop div,
 #plotSideMenu div,
 #plotContents div,
+#plotBottom div,
 #plotSideBannerContents div,
 #plotMobileTop div,
 #plotMobileContents div,
@@ -72,6 +83,7 @@
 #plotTop div.emptyWidget,
 #plotSideMenu div.emptyWidget,
 #plotContents div.emptyWidget,
+#plotBottom div.emptyWidget,
 #plotSideBannerContents div.emptyWidget,
 #plotMobileTop div.emptyWidget,
 #plotMobileContents div.emptyWidget,

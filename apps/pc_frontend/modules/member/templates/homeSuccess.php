@@ -25,3 +25,13 @@
 <?php endif; ?>
 <?php endforeach; ?>
 <?php endif; ?>
+
+<?php slot('op_bottom') ?>
+<?php if ($bottomWidgets): ?>
+<?php foreach ($bottomWidgets as $widget): ?>
+<?php if ($widget->isEnabled()): ?>
+<?php include_component($widget->getComponentModule(), $widget->getComponentAction(), array('widget' => $widget)); ?>
+<?php endif; ?>
+<?php endforeach; ?>
+<?php endif; ?>
+<?php end_slot() ?>

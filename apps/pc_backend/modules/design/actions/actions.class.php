@@ -72,6 +72,7 @@ class designActions extends sfActions
           'top'      => HomeWidgetPeer::retrieveTopWidgets(),
           'sideMenu'     => HomeWidgetPeer::retrieveSideMenuWidgets(),
           'contents' => HomeWidgetPeer::retrieveContentsWidgets(),
+          'bottom' => HomeWidgetPeer::retrieveBottomWidgets(),
         );
     }
 
@@ -98,9 +99,10 @@ class designActions extends sfActions
   public function executeHomeWidgetPlot(sfWebRequest $request)
   {
     $this->layoutPattern = 'layoutA';
-    $this->topWidgets = HomeWidgetPeer::retrieveTopWidgets();
-    $this->sideMenuWidgets = HomeWidgetPeer::retrieveSideMenuWidgets();
-    $this->contentsWidgets = HomeWidgetPeer::retrieveContentsWidgets();
+    $this->topWidgets = (array)HomeWidgetPeer::retrieveTopWidgets();
+    $this->sideMenuWidgets = (array)HomeWidgetPeer::retrieveSideMenuWidgets();
+    $this->contentsWidgets = (array)HomeWidgetPeer::retrieveContentsWidgets();
+    $this->bottomWidgets = (array)HomeWidgetPeer::retrieveBottomWidgets();
     $this->widgetConfig = sfConfig::get('op_widget_list');
 
     $layout = SnsConfigPeer::retrieveByName('home_layout');
@@ -119,7 +121,7 @@ class designActions extends sfActions
   */
   public function executeHomeAddWidget(sfWebRequest $request)
   {
-    $validTypes = array('top', 'sideMenu', 'contents', 'mobileTop', 'mobileContents', 'mobileBottom', 'sideBannerContents');
+    $validTypes = array('top', 'sideMenu', 'contents', 'bottom', 'mobileTop', 'mobileContents', 'mobileBottom', 'sideBannerContents');
     $mobileTypes = array('mobileTop', 'mobileContents', 'mobileBottom');
     $sideBannerTypes = array('sideBannerContents');
 

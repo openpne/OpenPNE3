@@ -4,6 +4,7 @@ widgetSuccess:
 homeWidgetPlotSuccess: &homeWidgetPlotSuccess
   layout: plain
   stylesheets: [-backend, widgetPlot]
+  javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
 
 homeAddWidgetSuccess:
   layout: plain

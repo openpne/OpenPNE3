@@ -39,6 +39,8 @@ function insertWidget(type, id, caption)
   hidden.setAttribute('name', 'new[' + type + '][]');
   hidden.setAttribute('value', id);
   new Insertion.Bottom(form, hidden);
+
+  parentIframe.contentWindow.parent.adjustByIframeContens(parentIframe);
 }
 ");
 ?>

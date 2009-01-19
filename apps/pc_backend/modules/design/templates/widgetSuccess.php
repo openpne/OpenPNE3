@@ -39,7 +39,16 @@
 </form>
 </div>
 
-<iframe src="<?php echo url_for('design/'.$type.'WidgetPlot') ?>" width="610" height="410">
+<?php echo javascript_tag("
+function adjustByIframeContens(obj)
+{
+  var size = Element.getHeight(obj.contentWindow.document.body);
+  obj.style.height = size+'px';
+}
+");
+?>
+
+<iframe src="<?php echo url_for('design/'.$type.'WidgetPlot') ?>" width="600" height="410" onload="adjustByIframeContens(this)" scrolling="no" frameborder="0">
 </iframe>
 
 <?php echo make_modal_box('modal', '<iframe width="400" height="400"></iframe>', 400, 400) ?>

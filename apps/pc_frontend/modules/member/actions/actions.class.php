@@ -40,6 +40,7 @@ class memberActions extends sfOpenPNEMemberAction
       $this->sideMenuWidgets = HomeWidgetPeer::retrieveSideMenuWidgets();
     }
     $this->contentsWidgets = HomeWidgetPeer::retrieveContentsWidgets();
+    $this->bottomWidgets = HomeWidgetPeer::retrieveBottomWidgets();
 
     return parent::executeHome($request);
   }

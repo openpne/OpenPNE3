@@ -50,6 +50,8 @@ function dropNewWidget(type, name, obj)
     }
   }
   Element.remove(obj);
+
+  parent.adjustByIframeContens(this.frameElement);
 }
 
 ");

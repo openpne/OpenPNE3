@@ -17,5 +17,6 @@
 
 <?php include_partial('plotWidget', array('type' => 'mobileBottom', 'widgets' => $mobileBottomWidgets, 'widgetConfig' => $widgetConfig)); ?>
 
+<br style="clear:both;" />
 </div>
 </div>

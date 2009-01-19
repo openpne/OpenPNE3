@@ -13,5 +13,8 @@
 
 <?php include_partial('plotWidget', array('type' => 'contents', 'widgets' => $contentsWidgets, 'widgetConfig' => $widgetConfig)); ?>
 
+<?php include_partial('plotWidget', array('type' => 'bottom', 'widgets' => $bottomWidgets, 'widgetConfig' => $widgetConfig)); ?>
+
+<br style="clear:both;" />
 </div>
 </div>

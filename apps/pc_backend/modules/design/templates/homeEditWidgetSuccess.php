@@ -41,6 +41,7 @@ function deleteWidget(type, id)
     }
   }
 
+  parentIframe.contentWindow.parent.adjustByIframeContens(parentIframe);
   parent.document.getElementById('modal').onclick();
 }
 ");

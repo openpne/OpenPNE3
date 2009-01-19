@@ -27,6 +27,11 @@ class HomeWidgetPeer extends BaseHomeWidgetPeer
     return self::retrieveByType('contents');
   }
 
+  static public function retrieveBottomWidgets()
+  {
+    return self::retrieveByType('bottom');
+  }
+
   static public function retrieveMobileTopWidgets()
   {
     return self::retrieveByType('mobileTop');
