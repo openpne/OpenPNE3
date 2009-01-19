@@ -55,7 +55,12 @@ include_parts('descriptionBox', 'informationAboutThisIsYourProfilePage', $option
 $list = array();
 foreach ($member->getProfiles() as $profile)
 {
-  $list[$profile->getCaption()] = $profile;
+  $caption = $profile->getCaption();
+  if ($profile->getFormType() === 'textarea')
+  {
+    $profile = nl2br($profile);
+  }
+  $list[$caption] = $profile;
 }
 include_list_box('profile', $list, array('title' => 'プロフィール'))
 ?>
