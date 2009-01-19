@@ -47,6 +47,15 @@ class InviteForm extends MemberConfigPcAddressForm
       throw new sfValidatorError($validator, 'invalid');
     }
 
+    if (!empty($values['mobile_address']) && MemberConfigPeer::retrieveByNameAndValue('mobile_address', $values['mobile_address']))
+    {
+      throw new sfValidatorError($validator, 'invalid');
+    }
+    if (!empty($values['pc_address']) && MemberConfigPeer::retrieveByNameAndValue('pc_address', $values['pc_address']))
+    {
+      throw new sfValidatorError($validator, 'invalid');
+    }
+
     return $values;
   }
 
