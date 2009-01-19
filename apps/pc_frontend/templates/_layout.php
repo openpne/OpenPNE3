@@ -5,7 +5,7 @@
 <?php include_metas() ?>
 <title><?php echo ($op_config['sns_title']) ? $op_config['sns_title'] : $op_config['sns_name'] ?></title>
 </head>
-<body id="<?php printf('page_%s_%s', $this->getModuleName(), $this->getActionName()) ?>">
+<body id="<?php printf('page_%s_%s', $view->getModuleName(), $view->getActionName()) ?>">
 <div id="Body">
 <div id="Container">
 
