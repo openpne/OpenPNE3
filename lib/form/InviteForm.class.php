@@ -20,7 +20,7 @@ class InviteForm extends MemberConfigPcAddressForm
   public function configure()
   {
     $this->setWidget('mail_address', new sfWidgetFormInput());
-    $this->setValidator('mail_address', new sfValidatorEmail());
+    $this->setValidator('mail_address', new sfValidatorPass());
 
     $this->validatorSchema->setPostValidator(new sfValidatorCallback(array(
         'callback' => array($this, 'validate'),
