@@ -1,9 +1,9 @@
 <?php include_customizes($id, 'before') ?>
-<?php if ($option['border']): ?>
-<div id="<?php echo $id ?>" class="dparts <?php echo $option['class'] ?>">
+<?php if ($options['border']): ?>
+<div id="<?php echo $id ?>" class="dparts <?php echo $options['class'] ?>">
 <div class="parts">
 <?php else: ?>
-<div class="parts <?php echo $option['class'] ?>">
+<div class="parts <?php echo $options['class'] ?>">
 <?php endif ?>
 
 <?php if ($title) : ?>

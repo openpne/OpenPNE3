@@ -1,5 +1,5 @@
 <?php
-$option = array(
+$options = array(
   'title' => __('コミュニティリスト'),
   'list' => $communities,
   'link_to' => 'community/home?id=',
@@ -8,4 +8,4 @@ $option = array(
   'row' => $row,
   'col' => $col,
 );
-include_parts('nineTable', 'communityList', $option);
+op_include_parts('nineTable', 'communityList', '', $options);

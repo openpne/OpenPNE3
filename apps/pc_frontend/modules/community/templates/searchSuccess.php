@@ -1,12 +1,12 @@
 <?php
 $options = array(
-  'form'   => $filters,
+  'title'   => __('コミュニティ検索'),
   'url'    => 'community/search',
   'button' => __('検索'),
   'moreInfo' => array(link_to(__('コミュニティ作成'), 'community/edit'))
 );
 
-include_box('searchCommunity', __('コミュニティ検索'), '', $options);
+op_include_parts('form', 'searchCommunity', $filters, $options);
 ?>
 
 <?php if ($pager->getNbResults()): ?>
@@ -21,14 +21,15 @@ foreach ($pager->getResults() as $key => $community)
 }
 
 $options = array(
+  'title'          => __('検索結果'),
   'pager'          => $pager,
   'link_to_page'   => 'community/search?page=%d',
   'link_to_detail' => 'community/home?id=%d',
   'list'           => $list,
 );
 
-include_parts('searchResultList', 'searchCommunityResult', $options);
+op_include_parts('searchResultList', 'searchCommunityResult', '', $options);
 ?>
 <?php else: ?>
-<?php include_box('searchCommunityResult', __('検索結果'), __('該当するコミュニティはありませんでした。')) ?>
+<?php op_include_parts('box', 'searchCommunityResult', __('該当するコミュニティはありませんでした。'), array('title' => __('検索結果'))) ?>
 <?php endif; ?>

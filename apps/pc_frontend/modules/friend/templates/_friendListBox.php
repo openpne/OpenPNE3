@@ -1,5 +1,5 @@
 <?php
-$option = array(
+$options = array(
   'title' => __('フレンドリスト'),
   'list' => $friends,
   'link_to' => 'member/profile?id=',
@@ -11,7 +11,7 @@ $option = array(
 
 if ($member->getId() == $sf_user->getMember()->getId())
 {
-  $option['moreInfo'][__('フレンド管理')] = 'friend/manage';
+  $options['moreInfo'][__('フレンド管理')] = 'friend/manage';
 }
 
-include_parts('nineTable', 'frendList', $option);
+op_include_parts('nineTable', 'frendList', '', $options);

@@ -1,11 +1,11 @@
 <?php
 $options = array(
-  'form'   => $filters,
+  'title'  => __('メンバー検索'),
   'url'    => 'member/search',
   'button' => __('検索'),
 );
 
-include_box('searchMember', __('メンバー検索'), '', $options);
+op_include_parts('form', 'searchMember', $filters, $options);
 ?>
 
 <?php use_helper('Date'); ?>
@@ -25,14 +25,15 @@ foreach ($pager->getResults() as $key => $member)
 }
 
 $options = array(
+  'title'          =>  __('検索結果'),
   'pager'          => $pager,
   'link_to_page'   => 'member/search?page=%d',
   'link_to_detail' => 'member/profile?id=%d',
   'list'           => $list,
 );
 
-include_parts('searchResultList', 'searchCommunityResult', $options);
+op_include_parts('searchResultList', 'searchCommunityResult', '', $options);
 ?>
 <?php else: ?>
-<?php include_box('searchMemberResult', __('検索結果'), __('該当するメンバーはいませんでした。')) ?>
+<?php op_include_parts('box', 'searchMemberResult', __('該当するメンバーはいませんでした。'), array('title' => __('検索結果'))) ?>
 <?php endif; ?>

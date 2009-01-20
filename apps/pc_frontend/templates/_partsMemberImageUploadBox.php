@@ -1,11 +1,9 @@
-<div class="dparts memberImageUploadBox"><div class="parts">
-<div class="partsHeading"><h3><?php echo(__('写真を編集する')) ?></h3></div>
 <table>
 <tr>
 <?php for ($i = 0; $i < 3; $i++) : ?>
 <td>
-<?php if (isset($option['images'][$i])) : ?>
-<?php $image = $option['images'][$i] ?>
+<?php if (isset($options['images'][$i])) : ?>
+<?php $image = $options['images'][$i] ?>
 <?php echo image_tag_sf_image($image->getFile(), array('size' => '180x180')) ?><br />
 [
 <?php echo link_to(__('削除'), 'member/deleteImage?member_image_id='.$image->getId()) ?> |
@@ -24,10 +22,10 @@
 </table>
 
 <div class="block">
-<?php echo $option['form']->renderFormTag(url_for('member/configImage')) ?>
+<?php echo $options['form']->renderFormTag(url_for('member/configImage')) ?>
 <p>
-<?php echo $option['form']['file'] ?>
-<?php echo $option['form']->renderHiddenFields(); ?>
+<?php echo $options['form']['file'] ?>
+<?php echo $options['form']->renderHiddenFields(); ?>
 </p>
 <p><input type="submit" class="input_submit" value="<?php echo __('アップロードする') ?>" /></p>
 </form>
@@ -37,4 +35,3 @@
 <li><?php echo __('著作権や肖像権の侵害にあたる写真、暴力的・卑猥な写真、他のメンバーが見て不快に感じる写真の掲載は禁止しております。掲載はご自身の責任でお願いいたします。') ?></li>
 </ul>
 </div>
-</div></div>

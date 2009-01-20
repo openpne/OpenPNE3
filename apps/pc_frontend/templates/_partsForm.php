@@ -1,3 +1,8 @@
+<?php
+$options = array_merge(array(
+  'button' => __('変更'),
+), $sf_data->getRaw('options'));
+?>
 <?php if (!empty($options['body'])): ?>
 <div class="body">
 <?php include_customizes($id, 'bodyTop') ?>
@@ -59,8 +64,8 @@ foreach ($forms as $form)
 <?php if (!empty($options['moreInfo'])) : ?>
 <div class="block moreInfo">
 <ul class="moreInfo">
-<?php foreach ($options['moreInfo'] as $key => $value) : ?>
-<li><?php echo $options['moreInfo']->getRaw($key); ?></li>
+<?php foreach ($options['moreInfo'] as $key => $value): ?>
+<li><?php echo $value ?></li>
 <?php endforeach; ?>
 </ul>
 </div>

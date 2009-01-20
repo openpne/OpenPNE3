@@ -43,6 +43,11 @@ function op_include_parts($name, $id, $content, $options = array())
     $params['op_content'] = $content;
   }
 
+  if ('' === trim($params['op_content']))
+  {
+    return;
+  }
+
   include_partial('global/partsLayout', $params);
 }
 
@@ -138,8 +143,8 @@ function include_box($id, $title = '', $body = '', $options = array())
 function include_parts($parts_name, $id, $option = array())
 {
   $params = array(
-    'id'     => $id,
-    'option' => $option,
+    'id'      => $id,
+    'options' => $option,
   );
   include_partial('global/parts'.ucfirst($parts_name), $params);
 }

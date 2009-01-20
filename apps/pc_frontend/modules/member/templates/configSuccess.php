@@ -8,15 +8,12 @@ foreach ($categories as $key => $value)
     $list[$key] = link_to($categoryCaptions[$key], 'member/config?category='.$key);
   }
 }
-include_parts('pageNav', 'pagenav', array('list' => $list, 'current' => $categoryName));
+op_include_parts('pageNav', 'pageNav', '', array('list' => $list, 'current' => $categoryName));
 ?>
 <?php end_slot(); ?>
 
-<?php if ($categoryName) : ?>
-<?php include_box('form'.$categoryName, $categoryCaptions[$categoryName], '', array(
-  'form' => array($form),
-  'url' => 'member/config?category='.$categoryName)
-) ?>
+<?php if ($categoryName): ?>
+<?php op_include_parts('form', $categoryName.'Form', $form, array('title' => $categoryCaptions[$categoryName], 'url' => 'member/config?category='.$categoryName)) ?>
 <?php else: ?>
-<?php include_box('configInformation', __('設定変更'), __('メニューから設定したい項目を選択してください。')); ?>
+<?php op_include_parts('box', 'configInformation', __('メニューから設定したい項目を選択してください。'), array('title' => __('設定変更'))); ?>
 <?php endif; ?>

@@ -1,22 +1,26 @@
 <?php slot('op_sidemenu'); ?>
-<?php include_parts('memberImageBox', 'image', array('name' => $community->getName(), 'image' => $community->getImageFileName())) ?>
+<?php
+$options = array(
+  'name'   => $community->getName(),
+  'image'  => $community->getImageFileName(),
+  'single' => true,
+);
+op_include_parts('memberImageBox', 'memberImageBox', '', $options);
+?>
 
 <?php
-$option = array(
+$options = array(
   'title' => __('コミュニティメンバー'),
   'list' => $community->getMembers(9),
   'link_to' => 'member/profile?id=',
-  'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $community->countCommunityMembers()) => 'community/memberList?id=' . $community->getId()),
+  'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $community->countCommunityMembers()) => 'community/memberList?id='.$community->getId()),
 );
-
 if ($isAdmin)
 {
-  $option['moreInfo'][__('メンバー管理')] = 'community/memberManage?id='.$community->getId();
+  $options['moreInfo'][__('メンバー管理')] = 'community/memberManage?id='.$community->getId();
 }
-
-include_parts('nineTable', 'frendList', $option);
+op_include_parts('nineTable', 'frendList', '', $options);
 ?>
-
 <?php end_slot(); ?>
 
 <?php
@@ -31,12 +35,12 @@ include_list_box('communityHome', $list, array('title' => 'コミュニティ'))
 ?>
 
 <ul>
-<?php if ($isEditCommunity) : ?>
+<?php if ($isEditCommunity): ?>
 <li><?php echo link_to('このコミュニティを編集する', 'community/edit?id=' . $community->getId()) ?></li>
 <?php endif; ?>
 
-<?php if (!$isAdmin) : ?>
-<?php if ($isCommunityMember) : ?>
+<?php if (!$isAdmin): ?>
+<?php if ($isCommunityMember): ?>
 <li><?php echo link_to('このコミュニティを退会する', 'community/quit?id=' . $community->getId()) ?></li>
 <?php else : ?>
 <li><?php echo link_to('このコミュニティに参加する', 'community/join?id=' . $community->getId()) ?></li>

@@ -9,30 +9,33 @@ if ($relation->isSelf())
   $moreInfo[] = link_to(__('写真を編集'), 'member/configImage');
 }
 
-include_parts('memberImageBox', 'image', array(
+$options = array(
   'name'     => $member->getName(),
   'image'    => $member->getImageFileName(),
   'moreInfo' => $moreInfo,
-)) ?>
+  'single'   => true,
+);
+op_include_parts('memberImageBox', 'memberImageBox', '', $options);
+?>
 
 <?php
-$option = array(
+$options = array(
   'title' => __('フレンドリスト'),
   'list' => $member->getFriends(9),
   'link_to' => 'member/profile?id=',
   'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $member->countFriends()) => 'friend/list?id='.$member->getId()),
 );
-include_parts('nineTable', 'frendList', $option);
+op_include_parts('nineTable', 'frendList', '', $options);
 ?>
 
 <?php
-$option = array(
+$options = array(
   'title' => __('コミュニティリスト'),
   'list' => $communities,
   'link_to' => 'community/home?id=',
   'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $member->countCommunityMembers()) => 'community/joinlist'),
 );
-include_parts('nineTable', 'communityList', $option);
+op_include_parts('nineTable', 'communityList', '', $options);
 ?>
 <?php end_slot(); ?>
 

@@ -11,14 +11,14 @@
 <li>
 <select name="search_module">
 <?php include_customizes($id, 'itemFirst') ?>
-<?php foreach($option['items'] as $key => $value) : ?>
+<?php foreach($options['items'] as $key => $value) : ?>
 <option value="<?php echo $key ?>"><?php echo $value ?></option>
 <?php endforeach; ?>
 <?php include_customizes($id, 'itemLast') ?>
 </select>
 </li>
 <li>
-<input type="submit" class="input_submit" value="<?php echo $option['button'] ?>" />
+<input type="submit" class="input_submit" value="<?php echo $options['button'] ?>" />
 </li>
 </ul>
 </form>
