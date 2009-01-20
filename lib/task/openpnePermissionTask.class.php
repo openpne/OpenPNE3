@@ -29,9 +29,9 @@ EOF;
 
     $webCacheDir = sfConfig::get('sf_web_dir').'/cache';
     $this->getFilesystem()->chmod($webCacheDir, 0777);
-    $dirFinder = sfFinder::type('dir');
+
+    $dataDir = sfConfig::get('sf_data_dir').'/config';
     $fileFinder = sfFinder::type('file');
-    $this->getFilesystem()->chmod($dirFinder->in($webCacheDir), 0777);
-    $this->getFilesystem()->chmod($fileFinder->in($webCacheDir), 0666);
+    $this->getFilesystem()->chmod($fileFinder->in($dataDir), 0666);
   }
 }

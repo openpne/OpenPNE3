@@ -131,6 +131,20 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   }
 
   /**
+   * @see sfApplicationConfiguration
+   */
+  public function getConfigCache()
+  {
+    if (is_null($this->configCache))
+    {
+      require_once sfConfig::get('sf_lib_dir').'/config/opConfigCache.class.php';
+      $this->configCache = new opConfigCache($this);
+    }
+
+    return $this->configCache;
+  }
+
+  /**
    * Listens to the template.filter_parameters event.
    *
    * @param  sfEvent $event       An sfEvent instance

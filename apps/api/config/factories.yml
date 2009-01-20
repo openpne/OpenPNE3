@@ -31,6 +31,24 @@ all:
       generate_shortest_url:            true
       extra_parameters_as_query_string: true
 
+  logger:
+    class: sfAggregateLogger
+    param:
+      level: debug
+      loggers:
+        sf_web_debug:
+          class: sfWebDebugLogger
+          param:
+            level: debug
+            condition:       %SF_WEB_DEBUG%
+            xdebug_logging:  true
+            web_debug_class: sfWebDebug
+        sf_file_debug:
+          class: opFileLogger
+          param:
+            level: debug
+            file: %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log
+
 #all:
 #  controller:
 #    class: sfFrontWebController

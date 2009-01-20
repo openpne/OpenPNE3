@@ -53,6 +53,6 @@ EOF;
 
     $fixPerms = new sfProjectPermissionsTask($this->dispatcher, $this->formatter);
     $fixPerms->setCommandApplication($this->commandApplication);
-    $fixPerms->run();
+    @$fixPerms->run();
   }
 }
