@@ -1,11 +1,18 @@
-function getCenterMuchScreen(width, height)
+function getCenterMuchScreen(element)
 {
-  var screenWidth = document.body.clientWidth  || document.documentElement.clientWidth;
+  var width  = $(element).getWidth();
+  var height = $(element).getHeight();
+  var screenWidth = document.viewport.getWidth();
   var screenHeight = document.documentElement.clientHeight;
-  var screenTop = document.body.scrollTop || document.documentElement.scrollTop;
+  var screenTop = document.viewport.getScrollOffsets().top;
 
   var left = (screenWidth / 2) - (width / 2);
   var top = (screenHeight / 2 + screenTop) - (height / 2);
 
-  return {"left": left, "top" : top};
+  if (top < 10)
+  {
+    top = 10;
+  }
+
+  return {"left": left + "px", "top" : top + "px"};
 }
