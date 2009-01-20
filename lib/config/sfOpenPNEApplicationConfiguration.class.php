@@ -58,9 +58,9 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
       $this->disablePlugins(array_keys($pluginActivations, false));
     }
 
-    include($this->getConfigCache()->checkConfig('config/widget.yml'));
-    include($this->getConfigCache()->checkConfig('config/mobile_widget.yml'));
-    include($this->getConfigCache()->checkConfig('config/side_banner_widget.yml'));
+    include($this->getConfigCache()->checkConfig('config/gadget.yml'));
+    include($this->getConfigCache()->checkConfig('config/mobile_gadget.yml'));
+    include($this->getConfigCache()->checkConfig('config/side_banner_gadget.yml'));
 
     return $result;
   }

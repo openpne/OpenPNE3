@@ -9,19 +9,19 @@
  */
 
 /**
- * Widget Add Form.
+ * Gadget Add Form.
  *
  * @package    OpenPNE
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class WidgetAddForm extends sfForm
+class GadgetAddForm extends sfForm
 {
   public function configure()
   {
-    $widgets = $this->getOption('current_widgets', array());
+    $gadgets = $this->getOption('current_gadgets', array());
 
-    foreach ($widgets as $key => $value)
+    foreach ($gadgets as $key => $value)
     {
       $this->setValidator($key, new sfValidatorCallback(array('callback' => array($this, 'validate'))));
     }
@@ -31,19 +31,19 @@ class WidgetAddForm extends sfForm
 
   public function save()
   {
-    foreach ($this->values as $type => $widgets)
+    foreach ($this->values as $type => $gadgets)
     {
-      if (!$widgets)
+      if (!$gadgets)
       {
         continue;
       }
 
-      foreach ($widgets as $value)
+      foreach ($gadgets as $value)
       {
-        $widget = new HomeWidget();
-        $widget->setType($type);
-        $widget->setName($value);
-        $widget->save();
+        $gadget = new Gadget();
+        $gadget->setType($type);
+        $gadget->setName($value);
+        $gadget->save();
       }
     }
   }
@@ -54,9 +54,9 @@ class WidgetAddForm extends sfForm
 
     foreach ($value as $key => $item)
     {
-      if (array_key_exists($item, sfConfig::get('op_widget_list'))
-        || array_key_exists($item, sfConfig::get('op_mobile_widget_list'))
-        || array_key_exists($item, sfConfig::get('op_side_banner_widget_list')))
+      if (array_key_exists($item, sfConfig::get('op_gadget_list'))
+        || array_key_exists($item, sfConfig::get('op_mobile_gadget_list'))
+        || array_key_exists($item, sfConfig::get('op_side_banner_gadget_list')))
       {
         $result[] = $item;
       }

@@ -9,52 +9,52 @@
  */
 
 /**
- * Widget Sort Form.
+ * Gadget Sort Form.
  *
  * @package    OpenPNE
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class WidgetSortForm extends sfForm
+class GadgetSortForm extends sfForm
 {
   public function configure()
   {
-    $widgets = $this->getOption('current_widgets', array());
+    $gadgets = $this->getOption('current_gadgets', array());
 
-    foreach ($widgets as $key => $value)
+    foreach ($gadgets as $key => $value)
     {
       $this->setValidator($key, new sfValidatorCallback(array('callback' => array($this, 'validate'))));
     }
 
-    $this->getWidgetSchema()->setNameFormat('widget[%s]');
+    $this->getWidgetSchema()->setNameFormat('gadget[%s]');
   }
 
   public function save()
   {
-    foreach ($this->values as $type => $widgets)
+    foreach ($this->values as $type => $gadgets)
     {
-      $ids = HomeWidgetPeer::getWidgetsIds($type);
-      if (!$widgets)
+      $ids = GadgetPeer::getGadgetsIds($type);
+      if (!$gadgets)
       {
-        $widgets = array();
+        $gadgets = array();
       }
 
       foreach ($ids as $id)
       {
-        $widget = HomeWidgetPeer::retrieveByPk($id);
-        $key = array_search($id, $widgets);
+        $gadget = GadgetPeer::retrieveByPk($id);
+        $key = array_search($id, $gadgets);
 
         if ($key === false)
         {
-          $widget->delete();
+          $gadget->delete();
           continue;
         }
 
-        if ($widget)
+        if ($gadget)
         {
           $sortOrder = ((int)$key + 1) * 10;
-          $widget->setSortOrder($sortOrder);
-          $widget->save();
+          $gadget->setSortOrder($sortOrder);
+          $gadget->save();
         }
       }
     }
@@ -66,12 +66,12 @@ class WidgetSortForm extends sfForm
 
     foreach ($value as $id)
     {
-      $widget = HomeWidgetPeer::retrieveByPk($id);
-      if ($widget) 
+      $gadget = GadgetPeer::retrieveByPk($id);
+      if ($gadget) 
       {
-        if (array_key_exists($widget->getName(), sfConfig::get('op_widget_list'))
-          || array_key_exists($widget->getName(), sfConfig::get('op_mobile_widget_list'))
-          || array_key_exists($widget->getName(), sfConfig::get('op_side_banner_widget_list')))
+        if (array_key_exists($gadget->getName(), sfConfig::get('op_gadget_list'))
+          || array_key_exists($gadget->getName(), sfConfig::get('op_mobile_gadget_list'))
+          || array_key_exists($gadget->getName(), sfConfig::get('op_side_banner_gadget_list')))
         {
           $result[] = $id;
         }

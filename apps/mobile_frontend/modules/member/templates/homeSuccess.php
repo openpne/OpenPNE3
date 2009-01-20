@@ -1,7 +1,7 @@
-<?php if ($mobileTopWidgets) : ?>
-<?php foreach ($mobileTopWidgets as $widget) : ?>
-<?php if ($widget->isEnabled()) : ?>
-<?php include_component($widget->getComponentModule(), $widget->getComponentAction(), array('widget' => $widget)); ?>
+<?php if ($mobileTopGadgets) : ?>
+<?php foreach ($mobileTopGadgets as $gadget) : ?>
+<?php if ($gadget->isEnabled()) : ?>
+<?php include_component($gadget->getComponentModule(), $gadget->getComponentAction(), array('gadget' => $gadget)); ?>
 <?php endif; ?>
 <?php endforeach; ?>
 <?php endif; ?>
@@ -39,10 +39,10 @@
 
 </table>
 
-<?php if ($mobileContentsWidgets) : ?>
-<?php foreach ($mobileContentsWidgets as $widget) : ?>
-<?php if ($widget->isEnabled()) : ?>
-<?php include_component($widget->getComponentModule(), $widget->getComponentAction(), array('widget' => $widget)); ?>
+<?php if ($mobileContentsGadgets) : ?>
+<?php foreach ($mobileContentsGadgets as $gadget) : ?>
+<?php if ($gadget->isEnabled()) : ?>
+<?php include_component($gadget->getComponentModule(), $gadget->getComponentAction(), array('gadget' => $gadget)); ?>
 <?php endif; ?>
 <?php endforeach; ?>
 <?php endif; ?>
@@ -76,10 +76,10 @@ $list[] = link_to(__('Setting easy login'), 'member/configUID');
 op_include_parts('list', 'configEdit', $list, array('title' => __('Settings')))
 ?>
 
-<?php if ($mobileBottomWidgets) : ?>
-<?php foreach ($mobileBottomWidgets as $widget) : ?>
-<?php if ($widget->isEnabled()) : ?>
-<?php include_component($widget->getComponentModule(), $widget->getComponentAction(), array('widget' => $widget)); ?>
+<?php if ($mobileBottomGadgets) : ?>
+<?php foreach ($mobileBottomGadgets as $gadget) : ?>
+<?php if ($gadget->isEnabled()) : ?>
+<?php include_component($gadget->getComponentModule(), $gadget->getComponentAction(), array('gadget' => $gadget)); ?>
 <?php endif; ?>
 <?php endforeach; ?>
 <?php endif; ?>

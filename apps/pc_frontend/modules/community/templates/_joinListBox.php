@@ -4,7 +4,7 @@ $option = array(
   'list' => $communities,
   'link_to' => 'community/home?id=',
   'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $member->countCommunityMembers()) => 'community/joinlist'),
-  'type' => $sf_data->getRaw('widget')->getConfig('type'),
+  'type' => $sf_data->getRaw('gadget')->getConfig('type'),
   'row' => $row,
   'col' => $col,
 );

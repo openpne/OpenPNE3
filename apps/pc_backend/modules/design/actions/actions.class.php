@@ -46,64 +46,64 @@ class designActions extends sfActions
   }
 
  /**
-  * Executes widget action
+  * Executes gadget action
   *
   * @param sfRequest $request A request object
   */
-  public function executeWidget(sfWebRequest $request)
+  public function executeGadget(sfWebRequest $request)
   {
     $this->type = $request->getParameter('type', 'home');
     switch ($this->type)
     {
       case 'mobileHome':
-        $this->widgets = array(
-          'mobileTop'      => HomeWidgetPeer::retrieveMobileTopWidgets(),
-          'mobileContents' => HomeWidgetPeer::retrieveMobileContentsWidgets(),
-          'mobileBottom'   => HomeWidgetPeer::retrieveMobileBottomWidgets(),
+        $this->gadgets = array(
+          'mobileTop'      => GadgetPeer::retrieveMobileTopGadgets(),
+          'mobileContents' => GadgetPeer::retrieveMobileContentsGadgets(),
+          'mobileBottom'   => GadgetPeer::retrieveMobileBottomGadgets(),
         );
         break;
       case 'sideBanner':
-        $this->widgets = array(
-          'sideBannerContents' => HomeWidgetPeer::retrieveSideBannerContentsWidgets(),
+        $this->gadgets = array(
+          'sideBannerContents' => GadgetPeer::retrieveSideBannerContentsGadgets(),
         );
         break;
       default:
-        $this->widgets = array(
-          'top'      => HomeWidgetPeer::retrieveTopWidgets(),
-          'sideMenu'     => HomeWidgetPeer::retrieveSideMenuWidgets(),
-          'contents' => HomeWidgetPeer::retrieveContentsWidgets(),
-          'bottom' => HomeWidgetPeer::retrieveBottomWidgets(),
+        $this->gadgets = array(
+          'top'      => GadgetPeer::retrieveTopGadgets(),
+          'sideMenu'     => GadgetPeer::retrieveSideMenuGadgets(),
+          'contents' => GadgetPeer::retrieveContentsGadgets(),
+          'bottom' => GadgetPeer::retrieveBottomGadgets(),
         );
     }
 
-    $this->sortForm = new WidgetSortForm(array(), array('current_widgets' => $this->widgets));
-    $this->addForm = new WidgetAddForm(array(), array('current_widgets' => $this->widgets));
+    $this->sortForm = new GadgetSortForm(array(), array('current_gadgets' => $this->gadgets));
+    $this->addForm = new GadgetAddForm(array(), array('current_gadgets' => $this->gadgets));
     if ($request->isMethod(sfRequest::POST))
     {
-      $this->sortForm->bind($request->getParameter('widget'));
+      $this->sortForm->bind($request->getParameter('gadget'));
       $this->addForm->bind($request->getParameter('new'));
       if ($this->sortForm->isValid() && $this->addForm->isValid())
       {
         $this->sortForm->save();
         $this->addForm->save();
-        $this->redirect('design/widget?type='.$this->type);
+        $this->redirect('design/gadget?type='.$this->type);
       }
     }
   }
 
  /**
-  * Executes home widget plot action
+  * Executes home gadget plot action
   *
   * @param sfRequest $request A request object
   */
-  public function executeHomeWidgetPlot(sfWebRequest $request)
+  public function executeHomeGadgetPlot(sfWebRequest $request)
   {
     $this->layoutPattern = 'layoutA';
-    $this->topWidgets = (array)HomeWidgetPeer::retrieveTopWidgets();
-    $this->sideMenuWidgets = (array)HomeWidgetPeer::retrieveSideMenuWidgets();
-    $this->contentsWidgets = (array)HomeWidgetPeer::retrieveContentsWidgets();
-    $this->bottomWidgets = (array)HomeWidgetPeer::retrieveBottomWidgets();
-    $this->widgetConfig = sfConfig::get('op_widget_list');
+    $this->topGadgets = (array)GadgetPeer::retrieveTopGadgets();
+    $this->sideMenuGadgets = (array)GadgetPeer::retrieveSideMenuGadgets();
+    $this->contentsGadgets = (array)GadgetPeer::retrieveContentsGadgets();
+    $this->bottomGadgets = (array)GadgetPeer::retrieveBottomGadgets();
+    $this->gadgetConfig = sfConfig::get('op_gadget_list');
 
     $layout = SnsConfigPeer::retrieveByName('home_layout');
     if ($layout)
@@ -115,17 +115,17 @@ class designActions extends sfActions
   }
 
  /**
-  * Executes home add widget action
+  * Executes add gadget action
   *
   * @param sfRequest $request A request object
   */
-  public function executeHomeAddWidget(sfWebRequest $request)
+  public function executeAddGadget(sfWebRequest $request)
   {
     $validTypes = array('top', 'sideMenu', 'contents', 'bottom', 'mobileTop', 'mobileContents', 'mobileBottom', 'sideBannerContents');
     $mobileTypes = array('mobileTop', 'mobileContents', 'mobileBottom');
     $sideBannerTypes = array('sideBannerContents');
 
-    $this->config = sfConfig::get('op_widget_list', array());
+    $this->config = sfConfig::get('op_gadget_list', array());
     $this->type = 'top';
     if (in_array($request->getParameter('type'), $validTypes))
     {
@@ -134,40 +134,40 @@ class designActions extends sfActions
 
     if (in_array($this->type, $mobileTypes))
     {
-      $this->config = sfConfig::get('op_mobile_widget_list', array());
+      $this->config = sfConfig::get('op_mobile_gadget_list', array());
     }
     elseif (in_array($this->type, $sideBannerTypes))
     {
-      $this->config = sfConfig::get('op_side_banner_widget_list', array());
+      $this->config = sfConfig::get('op_side_banner_gadget_list', array());
     }
 
     return sfView::SUCCESS;
   }
 
  /**
-  * Executes home edit widget action
+  * Executes home edit gadget action
   *
   * @param sfRequest $request A request object
   */
-  public function executeHomeEditWidget(sfWebRequest $request)
+  public function executeEditGadget(sfWebRequest $request)
   {
-    $this->widget = HomeWidgetPeer::retrieveByPK($request->getParameter('id'));
-    $config = sfConfig::get('op_widget_list', array());
-    $this->forward404Unless($this->widget && $config);
+    $this->gadget = GadgetPeer::retrieveByPK($request->getParameter('id'));
+    $config = sfConfig::get('op_gadget_list', array());
+    $this->forward404Unless($this->gadget && $config);
 
-    $this->config = $config[$this->widget->getName()];
+    $this->config = $config[$this->gadget->getName()];
 
     if (!empty($this->config['config']))
     {
-      $this->form = new HomeWidgetConfigForm($this->widget);
+      $this->form = new GadgetConfigForm($this->gadget);
 
       if ($request->isMethod(sfRequest::POST))
       {
-        $this->form->bind($request->getParameter('home_widget_config'));
+        $this->form->bind($request->getParameter('gadget_config'));
         if ($this->form->isValid())
         {
           $this->form->save();
-          $this->redirect('design/homeEditWidget?id='.$this->widget->getId());
+          $this->redirect('design/editGadget?id='.$this->gadget->getId());
         }
       }
     }
@@ -176,29 +176,29 @@ class designActions extends sfActions
   }
 
  /**
-  * Executes mobile home widget plot action
+  * Executes mobile home gadget plot action
   *
   * @param sfRequest $request A request object
   */
-  public function executeMobileHomeWidgetPlot(sfWebRequest $request)
+  public function executeMobileHomeGadgetPlot(sfWebRequest $request)
   {
-    $this->mobileTopWidgets = (array)HomeWidgetPeer::retrieveMobileTopWidgets();
-    $this->mobileContentsWidgets = (array)HomeWidgetPeer::retrieveMobileContentsWidgets();
-    $this->mobileBottomWidgets = (array)HomeWidgetPeer::retrieveMobileBottomWidgets();
-    $this->widgetConfig = sfConfig::get('op_mobile_widget_list');
+    $this->mobileTopGadgets = (array)GadgetPeer::retrieveMobileTopGadgets();
+    $this->mobileContentsGadgets = (array)GadgetPeer::retrieveMobileContentsGadgets();
+    $this->mobileBottomGadgets = (array)GadgetPeer::retrieveMobileBottomGadgets();
+    $this->gadgetConfig = sfConfig::get('op_mobile_gadget_list');
 
     return sfView::SUCCESS;
   }
 
  /**
-  * Executes side banner home widget plot action
+  * Executes side banner home gadget plot action
   *
   * @param sfRequest $request A request object
   */
-  public function executeSideBannerWidgetPlot(sfWebRequest $request)
+  public function executeSideBannerGadgetPlot(sfWebRequest $request)
   {
-    $this->sideBannerContentsWidgets = (array)HomeWidgetPeer::retrieveSideBannerContentsWidgets();
-    $this->widgetConfig = sfConfig::get('op_side_banner_widget_list');
+    $this->sideBannerContentsGadgets = (array)GadgetPeer::retrieveSideBannerContentsGadgets();
+    $this->gadgetConfig = sfConfig::get('op_side_banner_gadget_list');
 
     return sfView::SUCCESS;
   }

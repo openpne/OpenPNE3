@@ -9,14 +9,13 @@
  */
 
 /**
- * HomeWidgetConfig filter form.
+ * Gadget filter form.
  *
  * @package    OpenPNE
  * @subpackage filter
- * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterTemplate.php 11675 2008-09-19 15:21:38Z fabien $
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class HomeWidgetConfigFormFilter extends BaseHomeWidgetConfigFormFilter
+class GadgetFormFilter extends BaseGadgetFormFilter
 {
   public function configure()
   {

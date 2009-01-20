@@ -8,15 +8,15 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class HomeWidgetConfigPeer extends BaseHomeWidgetConfigPeer
+class GadgetConfigPeer extends BaseGadgetConfigPeer
 {
   static protected $results;
 
-  static public function retrieveByWidgetIdAndName($widgetId, $name)
+  static public function retrieveByGadgetIdAndName($gadgetId, $name)
   {
     $results = self::getResults();
 
-    return (isset($results[$widgetId][$name])) ? $results[$widgetId][$name] : null;
+    return (isset($results[$gadgetId][$name])) ? $results[$gadgetId][$name] : null;
   }
 
   static protected function getResults()
@@ -26,7 +26,7 @@ class HomeWidgetConfigPeer extends BaseHomeWidgetConfigPeer
       self::$results = array();
       foreach (self::doSelect(new Criteria()) as $object)
       {
-        self::$results[$object->getHomeWidgetId()][$object->getName()] = $object;
+        self::$results[$object->getGadgetId()][$object->getName()] = $object;
       }
     }
 

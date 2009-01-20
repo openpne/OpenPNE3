@@ -24,10 +24,10 @@ class memberActions extends sfOpenPNEMemberAction
   */
   public function executeHome($request)
   {
-    $this->widgetConfig = sfConfig::get('op_mobile_widget_list');
-    $this->mobileTopWidgets = HomeWidgetPeer::retrieveMobileTopWidgets();
-    $this->mobileContentsWidgets = HomeWidgetPeer::retrieveMobileContentsWidgets();
-    $this->mobileBottomWidgets = HomeWidgetPeer::retrieveMobileBottomWidgets();
+    $this->gadgetConfig = sfConfig::get('op_mobile_gadget_list');
+    $this->mobileTopGadgets = GadgetPeer::retrieveMobileTopGadgets();
+    $this->mobileContentsGadgets = GadgetPeer::retrieveMobileContentsGadgets();
+    $this->mobileBottomGadgets = GadgetPeer::retrieveMobileBottomGadgets();
 
     return parent::executeHome($request);
   }

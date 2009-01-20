@@ -24,7 +24,7 @@ class memberActions extends sfOpenPNEMemberAction
   */
   public function executeHome($request)
   {
-    $this->widgetConfig = sfConfig::get('op_widget_list');
+    $this->gadgetConfig = sfConfig::get('op_gadget_list');
     $layout = SnsConfigPeer::retrieveByName('home_layout');
     if ($layout)
     {
@@ -33,14 +33,14 @@ class memberActions extends sfOpenPNEMemberAction
 
     if (!$layout || $layout->getValue() === 'layoutA')
     {
-      $this->topWidgets = HomeWidgetPeer::retrieveTopWidgets();
+      $this->topGadgets = GadgetPeer::retrieveTopGadgets();
     }
     if (!$layout || $layout->getValue() === 'layoutA' || $layout->getValue() === 'layoutB')
     {
-      $this->sideMenuWidgets = HomeWidgetPeer::retrieveSideMenuWidgets();
+      $this->sideMenuGadgets = GadgetPeer::retrieveSideMenuGadgets();
     }
-    $this->contentsWidgets = HomeWidgetPeer::retrieveContentsWidgets();
-    $this->bottomWidgets = HomeWidgetPeer::retrieveBottomWidgets();
+    $this->contentsGadgets = GadgetPeer::retrieveContentsGadgets();
+    $this->bottomGadgets = GadgetPeer::retrieveBottomGadgets();
 
     return parent::executeHome($request);
   }

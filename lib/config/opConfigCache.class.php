@@ -23,6 +23,6 @@ class opConfigCache extends sfConfigCache
   protected function writeCacheFile($config, $cache, $data)
   {
     parent::writeCacheFile($config, $cache, $data);
-    chmod($cache, 0666);
+    @chmod($cache, 0666);
   }
 }

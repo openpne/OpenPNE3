@@ -80,20 +80,20 @@ body
   padding-top: 10px;
 }
 
-#plotTop div.emptyWidget,
-#plotSideMenu div.emptyWidget,
-#plotContents div.emptyWidget,
-#plotBottom div.emptyWidget,
-#plotSideBannerContents div.emptyWidget,
-#plotMobileTop div.emptyWidget,
-#plotMobileContents div.emptyWidget,
-#plotMobileBottom div.emptyWidget
+#plotTop div.emptyGadget,
+#plotSideMenu div.emptyGadget,
+#plotContents div.emptyGadget,
+#plotBottom div.emptyGadget,
+#plotSideBannerContents div.emptyGadget,
+#plotMobileTop div.emptyGadget,
+#plotMobileContents div.emptyGadget,
+#plotMobileBottom div.emptyGadget
 {
   background-color: transparent;
   border-style: dashed;
 }
 
-div.fixedWidget
+div.fixedGadget
 {
   width: 100%;
   height: 35px;

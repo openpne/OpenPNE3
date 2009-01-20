@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class HomeWidget extends BaseHomeWidget
+class Gadget extends BaseGadget
 {
   public function save(PropelPDO $con = null)
   {
@@ -16,11 +16,11 @@ class HomeWidget extends BaseHomeWidget
     {
       $maxSortOrder = 0;
 
-      $widgets = HomeWidgetPeer::retrieveByType($this->getType());
-      $finalWidget = array_pop($widgets);
-      if ($finalWidget)
+      $gadgets = GadgetPeer::retrieveByType($this->getType());
+      $finalGadget = array_pop($gadgets);
+      if ($finalGadget)
       {
-        $maxSortOrder = $finalWidget->getSortOrder();
+        $maxSortOrder = $finalGadget->getSortOrder();
       }
 
       $this->setSortOrder($maxSortOrder + 10);
@@ -31,7 +31,7 @@ class HomeWidget extends BaseHomeWidget
 
   public function getComponentModule()
   {
-    $list = sfConfig::get('op_widget_list');
+    $list = sfConfig::get('op_gadget_list');
 
     if (empty($list[$this->getName()]))
     {
@@ -43,7 +43,7 @@ class HomeWidget extends BaseHomeWidget
 
   public function getComponentAction()
   {
-    $list = sfConfig::get('op_widget_list');
+    $list = sfConfig::get('op_gadget_list');
 
     if (empty($list[$this->getName()]))
     {
@@ -55,7 +55,7 @@ class HomeWidget extends BaseHomeWidget
 
   public function isEnabled()
   {
-    $list = sfConfig::get('op_widget_list');
+    $list = sfConfig::get('op_gadget_list');
     if (empty($list[$this->getName()]))
     {
       return false;
@@ -67,9 +67,9 @@ class HomeWidget extends BaseHomeWidget
   public function getConfig($name)
   {
     $result = null;
-    $list = sfConfig::get('op_widget_list');
+    $list = sfConfig::get('op_gadget_list');
 
-    $config = HomeWidgetConfigPeer::retrieveByWidgetIdAndName($this->getId(), $name);
+    $config = GadgetConfigPeer::retrieveByGadgetIdAndName($this->getId(), $name);
     if ($config)
     {
       $result = $config->getValue();

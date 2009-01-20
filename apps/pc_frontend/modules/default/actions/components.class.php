@@ -39,9 +39,9 @@ class defaultComponents extends sfComponents
     }
   }
 
-  public function executeSideBannerWidgets()
+  public function executeSideBannerGadgets()
   {
-    $this->widgets = HomeWidgetPeer::retrieveSideBannerContentsWidgets();
+    $this->gadgets = GadgetPeer::retrieveSideBannerContentsGadgets();
   }
 
   public function executeInformationBox()

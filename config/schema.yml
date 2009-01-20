@@ -113,15 +113,15 @@ propel:
     name: { type: varchar(64), required: true, defaultValue: "" }
     value: { type: longvarchar }
 
-  home_widget:
+  gadget:
     id: ~
     type: { type: varchar(64), required: true, index: true, defaultValue: "" }
     name: { type: varchar(64), required: true, defaultValue: "" }
     sort_order: { type: integer }
 
-  home_widget_config:
+  gadget_config:
     id: ~
-    home_widget_id: { type: integer, foreignTable: home_widget, foreignReference: id, onDelete: cascade }
+    gadget_id: { type: integer, foreignTable: gadget, foreignReference: id, onDelete: cascade }
     name: { type: varchar(64), required: true, defaultValue: "" }
     value: { type: longvarchar }
 

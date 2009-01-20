@@ -8,63 +8,63 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class HomeWidgetPeer extends BaseHomeWidgetPeer
+class GadgetPeer extends BaseGadgetPeer
 {
   static protected $results;
 
-  static public function retrieveTopWidgets()
+  static public function retrieveTopGadgets()
   {
     return self::retrieveByType('top');
   }
 
-  static public function retrieveSideMenuWidgets()
+  static public function retrieveSideMenuGadgets()
   {
     return self::retrieveByType('sideMenu');
   }
 
-  static public function retrieveContentsWidgets()
+  static public function retrieveContentsGadgets()
   {
     return self::retrieveByType('contents');
   }
 
-  static public function retrieveBottomWidgets()
+  static public function retrieveBottomGadgets()
   {
     return self::retrieveByType('bottom');
   }
 
-  static public function retrieveMobileTopWidgets()
+  static public function retrieveMobileTopGadgets()
   {
     return self::retrieveByType('mobileTop');
   }
 
-  static public function retrieveMobileContentsWidgets()
+  static public function retrieveMobileContentsGadgets()
   {
     return self::retrieveByType('mobileContents');
   }
 
-  static public function retrieveMobileBottomWidgets()
+  static public function retrieveMobileBottomGadgets()
   {
     return self::retrieveByType('mobileBottom');
   }
 
-  static public function retrieveSideBannerContentsWidgets()
+  static public function retrieveSideBannerContentsGadgets()
   {
     return self::retrieveByType('sideBannerContents');
   }
 
-  static public function getTopWidgetsIds()
+  static public function getTopGadgetsIds()
   {
-    return self::getWidgetsIds('top');
+    return self::getGadgetsIds('top');
   }
 
-  static public function getSideMenuWidgetsIds()
+  static public function getSideMenuGadgetsIds()
   {
-    return self::getWidgetsIds('sideMenu');
+    return self::getGadgetsIds('sideMenu');
   }
 
-  static public function getContentsWidgetsIds()
+  static public function getContentsGadgetsIds()
   {
-    return self::getWidgetsIds('contents');
+    return self::getGadgetsIds('contents');
   }
 
   static public function retrieveByType($type)
@@ -74,7 +74,7 @@ class HomeWidgetPeer extends BaseHomeWidgetPeer
     return (isset($results[$type])) ? $results[$type] : null;
   }
 
-  static public function getWidgetsIds($type)
+  static public function getGadgetsIds($type)
   {
     $result = array();
 

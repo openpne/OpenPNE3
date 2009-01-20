@@ -13,8 +13,8 @@ function showModalOnParent(url)
 
 function insertHiddenTags(type, ids)
 {
-  var form = parent.document.getElementById('widgetForm');
-  var hiddens = form.getElementsByClassName(type + 'Widget');
+  var form = parent.document.getElementById('gadgetForm');
+  var hiddens = form.getElementsByClassName(type + 'Gadget');
 
   while (hiddens.length)
   {
@@ -29,17 +29,17 @@ function insertHiddenTags(type, ids)
     }
 
     var obj = document.createElement('input');
-    obj.setAttribute('class', type + 'Widget');
+    obj.setAttribute('class', type + 'Gadget');
     obj.setAttribute('type', 'hidden');
-    obj.setAttribute('name', 'widget[' + type + '][' + i + ']');
+    obj.setAttribute('name', 'gadget[' + type + '][' + i + ']');
     obj.setAttribute('value', ids[i]);
     new Insertion.Bottom(form, obj);
   }
 }
 
-function dropNewWidget(type, name, obj)
+function dropNewGadget(type, name, obj)
 {
-  var form = parent.document.getElementById('widgetForm');
+  var form = parent.document.getElementById('gadgetForm');
   var hiddens = form.getElementsByClassName(type + 'New');
   for (var i = 0; i < hiddens.length; i++)
   {

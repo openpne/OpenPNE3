@@ -8,16 +8,6 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-/**
- * HomeWidget form.
- *
- * @package    OpenPNE
- * @subpackage form
- * @author     Kousuke Ebihara <ebihara@tejimaya.com>
- */
-class HomeWidgetForm extends BaseHomeWidgetForm
+class GadgetConfig extends BaseGadgetConfig
 {
-  public function configure()
-  {
-  }
 }

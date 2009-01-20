@@ -1,23 +1,23 @@
-widgetSuccess:
+gadgetSuccess:
   javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
 
-homeWidgetPlotSuccess: &homeWidgetPlotSuccess
+homeGadgetPlotSuccess: &homeGadgetPlotSuccess
   layout: plain
-  stylesheets: [-backend, widgetPlot]
+  stylesheets: [-backend, gadgetPlot]
   javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
 
-homeAddWidgetSuccess:
-  layout: plain
-  stylesheets: [-backend]
-  javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
-
-homeEditWidgetSuccess:
+addGadgetSuccess:
   layout: plain
   stylesheets: [-backend]
   javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
 
-sideBannerWidgetPlotSuccess:
-  <<: *homeWidgetPlotSuccess
+editGadgetSuccess:
+  layout: plain
+  stylesheets: [-backend]
+  javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
 
-mobileHomeWidgetPlotSuccess:
-  <<: *homeWidgetPlotSuccess
+sideBannerGadgetPlotSuccess:
+  <<: *homeGadgetPlotSuccess
+
+mobileHomeGadgetPlotSuccess:
+  <<: *homeGadgetPlotSuccess

@@ -23,15 +23,15 @@ dd
 </style>
 
 <?php echo javascript_tag("
-function deleteWidget(type, id)
+function deleteGadget(type, id)
 {
   var parentIframe = parent.document.getElementsByTagName('iframe')[0];
 
   var typeId = 'plot' + type.charAt(0).toUpperCase() + type.substr(1, type.length - 1);
-  Element.remove(parentIframe.contentWindow.document.getElementById(typeId + '_widget_' + id));
+  Element.remove(parentIframe.contentWindow.document.getElementById(typeId + '_gadget_' + id));
 
-  var form = parent.document.getElementById('widgetForm');
-  var hiddens = form.getElementsByClassName(type + 'Widget');
+  var form = parent.document.getElementById('gadgetForm');
+  var hiddens = form.getElementsByClassName(type + 'Gadget');
   for (var i = 0; i < hiddens.length; i++)
   {
     if (hiddens[i].value == id)
@@ -50,7 +50,7 @@ function deleteWidget(type, id)
 <dl>
 <dt>
 <?php echo $config['caption']['ja_JP'] ?><br />
-<?php echo link_to_function(__('このウィジェットを削除する'), 'deleteWidget(\''.$widget->getType().'\', \''.$widget->getId().'\')') ?>
+<?php echo link_to_function(__('このガジェットを削除する'), 'deleteGadget(\''.$gadget->getType().'\', \''.$gadget->getId().'\')') ?>
 </dt>
 <dd><?php echo $config['description']['ja_JP'] ?></dd>
 </dl>
@@ -60,7 +60,7 @@ function deleteWidget(type, id)
 <dt>設定変更</dt>
 <dd>
 <table>
-<?php echo $form->renderFormTag(url_for('design/homeEditWidget?id='.$widget->getId())) ?>
+<?php echo $form->renderFormTag(url_for('design/editGadget?id='.$gadget->getId())) ?>
 <?php echo $form ?>
 <tr>
 <td colspan="2"><input type="submit" value="submit" /></td>

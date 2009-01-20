@@ -9,13 +9,13 @@
  */
 
 /**
- * sfOpenPNEWidgetConfigHandler
+ * opGadgetConfigHandler
  *
  * @package    OpenPNE
  * @subpackage config
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class sfOpenPNEWidgetConfigHandler extends sfYamlConfigHandler
+class opGadgetConfigHandler extends sfYamlConfigHandler
 {
   public function execute($configFiles)
   {
@@ -26,7 +26,7 @@ class sfOpenPNEWidgetConfigHandler extends sfYamlConfigHandler
 
     $format = "<?php\n"
             . "sfConfig::add(array('%s' => %s));";
-    $result = sprintf($format, 'op_'.$prefix.'widget_list', var_export($config, true));
+    $result = sprintf($format, 'op_'.$prefix.'gadget_list', var_export($config, true));
     return $result;
   }
 }

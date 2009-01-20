@@ -2,19 +2,19 @@ data/config/plugin.yml:
   class: sfOpenPNEPluginConfigHandler
   file:  %SF_LIB_DIR%/config/sfOpenPNEPluginConfigHandler.class.php
 
-config/widget.yml:
-  class: sfOpenPNEWidgetConfigHandler
-  file:  %SF_LIB_DIR%/config/sfOpenPNEWidgetConfigHandler.class.php
+config/gadget.yml:
+  class: opGadgetConfigHandler
+  file:  %SF_LIB_DIR%/config/opGadgetConfigHandler.class.php
 
-config/side_banner_widget.yml:
-  class: sfOpenPNEWidgetConfigHandler
-  file:  %SF_LIB_DIR%/config/sfOpenPNEWidgetConfigHandler.class.php
+config/side_banner_gadget.yml:
+  class: opGadgetConfigHandler
+  file:  %SF_LIB_DIR%/config/opGadgetConfigHandler.class.php
   param:
     prefix: side_banner_
 
-config/mobile_widget.yml:
-  class: sfOpenPNEWidgetConfigHandler
-  file:  %SF_LIB_DIR%/config/sfOpenPNEWidgetConfigHandler.class.php
+config/mobile_gadget.yml:
+  class: opGadgetConfigHandler
+  file:  %SF_LIB_DIR%/config/opGadgetConfigHandler.class.php
   param:
     prefix: mobile_
 

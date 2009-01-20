@@ -8,6 +8,16 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class HomeWidgetConfig extends BaseHomeWidgetConfig
+/**
+ * GadgetConfig filter form.
+ *
+ * @package    OpenPNE
+ * @subpackage filter
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
+ */
+class GadgetConfigFormFilter extends BaseGadgetConfigFormFilter
 {
+  public function configure()
+  {
+  }
 }
