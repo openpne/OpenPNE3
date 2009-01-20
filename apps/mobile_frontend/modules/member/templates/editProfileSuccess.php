@@ -1,7 +1,7 @@
 <?php slot('op_mobile_header') ?>
 <table width="100%">
 <tr><td align="center" bgcolor="#0D6DDF">
-<font color="#EEEEEE"><a name="top"><?php echo __('ﾌﾟﾛﾌｨｰﾙ変更') ?></a></font><br>
+<font color="#EEEEEE"><a name="top"><?php echo __('Edit profile') ?></a></font><br>
 </td></tr>
 </table>
 <?php end_slot(); ?>
@@ -9,5 +9,5 @@
 <?php echo $memberForm ?>
 <?php echo $profileForm ?>
 <br><br>
-<center><input type="submit" value="変更する"></center>
+<center><input type="submit" value="<?php echo __('Save') ?>"></center>
 </form>

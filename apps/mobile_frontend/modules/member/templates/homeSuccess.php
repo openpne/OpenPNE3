@@ -15,7 +15,7 @@
 <tr><td align="center" width="50%" valign="top">
 <?php echo image_tag_sf_image($sf_user->getMember()->getImageFileName(), array('size' => '120x120', 'format' => 'jpg')) ?>
 <br>
-<?php echo $sf_user->getMember()->getName() ?>さん<br>
+<?php echo $sf_user->getMember()->getName() ?><br>
 </td>
 
 <td valign="top">
@@ -25,7 +25,7 @@
 
 <tr><td colspan="2" align="center">
 <hr color="#0d6ddf" size="3">
-<?php echo link_to('ﾌﾟﾛﾌｨｰﾙ', 'member/profile') ?>
+<?php echo link_to(__('Profile'), 'member/profile') ?>
 <hr color="#0d6ddf" size="3">
 </td></tr>
 
@@ -51,9 +51,9 @@
 
 <?php
 $list = array(
-  link_to('ﾌﾟﾛﾌｨｰﾙ変更', 'member/editProfile'),
+  link_to(__('Edit profile'), 'member/editProfile'),
 );
-include_mobile_parts('list', 'profileEdit', $list, array('title' => 'ﾌﾟﾛﾌｨｰﾙ変更'))
+include_mobile_parts('list', 'profileEdit', $list, array('title' => __('Edit profile')))
 ?>
 
 <?php
@@ -72,8 +72,8 @@ foreach (sfConfig::get('openpne_member_category') as $key => $value)
     $list[] = link_to($title, 'member/config?category='.$key);
   }
 }
-$list[] = link_to('かんたんﾛｸﾞｲﾝ設定', 'member/configUID');
-include_mobile_parts('list', 'configEdit', $list, array('title' => '設定変更'))
+$list[] = link_to(__('Setting easy login'), 'member/configUID');
+include_mobile_parts('list', 'configEdit', $list, array('title' => __('Settings')))
 ?>
 
 <?php if ($mobileBottomWidgets) : ?>
@@ -86,11 +86,11 @@ include_mobile_parts('list', 'configEdit', $list, array('title' => '設定変更
 
 <hr color="#0d6ddf">
 
-■<?php echo link_to('ﾛｸﾞｱｳﾄ', 'member/logout') ?><br>
+■<?php echo link_to(__('Logout'), 'member/logout') ?><br>
 
 <?php slot('op_mobile_footer') ?>
 <table width="100%">
 <tbody><tr><td align="center" bgcolor="#0d6ddf">
-<font color="#eeeeee"><a href="<?php echo url_for('member/home') ?>" accesskey="0"><font color="#eeeeee">0.ﾎｰﾑ</font></a> / <a href="#top"><font color="#eeeeee">↑上へ</font></a> / <a href="#bottom" accesskey="8"><font color="#eeeeee">8.下へ</font></a></font><br>
+<font color="#eeeeee"><a href="<?php echo url_for('member/home') ?>" accesskey="0"><font color="#eeeeee">0. <?php echo __('home') ?></font></a> / <a href="#top"><font color="#eeeeee">↑ <?php echo __('top') ?></font></a> / <a href="#bottom" accesskey="8"><font color="#eeeeee">8. <?php echo __('bottom') ?></font></a></font><br>
 </td></tr></tbody></table>
 <?php end_slot(); ?>

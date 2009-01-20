@@ -1,1 +1,1 @@
-ﾛｸﾞｲﾝに失敗しました。
+<?php echo __('Login Failed.') ?>

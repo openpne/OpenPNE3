@@ -1,0 +1,91 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>home</source>
+        <target>ﾎｰﾑ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>top</source>
+        <target>上へ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>bottom</source>
+        <target>下へ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Logout</source>
+        <target>ﾛｸﾞｱｳﾄ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Error</source>
+        <target>ｴﾗｰ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Mail address</source>
+        <target>ﾒｰﾙｱﾄﾞﾚｽ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Password</source>
+        <target>ﾊﾟｽﾜｰﾄﾞ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Save</source>
+        <target>確定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Send</source>
+        <target>送信</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Profile</source>
+        <target>ﾌﾟﾛﾌｨｰﾙ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Edit profile</source>
+        <target>ﾌﾟﾛﾌｨｰﾙ変更</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Setting easy login</source>
+        <target>かんたんﾛｸﾞｲﾝ設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Settings</source>
+        <target>設定変更</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Invite friends for %1%</source>
+        <target>友人を%1%に招待する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Login Failed.</source>
+        <target>ﾛｸﾞｲﾝに失敗しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please select the item from the menu.</source>
+        <target>ﾒﾆｭｰから設定したい項目を選択してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Successful in invite.</source>
+        <target>送信が完了しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Invite is not available.</source>
+        <target>招待が許可されていません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>This member is already friend.</source>
+        <target>既にﾌﾚﾝﾄﾞです。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Setting mobile UID.</source>
+        <target>携帯個体識別番号を登録します。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Prease input your password, press "%1%" button.</source>
+        <target>ﾊﾟｽﾜｰﾄﾞを入力して、「%1%」ﾎﾞﾀﾝを押してください。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
