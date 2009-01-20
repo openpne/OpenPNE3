@@ -1,4 +1,10 @@
-<?php include_page_title($member->getName().'さん')?>
+<?php slot('op_mobile_header') ?>
+<table width="100%">
+<tr><td align="center" bgcolor="#0D6DDF">
+<font color="#EEEEEE"><a name="top"><?php echo $member->getName().'さん' ?></a></font><br>
+</td></tr>
+</table>
+<?php end_slot(); ?>
 
 <?php if ($member == $sf_user->getMember()) : ?>
 <font color="#ff0000">

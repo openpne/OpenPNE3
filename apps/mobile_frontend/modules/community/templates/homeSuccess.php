@@ -1,4 +1,10 @@
-<?php include_page_title($community->getName()) ?>
+<?php slot('op_mobile_header') ?>
+<table width="100%">
+<tr><td align="center" bgcolor="#0D6DDF">
+<font color="#EEEEEE"><a name="top"><?php echo $community->getName() ?></a></font><br>
+</td></tr>
+</table>
+<?php end_slot(); ?>
 
 <table width="100%" bgcolor="#EEEEFF">
 <tr><td colspan="2" align="center">

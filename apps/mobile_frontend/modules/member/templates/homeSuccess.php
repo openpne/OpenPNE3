@@ -1,5 +1,3 @@
-<?php include_page_title($op_config['sns_name']) ?>
-
 <?php if ($mobileTopWidgets) : ?>
 <?php foreach ($mobileTopWidgets as $widget) : ?>
 <?php if ($widget->isEnabled()) : ?>
