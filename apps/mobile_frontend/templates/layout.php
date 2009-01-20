@@ -20,6 +20,20 @@
 
 <a name="#top"></a>
 
+<?php if(!include_slot('op_mobile_header')): ?>
+<table width="100%">
+<tr><td align="center" bgcolor="#0D6DDF">
+<font color="#EEEEEE"><a name="top"><?php echo $op_config['sns_name'] ?></a></font><br>
+</td></tr>
+</table>
+<?php endif; ?>
+<?php if ($sf_user->hasFlash('error')): ?>
+<font color="#FF0000"><?php echo __($sf_user->getFlash('error')) ?></font>
+<?php endif; ?>
+<?php if ($sf_user->hasFlash('notice')): ?>
+<font color="#FF0000"><?php echo __($sf_user->getFlash('notice')) ?></font>
+<?php endif; ?>
+
 <?php echo $sf_content ?>
 
 <a name="#bottom"></a>
