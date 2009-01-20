@@ -1,4 +1,4 @@
-<?php use_helper('JavaScript') ?>
+<?php use_helper('Javascript') ?>
 <?php echo javascript_tag('
 function getVersion(obj)
 {
