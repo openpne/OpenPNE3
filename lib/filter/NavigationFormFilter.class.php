@@ -9,14 +9,13 @@
  */
 
 /**
- * NaviI18n filter form.
+ * Navigation filter form.
  *
  * @package    OpenPNE
  * @subpackage filter
- * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterTemplate.php 11675 2008-09-19 15:21:38Z fabien $
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class NaviI18nFormFilter extends BaseNaviI18nFormFilter
+class NavigationFormFilter extends BaseNavigationFormFilter
 {
   public function configure()
   {

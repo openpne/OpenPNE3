@@ -1,32 +1,32 @@
-Navi:
-  mobile_home_side_navi_invite:
+Navigation:
+  mobile_home_side_navigation_invite:
     type: "mobile_home_side"
     uri: "member/invite"
     sort_order: 0
 
-  mobile_home_navi_friend:
+  mobile_home_navigation_friend:
     type: "mobile_home"
     uri: "friend/list"
     sort_order: 0
 
-  mobile_home_navi_community:
+  mobile_home_navigation_community:
     type: "mobile_home"
     uri: "community/joinlist"
     sort_order: 10
 
-NaviI18n:
-  mobile_home_side_navi_invite_i18n:
-    id: mobile_home_side_navi_invite
+NavigationI18n:
+  mobile_home_side_navigation_invite_i18n:
+    id: mobile_home_side_navigation_invite
     caption: "友人を誘う"
     culture: "ja_JP"
 
-  mobile_home_navi_friend_i18n:
-    id: mobile_home_navi_friend
+  mobile_home_navigation_friend_i18n:
+    id: mobile_home_navigation_friend
     caption: "ﾏｲﾌﾚﾝﾄﾞ"
     culture: "ja_JP"
 
-  mobile_home_navi_community_i18n:
-    id: mobile_home_navi_community
+  mobile_home_navigation_community_i18n:
+    id: mobile_home_navigation_community
     caption: "参加ｺﾐｭﾆﾃｨ"
     culture: "ja_JP"
 

@@ -202,4 +202,106 @@ class designActions extends sfActions
 
     return sfView::SUCCESS;
   }
+
+ /**
+  * Execute navigation action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeNavigation(sfWebRequest $request)
+  {
+    $this->app = $request->getParameter('app', 'pc');
+    $isMobile = (bool)('mobile' === $this->app);
+
+    $this->list = array();
+
+    $types = NavigationPeer::retrieveTypes($isMobile);
+
+    foreach ($types as $type)
+    {
+      $navs = NavigationPeer::retrieveByType($type);
+      foreach ($navs as $nav)
+      {
+        $this->list[$type][] = new NavigationForm($nav);
+      }
+      $this->list[$type][] = new NavigationForm();
+    }
+  }
+
+ /**
+  * Execute navigationEdit action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeNavigationEdit(sfWebRequest $request)
+  {
+    $nav = $request->getParameter('nav');
+    $app = $request->getParameter('app', 'pc');
+
+    $model = NavigationPeer::retrieveByPk($nav['id']);
+    $this->form = new NavigationForm($model);
+    if ($request->isMethod('post'))
+    {
+       $this->form->bind($nav);
+       if ($this->form->isValid())
+       {
+         $this->form->save();
+       }
+    }
+
+    $this->redirect('design/navigation?app='.$app);
+  }
+
+ /**
+  * Execute navigationDelete action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeNavigationDelete(sfWebRequest $request)
+  {
+    $app = $request->getParameter('app', 'pc');
+
+    if ($request->isMethod('post'))
+    {
+      $model = NavigationPeer::retrieveByPk($request->getParameter('id'));
+      $this->forward404Unless($model);
+      $model->delete();
+    }
+
+    $this->redirect('design/navigation?app='.$app);
+  }
+
+ /**
+  * Execute navigationSort action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeNavigationSort(sfWebRequest $request)
+  {
+    if (!$request->isXmlHttpRequest())
+    {
+      $this->forward404();
+    }
+
+    $parameters = $request->getParameterHolder();
+    $keys = $parameters->getNames();
+    foreach ($keys as $key)
+    {
+      if (strpos($key, 'type_') === 0)
+      {
+        $order = $parameters->get($key);
+        for ($i = 0; $i < count($order); $i++)
+        {
+          $nav = NavigationPeer::retrieveByPk($order[$i]);
+          if ($nav)
+          {
+            $nav->setSortOrder($i * 10);
+            $nav->save();
+          }
+        }
+        break;
+      }
+    }
+    return sfView::NONE;
+  }
 }

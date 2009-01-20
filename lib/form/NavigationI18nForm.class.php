@@ -9,16 +9,18 @@
  */
 
 /**
- * Navi filter form.
+ * NavigationI18n form.
  *
  * @package    OpenPNE
- * @subpackage filter
- * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterTemplate.php 11675 2008-09-19 15:21:38Z fabien $
+ * @subpackage form
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class NaviFormFilter extends BaseNaviFormFilter
+class NavigationI18nForm extends BaseNavigationI18nForm
 {
   public function configure()
   {
+    $this->setWidgets(array(
+      'caption' => new sfWidgetFormInput(),
+    ));
   }
 }

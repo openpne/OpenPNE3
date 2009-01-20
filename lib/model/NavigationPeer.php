@@ -8,14 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-/**
- * Subclass for performing query and update operations on the 'navi' table.
- *
- * 
- *
- * @package lib.model
- */ 
-class NaviPeer extends BaseNaviPeer
+class NavigationPeer extends BaseNavigationPeer
 {
   public static function retrieveByType($type)
   {

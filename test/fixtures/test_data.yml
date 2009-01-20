@@ -93,158 +93,158 @@ AdminUser:
     id: ~
     username: "admin"
     password: "password"
-Navi:
-  secure_global_navi_home:
+Navigation:
+  secure_global_navigation_home:
     type: "secure_global"
     uri: "@homepage"
 
-  secure_global_navi_member_list:
+  secure_global_navigation_member_list:
     type: "secure_global"
     uri: "member/list"
 
-  secure_global_navi_community_list:
+  secure_global_navigation_community_list:
     type: "secure_global"
     uri: "community/list"
 
-  secure_global_navi_config:
+  secure_global_navigation_config:
     type: "secure_global"
     uri: "member/config"
 
-  secure_global_navi_invite:
+  secure_global_navigation_invite:
     type: "secure_global"
     uri: "member/invite"
 
-  secure_global_navi_logout:
+  secure_global_navigation_logout:
     type: "secure_global"
     uri: "member/logout"
 
-  default_navi_home:
+  default_navigation_home:
     type: "default"
     uri: "@homepage"
 
-  default_navi_friend_list:
+  default_navigation_friend_list:
     type: "default"
     uri: "friend/list"
 
-  default_navi_profile_confirm:
+  default_navigation_profile_confirm:
     type: "default"
     uri: "member/profile"
 
-  default_navi_profile_edit:
+  default_navigation_profile_edit:
     type: "default"
     uri: "member/editProfile"
 
-  friend_navi_home:
+  friend_navigation_home:
     type: "friend"
     uri: "member/profile"
 
-  friend_navi_friend_list:
+  friend_navigation_friend_list:
     type: "friend"
     uri: "friend/list"
 
-  friend_navi_link:
+  friend_navigation_link:
     type: "friend"
     uri: "friend/link"
 
-  friend_navi_unlink:
+  friend_navigation_unlink:
     type: "friend"
     uri: "friend/unlink"
 
-  community_navi_home:
+  community_navigation_home:
     type: "community"
     uri: "community/home"
 
-  community_navi_join:
+  community_navigation_join:
     type: "community"
     uri: "community/join"
 
-  community_navi_quit:
+  community_navigation_quit:
     type: "community"
     uri: "community/quit"
 
-NaviI18n:
-  secure_global_navi_home_i18n:
-    id: secure_global_navi_home
+NavigationI18n:
+  secure_global_navigation_home_i18n:
+    id: secure_global_navigation_home
     caption: "マイホーム"
     culture: "ja_JP"
 
-  secure_global_navi_member_list_i18n:
-    id: secure_global_navi_member_list
+  secure_global_navigation_member_list_i18n:
+    id: secure_global_navigation_member_list
     caption: "メンバー一覧"
     culture: "ja_JP"
 
-  secure_global_navi_community_list_i18n:
-    id: secure_global_navi_community_list
+  secure_global_navigation_community_list_i18n:
+    id: secure_global_navigation_community_list
     caption: "コミュニティ一覧"
     culture: "ja_JP"
 
-  secure_global_navi_config_i18n:
-    id: secure_global_navi_config
+  secure_global_navigation_config_i18n:
+    id: secure_global_navigation_config
     caption: "設定変更"
     culture: "ja_JP"
 
-  secure_global_navi_invite_i18n:
-    id: secure_global_navi_invite
+  secure_global_navigation_invite_i18n:
+    id: secure_global_navigation_invite
     caption: "友人を招待する"
     culture: "ja_JP"
 
-  secure_global_navi_logout_i18n:
-    id: secure_global_navi_logout
+  secure_global_navigation_logout_i18n:
+    id: secure_global_navigation_logout
     caption: "ログアウト"
     culture: "ja_JP"
 
-  default_navi_home_i18n:
-    id: default_navi_home
+  default_navigation_home_i18n:
+    id: default_navigation_home
     caption: "ホーム"
     culture: "ja_JP"
 
-  default_navi_friend_list_i18n:
-    id: default_navi_friend_list
+  default_navigation_friend_list_i18n:
+    id: default_navigation_friend_list
     caption: "マイフレンド"
     culture: "ja_JP"
 
-  default_navi_profile_confirm_i18n:
-    id: default_navi_profile_confirm
+  default_navigation_profile_confirm_i18n:
+    id: default_navigation_profile_confirm
     caption: "プロフィール確認"
     culture: "ja_JP"
 
-  default_navi_profile_edit_i18n:
-    id: default_navi_profile_edit
+  default_navigation_profile_edit_i18n:
+    id: default_navigation_profile_edit
     caption: "プロフィール編集"
     culture: "ja_JP"
 
-  friend_navi_home_i18n:
-    id: friend_navi_home
+  friend_navigation_home_i18n:
+    id: friend_navigation_home
     caption: "ホーム"
     culture: "ja_JP"
 
-  friend_navi_friend_list_i18n:
-    id: friend_navi_friend_list
+  friend_navigation_friend_list_i18n:
+    id: friend_navigation_friend_list
     caption: "フレンドリスト"
     culture: "ja_JP"
 
-  friend_navi_link_i18n:
-    id: friend_navi_link
+  friend_navigation_link_i18n:
+    id: friend_navigation_link
     caption: "マイフレンドになる"
     culture: "ja_JP"
 
-  friend_navi_unlink_i18n:
-    id: friend_navi_unlink
+  friend_navigation_unlink_i18n:
+    id: friend_navigation_unlink
     caption: "マイフレンドをやめる"
     culture: "ja_JP"
 
-  community_navi_home_i18n:
-    id: community_navi_home
+  community_navigation_home_i18n:
+    id: community_navigation_home
     caption: "コミュニティトップ"
     culture: "ja_JP"
 
-  community_navi_join_i18n:
-    id: community_navi_join
+  community_navigation_join_i18n:
+    id: community_navigation_join
     caption: "コミュニティに参加"
     culture: "ja_JP"
 
-  community_navi_quit_i18n:
-    id: community_navi_quit
+  community_navigation_quit_i18n:
+    id: community_navigation_quit
     caption: "コミュニティを退会"
     culture: "ja_JP"
 

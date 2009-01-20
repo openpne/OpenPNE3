@@ -8,13 +8,6 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-/**
- * Subclass for performing query and update operations on the 'navi_i18n' table.
- *
- * 
- *
- * @package lib.model
- */ 
-class NaviI18nPeer extends BaseNaviI18nPeer
+class NavigationI18n extends BaseNavigationI18n
 {
 }

@@ -9,13 +9,13 @@
  */
 
 /**
- * Navi form.
+ * Navigation form.
  *
- * @package    form
- * @subpackage navi
- * @version    SVN: $Id: sfPropelFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
+ * @package    OpenPNE
+ * @subpackage form
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class NaviForm extends BaseNaviForm
+class NavigationForm extends BaseNavigationForm
 {
   public function configure()
   {
@@ -25,28 +25,28 @@ class NaviForm extends BaseNaviForm
       'type' => new sfWidgetFormInputHidden(),
     ));
 
-    $this->widgetSchema->setNameFormat('navi[%s]');
+    $this->widgetSchema->setNameFormat('nav[%s]');
     $this->embedI18n(array('ja_JP'));
   }
 
   public function updateObject($values = null)
   {
-    $navi = parent::updateObject($values);
+    $nav = parent::updateObject($values);
 
-    if (!$navi->getSortOrder())
+    if (!$nav->getSortOrder())
     {
       $maxSortOrder = 0;
 
-      $navis = NaviPeer::retrieveByType($navi->getType());
-      $finalNavi = array_pop($navis);
-      if ($finalNavi)
+      $navs = NavigationPeer::retrieveByType($nav->getType());
+      $finalNav = array_pop($navs);
+      if ($finalNav)
       {
-        $maxSortOrder = $finalNavi->getSortOrder();
+        $maxSortOrder = $finalNav->getSortOrder();
       }
 
-      $navi->setSortOrder($maxSortOrder + 10);
+      $nav->setSortOrder($maxSortOrder + 10);
     }
 
-    return $navi;
+    return $nav;
   }
 }

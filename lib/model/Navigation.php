@@ -8,13 +8,6 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-/**
- * Subclass for representing a row from the 'navi_i18n' table.
- *
- * 
- *
- * @package lib.model
- */ 
-class NaviI18n extends BaseNaviI18n
+class Navigation extends BaseNavigation
 {
 }

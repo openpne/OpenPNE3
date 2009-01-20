@@ -125,13 +125,13 @@ propel:
     name: { type: varchar(64), required: true, defaultValue: "" }
     value: { type: longvarchar }
 
-  navi:
+  navigation:
     id: ~
     type: { type: varchar(64), required: true, index: true, defaultValue: "" }
     uri: { type: longvarchar, required: true, defaultValue: "" }
     sort_order: { type: integer }
 
-  navi_i18n:
+  navigation_i18n:
     caption: { type: longvarchar, required: true, defaultValue: "" }
 
   blacklist:

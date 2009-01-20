@@ -16,7 +16,7 @@ class defaultComponents extends sfComponents
     if ($this->isSecurePage()) {
       $type = 'secure_global';
     }
-    $this->navs = NaviPeer::retrieveByType($type);
+    $this->navs = NavigationPeer::retrieveByType($type);
   }
 
   public function executeLocalNav()
@@ -31,7 +31,7 @@ class defaultComponents extends sfComponents
 
     $type = sfConfig::get('sf_nav_type', sfConfig::get('mod_' . $module . '_default_nav', 'default'));
 
-    $this->navs = NaviPeer::retrieveByType($type);
+    $this->navs = NavigationPeer::retrieveByType($type);
 
     if ('default' !== $type)
     {
