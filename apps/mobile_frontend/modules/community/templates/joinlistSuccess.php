@@ -17,7 +17,7 @@ foreach ($pager->getResults() as $community) {
 $option = array(
   'border' => true,
 );
-include_mobile_parts('list', 'communityList', $list, $option);
+op_include_parts('list', 'communityList', $list, $option);
 ?>
 
 <?php echo pager_navigation($pager, 'community/joinlist?page=%d&member_id=' . $sf_params->get('member_id'), false); ?>

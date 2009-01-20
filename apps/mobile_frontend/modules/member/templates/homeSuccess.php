@@ -53,7 +53,7 @@
 $list = array(
   link_to(__('Edit profile'), 'member/editProfile'),
 );
-include_mobile_parts('list', 'profileEdit', $list, array('title' => __('Edit profile')))
+op_include_parts('list', 'profileEdit', $list, array('title' => __('Edit profile')))
 ?>
 
 <?php
@@ -73,7 +73,7 @@ foreach (sfConfig::get('openpne_member_category') as $key => $value)
   }
 }
 $list[] = link_to(__('Setting easy login'), 'member/configUID');
-include_mobile_parts('list', 'configEdit', $list, array('title' => __('Settings')))
+op_include_parts('list', 'configEdit', $list, array('title' => __('Settings')))
 ?>
 
 <?php if ($mobileBottomWidgets) : ?>

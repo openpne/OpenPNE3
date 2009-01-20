@@ -1,16 +1,16 @@
 <html>
 <head>
 <?php include_http_metas() ?>
-<?php if ($op_config['sns_title']) : ?>
+<?php if ($op_config['sns_title']): ?>
 <title><?php echo $op_config['sns_title'] ?></title>
 <?php else: ?>
 <title><?php echo $op_config['sns_name'] ?></title>
 <?php endif; ?>
-<?php if ($sf_request->getMobile()->isSoftBank() && $op_config['font_size']) : ?>
+<?php if ($sf_request->getMobile()->isSoftBank() && $op_config['font_size']): ?>
 <style type="text/css">
 *{font-size:small;}
 </style>
-<?php elseif ($sf_request->getMobile()->isEZWeb() && $op_config['font_size']) : ?>
+<?php elseif ($sf_request->getMobile()->isEZWeb() && $op_config['font_size']): ?>
 <style type="text/css">
 *{font-size:xx-small;}
 </style>
@@ -20,7 +20,7 @@
 
 <a name="#top"></a>
 
-<?php if(!include_slot('op_mobile_header')): ?>
+<?php if (!include_slot('op_mobile_header')): ?>
 <table width="100%">
 <tr><td align="center" bgcolor="#0D6DDF">
 <font color="#EEEEEE"><a name="top"><?php echo $op_config['sns_name'] ?></a></font><br>

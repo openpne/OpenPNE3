@@ -61,7 +61,7 @@ $option = array(
     link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'friend/list?id='.$member->getId())
   ),
 );
-include_mobile_parts('list', 'friendList', $list, $option);
+op_include_parts('list', 'friendList', $list, $option);
 ?>
 
 <?php
@@ -77,7 +77,7 @@ $option = array(
     link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'community/joinlist?member_id='.$member->getId())
   ),
 );
-include_mobile_parts('list', 'communityList', $list, $option);
+op_include_parts('list', 'communityList', $list, $option);
 ?>
 
 <?php slot('op_mobile_footer') ?>

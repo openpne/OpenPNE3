@@ -38,16 +38,13 @@ include_parts('nineTable', 'communityList', $option);
 
 <?php slot('op_top'); ?>
 <?php if ($relation->isSelf()): ?>
-<?php
-$option = array(
-  'body' => '
+<?php ob_start() ?>
 <p>※他のメンバーから見たあなたのページはこのようになります。</p>
 <p>他のメンバーにあなたのページを教える場合は、以下のURLを使ってください。<br />
-'.url_for('member/profile?id='.$member->getId(), true).'</p>
-<p>プロフィールを変更する場合は「'.link_to(__('プロフィール変更'), 'member/editProfile').'」よりおこなってください。</p>
-');
-include_parts('descriptionBox', 'informationAboutThisIsYourProfilePage', $option);
-?>
+<?php echo url_for('member/profile?id='.$member->getId(), true) ?></p>
+<p>プロフィールを変更する場合は「<?php echo link_to(__('プロフィール変更'), 'member/editProfile') ?>」よりおこなってください。</p>
+<?php $content = ob_get_clean() ?>
+<?php op_include_parts('descriptionBox', 'informationAboutThisIsYourProfilePage', $content) ?>
 <?php endif; ?>
 <?php end_slot(); ?>
 

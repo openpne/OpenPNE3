@@ -13,16 +13,16 @@
 <?php include_partial('global/header') ?>
 </div><!-- Header -->
 
+<div id="Layout<?php echo $layout ?>">
+
+<div id="Contents">
+
 <?php if ($sf_user->hasFlash('error')): ?>
 <?php include_alert_box('flashError', __($sf_user->getFlash('error'))) ?>
 <?php endif; ?>
 <?php if ($sf_user->hasFlash('notice')): ?>
 <?php include_alert_box('flashNotice', __($sf_user->getFlash('notice'))) ?>
 <?php endif; ?>
-
-<div id="Layout<?php echo $layout ?>">
-
-<div id="Contents">
 
 <?php if (has_slot('op_top')): ?>
 <div id="Top">

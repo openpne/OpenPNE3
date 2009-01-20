@@ -21,7 +21,7 @@ foreach ($pager->getResults() as $member) {
 $option = array(
   'border' => true,
 );
-include_mobile_parts('list', 'memberList', $list, $option);
+op_include_parts('list', 'memberList', $list, $option);
 ?>
 
 <?php echo pager_navigation($pager, 'friend/list?page=%d&id=' . $sf_params->get('id'), false); ?>

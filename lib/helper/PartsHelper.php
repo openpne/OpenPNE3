@@ -14,7 +14,37 @@
  * @package    openpne
  * @subpackage helper
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
+ * @author     Ogawa Rimpei <ogawa@tejimaya.com>
  */
+
+/**
+ * Include parts
+ *
+ * @param string $name parts name
+ * @param string $id
+ * @param mixed  $content
+ * @param array  $options
+ */
+function op_include_parts($name, $id, $content, $options = array())
+{
+  $params = array(
+    'id'      => $id,
+    'name'    => $name,
+    'content' => $content,
+    'options' => $options,
+  );
+
+  if ($name)
+  {
+    $params['op_content'] = get_partial('global/parts'.ucfirst($name), $params);
+  }
+  else
+  {
+    $params['op_content'] = $content;
+  }
+
+  include_partial('global/partsLayout', $params);
+}
 
 /**
  * Includes a login parts.
@@ -46,30 +76,17 @@ function include_page_title($title, $subtitle = '')
 
 function include_list_box($id, $list, $options = array())
 {
-  $params = array(
-    'id' => $id,
-    'list' => $list,
-    'options' => $options,
-  );
-  include_partial('global/partsListBox', $params);
+  op_include_parts('listBox', $id, $list, $options);
 }
 
 function include_information_box($id, $body)
 {
-  $params = array(
-    'id' => $id,
-    'body' => $body,
-  );
-  include_partial('global/partsInformationBox', $params);
+  op_include_parts('informationBox', $id, $body);
 }
 
 function include_alert_box($id, $body)
 {
-  $params = array(
-    'id' => $id,
-    'body' => $body,
-  );
-  include_partial('global/partsAlertBox', $params);
+  op_include_parts('alertBox', $id, $body);
 }
 
 function include_simple_box($id, $title = '', $block = '', $option = array())
@@ -93,23 +110,29 @@ function include_simple_box($id, $title = '', $block = '', $option = array())
   include_partial('global/partsSimpleBox', $params);
 }
 
-function include_box($id, $title = '', $body = '', $option = array())
+function include_box($id, $title = '', $body = '', $options = array())
 {
-  if (!empty($option['form']) && !isset($option['button'])) {
-    $option['button'] = '変更';
-  }
+  $options['title'] = $title;
 
-  if (!empty($option['form']) && !isset($option['url'])) {
-    $request = sfContext::getInstance()->getRequest();
-    $option['url'] = $request->getParameter('module').'/'.$request->getParameter('action');
-  }
+  if (!empty($options['form']))
+  {
+    if (!isset($options['button']))
+    {
+      $options['button'] = '変更';
+    }
 
-  $params = array(
-    'id' => $id,
-    'body' => $body,
-    'option' => $option,
-  );
-  include_simple_box($id, $title, get_partial('global/partsBox', $params), array('class' => 'box'));
+    if (!isset($options['url']))
+    {
+      $request = sfContext::getInstance()->getRequest();
+      $options['url'] = $request->getParameter('module').'/'.$request->getParameter('action');
+    }
+
+    op_include_parts('form', $id, $options['form'], $options);
+  }
+  else
+  {
+    op_include_parts('box', $id, $body, $options);
+  }
 }
 
 function include_parts($parts_name, $id, $option = array())
@@ -119,20 +142,6 @@ function include_parts($parts_name, $id, $option = array())
     'option' => $option,
   );
   include_partial('global/parts'.ucfirst($parts_name), $params);
-}
-
-function include_mobile_parts($parts_name, $id, $contents, $option = array())
-{
-  $parts_option = array(
-    'id'     => $id,
-    'contents' => $contents,
-    'option' => $option,
-  );
-  $params = array(
-    'parts_name'     => $parts_name,
-    'parts_option' => $parts_option,
-  );
-  include_partial('global/partsLayout', $params);
 }
 
 /**

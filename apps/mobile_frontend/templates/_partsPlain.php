@@ -1,1 +1,1 @@
-<?php echo $contents ?>
+<?php echo $content ?>
