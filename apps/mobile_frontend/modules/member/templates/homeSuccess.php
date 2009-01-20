@@ -19,7 +19,7 @@
 </td>
 
 <td valign="top">
-<?php include_component('default', 'navi', array('type' => 'mobile_home_side')) ?>
+<?php include_component('default', 'nav', array('type' => 'mobile_home_side')) ?>
 </td>
 </tr>
 
@@ -30,7 +30,7 @@
 </td></tr>
 
 <tr><td colspan="2">
-<?php include_component('default', 'navi', array('type' => 'mobile_home')) ?>
+<?php include_component('default', 'nav', array('type' => 'mobile_home')) ?>
 </td></tr>
 
 <tr><td colspan="2" align="center">

@@ -1,9 +1,9 @@
-<?php if (count($navis)) : ?>
-<?php foreach ($navis as $navi) : ?>
+<?php if (count($navs)) : ?>
+<?php foreach ($navs as $nav) : ?>
 <?php if (isset($id)) : ?>
-<?php echo link_to($navi->getCaption(), $navi->getUri().'?id='.$id) ?><br>
+<?php echo link_to($nav->getCaption(), $nav->getUri().'?id='.$id) ?><br>
 <?php else : ?>
-<?php echo link_to($navi->getCaption(), $navi->getUri()) ?><br>
+<?php echo link_to($nav->getCaption(), $nav->getUri()) ?><br>
 <?php endif; ?>
 <?php endforeach; ?>
 

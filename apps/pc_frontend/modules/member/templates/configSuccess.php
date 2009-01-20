@@ -8,7 +8,7 @@ foreach ($categories as $key => $value)
     $list[$key] = link_to($categoryCaptions[$key], 'member/config?category='.$key);
   }
 }
-include_parts('pageNav', 'pagenavi', array('list' => $list, 'current' => $categoryName));
+include_parts('pageNav', 'pagenav', array('list' => $list, 'current' => $categoryName));
 ?>
 <?php end_slot(); ?>
 

@@ -1,5 +1,5 @@
 all:
-  default_navi: community
-  navi:
+  default_nav: community
+  nav:
     list: default
     joinlist: default

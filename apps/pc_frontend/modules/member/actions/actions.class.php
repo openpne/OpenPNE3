@@ -79,7 +79,7 @@ class memberActions extends sfOpenPNEMemberAction
   {
     if ($request->hasParameter('id') && $request->getParameter('id') != $this->getUser()->getMemberId())
     {
-      sfConfig::set('sf_navi_type', 'friend');
+      sfConfig::set('sf_nav_type', 'friend');
     }
 
     $result = parent::executeProfile($request);

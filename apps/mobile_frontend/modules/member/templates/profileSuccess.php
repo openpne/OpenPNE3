@@ -40,7 +40,7 @@
 <?php echo link_to(__('Makes friends'), 'friend/link?id='.$member->getId()) ?><br>
 <?php endif; ?>
 
-<?php include_component('default', 'navi', array('type' => 'mobile_community', 'id' => $member->getId())) ?>
+<?php include_component('default', 'nav', array('type' => 'mobile_community', 'id' => $member->getId())) ?>
 
 <?php include_customizes('menu', 'bottom') ?>
 </td></tr>

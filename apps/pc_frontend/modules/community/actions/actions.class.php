@@ -27,7 +27,7 @@ class communityActions extends sfOpenPNECommunityAction
     $result = parent::executeEdit($request);
 
     if (!$this->community) {
-      sfConfig::set('sf_navi_type', 'default');
+      sfConfig::set('sf_nav_type', 'default');
     }
 
     return $result;
@@ -40,7 +40,7 @@ class communityActions extends sfOpenPNECommunityAction
   */
   public function executeSearch($request)
   {
-    sfConfig::set('sf_navi_type', 'default');
+    sfConfig::set('sf_nav_type', 'default');
 
     $params = $request->getParameter('community', array());
     if ($request->hasParameter('search_query'))
@@ -66,11 +66,11 @@ class communityActions extends sfOpenPNECommunityAction
   */
   public function executeJoinlist($request)
   {
-    sfConfig::set('sf_navi_type', 'default');
+    sfConfig::set('sf_nav_type', 'default');
 
     if ($request->hasParameter('id') && $request->getParameter('id') != $this->getUser()->getMemberId())
     {
-      sfConfig::set('sf_navi_type', 'friend');
+      sfConfig::set('sf_nav_type', 'friend');
     }
 
     return parent::executeJoinlist($request);

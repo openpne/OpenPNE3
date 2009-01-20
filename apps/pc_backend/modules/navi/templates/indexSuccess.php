@@ -6,7 +6,7 @@
 
 <h2>ナビ設定</h2>
 
-<?php foreach ($list as $type => $navi) : ?>
+<?php foreach ($list as $type => $nav) : ?>
 <h3><?php echo $type ?></h3>
 
 <table id="type_<?php echo str_replace(' ', '_', $type) ?>">
@@ -15,7 +15,7 @@
 <th>項目名(ja_JP)</th>
 <th colspan="2">操作</th>
 </tr>
-<?php foreach ($navi as $form) : ?>
+<?php foreach ($nav as $form) : ?>
 <tbody id="type_<?php echo str_replace(' ', '_', $type) ?>_<?php echo $form->getObject()->getId() ?>"<?php if (!$form->isNew()) : ?> class="sortable"<?php endif; ?>>
 <tr>
 <td><form action="<?php echo url_for('navi/edit?app='.$app) ?>" method="post">

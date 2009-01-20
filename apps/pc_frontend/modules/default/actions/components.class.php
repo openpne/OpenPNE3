@@ -10,16 +10,16 @@
 
 class defaultComponents extends sfComponents
 {
-  public function executeGlobalNavi()
+  public function executeGlobalNav()
   {
     $type = 'insecure_global';
     if ($this->isSecurePage()) {
       $type = 'secure_global';
     }
-    $this->navis = NaviPeer::retrieveByType($type);
+    $this->navs = NaviPeer::retrieveByType($type);
   }
 
-  public function executeLocalNavi()
+  public function executeLocalNav()
   {
     if (!$this->isSecurePage()) {
       return sfView::NONE;
@@ -29,13 +29,13 @@ class defaultComponents extends sfComponents
     $module = $context->getActionStack()->getLastEntry()->getModuleName();
     $action = $context->getActionStack()->getLastEntry()->getActionName();
 
-    $type = sfConfig::get('sf_navi_type', sfConfig::get('mod_' . $module . '_default_navi', 'default'));
+    $type = sfConfig::get('sf_nav_type', sfConfig::get('mod_' . $module . '_default_nav', 'default'));
 
-    $this->navis = NaviPeer::retrieveByType($type);
+    $this->navs = NaviPeer::retrieveByType($type);
 
     if ('default' !== $type)
     {
-      $this->naviId = sfConfig::get('sf_navi_id', $context->getRequest()->getParameter('id'));
+      $this->navId = sfConfig::get('sf_nav_id', $context->getRequest()->getParameter('id'));
     }
   }
 

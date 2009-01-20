@@ -33,10 +33,10 @@ class naviActions extends sfActions
 
     foreach ($types as $type)
     {
-      $navis = NaviPeer::retrieveByType($type);
-      foreach ($navis as $navi)
+      $navs = NaviPeer::retrieveByType($type);
+      foreach ($navs as $nav)
       {
-        $this->list[$type][] = new NaviForm($navi);
+        $this->list[$type][] = new NaviForm($nav);
       }
       $this->list[$type][] = new NaviForm();
     }
@@ -49,14 +49,14 @@ class naviActions extends sfActions
   */
   public function executeEdit($request)
   {
-    $navi = $request->getParameter('navi');
+    $nav = $request->getParameter('navi');
     $app = $request->getParameter('app', 'pc');
 
-    $model = NaviPeer::retrieveByPk($navi['id']);
+    $model = NaviPeer::retrieveByPk($nav['id']);
     $this->form = new NaviForm($model);
     if ($request->isMethod('post'))
     {
-       $this->form->bind($navi);
+       $this->form->bind($nav);
        if ($this->form->isValid())
        {
          $this->form->save();
@@ -106,11 +106,11 @@ class naviActions extends sfActions
         $order = $parameters->get($key);
         for ($i = 0; $i < count($order); $i++)
         {
-          $navi = NaviPeer::retrieveByPk($order[$i]);
-          if ($navi)
+          $nav = NaviPeer::retrieveByPk($order[$i]);
+          if ($nav)
           {
-            $navi->setSortOrder($i * 10);
-            $navi->save();
+            $nav->setSortOrder($i * 10);
+            $nav->save();
           }
         }
         break;

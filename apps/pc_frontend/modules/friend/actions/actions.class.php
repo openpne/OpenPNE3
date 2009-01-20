@@ -23,7 +23,7 @@ class friendActions extends sfOpenPNEFriendAction
 
     if ($this->id == $this->getUser()->getMemberId())
     {
-      sfConfig::set('sf_navi_type', 'default');
+      sfConfig::set('sf_nav_type', 'default');
     }
   }
 }

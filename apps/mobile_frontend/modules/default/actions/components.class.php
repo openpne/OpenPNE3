@@ -10,9 +10,9 @@
 
 class defaultComponents extends sfComponents
 {
-  public function executeNavi()
+  public function executeNav()
   {
-    $this->navis = NaviPeer::retrieveByType($this->type);
+    $this->navs = NaviPeer::retrieveByType($this->type);
   }
 
   public function executeInformationBox()
