@@ -1,15 +1,15 @@
 <?php slot('op_mobile_header') ?>
 <table width="100%">
 <tr><td align="center" bgcolor="#0D6DDF">
-<font color="#EEEEEE"><a name="top"><?php echo $member->getName().'さん' ?></a></font><br>
+<font color="#EEEEEE"><a name="top"><?php echo $member->getName() ?></a></font><br>
 </td></tr>
 </table>
 <?php end_slot(); ?>
 
 <?php if ($member == $sf_user->getMember()) : ?>
 <font color="#ff0000">
-※他のﾒﾝﾊﾞｰから見たあなたのﾍﾟｰｼﾞはこのようになります。<br>
-ﾌﾟﾛﾌｨｰﾙを変更する場合は<?php echo link_to('「ﾌﾟﾛﾌｨｰﾙ変更」', 'member/editProfile') ?>よりおこなえます。
+<?php echo __('This is your page other member see.') ?><br>
+<?php echo __('If you edit profile, access %1%.', array('%1%' => link_to('「'. __('Edit profile') .'」', 'member/editProfile'))) ?>
 </font>
 <?php endif; ?>
 
@@ -37,7 +37,7 @@
 <tr><td colspan="2">
 
 <?php if (!$relation->isFriend() && !$relation->isSelf()) : ?>
-<?php echo link_to('ﾌﾚﾝﾄﾞに加える', 'friend/link?id='.$member->getId()) ?><br>
+<?php echo link_to(__('Makes friends'), 'friend/link?id='.$member->getId()) ?><br>
 <?php endif; ?>
 
 <?php include_component('default', 'navi', array('type' => 'mobile_community', 'id' => $member->getId())) ?>
@@ -55,10 +55,10 @@ foreach ($member->getFriends(5) as $friendMember)
   $list[] = link_to(sprintf('%s(%d)', $friendMember->getName(), $friendMember->countFriends()), 'member/profile?id='.$friendMember->getId());
 }
 $option = array(
-  'title' => 'ﾌﾚﾝﾄﾞﾘｽﾄ',
+  'title' => __('Friend list'),
   'border' => true,
   'moreInfo' => array(
-    link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'friend/list?id='.$member->getId())
+    link_to('<font color="#0c5f0f">⇒</font>'. __('More'), 'friend/list?id='.$member->getId())
   ),
 );
 op_include_parts('list', 'friendList', $list, $option);
@@ -71,10 +71,10 @@ foreach ($communities as $community)
   $list[] = link_to($community->getName(), 'community/home?id='.$community->getId());
 }
 $option = array(
-  'title' => '参加ｺﾐｭﾆﾃｨﾘｽﾄ',
+  'title' => __('Community list with this member'),
   'border' => true,
   'moreInfo' => array(
-    link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'community/joinlist?member_id='.$member->getId())
+    link_to('<font color="#0c5f0f">⇒</font>'. __('More'), 'community/joinlist?member_id='.$member->getId())
   ),
 );
 op_include_parts('list', 'communityList', $list, $option);
@@ -83,6 +83,6 @@ op_include_parts('list', 'communityList', $list, $option);
 <?php slot('op_mobile_footer') ?>
 <table width="100%">
 <tbody><tr><td align="center" bgcolor="#0d6ddf">
-<font color="#eeeeee"><a href="<?php echo url_for('member/home') ?>" accesskey="0"><font color="#eeeeee">0.ﾎｰﾑ</font></a> / <a href="#top"><font color="#eeeeee">↑上へ</font></a> / <a href="#bottom" accesskey="8"><font color="#eeeeee">8.下へ</font></a></font><br>
+<font color="#eeeeee"><a href="<?php echo url_for('member/home') ?>" accesskey="0"><font color="#eeeeee">0. <?php echo __('home') ?></font></a> / <a href="#top"><font color="#eeeeee">↑ <?php echo __('top') ?></font></a> / <a href="#bottom" accesskey="8"><font color="#eeeeee">8. <?php echo __('bottom') ?></font></a></font><br>
 </td></tr></tbody></table>
 <?php end_slot(); ?>

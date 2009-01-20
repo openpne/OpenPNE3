@@ -15,8 +15,16 @@
         <target>下へ</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Login</source>
+        <target>ﾛｸﾞｲﾝ</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Logout</source>
         <target>ﾛｸﾞｱｳﾄ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Registration</source>
+        <target>新規登録</target>
       </trans-unit>
       <trans-unit id="">
         <source>Error</source>
@@ -31,6 +39,10 @@
         <target>ﾊﾟｽﾜｰﾄﾞ</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Register</source>
+        <target>登録</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Save</source>
         <target>確定</target>
       </trans-unit>
@@ -39,12 +51,28 @@
         <target>送信</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Makes friends</source>
+        <target>ﾌﾚﾝﾄﾞに加える</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Friend list</source>
+        <target>ﾌﾚﾝﾄﾞﾘｽﾄ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Community list with this member</source>
+        <target>参加ｺﾐｭﾆﾃｨﾘｽﾄ</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Profile</source>
         <target>ﾌﾟﾛﾌｨｰﾙ</target>
       </trans-unit>
       <trans-unit id="">
         <source>Edit profile</source>
         <target>ﾌﾟﾛﾌｨｰﾙ変更</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Register mobile</source>
+        <target>携帯電話を登録する</target>
       </trans-unit>
       <trans-unit id="">
         <source>Setting easy login</source>
@@ -83,8 +111,20 @@
         <target>携帯個体識別番号を登録します。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>You register mobile UID.</source>
+        <target>携帯電話を登録する</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Prease input your password, press "%1%" button.</source>
         <target>ﾊﾟｽﾜｰﾄﾞを入力して、「%1%」ﾎﾞﾀﾝを押してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>This is your page other member see.</source>
+        <target>他のﾒﾝﾊﾞｰから見たあなたのﾍﾟｰｼﾞはこのようになります。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If you edit profile, access %1%.</source>
+        <target>ﾌﾟﾛﾌｨｰﾙを変更する場合は%1%よりおこなえます。</target>
       </trans-unit>
     </body>
   </file>
