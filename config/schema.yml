@@ -1,8 +1,8 @@
 propel:
   member:
     id: ~
-    name: { type: varchar(64), required: true }
-    is_active: { type: boolean, required: true }
+    name: { type: varchar(64), required: true, defaultValue: "" }
+    is_active: { type: boolean, required: true, defaultValue: 0 }
     created_at: ~
     updated_at: ~
     _behaviors:
@@ -27,9 +27,9 @@ propel:
 
   file:
     id: ~
-    name: { type: varchar(64), index: unique, required: true }
+    name: { type: varchar(64), index: unique, required: true, defaultValue: "" }
     original_filename: { type: longvarchar }
-    type: { type: varchar(64), required: true, index: true }
+    type: { type: varchar(64), required: true, index: true, defaultValue: "" }
     created_at: ~
     updated_at: ~
 
@@ -39,21 +39,21 @@ propel:
 
   profile:
     id: ~
-    name: { type: varchar(64), index: unique, required: true }
-    is_required: { type: boolean, required: true }
-    is_unique: { type: boolean, required: true }
-    form_type: { type: varchar(32), required: true }
-    value_type: { type: varchar(32), required: true }
+    name: { type: varchar(64), index: unique, required: true, defaultValue: "" }
+    is_required: { type: boolean, required: true, defaultValue: 0 }
+    is_unique: { type: boolean, required: true, defaultValue: 0 }
+    form_type: { type: varchar(32), required: true, defaultValue: "" }
+    value_type: { type: varchar(32), required: true, defaultValue: "" }
     value_regexp: { type: longvarchar }
     value_min: { type: integer }
     value_max: { type: integer }
-    is_disp_regist: { type: boolean, required: true }
-    is_disp_config: { type: boolean, required: true }
-    is_disp_search: { type: boolean, required: true }
+    is_disp_regist: { type: boolean, required: true, defaultValue: 0 }
+    is_disp_config: { type: boolean, required: true, defaultValue: 0 }
+    is_disp_search: { type: boolean, required: true, defaultValue: 0 }
     sort_order: { type: integer }
 
   profile_i18n:
-    caption: { type: longvarchar, required: true }
+    caption: { type: longvarchar, required: true, defaultValue: "" }
     info: { type: longvarchar }
 
   profile_option:
@@ -67,9 +67,9 @@ propel:
   member_profile:
     _attributes: { treeMode: NestedSet }
     id: ~
-    lft_key: { type: integer, nestedSetLeftKey: true ,index: true }
-    rht_key: { type: integer, nestedSetRightKey: true ,index: true }
-    tree_key : { type: integer, treeScopeKey: true ,index: true }
+    lft_key: { type: integer, nestedSetLeftKey: true, index: true, defaultValue: 0 }
+    rht_key: { type: integer, nestedSetRightKey: true, index: true, defaultValue: 0 }
+    tree_key : { type: integer, treeScopeKey: true, index: true }
     member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, onDelete: cascade }
     profile_id: { type: integer, required: true, foreignTable: profile, foreignReference: id, onDelete: cascade }
     profile_option_id: { type: integer, required: false, foreignTable: profile_option, foreignReference: id, onDelete: cascade }
@@ -77,7 +77,7 @@ propel:
 
   community:
     id: ~
-    name: { type: varchar(64), index: unique, required: true }
+    name: { type: varchar(64), index: unique, required: true, defaultValue: "" }
     file_id: { type: integer, required: false, foreignTable: file, foreignReference: id, onDelete: setnull }
     created_at: ~
     updated_at: ~
@@ -89,52 +89,52 @@ propel:
     id: ~
     community_id: { type: integer, required: true, foreignTable: community, foreignReference: id, onDelete: cascade }
     member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, onDelete: cascade }
-    position: { type: varchar(32), index: true }
+    position: { type: varchar(32), index: true, defaultValue: "" }
 
   admin_user:
     id: ~
-    username: { type: varchar(64), index: unique, required: true }
-    password: { type: varchar(40), required: true }
+    username: { type: varchar(64), index: unique, required: true, defaultValue: "" }
+    password: { type: varchar(40), required: true, defaultValue: "" }
 
   sns_config:
     id: ~
-    name: { type: varchar(64), index: unique, required: true }
+    name: { type: varchar(64), index: unique, required: true, defaultValue: "" }
     value: { type: longvarchar }
 
   member_config:
     id: ~
     member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, onDelete: cascade }
-    name: { type: varchar(64), required: true }
+    name: { type: varchar(64), required: true, defaultValue: "" }
     value: { type: longvarchar }
 
   community_config:
     id: ~
     community_id: { type: integer, required: true, foreignTable: community, foreignReference: id, onDelete: cascade }
-    name: { type: varchar(64), required: true }
+    name: { type: varchar(64), required: true, defaultValue: "" }
     value: { type: longvarchar }
 
   home_widget:
     id: ~
-    type: { type: varchar(64), required: true, index: true }
-    name: { type: varchar(64), required: true }
+    type: { type: varchar(64), required: true, index: true, defaultValue: "" }
+    name: { type: varchar(64), required: true, defaultValue: "" }
     sort_order: { type: integer }
 
   home_widget_config:
     id: ~
     home_widget_id: { type: integer, foreignTable: home_widget, foreignReference: id, onDelete: cascade }
-    name: { type: varchar(64), required: true }
+    name: { type: varchar(64), required: true, defaultValue: "" }
     value: { type: longvarchar }
 
   navi:
     id: ~
-    type: { type: varchar(64), required: true, index: true }
-    uri: { type: longvarchar, required: true }
+    type: { type: varchar(64), required: true, index: true, defaultValue: "" }
+    uri: { type: longvarchar, required: true, defaultValue: "" }
     sort_order: { type: integer }
 
   navi_i18n:
-    caption: { type: longvarchar, required: true }
+    caption: { type: longvarchar, required: true, defaultValue: "" }
 
   blacklist:
     id: ~
-    uid: { type: varchar(32), index: unique, required: true }
+    uid: { type: varchar(32), index: unique, required: true, defaultValue: "" }
     memo: { type: longvarchar }
