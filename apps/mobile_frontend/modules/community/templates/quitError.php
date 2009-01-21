@@ -1,8 +1,2 @@
-<?php slot('op_mobile_header') ?>
-<table width="100%">
-<tr><td align="center" bgcolor="#0D6DDF">
-<font color="#EEEEEE"><a name="top"><?php echo __('ｴﾗｰ') ?></a></font><br>
-</td></tr>
-</table>
-<?php end_slot(); ?>
+<?php op_mobile_page_title(__('Error')) ?>
 ｺﾐｭﾆﾃｨに参加していません。

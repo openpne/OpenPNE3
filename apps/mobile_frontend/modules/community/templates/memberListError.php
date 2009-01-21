@@ -1,11 +1,2 @@
-<?php slot('op_mobile_header') ?>
-<table width="100%">
-<tr><td align="center" bgcolor="#0D6DDF">
-<font color="#EEEEEE"><a name="top"><?php echo $community->getName() ?></a></font><br>
-</td></tr>
-<tr><td align="center" bgcolor="#DDDDDD">
-<font color="#000000"><a name="top"><?php echo __('Community member') ?></a></font><br>
-</td></tr>
-</table>
-<?php end_slot(); ?>
+<?php op_mobile_page_title($community->getName(), __('Community member')) ?>
 <?php echo __('Community member does not exist.') ?>

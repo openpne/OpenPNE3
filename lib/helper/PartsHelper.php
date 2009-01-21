@@ -157,6 +157,22 @@ function include_customizes($id, $name, $vars = null)
 }
 
 /**
+ * Set the op_mobile_header slot
+ *
+ * @param string $title
+ * @param string $subtitle
+ */
+function op_mobile_page_title($title, $subtitle = '')
+{
+  $params = array(
+    'title' => $title,
+    'subtitle' => $subtitle,
+  );
+
+  slot('op_mobile_header', get_partial('global/partsPageTitle', $params));
+}
+
+/**
  * Includes a login parts.
  *
  * @param string $id
@@ -175,6 +191,9 @@ function include_login_parts($id, $form, $link_to)
   include_partial('global/partsLogin', $params);
 }
 
+/**
+ * @deprecated since 3.0beta4
+ */
 function include_page_title($title, $subtitle = '')
 {
   $params = array(
