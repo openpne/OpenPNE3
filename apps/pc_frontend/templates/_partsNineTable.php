@@ -29,13 +29,4 @@ $options = array_merge(array(
 <?php endif; ?>
 <?php endfor; ?>
 </table>
-<?php if ($options['moreInfo']): ?>
-<div class="block moreInfo">
-<ul class="moreInfo">
-<?php foreach ($options['moreInfo'] as $key => $value): ?>
-<li><?php echo link_to($key, $value) ?></li>
-<?php endforeach; ?>
-</ul>
-</div>
-<?php endif; ?>
 <?php endif; ?>

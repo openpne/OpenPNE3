@@ -4,15 +4,6 @@ $options = array_merge(array(
   'url' => sprintf('%s/%s', $this->getModuleName(), $this->getActionName()),
 ), (array)$sf_data->getRaw('options'));
 ?>
-<?php if (!empty($options['info'])): ?>
-<div class="partsInfo">
-<div class="body">
-<?php include_customizes($id, 'bodyTop') ?>
-<?php echo $options['info'] ?>
-<?php include_customizes($id, 'bodyBottom') ?>
-</div>
-</div>
-<?php endif; ?>
 
 <form action="<?php echo url_for($options['url']) ?>" method="post"<?php if (!empty($options['isMultipart'])): ?> enctype="multipart/form-data"<?php endif; ?>>
 <?php include_customizes($id, 'formTop') ?>
@@ -64,15 +55,6 @@ foreach ($forms as $form)
 <?php include_customizes($id, 'lastRow') ?>
 </table>
 
-<?php if (!empty($options['moreInfo'])) : ?>
-<div class="block moreInfo">
-<ul class="moreInfo">
-<?php foreach ($options['moreInfo'] as $key => $value): ?>
-<li><?php echo $value ?></li>
-<?php endforeach; ?>
-</ul>
-</div>
-<?php endif; ?>
 <div class="operation">
 <ul class="moreInfo button">
 <li>

@@ -13,11 +13,11 @@ $options = array(
   'title' => __('コミュニティメンバー'),
   'list' => $community->getMembers(9),
   'link_to' => 'member/profile?id=',
-  'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $community->countCommunityMembers()) => 'community/memberList?id='.$community->getId()),
+  'moreInfo' => array(link_to(sprintf('%s(%d)', __('全てを見る'), $community->countCommunityMembers()), 'community/memberList?id='.$community->getId())),
 );
 if ($isAdmin)
 {
-  $options['moreInfo'][__('メンバー管理')] = 'community/memberManage?id='.$community->getId();
+  $options['moreInfo'][] = link_to(__('メンバー管理'), 'community/memberManage?id='.$community->getId());
 }
 op_include_parts('nineTable', 'frendList', $options);
 ?>

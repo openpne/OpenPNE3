@@ -5,11 +5,11 @@
 <li><?php echo __('ここで入力したメールアドレスは他のメンバーには公開されません。') ?></li>
 <li><?php echo __('ドメイン指定受信機能などをお使いの方は、携帯電話で「%1%」からのメールを受信できるように設定してください。', array('%1%' => $op_config['admin_mail_address'])) ?></li>
 </ul>
-<?php $info = ob_get_clean() ?>
+<?php $partsInfo = ob_get_clean() ?>
 <?php
 $options = array(
   'title' => __('携帯電話の登録'),
-  'info' => $info,
+  'partsInfo' => $partsInfo,
 );
 op_include_form('registerMobile', $form, $options);
 ?>

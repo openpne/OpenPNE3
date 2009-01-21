@@ -7,10 +7,3 @@
 <?php endif; ?>
 </p>
 <p class="text"><?php echo $options['name'] ?></p>
-<?php if (!empty($options['moreInfo'])): ?>
-<ul>
-<?php foreach ($options['moreInfo'] as $key => $value): ?>
-<li><?php echo $options['moreInfo']->getRaw($key) ?></li>
-<?php endforeach; ?>
-</ul>
-<?php endif; ?>

@@ -819,13 +819,20 @@ div.operation ul.moreInfo li {
   padding: 2px 0;
   text-align: center;
 }
+
 .nineTable tr.photo td p.crown {
   text-align: center;
 }
+
 .nineTable tr.text td {
   padding: 2px;
   text-align: center;
 }
+
+.nineTable div.moreInfo {
+  border-top: solid 1px #CCCCCC;
+}
+
 .nineTable div.moreInfo ul.moreInfo {
   width: 11em;
   margin-left: auto;

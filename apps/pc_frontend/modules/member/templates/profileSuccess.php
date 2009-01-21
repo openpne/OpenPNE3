@@ -23,7 +23,7 @@ $options = array(
   'title' => __('フレンドリスト'),
   'list' => $member->getFriends(9),
   'link_to' => 'member/profile?id=',
-  'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $member->countFriends()) => 'friend/list?id='.$member->getId()),
+  'moreInfo' => array(link_to(sprintf('%s(%d)', __('全てを見る'), $member->countFriends()), 'friend/list?id='.$member->getId())),
 );
 op_include_parts('nineTable', 'frendList', $options);
 ?>
@@ -33,7 +33,7 @@ $options = array(
   'title' => __('コミュニティリスト'),
   'list' => $communities,
   'link_to' => 'community/home?id=',
-  'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $member->countCommunityMembers()) => 'community/joinlist'),
+  'moreInfo' => array(link_to(sprintf('%s(%d)', __('全てを見る'), $member->countCommunityMembers()), 'community/joinlist')),
 );
 op_include_parts('nineTable', 'communityList', $options);
 ?>
