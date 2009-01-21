@@ -1,5 +1,5 @@
-<?php if ($relation->isFriend()) : ?>
-<?php include_box('alreadyFriend', 'エラー', '既にフレンドです。'); ?>
-<?php elseif ($relation->isFriendPre()) : ?>
-<?php include_box('alreadyFriend', 'エラー', '現在フレンド申請中です。'); ?>
+<?php if ($relation->isFriend()): ?>
+<?php op_include_box('alreadyFriend', __('既にフレンドです。'), array('title' => __('エラー'))) ?>
+<?php elseif ($relation->isFriendPre()): ?>
+<?php op_include_box('alreadyFriend', __('現在フレンド申請中です。'), array('title' => __('エラー'))) ?>
 <?php endif; ?>

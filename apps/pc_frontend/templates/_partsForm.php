@@ -1,13 +1,16 @@
 <?php
 $options = array_merge(array(
   'button' => __('変更'),
+  'url' => sprintf('%s/%s', $this->getModuleName(), $this->getActionName()),
 ), (array)$sf_data->getRaw('options'));
 ?>
-<?php if (!empty($options['body'])): ?>
+<?php if (!empty($options['info'])): ?>
+<div class="partsInfo">
 <div class="body">
 <?php include_customizes($id, 'bodyTop') ?>
-<?php echo $sf_data->getRaw('body') ?>
+<?php echo $options['info'] ?>
 <?php include_customizes($id, 'bodyBottom') ?>
+</div>
 </div>
 <?php endif; ?>
 

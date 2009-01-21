@@ -139,6 +139,11 @@ function include_box($id, $title = '', $body = '', $options = array())
 
   if (!empty($options['form']))
   {
+    if ($body)
+    {
+      $options['info'] = $body;
+    }
+
     if (!isset($options['button']))
     {
       $options['button'] = '変更';

@@ -1,5 +1,8 @@
-<?php include_box('formInvite', '友人を'.$op_config['sns_name'].'に招待する', '', array(
-  'form' => array($form),
+<?php
+$options = array(
+  'title' => __('友人を%1%に招待する', array('%1%' => $op_config['sns_name'])),
   'url' => 'member/invite',
-  'button' => '送信',
-)) ?>
+  'button' => __('送信'),
+);
+op_include_form('inviteForm', $form, $options);
+?>

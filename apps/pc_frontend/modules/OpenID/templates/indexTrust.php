@@ -5,5 +5,5 @@ $body = "<p>".__('Do you wish to login to the following site?')."</p>\n"
       . "<input type=\"submit\" name=\"trust\" value=\"Continue\" />\n"
       . "<input type=\"submit\" value=\"Cancel\" />\n"
       . "</form>";
-include_box('trustConfirm', 'Login to the site supporting OpenID', $body);
+op_include_box('trustConfirm', $body, array('title' => __('Login to the site supporting OpenID')));
 ?>

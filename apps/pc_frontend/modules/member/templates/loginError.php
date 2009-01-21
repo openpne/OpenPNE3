@@ -1,1 +1,6 @@
-<?php include_box('formProfile', 'エラー', 'ログインに失敗しました。'); ?>
+<?php
+$options = array(
+  'title' => __('エラー'),
+);
+op_include_box('loginError', __('ログインに失敗しました。'), $options);
+?>

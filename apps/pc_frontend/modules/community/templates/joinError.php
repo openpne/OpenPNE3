@@ -1,1 +1,1 @@
-<?php include_box('alreadyJoinCommunity', 'エラー', '既にコミュニティに参加済みです。'); ?>
+<?php op_include_box('alreadyJoinCommunity', __('既にコミュニティに参加済みです。'), array('title' => __('エラー'))) ?>

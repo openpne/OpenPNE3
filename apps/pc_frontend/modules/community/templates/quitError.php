@@ -1,5 +1,5 @@
-<?php if ($isAdmin) : ?>
-<?php include_box('admin', 'エラー', '管理者は退会できません。'); ?>
+<?php if ($isAdmin): ?>
+<?php op_include_box('admin', __('管理者は退会できません。'), array('title' => __('エラー'))) ?>
 <?php else: ?>
-<?php include_box('nonAdmin', 'エラー', 'まだコミュニティに参加していません。'); ?>
+<?php op_include_box('nonAdmin', __('まだコミュニティに参加していません。'), array('title' => __('エラー'))) ?>
 <?php endif; ?>

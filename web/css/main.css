@@ -435,7 +435,21 @@ div.operation {
 }
 
 div.partsInfo {
-  padding: 10px 40px;
+  padding: 5px 20px;
+}
+
+div.partsInfo div.body {
+  margin: 10px 0;
+}
+
+div.partsInfo p,
+div.partsInfo ul {
+  margin-bottom: 10px;
+}
+
+div.partsInfo ul {
+  padding-left: 1em;
+  list-style-type: disc;
 }
 
 div.pagerAbsolute {
