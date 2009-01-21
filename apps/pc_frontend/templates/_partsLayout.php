@@ -1,10 +1,15 @@
 <?php include_customizes($id, 'before') ?>
 
+<?php
+$class = '';
+if ($name) $class .= ' '.$name;
+if (!empty($options['class'])) $class .= ' '.$options['class'];
+?>
 <?php if (empty($options['single'])): ?>
-<div id="<?php echo $id ?>" class="dparts<?php if ($name) echo ' '.$name ?>">
+<div id="<?php echo $id ?>" class="dparts<?php echo $class ?>">
 <div class="parts">
 <?php else: ?>
-<div id="<?php echo $id ?>" class="parts<?php if ($name) echo ' '.$name ?>">
+<div id="<?php echo $id ?>" class="parts<?php echo $class ?>">
 <?php endif; ?>
 
 <?php if (isset($options['title'])): ?>

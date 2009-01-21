@@ -31,7 +31,11 @@ $list = array(
   'メンバー数'     => $community->countCommunityMembers(),
   '説明文'         => nl2br($community->getConfig('description')),
 );
-include_list_box('communityHome', $list, array('title' => 'コミュニティ'))
+$options = array(
+  'title' => __('コミュニティ'),
+  'list' => $list,
+);
+op_include_parts('listBox', 'communityHome', $options);
 ?>
 
 <ul>

@@ -14,7 +14,7 @@
  * @package    openpne
  * @subpackage helper
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
- * @author     Ogawa Rimpei <ogawa@tejimaya.com>
+ * @author     Rimpei Ogawa <ogawa@tejimaya.com>
  */
 
 /**
@@ -42,6 +42,15 @@ function op_include_parts($name, $id, $options = array())
   include_partial('global/partsLayout', $params);
 }
 
+/**
+ * Include box parts
+ *
+ * @param string $id
+ * @param string $body
+ * @param array  $options
+ *
+ * @see op_include_parts
+ */
 function op_include_box($id, $body, $options = array())
 {
   $options['body'] = $body;
@@ -49,6 +58,15 @@ function op_include_box($id, $body, $options = array())
   op_include_parts('box', $id, $options);
 }
 
+/**
+ * Include form parts
+ *
+ * @param string $id
+ * @param mixed  $form  a sfForm object or an array of sfForm objects
+ * @param array  $options
+ *
+ * @see op_include_parts
+ */
 function op_include_form($id, $form, $options = array())
 {
   $options['form'] = $form;
@@ -56,6 +74,15 @@ function op_include_form($id, $form, $options = array())
   op_include_parts('form', $id, $options);
 }
 
+/**
+ * Include list parts
+ *
+ * @param string $id
+ * @param array  $list
+ * @param array  $options
+ *
+ * @see op_include_parts
+ */
 function op_include_list($id, $list, $options = array())
 {
   $options['list'] = $list;
@@ -63,113 +90,20 @@ function op_include_list($id, $list, $options = array())
   op_include_parts('list', $id, $options);
 }
 
+/**
+ * Include line parts
+ *
+ * @param string $id
+ * @param string $line
+ * @param array  $options
+ *
+ * @see op_include_parts
+ */
 function op_include_line($id, $line, $options = array())
 {
   $options['line'] = $line;
 
   op_include_parts('line', $id, $options);
-}
-
-/**
- * Includes a login parts.
- *
- * @param string $id
- * @param sfForm $form
- * @param string $link_to   A location of an action.
- *
- * @see    include_partial
- */
-function include_login_parts($id, $form, $link_to)
-{
-  $params = array(
-    'id' => $form->getAuthMode().$id,
-    'form' => $form,
-    'link_to' => url_for(sprintf($link_to.'?%s=%s', sfOpenPNEAuthForm::AUTH_MODE_FIELD_NAME, $form->getAuthMode())),
-  );
-  include_partial('global/partsLogin', $params);
-}
-
-function include_page_title($title, $subtitle = '')
-{
-  $params = array(
-    'title' => $title,
-    'subtitle' => $subtitle,
-  );
-  include_partial('global/partsPageTitle', $params);
-}
-
-function include_list_box($id, $list, $options = array())
-{
-  $options['list'] = $list;
-
-  op_include_parts('listBox', $id, $options);
-}
-
-function include_alert_box($id, $body, $options = array())
-{
-  $options['body'] = $body;
-
-  op_include_parts('alertBox', $id, $options);
-}
-
-function include_simple_box($id, $title = '', $block = '', $option = array())
-{
-  if(!isset($option['border']))
-  {
-    $option['border'] = true;
-  }
-  if(!isset($option['class']))
-  {
-    $option['class'] = '';
-  }
-
-  $params = array(
-    'id' => $id,
-    'title' => $title,
-    'block' => $block,
-    'option' => $option,
-  );
-
-  include_partial('global/partsSimpleBox', $params);
-}
-
-function include_box($id, $title = '', $body = '', $options = array())
-{
-  $options['title'] = $title;
-
-  if (!empty($options['form']))
-  {
-    if ($body)
-    {
-      $options['info'] = $body;
-    }
-
-    if (!isset($options['button']))
-    {
-      $options['button'] = '変更';
-    }
-
-    if (!isset($options['url']))
-    {
-      $request = sfContext::getInstance()->getRequest();
-      $options['url'] = $request->getParameter('module').'/'.$request->getParameter('action');
-    }
-
-    op_include_form($id, $options['form'], $options);
-  }
-  else
-  {
-    op_include_box($id, $body, $options);
-  }
-}
-
-function include_parts($parts_name, $id, $option = array())
-{
-  $params = array(
-    'id'      => $id,
-    'options' => $option,
-  );
-  include_partial('global/parts'.ucfirst($parts_name), $params);
 }
 
 /**
@@ -222,20 +156,117 @@ function include_customizes($id, $name, $vars = null)
   echo get_customizes($id, $name, $vars);
 }
 
-function _is_disabled_plugin_dir($directory)
+/**
+ * Includes a login parts.
+ *
+ * @param string $id
+ * @param sfForm $form
+ * @param string $link_to   A location of an action.
+ *
+ * @see    include_partial
+ */
+function include_login_parts($id, $form, $link_to)
 {
-  foreach (sfConfig::get('sf_'.sfConfig::get('sf_app').'_openpne_disabled_plugins', array()) as $pluginName) {
-    if (0 === strpos($directory, sfConfig::get('sf_plugins_dir') . DIRECTORY_SEPARATOR . $pluginName)) {
-      return true;
-    }
+  $params = array(
+    'id' => $form->getAuthMode().$id,
+    'form' => $form,
+    'link_to' => url_for(sprintf($link_to.'?%s=%s', sfOpenPNEAuthForm::AUTH_MODE_FIELD_NAME, $form->getAuthMode())),
+  );
+  include_partial('global/partsLogin', $params);
+}
+
+function include_page_title($title, $subtitle = '')
+{
+  $params = array(
+    'title' => $title,
+    'subtitle' => $subtitle,
+  );
+  include_partial('global/partsPageTitle', $params);
+}
+
+/**
+ * @deprecated since 3.0beta4
+ */
+function include_list_box($id, $list, $options = array())
+{
+  $options['list'] = $list;
+
+  op_include_parts('listBox', $id, $options);
+}
+
+/**
+ * @deprecated since 3.0beta4
+ */
+function include_simple_box($id, $title = '', $block = '', $option = array())
+{
+  if(!isset($option['border']))
+  {
+    $option['border'] = true;
+  }
+  if(!isset($option['class']))
+  {
+    $option['class'] = '';
   }
 
-  return false;
+  $params = array(
+    'id' => $id,
+    'title' => $title,
+    'block' => $block,
+    'option' => $option,
+  );
+
+  include_partial('global/partsSimpleBox', $params);
+}
+
+/**
+ * @deprecated since 3.0beta4
+ */
+function include_box($id, $title = '', $body = '', $options = array())
+{
+  $options['title'] = $title;
+
+  if (!empty($options['form']))
+  {
+    if ($body)
+    {
+      $options['info'] = $body;
+    }
+
+    if (!isset($options['button']))
+    {
+      $options['button'] = '変更';
+    }
+
+    if (!isset($options['url']))
+    {
+      $request = sfContext::getInstance()->getRequest();
+      $options['url'] = $request->getParameter('module').'/'.$request->getParameter('action');
+    }
+
+    op_include_form($id, $options['form'], $options);
+  }
+  else
+  {
+    op_include_box($id, $body, $options);
+  }
+}
+
+/**
+ * @deprecated since 3.0beta4
+ */
+function include_parts($parts_name, $id, $option = array())
+{
+  $params = array(
+    'id'      => $id,
+    'options' => $option,
+  );
+  include_partial('global/parts'.ucfirst($parts_name), $params);
 }
 
 /**
  * Include news
  *
+ * @deprecated since 3.0beta4
  */
 function include_news($id, $title = '', $list, $option = array())
 {
@@ -250,6 +281,7 @@ function include_news($id, $title = '', $list, $option = array())
 /**
  * Include news pager
  *
+ * @deprecated since 3.0beta4
  */
 function include_news_pager($id, $title = '', $pager, $list, $link_to_detail)
 {
@@ -263,4 +295,3 @@ function include_news_pager($id, $title = '', $pager, $list, $link_to_detail)
 
  include_simple_box( $id, $title, get_partial('global/partsNewsPager', $params), array('class' => 'partsNewsPager'));
 }
-

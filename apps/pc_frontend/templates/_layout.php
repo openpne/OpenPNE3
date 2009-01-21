@@ -18,10 +18,10 @@
 <div id="Contents">
 
 <?php if ($sf_user->hasFlash('error')): ?>
-<?php include_alert_box('flashError', __($sf_user->getFlash('error'))) ?>
+<?php op_include_parts('alertBox', 'flashError', array('body' => __($sf_user->getFlash('error')))) ?>
 <?php endif; ?>
 <?php if ($sf_user->hasFlash('notice')): ?>
-<?php include_alert_box('flashNotice', __($sf_user->getFlash('notice'))) ?>
+<?php op_include_parts('alertBox', 'flashNotice', array('body' => __($sf_user->getFlash('notice')))) ?>
 <?php endif; ?>
 
 <?php if (has_slot('op_top')): ?>

@@ -62,5 +62,9 @@ foreach ($member->getProfiles() as $profile)
   }
   $list[$caption] = $profile;
 }
-include_list_box('profile', $list, array('title' => 'プロフィール'))
+$options = array(
+  'title' => __('プロフィール'),
+  'list' => $list,
+);
+op_include_parts('listBox', 'profile', $options);
 ?>
