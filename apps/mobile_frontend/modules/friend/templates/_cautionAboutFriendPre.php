@@ -1,12 +1,10 @@
 <?php foreach ($sf_user->getMember()->getFriendPreTo() as $key => $value) : ?>
 <font color="red">
-<?php
-$member = $value->getMemberRelatedByMemberIdFrom();
-echo link_to(sprintf('%sさん', $member->getName()), 'member/profile?id='.$member->getId()) ?>
-からﾌﾚﾝﾄﾞ申請がきています！
+<?php $member = $value->getMemberRelatedByMemberIdFrom(); ?>
+<?php echo __('Received from the friend link message from %1%!', array('%1%' => link_to(sprintf('%sさん', $member->getName()), 'member/profile?id='.$member->getId()))) ?>
 &nbsp;
-<?php echo link_to('許可する', 'friend/linkAccept?id='.$member->getId()) ?>
+<?php echo link_to(__('Accept'), 'friend/linkAccept?id='.$member->getId()) ?>
 &nbsp;
-<?php echo link_to('拒否する', 'friend/linkReject?id='.$member->getId()) ?>
+<?php echo link_to(__('Reject'), 'friend/linkReject?id='.$member->getId()) ?>
 </font><br>
 <?php endforeach; ?>

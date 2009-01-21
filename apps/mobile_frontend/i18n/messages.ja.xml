@@ -51,12 +51,24 @@
         <target>送信</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Accept</source>
+        <target>承認</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Reject</source>
+        <target>拒否</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Makes friends</source>
         <target>ﾌﾚﾝﾄﾞに加える</target>
       </trans-unit>
       <trans-unit id="">
         <source>Friend list</source>
         <target>ﾌﾚﾝﾄﾞﾘｽﾄ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Manage friend</source>
+        <target>ﾌﾚﾝﾄﾞ管理</target>
       </trans-unit>
       <trans-unit id="">
         <source>Community list with this member</source>
@@ -127,6 +139,10 @@
         <target>既にﾌﾚﾝﾄﾞです。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Friend does not exist.</source>
+        <target>ﾌﾚﾝﾄﾞがいません。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>You are already joined in this community.</source>
         <target>既にｺﾐｭﾆﾃｨに参加済みです。</target>
       </trans-unit>
@@ -165,6 +181,10 @@
       <trans-unit id="">
         <source>The page for pc is here.</source>
         <target>PC版ページはこちら</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Received from the friend link message from %1%!</source>
+        <target>%1%からﾌﾚﾝﾄﾞ申請がきています！</target>
       </trans-unit>
     </body>
   </file>

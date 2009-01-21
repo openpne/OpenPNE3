@@ -1,7 +1,7 @@
 <?php slot('op_mobile_header') ?>
 <table width="100%">
 <tr><td align="center" bgcolor="#0D6DDF">
-<font color="#EEEEEE"><a name="top"><?php echo __('ﾌﾚﾝﾄﾞﾘｽﾄ') ?></a></font><br>
+<font color="#EEEEEE"><a name="top"><?php echo __('Friend list') ?></a></font><br>
 </td></tr>
 </table>
 <?php end_slot(); ?>
@@ -23,4 +23,4 @@ op_include_list('friendList', $list, $option);
 
 <?php echo pager_navigation($pager, 'friend/list?page=%d&id=' . $sf_params->get('id'), false); ?>
 
-<?php echo link_to(__('ﾌﾚﾝﾄﾞ管理'), 'friend/manage') ?>
+<?php echo link_to(__('Manage friend'), 'friend/manage') ?>
