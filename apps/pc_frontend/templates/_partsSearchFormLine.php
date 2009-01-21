@@ -1,6 +1,3 @@
-<?php include_customizes($id, 'before') ?>
-<div id="<?php echo $id ?>" class="parts searchFormLine">
-<?php include_customizes($id, 'top') ?>
 <form action="default/search">
 <ul>
 <li><?php echo image_tag('icon_search.gif', array('alt' => 'search')) ?></li>
@@ -22,6 +19,3 @@
 </li>
 </ul>
 </form>
-<?php include_customizes($id, 'bottom') ?>
-</div>
-<?php include_customizes($id, 'after') ?>
