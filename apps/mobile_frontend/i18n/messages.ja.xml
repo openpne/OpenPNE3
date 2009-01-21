@@ -87,8 +87,28 @@
         <target>友人を%1%に招待する</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Edit community</source>
+        <target>ｺﾐｭﾆﾃｨの編集</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Join community</source>
+        <target>ｺﾐｭﾆﾃｨに参加する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Quit community</source>
+        <target>ｺﾐｭﾆﾃｨを退会する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Community member</source>
+        <target>ｺﾐｭﾆﾃｨﾒﾝﾊﾞｰ</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Login Failed.</source>
         <target>ﾛｸﾞｲﾝに失敗しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Can\'t access this page.</source>
+        <target>このﾍﾟｰｼﾞにはｱｸｾｽできません。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Please select the item from the menu.</source>
@@ -105,6 +125,18 @@
       <trans-unit id="">
         <source>This member is already friend.</source>
         <target>既にﾌﾚﾝﾄﾞです。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You are already joined in this community.</source>
+        <target>既にｺﾐｭﾆﾃｨに参加済みです。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Community does not exist.</source>
+        <target>ｺﾐｭﾆﾃｨがありません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Community member does not exist.</source>
+        <target>ｺﾐｭﾆﾃｨﾒﾝﾊﾞｰがいません。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Setting mobile UID.</source>
@@ -125,6 +157,14 @@
       <trans-unit id="">
         <source>If you edit profile, access %1%.</source>
         <target>ﾌﾟﾛﾌｨｰﾙを変更する場合は%1%よりおこなえます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Can view this page with mobile only.</source>
+        <target>このページには携帯電話からのみアクセスできます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The page for pc is here.</source>
+        <target>PC版ページはこちら</target>
       </trans-unit>
     </body>
   </file>

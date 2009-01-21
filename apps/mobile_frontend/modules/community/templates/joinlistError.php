@@ -5,4 +5,4 @@
 </td></tr>
 </table>
 <?php end_slot(); ?>
-参加ｺﾐｭﾆﾃｨはありません。
+<?php echo __('Community does not exist.') ?>

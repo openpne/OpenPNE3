@@ -4,7 +4,7 @@
 <font color="#EEEEEE"><a name="top"><?php echo $community->getName() ?></a></font><br>
 </td></tr>
 <tr><td align="center" bgcolor="#DDDDDD">
-<font color="#000000"><a name="top"><?php echo __('ｺﾐｭﾆﾃｨの編集') ?></a></font><br>
+<font color="#000000"><a name="top"><?php echo __('Edit community') ?></a></font><br>
 </td></tr>
 </table>
 <?php end_slot(); ?>
@@ -17,7 +17,7 @@
 <table>
 <?php echo $form ?>
 <tr>
-<td colspan="2"><input type="submit" value="ｺﾐｭﾆﾃｨを編集する" /></td>
+<td colspan="2"><input type="submit" value="<?php echo __('Save') ?>" /></td>
 </tr>
 </table>
 </form>

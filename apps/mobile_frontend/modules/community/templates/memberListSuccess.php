@@ -4,7 +4,7 @@
 <font color="#EEEEEE"><a name="top"><?php echo $community->getName() ?></a></font><br>
 </td></tr>
 <tr><td align="center" bgcolor="#DDDDDD">
-<font color="#000000"><a name="top"><?php echo __('ﾒﾝﾊﾞｰﾘｽﾄ') ?></a></font><br>
+<font color="#000000"><a name="top"><?php echo __('Community member') ?></a></font><br>
 </td></tr>
 </table>
 <?php end_slot(); ?>

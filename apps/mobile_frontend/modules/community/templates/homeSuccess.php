@@ -27,13 +27,13 @@
 
 <tr><td colspan="2">
 <?php if ($isEditCommunity) : ?>
-<?php echo link_to('このｺﾐｭﾆﾃｨを編集する', 'community/edit?id=' . $community->getId()) ?><br>
+<?php echo link_to(__('Edit community'), 'community/edit?id=' . $community->getId()) ?><br>
 <?php endif; ?>
 <?php if (!$isAdmin) : ?>
 <?php if ($isCommunityMember) : ?>
-<?php echo link_to('このｺﾐｭﾆﾃｨを退会する', 'community/quit?id=' . $community->getId()) ?><br>
+<?php echo link_to(__('Quit community'), 'community/quit?id=' . $community->getId()) ?><br>
 <?php else : ?>
-<?php echo link_to('このｺﾐｭﾆﾃｨに参加する', 'community/join?id=' . $community->getId()) ?><br>
+<?php echo link_to(__('Join community'), 'community/join?id=' . $community->getId()) ?><br>
 <?php endif; ?>
 <?php endif; ?>
 <?php include_component('default', 'nav', array('type' => 'mobile_community', 'id' => $community->getId())) ?>
@@ -52,10 +52,10 @@ foreach ($community->getCommunityMembers() as $communityMember) {
   $list[] = link_to($member->getName(), 'member/profile?id='.$member->getId());
 }
 $option = array(
-  'title' => 'ｺﾐｭﾆﾃｨﾒﾝﾊﾞｰ',
+  'title' => __('Community member'),
   'border' => true,
   'moreInfo' => array(
-    link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'community/memberList?id='.$community->getId()),
+    link_to('<font color="#0c5f0f">⇒</font>'. __('More'), 'community/memberList?id='.$community->getId()),
   ),
 );
 op_include_list('communityMember', $list, $option);
@@ -64,6 +64,6 @@ op_include_list('communityMember', $list, $option);
 <?php slot('op_mobile_footer') ?>
 <table width="100%">
 <tbody><tr><td align="center" bgcolor="#0d6ddf">
-<font color="#eeeeee"><a href="<?php echo url_for('member/home') ?>" accesskey="0"><font color="#eeeeee">0.ﾎｰﾑ</font></a> / <a href="#top"><font color="#eeeeee">↑上へ</font></a> / <a href="#bottom" accesskey="8"><font color="#eeeeee">8.下へ</font></a></font><br>
+<font color="#eeeeee"><a href="<?php echo url_for('member/home') ?>" accesskey="0"><font color="#eeeeee">0. <?php echo __('home') ?></font></a> / <a href="#top"><font color="#eeeeee">↑ <?php echo __('top') ?></font></a> / <a href="#bottom" accesskey="8"><font color="#eeeeee">8. <?php echo __('bottom') ?></font></a></font><br>
 </td></tr></tbody></table>
 <?php end_slot(); ?>
