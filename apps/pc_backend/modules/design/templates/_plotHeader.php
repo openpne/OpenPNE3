@@ -7,6 +7,7 @@ function showModalOnParent(url)
   var modalContents = parent.document.getElementById('modal_contents');
   var modalIframe = modalContents.getElementsByTagName('iframe')[0];
   modalIframe.src = url;
+  modalContents.setStyle(parent.getCenterMuchScreen(modalContents));
   new Effect.Appear(modal, {from:0, to:0.7, duration: 0.5, fps: 100});
   new Effect.Appear(modalContents, {from:0, to:1.0, duration: 0.6});
 }
