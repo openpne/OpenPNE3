@@ -6,7 +6,7 @@ $options = array(
   'moreInfo' => array(link_to(__('コミュニティ作成'), 'community/edit'))
 );
 
-op_include_parts('form', 'searchCommunity', $filters, $options);
+op_include_form('searchCommunity', $filters, $options);
 ?>
 
 <?php if ($pager->getNbResults()): ?>
@@ -28,8 +28,8 @@ $options = array(
   'list'           => $list,
 );
 
-op_include_parts('searchResultList', 'searchCommunityResult', '', $options);
+op_include_parts('searchResultList', 'searchCommunityResult', $options);
 ?>
 <?php else: ?>
-<?php op_include_parts('box', 'searchCommunityResult', __('該当するコミュニティはありませんでした。'), array('title' => __('検索結果'))) ?>
+<?php op_include_box('searchCommunityResult', __('該当するコミュニティはありませんでした。'), array('title' => __('検索結果'))) ?>
 <?php endif; ?>

@@ -5,7 +5,7 @@ $options = array(
   'button' => __('検索'),
 );
 
-op_include_parts('form', 'searchMember', $filters, $options);
+op_include_form('searchMember', $filters, $options);
 ?>
 
 <?php use_helper('Date'); ?>
@@ -32,8 +32,8 @@ $options = array(
   'list'           => $list,
 );
 
-op_include_parts('searchResultList', 'searchCommunityResult', '', $options);
+op_include_parts('searchResultList', 'searchCommunityResult', $options);
 ?>
 <?php else: ?>
-<?php op_include_parts('box', 'searchMemberResult', __('該当するメンバーはいませんでした。'), array('title' => __('検索結果'))) ?>
+<?php op_include_box('searchMemberResult', __('該当するメンバーはいませんでした。'), array('title' => __('検索結果'))) ?>
 <?php endif; ?>

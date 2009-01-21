@@ -10,7 +10,7 @@
 
 <form action="<?php echo url_for($options['url']) ?>" method="post">
 <?php include_customizes($id, 'formTop') ?>
-<?php $forms = ($content instanceof sfForm) ? array($content): $content ?>
+<?php $forms = ($options['form'] instanceof sfForm) ? array($options['form']): $options['form'] ?>
 <?php foreach ($forms as $form): ?>
 <?php echo $form ?>
 <?php endforeach; ?>

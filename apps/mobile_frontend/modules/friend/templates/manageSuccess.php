@@ -27,7 +27,7 @@ $option = array(
   'border' => true,
 );
 
-op_include_parts('list', 'friendList', $list, $option);
+op_include_list('friendList', $list, $option);
 ?>
 
 <?php echo pager_navigation($pager, 'friend/list?page=%d&id=' . $sf_params->get('id'), false); ?>

@@ -1,1 +1,1 @@
-<?php echo $sf_data->getRaw('content') ?>
+<?php echo $options->getRaw('body') ?>

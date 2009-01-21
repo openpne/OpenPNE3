@@ -15,7 +15,7 @@ $options = array(
   'moreInfo' => $moreInfo,
   'single'   => true,
 );
-op_include_parts('memberImageBox', 'memberImageBox', '', $options);
+op_include_parts('memberImageBox', 'memberImageBox', $options);
 ?>
 
 <?php
@@ -25,7 +25,7 @@ $options = array(
   'link_to' => 'member/profile?id=',
   'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $member->countFriends()) => 'friend/list?id='.$member->getId()),
 );
-op_include_parts('nineTable', 'frendList', '', $options);
+op_include_parts('nineTable', 'frendList', $options);
 ?>
 
 <?php
@@ -35,7 +35,7 @@ $options = array(
   'link_to' => 'community/home?id=',
   'moreInfo' => array(sprintf('%s(%d)', __('全てを見る'), $member->countCommunityMembers()) => 'community/joinlist'),
 );
-op_include_parts('nineTable', 'communityList', '', $options);
+op_include_parts('nineTable', 'communityList', $options);
 ?>
 <?php end_slot(); ?>
 
@@ -47,7 +47,7 @@ op_include_parts('nineTable', 'communityList', '', $options);
 <?php echo url_for('member/profile?id='.$member->getId(), true) ?></p>
 <p>プロフィールを変更する場合は「<?php echo link_to(__('プロフィール変更'), 'member/editProfile') ?>」よりおこなってください。</p>
 <?php $content = ob_get_clean() ?>
-<?php op_include_parts('descriptionBox', 'informationAboutThisIsYourProfilePage', $content) ?>
+<?php op_include_parts('descriptionBox', 'informationAboutThisIsYourProfilePage', array('body' => $content)) ?>
 <?php endif; ?>
 <?php end_slot(); ?>
 

@@ -58,7 +58,7 @@ $option = array(
     link_to('<font color="#0c5f0f">⇒</font>もっと見る', 'community/memberList?id='.$community->getId()),
   ),
 );
-op_include_parts('list', 'communityMember', $list, $option);
+op_include_list('communityMember', $list, $option);
 ?>
 
 <?php slot('op_mobile_footer') ?>

@@ -61,7 +61,7 @@ $option = array(
     link_to('<font color="#0c5f0f">⇒</font>'. __('More'), 'friend/list?id='.$member->getId())
   ),
 );
-op_include_parts('list', 'friendList', $list, $option);
+op_include_list('friendList', $list, $option);
 ?>
 
 <?php
@@ -77,7 +77,7 @@ $option = array(
     link_to('<font color="#0c5f0f">⇒</font>'. __('More'), 'community/joinlist?member_id='.$member->getId())
   ),
 );
-op_include_parts('list', 'communityList', $list, $option);
+op_include_list('communityList', $list, $option);
 ?>
 
 <?php slot('op_mobile_footer') ?>

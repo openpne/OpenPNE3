@@ -8,4 +8,4 @@ $options = array(
   ),
   'single'   => true,
 );
-op_include_parts('memberImageBox', 'memberImageBox', '', $options);
+op_include_parts('memberImageBox', 'memberImageBox', $options);

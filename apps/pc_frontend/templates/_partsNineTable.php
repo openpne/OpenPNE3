@@ -4,7 +4,7 @@ $options = array_merge(array(
   'row' => 3,
   'col' => 3,
   'type' => 'full',
-), $sf_data->getRaw('options'));
+), (array)$sf_data->getRaw('options'));
 ?>
 <table>
 <?php $row = ceil(count($options['list']) / $options['row']) ?>

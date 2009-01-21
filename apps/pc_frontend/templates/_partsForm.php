@@ -1,7 +1,7 @@
 <?php
 $options = array_merge(array(
   'button' => __('変更'),
-), $sf_data->getRaw('options'));
+), (array)$sf_data->getRaw('options'));
 ?>
 <?php if (!empty($options['body'])): ?>
 <div class="body">
@@ -16,7 +16,7 @@ $options = array_merge(array(
 
 <table>
 <?php
-$forms = ($content instanceof sfForm) ? array($content) : $content;
+$forms = ($options['form'] instanceof sfForm) ? array($options['form']) : $options['form'];
 foreach ($forms as $form)
 {
   foreach ($form as $field)

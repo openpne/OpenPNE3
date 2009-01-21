@@ -1,8 +1,8 @@
 <table>
-<?php foreach ($content as $key => $value): ?>
+<?php foreach ($options['list'] as $key => $value): ?>
 <tr>
 <th><?php echo $key ?></th>
-<td><?php echo $content->getRaw($key) ?></td>
+<td><?php echo $options['list']->getRaw($key) ?></td>
 </tr>
 <?php endforeach; ?>
 <?php include_customizes($id, 'lastRow') ?>

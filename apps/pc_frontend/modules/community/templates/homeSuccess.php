@@ -5,7 +5,7 @@ $options = array(
   'image'  => $community->getImageFileName(),
   'single' => true,
 );
-op_include_parts('memberImageBox', 'memberImageBox', '', $options);
+op_include_parts('memberImageBox', 'communityImageBox', $options);
 ?>
 
 <?php
@@ -19,7 +19,7 @@ if ($isAdmin)
 {
   $options['moreInfo'][__('メンバー管理')] = 'community/memberManage?id='.$community->getId();
 }
-op_include_parts('nineTable', 'frendList', '', $options);
+op_include_parts('nineTable', 'frendList', $options);
 ?>
 <?php end_slot(); ?>
 

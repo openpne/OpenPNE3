@@ -1,3 +1,3 @@
 <?php
-include_information_box('information', $sf_data->getRaw('gadget')->getConfig('value'))
+op_include_parts('informationBox', 'information', array('body' => $sf_data->getRaw('gadget')->getConfig('value')))
 ?>

@@ -14,4 +14,4 @@ if ($member->getId() == $sf_user->getMember()->getId())
   $options['moreInfo'][__('フレンド管理')] = 'friend/manage';
 }
 
-op_include_parts('nineTable', 'frendList', '', $options);
+op_include_parts('nineTable', 'frendList', $options);

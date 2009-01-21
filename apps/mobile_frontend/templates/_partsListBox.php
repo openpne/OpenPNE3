@@ -9,9 +9,9 @@
 </td></tr>
 <?php endif; ?>
 
-<?php foreach ($content as $key => $value): ?>
+<?php foreach ($options['list'] as $key => $value): ?>
 <tr><td bgcolor="<?php echo cycle_vars($id, '#e0eaef,#ffffff') ?>">
-<?php echo $content->getRaw($key) ?><br>
+<?php echo $options['list']->getRaw($key) ?><br>
 </td></tr>
 <?php if (!empty($options['border'])): ?>
 <tr><td bgcolor="#ffffff">

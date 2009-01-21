@@ -22,26 +22,17 @@
  *
  * @param string $name parts name
  * @param string $id
- * @param mixed  $content
  * @param array  $options
  */
-function op_include_parts($name, $id, $content, $options = array())
+function op_include_parts($name, $id, $options = array())
 {
   $params = array(
     'id'      => $id,
     'name'    => $name,
-    'content' => $content,
     'options' => $options,
   );
 
-  if ($name)
-  {
-    $params['op_content'] = get_partial('global/parts'.ucfirst($name), $params);
-  }
-  else
-  {
-    $params['op_content'] = $content;
-  }
+  $params['op_content'] = get_partial('global/parts'.ucfirst($name), $params);
 
   if ('' === trim($params['op_content']))
   {
@@ -49,6 +40,34 @@ function op_include_parts($name, $id, $content, $options = array())
   }
 
   include_partial('global/partsLayout', $params);
+}
+
+function op_include_box($id, $body, $options = array())
+{
+  $options['body'] = $body;
+
+  op_include_parts('box', $id, $options);
+}
+
+function op_include_form($id, $form, $options = array())
+{
+  $options['form'] = $form;
+
+  op_include_parts('form', $id, $options);
+}
+
+function op_include_list($id, $list, $options = array())
+{
+  $options['list'] = $list;
+
+  op_include_parts('list', $id, $options);
+}
+
+function op_include_line($id, $line, $options = array())
+{
+  $options['line'] = $line;
+
+  op_include_parts('line', $id, $options);
 }
 
 /**
@@ -81,17 +100,16 @@ function include_page_title($title, $subtitle = '')
 
 function include_list_box($id, $list, $options = array())
 {
-  op_include_parts('listBox', $id, $list, $options);
+  $options['list'] = $list;
+
+  op_include_parts('listBox', $id, $options);
 }
 
-function include_information_box($id, $body)
+function include_alert_box($id, $body, $options = array())
 {
-  op_include_parts('informationBox', $id, $body);
-}
+  $options['body'] = $body;
 
-function include_alert_box($id, $body)
-{
-  op_include_parts('alertBox', $id, $body);
+  op_include_parts('alertBox', $id, $options);
 }
 
 function include_simple_box($id, $title = '', $block = '', $option = array())
@@ -132,11 +150,11 @@ function include_box($id, $title = '', $body = '', $options = array())
       $options['url'] = $request->getParameter('module').'/'.$request->getParameter('action');
     }
 
-    op_include_parts('form', $id, $options['form'], $options);
+    op_include_form($id, $options['form'], $options);
   }
   else
   {
-    op_include_parts('box', $id, $body, $options);
+    op_include_box($id, $body, $options);
   }
 }
 
