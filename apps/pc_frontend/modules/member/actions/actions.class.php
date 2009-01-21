@@ -77,13 +77,16 @@ class memberActions extends sfOpenPNEMemberAction
   */
   public function executeProfile($request)
   {
-    if ($request->hasParameter('id') && $request->getParameter('id') != $this->getUser()->getMemberId())
+    $id = $request->getParameter('id', $this->getUser()->getMemberId());
+    if ($id != $this->getUser()->getMemberId())
     {
       sfConfig::set('sf_nav_type', 'friend');
     }
 
     $result = parent::executeProfile($request);
-    $this->communities = CommunityPeer::retrievesByMemberId($this->getUser()->getMemberId(), 9);
+
+    $this->communities = CommunityPeer::retrievesByMemberId($id, 9);
+
     return $result;
   }
 
