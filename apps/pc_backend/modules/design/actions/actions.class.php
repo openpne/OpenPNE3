@@ -152,9 +152,23 @@ class designActions extends sfActions
   public function executeEditGadget(sfWebRequest $request)
   {
     $this->gadget = GadgetPeer::retrieveByPK($request->getParameter('id'));
-    $config = sfConfig::get('op_gadget_list', array());
-    $this->forward404Unless($this->gadget && $config);
 
+    $mobileTypes = array('mobileTop', 'mobileContents', 'mobileBottom');
+    $sideBannerTypes = array('sideBannerContents');
+
+    $type = $this->gadget->getType();
+    $config = sfConfig::get('op_gadget_list', array());
+
+    if (in_array($type, $mobileTypes))
+    {
+      $config = sfConfig::get('op_mobile_gadget_list', array());
+    }
+    elseif (in_array($type, $sideBannerTypes))
+    {
+      $config = sfConfig::get('op_side_banner_gadget_list', array());
+    }
+
+    $this->forward404Unless($this->gadget && $config);
     $this->config = $config[$this->gadget->getName()];
 
     if (!empty($this->config['config']))
