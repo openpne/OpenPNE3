@@ -49,7 +49,7 @@ $option = array(
   'title' => __('Community member'),
   'border' => true,
   'moreInfo' => array(
-    link_to('<font color="#0c5f0f">⇒</font>'. __('More'), 'community/memberList?id='.$community->getId()),
+    link_to(__('More'), 'community/memberList?id='.$community->getId()),
   ),
 );
 op_include_list('communityMember', $list, $option);

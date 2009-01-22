@@ -52,7 +52,7 @@ $option = array(
   'title' => __('Friend list'),
   'border' => true,
   'moreInfo' => array(
-    link_to('<font color="#0c5f0f">⇒</font>'. __('More'), 'friend/list?id='.$member->getId())
+    link_to(__('More'), 'friend/list?id='.$member->getId())
   ),
 );
 op_include_list('friendList', $list, $option);
@@ -68,7 +68,7 @@ $option = array(
   'title' => __('Community list with this member'),
   'border' => true,
   'moreInfo' => array(
-    link_to('<font color="#0c5f0f">⇒</font>'. __('More'), 'community/joinlist?member_id='.$member->getId())
+    link_to(__('More'), 'community/joinlist?member_id='.$member->getId())
   ),
 );
 op_include_list('communityList', $list, $option);
