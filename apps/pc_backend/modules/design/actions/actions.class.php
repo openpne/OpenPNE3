@@ -70,9 +70,9 @@ class designActions extends sfActions
       default:
         $this->gadgets = array(
           'top'      => GadgetPeer::retrieveTopGadgets(),
-          'sideMenu'     => GadgetPeer::retrieveSideMenuGadgets(),
+          'sideMenu' => GadgetPeer::retrieveSideMenuGadgets(),
           'contents' => GadgetPeer::retrieveContentsGadgets(),
-          'bottom' => GadgetPeer::retrieveBottomGadgets(),
+          'bottom'   => GadgetPeer::retrieveBottomGadgets(),
         );
     }
 
@@ -121,25 +121,8 @@ class designActions extends sfActions
   */
   public function executeAddGadget(sfWebRequest $request)
   {
-    $validTypes = array('top', 'sideMenu', 'contents', 'bottom', 'mobileTop', 'mobileContents', 'mobileBottom', 'sideBannerContents');
-    $mobileTypes = array('mobileTop', 'mobileContents', 'mobileBottom');
-    $sideBannerTypes = array('sideBannerContents');
-
-    $this->config = sfConfig::get('op_gadget_list', array());
-    $this->type = 'top';
-    if (in_array($request->getParameter('type'), $validTypes))
-    {
-      $this->type = $request->getParameter('type');
-    }
-
-    if (in_array($this->type, $mobileTypes))
-    {
-      $this->config = sfConfig::get('op_mobile_gadget_list', array());
-    }
-    elseif (in_array($this->type, $sideBannerTypes))
-    {
-      $this->config = sfConfig::get('op_side_banner_gadget_list', array());
-    }
+    $this->type = $request->getParameter('type','top');
+    $this->config = GadgetPeer::getGadgetConfigListByType($this->type);
 
     return sfView::SUCCESS;
   }
@@ -153,20 +136,8 @@ class designActions extends sfActions
   {
     $this->gadget = GadgetPeer::retrieveByPK($request->getParameter('id'));
 
-    $mobileTypes = array('mobileTop', 'mobileContents', 'mobileBottom');
-    $sideBannerTypes = array('sideBannerContents');
-
     $type = $this->gadget->getType();
-    $config = sfConfig::get('op_gadget_list', array());
-
-    if (in_array($type, $mobileTypes))
-    {
-      $config = sfConfig::get('op_mobile_gadget_list', array());
-    }
-    elseif (in_array($type, $sideBannerTypes))
-    {
-      $config = sfConfig::get('op_side_banner_gadget_list', array());
-    }
+    $config = GadgetPeer::getGadgetConfigListByType($type);
 
     $this->forward404Unless($this->gadget && $config);
     $this->config = $config[$this->gadget->getName()];

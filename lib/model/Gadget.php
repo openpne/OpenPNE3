@@ -10,21 +10,6 @@
 
 class Gadget extends BaseGadget
 {
-  protected function getConfigList()
-  {
-    $mobileTypes = array('mobileTop', 'mobileContents', 'mobileBottom');
-    $sideBannerTypes = array('sideBannerContents');
-    if (in_array($this->getType(), $mobileTypes))
-    {
-      $list = sfConfig::get('op_mobile_gadget_list');
-    }
-    elseif(in_array($this->getType(), $sideBannerTypes))
-    {
-      return sfConfig::get('op_side_banner_gadget_list');
-    }
-    return sfConfig::get('op_gadget_list');
-  }
-
   public function save(PropelPDO $con = null)
   {
     if (!$this->getSortOrder())
@@ -46,7 +31,7 @@ class Gadget extends BaseGadget
 
   public function getComponentModule()
   {
-    $list = $this->getConfigList();
+    $list = GadgetPeer::getGadgetConfigListByType($this->getType());
 
     if (empty($list[$this->getName()]))
     {
@@ -58,7 +43,7 @@ class Gadget extends BaseGadget
 
   public function getComponentAction()
   {
-    $list = $this->getConfigList();
+    $list = GadgetPeer::getGadgetConfigListByType($this->getType());
 
     if (empty($list[$this->getName()]))
     {
@@ -70,7 +55,7 @@ class Gadget extends BaseGadget
 
   public function isEnabled()
   {
-    $list = $this->getConfigList();
+    $list = GadgetPeer::getGadgetConfigListByType($this->getType());
     if (empty($list[$this->getName()]))
     {
       return false;
@@ -82,7 +67,7 @@ class Gadget extends BaseGadget
   public function getConfig($name)
   {
     $result = null;
-    $list = $this->getConfigList();
+    $list = GadgetPeer::getGadgetConfigListByType($this->getType());
 
     $config = GadgetConfigPeer::retrieveByGadgetIdAndName($this->getId(), $name);
     if ($config)

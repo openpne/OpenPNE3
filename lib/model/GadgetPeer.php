@@ -10,6 +10,12 @@
 
 class GadgetPeer extends BaseGadgetPeer
 {
+  static protected $pcTypes = array('top', 'sideMenu', 'contents', 'bottom');
+
+  static protected $mobileTypes = array('mobileTop', 'mobileContents', 'mobileBottom');
+  
+  static protected $sideBannerTypes = array('sideBannerContents');
+
   static protected $results;
 
   static public function retrieveTopGadgets()
@@ -107,5 +113,22 @@ class GadgetPeer extends BaseGadgetPeer
     }
 
     return self::$results;
+  }
+
+  static public function getGadgetConfigListByType($type)
+  {
+    if (in_array($type, self::$pcTypes))
+    {
+      return sfConfig::get('op_gadget_list', array());
+    }
+    elseif (in_array($type, self::$mobileTypes))
+    {
+      return sfConfig::get('op_mobile_gadget_list', array());
+    }
+    elseif (in_array($type, self::$sideBannerTypes))
+    {
+      return sfConfig::get('op_side_banner_gadget_list', array());
+    }
+    return array();
   }
 }
