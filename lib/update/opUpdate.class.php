@@ -43,9 +43,19 @@ abstract class opUpdate extends Doctrine_Migration
 
   abstract public function update();
 
+  public function preUpdate()
+  {
+  }
+
+  public function postUpdate()
+  {
+  }
+
   public function doUpdate()
   {
+    $this->preUpdate();
     $this->update();
+    $this->postUpdate();
 
     foreach ($this->_changes as $type => $changes)
     {
