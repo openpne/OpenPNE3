@@ -71,6 +71,10 @@
         <target>ﾌﾚﾝﾄﾞ管理</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Removes this friend</source>
+        <target>ﾌﾚﾝﾄﾞから外す</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Community list with this member</source>
         <target>参加ｺﾐｭﾆﾃｨﾘｽﾄ</target>
       </trans-unit>
@@ -147,6 +151,10 @@
         <target>既にｺﾐｭﾆﾃｨに参加済みです。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>You don\'t join this community yet.</source>
+        <target>ｺﾐｭﾆﾃｨに参加していません。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Community does not exist.</source>
         <target>ｺﾐｭﾆﾃｨがありません。</target>
       </trans-unit>
@@ -185,6 +193,18 @@
       <trans-unit id="">
         <source>Received from the friend link message from %1%!</source>
         <target>%1%からﾌﾚﾝﾄﾞ申請がきています！</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Click following URL, please. You finish register if you inputs your password at here.</source>
+        <target>以下のURLをｸﾘｯｸし、ﾊﾟｽﾜｰﾄﾞを入力して登録を完了してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>if you already registered mail address, mail address is overwrited to new data.</source>
+        <target>ﾒｰﾙｱﾄﾞﾚｽが登録されている場合、新しいﾒｰﾙｱﾄﾞﾚｽに変更されます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Click following URL, please. You can register in %1%.</source>
+        <target>以下のURLから%1%に登録してください。</target>
       </trans-unit>
     </body>
   </file>

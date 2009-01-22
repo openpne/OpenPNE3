@@ -1,2 +1,2 @@
 <?php op_mobile_page_title(__('Error')) ?>
-ｺﾐｭﾆﾃｨに参加していません。
+<?php echo __('You don\'t join this community yet.');
