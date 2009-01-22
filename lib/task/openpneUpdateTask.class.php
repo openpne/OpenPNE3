@@ -21,6 +21,10 @@ class openpneUpdateTask extends sfPropelBaseTask
       new sfCommandArgument('after-version', sfCommandArgument::REQUIRED, ''),
     ));
 
+    $this->addOptions(array(
+      new sfCommandOption('no-build-model', null, sfCommandOption::PARAMETER_NONE, 'Do not build model classes'),
+    ));
+
     $this->briefDescription = 'update OpenPNE';
     $this->detailedDescription = <<<EOF
 The [openpne:install|INFO] task updates OpenPNE and/or plugin.
@@ -59,12 +63,15 @@ EOF;
         $className = $prefix.'Update_'.str_replace('.php', '', $file);
         $this->logSection('execute', $className);
         require_once $dir.'/'.$file;
-        $obj = new $className($databaseManager);
+        $obj = new $className($this->dispatcher, $databaseManager);
         $obj->doUpdate();
       }
     }
 
-    $this->buildModel();
+    if ($options['no-build-model'])
+    {
+      $this->buildModel();
+    }
   }
 
   static public function sortBeforeVersions($name1, $name2)

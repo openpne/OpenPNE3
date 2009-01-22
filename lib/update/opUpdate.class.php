@@ -18,13 +18,17 @@
 abstract class opUpdate extends Doctrine_Migration
 {
   protected
+    $dispatcher = null,
+    $formatter = null,
     $dbManager = null,
     $database = null,
     $connection = null,
     $doctrineProcess = null;
 
-  public function __construct($dbManager, $name = '')
+  public function __construct($dispatcher, $dbManager, $name = '')
   {
+    $this->dispatcher = $dispatcher;
+
     $this->dbManager = $dbManager;
     if (!$name)
     {
@@ -39,6 +43,14 @@ abstract class opUpdate extends Doctrine_Migration
 
     $this->connection = $doctrine->getDoctrineConnection();
     $this->doctrineProcess = new opUpdateDoctrineMigrationProcess($this->connection);
+
+
+    $this->formatter = new sfFormatter();
+    if ('cli' === PHP_SAPI)
+    {
+      $this->formatter = new sfAnsiColorFormatter();
+    }
+
   }
 
   abstract public function update();
