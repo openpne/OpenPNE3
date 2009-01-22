@@ -20,6 +20,15 @@ class opConfigCache extends sfConfigCache
   /**
    * @see sfConfigCache
    */
+  public function registerConfigHandler($handler, $class, $params = array())
+  {
+    $handler = str_replace(DIRECTORY_SEPARATOR, '/', $handler);
+    parent::registerConfigHandler($handler, $class, $params);
+  }
+
+  /**
+   * @see sfConfigCache
+   */
   protected function writeCacheFile($config, $cache, $data)
   {
     parent::writeCacheFile($config, $cache, $data);
