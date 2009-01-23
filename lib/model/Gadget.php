@@ -17,10 +17,13 @@ class Gadget extends BaseGadget
       $maxSortOrder = 0;
 
       $gadgets = GadgetPeer::retrieveByType($this->getType());
-      $finalGadget = array_pop($gadgets);
-      if ($finalGadget)
+      if ($gadgets)
       {
-        $maxSortOrder = $finalGadget->getSortOrder();
+        $finalGadget = array_pop($gadgets);
+        if ($finalGadget)
+        {
+          $maxSortOrder = $finalGadget->getSortOrder();
+        }
       }
 
       $this->setSortOrder($maxSortOrder + 10);
