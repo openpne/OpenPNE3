@@ -12,3 +12,10 @@ informationBox:
       ValueType:  "text"
       IsRequired: false
 
+languageSelecterBox:
+  caption:
+    ja_JP: "言語切り替えボックス"
+  description:
+    ja_JP: "他の言語に切り替えるために必要なボックスを設置できます。"
+  component: [default, languageSelecterBox]
+

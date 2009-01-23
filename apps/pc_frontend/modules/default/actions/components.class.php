@@ -61,6 +61,11 @@ class defaultComponents extends sfComponents
     );
   }
 
+  public function executeLanguageSelecterBox()
+  {
+    $this->form = new opLanguageSelecterForm();
+  }
+
   private function isSecurePage()
   {
     $context = sfContext::getInstance();

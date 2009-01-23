@@ -8,5 +8,8 @@ registerInput:
 configComplete:
   is_secure: off
 
+changeLanguage:
+  is_secure: off
+
 registerMobileToRegisterEnd:
   credentials: SNSRegisterFinish
