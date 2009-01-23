@@ -101,6 +101,23 @@ propel:
     name: { type: varchar(64), index: unique, required: true, defaultValue: "" }
     value: { type: longvarchar }
 
+  word_type:
+    id: ~
+    name: { type: varchar(64), index: unique, required: true, defaultValue: "" }
+
+  word_type_i18n:
+    value: { type: longvarchar }
+
+  word_config:
+    id: ~
+    word_type_id: { type: integer, required: true, foreignTable: word_type, foreignReference: id, onDelete: cascade }
+    name: { type: varchar(64), index: unique, required: true, defaultValue: "" }
+
+  word_config_i18n:
+    caption: { type: longvarchar, required: true }
+    description: { type:longvarchar, required: true, defaultValue: "" }
+    value: { type: longvarchar, required: true }
+
   member_config:
     id: ~
     member_id: { type: integer, required: true, foreignTable: member, foreignReference: id, onDelete: cascade }
