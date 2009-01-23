@@ -52,29 +52,8 @@ class designActions extends sfActions
   */
   public function executeGadget(sfWebRequest $request)
   {
-    $this->type = $request->getParameter('type', 'home');
-    switch ($this->type)
-    {
-      case 'mobileHome':
-        $this->gadgets = array(
-          'mobileTop'      => GadgetPeer::retrieveMobileTopGadgets(),
-          'mobileContents' => GadgetPeer::retrieveMobileContentsGadgets(),
-          'mobileBottom'   => GadgetPeer::retrieveMobileBottomGadgets(),
-        );
-        break;
-      case 'sideBanner':
-        $this->gadgets = array(
-          'sideBannerContents' => GadgetPeer::retrieveSideBannerContentsGadgets(),
-        );
-        break;
-      default:
-        $this->gadgets = array(
-          'top'      => GadgetPeer::retrieveTopGadgets(),
-          'sideMenu' => GadgetPeer::retrieveSideMenuGadgets(),
-          'contents' => GadgetPeer::retrieveContentsGadgets(),
-          'bottom'   => GadgetPeer::retrieveBottomGadgets(),
-        );
-    }
+    $this->type = $request->getParameter('type', GadgetPeer::HOME_TYPES);
+    $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName($this->type);
 
     $this->sortForm = new GadgetSortForm(array(), array('current_gadgets' => $this->gadgets));
     $this->addForm = new GadgetAddForm(array(), array('current_gadgets' => $this->gadgets));
@@ -121,7 +100,7 @@ class designActions extends sfActions
   */
   public function executeAddGadget(sfWebRequest $request)
   {
-    $this->type = $request->getParameter('type','top');
+    $this->type = $request->getParameter('type',GadgetPeer::TOP_TYPE);
     $this->config = GadgetPeer::getGadgetConfigListByType($this->type);
 
     return sfView::SUCCESS;

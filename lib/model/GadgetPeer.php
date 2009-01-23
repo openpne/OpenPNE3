@@ -10,67 +10,112 @@
 
 class GadgetPeer extends BaseGadgetPeer
 {
-  static protected $pcTypes = array('top', 'sideMenu', 'contents', 'bottom');
+  const HOME_TYPES = 'home';
 
-  static protected $mobileTypes = array('mobileTop', 'mobileContents', 'mobileBottom');
+  const MOBILE_HOME_TYPES = 'mobileHome';
+
+  const SIDE_BANNER_TYPES = 'sideBanner';
+
+  const TOP_TYPE = 'top';
+
+  const SIDE_MENU_TYPE = 'sideMenu';
+
+  const CONTENTS_TYPE = 'contents';
+
+  const BOTTOM_TYPE = 'bottom';
+
+  const MOBILE_TOP_TYPE = 'mobileTop';
+
+  const MOBILE_CONTENTS_TYPE = 'mobileContents';
+
+  const MOBILE_BOTTOM_TYPE = 'mobileBottom';
+
+  const SIDE_BANNER_CONTENTS_TYPE = 'sideBannerContents';
+
+  static protected $homeTypes = array(self::TOP_TYPE, self::SIDE_MENU_TYPE, self::CONTENTS_TYPE, self::BOTTOM_TYPE);
+
+  static protected $mobileHomeTypes = array(self::MOBILE_TOP_TYPE, self::MOBILE_CONTENTS_TYPE, self::MOBILE_BOTTOM_TYPE);
   
-  static protected $sideBannerTypes = array('sideBannerContents');
+  static protected $sideBannerTypes = array(self::SIDE_BANNER_CONTENTS_TYPE);
 
   static protected $results;
 
+  static public function retrieveGadgetsByTypesName($typesName)
+  {
+    $results = array();
+    switch ($typesName)
+    {
+      case self::MOBILE_HOME_TYPES:
+        $types = self::$mobileHomeTypes;
+        break;
+      case self::SIDE_BANNER_TYPES:
+        $types = self::$sideBannerTypes;
+        break;
+      default:
+        $types = self::$homeTypes;
+    }
+    
+    foreach($types as $type)
+    {
+      $results[$type] = self::retrieveByType($type);
+    }
+
+    return $results;
+  }
+
   static public function retrieveTopGadgets()
   {
-    return self::retrieveByType('top');
+    return self::retrieveByType(self::TOP_TYPE);
   }
 
   static public function retrieveSideMenuGadgets()
   {
-    return self::retrieveByType('sideMenu');
+    return self::retrieveByType(self::SIDE_MENU_TYPE);
   }
 
   static public function retrieveContentsGadgets()
   {
-    return self::retrieveByType('contents');
+    return self::retrieveByType(self::CONTENTS_TYPE);
   }
 
   static public function retrieveBottomGadgets()
   {
-    return self::retrieveByType('bottom');
+    return self::retrieveByType(self::BOTTOM_TYPE);
   }
 
   static public function retrieveMobileTopGadgets()
   {
-    return self::retrieveByType('mobileTop');
+    return self::retrieveByType(self::MOBILE_TOP_TYPE);
   }
 
   static public function retrieveMobileContentsGadgets()
   {
-    return self::retrieveByType('mobileContents');
+    return self::retrieveByType(self::MOBILE_CONTENTS_TYPE);
   }
 
   static public function retrieveMobileBottomGadgets()
   {
-    return self::retrieveByType('mobileBottom');
+    return self::retrieveByType(self::MOBILE_BOTTOM_TYPE);
   }
 
   static public function retrieveSideBannerContentsGadgets()
   {
-    return self::retrieveByType('sideBannerContents');
+    return self::retrieveByType(self::SIDE_BANNER_CONTENTS_TYPE);
   }
 
   static public function getTopGadgetsIds()
   {
-    return self::getGadgetsIds('top');
+    return self::getGadgetsIds(self::TOP_TYPE);
   }
 
   static public function getSideMenuGadgetsIds()
   {
-    return self::getGadgetsIds('sideMenu');
+    return self::getGadgetsIds(self::SIDE_MENU_TYPE);
   }
 
   static public function getContentsGadgetsIds()
   {
-    return self::getGadgetsIds('contents');
+    return self::getGadgetsIds(self::CONTENTS_TYPE);
   }
 
   static public function retrieveByType($type)
@@ -114,14 +159,14 @@ class GadgetPeer extends BaseGadgetPeer
 
     return self::$results;
   }
-
+  
   static public function getGadgetConfigListByType($type)
   {
-    if (in_array($type, self::$pcTypes))
+    if (in_array($type, self::$homeTypes))
     {
       return sfConfig::get('op_gadget_list', array());
     }
-    elseif (in_array($type, self::$mobileTypes))
+    elseif (in_array($type, self::$mobileHomeTypes))
     {
       return sfConfig::get('op_mobile_gadget_list', array());
     }
