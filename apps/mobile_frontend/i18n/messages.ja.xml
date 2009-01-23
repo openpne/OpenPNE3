@@ -206,6 +206,22 @@
         <source>Click following URL, please. You can register in %1%.</source>
         <target>以下のURLから%1%に登録してください。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Delete your %1% account</source>
+        <target>%1%を退会する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You can not delete your account.</source>
+        <target>IDが1のﾒﾝﾊﾞｰは退会することができません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you delete your %1% account?</source>
+        <target>本当に%1%から退会しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please input your password if you want to delete your account.</source>
+        <target>退会する場合はパスワードを入力してください。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

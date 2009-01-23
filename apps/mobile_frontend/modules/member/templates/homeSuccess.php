@@ -73,7 +73,8 @@ foreach (sfConfig::get('openpne_member_category') as $key => $value)
   }
 }
 $list[] = link_to(__('Setting easy login'), 'member/configUID');
-op_include_list('configEdit', $list, array('title' => __('Settings')))
+$list[] = link_to(__('Delete your %1% account', array('%1%' => $op_config['sns_name'])), 'member/delete');
+op_include_list('configEdit', $list, array('title' => __('Settings')));
 ?>
 
 <?php if ($mobileBottomGadgets) : ?>

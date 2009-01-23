@@ -269,4 +269,32 @@ abstract class sfOpenPNEMemberAction extends sfActions
 
     return sfView::INPUT;
   }
+
+ /**
+  * Executes delete action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeDelete($request)
+  {
+    if (1 == $this->getUser()->getMemberId())
+    {
+      return sfView::ERROR;
+    }
+
+    $this->form = new sfOpenPNEPasswordForm(array(), array('member' => $this->getUser()->getMember()));
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('password'));
+      if ($this->form->isValid())
+      {
+        $this->getUser()->getMember()->delete();
+        $this->getUser()->setFlash('notice', '退会が完了しました');
+        $this->getUser()->logout();
+        $this->redirect('member/login');
+      }
+    }
+
+    return sfView::INPUT;
+  }
 }
