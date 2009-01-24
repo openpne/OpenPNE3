@@ -58,7 +58,7 @@ EOF;
       $_before = self::formatVersion($versions[0]);
       $_after = self::formatVersion($versions[1]);
 
-      if (version_compare($beforeVersion, $_before, '<=') && version_compare($afterVersion, $_after, '>='))
+      if (version_compare($beforeVersion, $_after, '<=') && version_compare($afterVersion, $_after, '>='))
       {
         $className = $prefix.'Update_'.str_replace('.php', '', $file);
         $this->logSection('execute', $className);

@@ -59,16 +59,6 @@ Navigation:
     uri: "friend/list"
     sort_order: 20
 
-  friend_navigation_link:
-    type: "friend"
-    uri: "friend/link"
-    sort_order: 30
-
-  friend_navigation_unlink:
-    type: "friend"
-    uri: "friend/unlink"
-    sort_order: 40
-
   community_navigation_home:
     type: "community"
     uri: "community/home"
@@ -143,16 +133,6 @@ NavigationI18n:
   friend_navigation_friend_list_i18n:
     id: friend_navigation_friend_list
     caption: "フレンドリスト"
-    culture: "ja_JP"
-
-  friend_navigation_link_i18n:
-    id: friend_navigation_link
-    caption: "マイフレンドになる"
-    culture: "ja_JP"
-
-  friend_navigation_unlink_i18n:
-    id: friend_navigation_unlink
-    caption: "マイフレンドをやめる"
     culture: "ja_JP"
 
   community_navigation_home_i18n:

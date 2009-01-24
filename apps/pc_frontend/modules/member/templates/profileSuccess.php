@@ -47,6 +47,13 @@ op_include_parts('nineTable', 'communityList', $options);
 <p>プロフィールを変更する場合は「<?php echo link_to(__('プロフィール変更'), 'member/editProfile') ?>」よりおこなってください。</p>
 <?php $content = ob_get_clean() ?>
 <?php op_include_parts('descriptionBox', 'informationAboutThisIsYourProfilePage', array('body' => $content)) ?>
+<?php elseif (!$relation->isFriend()): ?>
+<?php ob_start() ?>
+<p><?php echo __('%1%さんと知り合いの場合、マイフレンドに追加しましょう！', array('%1%' => $member->getName())) ?><br />
+<?php echo link_to(__('マイフレンドに追加'), 'friend/link?id='.$member->getId()) ?>
+</p>
+<?php $content = ob_get_clean() ?>
+<?php op_include_parts('descriptionBox', 'informationAboutThisIsYourProfilePage', array('body' => $content)) ?>
 <?php endif; ?>
 <?php end_slot(); ?>
 
