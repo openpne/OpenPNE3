@@ -28,10 +28,10 @@
 </table>
 <?php endif; ?>
 <?php if ($sf_user->hasFlash('error')): ?>
-<font color="#FF0000"><?php echo __($sf_user->getFlash('error')) ?></font>
+<font color="#FF0000"><?php echo __($sf_user->getFlash('error')) ?></font><br>
 <?php endif; ?>
 <?php if ($sf_user->hasFlash('notice')): ?>
-<font color="#FF0000"><?php echo __($sf_user->getFlash('notice')) ?></font>
+<font color="#FF0000"><?php echo __($sf_user->getFlash('notice')) ?></font><br>
 <?php endif; ?>
 
 <?php echo $sf_content ?>

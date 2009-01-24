@@ -56,9 +56,15 @@ abstract class sfOpenPNEFriendAction extends sfActions
   {
     $this->redirectIf($this->relation->isAccessBlocked(), '@error');
 
-    if ($this->relation->isFriend() || $this->relation->isFriendPreFrom())
+    if ($this->relation->isFriend())
     {
-      return sfView::ERROR;
+      $this->getUser()->setFlash('error', 'This member already belongs to my friends.');
+      $this->redirect('member/profile?id='.$this->id);
+    }
+    if ($this->relation->isFriendPreFrom())
+    {
+      $this->getUser()->setFlash('error', 'My friends request is already sent.');
+      $this->redirect('member/profile?id='.$this->id);
     }
 
     $this->redirectToHomeIfIdIsNotValid();
@@ -113,8 +119,10 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeUnlink($request)
   {
-    if (!$this->relation->isFriend()) {
-      return sfView::ERROR;
+    if (!$this->relation->isFriend())
+    {
+      $this->getUser()->setFlash('error', 'This member is not your friend.');
+      $this->redirect('friend/manage');
     }
     $this->redirectToHomeIfIdIsNotValid();
     $this->relation->removeFriend();
