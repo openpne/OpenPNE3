@@ -12,7 +12,8 @@ op_include_parts('pageNav', 'pageNav', array('list' => $list, 'current' => $cate
 ?>
 
 <?php
-op_include_box('navForDelete', link_to(__('%1%を退会する', array('%1%' => $op_config['sns_name'])), 'member/delete'));
+$list = array(link_to(__('%1%を退会する', array('%1%' => $op_config['sns_name'])), 'member/delete'));
+op_include_parts('pageNav', 'navForDelete', array('list' => $list));
 ?>
 <?php end_slot(); ?>
 
