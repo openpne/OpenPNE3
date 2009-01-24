@@ -35,6 +35,18 @@
 <?php include_slot('submenu') ?>
 </ul>
 <?php endif; ?>
+<?php if (has_slot('title')): ?>
+<h2><?php include_slot('title') ?></h2>
+<?php endif; ?>
+
+<?php if ($sf_user->hasFlash('error')): ?>
+<p id="flashError" class="flash"><?php echo __($sf_user->getFlash('error')) ?></p>
+<?php endif; ?>
+<?php if ($sf_user->hasFlash('notice')): ?>
+<p id="flashNotice" class="flash"><?php echo __($sf_user->getFlash('notice')) ?></p>
+<?php endif; ?>
+
+
 <?php echo $sf_content ?>
 </div>
 

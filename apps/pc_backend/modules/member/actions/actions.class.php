@@ -53,6 +53,33 @@ class memberActions extends sfActions
   }
 
  /**
+  * Executes delete action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeDelete(sfWebRequest $request)
+  {
+    $id = $request->getParameter('id');
+    if ($id == 1)
+    {
+      return sfView::ERROR;
+    }
+
+    $this->member = MemberPeer::retrieveByPK($id);
+    $this->forward404Unless($this->member);
+
+    $this->form = new sfForm();
+    if ($request->isMethod('post'))
+    {
+      $this->member->delete();
+      $this->getUser()->setFlash('notice', '退会が完了しました');
+      $this->redirect('member/list');
+    }
+
+    return sfView::SUCCESS;
+  }
+
+ /**
   * Executes invite action
   *
   * @param sfRequest $request A request object

@@ -141,3 +141,14 @@ th {
   background-color: #FF7777;
 }
 
+.flash {
+  margin: 0 0 15px -20px;
+  padding: 10px;
+  background-color: #FFFEEB;
+  border-bottom: 1px #CCCCCC solid;
+  border-top: 1px #CCCCCC solid;
+}
+#flashError {
+  color: #ff0000;
+}
+
