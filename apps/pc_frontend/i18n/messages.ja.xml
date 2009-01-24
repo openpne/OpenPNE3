@@ -1,0 +1,279 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Community List</source>
+        <target>コミュニティリスト</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Show all</source>
+        <target>全てを見る</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Create a new community</source>
+        <target>コミュニティ作成</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Edit the new community</source>
+        <target>コミュニティ編集</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Community Name</source>
+        <target>コミュニティ名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Date Created</source>
+        <target>開設日</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Administrator</source>
+        <target>管理者</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Count of Members</source>
+        <target>メンバー数</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Description</source>
+        <target>説明文</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Community</source>
+        <target>コミュニティ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Edit this community</source>
+        <target>このコミュニティを編集する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Leave this community</source>
+        <target>このコミュニティを退会する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Join this community</source>
+        <target>このコミュニティに参加する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You are already joined to this community.</source>
+        <target>既にコミュニティに参加済みです。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You are already joined to this community.</source>
+        <target>既にコミュニティに参加済みです。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Errors</source>
+        <target>エラー</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Joined Communities</source>
+        <target>参加コミュニティ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You don't have any joined communities.</source>
+        <target>参加しているコミュニティはありません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Drop this member</source>
+        <target>退会させる</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The administrator doesn't leave the community.</source>
+        <target>管理者は退会できません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You haven't joined this community yet.</source>
+        <target>まだコミュニティに参加していません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Search Communities</source>
+        <target>コミュニティ検索</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Search</source>
+        <target>検索</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Search Results</source>
+        <target>検索結果</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your search queries did not match any communites.</source>
+        <target>該当するコミュニティはありませんでした。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Member</source>
+        <target>メンバー</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You can't access this page.</source>
+        <target>このページにはアクセスできません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1% sent my friends request to you!</source>
+        <target>%1%さんからフレンド申請がきています！</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Permits</source>
+        <target>許可する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Refuses</source>
+        <target>拒否する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>My Friends Seetting</source>
+        <target>フレンド管理</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>This member already belongs to my friends.</source>
+        <target>既にフレンドです。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>My friends request is already sent.</source>
+        <target>現在フレンド申請中です。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You don't have any friends.</source>
+        <target>フレンドがいません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete from my friends.</source>
+        <target>フレンドから外す</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>This member is not your friend.</source>
+        <target>フレンドではありません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Register Mobile phone</source>
+        <target>携帯登録</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>When mobile information registration is done from following URL, the member registration is completed.</source>
+        <target>以下のURLから携帯登録をおこなうと、メンバー登録が完了します。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Change Settings</source>
+        <target>設定変更</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Send</source>
+        <target>送信</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Edit Photo</source>
+        <target>写真を編集する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please select the item that wants to be set from the menu.</source>
+        <target>メニューから設定したい項目を選択してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Edit Profile</source>
+        <target>プロフィール編集</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Invite a friend to %1%</source>
+        <target>友人を%1%に招待する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Sent.</source>
+        <target>送信が完了しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Failed in login.</source>
+        <target>ログインに失敗しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Last Login</source>
+        <target>最終ログイン</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Friends List</source>
+        <target>フレンドリスト</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Commnunities List</source>
+        <target>コミュニティリスト</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Other members look your page like this.</source>
+        <target>※他のメンバーから見たあなたのページはこのようになります。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If you edit this page, please visit %1%.</source>
+        <target>プロフィールを変更する場合は「%1%」よりおこなってください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>It is necessary to register the cell-phone Information to entry in %1%.</source>
+        <target>%1%に参加するには、携帯電話の登録が必要です。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>URL for mobile registration is send to the mobile mail address appropriating input here.</source>
+        <target>ここで入力した携帯メールアドレス宛に、携帯登録用のURLを送信します。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please set your mobile phone to receive a mail from %1%.</source>
+        <target>ドメイン指定受信機能などをお使いの方は、携帯電話で「%1%」からのメールを受信できるように設定してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Nickname</source>
+        <target>ニックネーム</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your search queries did not match any members.</source>
+        <target>該当するメンバーはいませんでした。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please click following URL, input the password, and complete registration.</source>
+        <target>以下のURLをクリックし、パスワードを入力して登録を完了してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>When the mail address is registered, it is changed to a new mail address.</source>
+        <target>メールアドレスが登録されている場合、新しいメールアドレスに変更されます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Register</source>
+        <target>新規登録</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete</source>
+        <target>削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You can upload 3 photos.</source>
+        <target>写真は最大3枚までアップロードできます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please make it to GIF･JPEG･PNG within 300KB.</source>
+        <target>300KB以内のGIF・JPEG・PNGにしてください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Photograph that hits violation of copyright and portrait right and violence and obscene photograph and other members are seen and revolted a press ban. Please publish by the self-responsibility.</source>
+        <target>著作権や肖像権の侵害にあたる写真、暴力的・卑猥な写真、他のメンバーが見て不快に感じる写真の掲載は禁止しております。掲載はご自身の責任でお願いいたします。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please input a mail address.</source>
+        <target>メールアドレスを入力してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You can not delete your account.</source>
+        <target>IDが1のメンバーは退会することができません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you delete your %1% account?</source>
+        <target>本当に%1%から退会しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please input your password if you want to delete your account.</source>
+        <target>退会する場合は、以下のフォームにパスワードを入力してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete your %1% account</source>
+        <target>%1%を退会する</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
