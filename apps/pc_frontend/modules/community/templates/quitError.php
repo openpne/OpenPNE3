@@ -1,8 +1,8 @@
 <?php if ($isAdmin): ?>
-<?php op_include_box('admin', __('管理者は退会できません。'), array('title' => __('エラー'))) ?>
+<?php op_include_box('admin', __('The administrator doesn\'t leave the community.'), array('title' => __('Errors'))) ?>
 <?php else: ?>
-<?php op_include_box('nonAdmin', __('まだコミュニティに参加していません。'), array('title' => __('エラー'))) ?>
+<?php op_include_box('nonAdmin', __('You haven\'t joined this community yet.'), array('title' => __('Errors'))) ?>
 <?php endif; ?>
 
 <?php use_helper('Javascript') ?>
-<p><?php echo link_to_function(__('前のページに戻る'), 'history.back()') ?></p>
+<p><?php echo link_to_function(__('Back to previous page'), 'history.back()') ?></p>

@@ -1,9 +1,9 @@
 <?php
 $options = array(
-  'title'   => __('コミュニティ検索'),
+  'title'   => __('Search Communities'),
   'url'    => 'community/search',
-  'button' => __('検索'),
-  'moreInfo' => array(link_to(__('コミュニティ作成'), 'community/edit'))
+  'button' => __('Search'),
+  'moreInfo' => array(link_to(__('Create a new community'), 'community/edit'))
 );
 
 op_include_form('searchCommunity', $filters, $options);
@@ -16,12 +16,12 @@ $list = array();
 foreach ($pager->getResults() as $key => $community)
 {
   $list[$key] = array();
-  $list[$key][__('コミュニティ名')] = $community->getName();
-  $list[$key][__('説明文')] = $community->getConfig('description');
+  $list[$key][__('Community Name')] = $community->getName();
+  $list[$key][__('Description')] = $community->getConfig('description');
 }
 
 $options = array(
-  'title'          => __('検索結果'),
+  'title'          => __('Search Results'),
   'pager'          => $pager,
   'link_to_page'   => 'community/search?page=%d',
   'link_to_detail' => 'community/home?id=%d',
@@ -31,5 +31,5 @@ $options = array(
 op_include_parts('searchResultList', 'searchCommunityResult', $options);
 ?>
 <?php else: ?>
-<?php op_include_box('searchCommunityResult', __('該当するコミュニティはありませんでした。'), array('title' => __('検索結果'))) ?>
+<?php op_include_box('searchCommunityResult', __('Your search queries did not match any communites.'), array('title' => __('Search Results'))) ?>
 <?php endif; ?>

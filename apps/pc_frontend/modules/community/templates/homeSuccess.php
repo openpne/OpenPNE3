@@ -12,7 +12,7 @@ $options = array(
   'title' => __('コミュニティメンバー'),
   'list' => $community->getMembers(9),
   'link_to' => 'member/profile?id=',
-  'moreInfo' => array(link_to(sprintf('%s(%d)', __('全てを見る'), $community->countCommunityMembers()), 'community/memberList?id='.$community->getId())),
+  'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $community->countCommunityMembers()), 'community/memberList?id='.$community->getId())),
 );
 if ($isAdmin)
 {
@@ -24,14 +24,14 @@ op_include_parts('nineTable', 'frendList', $options);
 
 <?php
 $list = array(
-  'コミュニティ名' => $community->getName(),
-  '開設日'         => $community->getCreatedAt(),
-  '管理者'         => $community_admin->getName(),
-  'メンバー数'     => $community->countCommunityMembers(),
-  '説明文'         => nl2br($community->getConfig('description')),
+  __('Community Name') => $community->getName(),
+  __('Date Created')         => $community->getCreatedAt(),
+  __('Administrator')         => $community_admin->getName(),
+  __('Count of Members')     => $community->countCommunityMembers(),
+  __('Description')         => nl2br($community->getConfig('description')),
 );
 $options = array(
-  'title' => __('コミュニティ'),
+  'title' => __('Community'),
   'list' => $list,
 );
 op_include_parts('listBox', 'communityHome', $options);
@@ -39,14 +39,14 @@ op_include_parts('listBox', 'communityHome', $options);
 
 <ul>
 <?php if ($isEditCommunity): ?>
-<li><?php echo link_to('このコミュニティを編集する', 'community/edit?id=' . $community->getId()) ?></li>
+<li><?php echo link_to(__('Edit this community'), 'community/edit?id=' . $community->getId()) ?></li>
 <?php endif; ?>
 
 <?php if (!$isAdmin): ?>
 <?php if ($isCommunityMember): ?>
-<li><?php echo link_to('このコミュニティを退会する', 'community/quit?id=' . $community->getId()) ?></li>
+<li><?php echo link_to(__('Leave this community'), 'community/quit?id=' . $community->getId()) ?></li>
 <?php else : ?>
-<li><?php echo link_to('このコミュニティに参加する', 'community/join?id=' . $community->getId()) ?></li>
+<li><?php echo link_to(__('Join this community'), 'community/join?id=' . $community->getId()) ?></li>
 <?php endif; ?>
 <?php endif; ?>
 </ul>

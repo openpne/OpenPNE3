@@ -2,7 +2,7 @@
 $options = array(
   'title'  => __('メンバー検索'),
   'url'    => 'member/search',
-  'button' => __('検索'),
+  'button' => __('Search'),
 );
 
 op_include_form('searchMember', $filters, $options);
@@ -16,16 +16,16 @@ $list = array();
 foreach ($pager->getResults() as $key => $member)
 {
   $list[$key] = array();
-  $list[$key][__('ニックネーム')] = $member->getName();
+  $list[$key][__('Nickname')] = $member->getName();
   if ($member->getProfile('self_intro'))
   {
     $list[$key][$member->getProfile('self_intro')->getCaption()] = nl2br($member->getProfile('self_intro'));
   }
-  $list[$key][__('最終ログイン')] = distance_of_time_in_words($member->getLastLoginTime());
+  $list[$key][__('Last Login')] = distance_of_time_in_words($member->getLastLoginTime());
 }
 
 $options = array(
-  'title'          =>  __('検索結果'),
+  'title'          =>  __('Search Results'),
   'pager'          => $pager,
   'link_to_page'   => 'member/search?page=%d',
   'link_to_detail' => 'member/profile?id=%d',
@@ -35,5 +35,5 @@ $options = array(
 op_include_parts('searchResultList', 'searchCommunityResult', $options);
 ?>
 <?php else: ?>
-<?php op_include_box('searchMemberResult', __('該当するメンバーはいませんでした。'), array('title' => __('検索結果'))) ?>
+<?php op_include_box('searchMemberResult', __('Your search queries did not match any members.'), array('title' => __('Search Results'))) ?>
 <?php endif; ?>

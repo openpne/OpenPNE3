@@ -1,9 +1,9 @@
 <?php
 $options = array(
-  'title' => __('コミュニティリスト'),
+  'title' => __('Communities List'),
   'list' => $communities,
   'link_to' => 'community/home?id=',
-  'moreInfo' => array(link_to(sprintf('%s(%d)', __('全てを見る'), $member->countCommunityMembers()), 'community/joinlist')),
+  'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $member->countCommunityMembers()), 'community/joinlist')),
   'type' => $sf_data->getRaw('gadget')->getConfig('type'),
   'row' => $row,
   'col' => $col,

@@ -1,5 +1,5 @@
 <div class="dparts manageList"><div class="parts">
-<div class="partsHeading"><h3><?php echo __('マイフレンド管理') ?></h3></div>
+<div class="partsHeading"><h3><?php echo __('My Friends Seetting') ?></h3></div>
 
 <div class="pagerRelative"><p class="number"><?php echo pager_navigation($pager, 'friend/list?page=%d&id=' . $sf_params->get('id')); ?></p></div>
 
@@ -17,7 +17,7 @@
 <?php include_customizes('id_photo', 'after', $comp_vars) ?>
 
 <?php include_customizes('id_friend', 'before', $comp_vars) ?>
-<td class="delete"><?php echo link_to(__('フレンドから外す'), 'friend/unlink?id='.$member->getId()) ?></td>
+<td class="delete"><?php echo link_to(__('Delete from my friends.'), 'friend/unlink?id='.$member->getId()) ?></td>
 <?php include_customizes('id_friend', 'after', $comp_vars) ?>
 </tr>
 <?php endforeach; ?>

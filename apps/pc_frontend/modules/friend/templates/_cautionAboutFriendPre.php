@@ -2,11 +2,10 @@
 <p class="caution">
 <?php
 $member = $value->getMemberRelatedByMemberIdFrom();
-echo link_to(sprintf('%sさん', $member->getName()), 'member/profile?id='.$member->getId()) ?>
-からフレンド申請がきています！
+echo link_to(sprintf(__('%1% sent my friends request to you!', array('%1%' => $member->getName())), 'member/profile?id='.$member->getId())) ?>
 &nbsp;
-<?php echo link_to('許可する', 'friend/linkAccept?id='.$member->getId()) ?>
+<?php echo link_to(__('Permits'), 'friend/linkAccept?id='.$member->getId()) ?>
 &nbsp;
-<?php echo link_to('拒否する', 'friend/linkReject?id='.$member->getId()) ?>
+<?php echo link_to(__('Refuses'), 'friend/linkReject?id='.$member->getId()) ?>
 </p>
 <?php endforeach; ?>

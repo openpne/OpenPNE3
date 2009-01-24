@@ -6,7 +6,7 @@
 <?php $image = $options['images'][$i] ?>
 <?php echo image_tag_sf_image($image->getFile(), array('size' => '180x180')) ?><br />
 [
-<?php echo link_to(__('削除'), 'member/deleteImage?member_image_id='.$image->getId()) ?> |
+<?php echo link_to(__('Delete'), 'member/deleteImage?member_image_id='.$image->getId()) ?> |
 <?php if ($image->getIsPrimary()) : ?>
 <?php echo(__('メイン写真')) ?>
 <?php else: ?>
@@ -30,8 +30,8 @@
 <p><input type="submit" class="input_submit" value="<?php echo __('アップロードする') ?>" /></p>
 </form>
 <ul>
-<li><?php echo __('写真は最大3枚までアップロードできます。') ?></li>
-<li><?php echo __('300KB以内のGIF・JPEG・PNGにしてください。') ?></li>
-<li><?php echo __('著作権や肖像権の侵害にあたる写真、暴力的・卑猥な写真、他のメンバーが見て不快に感じる写真の掲載は禁止しております。掲載はご自身の責任でお願いいたします。') ?></li>
+<li><?php echo __('You can upload 3 photos.') ?></li>
+<li><?php echo __('Please make it to GIF･JPEG･PNG within 300KB.') ?></li>
+<li><?php echo __('Photograph that hits violation of copyright and portrait right and violence and obscene photograph and other members are seen and revolted a press ban. Please publish by the self-responsibility.') ?></li>
 </ul>
 </div>

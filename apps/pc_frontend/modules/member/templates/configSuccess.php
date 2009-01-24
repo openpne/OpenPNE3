@@ -12,7 +12,7 @@ op_include_parts('pageNav', 'pageNav', array('list' => $list, 'current' => $cate
 ?>
 
 <?php
-$list = array(link_to(__('%1%を退会する', array('%1%' => $op_config['sns_name'])), 'member/delete'));
+$list = array(link_to(__('Delete your %1% account', array('%1%' => $op_config['sns_name'])), 'member/delete'));
 op_include_parts('pageNav', 'navForDelete', array('list' => $list));
 ?>
 <?php end_slot(); ?>
@@ -20,5 +20,5 @@ op_include_parts('pageNav', 'navForDelete', array('list' => $list));
 <?php if ($categoryName): ?>
 <?php op_include_form($categoryName.'Form', $form, array('title' => $categoryCaptions[$categoryName], 'url' => 'member/config?category='.$categoryName)) ?>
 <?php else: ?>
-<?php op_include_box('configInformation', __('メニューから設定したい項目を選択してください。'), array('title' => __('設定変更'))); ?>
+<?php op_include_box('configInformation', __('Please select the item that wants to be set from the menu.'), array('title' => __('Change Settings'))); ?>
 <?php endif; ?>

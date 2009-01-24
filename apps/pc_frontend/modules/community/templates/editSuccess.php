@@ -5,12 +5,12 @@ $options = array(
 
 if ($form->isNew())
 {
-  $options['title'] = 'コミュニティ作成';
+  $options['title'] = 'Create a new community';
   $options['url'] = 'community/edit';
 }
 else
 {
-  $options['title'] = 'コミュニティ編集';
+  $options['title'] = 'Edit the community';
   $options['url'] = 'community/edit?id='.$community->getId();
 }
 

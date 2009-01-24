@@ -1,4 +1,4 @@
-<?php op_include_box('noJoinCommunity', __('参加しているコミュニティはありません。'), array('title' => __('参加コミュニティ'))) ?>
+<?php op_include_box('noJoinCommunity', __('You don\'t have any joined communities.'), array('title' => __('Joined Communities'))) ?>
 
 <?php use_helper('Javascript') ?>
-<p><?php echo link_to_function(__('前のページに戻る'), 'history.back()') ?></p>
+<p><?php echo link_to_function(__('Back to previous page'), 'history.back()') ?></p>

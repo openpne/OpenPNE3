@@ -1,7 +1,7 @@
 <?php op_include_parts('searchFormLine', 'searchLine', array(
-  'button' => '検索',
+  'button' => __('Search'),
   'items' => array(
-    'member' => __('メンバー'),
-    'community' => __('コミュニティ'),
+    'member' => __('Member'),
+    'community' => __('Community'),
   ),
 )) ?>

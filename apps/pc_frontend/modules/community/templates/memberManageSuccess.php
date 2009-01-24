@@ -6,7 +6,7 @@
 <?php $communityMembers = $member->getCommunityMembers(); ?>
 <?php if ($communityMembers[0]->getPosition() !== 'admin') : ?>
 &nbsp;
-<?php echo link_to(__('退会させる'), 'community/dropMember?id='.$community->getId().'&member_id='.$member->getId()) ?>
+<?php echo link_to(__('Drop this member'), 'community/dropMember?id='.$community->getId().'&member_id='.$member->getId()) ?>
 <?php endif; ?>
 </li>
 <?php endforeach; ?>

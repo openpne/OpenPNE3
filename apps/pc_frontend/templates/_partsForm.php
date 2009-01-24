@@ -1,5 +1,5 @@
 <?php
-$options->setDefault('button', __('変更'));
+$options->setDefault('button', __('Send'));
 $options->setDefault('url', sprintf('%s/%s', $this->getModuleName(), $this->getActionName()));
 ?>
 

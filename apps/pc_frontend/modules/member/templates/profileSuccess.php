@@ -2,11 +2,11 @@
 <?php use_helper('Date'); ?>
 <?php
 $moreInfo = array(
-  '('.__('最終ログイン').':'.distance_of_time_in_words($member->getLastLoginTime()).')'
+  '('.__('Last Login').':'.distance_of_time_in_words($member->getLastLoginTime()).')'
 );
 if ($relation->isSelf())
 {
-  $moreInfo[] = link_to(__('写真を編集'), 'member/configImage');
+  $moreInfo[] = link_to(__('Edit Photo'), 'member/configImage');
 }
 
 $options = array(
@@ -19,20 +19,20 @@ op_include_parts('memberImageBox', 'memberImageBox', $options);
 
 <?php
 $options = array(
-  'title' => __('フレンドリスト'),
+  'title' => __('Friends List'),
   'list' => $member->getFriends(9),
   'link_to' => 'member/profile?id=',
-  'moreInfo' => array(link_to(sprintf('%s(%d)', __('全てを見る'), $member->countFriends()), 'friend/list?id='.$member->getId())),
+  'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $member->countFriends()), 'friend/list?id='.$member->getId())),
 );
 op_include_parts('nineTable', 'frendList', $options);
 ?>
 
 <?php
 $options = array(
-  'title' => __('コミュニティリスト'),
+  'title' => __('Communities List'),
   'list' => $communities,
   'link_to' => 'community/home?id=',
-  'moreInfo' => array(link_to(sprintf('%s(%d)', __('全てを見る'), $member->countCommunityMembers()), 'community/joinlist')),
+  'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $member->countCommunityMembers()), 'community/joinlist')),
 );
 op_include_parts('nineTable', 'communityList', $options);
 ?>
@@ -41,10 +41,10 @@ op_include_parts('nineTable', 'communityList', $options);
 <?php slot('op_top'); ?>
 <?php if ($relation->isSelf()): ?>
 <?php ob_start() ?>
-<p>※他のメンバーから見たあなたのページはこのようになります。</p>
+<p><?php echo __('Other members look your page like this.') ?></p>
 <p>他のメンバーにあなたのページを教える場合は、以下のURLを使ってください。<br />
 <?php echo url_for('member/profile?id='.$member->getId(), true) ?></p>
-<p>プロフィールを変更する場合は「<?php echo link_to(__('プロフィール変更'), 'member/editProfile') ?>」よりおこなってください。</p>
+<p><?php echo __('If you edit this page, please visit %1%.', array('%1%' => link_to(__('プロフィール変更'), 'member/editProfile'))) ?></p>
 <?php $content = ob_get_clean() ?>
 <?php op_include_parts('descriptionBox', 'informationAboutThisIsYourProfilePage', array('body' => $content)) ?>
 <?php elseif (!$relation->isFriend()): ?>

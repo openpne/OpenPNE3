@@ -3,7 +3,7 @@
   <file orginal="global" source-language="en" datatype="plaintext">
     <body>
       <trans-unit id="">
-        <source>Community List</source>
+        <source>Communities List</source>
         <target>コミュニティリスト</target>
       </trans-unit>
       <trans-unit id="">
@@ -15,7 +15,7 @@
         <target>コミュニティ作成</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Edit the new community</source>
+        <source>Edit the community</source>
         <target>コミュニティ編集</target>
       </trans-unit>
       <trans-unit id="">
@@ -195,10 +195,6 @@
         <target>フレンドリスト</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Commnunities List</source>
-        <target>コミュニティリスト</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Other members look your page like this.</source>
         <target>※他のメンバーから見たあなたのページはこのようになります。</target>
       </trans-unit>
@@ -273,6 +269,14 @@
       <trans-unit id="">
         <source>Delete your %1% account</source>
         <target>%1%を退会する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Back to previous page</source>
+        <target>前のページに戻る</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Show Profile</source>
+        <target>プロフィール確認</target>
       </trans-unit>
     </body>
   </file>
