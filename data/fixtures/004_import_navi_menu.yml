@@ -149,3 +149,78 @@ NavigationI18n:
     id: community_navigation_quit
     caption: "コミュニティを退会"
     culture: "ja_JP"
+
+  secure_global_navigation_home_i18n_en:
+    id: secure_global_navigation_home
+    caption: "My Home"
+    culture: "en"
+
+  secure_global_navigation_member_search_i18n_en:
+    id: secure_global_navigation_member_search
+    caption: "Search Members"
+    culture: "en"
+
+  secure_global_navigation_community_search_i18n_en:
+    id: secure_global_navigation_community_search
+    caption: "Search Communities"
+    culture: "en"
+
+  secure_global_navigation_config_i18n_en:
+    id: secure_global_navigation_config
+    caption: "Settings"
+    culture: "en"
+
+  secure_global_navigation_invite_i18n_en:
+    id: secure_global_navigation_invite
+    caption: "Invite"
+    culture: "en"
+
+  secure_global_navigation_logout_i18n_en:
+    id: secure_global_navigation_logout
+    caption: "Logout"
+    culture: "en"
+
+  default_navigation_home_i18n_en:
+    id: default_navigation_home
+    caption: "Home"
+    culture: "en"
+
+  default_navigation_friend_list_i18n_en:
+    id: default_navigation_friend_list
+    caption: "My Friends"
+    culture: "en"
+
+  default_navigation_profile_confirm_i18n_en:
+    id: default_navigation_profile_confirm
+    caption: "Profile"
+    culture: "en"
+
+  default_navigation_profile_edit_i18n_en:
+    id: default_navigation_profile_edit
+    caption: "Edit Profile"
+    culture: "en"
+
+  friend_navigation_home_i18n_en:
+    id: friend_navigation_home
+    caption: "Home"
+    culture: "en"
+
+  friend_navigation_friend_list_i18n_en:
+    id: friend_navigation_friend_list
+    caption: "Friends"
+    culture: "en"
+
+  community_navigation_home_i18n_en:
+    id: community_navigation_home
+    caption: "Community Top"
+    culture: "en"
+
+  community_navigation_join_i18n_en:
+    id: community_navigation_join
+    caption: "Join Community"
+    culture: "en"
+
+  community_navigation_quit_i18n_en:
+    id: community_navigation_quit
+    caption: "Leave Community"
+    culture: "en"
