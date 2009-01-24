@@ -52,4 +52,28 @@ class Community extends BaseCommunity
     return MemberPeer::doSelect($c);
   }
 
+  public function checkPrivilegeBelong($memberId)
+  {
+    if (!$this->isPrivilegeBelong($memberId))
+    {
+      throw new opPrivilegeException('fail');
+    }
+  }
+
+  public function isPrivilegeBelong($memberId)
+  {
+    $c = new Criteria();
+    $c->add(CommunityMemberPeer::MEMBER_ID, $memberId);
+
+    return (bool)$this->getCommunityMembers($c);
+  }
+
+  public function isAdmin($memberId)
+  {
+    $c = new Criteria();
+    $c->add(CommunityMemberPeer::MEMBER_ID, $memberId);
+    $c->add(CommunityMemberPeer::POSITION, 'admin');
+
+    return (bool)$this->getCommunityMembers($c);
+  }
 }
