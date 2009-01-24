@@ -1,11 +1,11 @@
 <?php if (count($options['list'])): ?>
+
 <?php
-$options = array_merge(array(
-  'row' => 3,
-  'col' => 3,
-  'type' => 'full',
-), (array)$sf_data->getRaw('options'));
+$options->setDefault('row', 3);
+$options->setDefault('col', 3);
+$options->setDefault('type', 'full');
 ?>
+
 <table>
 <?php $row = ceil(count($options['list']) / $options['row']) ?>
 <?php for ($i = $j = 1; $row >= $i; $i++): ?>

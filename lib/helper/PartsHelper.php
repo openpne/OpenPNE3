@@ -29,7 +29,7 @@ function op_include_parts($name, $id, $options = array())
   $params = array(
     'id'      => $id,
     'name'    => $name,
-    'options' => $options,
+    'options' => new opPartsOptionHolder($options),
   );
 
   $params['op_content'] = get_partial('global/parts'.ucfirst($name), $params);

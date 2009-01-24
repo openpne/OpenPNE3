@@ -1,8 +1,6 @@
 <?php
-$options = array_merge(array(
-  'button' => __('変更'),
-  'url' => sprintf('%s/%s', $this->getModuleName(), $this->getActionName()),
-), (array)$sf_data->getRaw('options'));
+$options->setDefault('button', __('変更'));
+$options->setDefault('url', sprintf('%s/%s', $this->getModuleName(), $this->getActionName()));
 ?>
 
 <form action="<?php echo url_for($options['url']) ?>" method="post"<?php if (!empty($options['isMultipart'])): ?> enctype="multipart/form-data"<?php endif; ?>>
