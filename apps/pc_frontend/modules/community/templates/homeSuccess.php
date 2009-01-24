@@ -3,7 +3,6 @@
 $options = array(
   'name'   => $community->getName(),
   'image'  => $community->getImageFileName(),
-  'single' => true,
 );
 op_include_parts('memberImageBox', 'communityImageBox', $options);
 ?>

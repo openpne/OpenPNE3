@@ -1,3 +1,5 @@
+<?php $options->setDefault('single', true) ?>
+
 <form action="default/search">
 <ul>
 <li><?php echo image_tag('icon_search.gif', array('alt' => 'search')) ?></li>

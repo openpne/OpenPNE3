@@ -4,5 +4,4 @@
     'member' => __('メンバー'),
     'community' => __('コミュニティ'),
   ),
-  'single' => true,
 )) ?>

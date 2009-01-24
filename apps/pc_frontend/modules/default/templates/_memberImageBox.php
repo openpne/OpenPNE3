@@ -6,6 +6,5 @@ $options = array(
     link_to(__('写真を編集'), 'member/configImage'),
     link_to(__('プロフィール確認'), 'member/profile'),
   ),
-  'single'   => true,
 );
 op_include_parts('memberImageBox', 'memberImageBox', $options);

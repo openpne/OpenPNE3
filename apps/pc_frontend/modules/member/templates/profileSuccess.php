@@ -13,7 +13,6 @@ $options = array(
   'name'     => $member->getName(),
   'image'    => $member->getImageFileName(),
   'moreInfo' => $moreInfo,
-  'single'   => true,
 );
 op_include_parts('memberImageBox', 'memberImageBox', $options);
 ?>

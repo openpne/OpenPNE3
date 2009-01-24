@@ -1,3 +1,5 @@
+<?php $options->setDefault('single', true) ?>
+
 <p class="photo">
 <?php $imgParam = array('size' => '180x180', 'alt' => $options['name']) ?>
 <?php if ($options['image']): ?>
