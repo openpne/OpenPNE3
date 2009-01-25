@@ -26,4 +26,11 @@ class friendActions extends sfOpenPNEFriendAction
       sfConfig::set('sf_nav_type', 'default');
     }
   }
+
+  public function executeList(sfWebRequest $request)
+  {
+    $this->size = 50;
+
+    parent::executeList($request);
+  }
 }

@@ -38,7 +38,11 @@ abstract class sfOpenPNEFriendAction extends sfActions
   {
     $this->redirectIf($this->relation->isAccessBlocked(), '@error');
 
-    $this->pager = MemberRelationshipPeer::getFriendListPager($this->id, $request->getParameter('page', 1));
+    if (!$this->size)
+    {
+      $this->size = 20;
+    }
+    $this->pager = MemberRelationshipPeer::getFriendListPager($this->id, $request->getParameter('page', 1), $this->size);
 
     if (!$this->pager->getNbResults()) {
       return sfView::ERROR;
