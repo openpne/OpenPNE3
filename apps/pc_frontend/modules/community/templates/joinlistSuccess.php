@@ -1,7 +1,10 @@
-<?php echo pager_navigation($pager, 'community/joinlist?page=%d&id=' . $sf_params->get('id')); ?>
-<ul>
-<?php foreach ($pager->getResults() as $community) : ?>
-<li><?php echo link_to($community->getName(), 'community/home?id=' . $community->getId()); ?></li>
-<?php endforeach; ?>
-</ul>
-<?php echo pager_navigation($pager, 'community/joinlist?page=%d&id=' . $sf_params->get('id')); ?>
+<?php
+$options = array(
+  'title' => __('Communities List'),
+  'list' => $pager->getResults(),
+  'link_to' => 'community/home?id=',
+  'pager' => $pager,
+  'link_to_pager' => 'community/joinlist?page=%d&id='.$member->getId(),
+);
+op_include_parts('photoTable', 'communityList', $options)
+?>

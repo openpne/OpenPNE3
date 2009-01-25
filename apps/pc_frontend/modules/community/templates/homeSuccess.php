@@ -9,7 +9,7 @@ op_include_parts('memberImageBox', 'communityImageBox', $options);
 
 <?php
 $options = array(
-  'title' => __('コミュニティメンバー'),
+  'title' => __('Community Members'),
   'list' => $community->getMembers(9),
   'link_to' => 'member/profile?id=',
   'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $community->countCommunityMembers()), 'community/memberList?id='.$community->getId())),

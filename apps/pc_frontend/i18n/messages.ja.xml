@@ -7,6 +7,10 @@
         <target>コミュニティリスト</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Community Members</source>
+        <target>コミュニティメンバー</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Show all</source>
         <target>全てを見る</target>
       </trans-unit>
