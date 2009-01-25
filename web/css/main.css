@@ -100,7 +100,9 @@ form p {
  * OpenPNE Common Style
  *----------------------------------------------------------------------------*/
 body {
-  font: normal normal normal 10pt/1.2 "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", "MS PGothic", Osaka, sans-serif;
+  line-height: 1.2;
+  font-style: normal;
+  font-size: 10pt;
 }
 
 input,
@@ -108,7 +110,6 @@ textarea,
 select {
   color: #333333;
   font-size: inherit;
-  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", "MS PGothic", Osaka, sans-serif;
 }
 
 a:link {
