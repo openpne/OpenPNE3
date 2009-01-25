@@ -1,5 +1,5 @@
 <?php if ($navs): ?>
-<ul>
+<ul class="<?php echo $type ?>">
 <?php foreach ($navs as $nav): ?>
 <li><?php if (isset($navId)): ?>
 <?php echo link_to($nav->getCaption(), $nav->getUri().'?id='.$navId) ?>

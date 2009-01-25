@@ -29,11 +29,11 @@ class defaultComponents extends sfComponents
     $module = $context->getActionStack()->getLastEntry()->getModuleName();
     $action = $context->getActionStack()->getLastEntry()->getActionName();
 
-    $type = sfConfig::get('sf_nav_type', sfConfig::get('mod_' . $module . '_default_nav', 'default'));
+    $this->type = sfConfig::get('sf_nav_type', sfConfig::get('mod_' . $module . '_default_nav', 'default'));
 
-    $this->navs = NavigationPeer::retrieveByType($type);
+    $this->navs = NavigationPeer::retrieveByType($this->type);
 
-    if ('default' !== $type)
+    if ('default' !== $this->type)
     {
       $this->navId = sfConfig::get('sf_nav_id', $context->getRequest()->getParameter('id'));
     }

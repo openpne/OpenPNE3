@@ -340,7 +340,19 @@ pre {
 
 #localNav {
   margin: 10px 0;
-  background-color: #58B5F3;
+}
+
+#localNav ul {
+  background-color: #2396d2;
+  color: #FFFFFF;
+}
+
+#localNav ul.friend {
+  background-color: #6CA80C;
+}
+
+#localNav ul.community {
+  background-color: #F2638C;
 }
 
 #localNav li {
@@ -351,7 +363,7 @@ pre {
 
 #localNav li a {
   padding: 0 10px;
-  color: #000000;
+  color: #FFFFFF;
   text-decoration: none;
 }
 
