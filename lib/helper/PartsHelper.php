@@ -15,6 +15,7 @@
  * @subpackage helper
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  * @author     Rimpei Ogawa <ogawa@tejimaya.com>
+ * @author     Shogo Kawahara <kawahara@tejimaya.net>
  */
 
 /**
@@ -104,6 +105,22 @@ function op_include_line($id, $line, $options = array())
   $options['line'] = $line;
 
   op_include_parts('line', $id, $options);
+}
+
+/**
+ * Include yesNo parts
+ *
+ * @params string $id
+ * @params mixed  $yesForm a sfForm object or array of sfForm objects
+ * @params mixed  $noForm  a sfForm object or array of sfForm objects
+ * @params array  $options
+ */
+function op_include_yesno($id, $yesForm, $noForm, $options = array())
+{
+  $options['yes_form'] = $yesForm;
+  $options['no_form'] = $noForm;
+
+  op_include_parts('yesNo', $id, $options);
 }
 
 /**
