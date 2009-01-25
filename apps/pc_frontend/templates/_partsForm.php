@@ -1,10 +1,17 @@
 <?php
 $options->setDefault('button', __('Send'));
-$options->setDefault('url', sprintf('%s/%s', $this->getModuleName(), $this->getActionName()));
+$options->setDefault('url', sfContext::getInstance()->getRouting()->getCurrentInternalUri());
+$options->setDefault('method','post');
 ?>
 
 <form action="<?php echo url_for($options['url']) ?>" method="post"<?php if (!empty($options['isMultipart'])): ?> enctype="multipart/form-data"<?php endif; ?>>
 <?php include_customizes($id, 'formTop') ?>
+
+<?php if (isset($options['body'])): ?>
+<div class="block">
+<?php echo $options['body'] ?>
+</div>
+<?php endif ?>
 
 <table>
 <?php
