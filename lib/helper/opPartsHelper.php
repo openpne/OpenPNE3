@@ -233,22 +233,22 @@ function include_list_box($id, $list, $options = array())
 /**
  * @deprecated since 3.0beta4
  */
-function include_simple_box($id, $title = '', $block = '', $option = array())
+function include_simple_box($id, $title = '', $block = '', $options = array())
 {
-  if(!isset($option['border']))
+  if(!isset($options['border']))
   {
-    $option['border'] = true;
+    $options['border'] = true;
   }
-  if(!isset($option['class']))
+  if(!isset($options['class']))
   {
-    $option['class'] = '';
+    $options['class'] = '';
   }
 
   $params = array(
     'id' => $id,
     'title' => $title,
     'block' => $block,
-    'option' => $option,
+    'options' => $options,
   );
 
   include_partial('global/partsSimpleBox', $params);
