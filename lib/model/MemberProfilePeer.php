@@ -30,8 +30,10 @@ class MemberProfilePeer extends BaseMemberProfileNestedSetPeer
 
     $c->add(self::MEMBER_ID, $memberId);
     $c->add(self::LFT_KEY, 1);
+    $c->add(ProfileI18nPeer::CULTURE, sfPropel::getDefaultCulture());
     $c->addJoin(ProfilePeer::ID, ProfileI18nPeer::ID);
     $c->addJoin(ProfilePeer::ID, MemberProfilePeer::PROFILE_ID);
+
     $c->addAscendingOrderByColumn(ProfilePeer::SORT_ORDER);
 
     $stmt = self::doSelectStmt($c);
