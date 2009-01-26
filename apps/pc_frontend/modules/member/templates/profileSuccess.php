@@ -64,7 +64,7 @@ foreach ($member->getProfiles() as $profile)
   $caption = $profile->getCaption();
   if ($profile->getFormType() === 'textarea')
   {
-    $profile = nl2br($profile);
+    $profile = op_auto_link_text(nl2br($profile));
   }
   $list[$caption] = $profile;
 }
