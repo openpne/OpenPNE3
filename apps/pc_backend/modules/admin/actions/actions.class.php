@@ -92,4 +92,24 @@ class adminActions extends sfActions
       $this->redirectIf($this->form->bindAndSave($params), 'admin/manageUser');
     }
   }
+
+ /**
+  * Executes changeLanguage action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeChangeLanguage(sfWebRequest $request)
+  {
+    $this->form = new opLanguageSelecterForm();
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $this->form->bind($request->getParameter('language'));
+      if ($this->form->isValid())
+      {
+        $this->form->setCulture();
+        $this->getUser()->setFlash('notice', 'Changed configuration for your culture.');
+        $this->redirect('admin/changeLanguage');
+      }
+    }
+  }
 }
