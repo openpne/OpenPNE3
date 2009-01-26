@@ -16,7 +16,7 @@ $options = array(
 );
 if ($isAdmin)
 {
-  $options['moreInfo'][] = link_to(__('メンバー管理'), 'community/memberManage?id='.$community->getId());
+  $options['moreInfo'][] = link_to(__('Management member'), 'community/memberManage?id='.$community->getId());
 }
 op_include_parts('nineTable', 'frendList', $options);
 ?>

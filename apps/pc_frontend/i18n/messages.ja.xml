@@ -23,6 +23,10 @@
         <target>コミュニティ編集</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Management member</source>
+        <target>メンバー管理</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Community Name</source>
         <target>コミュニティ名</target>
       </trans-unit>
@@ -62,11 +66,7 @@
         <source>You are already joined to this community.</source>
         <target>既にコミュニティに参加済みです。</target>
       </trans-unit>
-      <trans-unit id="">
-        <source>You are already joined to this community.</source>
-        <target>既にコミュニティに参加済みです。</target>
-      </trans-unit>
-      <trans-unit id="">
+     <trans-unit id="">
         <source>Errors</source>
         <target>エラー</target>
       </trans-unit>
@@ -103,6 +103,10 @@
         <target>検索結果</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Other member can not view the mail address that was input here.</source>
+        <target>ここで入力したメールアドレスは他のメンバーには公開されません。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Your search queries did not match any communites.</source>
         <target>該当するコミュニティはありませんでした。</target>
       </trans-unit>
@@ -127,7 +131,7 @@
         <target>拒否する</target>
       </trans-unit>
       <trans-unit id="">
-        <source>My Friends Seetting</source>
+        <source>My Friends Setting</source>
         <target>フレンド管理</target>
       </trans-unit>
       <trans-unit id="">
@@ -147,6 +151,10 @@
         <target>フレンドから外す</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Ass friends</source>
+        <target>マイフレンドに追加</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>This member is not your friend.</source>
         <target>フレンドではありません。</target>
       </trans-unit>
@@ -157,6 +165,10 @@
       <trans-unit id="">
         <source>When mobile information registration is done from following URL, the member registration is completed.</source>
         <target>以下のURLから携帯登録をおこなうと、メンバー登録が完了します。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Settings</source>
+        <target>設定</target>
       </trans-unit>
       <trans-unit id="">
         <source>Change Settings</source>
@@ -174,15 +186,31 @@
         <source>Please select the item that wants to be set from the menu.</source>
         <target>メニューから設定したい項目を選択してください。</target>
       </trans-unit>
-      <trans-unit id="">
+     <trans-unit id="">
+        <source>Edit profile</source>
+        <target>プロフィール変更</target>
+      </trans-unit>
+     <trans-unit id="">
         <source>Edit Profile</source>
         <target>プロフィール編集</target>
+      </trans-unit>
+     <trans-unit id="">
+        <source>Profile</source>
+        <target>プロフィール</target>
       </trans-unit>
       <trans-unit id="">
         <source>Invite a friend to %1%</source>
         <target>友人を%1%に招待する</target>
       </trans-unit>
       <trans-unit id="">
+        <source>If %1% is your friends, let us add to friends it!If %1% is your friends, let us add to friends it!</source>
+        <target>%1%さんと知り合いの場合、マイフレンドに追加しましょう！</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The invitation has not been permitted.</source>
+        <target>招待が許可されていません</target>
+      </trans-unit>
+     <trans-unit id="">
         <source>Sent.</source>
         <target>送信が完了しました。</target>
       </trans-unit>
@@ -203,12 +231,20 @@
         <target>※他のメンバーから見たあなたのページはこのようになります。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>If you teach your page to other members, please use following URL.</source>
+        <target>他のメンバーにあなたのページを教える場合は、以下のURLを使ってください。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>If you edit this page, please visit %1%.</source>
         <target>プロフィールを変更する場合は「%1%」よりおこなってください。</target>
       </trans-unit>
       <trans-unit id="">
         <source>It is necessary to register the cell-phone Information to entry in %1%.</source>
         <target>%1%に参加するには、携帯電話の登録が必要です。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Register the cell-phone</source>
+        <target>携帯電話の登録</target>
       </trans-unit>
       <trans-unit id="">
         <source>URL for mobile registration is send to the mobile mail address appropriating input here.</source>
@@ -235,6 +271,14 @@
         <target>メールアドレスが登録されている場合、新しいメールアドレスに変更されます。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Main photo</source>
+        <target>メイン写真</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Upload</source>
+        <target>アップロードする</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Register</source>
         <target>新規登録</target>
       </trans-unit>
@@ -255,33 +299,17 @@
         <target>著作権や肖像権の侵害にあたる写真、暴力的・卑猥な写真、他のメンバーが見て不快に感じる写真の掲載は禁止しております。掲載はご自身の責任でお願いいたします。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Details</source>
+        <target>詳細を見る</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please bgining register from %1% to following URL.</source>
+        <target>以下のURLから%1%に登録してください</target>
+      </trans-unit>
+     <trans-unit id="">
         <source>Please input a mail address.</source>
         <target>メールアドレスを入力してください。</target>
       </trans-unit>
-      <trans-unit id="">
-        <source>You can not delete your account.</source>
-        <target>IDが1のメンバーは退会することができません。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Do you delete your %1% account?</source>
-        <target>本当に%1%から退会しますか？</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Please input your password if you want to delete your account.</source>
-        <target>退会する場合は、以下のフォームにパスワードを入力してください。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Delete your %1% account</source>
-        <target>%1%を退会する</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Back to previous page</source>
-        <target>前のページに戻る</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Show Profile</source>
-        <target>プロフィール確認</target>
-      </trans-unit>
-    </body>
+   </body>
   </file>
 </xliff>

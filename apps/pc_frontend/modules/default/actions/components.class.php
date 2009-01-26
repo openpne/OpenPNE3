@@ -56,8 +56,8 @@ class defaultComponents extends sfComponents
   public function executeSearchBox()
   {
     $this->searchActions = array(
-      'メンバー' => 'member',
-      'コミュニティ' => 'community',
+      'Member' => 'member',
+      'Community' => 'community',
     );
   }
 

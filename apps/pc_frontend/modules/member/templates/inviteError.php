@@ -2,7 +2,7 @@
 $options = array(
   'title' => __('Invite a friend to %1%', array('%1%' => $op_config['sns_name'])),
 );
-op_include_box('inviteForm', __('招待が許可されていません。'), $options);
+op_include_box('inviteForm', __('The invitation has not been permitted.'), $options);
 ?>
 
 <?php use_helper('Javascript') ?>
