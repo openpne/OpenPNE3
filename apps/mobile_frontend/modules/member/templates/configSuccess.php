@@ -1,5 +1,5 @@
 <?php if ($categoryName): ?>
-<?php op_mobile_page_title(__('Settings'), $categoryCaptions[$categoryName]) ?>
+<?php op_mobile_page_title(__('Settings'), __($categoryCaptions[$categoryName])) ?>
 <?php else: ?>
 <?php op_mobile_page_title(__('Settings')) ?>
 <?php endif; ?>

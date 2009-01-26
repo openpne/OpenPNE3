@@ -5,7 +5,7 @@ foreach ($categories as $key => $value)
 {
   if (count($value))
   {
-    $list[$key] = link_to($categoryCaptions[$key], 'member/config?category='.$key);
+    $list[$key] = link_to(__($categoryCaptions[$key]), 'member/config?category='.$key);
   }
 }
 op_include_parts('pageNav', 'pageNav', array('list' => $list, 'current' => $categoryName));
@@ -18,7 +18,7 @@ op_include_parts('pageNav', 'navForDelete', array('list' => $list));
 <?php end_slot(); ?>
 
 <?php if ($categoryName): ?>
-<?php op_include_form($categoryName.'Form', $form, array('title' => $categoryCaptions[$categoryName], 'url' => 'member/config?category='.$categoryName)) ?>
+<?php op_include_form($categoryName.'Form', $form, array('title' => __($categoryCaptions[$categoryName]), 'url' => 'member/config?category='.$categoryName)) ?>
 <?php else: ?>
 <?php op_include_box('configInformation', __('Please select the item that wants to be set from the menu.'), array('title' => __('Change Settings'))); ?>
 <?php endif; ?>

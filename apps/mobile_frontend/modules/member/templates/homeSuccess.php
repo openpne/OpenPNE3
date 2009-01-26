@@ -69,7 +69,7 @@ foreach (sfConfig::get('openpne_member_category') as $key => $value)
 
   if (count($value))
   {
-    $list[] = link_to($title, 'member/config?category='.$key);
+    $list[] = link_to(__($title), 'member/config?category='.$key);
   }
 }
 $list[] = link_to(__('Setting easy login'), 'member/configUID');

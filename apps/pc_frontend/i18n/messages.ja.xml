@@ -310,30 +310,82 @@
         <source>Please input a mail address.</source>
         <target>メールアドレスを入力してください。</target>
       </trans-unit>
-      <trans-unit id=""> 
-        <source>You can not delete your account.</source> 
-        <target>IDが1のメンバーは退会することができません。</target> 
-      </trans-unit> 
-      <trans-unit id=""> 
-        <source>Do you delete your %1% account?</source> 
-        <target>本当に%1%から退会しますか？</target> 
-      </trans-unit> 
-      <trans-unit id=""> 
-        <source>Please input your password if you want to delete your account.</source> 
-        <target>退会する場合は、以下のフォームにパスワードを入力してください。</target> 
-      </trans-unit> 
-      <trans-unit id=""> 
-        <source>Delete your %1% account</source> 
-        <target>%1%を退会する</target> 
-      </trans-unit> 
-      <trans-unit id=""> 
-        <source>Back to previous page</source> 
-        <target>前のページに戻る</target> 
-      </trans-unit> 
-      <trans-unit id=""> 
-        <source>Show Profile</source> 
-        <target>プロフィール確認</target> 
-      </trans-unit> 
+      <trans-unit id="">
+        <source>You can not delete your account.</source>
+        <target>IDが1のメンバーは退会することができません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you delete your %1% account?</source>
+        <target>本当に%1%から退会しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please input your password if you want to delete your account.</source>
+        <target>退会する場合は、以下のフォームにパスワードを入力してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete your %1% account</source>
+        <target>%1%を退会する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Back to previous page</source>
+        <target>前のページに戻る</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Show Profile</source>
+        <target>プロフィール確認</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>General Configuration</source>
+        <target>一般設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>PC E-mail Address Configuration</source>
+        <target>PCメールアドレス設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>PC E-mail Address</source>
+        <target>PCメールアドレス</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>PC E-mail Address(Confirm)</source>
+        <target>PCメールアドレス(確認)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Mobile E-mail Address Configuration</source>
+        <target>携帯メールアドレス設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Mobile E-mail Address</source>
+        <target>携帯メールアドレス</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Mobile E-mail Address(Confirm)</source>
+        <target>携帯メールアドレス(確認)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Password Configuration</source>
+        <target>パスワード設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Password</source>
+        <target>パスワード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Password(Confirm)</source>
+        <target>パスワード(確認)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Access Block Configuration</source>
+        <target>アクセスブロック設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Access Block</source>
+        <target>アクセスブロック</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your current password</source>
+        <target>現在のパスワード</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

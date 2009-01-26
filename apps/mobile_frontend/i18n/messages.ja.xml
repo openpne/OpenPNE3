@@ -234,10 +234,62 @@
         <source>This member is not your friend.</source>
         <target>ﾌﾚﾝﾄﾞではありません。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>General Configuration</source>
+        <target>一般設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>PC E-mail Address Configuration</source>
+        <target>PCﾒｰﾙｱﾄﾞﾚｽ設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>PC E-mail Address</source>
+        <target>PCﾒｰﾙｱﾄﾞﾚｽ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>PC E-mail Address(Confirm)</source>
+        <target>PCﾒｰﾙｱﾄﾞﾚｽ(確認)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Mobile E-mail Address Configuration</source>
+        <target>携帯ﾒｰﾙｱﾄﾞﾚｽ設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Mobile E-mail Address</source>
+        <target>携帯ﾒｰﾙｱﾄﾞﾚｽ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Mobile E-mail Address(Confirm)</source>
+        <target>携帯ﾒｰﾙｱﾄﾞﾚｽ(確認)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Password Configuration</source>
+        <target>ﾊﾟｽﾜｰﾄﾞ設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Password</source>
+        <target>ﾊﾟｽﾜｰﾄﾞ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Password(Confirm)</source>
+        <target>ﾊﾟｽﾜｰﾄﾞ(確認)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Access Block Configuration</source>
+        <target>ｱｸｾｽﾌﾞﾛｯｸ設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Access Block</source>
+        <target>ｱｸｾｽﾌﾞﾛｯｸ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your current password</source>
+        <target>現在のﾊﾟｽﾜｰﾄﾞ</target>
+      </trans-unit>
       <trans-unit id=""> 
-        <source>Back to previous page</source> 
-        <target>前のﾍﾟｰｼﾞに戻る</target> 
-      </trans-unit> 
+        <source>Back to previous page</source>
+        <target>前のﾍﾟｰｼﾞに戻る</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

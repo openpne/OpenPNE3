@@ -10,14 +10,14 @@
 
 general:
   _attributes:
-    caption: "一般設定"
+    caption: "General Configuration"
 
 pcAddress:
   _attributes:
-    caption: "PCメールアドレス設定"
+    caption: "PC E-mail Address Configuration"
   pc_address:
     Name:       "pc_address"
-    Caption:    "PCメールアドレス"
+    Caption:    "PC E-mail Address"
     FormType:   "input"
     ValueType:  "pc_email"
     IsRegist:   false
@@ -28,10 +28,10 @@ pcAddress:
 
 mobileAddress:
   _attributes:
-    caption: "携帯メールアドレス設定"
+    caption: "Mobile E-mail Address Configuration"
   mobile_address:
     Name:       "mobile_address"
-    Caption:    "携帯メールアドレス"
+    Caption:    "Mobile E-mail Address"
     FormType:   "input"
     ValueType:  "mobile_email"
     IsRegist:   false
@@ -42,10 +42,10 @@ mobileAddress:
 
 password:
   _attributes:
-    caption: "パスワード設定"
+    caption: "Password Configuration"
   password:
     Name:       "password"
-    Caption:    "パスワード"
+    Caption:    "Password"
     FormType:   "password"
     ValueType:  "password"
     IsRegist:   true
@@ -56,10 +56,10 @@ password:
 
 accessBlock:
   _attributes:
-    caption: "アクセスブロック設定"
+    caption: "Access Block Configuration"
   access_block:
     Name:       "access_block"
-    Caption:    "アクセスブロック"
+    Caption:    "Access Block"
     FormType:   "increased_input"
     ValueType:  "pass"
     IsRegist:   false
