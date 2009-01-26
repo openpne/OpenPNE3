@@ -220,11 +220,11 @@
       </trans-unit>
       <trans-unit id="">
         <source>Please input your password if you want to delete your account.</source>
-        <target>退会する場合はパスワードを入力してください。</target>
+        <target>退会する場合はﾊﾟｽﾜｰﾄﾞを入力してください｡</target>
       </trans-unit>
       <trans-unit id="">
         <source>This member already belongs to my friends.</source>
-        <target>このメンバーは既にﾌﾚﾝﾄﾞです。</target>
+        <target>このﾒﾝﾊﾞｰは既にﾌﾚﾝﾄﾞです｡</target>
       </trans-unit>
       <trans-unit id="">
         <source>My friends request is already sent.</source>
@@ -234,6 +234,10 @@
         <source>This member is not your friend.</source>
         <target>ﾌﾚﾝﾄﾞではありません。</target>
       </trans-unit>
+      <trans-unit id=""> 
+        <source>Back to previous page</source> 
+        <target>前のﾍﾟｰｼﾞに戻る</target> 
+      </trans-unit> 
     </body>
   </file>
 </xliff>
