@@ -66,7 +66,7 @@
         <source>You are already joined to this community.</source>
         <target>既にコミュニティに参加済みです。</target>
       </trans-unit>
-     <trans-unit id="">
+      <trans-unit id="">
         <source>Errors</source>
         <target>エラー</target>
       </trans-unit>
@@ -186,15 +186,15 @@
         <source>Please select the item that wants to be set from the menu.</source>
         <target>メニューから設定したい項目を選択してください。</target>
       </trans-unit>
-     <trans-unit id="">
+      <trans-unit id="">
         <source>Edit profile</source>
         <target>プロフィール変更</target>
       </trans-unit>
-     <trans-unit id="">
+      <trans-unit id="">
         <source>Edit Profile</source>
         <target>プロフィール編集</target>
       </trans-unit>
-     <trans-unit id="">
+      <trans-unit id="">
         <source>Profile</source>
         <target>プロフィール</target>
       </trans-unit>
@@ -210,7 +210,7 @@
         <source>The invitation has not been permitted.</source>
         <target>招待が許可されていません</target>
       </trans-unit>
-     <trans-unit id="">
+      <trans-unit id="">
         <source>Sent.</source>
         <target>送信が完了しました。</target>
       </trans-unit>
@@ -306,10 +306,34 @@
         <source>Please bgining register from %1% to following URL.</source>
         <target>以下のURLから%1%に登録してください</target>
       </trans-unit>
-     <trans-unit id="">
+      <trans-unit id="">
         <source>Please input a mail address.</source>
         <target>メールアドレスを入力してください。</target>
       </trans-unit>
-   </body>
+      <trans-unit id=""> 
+        <source>You can not delete your account.</source> 
+        <target>IDが1のメンバーは退会することができません。</target> 
+      </trans-unit> 
+      <trans-unit id=""> 
+        <source>Do you delete your %1% account?</source> 
+        <target>本当に%1%から退会しますか？</target> 
+      </trans-unit> 
+      <trans-unit id=""> 
+        <source>Please input your password if you want to delete your account.</source> 
+        <target>退会する場合は、以下のフォームにパスワードを入力してください。</target> 
+      </trans-unit> 
+      <trans-unit id=""> 
+        <source>Delete your %1% account</source> 
+        <target>%1%を退会する</target> 
+      </trans-unit> 
+      <trans-unit id=""> 
+        <source>Back to previous page</source> 
+        <target>前のページに戻る</target> 
+      </trans-unit> 
+      <trans-unit id=""> 
+        <source>Show Profile</source> 
+        <target>プロフィール確認</target> 
+      </trans-unit> 
+    </body>
   </file>
 </xliff>
