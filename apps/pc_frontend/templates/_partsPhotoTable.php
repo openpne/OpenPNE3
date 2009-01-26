@@ -7,7 +7,7 @@ $options->setDefault('type', 'full');
 ?>
 
 <?php ob_start() ?>
-<?php include_partial('global/pagerRelative', array('pager' => $options->pager, 'link_to' => $options->getRaw('link_to_pager'))) ?>
+<?php include_partial('global/pagerRelative', array('pager' => $options['pager'], 'link_to' => $options->getRaw('link_to_pager'))) ?>
 <?php $pager = ob_get_flush() ?>
 
 <table>
@@ -33,6 +33,5 @@ $options->setDefault('type', 'full');
 <?php endif; ?>
 <?php endfor; ?>
 </table>
-<?php endif; ?>
-
 <?php echo $pager ?>
+<?php endif; ?>
