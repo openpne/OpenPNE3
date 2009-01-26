@@ -81,9 +81,6 @@ propel:
     file_id: { type: integer, required: false, foreignTable: file, foreignReference: id, onDelete: setnull }
     created_at: ~
     updated_at: ~
-    _behaviors:
-      check_privilege_belong: { class_name: CommunityMember }
-      check_privilege_owner: { class_name: CommunityMember }
 
   community_member:
     id: ~
