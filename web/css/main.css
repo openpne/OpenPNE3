@@ -344,16 +344,16 @@ pre {
 }
 
 #localNav ul {
-  background-color: #2396d2;
+  background: transparent url(../images/skin_navi_h.jpg) no-repeat 0 0;
   color: #FFFFFF;
 }
 
 #localNav ul.friend {
-  background-color: #6CA80C;
+  background: transparent url(../images/skin_navi_f.jpg) no-repeat 0 0;
 }
 
 #localNav ul.community {
-  background-color: #F2638C;
+  background: transparent url(../images/skin_navi_c.jpg) no-repeat 0 0;
 }
 
 #localNav li {
