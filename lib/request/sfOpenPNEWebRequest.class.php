@@ -31,8 +31,13 @@ class sfOpenPNEWebRequest extends sfWebRequest
 
   public function getMobile()
   {
-    if (!$this->userAgentMobileInstance) {
+    if (!$this->userAgentMobileInstance)
+    {
       $this->userAgentMobileInstance = Net_UserAgent_Mobile::factory();
+      if ($this->userAgentMobileInstance instanceof Net_UserAgent_Mobile_Error)
+      {
+        $this->userAgentMobileInstance = new Net_UserAgent_Mobile_NonMobile('');
+      }
     }
 
     return $this->userAgentMobileInstance;
