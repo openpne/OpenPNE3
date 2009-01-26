@@ -25,7 +25,7 @@ op_include_parts('nineTable', 'frendList', $options);
 <?php
 $list = array(
   __('Community Name')   => $community->getName(),
-  __('Date Created')     => $community->getCreatedAt(),
+  __('Date Created')         => op_format_date($community->getCreatedAt(), 'D'),
   __('Administrator')    => $community_admin->getName(),
   __('Count of Members') => $community->countCommunityMembers(),
   __('Description')      => op_auto_link_text(nl2br($community->getConfig('description'))),
