@@ -369,16 +369,16 @@ pre {
 }
 
 #localNav ul {
-  background: transparent url(../images/skin_navi_h.jpg) repeat-y 0 0;
+  background: transparent url(../images/bg_localnav_default.gif) repeat-y 0 0;
   color: #FFFFFF;
 }
 
 #localNav ul.friend {
-  background: transparent url(../images/skin_navi_f.jpg) no-repeat 0 0;
+  background: transparent url(../images/bg_localnav_friend.gif) repeat-y 0 0;
 }
 
 #localNav ul.community {
-  background: transparent url(../images/skin_navi_c.jpg) no-repeat 0 0;
+  background: transparent url(../images/bg_localnav_community.gif) repeat-y 0 0;
 }
 
 #localNav li {
@@ -403,15 +403,15 @@ pre {
 }
 
 #localNav ul li a:hover {
-  background: transparent url(../images/skin_navi_h_2.jpg) repeat-x scroll 0 0;
+  background: transparent url(../images/bg_localnav_default_hover.gif) repeat-x scroll 0 0;
 }
 
 #localNav ul.friend li a:hover {
-  background: transparent url(../images/skin_navi_f_2.jpg) repeat-x scroll 0 0;
+  background: transparent url(../images/bg_localnav_friend_hover.gif) repeat-x scroll 0 0;
 }
 
 #localNav ul.community li a:hover {
-  background: transparent url(../images/skin_navi_c_2.jpg) repeat-x scroll 0 0;
+  background: transparent url(../images/bg_localnav_community_hover.gif) repeat-x scroll 0 0;
 }
 
 /*----------------------------------------------
