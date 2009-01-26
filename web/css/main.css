@@ -165,6 +165,9 @@ strong {
 div.parts table {
   table-layout: fixed;
   width: 100%;
+  border-width: 0 1px 1px 0;
+  border-style: solid;
+  border-color: #CCCCCC;
 }
 
 div.parts th,
@@ -172,13 +175,6 @@ div.parts td {
   border-width: 1px 0 0 1px;
   border-style: solid;
   border-color: #CCCCCC;
-}
-
-div.parts tr th:first-child,
-div.parts tr td:first-child,
-div.parts tr th.first-child,
-div.parts tr td.first-child {
-  border-left-width: 0;
 }
 
 /*----------------------------------------------
@@ -253,7 +249,7 @@ pre {
 
 #LayoutA #Left {
   float: left;
-  width: 275px;
+  width: 270px;
 }
 
 #LayoutA #Center {
@@ -452,43 +448,46 @@ div.dparts div.parts {
   margin: 0;
 }
 
-div.parts,
-div.dparts,
-div.item,
-div.ditem {
-  border: 1px solid #CCCCCC;
-}
-
-div.ditem div.item {
-  border-top-width: 0;
-}
-
-div.dparts {
-  padding: 7px;
-}
-
 div.ditem {
   padding: 5px 6px;
-}
-
-#Left div.dparts {
-  padding: 0;
-  border: none;
 }
 
 /*----------------------------------------------
  * Parts Heading
  *--------------------------------------------*/
 div.partsHeading {
-  padding: 2px 8px 2px 36px;
-  background: #36B3D1 url(../images/content_header_1.gif) no-repeat 0 0;
+  margin-bottom: 5px;
+  padding: 2px 8px 2px 10px;
+  height: 30px;
+  background: transparent url(../images/bg_parts_heading_650.gif) no-repeat 0 0;
+  line-height: 26px;
+  color: #FFFFFF;
   font-size: 100%;
   text-align: left;
 }
 
-#Left div.partsHeading {
-  padding-left: 24px;
-  background-image: url(../images/icon_title_1.gif);
+div.partsHeading a {
+  color: #FFFFFF;
+}
+
+#LayoutA #Left div.partsHeading {
+  background-image: url(../images/bg_parts_heading_270.gif);
+}
+
+#LayoutA #Center div.partsHeading {
+  background-image: url(../images/bg_parts_heading_440.gif);
+}
+
+#LayoutB #Left div.partsHeading {
+  background-image: url(../images/bg_parts_heading_270.gif);
+}
+
+#LayoutB #Center div.partsHeading {
+  background-image: url(../images/bg_parts_heading_540.gif);
+}
+
+#LayoutC #Center div.partsHeading {
+  background-image: url(../images/bg_parts_heading_650.gif);
 }
 
 div.partsHeading h3 {
@@ -510,15 +509,6 @@ div.partsHeading p.link {
 /*----------------------------------------------
  * Parts Items
  *--------------------------------------------*/
-div.block,
-div.partsInfo,
-div.pagerAbsolute,
-div.pagerRelative,
-div.pagerRelativeMulti,
-div.operation {
-  border-top: 1px solid #CCCCCC;
-}
-
 div.partsInfo {
   padding: 5px 20px;
 }
@@ -597,10 +587,12 @@ div.operation ul.moreInfo li {
  * Calendar
  *--------------------------------------------*/
 #Left .calendar .partsHeading {
-  padding: 4px 0;
-  border: none;
-  background: none;
   text-align: center;
+}
+
+#Left .calendar .partsHeading a {
+  color: #FFFFFF;
+  text-decoration: none;
 }
 
 .calendar th {
@@ -631,13 +623,10 @@ div.operation ul.moreInfo li {
 /*----------------------------------------------
  * Page Navigation
  *--------------------------------------------*/
-#Left .pageNav {
-  border: 1px solid #CCCCCC;
-  background-color: #FFFFFF;
-}
-
 #Left .pageNav ul {
   margin: 1px;
+  border: 1px solid #CCCCCC;
+  background-color: #FFFFFF;
 }
 
 #Left .pageNav li {
@@ -652,6 +641,11 @@ div.operation ul.moreInfo li {
 /*==============================================================================
  * descriptionBox
  *----------------------------------------------------------------------------*/
+.descriptionBox .parts {
+  border: 1px solid #CCCCCC;
+  background-color: #FFFFFF;
+}
+
 .descriptionBox p {
   margin: 12px;
 }
@@ -714,11 +708,11 @@ div.operation ul.moreInfo li {
 .form th,
 .form td {
   padding: 5px;
+  background-color: #FFFFFF;
 }
 
 .form th {
   width: 140px;
-  border-left: medium none;
 }
 
 .form textarea {
@@ -819,11 +813,14 @@ div.operation ul.moreInfo li {
 
 .memberImageBox {
   padding: 7px;
+  border: 1px solid #CCCCCC;
+  background: transparent url(../images/bg_parts_photo_box.gif) repeat-x 0 0;
 }
 
 .memberImageBox p.photo {
   padding: 7px;
   border: 1px solid #CCCCCC;
+  background-color: #FFFFFF;
 }
 
 .memberImageBox p.friendLink {
@@ -927,10 +924,6 @@ div.operation ul.moreInfo li {
   text-align: center;
 }
 
-.nineTable div.moreInfo {
-  border-top: solid 1px #CCCCCC;
-}
-
 .nineTable div.moreInfo ul.moreInfo {
   width: 11em;
   margin-left: auto;
@@ -943,32 +936,34 @@ div.operation ul.moreInfo li {
 .searchResultList .partsInfo {
   background: #EEEEEE;
 }
+
 .searchResultList .ditem {
-  margin: 8px 34px;
+  margin: 8px 0;
 }
+
 .searchResultList td.photo {
   width: 90px;
-  padding: 0;
-  border-left: none;
+  padding: 5px;
   text-align: center;
 }
-.searchResultList th, .searchResultList td {
+
+.searchResultList th,
+.searchResultList td {
   padding: 5px;
 }
 .searchResultList th {
   width: 75px;
 }
-#Body .searchResultList th:first-child,
-#Body .searchResultList th.first-child {
-  border-left-width: 1px;
-}
+
 .searchResultList tr.operation th {
   padding-top: 0;
   padding-bottom: 0;
 }
+
 .searchResultList tr.operation td {
   padding: 0;
 }
+
 .searchResultList tr.operation span.text {
   float: left;
   display: block;
@@ -976,6 +971,7 @@ div.operation ul.moreInfo li {
   padding: 5px;
   border-right: 1px solid #CCCCCC;
 }
+
 .searchResultList tr.operation span.moreInfo{
   zoom: 1;
   display: block;
@@ -983,9 +979,11 @@ div.operation ul.moreInfo li {
   padding: 4px 0 3px;
   text-align: center;
 }
+
 .searchResultList div.operation {
   text-align: center;
 }
+
 .searchResultList tr.operation span.moreInfo img,
 .searchResultList div.operation form,
 .searchResultList div.operation fieldset {
@@ -1085,17 +1083,16 @@ div.operation ul.moreInfo li {
 /*==============================================================================
  * photoTable
  *----------------------------------------------------------------------------*/
-.photoTable {
-  width: 561px;
-}
 .photoTable tr.photo td {
-  height: 90px;
+  height: 100px;
   padding: 8px 0;
   text-align: center;
 }
+
 .photoTable tr.photo td p.crown {
   text-align: center;
 }
+
 .photoTable tr.text td {
   padding: 5px 2px;
   text-align: center;
