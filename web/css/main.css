@@ -205,6 +205,7 @@ ul.moreInfo.button li form .input_submit {
 /*----------------------------------------------
  * clearfix, overflow: hidden
  *--------------------------------------------*/
+div#Contents,
 div#LayoutA,
 div#LayoutB,
 div#LayoutC {
@@ -236,54 +237,20 @@ pre {
 /*----------------------------------------------
  * Base Layout
  *--------------------------------------------*/
-#Container {
+#HeaderContainer,
+#ContentsContainer,
+#FooterContainer {
   margin: 0 auto;
   width: 950px;
 }
 
-#Header {
-  position: relative;
-}
-
-#Contents {
+#LayoutA,
+#LayoutB,
+#LayoutC {
   float: left;
   width: 720px;
 }
 
-#sideBanner {
-  float: right;
-  width: 225px;
-}
-
-#Footer {
-  clear: both;
-  background-color: #58B5F3;
-}
-
-/*----------------------------------------------
- * Header
- *--------------------------------------------*/
-#Header h1 {
-  margin: 0;
-  width: 220px;
-  height: 45px;
-  background: transparent url(../images/skin_header_logo.jpg) no-repeat scroll 0 0;
-}
-
-#Header h1 a {
-  margin: 0;
-  padding: 0;
-  border: medium none;
-  display: block;
-  width: 100%;
-  height: 100%;
-  text-indent: -9999px;
-  text-decoration: none;
-}
-
-/*----------------------------------------------
- * Contents
- *--------------------------------------------*/
 #LayoutA #Left {
   float: left;
   width: 275px;
@@ -317,34 +284,92 @@ pre {
   margin: 0 auto;
 }
 
+#sideBanner {
+  float: right;
+  width: 225px;
+}
+
+#Footer {
+  clear: both;
+}
+
 /*----------------------------------------------
- * Footer
+ * Header
  *--------------------------------------------*/
-#Footer p {
-  padding: 0 10px;
-  line-height: 30px;
-  text-align: right;
+#Header {
+  background: #092f56 url(../images/bg_header.gif) repeat-x scroll 0 0;
+  overflow: hidden;
+}
+
+#HeaderContainer {
+  position: relative;
+}
+
+#Header h1 {
+  margin: 0;
+  width: 100px;
+  height: 80px;
+  background: transparent url(../images/skin_header_logo.jpg) no-repeat scroll 0 0;
+  float: left;
+}
+
+#Header h1 a {
+  margin: 0;
+  padding: 0;
+  border: medium none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-indent: -9999px;
+  text-decoration: none;
 }
 
 /*----------------------------------------------
  * Navigation
  *--------------------------------------------*/
 #globalNav {
-  padding-left: 30px;
+  padding-top: 40px;
   text-align: right;
+  width: 850px;
+  float: left;
 }
 
 #globalNav li {
-  padding: 0 5px;
+  padding: 0;
+  border-left: 1px solid #204D6C;
+  border-right: 1px solid #082F57;
+  float: left;
+}
+
+#globalNav li a {
+  padding: 0 10px;
+  height: 40px;
+  line-height: 40px;
+  display: block;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+* html #globalNav li {
+  float: none;
   display: inline;
 }
 
+* html #globalNav li a {
+  display: inline;
+}
+
+#globalNav li a:hover {
+  background: transparent url(../images/bg_globalnav_hover.gif) repeat-x scroll 0 0;
+}
+
 #localNav {
-  margin: 10px 0;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 #localNav ul {
-  background: transparent url(../images/skin_navi_h.jpg) no-repeat 0 0;
+  background: transparent url(../images/skin_navi_h.jpg) repeat-y 0 0;
   color: #FFFFFF;
 }
 
@@ -357,15 +382,62 @@ pre {
 }
 
 #localNav li {
-  border-right: 1px solid #CCCCCC;
-  display: inline;
   line-height: 30px;
+  float: left;
 }
 
 #localNav li a {
-  padding: 0 10px;
+  padding: 0 15px;
   color: #FFFFFF;
   text-decoration: none;
+  display: block;
+}
+
+* html #localNav li {
+  float: none;
+  display: inline;
+}
+
+* html #localNav li a {
+  display: inline;
+}
+
+#localNav ul li a:hover {
+  background: transparent url(../images/skin_navi_h_2.jpg) repeat-x scroll 0 0;
+}
+
+#localNav ul.friend li a:hover {
+  background: transparent url(../images/skin_navi_f_2.jpg) repeat-x scroll 0 0;
+}
+
+#localNav ul.community li a:hover {
+  background: transparent url(../images/skin_navi_c_2.jpg) repeat-x scroll 0 0;
+}
+
+/*----------------------------------------------
+ * Contents
+ *--------------------------------------------*/
+#Contents {
+  background: transparent url(../images/bg_contents.gif) repeat-x scroll 0 0;
+}
+
+/*----------------------------------------------
+ * Footer
+ *--------------------------------------------*/
+#Footer {
+  height: 50px;
+  background: transparent url(../images/bg_footer.gif) repeat-x scroll 0 0;
+  color: #FFFFFF;
+}
+
+#Footer a {
+  color: #FFFFFF;
+}
+
+#Footer p {
+  padding: 0 10px;
+  line-height: 30px;
+  text-align: right;
 }
 
 /*----------------------------------------------

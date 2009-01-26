@@ -10,12 +10,19 @@
 <div id="Container">
 
 <div id="Header">
+<div id="HeaderContainer">
 <?php include_partial('global/header') ?>
+</div><!-- HeaderContainer -->
 </div><!-- Header -->
 
-<div id="Layout<?php echo $layout ?>">
-
 <div id="Contents">
+<div id="ContentsContainer">
+
+<div id="localNav">
+<?php include_component('default', 'localNav') ?>
+</div><!-- localNav -->
+
+<div id="Layout<?php echo $layout ?>" class="Layout">
 
 <?php if ($sf_user->hasFlash('error')): ?>
 <?php op_include_parts('alertBox', 'flashError', array('body' => __($sf_user->getFlash('error')))) ?>
@@ -46,16 +53,19 @@
 </div><!-- Bottom -->
 <?php endif; ?>
 
-</div><!-- Contents -->
+</div><!-- Layout -->
 
 <div id="sideBanner">
 <?php include_component('default', 'sideBannerGadgets'); ?>
 </div><!-- sideBanner -->
 
-</div><!-- LayoutA -->
+</div><!-- ContentsContainer -->
+</div><!-- Contents -->
 
 <div id="Footer">
+<div id="FooterContainer">
 <?php include_partial('global/footer') ?>
+</div><!-- FooterContainer -->
 </div><!-- Footer -->
 
 </div><!-- Container -->

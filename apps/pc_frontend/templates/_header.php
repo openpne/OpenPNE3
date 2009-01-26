@@ -3,7 +3,3 @@
 <div id="globalNav">
 <?php include_component('default', 'globalNav') ?>
 </div><!-- globalNav -->
-
-<div id="localNav">
-<?php include_component('default', 'localNav') ?>
-</div><!-- localNav -->
