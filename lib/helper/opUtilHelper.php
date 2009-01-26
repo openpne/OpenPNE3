@@ -152,3 +152,45 @@ function _create_script_name($application, $environment)
 
   return $script_name;
 }
+
+function op_url_cmd($text)
+{
+  $url_pattern = '/https?:\/\/([a-zA-Z0-9\-.]+)\/?(?:[a-zA-Z0-9_\-\/.,:;~?@=+$%#!()]|&amp;)*/';
+
+  return preg_replace_callback($url_pattern, '_op_url_cmd', $text);
+}
+
+function _op_url_cmd($matches)
+{
+  $url = $matches[0];
+  $cmd = $matches[1];
+
+  $file = $cmd . '.js';
+  $path = './cmd/' . $file;
+
+  if (!is_readable($path)) {
+    return str_replace('&', '&amp;', op_auto_link_text(str_replace('&amp;', '&', $url)));
+  }
+
+  $public_path = _compute_public_path($cmd, 'cmd', 'js');
+  $result = <<<EOD
+<script type="text/javascript" src="{$public_path}"></script>
+<script type="text/javascript">
+<!--
+url2cmd('{$url}');
+//-->
+</script>
+EOD;
+  return $result;
+}
+
+/**
+ * @see auto_link_text
+ */
+function op_auto_link_text($text, $link = 'urls', $href_options = array('target' => '_blank'), $truncate = true, $truncate_len = 57, $pad = '...')
+{
+  use_helper('Text');
+  return auto_link_text($text, $link, $href_options, $truncate, $truncate_len, $pad);
+}
+
+?>

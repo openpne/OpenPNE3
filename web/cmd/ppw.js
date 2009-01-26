@@ -1,0 +1,5 @@
+function main() {
+document.write("<object classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000' codebase='http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0' width='160' height='247' id='postpet' align='middle'><param name='allowScriptAccess' value='sameDomain' /><param name='movie' value='http://www.so-net.ne.jp/ad/pp-uranai/pet.swf' /><param name='FlashVars' value='baseURL=http://www.so-net.ne.jp/ad/pp-uranai/&adImg=&adTxt=' /><param name='quality' value='high' /><param name='bgcolor' value='#ffffff' /><embed src='http://www.so-net.ne.jp/ad/pp-uranai/pet.swf' FlashVars='baseURL=http://www.so-net.ne.jp/ad/pp-uranai/&adImg=&adTxt=' quality='high' bgcolor='#ffffff' width='160' height='247' name='postpet'  align='middle' allowScriptAccess='sameDomain' type='application/x-shockwave-flash' pluginspage='http://www.macromedia.com/go/getflashplayer' /></object>");
+ord=Math.random()*10000000000000000;
+document.write('<SCRIPT LANGUAGE="JavaScript" SRC="http://ad.jp.doubleclick.net/adj/postpet.so-net.window2/;sz=160x24;ord=' + ord + '?" ><\/SCRIPT>');
+}
