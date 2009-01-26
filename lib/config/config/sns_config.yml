@@ -84,3 +84,18 @@ mobile:
       1: "フォントサイズを指定する"
       0: "フォントサイズを指定しない"
 
+policy:
+  user_agreement:
+    Name:       "user_agreement"
+    Caption:    "利用規約"
+    FormType:   "textarea"
+    ValueType:  "string"
+    IsRequired: true
+    Default:    "利用規約はただいま準備中です。\nThe User Agreement is under construction."
+  privacy_policy:
+    Name:       "privacy_policy"
+    Caption:    "プライバシーポリシー"
+    FormType:   "textarea"
+    ValueType:  "string"
+    IsRequired: true
+    Default:    "プライバシーポリシーはただいま準備中です。\nThe Privacy Policy is under construction."
