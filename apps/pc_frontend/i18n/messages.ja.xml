@@ -386,6 +386,66 @@
         <source>Your current password</source>
         <target>現在のパスワード</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>less than 5 seconds</source>
+        <target>5秒以内</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>less than 10 seconds</source>
+        <target>10秒以内</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>less than 20 seconds</source>
+        <target>20秒以内</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>half a minute</source>
+        <target>30秒以内</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>less than a minute</source>
+        <target>1分以内</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>1 minute</source>
+        <target>1分</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%minutes% minutes</source>
+        <target>%minutes%分</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>about 1 hour</source>
+        <target>1時間</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>about %hours% hours</source>
+        <target>%hours%時間</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>1 day</source>
+        <target>1日</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%days% days</source>
+        <target>%days%日</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>about 1 month</source>
+        <target>1ヶ月</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%months% months</source>
+        <target>%months%ヶ月</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>about 1 year</source>
+        <target>1年</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>over %years% years</source>
+        <target>%years%年以上</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
