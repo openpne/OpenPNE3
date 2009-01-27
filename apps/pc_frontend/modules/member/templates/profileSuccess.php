@@ -42,14 +42,14 @@ op_include_parts('nineTable', 'communityList', $options);
 <?php if ($relation->isSelf()): ?>
 <?php ob_start() ?>
 <p><?php echo __('Other members look your page like this.') ?></p>
-<p><?php echo __('If you teach your page to other members,Please use following URL.') ?><br />
+<p><?php echo __('If you teach your page to other members, please use following URL.') ?><br />
 <?php echo url_for('member/profile?id='.$member->getId(), true) ?></p>
 <p><?php echo __('If you edit this page, please visit %1%.', array('%1%' => link_to(__('Edit profile'), 'member/editProfile'))) ?></p>
 <?php $content = ob_get_clean() ?>
 <?php op_include_parts('descriptionBox', 'informationAboutThisIsYourProfilePage', array('body' => $content)) ?>
 <?php elseif (!$relation->isFriend()): ?>
 <?php ob_start() ?>
-<p><?php echo __('If %1% is your friends, let us add to friends it!', array('%1%' => $member->getName())) ?><br />
+<p><?php echo __('If %1% is your friend, let us add to friends it!', array('%1%' => $member->getName())) ?><br />
 <?php echo link_to(__('Add friends'), 'friend/link?id='.$member->getId()) ?>
 </p>
 <?php $content = ob_get_clean() ?>

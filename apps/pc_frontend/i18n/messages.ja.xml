@@ -203,10 +203,6 @@
         <target>友人を%1%に招待する</target>
       </trans-unit>
       <trans-unit id="">
-        <source>If %1% is your friends, let us add to friends it!If %1% is your friends, let us add to friends it!</source>
-        <target>%1%さんと知り合いの場合、マイフレンドに追加しましょう！</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>The invitation has not been permitted.</source>
         <target>招待が許可されていません</target>
       </trans-unit>
@@ -445,6 +441,14 @@
       <trans-unit id="">
         <source>over %years% years</source>
         <target>%years%年以上</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If %1% is your friend, let us add to friends it!</source>
+        <target>%1%さんと直接の知り合いの場合、マイフレンドに追加しましょう！</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Add friends</source>
+        <target>マイフレンドに追加する</target>
       </trans-unit>
     </body>
   </file>

@@ -30,3 +30,17 @@ NavigationI18n:
     caption: "参加ｺﾐｭﾆﾃｨ"
     culture: "ja_JP"
 
+  mobile_home_side_navigation_invite_i18n_en:
+    id: mobile_home_side_navigation_invite
+    caption: "Invite"
+    culture: "en"
+
+  mobile_home_navigation_friend_i18n_en:
+    id: default_navigation_friend_list
+    caption: "My Friends"
+    culture: "en"
+
+  mobile_home_navigation_community_i18n_en:
+    id: mobile_home_navigation_community
+    caption: "Communities"
+    culture: "en"
