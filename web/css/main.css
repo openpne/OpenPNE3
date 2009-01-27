@@ -459,7 +459,7 @@ div.partsHeading {
   margin-bottom: 5px;
   padding: 2px 8px 2px 10px;
   height: 30px;
-  background: transparent url(../images/bg_parts_heading_650.gif) no-repeat 0 0;
+  background: transparent url(../images/bg_parts_heading_720.gif) no-repeat 0 0;
   line-height: 26px;
   color: #FFFFFF;
   font-size: 100%;
@@ -479,7 +479,7 @@ div.partsHeading a {
 }
 
 #LayoutB #Left div.partsHeading {
-  background-image: url(../images/bg_parts_heading_270.gif);
+  background-image: url(../images/bg_parts_heading_175.gif);
 }
 
 #LayoutB #Center div.partsHeading {
@@ -1117,7 +1117,8 @@ div.operation ul.moreInfo li {
  * recentList
  *----------------------------------------------------------------------------*/
 .recentList dl {
-  border-top: 1px solid #CCCCCC;
+  border: 1px solid #CCCCCC;
+  margin-bottom: 5px;
 }
 
 .recentList dt {
@@ -1143,6 +1144,7 @@ div.operation ul.moreInfo li {
  *----------------------------------------------------------------------------*/
 .commentList dl {
   border: 1px solid #CCCCCC;
+  margin-bottom: 10px;
 }
 
 .commentList dt {
