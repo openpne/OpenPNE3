@@ -1022,32 +1022,40 @@ div.operation ul.moreInfo li {
 .manageList td {
   padding: 5px;
 }
+
 .manageList td.photo {
   width: 140px;
-  border-left: none;
   text-align: center;
 }
+
 .manageList td.delete {
   width: 120px;
 }
+
 .manageList col.date {
   width: 160px;
 }
+
 * html .manageList col.date {
   width: 150px;
 }
+
 *:first-child+html .manageList col.date {
   width: 150px;
 }
+
 .manageList col.name {
   width: auto;
 }
+
 .manageList colgroup.operation col {
   width: 86px;
 }
+
 * html .manageList colgroup.operation col {
   width: 76px;
 }
+
 *:first-child+html .manageList colgroup.operation col {
   width: 76px;
 }
