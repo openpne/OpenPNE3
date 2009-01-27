@@ -24,6 +24,11 @@ Gadget:
     name: "communityJoinListBox"
     sort_order: 30
 
+  gadget_language_select_box:
+    type: "sideBannerContents"
+    name: "languageSelecterBox"
+    sort_order: 10
+
   mobile_gadget_information:
     type: "mobileTop"
     name: "informationBox"
