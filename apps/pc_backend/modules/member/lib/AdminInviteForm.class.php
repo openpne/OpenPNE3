@@ -75,15 +75,15 @@ class AdminInviteForm extends InviteForm
     {
       $this->member = MemberPeer::createPre();
       $this->saveConfig('pc_address', $value);
+      $this->member->setConfig('register_auth_mode', $authMode);
     }
 
     foreach ($this->getValue('mobile') as $value)
     {
       $this->member = MemberPeer::createPre();
       $this->saveConfig('mobile_address', $value);
+      $this->member->setConfig('register_auth_mode', $authMode);
     }
-
-    $this->member->setConfig('register_auth_mode', $authMode);
 
     return true;
   }
