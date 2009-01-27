@@ -88,7 +88,7 @@ class InviteForm extends MemberConfigPcAddressForm
     );
 
     $mail = new sfOpenPNEMailSend();
-    $mail->setSubject(opConfig::get('sns_name').'の招待状が届いています');
+    $mail->setSubject(opConfig::get('sns_name').'招待状');
     $mail->setTemplate('global/requestRegisterURLMail', $param);
     $mail->send($to, opConfig::get('admin_mail_address'));
   }
