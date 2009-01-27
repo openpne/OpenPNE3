@@ -56,7 +56,9 @@ abstract class sfOpenPNECommunityAction extends sfActions
 
     if ($request->isMethod('post'))
     {
-      $this->form->bind($request->getParameter('community'), $request->getFiles('community'));
+      $params = $request->getParameter('community');
+      $params['id'] = $this->id;
+      $this->form->bind($params, $request->getFiles('community'));
       if ($this->form->isValid())
       {
         $community = $this->form->save();
