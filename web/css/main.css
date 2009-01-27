@@ -642,12 +642,17 @@ div.operation ul.moreInfo li {
  * descriptionBox
  *----------------------------------------------------------------------------*/
 .descriptionBox .parts {
+  padding: 5px 20px;
   border: 1px solid #CCCCCC;
   background-color: #FFFFFF;
 }
 
+.descriptionBox div.body {
+  margin: 10px 0;
+}
+
 .descriptionBox p {
-  margin: 12px;
+  margin-bottom: 10px;
 }
 
 /*==============================================================================
