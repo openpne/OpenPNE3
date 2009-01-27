@@ -45,7 +45,31 @@ class sfOpenPNEWebRequest extends sfWebRequest
 
   public function isMobile()
   {
+    if (opConfig::get('is_check_mobile_ip') && !$this->isMobileIPAddress())
+    {
+      return false;
+    }
+
     return !($this->getMobile()->isNonMobile());
+  }
+
+  public function isMobileIPAddress()
+  {
+    $ipList = (array)include(sfContext::getInstance()->getConfigCache()->checkConfig('config/mobile_ip_address.yml'));
+
+    require_once 'Net/IPv4.php';
+
+    $result = false;
+    foreach ($ipList as $mobileIp)
+    {
+      if (Net_IPv4::ipInNetwork($_SERVER['REMOTE_ADDR'], $mobileIp))
+      {
+        $result = true;
+        break;
+      }
+    }
+
+    return $result;
   }
 
  /**

@@ -20,3 +20,6 @@ config/mobile_gadget.yml:
 
 config/mobile_mail_domain.yml:
   class: sfSimpleYamlConfigHandler
+
+config/mobile_ip_address.yml:
+  class: sfSimpleYamlConfigHandler
