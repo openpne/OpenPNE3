@@ -923,8 +923,9 @@ div.operation ul.moreInfo li {
 .searchResultList td {
   padding: 5px;
 }
+
 .searchResultList th {
-  width: 75px;
+  width: 90px;
 }
 
 .searchResultList tr.operation th {

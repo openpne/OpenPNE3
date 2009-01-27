@@ -17,6 +17,7 @@ foreach ($pager->getResults() as $key => $community)
 {
   $list[$key] = array();
   $list[$key][__('Community Name')] = $community->getName();
+  $list[$key][__('Count of Members')] = $community->countCommunityMembers();
   $list[$key][__('Description')] = $community->getConfig('description');
 }
 
