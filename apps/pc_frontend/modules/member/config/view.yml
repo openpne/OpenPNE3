@@ -4,7 +4,7 @@ homeSuccess:
     cautionAboutFriendPre:
       template: [friend, cautionAboutFriendPre]
       parts   : [information]
-      target  : [bottom]
+      target  : [bodyBottom]
 
 profileSuccess:
   layout: layoutA
