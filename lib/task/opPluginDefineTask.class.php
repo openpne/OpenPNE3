@@ -39,7 +39,13 @@ EOF;
     $info = $this->getPluginManager()->getPluginInfo($pluginName);
     if (!$info)
     {
-      throw new sfException(sprintf('Plugin "%s" is not registered in %s.', $pluginName, opPluginManager::OPENPNE_PLUGIN_CHANNEL));
+      $info = array(
+        'n' => $pluginName,
+        'c' => opPluginManager::OPENPNE_PLUGIN_CHANNEL,
+        'l' => 'Apache 2.0',
+        's' => ' ',
+        'd' => ' ',
+      );
     }
 
     $maintainers = $this->getPluginManager()->getPluginMaintainer($pluginName);
