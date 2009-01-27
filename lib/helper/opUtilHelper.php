@@ -118,6 +118,7 @@ function _app_url_for_internal_uri($application, $internal_uri, $absolute = fals
   if (sfContext::hasInstance($application))
   {
     $context = sfContext::getInstance($application);
+    sfContext::switchTo($application);
   }
   else
   {
