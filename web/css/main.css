@@ -722,47 +722,6 @@ div.operation ul.moreInfo li {
 }
 
 /*==============================================================================
- * news
- *----------------------------------------------------------------------------*/
-.partsNews th, .partsNews td {
-  border-color:#CCCCCC;
-  border-style:solid;
-  border-width:1px 0 0 1px;
-  padding: 5px;
-}
-
-.partsNews th {
-  width: 83px;
-}
-
-.partsNews .block {
-  border-width: 0;
-}
-
-.partsNews ul.articleList li {
-  padding-left: 85px;
-  text-indent: -72px;
-  background: transparent url(../images/icon_3.gif) no-repeat scroll 3px 0.4em;
-}
-
-.partsNews div.moreInfo ul.moreInfo {
-  margin: 0 2px 0 auto;
-  width: 10em;
-  padding-left: 0;
-  text-indent: 0;
-}
-
-.partsNews span.date {
-  background: transparent url(../images/articleList_marker.gif) no-repeat scroll 92% 0.3em;
-  padding-right: 18px;
-}
-
-.partsNews ul.moreInfo li {
-  background: transparent url(../images/icon_arrow_1.gif) no-repeat scroll 0 0.4em;
-  padding: 2px 0 2px 20px;
-}
-
-/*==============================================================================
  * news pager
  *----------------------------------------------------------------------------*/
 .partsNewsPager .block {
@@ -794,6 +753,7 @@ div.operation ul.moreInfo li {
   width: 83px;
   background-color: #FFFFFF;
 }
+
 .listBox th, .listBox td {
   padding: 5px;
 }

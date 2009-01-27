@@ -300,21 +300,6 @@ function include_parts($parts_name, $id, $option = array())
 }
 
 /**
- * Include news
- *
- * @deprecated since 3.0beta4
- */
-function include_news($id, $title = '', $list, $option = array())
-{
-  $option['class'] = 'partsNews';
-  $params = array(
-    'list' => $list,
-  );
-
- include_simple_box( $id, $title, get_partial('global/partsNews', $params), $option);
-}
-
-/**
  * Include news pager
  *
  * @deprecated since 3.0beta4
