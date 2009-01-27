@@ -1,6 +1,6 @@
 <?php include_customizes($id, 'before') ?>
 
-<div id="<?php echo $id ?>">
+<div id="<?php echo $id ?>" class="loginForm">
 
 <?php include_customizes($id, 'top') ?>
 

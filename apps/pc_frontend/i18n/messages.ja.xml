@@ -450,6 +450,14 @@
         <source>Add friends</source>
         <target>マイフレンドに追加する</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Mail address</source>
+        <target>メールアドレス</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Languages</source>
+        <target>言語</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

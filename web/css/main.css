@@ -1215,3 +1215,20 @@ div.operation ul.moreInfo li {
 .line {
   text-align: center;
 }
+
+/*==============================================================================
+ * loginForm
+ *----------------------------------------------------------------------------*/
+.loginForm {
+  margin: 10px 0 20px 0;
+}
+
+.loginForm th,
+.loginForm td {
+  padding: 3px;
+}
+
+.loginForm input {
+  border: 1px solid #888888;
+  background-color: #f8f8f8;
+}
