@@ -674,15 +674,17 @@ div.operation ul.moreInfo li {
 .alertBox {
   width: 564px;
 }
+
 #Body .alertBox th {
-  width: 148px;
   padding: 8px 0;
-  border: none;
+  width: 148px;
+  background-color: #FFFFFF;
   text-align: center;
 }
+
 #Body .alertBox td {
   padding: 6px;
-  border-width: 0 0 0 1px;
+  background-color: #FFFFFF;
   color: #ff0000;
 }
 
@@ -862,23 +864,28 @@ div.operation ul.moreInfo li {
 .memberImageUploadBox table {
   border-top: 1px solid #CCCCCC;
 }
+
 #Body .memberImageUploadBox td {
   padding: 8px 0;
-  border: none;
+  background-color: #FFFFFF;
   text-align: center;
 }
+
 .memberImageUploadBox form {
   float: left;
   width: 230px;
 }
+
 .memberImageUploadBox form p {
   margin: 8px 0;
   text-align: center;
 }
+
 .memberImageUploadBox ul {
   zoom: 1;
   margin: 8px 0 8px 230px;
 }
+
 .memberImageUploadBox li {
   padding-left: 12px;
   background: url(./skin/default/img/marker.gif) no-repeat 3px 3px;
@@ -1135,7 +1142,7 @@ div.operation ul.moreInfo li {
  * commentList
  *----------------------------------------------------------------------------*/
 .commentList dl {
-  border-top: 1px solid #CCCCCC;
+  border: 1px solid #CCCCCC;
 }
 
 .commentList dt {
