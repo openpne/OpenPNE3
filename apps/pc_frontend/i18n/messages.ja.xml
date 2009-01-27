@@ -458,6 +458,10 @@
         <source>Languages</source>
         <target>言語</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Member Registration</source>
+        <target>メンバー登録</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
