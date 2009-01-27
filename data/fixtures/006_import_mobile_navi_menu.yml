@@ -36,7 +36,7 @@ NavigationI18n:
     culture: "en"
 
   mobile_home_navigation_friend_i18n_en:
-    id: default_navigation_friend_list
+    id: mobile_home_navigation_friend
     caption: "My Friends"
     culture: "en"
 
