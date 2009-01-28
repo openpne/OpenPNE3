@@ -32,5 +32,5 @@ $options = array(
 op_include_parts('searchResultList', 'searchCommunityResult', $options);
 ?>
 <?php else: ?>
-<?php op_include_box('searchCommunityResult', __('Your search queries did not match any communites.'), array('title' => __('Search Results'))) ?>
+<?php op_include_box('searchCommunityResult', __('Your search queries did not match any communities.'), array('title' => __('Search Results'))) ?>
 <?php endif; ?>

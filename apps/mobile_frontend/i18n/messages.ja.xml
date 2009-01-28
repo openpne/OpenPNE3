@@ -247,7 +247,7 @@
         <target>PCﾒｰﾙｱﾄﾞﾚｽ</target>
       </trans-unit>
       <trans-unit id="">
-        <source>PC E-mail Address(Confirm)</source>
+        <source>PC E-mail Address (Confirm)</source>
         <target>PCﾒｰﾙｱﾄﾞﾚｽ(確認)</target>
       </trans-unit>
       <trans-unit id="">
@@ -259,7 +259,7 @@
         <target>携帯ﾒｰﾙｱﾄﾞﾚｽ</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Mobile E-mail Address(Confirm)</source>
+        <source>Mobile E-mail Address (Confirm)</source>
         <target>携帯ﾒｰﾙｱﾄﾞﾚｽ(確認)</target>
       </trans-unit>
       <trans-unit id="">
@@ -271,7 +271,7 @@
         <target>ﾊﾟｽﾜｰﾄﾞ</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Password(Confirm)</source>
+        <source>Password (Confirm)</source>
         <target>ﾊﾟｽﾜｰﾄﾞ(確認)</target>
       </trans-unit>
       <trans-unit id="">

@@ -107,7 +107,7 @@
         <target>ここで入力したメールアドレスは他のメンバーには公開されません。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Your search queries did not match any communites.</source>
+        <source>Your search queries did not match any communities.</source>
         <target>該当するコミュニティはありませんでした。</target>
       </trans-unit>
       <trans-unit id="">
@@ -151,7 +151,7 @@
         <target>フレンドから外す</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Ass friends</source>
+        <source>Add friends</source>
         <target>マイフレンドに追加</target>
       </trans-unit>
       <trans-unit id="">
@@ -235,11 +235,11 @@
         <target>プロフィールを変更する場合は「%1%」よりおこなってください。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>It is necessary to register the cell-phone Information to entry in %1%.</source>
+        <source>It is necessary to register the mobile-phone information to entry in %1%.</source>
         <target>%1%に参加するには、携帯電話の登録が必要です。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Register the cell-phone</source>
+        <source>Register the mobile-phone</source>
         <target>携帯電話の登録</target>
       </trans-unit>
       <trans-unit id="">
@@ -299,7 +299,7 @@
         <target>詳細を見る</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Please bgining register from %1% to following URL.</source>
+        <source>Please beginning register from %1% to following URL.</source>
         <target>以下のURLから%1%に登録してください</target>
       </trans-unit>
       <trans-unit id="">
@@ -343,7 +343,7 @@
         <target>PCメールアドレス</target>
       </trans-unit>
       <trans-unit id="">
-        <source>PC E-mail Address(Confirm)</source>
+        <source>PC E-mail Address (Confirm)</source>
         <target>PCメールアドレス(確認)</target>
       </trans-unit>
       <trans-unit id="">
@@ -355,7 +355,7 @@
         <target>携帯メールアドレス</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Mobile E-mail Address(Confirm)</source>
+        <source>Mobile E-mail Address (Confirm)</source>
         <target>携帯メールアドレス(確認)</target>
       </trans-unit>
       <trans-unit id="">
@@ -367,7 +367,7 @@
         <target>パスワード</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Password(Confirm)</source>
+        <source>Password (Confirm)</source>
         <target>パスワード(確認)</target>
       </trans-unit>
       <trans-unit id="">
