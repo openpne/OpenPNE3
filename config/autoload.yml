@@ -1,4 +1,16 @@
 autoload:
+  project:
+    name:           project
+    path:           %SF_LIB_DIR%
+    recursive:      on
+    exclude:        [model, symfony, vendor]
+
+  project_vendor:
+    name:           project vendor
+    path:           %SF_LIB_DIR%/vendor
+    recursive:      on
+    exclude:        [PEAR]
+
   plugins_application_lib:
     name:           plugins application lib
     path:           %SF_PLUGINS_DIR%/*/apps/*/lib

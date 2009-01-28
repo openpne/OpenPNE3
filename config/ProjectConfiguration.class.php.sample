@@ -13,7 +13,9 @@ class ProjectConfiguration extends sfProjectConfiguration
 
   public function setIncludePath()
   {
-    // PEAR
-    set_include_path(get_include_path().PATH_SEPARATOR.dirname(__FILE__).'/../lib/vendor/PEAR/');
+    sfToolkit::addIncludePath(array(
+      //PEAR
+      dirname(__FILE__).'/../lib/vendor/PEAR/',
+    ));
   }
 }
