@@ -1,0 +1,125 @@
+WordConfig:
+  word_config_friend:
+    word_type_id: word_type_friend
+    name: "friend"
+  word_config_myfriend:
+    word_type_id: word_type_friend
+    name: "myfriend"
+  word_config_friend_mobile:
+    word_type_id: word_type_friend
+    name: "friend_moblie"
+  word_config_myfriend_mobile:
+    word_type_id: word_type_friend
+    name: "myfriend_mobile"
+
+  word_config_community:
+    word_type_id: word_type_community
+    name: "community"
+  word_config_community_mobile:
+    word_type_id: word_type_community
+    name: "community_mobile"
+
+  word_config_nickname:
+    word_type_id: word_type_nickname
+    name: "nickname"
+  word_config_nickname_mobile:
+    word_type_id: word_type_nickname
+    name: "nickname_mobile"
+
+WordConfigI18n:
+  word_config_i18n_friend_en:
+    id: word_config_friend
+    caption: "friend"
+    value: "friend"
+    culture: "en"
+  word_config_i18n_friend_ja:
+    id: word_config_friend
+    caption: "フレンド"
+    description: "SNS内「フレンド」を他の名称に設定します"
+    value: "フレンド"
+    culture: "ja_JP"
+
+  word_config_i18n_myfriend_en:
+    id: word_config_myfriend
+    caption: "myfriend"
+    value: "myfriend"
+    culture: "en"
+  word_config_i18n_myfriend_ja:
+    id: word_config_myfriend
+    caption: "マイフレンド"
+    description: "SNS内「マイフレンド」を他の名称に設定します"
+    value: "マイフレンド"
+    culture: "ja_JP"
+
+  word_config_i18n_friend_mobile_en:
+    id: word_config_friend_mobile
+    caption: "friend(mobile)"
+    value: "friend"
+    culture: "en"
+  word_config_i18n_friend_mobile_ja:
+    id: word_config_friend_mobile
+    caption: "ﾌﾚﾝﾄﾞ(携帯)"
+    description: "SNS内「ﾌﾚﾝﾄﾞ」(携帯)を他の名称に設定します"
+    value: "ﾌﾚﾝﾄﾞ"
+    culture: "ja_JP"
+
+  word_config_i18n_myfriend_mobile_en:
+    id: word_config_myfriend_mobile
+    caption: "myfriend(mobile)"
+    value: "friend"
+    culture: "en"
+  word_config_i18n_myfriend_mobile_ja:
+    id: word_config_myfriend_mobile
+    caption: "ﾏｲﾌﾚﾝﾄﾞ(携帯)"
+    description: "SNS内「ﾏｲﾌﾚﾝﾄﾞ」(携帯)を他の名称に設定します"
+    value: "ﾏｲﾌﾚﾝﾄﾞ"
+    culture: "ja_JP"
+
+  word_config_i18n_community_en:
+    id: word_config_community
+    caption: "community"
+    value: "community"
+    culture: "en"
+  word_config_i18n_community_ja:
+    id: word_config_community
+    caption: "コミュニティ"
+    description: "SNS内「コミュニティ」を他の名称に設定します"
+    value: "コミュニティ"
+    culture: "ja_JP"
+
+  word_config_i18n_community_mobile_en:
+    id: word_config_community_mobile
+    caption: "community(mobile)"
+    value: "community"
+    culture: "en"
+  word_config_i18n_community_mobile_ja:
+    id: word_config_community_mobile
+    caption: "ｺﾐｭﾆﾃｨ（携帯）"
+    description: "SNS内「ｺﾐｭﾆﾃｨ」(携帯)を他の名称に設定します"
+    value: "ｺﾐｭﾆﾃｨ"
+    culture: "ja_JP"
+
+  word_config_i18n_nickname_en:
+    id: word_config_nickname
+    caption: "nickname"
+    value: "nickname"
+    culture: "en"
+  word_config_i18n_nickname_ja:
+    id: word_config_nickname
+    caption: "ニックネーム"
+    description: "SNS内「ニックネーム」を他の名称に設定します"
+    value: "ニックネーム"
+    culture: "ja_JP"
+
+  word_config_i18n_nickname_mobile_en:
+    id: word_config_nickname_mobile
+    caption: "nickname(mobile)"
+    value: "nickname"
+    culture: "en"
+  word_config_i18n_nickname_mobile_ja:
+    id: word_config_nickname_mobile
+    caption: "ﾆｯｸﾈｰﾑ（携帯）"
+    description: "SNS内「ﾆｯｸﾈｰﾑ」(携帯)を他の名称に設定します"
+    value: "ﾆｯｸﾈｰﾑ"
+    culture: "ja_JP"
+
