@@ -4,7 +4,7 @@ $options->setDefault('url', sfContext::getInstance()->getRouting()->getCurrentIn
 $options->setDefault('method','post');
 ?>
 
-<form action="<?php echo url_for($options['url']) ?>" method="post"<?php if (!empty($options['isMultipart'])): ?> enctype="multipart/form-data"<?php endif; ?>>
+<form action="<?php echo $options->getRaw('url') ?>" method="post"<?php if (!empty($options['isMultipart'])): ?> enctype="multipart/form-data"<?php endif; ?>>
 <?php include_customizes($id, 'formTop') ?>
 
 <?php if (isset($options['body'])): ?>

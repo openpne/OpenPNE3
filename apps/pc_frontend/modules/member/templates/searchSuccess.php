@@ -1,7 +1,7 @@
 <?php
 $options = array(
   'title'  => __('メンバー検索'),
-  'url'    => 'member/search',
+  'url'    => url_for('member/search'),
   'button' => __('Search'),
 );
 

@@ -278,6 +278,10 @@ function include_box($id, $title = '', $body = '', $options = array())
       $request = sfContext::getInstance()->getRequest();
       $options['url'] = $request->getParameter('module').'/'.$request->getParameter('action');
     }
+    else
+    {
+      $options['url'] = url_for($options['url']);
+    }
 
     op_include_form($id, $options['form'], $options);
   }

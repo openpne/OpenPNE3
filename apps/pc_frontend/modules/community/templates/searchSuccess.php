@@ -1,7 +1,7 @@
 <?php
 $options = array(
   'title'   => __('Search Communities'),
-  'url'    => 'community/search',
+  'url'    => url_for('community/search'),
   'button' => __('Search'),
   'moreInfo' => array(link_to(__('Create a new community'), 'community/edit'))
 );

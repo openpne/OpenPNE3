@@ -18,7 +18,7 @@ op_include_parts('pageNav', 'navForDelete', array('list' => $list));
 <?php end_slot(); ?>
 
 <?php if ($categoryName): ?>
-<?php op_include_form($categoryName.'Form', $form, array('title' => __($categoryCaptions[$categoryName]), 'url' => 'member/config?category='.$categoryName)) ?>
+<?php op_include_form($categoryName.'Form', $form, array('title' => __($categoryCaptions[$categoryName]), 'url' => url_for('member/config?category='.$categoryName))) ?>
 <?php else: ?>
 <?php op_include_box('configInformation', __('Please select the item that wants to be set from the menu.'), array('title' => __('Change Settings'))); ?>
 <?php endif; ?>
