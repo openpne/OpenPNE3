@@ -16,7 +16,7 @@ $options->setDefault('no_method', 'post');
 <div class="operation">
 <ul class="moreInfo button">
 <li>
-<form action="<?php echo url_for($options['yes_url']) ?>" method="<?php echo $options['yes_method'] ?>">
+<form action="<?php echo $options['yes_url'] ?>" method="<?php echo $options['yes_method'] ?>">
 <?php $yesFomrs = ($options['yes_form'] instanceof sfForm) ? array($options['yes_form']) : $options['yes_form'] ?>
 <?php foreach($yesFomrs as $yesForm): ?>
 <?php echo $yesForm->renderHiddenFields() ?>
@@ -25,7 +25,7 @@ $options->setDefault('no_method', 'post');
 </form>
 </li>
 <li>
-<form action="<?php echo url_for($options['no_url']) ?>" method="<?php echo $options['no_method'] ?>">
+<form action="<?php echo $options['no_url'] ?>" method="<?php echo $options['no_method'] ?>">
 <?php $noForms = ($options['no_form'] instanceof sfForm) ? array($options['no_form']) : $options['no_form'] ?>
 <?php foreach($noForms as $noForm): ?>
 <?php echo $noForm->renderHiddenFields() ?>
