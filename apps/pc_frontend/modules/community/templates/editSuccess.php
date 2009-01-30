@@ -11,7 +11,7 @@ if ($form->isNew())
 else
 {
   $options['title'] = __('Edit the community');
-  $options['url'] = url_for('community/edit', $community->getId());
+  $options['url'] = url_for('community/edit?id='.$community->getId());
 }
 
 op_include_form('formCommunity', $form, $options);
