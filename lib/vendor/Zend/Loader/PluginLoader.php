@@ -101,8 +101,12 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
     {
         if (is_string($staticRegistryName) && !empty($staticRegistryName)) {
             $this->_useStaticRegistry = $staticRegistryName;
-            self::$_staticPrefixToPaths[$staticRegistryName] = array();
-            self::$_staticLoadedPlugins[$staticRegistryName] = array();
+            if(!isset(self::$_staticPrefixToPaths[$staticRegistryName])) {
+                self::$_staticPrefixToPaths[$staticRegistryName] = array();
+            }
+            if(!isset(self::$_staticLoadedPlugins[$staticRegistryName])) {
+                self::$_staticLoadedPlugins[$staticRegistryName] = array();
+            }
         }
 
         foreach ($prefixToPaths as $prefix => $path) {

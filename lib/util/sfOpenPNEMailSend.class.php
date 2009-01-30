@@ -38,16 +38,20 @@ class sfOpenPNEMailSend
 
   public static function execute($subject, $to, $from, $body)
   {
-    $swift = new Swift(new Swift_Connection_NativeMail());
+    sfOpenPNEApplicationConfiguration::registerZend();
 
-    $msg = new Swift_Message(
-      mb_convert_encoding($subject, 'JIS', 'UTF-8'),
-      mb_convert_encoding($body, 'JIS', 'UTF-8'),
-      'text/plain', '7bit', 'iso-2022-jp'
-    );
-    $msg->headers->setCharset('ISO-2022-JP');
+    $mailer = new Zend_Mail('iso-2022-jp');
+    $mailer->setHeaderEncoding(Zend_Mime::ENCODING_BASE64)
+      ->setFrom($from)
+      ->addTo($to)
+      ->setSubject(mb_encode_mimeheader($subject, 'iso-2022-jp'))
+      ->setBodyText(mb_convert_encoding($body, 'JIS', 'UTF-8'), 'iso-2022-jp', Zend_Mime::ENCODING_7BIT);
 
-    return $swift->send($msg, $to, $from);
+    $result = $mailer->send();
+
+    Zend_Loader::registerAutoLoad('Zend_Loader', false);
+
+    return $result;
   }
 
  /**
