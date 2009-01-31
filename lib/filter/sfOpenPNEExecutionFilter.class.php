@@ -29,7 +29,14 @@ class sfOpenPNEExecutionFilter extends sfExecutionFilter
       'actionInstance' => $actionInstance,
     )));
 
-    $result = parent::handleAction($filterChain, $actionInstance);
+    try
+    {
+      $result = parent::handleAction($filterChain, $actionInstance);
+    }
+    catch (opRuntimeException $e)
+    {
+      $this->forwardToErrorAction();
+    }
 
     $dispatcher->notify(new sfEvent($this, 'op_action.post_execute_'.$moduleName.'_'.$actionName, array(
       'moduleName'     => $moduleName,
@@ -65,5 +72,12 @@ class sfOpenPNEExecutionFilter extends sfExecutionFilter
     {
       $form->getWidgetSchema()->setFormFormatterName('mobile');
     }
+  }
+
+  protected function forwardToErrorAction()
+  {
+    $this->context->getController()->forward('default', 'error');
+
+    throw new sfStopException();
   }
 }

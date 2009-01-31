@@ -97,18 +97,20 @@ class memberActions extends sfOpenPNEMemberAction
   */
   public function executeConfigImage($request)
   {
-    if ($request->isXmlHttpRequest())
-    {
-      $this->setLayout('plain');
-    }
-
     $options = array('member' => $this->getUser()->getMember());
     $this->form = new MemberImageForm(array(), $options);
 
     if ($request->isMethod('post'))
     {
-      $this->form->bindAndSave($request->getParameter('member_image'), $request->getFiles('member_image'));
-      $this->redirect('member/configImage');
+      try
+      {
+        $this->form->bindAndSave($request->getParameter('member_image'), $request->getFiles('member_image'));
+        $this->redirect('member/configImage');
+      }
+      catch (opRuntimeException $e)
+      {
+        $this->getUser()->setFlash('error', $e->getMessage());
+      }
     }
   }
 

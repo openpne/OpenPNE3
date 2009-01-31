@@ -462,6 +462,10 @@
         <source>Member Registration</source>
         <target>メンバー登録</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Cannot add an image any more.</source>
+        <target>これ以上画像を追加できません。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

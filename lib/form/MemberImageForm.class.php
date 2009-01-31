@@ -40,7 +40,7 @@ class MemberImageForm extends sfForm
     $count = $this->member->countMemberImages();
     if ($count >= 3)
     {
-      throw new sfException('Cannot add an image any more.');
+      throw new opRuntimeException('Cannot add an image any more.');
     }
 
     $file = new File();

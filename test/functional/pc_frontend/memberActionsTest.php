@@ -40,4 +40,7 @@ $browser
     'file' => array('name' => $filePath, 'type' => 'image/jpeg'),
   )))
   ->isStatusCode(200)
+  ->with('response')->begin()
+  ->checkElement('#flashError td:contains("これ以上画像を追加できません。")', true)
+  ->end()
 ;
