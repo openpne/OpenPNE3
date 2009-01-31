@@ -256,7 +256,7 @@ function _op_url_cmd($matches)
     return str_replace('&', '&amp;', op_auto_link_text(str_replace('&amp;', '&', $url)));
   }
 
-  $public_path = _compute_public_path($cmd, 'cmd', 'js');
+  $public_path = _compute_public_path($file, 'cmd', 'js');
   $result = <<<EOD
 <script type="text/javascript" src="{$public_path}"></script>
 <script type="text/javascript">
