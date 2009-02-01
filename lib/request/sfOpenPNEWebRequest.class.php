@@ -22,9 +22,9 @@ class sfOpenPNEWebRequest extends sfWebRequest
  /**
   * @see sfWebRequest
   */
-  public function initialize(sfEventDispatcher $dispatcher, $parameters = array(), $attributes = array())
+  public function initialize(sfEventDispatcher $dispatcher, $parameters = array(), $attributes = array(), $options = array())
   {
-    parent::initialize($dispatcher, $parameters, $attributes);
+    parent::initialize($dispatcher, $parameters, $attributes, $options);
 
     require_once 'Net/UserAgent/Mobile.php';
   }
