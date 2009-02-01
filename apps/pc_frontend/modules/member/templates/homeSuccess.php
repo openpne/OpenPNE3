@@ -35,3 +35,16 @@
 <?php endforeach; ?>
 <?php endif; ?>
 <?php end_slot() ?>
+
+<?php echo javascript_tag('
+$$(".partsHeading").each(function(obj){
+  // folding
+  Event.observe(obj, "dblclick", function(e){
+    Event.element(e).parentNode.childElements().each(function(child){
+      if (!child.hasClassName("partsHeading")) {
+        child.toggle();
+      }
+    });
+  });
+});
+') ?>
