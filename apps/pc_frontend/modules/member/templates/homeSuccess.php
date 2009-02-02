@@ -59,10 +59,11 @@ function foldObj(obj, display)
 
       var size = Element.childElements(obj.parentNode).length;
       if (size == index + 1) {  // It is a last loop maybe
+        var path = "'.($sf_request->getRelativeUrlRoot() ? $sf_request->getRelativeUrlRoot() : '/').'";
         var id = child.parentNode.parentNode.id;
         var expires = new Date();
         expires.setTime((new Date()).getTime() + (10 * 12 * 30 * 24 * 60 * 60 * 1000));
-        opCookie.set("HomeGadget_"+id+"_toggle", child.visible(), expires);
+        opCookie.set("HomeGadget_"+id+"_toggle", child.visible(), expires, path);
       }
     }
   });
