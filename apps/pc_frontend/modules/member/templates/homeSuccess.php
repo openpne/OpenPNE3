@@ -102,48 +102,57 @@ $$(".partsHeading").each(function(obj){
 });
 
 var TopSort = opCookie.get("HomeGadget_Top_sort");
-var Top = document.getElementById("Top");
-var preGadget = null;
-TopSort.split(",").each(function(value){
-  var gadget = document.getElementById(value);
-  if (!preGadget) {
-    Element.remove(gadget);
-    Insertion.Top(Top, gadget);
-  } else {
-    Element.remove(gadget);
-    Insertion.After(preGadget, gadget);
-  }
-  preGadget = gadget;
-});
+if (TopSort)
+{
+  var Top = document.getElementById("Top");
+  var preGadget = null;
+  TopSort.split(",").each(function(value){
+    var gadget = document.getElementById(value);
+    if (!preGadget) {
+      Element.remove(gadget);
+      Insertion.Top(Top, gadget);
+    } else {
+      Element.remove(gadget);
+      Insertion.After(preGadget, gadget);
+    }
+    preGadget = gadget;
+  });
+}
 
 var LeftSort = opCookie.get("HomeGadget_Left_sort");
-var Left = document.getElementById("Left");
-var preGadget = null;
-LeftSort.split(",").each(function(value){
-  var gadget = document.getElementById(value);
-  if (!preGadget) {
-    Element.remove(gadget);
-    Insertion.Top(Left, gadget);
-  } else {
-    Element.remove(gadget);
-    Insertion.After(preGadget, gadget);
-  }
-  preGadget = gadget;
-});
+if (LeftSort)
+{
+  var Left = document.getElementById("Left");
+  var preGadget = null;
+  LeftSort.split(",").each(function(value){
+    var gadget = document.getElementById(value);
+    if (!preGadget) {
+      Element.remove(gadget);
+      Insertion.Top(Left, gadget);
+    } else {
+      Element.remove(gadget);
+      Insertion.After(preGadget, gadget);
+    }
+    preGadget = gadget;
+  });
+}
 
 var CenterSort = opCookie.get("HomeGadget_Center_sort");
-var Center = document.getElementById("Center");
-var preGadget = null;
-CenterSort.split(",").each(function(value){
-  var gadget = document.getElementById(value);
-  if (!preGadget) {
-    Element.remove(gadget);
-    Insertion.Top(Center, gadget);
-  } else {
-    Element.remove(gadget);
-    Insertion.After(preGadget, gadget);
-  }
-  preGadget = gadget;
-});
+if (CenterSort)
+{
+  var Center = document.getElementById("Center");
+  var preGadget = null;
+  CenterSort.split(",").each(function(value){
+    var gadget = document.getElementById(value);
+    if (!preGadget) {
+      Element.remove(gadget);
+      Insertion.Top(Center, gadget);
+    } else {
+      Element.remove(gadget);
+      Insertion.After(preGadget, gadget);
+    }
+    preGadget = gadget;
+  });
+}
 
 ') ?>
