@@ -102,17 +102,14 @@ $$(".partsHeading").each(function(obj){
 });
 
 var TopSort = opCookie.get("HomeGadget_Top_sort");
-console.debug(TopSort);
 var Top = document.getElementById("Top");
 var preGadget = null;
 TopSort.split(",").each(function(value){
   var gadget = document.getElementById(value);
   if (!preGadget) {
-    console.debug("first gadget");
     Element.remove(gadget);
     Insertion.Top(Top, gadget);
   } else {
-    console.debug("normal gadget");
     Element.remove(gadget);
     Insertion.After(preGadget, gadget);
   }
@@ -120,17 +117,14 @@ TopSort.split(",").each(function(value){
 });
 
 var LeftSort = opCookie.get("HomeGadget_Left_sort");
-console.debug(LeftSort);
 var Left = document.getElementById("Left");
 var preGadget = null;
 LeftSort.split(",").each(function(value){
   var gadget = document.getElementById(value);
   if (!preGadget) {
-    console.debug("first gadget");
     Element.remove(gadget);
     Insertion.Top(Left, gadget);
   } else {
-    console.debug("normal gadget");
     Element.remove(gadget);
     Insertion.After(preGadget, gadget);
   }
@@ -138,17 +132,14 @@ LeftSort.split(",").each(function(value){
 });
 
 var CenterSort = opCookie.get("HomeGadget_Center_sort");
-console.debug(CenterSort);
 var Center = document.getElementById("Center");
 var preGadget = null;
 CenterSort.split(",").each(function(value){
   var gadget = document.getElementById(value);
   if (!preGadget) {
-    console.debug("first gadget");
     Element.remove(gadget);
     Insertion.Top(Center, gadget);
   } else {
-    console.debug("normal gadget");
     Element.remove(gadget);
     Insertion.After(preGadget, gadget);
   }
