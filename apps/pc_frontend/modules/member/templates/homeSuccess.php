@@ -43,14 +43,41 @@
 <?php endif; ?>
 
 <?php echo javascript_tag('
+function foldObj(obj, display)
+{
+  Element.childElements(obj.parentNode).each(function(child, index){
+    if (!child.hasClassName("partsHeading")) {
+      if (display == null) {
+        child.toggle();
+      } else {
+        if (display == "true") {
+          child.show();
+        } else {
+          child.hide();
+        }
+      }
+
+      var size = Element.childElements(obj.parentNode).length;
+      if (size == index + 1) {  // It is a last loop maybe
+        var id = child.parentNode.parentNode.id;
+        var expires = new Date();
+        expires.setTime((new Date()).getTime() + (10 * 12 * 30 * 24 * 60 * 60 * 1000));
+        opCookie.set("HomeGadget_"+id+"_toggle", child.visible(), expires);
+      }
+    }
+  });
+}
+
 $$(".partsHeading").each(function(obj){
   // folding
   Event.observe(obj, "dblclick", function(e){
-    Event.element(e).parentNode.childElements().each(function(child){
-      if (!child.hasClassName("partsHeading")) {
-        child.toggle();
-      }
-    });
+    foldObj(obj);
   });
+  var id = obj.parentNode.parentNode.id;
+  var display = opCookie.get("HomeGadget_"+id+"_toggle");
+  if (display != null) {
+    foldObj(obj, display);
+  }
 });
+
 ') ?>

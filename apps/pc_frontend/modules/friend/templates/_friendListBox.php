@@ -14,4 +14,4 @@ if ($member->getId() == $sf_user->getMember()->getId())
   $options['moreInfo'][] = link_to(__('My Friends Setting'), 'friend/manage');
 }
 
-op_include_parts('nineTable', 'frendList', $options);
+op_include_parts('nineTable', 'frendList_'.$gadget->getId(), $options);

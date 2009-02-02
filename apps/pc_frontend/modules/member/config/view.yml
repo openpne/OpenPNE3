@@ -1,4 +1,5 @@
 homeSuccess:
+  javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype, util]
   layout: layoutA
   customize:
     cautionAboutFriendPre:

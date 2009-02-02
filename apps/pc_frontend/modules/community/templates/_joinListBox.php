@@ -8,4 +8,4 @@ $options = array(
   'row' => $row,
   'col' => $col,
 );
-op_include_parts('nineTable', 'communityList', $options);
+op_include_parts('nineTable', 'communityList_'.$gadget->getId(), $options);
