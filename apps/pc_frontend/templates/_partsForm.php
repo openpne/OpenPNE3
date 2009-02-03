@@ -1,6 +1,6 @@
 <?php
 $options->setDefault('button', __('Send'));
-$options->setDefault('url', sfContext::getInstance()->getRouting()->getCurrentInternalUri());
+$options->setDefault('url', url_for(sfContext::getInstance()->getRouting()->getCurrentInternalUri()));
 $options->setDefault('method','post');
 ?>
 
