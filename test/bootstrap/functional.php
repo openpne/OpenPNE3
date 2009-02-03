@@ -23,7 +23,8 @@ $configuration = ProjectConfiguration::getApplicationConfiguration($app, 'test',
 sfContext::createInstance($configuration);
 
 $loader = new sfPropelData();
-$loader->loadData(sfConfig::get('sf_data_dir').'/fixtures');
+$loader->setDeleteCurrentData(true);
+$loader->loadData(dirname(__FILE__).'/../fixtures');
 
 // remove all cache
 sfToolkit::clearDirectory(sfConfig::get('sf_app_cache_dir'));
