@@ -7,8 +7,14 @@ $t = new lime_test(4, new lime_output_color());
 
 //------------------------------------------------------------
 
+class dummyActions extends sfActions
+{
+}
+
+
 $configuration = ProjectConfiguration::getApplicationConfiguration('pc_frontend', 'test', true);
 sfContext::createInstance($configuration);
+sfContext::getInstance()->getController()->getActionStack()->addEntry('member', 'home', new dummyActions(sfContext::getInstance(), 'member', 'home'));
 
 $member = MemberPeer::retrieveByPk(1);
 $form = new MemberConfigMobileAddressForm($member, array(), false);
