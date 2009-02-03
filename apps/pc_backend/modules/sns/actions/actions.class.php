@@ -14,7 +14,6 @@
  * @package    OpenPNE
  * @subpackage sns
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
- * @version    SVN: $Id: actions.class.php 9301 2008-05-27 01:08:46Z dwhittle $
  */
 class snsActions extends sfActions
 {
@@ -23,16 +22,17 @@ class snsActions extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeConfig($request)
+  public function executeConfig(sfWebRequest $request)
   {
-    $category = $request->getParameter('category', 'general');
-    $this->form = new SnsConfigForm(array(), array('category' => $category));
+    $this->category = $request->getParameter('category', 'general');
+    $this->form = new SnsConfigForm(array(), array('category' => $this->category));
     if ($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('sns_config'));
       if ($this->form->isValid())
       {
         $this->form->save();
+        $this->redirect('sns/config?category='.$this->category);
       }
     }
   }

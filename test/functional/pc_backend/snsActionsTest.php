@@ -17,23 +17,26 @@ $browser
   ->info('1. When an admin user tries to change the SNS configuration. (ref. #3488)')
   ->info('A category is not selected, admin user can change the general configuration.')
   ->get('/sns/config')
-  ->click('設定変更', array('sns_config' => array(
-    'sns_name'           => 'Super MySNS',
-    'sns_title'          => 'Super MySNS - Come on join us! -',
-    'admin_mail_address' => 'admin@example.com',
-    'enable_pc'          => 1,
-    'enable_mobile'      => 1,
-  )))
+  ->click('設定変更')
   ->isStatusCode(302)
 
   ->info('A general category is selected, admin user can change the general configuration.')
   ->get('/sns/config/category/general')
-  ->click('設定変更', array('sns_config' => array(
-    'sns_name'           => 'Super MySNS',
-    'sns_title'          => 'Super MySNS - Come on join us! -',
-    'admin_mail_address' => 'admin@example.com',
-    'enable_pc'          => 1,
-    'enable_mobile'      => 1,
-  )))
+  ->click('設定変更')
+  ->isStatusCode(302)
+
+  ->info('An authentication category is selected, admin user can change the authentication configuration.')
+  ->get('/sns/config/category/authentication')
+  ->click('設定変更')
+  ->isStatusCode(302)
+
+  ->info('A mobile category is selected, admin user can change the mobile configuration.')
+  ->get('/sns/config/category/mobile')
+  ->click('設定変更')
+  ->isStatusCode(302)
+
+  ->info('A policy category is selected, admin user can change the policy configuration.')
+  ->get('/sns/config/category/policy')
+  ->click('設定変更')
   ->isStatusCode(302)
 ;
