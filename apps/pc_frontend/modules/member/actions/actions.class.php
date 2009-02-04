@@ -62,7 +62,9 @@ class memberActions extends sfOpenPNEMemberAction
     $this->filters->bind($params);
 
     $this->pager = new sfPropelPager('Member', 20);
-    $this->pager->setCriteria($this->filters->getCriteria());
+    $c = $this->filters->getCriteria();
+    $c->addDescendingOrderByColumn(MemberPeer::ID);
+    $this->pager->setCriteria($c);
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
 
