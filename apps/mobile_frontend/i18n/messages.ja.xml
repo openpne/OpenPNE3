@@ -290,6 +290,10 @@
         <source>Back to previous page</source>
         <target>前のﾍﾟｰｼﾞに戻る</target>
       </trans-unit>
-    </body>
+      <trans-unit id="">
+        <source>Please input by a-z or A-Z or 6-12 characters and 6-12 length.</source>
+        <target>6～12文字の半角英数で入力してください。</target>
+      </trans-unit>
+     </body>
   </file>
 </xliff>

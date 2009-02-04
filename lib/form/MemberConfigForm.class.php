@@ -86,7 +86,7 @@ class MemberConfigForm extends sfForm
       $this->widgetSchema[$name.'_confirm'] = $this->widgetSchema[$name];
       $this->widgetSchema->setLabel($name.'_confirm', $config['Caption'].' (Confirm)');
 
-      $this->mergePostValidator(new sfValidatorSchemaCompare($name, '==', $name.'_confirm'));
+      $this->mergePostValidator(new sfValidatorSchemaCompare($name.'_confirm', '==', $name));
     }
 
     if (!empty($config['IsUnique'])) {
