@@ -111,7 +111,7 @@ abstract class sfOpenPNEFriendAction extends sfActions
 
     $this->redirectToHomeIfIdIsNotValid();
 
-    $this->relation->removeFriend();
+    $this->relation->removeFriendPre();
 
     $this->redirect('@homepage');
   }
