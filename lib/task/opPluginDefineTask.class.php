@@ -19,6 +19,7 @@ class opPluginDefineTask extends sfBaseTask
       new sfCommandArgument('version', sfCommandArgument::REQUIRED, 'The plugin version'),
       new sfCommandArgument('stability', sfCommandArgument::REQUIRED, 'The plugin stability'),
       new sfCommandArgument('note', sfCommandArgument::REQUIRED, 'The plugin release note'),
+      new sfCommandArgument('user', sfCommandArgument::REQUIRED, 'Your username'),
     ));
 
     $this->namespace        = 'opPlugin';
@@ -42,14 +43,20 @@ EOF;
       $info = array(
         'n' => $pluginName,
         'c' => opPluginManager::OPENPNE_PLUGIN_CHANNEL,
-        'l' => 'Apache 2.0',
-        's' => ' ',
-        'd' => ' ',
+        'l' => 'Apache',
+        's' => $pluginName,
+        'd' => $pluginName,
       );
     }
 
-    $maintainers = $this->getPluginManager()->getPluginMaintainer($pluginName);
-    $maintainer = $this->getPluginManager()->getMaintainerInfo($maintainers['m']['h']);
+    $user = $this->getPluginManager()->getMaintainerInfo($arguments['user']);
+    if (!$user)
+    {
+      throw new sfCommandException('Your account has not registerd yet.');
+    }
+
+    $maintainers = (array)$this->getPluginManager()->getPluginMaintainer($pluginName);
+    $maintainers[] = array('h' => $user['h'], 'n' => $user['n'], 'a' => 1);
 
     $packageXml = new PEAR_PackageFileManager2();
     $options = array(
@@ -70,9 +77,14 @@ EOF;
     $packageXml->setReleaseStability($arguments['stability']);
     $packageXml->setApiVersion($arguments['version']);
     $packageXml->setApiStability($arguments['stability']);
-    $packageXml->addMaintainer('lead', $maintainer['h'], $maintainer['n'], 'maintainer@example.com');
+
+    foreach ($maintainers as $maintainer)
+    {
+      $packageXml->addMaintainer('lead', $maintainer['h'], $maintainer['n'], '');
+    }
+
     $packageXml->setNotes($arguments['note']);
-    $packageXml->setPhpDep('5.2.0');
+    $packageXml->setPhpDep('5.2.3');
     $packageXml->setPearinstallerDep('1.4.0');
     $packageXml->addPackageDepWithChannel('package', 'symfony', 'pear.symfony-project.com', '1.2.0');
     $packageXml->generateContents();

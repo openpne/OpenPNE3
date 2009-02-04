@@ -48,8 +48,8 @@ EOF;
     {
       $attributes = $file->attributes();
       $name = (string)$attributes['name'];
-      $tar->addString($pluginName.'/'.$name, file_get_contents($dirPath.'/'.$name));
+      $tar->addString($pluginName.'-'.(string)$infoXml->version->release.'/'.$name, file_get_contents($dirPath.'/'.$name));
     }
-    $tar->addString($pluginName.'/package.xml', file_get_contents($dirPath.'/package.xml'));
+    $tar->addString($pluginName.'-'.(string)$infoXml->version->release.'/package.xml', file_get_contents($dirPath.'/package.xml'));
   }
 }

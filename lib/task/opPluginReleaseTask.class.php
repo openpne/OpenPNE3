@@ -51,25 +51,28 @@ EOF;
 
     while (!($note = $this->ask('Type release note')));
 
+    while (!($user = $this->ask('Type your account')));
+
     $this->logBlock('These informations are inputed:', 'COMMENT');
     $this->log($this->formatList(array(
       'The Plugin Name     ' => $name,
       'The Plugin Version  ' => $version,
       'The Plugin Stability' => $stability,
       'The Release note    ' => $note,
+      'Your account        ' => $user,
     )));
 
     if ($this->askConfirmation('Is it OK to start this task? (y/n)'))
     {
-      $this->doRelease($name, $version, $stability, $note, $dir);
+      $this->doRelease($name, $version, $stability, $note, $dir, $user);
       $this->clearCache();
     }
   }
 
-  protected function doRelease($name, $version, $stability, $note, $dir)
+  protected function doRelease($name, $version, $stability, $note, $dir, $user)
   {
     $defineTask = new opPluginDefineTask($this->dispatcher, $this->formatter);
-    $defineTask->run(array('name' => $name, 'version' => $version, 'stability' => $stability, 'note' => '"'.$note.'"'));
+    $defineTask->run(array('name' => $name, 'version' => $version, 'stability' => $stability, 'note' => '"'.$note.'"', 'user' => $user));
     $archiveTask = new opPluginArchiveTask($this->dispatcher, $this->formatter);
     $archiveTask->run(array('name' => $name, $dir));
   }
