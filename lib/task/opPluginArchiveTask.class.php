@@ -50,6 +50,6 @@ EOF;
       $name = (string)$attributes['name'];
       $tar->addString($pluginName.'-'.(string)$infoXml->version->release.'/'.$name, file_get_contents($dirPath.'/'.$name));
     }
-    $tar->addString($pluginName.'-'.(string)$infoXml->version->release.'/package.xml', file_get_contents($dirPath.'/package.xml'));
+    $tar->addString('package.xml', file_get_contents($dirPath.'/package.xml'));
   }
 }

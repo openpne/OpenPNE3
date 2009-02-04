@@ -55,15 +55,13 @@ EOF;
       throw new sfCommandException('Your account has not registerd yet.');
     }
 
-    $maintainers = (array)$this->getPluginManager()->getPluginMaintainer($pluginName);
-    $maintainers[] = array('h' => $user['h'], 'n' => $user['n'], 'a' => 1);
-
     $packageXml = new PEAR_PackageFileManager2();
     $options = array(
       'packagedirectory'  => sfConfig::get('sf_plugins_dir').'/'.$pluginName.'/',
       'filelistgenerator' => 'file',
       'baseinstalldir'    => '/',
     );
+
     $e = $packageXml->setOptions($options);
     if (PEAR::isError($e))
     {
@@ -71,18 +69,15 @@ EOF;
       exit;
     }
 
+    $packageXml->_options['roles'] = array('*' => 'data');
+
     $packageXml->setPackage($pluginName);
     $packageXml->setChannel(opPluginManager::OPENPNE_PLUGIN_CHANNEL);
     $packageXml->setReleaseVersion($arguments['version']);
     $packageXml->setReleaseStability($arguments['stability']);
     $packageXml->setApiVersion($arguments['version']);
     $packageXml->setApiStability($arguments['stability']);
-
-    foreach ($maintainers as $maintainer)
-    {
-      $packageXml->addMaintainer('lead', $maintainer['h'], $maintainer['n'], '');
-    }
-
+    $packageXml->addMaintainer('lead', $user['h'], $user['n'], '');
     $packageXml->setNotes($arguments['note']);
     $packageXml->setPhpDep('5.2.3');
     $packageXml->setPearinstallerDep('1.4.0');
