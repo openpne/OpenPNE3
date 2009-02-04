@@ -14,7 +14,7 @@ class opPluginReleaseTask extends sfBaseTask
   {
     $this->addArguments(array(
       new sfCommandArgument('name', sfCommandArgument::REQUIRED, 'The plugin name'),
-      new sfCommandArgument('dir', sfCommandArgument::OPTIONAL, 'The output dir', sfConfig::get('sf_cache_dir')),
+      new sfCommandArgument('dir', sfCommandArgument::REQUIRED, 'The output dir'),
     ));
 
     $this->namespace        = 'opPlugin';
