@@ -115,7 +115,7 @@
         <target>ｺﾐｭﾆﾃｨを退会する</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Community member</source>
+        <source>Community Members</source>
         <target>ｺﾐｭﾆﾃｨﾒﾝﾊﾞｰ</target>
       </trans-unit>
       <trans-unit id="">
@@ -168,7 +168,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>You register mobile UID.</source>
-        <target>携帯電話を登録する</target>
+        <target>携帯電話を登録します。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Prease input your password, press "%1%" button.</source>

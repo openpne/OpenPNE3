@@ -300,7 +300,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>Please beginning register from %1% to following URL.</source>
-        <target>以下のURLから%1%に登録してください</target>
+        <target>以下のURLから%1%に登録してください。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Please input a mail address.</source>
@@ -445,10 +445,6 @@
       <trans-unit id="">
         <source>If %1% is your friend, let us add to friends it!</source>
         <target>%1%さんと直接の知り合いの場合、マイフレンドに追加しましょう！</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Add friends</source>
-        <target>マイフレンドに追加する</target>
       </trans-unit>
       <trans-unit id="">
         <source>Mail address</source>
