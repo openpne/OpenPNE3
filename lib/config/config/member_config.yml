@@ -47,7 +47,7 @@ password:
     Name:       "password"
     Caption:    "Password"
     FormType:   "password"
-    ValueType:  "password"
+    ValueType:  "string"
     IsRegist:   true
     IsConfig:   true
     IsUnique:   false
