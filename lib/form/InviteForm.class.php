@@ -22,6 +22,10 @@ class InviteForm extends MemberConfigPcAddressForm
     $this->setWidget('mail_address', new sfWidgetFormInput());
     $this->setValidator('mail_address', new sfValidatorPass());
 
+    $this->setWidget('message', new sfWidgetFormTextarea());
+    $this->setValidator('message', new sfValidatorPass());
+    $this->widgetSchema->setLabel('message', 'Message(Arbitrary)');
+
     $this->validatorSchema->setPostValidator(new sfValidatorCallback(array(
         'callback' => array($this, 'validate'),
     )));
@@ -85,6 +89,7 @@ class InviteForm extends MemberConfigPcAddressForm
       'token'    => $token,
       'authMode' => $authMode,
       'isMobile' => opToolkit::isMobileEmailAddress($to),
+      'message'  => $this->getValue('message')
     );
 
     $mail = new sfOpenPNEMailSend();

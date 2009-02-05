@@ -294,6 +294,10 @@
         <source>Please input by a-z or A-Z or 6-12 characters and 6-12 length.</source>
         <target>6～12文字の半角英数で入力してください。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Message(Arbitrary)</source>
+        <target>ﾒｯｾｰｼﾞ(任意)</target>
+      </trans-unit>
      </body>
   </file>
 </xliff>

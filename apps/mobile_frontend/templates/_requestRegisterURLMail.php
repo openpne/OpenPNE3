@@ -1,3 +1,6 @@
+<?php echo $message ?>
+
+
 <?php echo __('Click following URL, please. You can register in %1%.', array('%1%' => $op_config['sns_name'])) ?>
 
 <?php if ($isMobile) : ?>

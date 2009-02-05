@@ -267,6 +267,10 @@
         <target>メールアドレスが登録されている場合、新しいメールアドレスに変更されます。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Click following URL, please. You can register in %1%.</source>
+        <target>以下のURLから%1%に登録してください。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Main photo</source>
         <target>メイン写真</target>
       </trans-unit>
@@ -466,6 +470,10 @@
         <source>Please input by a-z or A-Z or 6-12 characters and 6-12 length.</source>
         <target>6～12文字の半角英数で入力してください。</target>
       </trans-unit>
-     </body>
+      <trans-unit id="">
+        <source>Message(Arbitrary)</source>
+        <target>メッセージ(任意)</target>
+      </trans-unit>
+      </body>
   </file>
 </xliff>
