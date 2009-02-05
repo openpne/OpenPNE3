@@ -21,6 +21,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
   public function initialize()
   {
+    mb_internal_encoding('UTF-8');
+
     require sfConfig::get('sf_data_dir').'/version.php';
 
     $this->dispatcher->connect('task.cache.clear', array($this, 'clearPluginCache'));
