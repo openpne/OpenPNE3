@@ -41,6 +41,12 @@ function op_include_parts($name, $id, $options = array())
   }
 
   include_partial('global/partsLayout', $params);
+
+  $shorts = $params['options']->getShortRequiredOptions();
+  if ($shorts)
+  {
+    throw new LogicException(sprintf('The %s parts requires the following options: \'%s\'.', $name, implode('\', \'', $shorts)));
+  }
 }
 
 /**

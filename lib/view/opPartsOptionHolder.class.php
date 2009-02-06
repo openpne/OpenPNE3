@@ -18,6 +18,8 @@
 
 class opPartsOptionHolder extends sfParameterHolder implements ArrayAccess, IteratorAggregate
 {
+  protected $required = array();
+
   public function __construct($parameters = array())
   {
     $this->parameters = $parameters;
@@ -49,6 +51,26 @@ class opPartsOptionHolder extends sfParameterHolder implements ArrayAccess, Iter
     {
       $this->set($name, $value);
     }
+  }
+
+  public function addRequiredOption($name)
+  {
+    $this->required[] = $name;
+  }
+
+  public function getShortRequiredOptions()
+  {
+    $short = array();
+
+    foreach ($this->required as $name)
+    {
+      if (!$this->has($name))
+      {
+        $short[] = $name;
+      }
+    }
+
+    return $short;
   }
 
   public function offsetGet($name)

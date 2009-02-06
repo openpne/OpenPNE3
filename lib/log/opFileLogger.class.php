@@ -34,6 +34,6 @@ class opFileLogger extends sfFileLogger
   protected function doLog($message, $priority)
   {
     parent::doLog($message, $priority);
-    chmod($this->file, 0666);
+    @chmod($this->file, 0666);
   }
 }
