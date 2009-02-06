@@ -33,7 +33,7 @@ class opAuthAction extends sfActions
     $this->getUser()->getAuthAdapter()->activate();
 
     $this->getUser()->setIsSNSMember(true);
-    InvitePeer::deleteInvitesByMemberIdTo($member->getId());
+    InvitelistPeer::deleteInvitesByMemberIdTo($member->getId());
     $this->redirect('member/home');
   }
 }
