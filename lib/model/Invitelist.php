@@ -2,7 +2,7 @@
 
 class Invitelist extends BaseInvitelist
 {
-  public function delete(PropelPDO $con = null)
+  public function deleteRelation(PropelPDO $con = null)
   {
     $relation = MemberRelationshipPeer::retrieveByFromAndTo(
       $this->getMemberIdFrom(), $this->getMemberIdTo());
@@ -12,6 +12,12 @@ class Invitelist extends BaseInvitelist
       $relation->delete();
     }
 
-    parent::delete($con);
+    $relation = MemberRelationshipPeer::retrieveByFromAndTo(
+      $this->getMemberIdTo(), $this->getMemberIdFrom());
+
+    if ($relation)
+    {
+      $relation->delete();
+    }
   }
 }

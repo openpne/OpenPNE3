@@ -42,6 +42,7 @@ class InvitelistForm extends sfForm
       {
         if ($invite->getMemberIdTo() == $key)
         {
+          $invite->deleteRelation();
           $invite->delete();
           break;
         }
