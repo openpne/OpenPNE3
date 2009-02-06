@@ -2866,7 +2866,7 @@ class OpenPNE_KtaiEmoji
             default:
                 // PC向けau/SoftBank→DoCoMo絵文字変換
                 if ((!defined('OPENPNE_EMOJI_DOCOMO_FOR_PC') || OPENPNE_EMOJI_DOCOMO_FOR_PC) && $o_carrier !== 'i') {
-                    return emoji_convert($this->relation_list[$o_carrier]['i'][$o_id]);
+                    return self::convertEmoji($this->relation_list[$o_carrier]['i'][$o_id]);
                 }
 
                 $c_code = $o_code;  // 画像出力の際にキャリア情報が必要になるため、絵文字IDではなく絵文字コードを用いる
