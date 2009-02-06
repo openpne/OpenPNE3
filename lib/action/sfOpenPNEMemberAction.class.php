@@ -267,6 +267,22 @@ abstract class sfOpenPNEMemberAction extends sfActions
       }
     }
 
+    $id = $this->getUser()->getMemberId();
+    $this->invites = InvitelistPeer::getInvitesByMemberIdFrom($id);
+    $this->listform = new InvitelistForm(
+      array(),
+      array('invites' => $this->invites)
+    );
+    if ($request->isMethod('post'))
+    {
+      $this->listform->bind($request->getParameter('invitelist'));
+      if ($this->listform->isValid())
+      {
+        $this->listform->save();
+        $this->redirect('member/invite');
+      }
+    }
+ 
     return sfView::INPUT;
   }
 

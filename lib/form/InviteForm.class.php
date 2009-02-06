@@ -118,6 +118,7 @@ class InviteForm extends MemberConfigPcAddressForm
         $relation->setMemberIdTo($toMemberId);
       }
       $relation->setFriend();
+      InvitelistPeer::addInvite($fromMemberId, $toMemberId, $this->getValue('mail_address'));
     }
   }
 }

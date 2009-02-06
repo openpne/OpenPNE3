@@ -135,3 +135,9 @@ propel:
     id: ~
     uid: { type: varchar(32), index: unique, required: true, defaultValue: "" }
     memo: { type: longvarchar }
+
+  invitelist:
+    created_at: ~
+    member_id_from: { type:integer, foreignTable: member, foreignReference: id, opDelete: cascade }
+    member_id_to: { type:integer, foreignTable: member, foreignReference: id }
+    mail_address: { type: longvarchar }
