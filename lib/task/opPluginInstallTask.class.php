@@ -10,6 +10,8 @@
 
 class opPluginInstallTask extends sfPluginInstallTask
 {
+  protected $pluginManager = null;
+
   protected function configure()
   {
     $this->addArguments(array(

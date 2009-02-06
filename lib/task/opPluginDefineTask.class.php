@@ -12,6 +12,8 @@ require_once 'PEAR/PackageFileManager2.php';
 
 class opPluginDefineTask extends sfBaseTask
 {
+  protected $pluginManager = null;
+
   protected function configure()
   {
     $this->addArguments(array(
