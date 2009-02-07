@@ -1,6 +1,6 @@
 <?php
 
-class opUpdate_3_0_to_3_0_1_dev_200902052050 extends opUpdate
+class opUpdate_3_0_1_dev_200901272359_to_3_0_1_dev_200902052050 extends opUpdate
 {
   public function update()
   {
@@ -16,3 +16,4 @@ class opUpdate_3_0_to_3_0_1_dev_200902052050 extends opUpdate
     );
   }
 }
+

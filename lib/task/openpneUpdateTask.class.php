@@ -68,7 +68,7 @@ EOF;
       }
     }
 
-    if ($options['no-build-model'])
+    if (!$options['no-build-model'])
     {
       $this->buildModel();
     }
