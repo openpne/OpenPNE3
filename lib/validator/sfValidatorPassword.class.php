@@ -24,7 +24,7 @@ class sfValidatorPassword extends sfValidatorRegex
   {
     parent::configure($options, $messages);
 
-    $this->setOption('pattern', '/[a-z0-9]+/i');
+    $this->setOption('pattern', '/^[a-z0-9]+$/i');
   }
 
   /**
