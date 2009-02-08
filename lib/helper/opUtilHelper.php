@@ -256,6 +256,8 @@ function _op_url_cmd($matches)
     return str_replace('&', '&amp;', op_auto_link_text(str_replace('&amp;', '&', $url)));
   }
 
+  sfContext::getInstance()->getResponse()->addJavascript('util');
+
   $public_path = _compute_public_path($file, 'cmd', 'js');
   $result = <<<EOD
 <script type="text/javascript" src="{$public_path}"></script>

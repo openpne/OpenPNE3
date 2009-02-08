@@ -122,3 +122,31 @@ var opCookie = {
     return value;
   }
 };
+
+/**
+ * Trims a long url and displays a link to the url
+ *
+ * @param string url
+ */
+function pne_url2a(url)
+{
+  var urlstr;
+
+  if (url.length > 57)
+  {
+    var _url = url.replace("&amp;", "&");
+
+    if (_url.length > 57)
+    {
+      _url = _url.substr(0, 57) + '...';
+      urlstr = _url.replace("&", "&amp;");
+    }
+  }
+
+  if (!urlstr)
+  {
+    urlstr = url;
+  }
+
+  document.write('<a href="'+url+'" target="_blank">'+urlstr+'</a>');
+}
