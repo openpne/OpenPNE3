@@ -39,7 +39,7 @@ foreach ($forms as $form)
       {
         echo '<tr>'."\n"
            . '  <th>'.$field->renderLabel().'</th>'."\n"
-           . '  <td><div id="'.$field->renderId().'">'.$field->render(array('class' => 'input_radio')).'</div></td>'."\n"
+           . '  <td>'.$field->renderError().'<div id="'.$field->renderId().'">'.$field->render(array('class' => 'input_radio')).'</div></td>'."\n"
            . '</tr>'."\n";
         continue;
       }
@@ -48,7 +48,7 @@ foreach ($forms as $form)
     {
       echo '<tr>'."\n"
          . '  <th>'.$field->renderLabel().'</th>'."\n"
-         . '  <td><div id="'.$field->renderId().'">'.$field->render().'</div></td>'."\n"
+         . '  <td>'.$field->renderError().'<div id="'.$field->renderId().'">'.$field->render().'</div></td>'."\n"
          . '</tr>'."\n";
       continue;
     }
