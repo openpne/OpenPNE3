@@ -41,6 +41,13 @@ class opPlugin
       $this->version = (string)$info->version->release;
       $this->summary = (string)$info->summary;
     }
+    else
+    {
+      $manager = new opPluginManager(sfContext::getInstance()->getEventDispatcher());
+      $package = $manager->getEnvironment()->getRegistry()->getPackage($pluginName, opPluginManager::OPENPNE_PLUGIN_CHANNEL);
+      $this->version = $package->getVersion();
+      $this->summary = $package->getSummary();
+    }
   }
 
   public static function getInstance($pluginName)
