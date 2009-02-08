@@ -16,9 +16,9 @@ class openpneUpdateTask extends sfPropelBaseTask
     $this->name             = 'update';
 
     $this->addArguments(array(
-      new sfCommandArgument('name', sfCommandArgument::REQUIRED, 'The plugin name or "OpenPNE"'),
-      new sfCommandArgument('before-version', sfCommandArgument::REQUIRED, ''),
-      new sfCommandArgument('after-version', sfCommandArgument::REQUIRED, ''),
+      new sfCommandArgument('name', sfCommandArgument::OPTIONAL, 'The plugin name or "OpenPNE"', 'OpenPNE'),
+      new sfCommandArgument('before-version', sfCommandArgument::OPTIONAL, '', '3.0.0'),
+      new sfCommandArgument('after-version', sfCommandArgument::OPTIONAL, '', OPENPNE_VERSION),
     ));
 
     $this->addOptions(array(
@@ -27,10 +27,10 @@ class openpneUpdateTask extends sfPropelBaseTask
 
     $this->briefDescription = 'update OpenPNE';
     $this->detailedDescription = <<<EOF
-The [openpne:install|INFO] task updates OpenPNE and/or plugin.
+The [openpne:update|INFO] task updates OpenPNE and/or plugin.
 Call it with:
 
-  [./symfony openpne:update OpenPNE 3.0 3.2|INFO]
+  [./symfony openpne:update|INFO]
 EOF;
   }
 
