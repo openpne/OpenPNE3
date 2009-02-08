@@ -15,8 +15,18 @@
  * @subpackage validator
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class sfValidatorPassword extends sfValidatorString
+class sfValidatorPassword extends sfValidatorRegex
 {
+  /**
+   * @see sfValidatorPassword
+   */
+  protected function configure($options = array(), $messages = array())
+  {
+    parent::configure($options, $messages);
+
+    $this->setOption('pattern', '/[a-z0-9]+/i');
+  }
+
   /**
    * @see sfValidatorString
    */
