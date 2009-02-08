@@ -254,7 +254,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
       return sfView::ERROR;
     }
 
-    $this->form = new InviteForm();
+    $this->form = new InviteForm(null, array('invited' => true));
     $this->form->setOption('is_link', true);
     if ($request->isMethod('post'))
     {

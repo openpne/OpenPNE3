@@ -22,9 +22,12 @@ class InviteForm extends MemberConfigPcAddressForm
     $this->setWidget('mail_address', new sfWidgetFormInput());
     $this->setValidator('mail_address', new sfValidatorPass());
 
-    $this->setWidget('message', new sfWidgetFormTextarea());
-    $this->setValidator('message', new sfValidatorPass());
-    $this->widgetSchema->setLabel('message', 'Message(Arbitrary)');
+    if ($this->getOption('invited'))
+    {
+      $this->setWidget('message', new sfWidgetFormTextarea());
+      $this->setValidator('message', new sfValidatorPass());
+      $this->widgetSchema->setLabel('message', 'Message(Arbitrary)');
+    }
 
     $this->validatorSchema->setPostValidator(new sfValidatorCallback(array(
         'callback' => array($this, 'validate'),
@@ -89,11 +92,12 @@ class InviteForm extends MemberConfigPcAddressForm
       'token'    => $token,
       'authMode' => $authMode,
       'isMobile' => opToolkit::isMobileEmailAddress($to),
-      'message'  => $this->getValue('message')
+      'name'     => $this->getOption('invited') ? sfContext::getInstance()->getUser()->getMember()->getName() : null,
+      'message'  => $this->getOption('invited') ? $this->getValue('message') : null
     );
 
     $mail = new sfOpenPNEMailSend();
-    $mail->setSubject(opConfig::get('sns_name').'招待状');
+    $mail->setSubject(opConfig::get('sns_name') . '$B>7BT>u(B');
     $mail->setTemplate('global/requestRegisterURLMail', $param);
     $mail->send($to, opConfig::get('admin_mail_address'));
   }
