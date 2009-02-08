@@ -97,7 +97,7 @@ class InviteForm extends MemberConfigPcAddressForm
     );
 
     $mail = new sfOpenPNEMailSend();
-    $mail->setSubject(opConfig::get('sns_name') . '$B>7BT>u(B');
+    $mail->setSubject(opConfig::get('sns_name') . '招待状');
     $mail->setTemplate('global/requestRegisterURLMail', $param);
     $mail->send($to, opConfig::get('admin_mail_address'));
   }
