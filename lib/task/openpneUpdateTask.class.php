@@ -15,6 +15,8 @@ class openpneUpdateTask extends sfPropelBaseTask
     $this->namespace        = 'openpne';
     $this->name             = 'update';
 
+    require sfConfig::get('sf_data_dir').'/version.php';
+
     $this->addArguments(array(
       new sfCommandArgument('name', sfCommandArgument::OPTIONAL, 'The plugin name or "OpenPNE"', 'OpenPNE'),
       new sfCommandArgument('before-version', sfCommandArgument::OPTIONAL, '', '3.0.0'),
