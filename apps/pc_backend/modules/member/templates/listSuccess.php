@@ -26,7 +26,7 @@
 <table>
 
 <tr>
-<td colspan="<?php echo 5 + count($profiles) + 3 ?>">
+<td colspan="<?php echo 6 + count($profiles) + 3 ?>">
 <?php echo pager_navigation($pager, 'member/list?page=%d', true, '?'.$sf_request->getCurrentQueryString()) ?>
 </td>
 </tr>
@@ -35,6 +35,7 @@
 <th colspan="2"><?php echo __('操作') ?></th>
 <th><?php echo __('ID') ?></th>
 <th><?php echo __('ニックネーム') ?></th>
+<th><?php echo __('招待者') ?></th>
 <th><?php echo __('最終ログイン') ?></th>
 <?php foreach ($profiles as $profile) : ?>
 <th><?php echo $profile->getCaption() ?></th>
@@ -56,6 +57,7 @@
 </td>
 <td><?php echo $member->getId() ?></td>
 <td><?php echo $member->getName() ?></td>
+<td><?php if ($member->getInviteMember()) : ?><?php echo $member->getInviteMember()->getName() ?><?php endif; ?></td>
 <td><?php if ($member->getLastLoginTime()) : ?><?php echo date('y-m-d<b\r />H:i:s', $member->getLastLoginTime()) ?><?php endif; ?></td>
 <?php foreach ($profiles as $profile) : ?>
 <td><?php echo $member->getProfile($profile->getName()); ?></td>

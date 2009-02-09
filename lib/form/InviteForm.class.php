@@ -104,9 +104,10 @@ class InviteForm extends MemberConfigPcAddressForm
 
   public function save()
   {
-    parent::save();
-
     $user = sfContext::getInstance()->getUser();
+    $this->member->setInviteMemberId($user->getMemberId());
+
+    parent::save();
 
     $this->member->setConfig('register_auth_mode', $this->getOption('authMode', $user->getCurrentAuthMode()));
 
@@ -122,7 +123,6 @@ class InviteForm extends MemberConfigPcAddressForm
         $relation->setMemberIdTo($toMemberId);
       }
       $relation->setFriend();
-      InvitelistPeer::addInvite($fromMemberId, $toMemberId, $this->getValue('mail_address'));
     }
   }
 }

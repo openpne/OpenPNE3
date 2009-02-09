@@ -14,11 +14,15 @@ class InvitelistForm extends sfForm
   {
     foreach ($this->getOption('invites') as $invite)
     {
-      $member = MemberPeer::retrieveByPk($invite->getMemberIdTo());
-      $name = strval($invite->getMemberIdTo());
-      $this->setWidget($name, new sfWidgetFormInputCheckbox());
-      $this->getWidget($name)->setLabel($invite->getMailAddress());
-      $this->setValidator($name, new sfValidatorBoolean());
+      $mailAddress = $invite->getConfig('pc_address_pre');
+      if (!$mailAddress)
+      {
+        $mailAddress = $invite->getConfig('mobile_address_pre');
+      }
+
+      $this->setWidget($invite->getId(), new sfWidgetFormInputCheckbox());
+      $this->getWidget($invite->getId())->setLabel($mailAddress);
+      $this->setValidator($invite->getId(), new sfValidatorBoolean());
     }
     
     $this->widgetSchema->setNameFormat('invitelist[%s]');
@@ -38,13 +42,15 @@ class InvitelistForm extends sfForm
       {
         continue;
       }
+
       foreach ($invites as $invite)
       {
-        if ($invite->getMemberIdTo() == $key)
+        if (
+          $key == $invite->getId()
+          && $invite->getInviteMemberId() == sfContext::getInstance()->getUser()->getMemberId()
+        )
         {
-          $invite->deleteRelation();
           $invite->delete();
-          break;
         }
       }
     }

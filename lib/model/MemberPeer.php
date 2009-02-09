@@ -48,4 +48,18 @@ class MemberPeer extends BaseMemberPeer
 
     return $ids;
   }
+
+  public static function retrivesByInviteMemberId($memberId)
+  {
+    opActivateBehavior::disable();
+
+    $c = new Criteria();
+    $c->add(self::INVITE_MEMBER_ID, $memberId);
+    $c->add(self::IS_ACTIVE, false);
+    $members = self::doSelect($c);
+
+    opActivateBehavior::enable();
+
+    return $members;
+  }
 }

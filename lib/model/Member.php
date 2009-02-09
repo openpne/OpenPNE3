@@ -9,11 +9,11 @@
  */
 
 /**
- * Subclass for representing a row from the 'member' table.
+ * Member
  *
- * 
- *
- * @package lib.model
+ * @package    OpenPNE
+ * @subpackage model
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */ 
 class Member extends BaseMember
 {
@@ -162,5 +162,15 @@ class Member extends BaseMember
     }
 
     return false;
+  }
+
+  public function getInvitingMembers()
+  {
+    return MemberPeer::retrivesByInviteMemberId($this->getId());
+  }
+
+  public function getInviteMember()
+  {
+    return MemberPeer::retrieveByPk($this->getInviteMemberId());
   }
 }

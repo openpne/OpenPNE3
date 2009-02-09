@@ -268,7 +268,8 @@ abstract class sfOpenPNEMemberAction extends sfActions
     }
 
     $id = $this->getUser()->getMemberId();
-    $this->invites = InvitelistPeer::getInvitesByMemberIdFrom($id);
+    $this->invites = $this->getUser()->getMember()->getInvitingMembers();
+
     $this->listform = new InvitelistForm(
       array(),
       array('invites' => $this->invites)
