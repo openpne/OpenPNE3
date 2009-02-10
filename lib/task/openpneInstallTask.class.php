@@ -41,12 +41,14 @@ EOF;
       !($hostname = $this->ask('Type database hostname'))
     );
 
+    $port = $this->ask('Type database port number (optional)');
+
     while (
       !($dbname = $this->ask('Type database name'))
     );
 
     $sock = '';
-    if ($dbms == 'mysql' && $hostname == 'localhost') {
+    if ($dbms == 'mysql' && ($hostname == 'localhost' || $hostname == '127.0.0.1')) {
       $sock = $this->ask('Type database socket path (optional)');
     }
 
@@ -57,26 +59,27 @@ EOF;
     }
 
     $this->log($this->formatList(array(
-      'The DBMS             ' => $dbms,
-      'The Database Username' => $username,
-      'The Database Password' => $maskedPassword,
-      'The Database Hostname' => $hostname,
-      'The Database Name    ' => $dbname,
-      'The Database Socket  ' => $sock,
+      'The DBMS                 ' => $dbms,
+      'The Database Username    ' => $username,
+      'The Database Password    ' => $maskedPassword,
+      'The Database Hostname    ' => $hostname,
+      'The Database Port Number ' => $port,
+      'The Database Name        ' => $dbname,
+      'The Database Socket      ' => $sock,
     )));
 
     if ($this->askConfirmation('Is it OK to start this task? (y/n)'))
     {
       @$this->fixPerms();
       @$this->clearCache();
-      $this->configureDatabase($dbms, $username, $password, $hostname, $dbname, $sock);
+      $this->configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock);
       $this->buildDb();
       $this->publishAssets();
       $this->clearCache();
     }
   }
 
-  protected function createDSN($dbms, $hostname, $dbname, $sock)
+  protected function createDSN($dbms, $hostname, $port, $dbname, $sock)
   {
     $result = $dbms.':';
 
@@ -92,6 +95,11 @@ EOF;
       $data[] = 'hostname='.$hostname;
     }
 
+    if ($port)
+    {
+      $data[] = 'port='.$port;
+    }
+
     if ($sock)
     {
       $data[] = 'unix_socket='.$sock;
@@ -101,9 +109,9 @@ EOF;
     return $result;
   }
 
-  protected function configureDatabase($dbms, $username, $password, $hostname, $dbname, $sock)
+  protected function configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock)
   {
-    $dsn = $this->createDSN($dbms, $hostname, $dbname, $sock);
+    $dsn = $this->createDSN($dbms, $hostname, $port, $dbname, $sock);
 
     $file = sfConfig::get('sf_config_dir').'/databases.yml';
     $config = array('dev' => array('propel' => array('param' => array(
