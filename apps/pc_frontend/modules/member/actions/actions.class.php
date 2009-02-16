@@ -102,12 +102,18 @@ class memberActions extends sfOpenPNEMemberAction
     $options = array('member' => $this->getUser()->getMember());
     $this->form = new MemberImageForm(array(), $options);
 
-    if ($request->isMethod('post'))
+    if ($request->isMethod(sfWebRequest::POST))
     {
       try
       {
-        $this->form->bindAndSave($request->getParameter('member_image'), $request->getFiles('member_image'));
-        $this->redirect('member/configImage');
+        if (!$this->form->bindAndSave($request->getParameter('member_image'), $request->getFiles('member_image')))
+        {
+          $errors = $this->form->getErrorSchema()->getErrors();
+          if (isset($errors['file']))
+          {
+            $this->getUser()->setFlash('error', $errors['file']);
+          }
+        }
       }
       catch (opRuntimeException $e)
       {

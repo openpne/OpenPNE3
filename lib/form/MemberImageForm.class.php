@@ -54,6 +54,6 @@ class MemberImageForm extends sfForm
     {
       $memberImage->setIsPrimary(true);
     }
-    $memberImage->save();
+    return $memberImage->save();
   }
 }
