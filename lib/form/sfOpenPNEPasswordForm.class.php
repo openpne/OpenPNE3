@@ -24,7 +24,10 @@ class sfOpenPNEPasswordForm extends sfForm
     ));
 
     $this->setValidators(array(
-      'password' => new sfValidatorCallback(array('callback' => array($this, 'isValidPassword'))),
+      'password' => new sfValidatorAnd(array(
+        new sfValidatorString(),
+        new sfValidatorCallback(array('callback' => array($this, 'isValidPassword')))
+      ))
     ));
 
     $this->widgetSchema->setNameFormat('password[%s]');
