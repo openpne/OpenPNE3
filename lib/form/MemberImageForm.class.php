@@ -21,7 +21,7 @@ class MemberImageForm extends sfForm
   {
     $this->member = $this->getOption('member');
     $this->setWidget('file', new sfWidgetFormInputFile());
-    $this->setValidator('file', new opValidatorImageFile());
+    $this->setValidator('file', new opValidatorImageFile(array('max_size' => 300*1024)));
     $this->widgetSchema->setNameFormat('member_image[%s]');
   }
 
