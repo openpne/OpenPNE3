@@ -25,7 +25,7 @@ class GadgetConfigForm extends sfForm
 
     parent::__construct(array(), $options, $CSRFSecret);
 
-    $config = sfConfig::get('op_gadget_list', array());
+    $config = GadgetPeer::getGadgetConfigListByType($options['type']);
     if (empty($config[$gadget->getName()]['config']))
     {
       throw new RuntimeException('The gadget has not registered or it doesn\'t have any configuration items.');

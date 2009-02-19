@@ -18,6 +18,12 @@ config/mobile_gadget.yml:
   param:
     prefix: mobile_
 
+config/login_gadget.yml:
+  class: opGadgetConfigHandler
+  file:  %SF_LIB_DIR%/config/opGadgetConfigHandler.class.php
+  param:
+    prefix: login_
+
 config/mobile_mail_domain.yml:
   class: sfSimpleYamlConfigHandler
 

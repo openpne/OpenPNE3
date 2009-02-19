@@ -22,7 +22,7 @@ class PickHomeLayoutForm extends sfForm
   public function configure()
   {
     $default = 0;
-    $snsConfig = SnsConfigPeer::retrieveByName('home_layout');
+    $snsConfig = SnsConfigPeer::retrieveByName($this->getOption('layout_name', 'home_layout'));
     if ($snsConfig)
     {
       $default = array_search($snsConfig->getValue(), $this->choices);
@@ -48,11 +48,11 @@ class PickHomeLayoutForm extends sfForm
       return false;
     }
 
-    $snsConfig = SnsConfigPeer::retrieveByName('home_layout');
+    $snsConfig = SnsConfigPeer::retrieveByName($this->getOption('layout_name', 'home_layout'));
     if (!$snsConfig)
     {
       $snsConfig = new SnsConfig();
-      $snsConfig->setName('home_layout');
+      $snsConfig->setName($this->getOption('layout_name', 'home_layout'));
     }
     $value = $this->choices[$this->values['layout']];
     $snsConfig->setValue($value);

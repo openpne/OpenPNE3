@@ -55,6 +55,7 @@ class GadgetAddForm extends sfForm
     foreach ($value as $key => $item)
     {
       if (array_key_exists($item, sfConfig::get('op_gadget_list'))
+        || array_key_exists($item, sfConfig::get('op_login_gadget_list'))
         || array_key_exists($item, sfConfig::get('op_mobile_gadget_list'))
         || array_key_exists($item, sfConfig::get('op_side_banner_gadget_list')))
       {

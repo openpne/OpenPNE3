@@ -12,3 +12,6 @@ profileSuccess:
 
 configSuccess:
   layout: layoutB
+
+loginSuccess:
+  layout: layoutA

@@ -49,6 +49,10 @@ class defaultComponents extends sfComponents
     $this->information = SnsConfigPeer::retrieveByName('pc_home_information');
   }
 
+  public function executeFreeAreaBox()
+  {
+  }
+
   public function executeMemberImageBox()
   {
   }
@@ -64,6 +68,11 @@ class defaultComponents extends sfComponents
   public function executeLanguageSelecterBox()
   {
     $this->form = new opLanguageSelecterForm();
+  }
+
+  public function executeLoginFormBox()
+  {
+    $this->forms = $this->getUser()->getAuthForms();
   }
 
   private function isSecurePage()

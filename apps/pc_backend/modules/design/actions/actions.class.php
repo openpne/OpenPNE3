@@ -34,12 +34,19 @@ class designActions extends sfActions
   */
   public function executeHomeLayout(sfWebRequest $request)
   {
-    $this->form = new PickHomeLayoutForm();
+    $option = array();
+    $params = '';
+    if ($request->getParameter('login'))
+    {
+      $option['layout_name'] = 'login_layout';
+      $params = '?login=1';
+    }
+    $this->form = new PickHomeLayoutForm(array(), $option);
 
     if ($request->isMethod(sfRequest::POST))
     {
       $this->form->bind($request->getParameter('pick_home_layout'));
-      $this->redirectIf($this->form->save(), 'design/homeLayout');
+      $this->redirectIf($this->form->save(), 'design/homeLayout'.$params);
     }
 
     return sfView::SUCCESS;
@@ -94,13 +101,36 @@ class designActions extends sfActions
   }
 
  /**
+  * Executes login gadget plot action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeLoginGadgetPlot(sfWebRequest $request)
+  {
+    $this->layoutPattern = 'layoutA';
+    $this->topGadgets = (array)GadgetPeer::retrieveLoginTopGadgets();
+    $this->sideMenuGadgets = (array)GadgetPeer::retrieveLoginSideMenuGadgets();
+    $this->contentsGadgets = (array)GadgetPeer::retrieveLoginContentsGadgets();
+    $this->bottomGadgets = (array)GadgetPeer::retrieveLoginBottomGadgets();
+    $this->gadgetConfig = sfConfig::get('op_login_gadget_list');
+
+    $layout = SnsConfigPeer::retrieveByName('login_layout');
+    if ($layout)
+    {
+      $this->layoutPattern = $layout->getValue();
+    }
+
+    return sfView::SUCCESS;
+  }
+
+ /**
   * Executes add gadget action
   *
   * @param sfRequest $request A request object
   */
   public function executeAddGadget(sfWebRequest $request)
   {
-    $this->type = $request->getParameter('type',GadgetPeer::TOP_TYPE);
+    $this->type = $request->getParameter('type', GadgetPeer::TOP_TYPE);
     $this->config = GadgetPeer::getGadgetConfigListByType($this->type);
 
     return sfView::SUCCESS;
@@ -123,7 +153,7 @@ class designActions extends sfActions
 
     if (!empty($this->config['config']))
     {
-      $this->form = new GadgetConfigForm($this->gadget);
+      $this->form = new GadgetConfigForm($this->gadget, array('type' => $type));
 
       if ($request->isMethod(sfRequest::POST))
       {

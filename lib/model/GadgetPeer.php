@@ -11,34 +11,32 @@
 class GadgetPeer extends BaseGadgetPeer
 {
   const HOME_TYPES = 'home';
-
+  const LOGIN_TYPES = 'login';
   const MOBILE_HOME_TYPES = 'mobileHome';
-
   const SIDE_BANNER_TYPES = 'sideBanner';
 
   const TOP_TYPE = 'top';
-
   const SIDE_MENU_TYPE = 'sideMenu';
-
   const CONTENTS_TYPE = 'contents';
-
   const BOTTOM_TYPE = 'bottom';
 
+  const LOGIN_TOP_TYPE = 'loginTop';
+  const LOGIN_SIDE_MENU_TYPE = 'loginSideMenu';
+  const LOGIN_CONTENTS_TYPE = 'loginContents';
+  const LOGIN_BOTTOM_TYPE = 'loginBottom';
+
   const MOBILE_TOP_TYPE = 'mobileTop';
-
   const MOBILE_CONTENTS_TYPE = 'mobileContents';
-
   const MOBILE_BOTTOM_TYPE = 'mobileBottom';
 
   const SIDE_BANNER_CONTENTS_TYPE = 'sideBannerContents';
 
-  static protected $homeTypes = array(self::TOP_TYPE, self::SIDE_MENU_TYPE, self::CONTENTS_TYPE, self::BOTTOM_TYPE);
-
-  static protected $mobileHomeTypes = array(self::MOBILE_TOP_TYPE, self::MOBILE_CONTENTS_TYPE, self::MOBILE_BOTTOM_TYPE);
-  
-  static protected $sideBannerTypes = array(self::SIDE_BANNER_CONTENTS_TYPE);
-
-  static protected $results;
+  static protected
+    $homeTypes = array(self::TOP_TYPE, self::SIDE_MENU_TYPE, self::CONTENTS_TYPE, self::BOTTOM_TYPE),
+    $loginTypes = array(self::LOGIN_TOP_TYPE, self::LOGIN_SIDE_MENU_TYPE, self::LOGIN_CONTENTS_TYPE, self::LOGIN_BOTTOM_TYPE),
+    $mobileHomeTypes = array(self::MOBILE_TOP_TYPE, self::MOBILE_CONTENTS_TYPE, self::MOBILE_BOTTOM_TYPE),
+    $sideBannerTypes = array(self::SIDE_BANNER_CONTENTS_TYPE),
+    $results;
 
   static public function retrieveGadgetsByTypesName($typesName)
   {
@@ -47,6 +45,9 @@ class GadgetPeer extends BaseGadgetPeer
     {
       case self::MOBILE_HOME_TYPES:
         $types = self::$mobileHomeTypes;
+        break;
+      case self::LOGIN_TYPES:
+        $types = self::$loginTypes;
         break;
       case self::SIDE_BANNER_TYPES:
         $types = self::$sideBannerTypes;
@@ -81,6 +82,26 @@ class GadgetPeer extends BaseGadgetPeer
   static public function retrieveBottomGadgets()
   {
     return self::retrieveByType(self::BOTTOM_TYPE);
+  }
+
+  static public function retrieveLoginTopGadgets()
+  {
+    return self::retrieveByType(self::LOGIN_TOP_TYPE);
+  }
+
+  static public function retrieveLoginSideMenuGadgets()
+  {
+    return self::retrieveByType(self::LOGIN_SIDE_MENU_TYPE);
+  }
+
+  static public function retrieveLoginContentsGadgets()
+  {
+    return self::retrieveByType(self::LOGIN_CONTENTS_TYPE);
+  }
+
+  static public function retrieveLoginBottomGadgets()
+  {
+    return self::retrieveByType(self::LOGIN_BOTTOM_TYPE);
   }
 
   static public function retrieveMobileTopGadgets()
@@ -165,6 +186,10 @@ class GadgetPeer extends BaseGadgetPeer
     if (in_array($type, self::$homeTypes))
     {
       return sfConfig::get('op_gadget_list', array());
+    }
+    elseif (in_array($type, self::$loginTypes))
+    {
+      return sfConfig::get('op_login_gadget_list', array());
     }
     elseif (in_array($type, self::$mobileHomeTypes))
     {

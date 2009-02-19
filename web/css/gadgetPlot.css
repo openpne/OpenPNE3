@@ -17,19 +17,22 @@ body
   margin-right: auto;
 }
 
-#plotTop
+#plotTop,
+#plotLoginTop
 {
   width: 100%;
 }
 
-.layoutA #plotSideMenu
+.layoutA #plotSideMenu,
+.layoutA #plotLoginSideMenu
 {
   width: 150px;
   margin-top: 10px;
   float: left;
 }
 
-.layoutA #plotContents
+.layoutA #plotContents,
+.layoutA #plotLoginContents
 {
   width: 380px;
   margin-top: 10px;
@@ -37,26 +40,30 @@ body
   float: left;
 }
 
-.layoutB #plotSideMenu
+.layoutB #plotSideMenu,
+.layoutB #plotLoginSideMenu
 {
   width: 100px;
   float: left;
 }
 
-.layoutB #plotContents
+.layoutB #plotContents,
+.layoutB #plotLoginContents
 {
   width: 430px;
   margin-left: 10px;
   float: left;
 }
 
-.layoutC #plotContents
+.layoutC #plotContents,
+.layoutC #plotLoginContents
 {
   width: 540px;
   float: left;
 }
 
-#plotBottom
+#plotBottom,
+#plotLoginBottom
 {
   width: 100%;
   float: left;
@@ -66,6 +73,10 @@ body
 #plotSideMenu div,
 #plotContents div,
 #plotBottom div,
+#plotLoginTop div,
+#plotLoginSideMenu div,
+#plotLoginContents div,
+#plotLoginBottom div,
 #plotSideBannerContents div,
 #plotMobileTop div,
 #plotMobileContents div,
@@ -84,6 +95,10 @@ body
 #plotSideMenu div.emptyGadget,
 #plotContents div.emptyGadget,
 #plotBottom div.emptyGadget,
+#plotLoginTop div.emptyGadget,
+#plotLoginSideMenu div.emptyGadget,
+#plotLoginContents div.emptyGadget,
+#plotLoginBottom div.emptyGadget,
 #plotSideBannerContents div.emptyGadget,
 #plotMobileTop div.emptyGadget,
 #plotMobileContents div.emptyGadget,

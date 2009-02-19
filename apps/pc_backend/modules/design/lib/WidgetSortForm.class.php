@@ -70,6 +70,7 @@ class GadgetSortForm extends sfForm
       if ($gadget) 
       {
         if (array_key_exists($gadget->getName(), sfConfig::get('op_gadget_list'))
+          || array_key_exists($gadget->getName(), sfConfig::get('op_login_gadget_list'))
           || array_key_exists($gadget->getName(), sfConfig::get('op_mobile_gadget_list'))
           || array_key_exists($gadget->getName(), sfConfig::get('op_side_banner_gadget_list')))
         {

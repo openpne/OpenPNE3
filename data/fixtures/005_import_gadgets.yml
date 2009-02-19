@@ -33,3 +33,8 @@ Gadget:
     type: "mobileTop"
     name: "informationBox"
     sort_order: 10
+
+  login_gadget_login_form_box:
+    type: "loginTop"
+    name: "loginForm"
+    sort_order: 10

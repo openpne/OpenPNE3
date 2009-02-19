@@ -4,6 +4,8 @@
 
 <h2>
 <?php switch ($type): ?>
+<?php case 'login': ?>
+<?php echo __('ログイン画面ガジェット設定'); break; ?>
 <?php case 'mobileHome': ?>
 <?php echo __('携帯版ホーム画面ガジェット設定'); break; ?>
 <?php case 'sideBanner': ?>
@@ -17,6 +19,7 @@
 
 <ul>
 <li><?php echo link_to(__('ホーム画面ガジェット設定'), 'design/gadget?type=home') ?></li>
+<li><?php echo link_to(__('ログイン画面ガジェット設定'), 'design/gadget?type=login') ?></li>
 <li><?php echo link_to(__('サイドバナー領域ガジェット設定'), 'design/gadget?type=sideBanner') ?></li>
 <li><?php echo link_to(__('携帯版ホーム画面ガジェット設定'), 'design/gadget?type=mobileHome') ?></li>
 </ul>

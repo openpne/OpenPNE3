@@ -46,6 +46,34 @@ class memberActions extends sfOpenPNEMemberAction
   }
 
  /**
+  * Executes login action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeLogin($request)
+  {
+    $this->gadgetConfig = sfConfig::get('op_login_gadget_list');
+    $layout = SnsConfigPeer::retrieveByName('login_layout');
+    if ($layout)
+    {
+      $this->setLayout($layout->getValue());
+    }
+
+    if (!$layout || $layout->getValue() === 'layoutA')
+    {
+      $this->topGadgets = GadgetPeer::retrieveLoginTopGadgets();
+    }
+    if (!$layout || $layout->getValue() === 'layoutA' || $layout->getValue() === 'layoutB')
+    {
+      $this->sideMenuGadgets = GadgetPeer::retrieveLoginSideMenuGadgets();
+    }
+    $this->contentsGadgets = GadgetPeer::retrieveLoginContentsGadgets();
+    $this->bottomGadgets = GadgetPeer::retrieveLoginBottomGadgets();
+
+    return parent::executeLogin($request);
+  }
+
+ /**
   * Executes search action
   *
   * @param sfRequest $request A request object
