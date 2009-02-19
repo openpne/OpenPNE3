@@ -38,14 +38,14 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
-    $databaseManager = new sfDatabaseManager($this->configuration);
-    $migration = new opMigration($this->dispatcher, $databaseManager);
-    $migration->migrate();
-
     if (!$options['no-build-model'])
     {
       $this->buildModel();
     }
+
+    $databaseManager = new sfDatabaseManager($this->configuration);
+    $migration = new opMigration($this->dispatcher, $databaseManager);
+    $migration->migrate();
   }
 
   protected function buildModel()
@@ -55,6 +55,8 @@ EOF;
     $task = new sfPropelBuildFormsTask($this->dispatcher, $this->formatter);
     $task->run();
     $task = new sfPropelBuildFiltersTask($this->dispatcher, $this->formatter);
+    $task->run();
+    $task = new sfCacheClearTask($this->dispatcher, $this->formatter);
     $task->run();
   }
 }

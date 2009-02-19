@@ -17,7 +17,11 @@
  */
 class opMigration extends Doctrine_Migration
 {
-  protected $targetName = '';
+  protected
+    $dispatcher = null,
+    $dbManager = null,
+    $targetName = '',
+    $connectionName = '';
 
  /**
   * Constructor
@@ -26,21 +30,23 @@ class opMigration extends Doctrine_Migration
   {
     $this->dispatcher = $dispatcher;
     $this->dbManager = $dbManager;
-    if (!$connectionName)
+    $this->connectionName = $connectionName;
+    if (!$this->connectionName)
     {
       $names = $this->dbManager->getNames();
-      $connectionName = array_shift($names);
+      $this->connectionName = array_shift($names);
     }
-    $this->database = $this->dbManager->getDatabase($connectionName);
+    $this->database = $this->dbManager->getDatabase($this->connectionName);
 
     $params = $this->database->getParameterHolder()->getAll();
     unset($params['classname']);
     $doctrine = new sfDoctrineDatabase($params);
 
     $this->connection = $doctrine->getDoctrineConnection();
+    $this->connection->getManager()->setAttribute(Doctrine::ATTR_IDXNAME_FORMAT, '%s');
     $this->doctrineProcess = new opUpdateDoctrineMigrationProcess($this->connection);
 
-    if ($pluginName)
+    if ($pluginName && $pluginName !== 'OpenPNE')
     {
       $this->targetName = $pluginName;
       $directory = sfConfig::get('sf_plugins_dir').'/'.$pluginName.'/data/migrations';
@@ -120,6 +126,24 @@ class opMigration extends Doctrine_Migration
   public function hasMigrated()
   {
     return is_null(SnsConfigPeer::get($this->targetName.'_revision'));
+  }
+
+ /**
+  * @see Doctrine_Migration
+  */
+  protected function getMigrationClass($num)
+  {
+    foreach ($this->_migrationClasses as $classMigrationNum => $info)
+    {
+      $className = $info['className'];
+
+      if ($classMigrationNum == $num)
+      {
+        return new $className($this->dispatcher, $this->dbManager, $this->targetName, $this->connectionName);
+      }
+    }
+
+    throw new Doctrine_Migration_Exception('Could not find migration class for migration step: '.$num);
   }
 
  /**
