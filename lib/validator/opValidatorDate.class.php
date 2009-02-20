@@ -94,6 +94,11 @@ class opValidatorDate extends sfValidatorDate
       return $this->getEmptyValue();
     }
 
+    if (strlen((int)$value['year']) > 4)
+    {
+      throw new sfValidatorError($this, 'invalid', array('value' => $value));
+    }
+
     if (!checkdate(intval($value['month']), intval($value['day']), intval($value['year'])))
     {
       throw new sfValidatorError($this, 'invalid', array('value' => $value));
