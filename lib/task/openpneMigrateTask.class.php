@@ -22,8 +22,8 @@ class openpneMigrateTask extends sfPropelBaseTask
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('openpne-version', 'v', sfCommandOption::PARAMETER_OPTIONAL, 'To version', OPENPNE_VERSION),
-      new sfCommandOption('revision', 'r', sfCommandOption::PARAMETER_OPTIONAL, 'To revision'),
+      new sfCommandOption('to-version', 'v', sfCommandOption::PARAMETER_OPTIONAL, 'To version'),
+      new sfCommandOption('to-revision', 'r', sfCommandOption::PARAMETER_OPTIONAL, 'To revision'),
       new sfCommandOption('no-build-model', null, sfCommandOption::PARAMETER_NONE, 'Do not build model classes'),
     ));
 
@@ -49,7 +49,7 @@ EOF;
     }
 
     $databaseManager = new sfDatabaseManager($this->configuration);
-    $migration = new opMigration($this->dispatcher, $databaseManager, $arguments['name']);
+    $migration = new opMigration($this->dispatcher, $databaseManager, $arguments['name'], null, $options['openpne-version']);
     $migration->migrate();
   }
 

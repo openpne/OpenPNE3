@@ -22,17 +22,20 @@ class opMigration extends Doctrine_Migration
     $dbManager = null,
     $pluginInstance = null,
 
+    $version = null,
+
     $targetName = '',
     $connectionName = '';
 
  /**
   * Constructor
   */
-  public function __construct($dispatcher, $dbManager, $pluginName = '', $connectionName = '')
+  public function __construct($dispatcher, $dbManager, $pluginName = '', $connectionName = '', $version = null)
   {
     $this->dispatcher = $dispatcher;
     $this->dbManager = $dbManager;
     $this->connectionName = $connectionName;
+    $this->version = $version;
     if (!$this->connectionName)
     {
       $names = $this->dbManager->getNames();
@@ -146,7 +149,6 @@ class opMigration extends Doctrine_Migration
         return new $className($this->dispatcher, $this->dbManager, $this->targetName, $this->connectionName);
       }
     }
-
     throw new Doctrine_Migration_Exception('Could not find migration class for migration step: '.$num);
   }
 
@@ -178,7 +180,17 @@ class opMigration extends Doctrine_Migration
     }
   }
 
-  protected function getVersion()
+  public function getVersion()
+  {
+    if ($this->version)
+    {
+      return $this->version;
+    }
+
+    return $this->getSourceVersion();
+  }
+
+  public function getSourceVersion()
   {
     if ($this->pluginInstance instanceof opPlugin)
     {
