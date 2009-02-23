@@ -49,7 +49,7 @@ EOF;
     }
 
     $databaseManager = new sfDatabaseManager($this->configuration);
-    $migration = new opMigration($this->dispatcher, $databaseManager, $arguments['name'], null, $options['openpne-version']);
+    $migration = new opMigration($this->dispatcher, $databaseManager, $arguments['name'], null, $options['to-version']);
     $migration->migrate();
   }
 
