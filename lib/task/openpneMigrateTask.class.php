@@ -63,22 +63,29 @@ EOF;
 
     foreach ($targets as $target)
     {
-      $migration = new opMigration($this->dispatcher, $databaseManager, $target, null, $options['to-version']);
-
-      try
-      {
-        $migration->migrate();
-      }
-      catch (Doctrine_Migration_Exception $e)
-      {
-        if (0 !== strpos($e->getMessage(), 'Already at version #'))
-        {
-          throw $e;
-        }
-      }
-
-      $this->logSection('migrate', sprintf('%s is now at revision %d.', $target, $migration->getCurrentVersion()));
+      $params = array(
+        'version'  => $options['to-version'],
+        'revision' => $options['to-revision'],
+      );
+      $this->migrate($target, $databaseManager, $params);
     }
+  }
+
+  protected function migrate($target, $databaseManager, $params)
+  {
+    try
+    {
+      $migration = new opMigration($this->dispatcher, $databaseManager, $target, null, $params);
+      $migration->migrate();
+    }
+    catch (Doctrine_Migration_Exception $e)
+    {
+      if (0 !== strpos($e->getMessage(), 'Already at version #'))
+      {
+        throw $e;
+      }
+    }
+    $this->logSection('migrate', sprintf('%s is now at revision %d.', $target, $migration->getCurrentVersion()));
   }
 
   protected function buildModel()

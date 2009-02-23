@@ -23,6 +23,7 @@ class opMigration extends Doctrine_Migration
     $pluginInstance = null,
 
     $version = null,
+    $revision = null,
 
     $targetName = '',
     $connectionName = '';
@@ -30,18 +31,25 @@ class opMigration extends Doctrine_Migration
  /**
   * Constructor
   */
-  public function __construct($dispatcher, $dbManager, $pluginName = '', $connectionName = '', $version = null)
+  public function __construct($dispatcher, $dbManager, $pluginName = '', $connectionName = '', $params = array())
   {
     $this->dispatcher = $dispatcher;
     $this->dbManager = $dbManager;
     $this->connectionName = $connectionName;
-    $this->version = $version;
     if (!$this->connectionName)
     {
       $names = $this->dbManager->getNames();
       $this->connectionName = array_shift($names);
     }
     $this->database = $this->dbManager->getDatabase($this->connectionName);
+    if (isset($params['revision']))
+    {
+      $this->revision = $params['revision'];
+    }
+    elseif (isset($params['version']))
+    {
+      $this->version = $params['version'];
+    }
 
     $params = $this->database->getParameterHolder()->getAll();
     unset($params['classname']);
@@ -71,6 +79,21 @@ class opMigration extends Doctrine_Migration
     }
 
     return parent::__construct($directory);
+  }
+
+ /**
+  * migrate
+  *
+  * @see Doctrine_Migration
+  */
+  public function migrate($to = null)
+  {
+    if (is_null($to))
+    {
+      $to = $this->revision;
+    }
+
+    parent::migrate($to);
   }
 
  /**
@@ -157,6 +180,11 @@ class opMigration extends Doctrine_Migration
   */
   public function loadMigrationClassesFromDirectory()
   {
+    if ($this->revision)
+    {
+      return parent::loadMigrationClassesFromDirectory();
+    }
+
     $classes = get_declared_classes();
 
     foreach ((array)$this->_migrationClassesDirectory as $dir)
