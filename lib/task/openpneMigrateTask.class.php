@@ -44,7 +44,7 @@ EOF;
     }
 
     $databaseManager = new sfDatabaseManager($this->configuration);
-    $migration = new opMigration($this->dispatcher, $databaseManager);
+    $migration = new opMigration($this->dispatcher, $databaseManager, $arguments['name']);
     $migration->migrate();
   }
 

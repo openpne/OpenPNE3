@@ -20,6 +20,8 @@ class opMigration extends Doctrine_Migration
   protected
     $dispatcher = null,
     $dbManager = null,
+    $pluginInstance = null,
+
     $targetName = '',
     $connectionName = '';
 
@@ -50,6 +52,8 @@ class opMigration extends Doctrine_Migration
     {
       $this->targetName = $pluginName;
       $directory = sfConfig::get('sf_plugins_dir').'/'.$pluginName.'/data/migrations';
+
+      $this->pluginInstance = opPlugin::getInstance($this->targetName);
     }
     else
     {
@@ -156,7 +160,7 @@ class opMigration extends Doctrine_Migration
     foreach ((array)$this->_migrationClassesDirectory as $dir)
     {
       $files = sfFinder::type('file')->name('*.php')->in($dir);
-      $iterator = new CompareMigrateDirectoryVersionFilterIterator($files, str_replace('-dev', '', OPENPNE_VERSION));
+      $iterator = new CompareMigrateDirectoryVersionFilterIterator($files, str_replace('-dev', '', $this->getVersion()));
       foreach ($iterator as $file)
       {
         if (!in_array(basename($file), $this->_loadedMigrations))
@@ -172,6 +176,16 @@ class opMigration extends Doctrine_Migration
         }
       }
     }
+  }
+
+  protected function getVersion()
+  {
+    if ($this->pluginInstance instanceof opPlugin)
+    {
+      return $this->pluginInstance->getVersion();
+    }
+
+    return OPENPNE_VERSION;
   }
 }
 
