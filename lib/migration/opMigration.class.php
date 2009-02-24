@@ -9,7 +9,7 @@
  */
 
 /**
- * opMigration provides migration
+ * opMigration provides way to migrate
  *
  * @package    OpenPNE
  * @subpackage migration
@@ -31,17 +31,16 @@ class opMigration extends Doctrine_Migration
  /**
   * Constructor
   */
-  public function __construct($dispatcher, $dbManager, $pluginName = '', $connectionName = '', $params = array())
+  public function __construct($dispatcher, $dbManager, $targetName = '', $connectionName = '', $params = array())
   {
     $this->dispatcher = $dispatcher;
     $this->dbManager = $dbManager;
-    $this->connectionName = $connectionName;
-    if (!$this->connectionName)
-    {
-      $names = $this->dbManager->getNames();
-      $this->connectionName = array_shift($names);
-    }
+    $this->setConnectionName($connectionName);
     $this->database = $this->dbManager->getDatabase($this->connectionName);
+    $this->initializeDatabaseConfiguration();
+
+    $this->setTargetName($targetName);
+
     if (isset($params['revision']))
     {
       $this->revision = $params['revision'];
@@ -49,8 +48,33 @@ class opMigration extends Doctrine_Migration
     elseif (isset($params['version']))
     {
       $this->version = $params['version'];
+      $this->revision = (string)$this->getRevisionByVersion($this->getVersion(), $this->getMigrationScriptDirectory());
     }
 
+    $this->setFormatter();
+    return parent::__construct($this->getMigrationScriptDirectory());
+  }
+
+ /**
+  * Sets name of connection to the database
+  *
+  * @param string $name
+  */
+  protected function setConnectionName($name = '')
+  {
+    $this->connectionName = $name;
+    if (!$this->connectionName)
+    {
+      $names = $this->dbManager->getNames();
+      $this->connectionName = array_shift($names);
+    }
+  }
+
+ /**
+  * Initializes database confiigurations
+  */
+  protected function initializeDatabaseConfiguration()
+  {
     $params = $this->database->getParameterHolder()->getAll();
     unset($params['classname']);
     $doctrine = new sfDoctrineDatabase($params);
@@ -58,27 +82,34 @@ class opMigration extends Doctrine_Migration
     $this->connection = $doctrine->getDoctrineConnection();
     $this->connection->getManager()->setAttribute(Doctrine::ATTR_IDXNAME_FORMAT, '%s');
     $this->doctrineProcess = new opUpdateDoctrineMigrationProcess($this->connection);
+  }
 
-    if ($pluginName && $pluginName !== 'OpenPNE')
-    {
-      $this->targetName = $pluginName;
-      $directory = sfConfig::get('sf_plugins_dir').'/'.$pluginName.'/data/migrations';
-
-      $this->pluginInstance = opPlugin::getInstance($this->targetName);
-    }
-    else
-    {
-      $this->targetName = 'OpenPNE';
-      $directory = sfConfig::get('sf_data_dir').'/migrations';
-    }
-
+ /**
+  * Sets formatter
+  */
+  protected function setFormatter()
+  {
     $this->formatter = new sfFormatter();
     if ('cli' === PHP_SAPI)
     {
       $this->formatter = new sfAnsiColorFormatter();
     }
+  }
 
-    return parent::__construct($directory);
+ /**
+  * Sets a name of the target of this migration
+  */
+  protected function setTargetName($name)
+  {
+    if ($name && $name !== 'OpenPNE')
+    {
+      $this->targetName = $name;
+      $this->pluginInstance = opPlugin::getInstance($this->targetName);
+    }
+    else
+    {
+      $this->targetName = 'OpenPNE';
+    }
   }
 
  /**
@@ -90,7 +121,10 @@ class opMigration extends Doctrine_Migration
   {
     if (is_null($to))
     {
-      $to = $this->revision;
+      if (!is_null($this->revision))
+      {
+        $to = $this->revision;
+      }
     }
 
     parent::migrate($to);
@@ -176,36 +210,27 @@ class opMigration extends Doctrine_Migration
   }
 
  /**
-  * @see Doctrine_Migration
+  * Gets a migration script directory
+  *
+  * @return string
   */
-  public function loadMigrationClassesFromDirectory()
+  protected function getMigrationScriptDirectory()
   {
-    if ($this->revision)
+    if ($this->targetName === 'OpenPNE')
     {
-      return parent::loadMigrationClassesFromDirectory();
+      $dir = sfConfig::get('sf_data_dir').'/migrations';
+    }
+    else
+    {
+      $dir = sfConfig::get('sf_plugins_dir').'/'.$this->targetName.'/data/migrations';
     }
 
-    $classes = get_declared_classes();
-
-    foreach ((array)$this->_migrationClassesDirectory as $dir)
+    if (!is_readable($dir))
     {
-      $files = sfFinder::type('file')->name('*.php')->in($dir);
-      $iterator = new CompareMigrateDirectoryVersionFilterIterator($files, str_replace('-dev', '', $this->getVersion()));
-      foreach ($iterator as $file)
-      {
-        if (!in_array(basename($file), $this->_loadedMigrations))
-        {
-          require_once $file;
-
-          $requiredClass = array_diff(get_declared_classes(), $classes);
-          $requiredClass = end($requiredClass);
-          if ($requiredClass)
-          {
-            $this->_loadedMigrations[$requiredClass] = basename($file);
-          }
-        }
-      }
+      return null;
     }
+
+    return $dir;
   }
 
   public function getVersion()
@@ -227,15 +252,74 @@ class opMigration extends Doctrine_Migration
 
     return OPENPNE_VERSION;
   }
+
+  public function getVersionByRevision($revision)
+  {
+    $version = '';
+
+    foreach ((array)$this->_migrationClassesDirectory as $dir)
+    {
+      $files = sfFinder::type('file')->name('/^0*'.$revision.'_.*\.php$/')->in($dir);
+      if (!empty($files))
+      {
+        $version = basename(dirname(array_shift($files)));
+        break;
+      }
+    }
+
+    return $version;
+  }
+
+  public function getRevisionByVersion($version, $directory)
+  {
+    $revision = 0;
+
+    $currentVersion = $this->getVersionByRevision($this->getCurrentVersion());
+
+    $direction = 'up';
+    if (version_compare($currentVersion, $version, '>'))
+    {
+      $direction = 'down';
+    }
+
+    $files = sfFinder::type('file')->name('*.php')->in($directory);
+    $iterator = new CompareMigrateDirectoryVersionFilterIterator($files, str_replace('-dev', '', $version), $direction);
+    $targets = array();
+    foreach ($iterator as $file)
+    {
+      $targets[] = basename($file);
+    }
+
+    if ($targets)
+    {
+      sort($targets);
+      $target = $targets[0];
+      if ($direction === 'up')
+      {
+        $target = $targets[count($targets) - 1];
+      }
+
+      $pos = strpos($target, '_');
+      $revision = (int)substr($target, 0, $pos);
+    }
+
+    return $revision;
+  }
 }
 
 class CompareMigrateDirectoryVersionFilterIterator extends FilterIterator
 {
-  protected $limitVersion;
+  protected
+    $limitVersion = null,
+    $direction    = 'up';
 
-  public function __construct(array $fileList, $limitVersion)
+  public function __construct(array $fileList, $limitVersion, $direction = '')
   {
     $this->limitVersion = $limitVersion;
+    if ($direction)
+    {
+      $this->direction = $direction;
+    }
 
     return parent::__construct(new ArrayIterator($fileList));
   }
@@ -243,6 +327,11 @@ class CompareMigrateDirectoryVersionFilterIterator extends FilterIterator
   public function accept()
   {
     $version = basename(dirname($this->current()));
-    return version_compare($version, $this->limitVersion, '<=');
+    $operand = '<=';
+    if ($this->direction === 'down')
+    {
+      $operand = '<';
+    }
+    return version_compare($version, $this->limitVersion, $operand);
   }
 }
