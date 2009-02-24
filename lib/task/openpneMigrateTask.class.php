@@ -113,6 +113,8 @@ EOF;
     $task->run();
     $task = new sfCacheClearTask($this->dispatcher, $this->formatter);
     $task->run();
+    $task = new openpnePermissionTask($this->dispatcher, $this->formatter);
+    $task->run();
   }
 
   protected function getEnabledOpenPNEPlugin()
