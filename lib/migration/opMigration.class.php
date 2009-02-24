@@ -81,6 +81,7 @@ class opMigration extends Doctrine_Migration
 
     $this->connection = $doctrine->getDoctrineConnection();
     $this->connection->getManager()->setAttribute(Doctrine::ATTR_IDXNAME_FORMAT, '%s');
+    $this->connection->getManager()->setAttribute(Doctrine::ATTR_QUOTE_IDENTIFIER, true);
     $this->doctrineProcess = new opDoctrineMigrationProcess($this->connection);
   }
 
