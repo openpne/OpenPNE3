@@ -18,18 +18,33 @@ class openpneMigrateTask extends sfPropelBaseTask
     require sfConfig::get('sf_data_dir').'/version.php';
 
     $this->addOptions(array(
-      new sfCommandOption('target', null, sfCommandOption::PARAMETER_OPTIONAL, 'The target of migration'),
-      new sfCommandOption('to-version', 'v', sfCommandOption::PARAMETER_OPTIONAL, 'To version'),
-      new sfCommandOption('to-revision', 'r', sfCommandOption::PARAMETER_OPTIONAL, 'To revision'),
+      new sfCommandOption('target', null, sfCommandOption::PARAMETER_OPTIONAL, 'The target of migration. This must be "OpenPNE" or a plugin name.'),
+      new sfCommandOption('to-version', 'v', sfCommandOption::PARAMETER_OPTIONAL, 'A version'),
+      new sfCommandOption('to-revision', 'r', sfCommandOption::PARAMETER_OPTIONAL, 'A revision'),
       new sfCommandOption('no-build-model', null, sfCommandOption::PARAMETER_NONE, 'Do not build model classes'),
     ));
 
-    $this->briefDescription = 'update OpenPNE';
+    $this->briefDescription = 'migrate OpenPNE and/or the plugins to newer/older version one';
     $this->detailedDescription = <<<EOF
-The [openpne:migrade|INFO] task upgrades or downgrades OpenPNE and/or plugin.
-Call it with:
+The [openpne:migrade|INFO] task lets OpenPNE migrate and/or the plugins newer/older version.
 
-  [./symfony openpne:migrade|INFO]
+Call it with:
+  1.  [./symfony openpne:migrade|INFO]
+  2.  [./symfony openpne:migrade --target=opSamplePlugin|INFO]
+  3.  [./symfony openpne:migrade -r 10 --target=OpenPNE|INFO]
+  4.  [./symfony openpne:migrade -v 3.0.2 --target=OpenPNE|INFO]
+
+    1. In the first form, any targets, versions and revisions aren't specified.
+       This task executes the migration scripts for OpenPNE and all the plugins to newer version.
+
+    2. In the second form, the specified target (OpenPNE or a plugin) will be migrated newer version.
+
+    3. In the third form, the specified target (OpenPNE or a plugin) will be migrated specified revision (internal version).
+
+    4. In the fourth form, the specified target (OpenPNE or a plugin) will be migrated specified version.
+
+  When the specified value of the [-r|INFO] option or the [-v|INFO] option is newer than the current revision of the target, it will be upgraded.
+  And, when the specified value of the [-r|INFO] option or the [-v|INFO] option is older than the current revision of the target, it will be downgraded.
 EOF;
   }
 
