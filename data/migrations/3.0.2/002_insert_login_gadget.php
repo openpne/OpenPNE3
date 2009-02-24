@@ -18,4 +18,19 @@ class insertLoginGadget extends opMigration
     $gadget->setSortOrder(10);
     $gadget->save();
   }
+
+  public function down()
+  {
+    $gadgets = array_merge(
+      (array)GadgetPeer::retrieveLoginTopGadgets(),
+      (array)GadgetPeer::retrieveLoginSideMenuGadgets(),
+      (array)GadgetPeer::retrieveLoginContentsGadgets(),
+      (array)GadgetPeer::retrieveLoginBottomGadgets()
+    );
+
+    foreach ($gadgets as $gadget)
+    {
+      $gadget->delete();
+    }
+  }
 }
