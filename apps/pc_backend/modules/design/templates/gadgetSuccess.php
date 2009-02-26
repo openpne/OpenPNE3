@@ -35,9 +35,9 @@
 <input class="<?php echo $gadgetType ?>Gadget" type="hidden" name="gadget[<?php echo $gadgetType ?>][<?php echo $key ?>]" value="<?php echo $gadget->getId() ?>" />
 <?php endforeach; ?>
 <?php endif; ?>
+<?php endforeach; ?>
 <?php echo $sortForm->renderHiddenFields(); ?>
 <?php echo $addForm->renderHiddenFields(); ?>
-<?php endforeach; ?>
 <input type="submit" value="<?php echo __('設定変更') ?>" />
 </form>
 </div>
