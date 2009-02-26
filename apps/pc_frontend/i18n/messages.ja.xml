@@ -183,6 +183,14 @@
         <target>写真を編集する</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Show more Photos</source>
+        <target>もっと写真を見る</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1%'s Photos</source>
+        <target>%1%さんの写真</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Please select the item that wants to be set from the menu.</source>
         <target>メニューから設定したい項目を選択してください。</target>
       </trans-unit>
