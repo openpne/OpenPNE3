@@ -112,8 +112,11 @@ abstract class sfOpenPNEMemberAction extends sfActions
 
     $id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
     $this->member = MemberPeer::retrieveByPk($id);
-    $this->communities = CommunityPeer::retrievesByMemberId($id);
+    
     $this->forward404Unless($this->member, 'Undefined member.');
+
+    $this->communities = CommunityPeer::retrievesByMemberId($id);
+    $this->crownIds = CommunityMemberPeer::getCommunityIdsOfAdminByMemberId($id);
 
     return sfView::SUCCESS;
   }

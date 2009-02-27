@@ -37,6 +37,7 @@ op_include_parts('nineTable', 'frendList', $options);
 $options = array(
   'title' => __('Communities List'),
   'list' => $communities,
+  'crownIds' => $sf_data->getRaw('crownIds'),
   'link_to' => 'community/home?id=',
   'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $member->countCommunityMembers()), 'community/joinlist')),
 );
