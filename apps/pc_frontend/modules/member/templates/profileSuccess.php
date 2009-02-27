@@ -10,14 +10,10 @@ if ($relation->isSelf())
 {
   $moreInfo[] = link_to(__('Edit Photo'), 'member/configImage');
 }
-else
+else if ($member->getImageFileName())
 {
-  if ($member->getImageFileName())
-  {
     $moreInfo[] = link_to(__("Show more Photos"), 'friend/showImage?id='.$member->getId());
-  }
 }
-
 
 $options = array(
   'name'     => $member->getName(),

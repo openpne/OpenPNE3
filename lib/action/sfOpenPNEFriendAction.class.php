@@ -14,6 +14,7 @@
  * @package    OpenPNE
  * @subpackage action
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
+ * @author     Shogo Kawahara <kawahara@tejimaya.net>
  */
 abstract class sfOpenPNEFriendAction extends sfActions
 {
@@ -155,4 +156,20 @@ abstract class sfOpenPNEFriendAction extends sfActions
 
     return sfView::SUCCESS;
   }
+
+  /**
+   * Executes show member iamges action
+   * 
+   * @param sfRequest $request A request object
+   */
+  public function executeShowImage($request)
+  {
+    $this->forward404Unless($this->id);
+
+    $this->member = MemberPeer::retrieveByPk($this->id);
+    $this->forward404Unless($this->member, 'Undefined member.');
+
+    return sfView::SUCCESS;
+  }
+
 }

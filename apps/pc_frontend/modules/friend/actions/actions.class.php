@@ -14,7 +14,6 @@
  * @package    OpenPNE
  * @subpackage friend
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
- * @author     Shogo Kawahara <kawahara@tejimaya.net>
  */
 class friendActions extends sfOpenPNEFriendAction
 {
@@ -33,15 +32,5 @@ class friendActions extends sfOpenPNEFriendAction
     $this->size = 50;
 
     parent::executeList($request);
-  }
-
-  public function executeShowImage(sfWebRequest $request)
-  {
-    $this->forward404Unless($this->id);
-
-    $this->member = MemberPeer::retrieveByPk($this->id);
-    $this->forward404Unless($this->member, 'Undefined member.');
-
-    return sfView::SUCCESS;
   }
 }
