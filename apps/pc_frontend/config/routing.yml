@@ -12,6 +12,11 @@ member_profile:
   param: { module: member, action: profile }
   requirements: { id: \d+ }
 
+friend_showImage:
+  url:   /friend/showImage/:id
+  param: { module: friend, action: showImage }
+  requirements: { id: \d+ }
+
 community_home:
   url:   /community/:id
   param: { module: community, action: home }
