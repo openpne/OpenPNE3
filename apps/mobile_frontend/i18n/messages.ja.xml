@@ -318,6 +318,22 @@
         <source>* Participate in %1%</source>
         <target>■ %1% に参加する</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Photo</source>
+        <target>写真</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Show Photo</source>
+        <target>写真を見る</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1%'s Profile</source>
+        <target>%1%さんのﾌﾟﾛﾌｨｰﾙ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Expansion</source>
+        <target>大</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

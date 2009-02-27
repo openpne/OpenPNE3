@@ -3,6 +3,11 @@ homepage:
   url:   /
   param: { module: member, action: home }
 
+friend_show_image:
+  url:   /friend/showImage/:id
+  param: { module: friend, action: showImage }
+  requirements: { id: \d+ }
+
 error:
   url: /default/error
   param: { module: default, action: error }

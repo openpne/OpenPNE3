@@ -15,6 +15,11 @@
 
 <tr><td align="center" width="50%" valign="top">
 <?php echo image_tag_sf_image($member->getImageFileName(), array('size' => '120x120', 'format' => 'jpg')) ?>
+<?php if ($relation->isSelf()) : ?>
+<?php //TODO: Add ability to edit image on mobile_frontend ?>
+<?php elseif ($member->getImageFileName()) : ?>
+<br><?php echo link_to(__('Show Photo'), 'friend/showImage?id='.$member->getId()) ?>
+<?php endif; ?>
 </td>
 <td valign="top">
 <?php foreach ($member->getProfiles() as $profile) : ?>
