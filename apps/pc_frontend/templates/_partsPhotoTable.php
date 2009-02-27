@@ -3,6 +3,7 @@
 <?php
 $options->setDefault('col', 5);
 $options->setDefault('type', 'full');
+$options->setDefault('crownIds', array());
 
 $options->addRequiredOption('pager');
 ?>
@@ -18,6 +19,9 @@ $options->addRequiredOption('pager');
 <tr class="photo">
 <?php for ($j = ($i * $options->col) - $options->col; ($i * $options->col) > $j; $j++): ?>
 <td><?php if (!empty($options->list[$j])): ?>
+<?php if (in_array($options->list[$j]->getId(), $options->getRaw('crownIds'))): ?>
+<p class="crown"><?php echo image_tag('icon_crown.gif', array('alt' => 'admin')) ?></p>
+<?php endif; ?>
 <?php echo link_to(image_tag_sf_image($options->list[$j]->getImageFileName(), array('size' => '76x76')), $options->link_to.$options->list[$j]->getId()) ?>
 <?php endif; ?></td>
 <?php endfor; ?>

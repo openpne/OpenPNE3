@@ -87,6 +87,8 @@ abstract class sfOpenPNECommunityAction extends sfActions
       return sfView::ERROR;
     }
 
+    $this->crownIds = CommunityMemberPeer::getCommunityIdsOfAdminByMemberId($memberId);
+
     return sfView::SUCCESS;
   }
 
@@ -103,7 +105,9 @@ abstract class sfOpenPNECommunityAction extends sfActions
     if (!$this->pager->getNbResults()) {
       return sfView::ERROR;
     }
-
+    
+    $this->crownIds = array(CommunityMemberPeer::getCommunityAdmin($this->id)->getMemberId());
+    
     return sfView::SUCCESS;
   }
 

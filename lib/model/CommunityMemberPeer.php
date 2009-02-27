@@ -77,4 +77,21 @@ class CommunityMemberPeer extends BaseCommunityMemberPeer
     $c->add(self::POSITION, 'admin');
     return self::doSelectOne($c);
   }
+
+  public static function getCommunityIdsOfAdminByMemberId($memberId)
+  {
+    $c = new Criteria();
+    $c->add(self::MEMBER_ID, $memberId);
+    $c->add(self::POSITION, 'admin');
+    $communityMembers = self::doSelect($c);
+
+    $result = array();
+
+    foreach ($communityMembers as $communityMember)
+    {
+      $result[] = $communityMember->getCommunityId();
+    }
+
+    return $result;
+  }
 }

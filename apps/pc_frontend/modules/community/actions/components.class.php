@@ -17,6 +17,7 @@ class communityComponents extends sfComponents
     $c->addAscendingOrderByColumn(Propel::getDB()->random(time()));
     $this->row = $this->gadget->getConfig('row');
     $this->col = $this->gadget->getConfig('col');
+    $this->crownIds = CommunityMemberPeer::getCommunityIdsOfAdminByMemberId($this->member->getId());
     $this->communities = CommunityPeer::retrievesByMemberId($this->member->getId(), $this->row * $this->col, $c);
   }
 }
