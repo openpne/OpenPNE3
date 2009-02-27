@@ -75,7 +75,7 @@ abstract class sfOpenPNECommunityAction extends sfActions
   */
   public function executeJoinlist($request)
   {
-    $memberId = $request->getParameter('member_id', $this->getUser()->getMemberId());
+    $memberId = $request->getParameter('id', $this->getUser()->getMemberId());
 
     $this->member = MemberPeer::retrieveByPK($memberId);
     $this->forward404Unless($this->member);

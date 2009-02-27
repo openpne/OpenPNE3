@@ -39,7 +39,7 @@ $options = array(
   'list' => $communities,
   'crownIds' => $sf_data->getRaw('crownIds'),
   'link_to' => 'community/home?id=',
-  'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $member->countCommunityMembers()), 'community/joinlist')),
+  'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $member->countCommunityMembers()), 'community/joinlist?id='.$member->getId())),
 );
 op_include_parts('nineTable', 'communityList', $options);
 ?>
