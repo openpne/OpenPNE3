@@ -22,7 +22,7 @@ function getDashboard(str)
 '); ?>
 
 <div id="versionInformation" style="display: none;"></div>
-<script type="text/javascript" src="http://sandbox.ebihara.dazai.pne.jp/OpenPNE3Develop/version.php?callback=getVersion&version=<?php echo OPENPNE_VERSION ?>&url=<?php echo urlencode($sf_request->getUriPrefix().$sf_request->getRelativeUrlRoot().'/') ?>"></script>
+<script type="text/javascript" src="http://update.openpne.jp/?callback=getVersion&version=<?php echo OPENPNE_VERSION ?>"></script>
 
 <div id="dashboard" style="display: none;"></div>
 <script type="text/javascript" src="http://sandbox.ebihara.dazai.pne.jp/OpenPNE3Develop/dashboard.php?callback=getDashboard"></script>
