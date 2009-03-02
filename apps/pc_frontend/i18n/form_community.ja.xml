@@ -6,6 +6,10 @@
         <source>Name</source>
         <target>コミュニティ名</target>
       </trans-unit>
+      <trans-unit id="2">
+        <source>Photo</source>
+        <target>写真</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

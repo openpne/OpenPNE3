@@ -31,6 +31,8 @@ class CommunityForm extends BaseCommunityForm
     $this->setWidget('file', new sfWidgetFormInputFile());
     $this->setValidator('file', new opValidatorImageFile(array('required' => false)));
 
+    $this->widgetSchema->setLabel('file', 'Photo');
+
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
   }
 
