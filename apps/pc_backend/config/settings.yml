@@ -3,6 +3,9 @@ prod:
     no_script_name:         off
     logging_enabled:        off
     check_lock:             on
+  .actions:
+    error_404_action:       error
+    module_disabled_action: error
 
 dev:
   .settings:
