@@ -28,7 +28,13 @@
 <td><?php echo ($value->getIsRequired() ? '○' : '×') ?></td>
 <td><?php echo ($value->getIsUnique() ? '×' :'○') ?></td>
 <td><?php echo $value->getFormType() ?></td>
-<td></td>
+<td>
+<?php if ($value->getFormType() == 'radio' || $value->getFormType() == 'checkbox' || $value->getFormType() == 'select') : ?>
+<?php echo link_to('一覧', 'profile/list', array('anchor' => $value->getName())) ?>
+<?php else: ?>
+-
+<?php endif; ?>
+</td>
 <td><?php echo ($value->getIsDispRegist() ? '○' : '×') ?></td>
 <td><?php echo ($value->getIsDispConfig() ? '○' : '×') ?></td>
 <td><?php echo ($value->getIsDispSearch() ? '○' : '×') ?></td>
@@ -45,7 +51,7 @@
 <?php foreach ($profiles as $value): ?>
 <?php if ($value->getFormType() == 'radio' || $value->getFormType() == 'checkbox' || $value->getFormType() == 'select') : ?>
 
-<h4><?php echo $value->getCaption() ?></h4>
+<h4><a name="<?php echo $value->getName() ?>"><?php echo $value->getCaption() ?></a></h4>
 <table id="profile_options_<?php echo $value->getId() ?>">
 <thead><tr>
 <th>ID</th>
