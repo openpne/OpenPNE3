@@ -16,8 +16,7 @@ else if ($member->getImageFileName())
 }
 
 $options = array(
-  'name'     => $member->getName(),
-  'image'    => $member->getImageFileName(),
+  'object'   => $member,
   'moreInfo' => $moreInfo,
 );
 op_include_parts('memberImageBox', 'memberImageBox', $options);
