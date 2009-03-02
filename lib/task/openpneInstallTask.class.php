@@ -92,7 +92,7 @@ EOF;
 
     if ($hostname)
     {
-      $data[] = 'hostname='.$hostname;
+      $data[] = 'host='.$hostname;
     }
 
     if ($port)
