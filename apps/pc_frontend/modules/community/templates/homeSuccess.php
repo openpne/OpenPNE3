@@ -1,8 +1,7 @@
 <?php slot('op_sidemenu'); ?>
 <?php
 $options = array(
-  'name'   => $community->getName(),
-  'image'  => $community->getImageFileName(),
+  'object' => $community,
 );
 op_include_parts('memberImageBox', 'communityImageBox', $options);
 ?>
