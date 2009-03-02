@@ -19,7 +19,7 @@ echo key($list);
 </tr>
 <?php foreach ($list as $caption => $item) : ?>
 <tr>
-<th><?php echo $caption ?></th><td><?php echo $item ?></td>
+<th><?php echo $caption ?></th><td><?php echo op_truncate($item, 36, '', 3) ?></td>
 </tr>
 <?php endforeach; ?>
 </tbody></table></div></div>

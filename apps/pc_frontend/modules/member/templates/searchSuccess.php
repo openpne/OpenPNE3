@@ -19,7 +19,7 @@ foreach ($pager->getResults() as $key => $member)
   $list[$key][__('Nickname')] = $member->getName();
   if ($member->getProfile('self_intro'))
   {
-    $list[$key][$member->getProfile('self_intro')->getCaption()] = nl2br($member->getProfile('self_intro'));
+    $list[$key][$member->getProfile('self_intro')->getCaption()] = $member->getProfile('self_intro');
   }
   $list[$key][__('Last Login')] = distance_of_time_in_words($member->getLastLoginTime());
 }
