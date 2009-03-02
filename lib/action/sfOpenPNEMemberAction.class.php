@@ -308,7 +308,9 @@ abstract class sfOpenPNEMemberAction extends sfActions
       $this->form->bind($request->getParameter('password'));
       if ($this->form->isValid())
       {
+        $member = $this->getUser()->getMember();
         $this->getUser()->getMember()->delete();
+        $this->sendDeleteAccountMail($member);
         $this->getUser()->setFlash('notice', '退会が完了しました');
         $this->getUser()->logout();
         $this->redirect('member/login');
@@ -316,5 +318,16 @@ abstract class sfOpenPNEMemberAction extends sfActions
     }
 
     return sfView::INPUT;
+  }
+
+  protected function sendDeleteAccountMail($member)
+  {
+    $param = array(
+      'member'   => $member,
+    );
+    $mail = new sfOpenPNEMailSend();
+    $mail->setSubject(opConfig::get('sns_name') . '退会者情報');
+    $mail->setTemplate('global/deleteAccountMail', $param);
+    $mail->send(opConfig::get('admin_mail_address'), opConfig::get('admin_mail_address'));
   }
 }

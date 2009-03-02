@@ -518,6 +518,10 @@
         <source>Invalid mime type (%mime_type%).</source>
         <target>ファイル形式が間違っています (%mime_type%).</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Information About the Withdrawal Member</source>
+        <target>退会者データ</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
