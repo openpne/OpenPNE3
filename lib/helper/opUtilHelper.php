@@ -244,6 +244,29 @@ function op_url_cmd($text)
   return preg_replace_callback($url_pattern, '_op_url_cmd', $text);
 }
 
+if (!defined('SF_AUTO_LINK_RE'))
+{
+  define('SF_AUTO_LINK_RE', '~
+    (                       # leading text
+      <\w+.*?>|             #   leading HTML tag, or
+      [^=!:\'"/]|           #   leading punctuation, or
+      ^                     #   beginning of line
+    )
+    (
+      (?:https?://)|        # protocol spec, or
+      (?:www\.)             # www.*
+    )
+    (
+      [-\w]+                   # subdomain or domain
+      (?:\.[-\w]+)*            # remaining subdomains or domain
+      (?::\d+)?                # port
+      \/?
+      [a-zA-Z0-9_\-\/.,:;\~\?@&=+$%#!()]*
+    )
+    ([[:punct:]]|\s|<|$)    # trailing text
+   ~x');
+}
+
 function _op_url_cmd($matches)
 {
   $url = $matches[0];
