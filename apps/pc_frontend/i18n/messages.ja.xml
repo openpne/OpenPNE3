@@ -510,6 +510,14 @@
         <source>* Participate in %1%</source>
         <target>■ %1% に参加する</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>File is too large (maximum is %max_size% bytes).</source>
+        <target>ファイルサイズが大きすぎます (最大 %max_size% bytes まで)。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Invalid mime type (%mime_type%).</source>
+        <target>ファイル形式が間違っています (%mime_type%).</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

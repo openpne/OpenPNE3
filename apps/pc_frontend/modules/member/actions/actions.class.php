@@ -139,7 +139,9 @@ class memberActions extends sfOpenPNEMemberAction
           $errors = $this->form->getErrorSchema()->getErrors();
           if (isset($errors['file']))
           {
-            $this->getUser()->setFlash('error', $errors['file']);
+            $error = $errors['file'];
+            $i18n = $this->getContext()->getI18N();
+            $this->getUser()->setFlash('error', $i18n->__($error->getMessageFormat(), $error->getArguments()));
           }
         }
       }
