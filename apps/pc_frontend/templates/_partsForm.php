@@ -16,8 +16,18 @@ $options->setDefault('method','post');
 <table>
 <?php
 $forms = ($options['form'] instanceof sfForm) ? array($options['form']) : $options['form'];
+
 foreach ($forms as $form)
 {
+  if ($form->hasGlobalErrors())
+  {
+    echo '<tr>'."\n"
+      . '<td colspan="2">'."\n";
+    echo $form->renderGlobalErrors();
+    echo '</td>'."\n"
+      . '</tr>'."\n";
+  }
+
   foreach ($form as $field)
   {
     if ($field->isHidden()) continue;
