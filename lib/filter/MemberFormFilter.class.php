@@ -31,6 +31,8 @@ class MemberFormFilter extends BaseMemberFormFilter
     $this->setValidators(array(
       'name'       => new sfValidatorPass(),
     ));
+    
+    $this->widgetSchema->setLabel('name', 'Nickname');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
     $this->widgetSchema->setNameFormat('member[%s]');
