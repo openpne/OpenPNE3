@@ -52,17 +52,23 @@ abstract class sfOpenPNECommunityAction extends sfActions
     }
 
     $this->community = CommunityPeer::retrieveByPk($this->id);
-    $this->form = new CommunityForm($this->community);
+
+    $this->communityForm       = new CommunityForm($this->community);
+    $this->communityConfigForm = new CommunityConfigForm(array(), array('community' => $this->community));
+    $this->communityFileForm   = new CommunityFileForm();
 
     if ($request->isMethod('post'))
     {
       $params = $request->getParameter('community');
       $params['id'] = $this->id;
-      $this->form->bind($params, $request->getFiles('community'));
-      if ($this->form->isValid())
+      $this->communityForm->bind($params);
+      $this->communityConfigForm->bind($request->getParameter('community_config'));
+      $this->communityFileForm->bind($request->getParameter('community_file'), $request->getFiles('community_file'));
+      if ($this->communityForm->isValid() && $this->communityConfigForm->isValid() && $this->communityFileForm->isValid())
       {
-        $community = $this->form->save();
-
+        $community = $this->communityForm->save();
+        $this->communityConfigForm->save($community);
+        $this->communityFileForm->save($community);
         $this->redirect('community/home?id='.$community->getId());
       }
     }

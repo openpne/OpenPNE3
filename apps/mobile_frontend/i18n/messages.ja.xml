@@ -107,6 +107,10 @@
         <target>ｺﾐｭﾆﾃｨの編集</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Create community</source>
+        <target>ｺﾐｭﾆﾃｨの作成</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Join community</source>
         <target>ｺﾐｭﾆﾃｨに参加する</target>
       </trans-unit>

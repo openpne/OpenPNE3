@@ -22,8 +22,7 @@ class CommunityConfigForm extends sfForm
     $category = '',
     $community,
     $isNew = false,
-    $isAutoGenerate = true,
-    $fieldName = 'config[%s]';
+    $isAutoGenerate = true;
 
   public function __construct($defaults = array(), $options = array(), $CSRFSecret = null)
   {
@@ -46,8 +45,19 @@ class CommunityConfigForm extends sfForm
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
   }
 
-  public function setCommunity(Community $community)
+  public function setCommunity($community)
   {
+    if (!($community instanceof Community))
+    {
+      if (!$this->community)
+      {
+        $community = new Community();
+      }
+      else
+      {
+        return;
+      }
+    }
     $this->community = $community;
   }
 
@@ -62,14 +72,14 @@ class CommunityConfigForm extends sfForm
   public function setConfigWidget($name)
   {
     $config = $this->configSettings[$name];
-    $this->widgetSchema[sprintf($this->fieldName, $name)] = opFormItemGenerator::generateWidget($config);
-    $this->widgetSchema->setLabel(sprintf($this->fieldName, $name), $config['Caption']);
+    $this->widgetSchema[$name] = opFormItemGenerator::generateWidget($config);
+    $this->widgetSchema->setLabel($name, $config['Caption']);
     $communityConfig = CommunityConfigPeer::retrieveByNameAndCommunityId($name, $this->community->getId());
     if ($communityConfig)
     {
-      $this->setDefault(sprintf($this->fieldName, $name), $communityConfig->getValue());
+      $this->setDefault($name, $communityConfig->getValue());
     }
-    $this->validatorSchema[sprintf($this->fieldName, $name)] = opFormItemGenerator::generateValidator($config);
+    $this->validatorSchema[$name] = opFormItemGenerator::generateValidator($config);
   }
 
   public function setConfigSettings($category = '')
@@ -89,30 +99,19 @@ class CommunityConfigForm extends sfForm
     }
   }
 
-  public function save()
+  public function save(Community $community)
   {
     foreach ($this->getValues() as $key => $value)
     {
-      $key = $this->getUnformattedFieldName($key);
       $config = CommunityConfigPeer::retrieveByNameAndCommunityId($key, $this->community->getId());
       if (!$config)
       {
         $config = new CommunityConfig();
-        $config->setCommunity($this->community);
+        $config->setCommunity($community);
         $config->setName($key);
       }
       $config->setValue($value);
       $config->save();
     }
-  }
-
-  public function getUnformattedFieldName($field)
-  {
-    $regexp = '/'.str_replace(array('%s'), array('(\w+)'), preg_quote($this->fieldName)).'/';
-    $matches = array();
-    preg_match($regexp, $field, $matches);
-    array_shift($matches);
-
-    return implode('', $matches);
   }
 }

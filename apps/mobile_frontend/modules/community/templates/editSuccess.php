@@ -1,12 +1,24 @@
-<?php op_mobile_page_title($community->getName(), __('Edit community')) ?>
+<?php 
+$subtitle = null;
+$url = 'community/edit';
+if($communityForm->isNew())
+{
+  $title = __('Create community');
+}
+else
+{
+  $title = __('Edit community');
+  $subtitle = $community->getName();
+  $url .= '?id='.$community->getId();
+}
+?>
 
-<?php if ($form->isNew()) : ?>
-<form action="<?php echo url_for('community/edit') ?>" method="post">
-<?php else : ?>
-<form action="<?php echo url_for('community/edit?id=' . $community->getId()) ?>" method="post">
-<?php endif; ?>
+<?php op_mobile_page_title($title, $subtitle) ?>
+
+<form action="<?php echo url_for($url) ?>" method="post">
 <table>
-<?php echo $form ?>
+<?php echo $communityForm ?>
+<?php echo $communityConfigForm ?>
 <tr>
 <td colspan="2"><input type="submit" value="<?php echo __('Save') ?>" /></td>
 </tr>

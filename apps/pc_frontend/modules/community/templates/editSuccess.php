@@ -3,7 +3,7 @@ $options = array(
   'isMultipart' => true,
 );
 
-if ($form->isNew())
+if ($communityForm->isNew())
 {
   $options['title'] = __('Create a new community');
   $options['url'] = url_for('community/edit');
@@ -14,5 +14,5 @@ else
   $options['url'] = url_for('community/edit?id='.$community->getId());
 }
 
-op_include_form('formCommunity', $form, $options);
+op_include_form('formCommunity', array($communityForm, $communityConfigForm, $communityFileForm), $options);
 ?>
