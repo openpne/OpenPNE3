@@ -174,8 +174,28 @@ EOF;
 
   protected function buildDb()
   {
+    $tmpdir = sfConfig::get('sf_data_dir').'/fixtures_tmp';
+    $this->getFilesystem()->mkdirs($tmpdir);
+    $this->getFilesystem()->remove(sfFinder::type('file')->in(array($tmpdir)));
+    
+    $fixturesDirs = sfFinder::type('dir')->name('fixtures')->in(array_merge(array(sfConfig::get('sf_data_dir')), $this->configuration->getPluginSubPaths('/data')));
+    $i = 0;
+    foreach ($fixturesDirs as $fixturesDir)
+    {
+      $files = sfFinder::type('file')->name('*.yml')->sort_by_name()->in(array($fixturesDir));
+      
+      foreach ($files as $file)
+      {
+        $this->getFilesystem()->copy($file, $tmpdir.'/'.sprintf('%03d_%s_%s.yml', $i, basename($file, '.yml'), md5(uniqid(rand(), true))));
+      }
+      $i++; 
+    }
+
     $buildAllLoad = new sfPropelBuildAllLoadTask($this->dispatcher, $this->formatter);
-    $buildAllLoad->run(array(), array('--no-confirmation'));
+    $buildAllLoad->run(array(), array('--no-confirmation', '--dir='.$tmpdir));
+
+    $this->getFilesystem()->remove(sfFinder::type('file')->in(array($tmpdir)));
+    $this->getFilesystem()->remove($tmpdir);
   }
 
   protected function fixPerms()
