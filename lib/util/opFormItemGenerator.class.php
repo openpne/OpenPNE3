@@ -26,13 +26,16 @@ class opFormItemGenerator
       $params['label'] = $field['Caption'];
     }
 
-    if ($choices)
+    switch ($field['FormType'])
     {
-      $params['choices'] = $choices;
-    }
-    elseif (!empty($field['Choices']))
-    {
-      $params['choices'] = $field['Choices'];
+      case 'checkbox' :
+      case 'select' :
+      case 'radio' :
+        $params['choices'] = $choices;
+        if (!empty($field['Choices']))
+        {
+          $params['choices'] = $field['Choices'];
+        }
     }
 
     if (!empty($field['Default']))

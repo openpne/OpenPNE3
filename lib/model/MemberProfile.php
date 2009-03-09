@@ -24,7 +24,7 @@ class MemberProfile extends BaseMemberProfileNestedSet
         return (string)$option->getValue();
       }
 
-      $children = $this->getChildrenValues();
+      $children = $this->getChildrenValues(true);
       if ($children)
       {
         return implode(', ', $children);
@@ -56,7 +56,7 @@ class MemberProfile extends BaseMemberProfileNestedSet
     return parent::getValue();
   }
 
-  protected function getChildrenValues()
+  protected function getChildrenValues($isToString = false)
   {
     $values = array();
 
@@ -71,8 +71,15 @@ class MemberProfile extends BaseMemberProfileNestedSet
         }
         elseif ($child->getProfileOptionId())
         {
-          $option = ProfileOptionPeer::retrieveByPk($child->getProfileOptionId());
-          $values[] = $option->getValue();
+          if ($isToString)
+          {
+            $option = ProfileOptionPeer::retrieveByPk($child->getProfileOptionId());
+            $values[] = $option->getValue();
+          }
+          else
+          {
+            $values[] = $child->getProfileOptionId();
+          }
         }
       }
     }
