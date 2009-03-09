@@ -46,8 +46,8 @@ propel:
     form_type: { type: varchar(32), required: true, defaultValue: "" }
     value_type: { type: varchar(32), required: true, defaultValue: "" }
     value_regexp: { type: longvarchar }
-    value_min: { type: integer }
-    value_max: { type: integer }
+    value_min: { type: varchar(32) }
+    value_max: { type: varchar(32) }
     is_disp_regist: { type: boolean, required: true, defaultValue: 0 }
     is_disp_config: { type: boolean, required: true, defaultValue: 0 }
     is_disp_search: { type: boolean, required: true, defaultValue: 0 }

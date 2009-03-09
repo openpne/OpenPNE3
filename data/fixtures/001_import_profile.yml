@@ -17,6 +17,8 @@ Profile:
     is_disp_regist: 1
     is_disp_config: 1
     is_disp_search: 1
+    value_min: "-100years"
+    value_max: "now"
     sort_order: 120
 
   profile_self_intro:

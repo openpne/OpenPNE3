@@ -40,7 +40,19 @@ class Profile extends BaseProfile
 
   public function hydrate($row, $startcol = 0, $rehydrate = false)
   {
-    $this->setCulture(sfContext::getInstance()->getUser()->getCulture());
+    try
+    {
+      $context = sfContext::getInstance();
+    }
+    catch (sfException $e)
+    {
+      $context = null;
+    }
+
+    if ($context)
+    {
+      $this->setCulture($context->getUser()->getCulture());
+    }
     return parent::hydrate($row, $startcol, $rehydrate);
   }
 

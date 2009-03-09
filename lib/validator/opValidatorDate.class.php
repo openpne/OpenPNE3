@@ -133,6 +133,25 @@ class opValidatorDate extends sfValidatorDate
       throw new sfValidatorError($this, 'invalid', array('value' => var_export($value, true)));
     }
 
+
+    if ($this->hasOption('max'))
+    {
+      $max = new DateTime($this->getOption('max'));
+      if ($max && $clean->format('U') > $max->format('U'))
+      {
+        throw new sfValidatorError($this, 'max', array('max' => $max->format('Y-m-d')));
+      }
+    }
+
+    if ($this->hasOption('min'))
+    {
+      $min = new DateTime($this->getOption('min'));
+      if ($min && $clean->format('U') < $min->format('U'))
+      {
+        throw new sfValidatorError($this, 'min', array('min' => $min->format('Y-m-d')));
+      }
+    }
+
     return $clean;
   }
 }

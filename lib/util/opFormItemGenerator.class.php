@@ -109,13 +109,8 @@ class opFormItemGenerator
       $obj = new sfValidatorChoice(array('choices' => $choices));
       return $obj;
     }
-    if ($field['FormType'] === 'date')
-    {
-      $obj = new opValidatorDate();
-      return $obj;
-    }
 
-    if ($field['ValueType'] === 'integer')
+    if ($field['ValueType'] === 'integer' || $field['FormType'] === 'date')
     {
         if (isset($field['ValueMin']))
         {
@@ -136,6 +131,12 @@ class opFormItemGenerator
         {
           $option['max_length'] = $field['ValueMax'];
         }
+    }
+
+    if ($field['FormType'] === 'date')
+    {
+      $obj = new opValidatorDate($option);
+      return $obj;
     }
 
     switch ($field['ValueType'])

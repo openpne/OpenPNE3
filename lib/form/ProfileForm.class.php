@@ -51,6 +51,11 @@ class ProfileForm extends BaseProfileForm
       new sfValidatorPropelUnique(array('model' => 'Profile', 'column' => array('name')))
     );
 
+    $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'advancedValidator'))));
+    $this->setValidator('value_min', new sfValidatorPass());
+    $this->setValidator('value_max', new sfValidatorPass());
+    $this->setValidator('value_type', new sfValidatorString(array('required' => false, 'empty_value' => 'string')));
+
     $this->widgetSchema->setLabels(array(
       'name' => '識別名',
       'is_required' => '必須',
@@ -73,5 +78,27 @@ class ProfileForm extends BaseProfileForm
     ));
 
     $this->embedI18n(array('ja_JP'));
+  }
+
+  static public function advancedValidator($validator, $values)
+  {
+    if ($values['form_type'] === 'input' || $values['form_type'] === 'textarea')
+    {
+      $validator = new sfValidatorInteger(array('required' => false));
+      $values['value_min'] = $validator->clean($values['value_min']);
+      $values['value_max'] = $validator->clean($values['value_max']);
+    }
+    elseif ($values['form_type'] === 'date')
+    {
+      $validator = new opValidatorDate(array('required' => false));
+      $validator->clean($values['value_min']);
+      $validator->clean($values['value_max']);
+    }
+    elseif ($values['value_min'] || $values['value_max'])
+    {
+      throw new sfValidatorError($validator, 'invalid');
+    }
+
+    return $values;
   }
 }
