@@ -173,4 +173,50 @@ class Member extends BaseMember
   {
     return MemberPeer::retrieveByPk($this->getInviteMemberId());
   }
+
+  public function getEmailAddress($isPriorityMobile = null)
+  {
+    if(is_null($isPriorityMobile))
+    {
+      $isPriorityMobile = false;
+      if (sfConfig::get('sf_app') == 'mobile_frontend')
+      {
+        $isPriorityMobile = true;
+      }
+    }
+
+    $memberPcAddressConfig = MemberConfigPeer::retrieveByNameAndMemberId('pc_address', $this->getId());
+    $memberMobileAddressConfig = MemberConfigPeer::retrieveByNameAndMemberId('mobile_address', $this->getId());
+
+    if ($memberMobileAddressConfig && ($isPriorityMobile || !$memberPcAddressConfig))
+    {
+      return $memberMobileAddressConfig->getValue();
+    }
+
+    if ($memberPcAddressConfig)
+    {
+      return $memberPcAddressConfig->getValue();
+    }
+
+    return null;
+  }
+
+  public function getEmailAddresses()
+  {
+    $result = array();
+    $memberPcAddressConfig = MemberConfigPeer::retrieveByNameAndMemberId('pc_address', $this->getId());
+    $memberMobileAddressConfig = MemberConfigPeer::retrieveByNameAndMemberId('mobile_address', $this->getId());
+
+    if ($memberPcAddressConfig)
+    {
+      $result[] = $memberPcAddressConfig->getValue();
+    }
+
+    if ($memberMobileAddressConfig)
+    {
+      $result[] = $memberMobileAddressConfig->getValue();
+    }
+
+    return $result;
+  }
 }
