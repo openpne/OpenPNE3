@@ -185,17 +185,17 @@ class Member extends BaseMember
       }
     }
 
-    $memberPcAddressConfig = MemberConfigPeer::retrieveByNameAndMemberId('pc_address', $this->getId());
-    $memberMobileAddressConfig = MemberConfigPeer::retrieveByNameAndMemberId('mobile_address', $this->getId());
+    $memberPcAddress     = $this->getConfig('pc_address');
+    $memberMobileAddress = $this->getConfig('mobile_address');
 
-    if ($memberMobileAddressConfig && ($isPriorityMobile || !$memberPcAddressConfig))
+    if ($memberMobileAddress && ($isPriorityMobile || !$memberPcAddress))
     {
-      return $memberMobileAddressConfig->getValue();
+      return $memberMobileAddress;
     }
 
-    if ($memberPcAddressConfig)
+    if ($memberPcAddress)
     {
-      return $memberPcAddressConfig->getValue();
+      return $memberPcAddress;
     }
 
     return null;
@@ -204,17 +204,18 @@ class Member extends BaseMember
   public function getEmailAddresses()
   {
     $result = array();
-    $memberPcAddressConfig = MemberConfigPeer::retrieveByNameAndMemberId('pc_address', $this->getId());
-    $memberMobileAddressConfig = MemberConfigPeer::retrieveByNameAndMemberId('mobile_address', $this->getId());
 
-    if ($memberPcAddressConfig)
+    $memberPcAddress     = $this->getConfig('pc_address');
+    $memberMobileAddress = $this->getConfig('mobile_address');
+
+    if ($memberPcAddress)
     {
-      $result[] = $memberPcAddressConfig->getValue();
+      $result[] = $memberPcAddress;
     }
 
-    if ($memberMobileAddressConfig)
+    if ($memberMobileAddress)
     {
-      $result[] = $memberMobileAddressConfig->getValue();
+      $result[] = $memberMobileAddress;
     }
 
     return $result;
