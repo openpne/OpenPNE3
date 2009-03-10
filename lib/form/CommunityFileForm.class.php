@@ -18,6 +18,9 @@
 
 class CommunityFileForm extends sfForm
 {
+  protected
+    $community;
+
   public function __construct($defaults = array(), $options = array(), $CSRFSecret = null)
   {
     return parent::__construct($defaults, $options, false);
@@ -25,7 +28,28 @@ class CommunityFileForm extends sfForm
 
   public function configure()
   {
-    $this->setWidget('file', new sfWidgetFormInputFile());
+    $this->setCommunity($this->getOption('community'));
+
+    $options = array(
+      'file_src'     => '',
+      'is_image'     => true,
+      'with_delete'  => true,
+      'delete_label' => sfContext::getInstance()->getI18N()->__('Remove the current photo')
+    );
+
+    if (!$this->community->isNew() && $this->community->getFileId())
+    {
+      sfContext::getInstance()->getConfiguration()->loadHelpers('Partial');
+      $options['edit_mode'] = true;
+      $options['template'] = get_partial('default/formEditImage', array('image' => $this->community));
+      $this->setValidator('file_delete', new sfValidatorBoolean(array('required' => false)));
+    }
+    else
+    {
+      $options['edit_mode'] = false;
+    }
+
+    $this->setWidget('file', new sfWidgetFormInputFileEditable($options, array('size' => 40)));
     $this->setValidator('file', new opValidatorImageFile(array('required' => false)));
 
     $this->widgetSchema->setLabel('file', 'Photo');
@@ -33,24 +57,40 @@ class CommunityFileForm extends sfForm
     $this->widgetSchema->setNameFormat('community_file[%s]');
   }
 
-  public function save(Community $community)
+  public function setCommunity($community)
   {
-    if (!$this->getValue('file'))
+    if (!($community instanceof Community))
     {
-      return false;
+      $community = new Community();
+    }
+    $this->community = $community;
+  }
+
+  public function save()
+  {
+    if ($this->getValue('file'))
+    {
+      if ($this->community->getFile())
+      {
+        $this->community->getFile()->delete(); 
+      }
+
+      $file = new File();
+      $file->setFromValidatedFile($this->getValue('file'));
+      $file->setName('c_'.$this->community->getId().'_'.$file->getName());
+
+      $this->community->setFile($file);
+    }
+    elseif ($this->getValue('file_delete'))
+    {
+      $this->community->getFile()->delete();
+      $this->community->setFile(null);
+    }
+    else
+    {
+      return;
     }
 
-    if ($community->getFile())
-    {
-      $community->getFile()->delete(); 
-    }
-
-    $file = new File();
-    $file->setFromValidatedFile($this->getValue('file'));
-    $file->setName('c_'.$community->getId().'_'.$file->getName());
-
-    $community->setFile($file);
-
-    $community->save();
+    $this->community->save();
   }
 }

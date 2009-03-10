@@ -52,10 +52,15 @@ abstract class sfOpenPNECommunityAction extends sfActions
     }
 
     $this->community = CommunityPeer::retrieveByPk($this->id);
+    if (!$this->community)
+    {
+      $this->community = new Community();
+    }
+
 
     $this->communityForm       = new CommunityForm($this->community);
     $this->communityConfigForm = new CommunityConfigForm(array(), array('community' => $this->community));
-    $this->communityFileForm   = new CommunityFileForm();
+    $this->communityFileForm   = new CommunityFileForm(array(), array('community' => $this->community));
 
     if ($request->isMethod('post'))
     {
@@ -66,10 +71,11 @@ abstract class sfOpenPNECommunityAction extends sfActions
       $this->communityFileForm->bind($request->getParameter('community_file'), $request->getFiles('community_file'));
       if ($this->communityForm->isValid() && $this->communityConfigForm->isValid() && $this->communityFileForm->isValid())
       {
-        $community = $this->communityForm->save();
-        $this->communityConfigForm->save($community);
-        $this->communityFileForm->save($community);
-        $this->redirect('community/home?id='.$community->getId());
+        $this->communityForm->save();
+        $this->communityConfigForm->save();
+        $this->communityFileForm->save();
+
+        $this->redirect('community/home?id='.$this->community->getId());
       }
     }
   }

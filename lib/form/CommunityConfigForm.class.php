@@ -49,14 +49,7 @@ class CommunityConfigForm extends sfForm
   {
     if (!($community instanceof Community))
     {
-      if (!$this->community)
-      {
-        $community = new Community();
-      }
-      else
-      {
-        return;
-      }
+      $community = new Community();
     }
     $this->community = $community;
   }
@@ -99,7 +92,7 @@ class CommunityConfigForm extends sfForm
     }
   }
 
-  public function save(Community $community)
+  public function save()
   {
     foreach ($this->getValues() as $key => $value)
     {
@@ -107,7 +100,7 @@ class CommunityConfigForm extends sfForm
       if (!$config)
       {
         $config = new CommunityConfig();
-        $config->setCommunity($community);
+        $config->setCommunity($this->community);
         $config->setName($key);
       }
       $config->setValue($value);

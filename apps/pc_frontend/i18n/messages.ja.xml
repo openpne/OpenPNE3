@@ -522,6 +522,10 @@
         <source>Information About the Withdrawal Member</source>
         <target>退会者データ</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Remove the current photo</source>
+        <target>この写真を削除する</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
