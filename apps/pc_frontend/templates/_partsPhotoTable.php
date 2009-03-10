@@ -6,6 +6,7 @@ $options->setDefault('type', 'full');
 $options->setDefault('crownIds', array());
 
 $options->addRequiredOption('pager');
+$options->addRequiredOption('link_to');
 ?>
 
 <?php ob_start() ?>
@@ -31,7 +32,7 @@ $options->addRequiredOption('pager');
 <tr class="text">
 <?php for ($j = ($i * $options->col) - $options->col; ($i * $options->col) > $j; $j++): ?>
 <td><?php if (!empty($options->list[$j])): ?>
-<?php echo link_to($options->list[$j]->getName(), 'member/profile?id='.$options->list[$j]->getId()) ?>
+<?php echo link_to($options->list[$j]->getName(), $options->link_to.$options->list[$j]->getId()) ?>
 <?php endif; ?></td>
 <?php endfor; ?>
 </tr>
