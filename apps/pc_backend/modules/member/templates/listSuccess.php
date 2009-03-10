@@ -20,19 +20,21 @@
 <p>
 <?php echo image_tag('icn_delete_account.gif', array('alt' => __('強制退会'))) ?>: <?php echo __('強制退会') ?>
 &nbsp;
+<?php echo image_tag('icn_passwd.gif', array('alt' => __('パスワード再発行'))) ?>: <?php echo __('パスワード再発行') ?>
+&nbsp;
 <?php echo image_tag('icn_blacklist.gif', array('alt' => __('携帯電話個体識別番号をブラックリストに登録'))) ?>: <?php echo __('携帯電話個体識別番号をブラックリストに登録') ?>
 </p>
 
 <table>
 
 <tr>
-<td colspan="<?php echo 6 + count($profiles) + 3 ?>">
+<td colspan="<?php echo 6 + count($profiles) + 4 ?>">
 <?php echo pager_navigation($pager, 'member/list?page=%d', true, '?'.$sf_request->getCurrentQueryString()) ?>
 </td>
 </tr>
 
 <tr>
-<th colspan="2"><?php echo __('操作') ?></th>
+<th colspan="3"><?php echo __('操作') ?></th>
 <th><?php echo __('ID') ?></th>
 <th><?php echo __('ニックネーム') ?></th>
 <th><?php echo __('招待者') ?></th>
@@ -51,6 +53,9 @@
 <?php if ($member->getId() != 1) : ?>
 <?php echo link_to(image_tag('icn_delete_account.gif', array('alt' => __('強制退会'))), 'member/delete?id='.$member->getId()) ?>
 <?php endif; ?>
+</td>
+<td>
+<?php echo link_to(image_tag('icn_passwd.gif', array('alt' => __('パスワード再発行'))), 'member/reissuePassword?id='.$member->getId()) ?>
 </td>
 <td>
 <?php echo link_to(image_tag('icn_blacklist.gif', array('alt' => __('携帯電話個体識別番号をブラックリストに登録'))), 'member/blacklist?uid='.$member->getConfig('mobile_uid')) ?>

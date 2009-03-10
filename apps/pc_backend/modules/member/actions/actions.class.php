@@ -162,4 +162,27 @@ class memberActions extends sfActions
 
     return sfView::SUCCESS;
   }
+
+  /**
+   * Executes reissuePassword action
+   *
+   * @param sfWebRequest $request A request object
+   */
+  public function executeReissuePassword(sfWebRequest $request)
+  {
+    $id = $request->getParameter('id');
+    $this->member = MemberPeer::retrieveByPk($id);
+    $this->forward404Unless($this->member);
+
+    $this->form = new ReissuePasswordForm($this->member);
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $this->form->bind($request->getParameter('member_config'));
+      if ($this->form->isValid())
+      {
+        $this->form->save();
+      }
+    }
+    return sfView::SUCCESS;
+  }
 }
