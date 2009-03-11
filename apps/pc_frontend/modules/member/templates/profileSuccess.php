@@ -65,7 +65,7 @@ op_include_parts('nineTable', 'communityList', $options);
 
 <?php
 $list = array();
-foreach ($member->getProfiles() as $profile)
+foreach ($member->getProfiles(true) as $profile)
 {
   $caption = $profile->getCaption();
   if ($profile->getFormType() === 'textarea')

@@ -17,6 +17,26 @@
  */ 
 class ProfilePeer extends BaseProfilePeer
 {
+  const PUBLIC_FLAG_SNS = 1;
+  const PUBLIC_FLAG_FRIEND = 2;
+  const PUBLIC_FLAG_PRIVATE = 3;
+
+  protected static $publicFlags = array(
+    self::PUBLIC_FLAG_SNS     => 'All Members',
+    self::PUBLIC_FLAG_FRIEND  => 'My Friends',
+    self::PUBLIC_FLAG_PRIVATE => 'Private',
+  );
+
+  public static function getPublicFlags()
+  {
+    return array_map(array(sfContext::getInstance()->getI18N(), '__'), self::$publicFlags);
+  }
+
+  public static function getPublicFlag($flag)
+  {
+    return sfContext::getInstance()->getI18N()->__(self::$publicFlags[$flag]);
+  }
+
   public static function retrievesAll()
   {
     $c = new Criteria();

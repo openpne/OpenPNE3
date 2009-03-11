@@ -136,4 +136,25 @@ class MemberProfile extends BaseMemberProfileNestedSet
 
     return parent::setValue($v);
   }
+
+  public function isViewable($memberId = null)
+  {
+    if (is_null($memberId))
+    {
+      $memberId = sfContext::getInstance()->getUser()->getMemberId();
+    }
+
+    switch ($this->getPublicFlag())
+    {
+      case ProfilePeer::PUBLIC_FLAG_PRIVATE:
+        return ($this->getMemberId == $memberId);
+      
+      case ProfilePeer::PUBLIC_FLAG_FRIEND:
+        $relation = MemberRelationshipPeer::retrieveByFromAndTo($this->getMemberId(), $memberId);
+        return ($relation && $relation->isFriend());
+      
+      case ProfilePeer::PUBLIC_FLAG_SNS:
+        return true;
+    }
+  }
 }

@@ -17,8 +17,12 @@
  */ 
 class Member extends BaseMember
 {
-  public function getProfiles()
+  public function getProfiles($viewableCheck = false, $myMemberId = null)
   {
+    if ($viewableCheck)
+    {
+      return MemberProfilePeer::getViewableProfileListByMemberId($this->getId(), $myMemberId);
+    }
     return MemberProfilePeer::getProfileListByMemberId($this->getId());
   }
 

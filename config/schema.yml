@@ -43,6 +43,8 @@ propel:
     name: { type: varchar(64), index: unique, required: true, defaultValue: "" }
     is_required: { type: boolean, required: true, defaultValue: 0 }
     is_unique: { type: boolean, required: true, defaultValue: 0 }
+    is_edit_public_flag: { type: boolean, required: true, defaultValue: 0 }
+    default_public_flag: { type: tinyint, required: true, defaultValue: 1 }
     form_type: { type: varchar(32), required: true, defaultValue: "" }
     value_type: { type: varchar(32), required: true, defaultValue: "" }
     value_regexp: { type: longvarchar }
@@ -75,6 +77,7 @@ propel:
     profile_id: { type: integer, required: true, foreignTable: profile, foreignReference: id, onDelete: cascade }
     profile_option_id: { type: integer, required: false, foreignTable: profile_option, foreignReference: id, onDelete: cascade }
     value: { type: longvarchar }
+    public_flag: { type: tinyint, required: false }
 
   community:
     id: ~

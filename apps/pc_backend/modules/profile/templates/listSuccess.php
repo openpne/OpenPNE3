@@ -10,6 +10,8 @@
 <th>項目名</th>
 <th>識別名</th>
 <th>必須</th>
+<th>公開設定変更の可否</th>
+<th>公開設定デフォルト値</th>
 <th>重複の可否</th>
 <th>フォームタイプ</th>
 <th>選択肢</th>
@@ -25,7 +27,9 @@
 <td><?php echo $value->getId() ?></td>
 <td><?php echo $value->getCaption() ?></td>
 <td><?php echo $value->getName() ?></td>
-<td><?php echo ($value->getIsRequired() ? '○' : '×') ?></td>
+<td><?php echo ($value->getIsRequired() ? '○' : '×') ?></t
+<td><?php echo ($value->getIsEditPublicFlag() ? '○' :'×') ?></>
+<td><?php echo (ProfilePeer::getPublicFlag($value->getDefaultPublicFlag())) ?> </td>
 <td><?php echo ($value->getIsUnique() ? '×' :'○') ?></td>
 <td><?php echo $value->getFormType() ?></td>
 <td>
@@ -35,9 +39,9 @@
 -
 <?php endif; ?>
 </td>
-<td><?php echo ($value->getIsDispRegist() ? '○' : '×') ?></td>
-<td><?php echo ($value->getIsDispConfig() ? '○' : '×') ?></td>
-<td><?php echo ($value->getIsDispSearch() ? '○' : '×') ?></td>
+<td><?php echo ($value->getIsDispRegist() ? '○' :'×') ?></td>
+<td><?php echo ($value->getIsDispConfig() ? '○' :'×') ?></td>
+<td><?php echo ($value->getIsDispSearch() ? '○' : '') ?></td>
 </tr>
 </tbody>
 <?php endforeach; ?>

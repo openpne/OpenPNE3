@@ -47,6 +47,25 @@ class MemberProfilePeer extends BaseMemberProfileNestedSetPeer
     return $profiles;
   }
 
+  public static function getViewableProfileListByMemberId($memberId, $myMemberId = null)
+  {
+    if(is_null($myMemberId))
+    {
+      $myMemberId = sfContext::getInstance()->getUser()->getMemberId();
+    }
+
+    $profiles = self::getProfileListByMemberId($memberId);
+    foreach ($profiles as $key => $profile)
+    {
+      if (!$profile->isViewable($myMemberId))
+      {
+        unset($profiles[$key]);
+      }
+    }
+
+    return $profiles;
+  }
+
   public static function retrieveByMemberIdAndProfileId($memberId, $profileId)
   {
     $c = new Criteria();

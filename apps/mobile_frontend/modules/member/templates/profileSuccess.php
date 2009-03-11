@@ -22,7 +22,7 @@
 <?php endif; ?>
 </td>
 <td valign="top">
-<?php foreach ($member->getProfiles() as $profile) : ?>
+<?php foreach ($member->getProfiles(true) as $profile) : ?>
 <font color="#999966"><?php echo $profile->getCaption() ?>:</font><br>
 <?php echo $profile ?><br>
 <?php endforeach; ?>

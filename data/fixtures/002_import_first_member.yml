@@ -11,6 +11,7 @@ MemberProfile:
     member_id: first_member
     profile_id: profile_sex
     profile_option_id: profile_option_sex_man
+    public_flag: 1
 
   first_member_profile_birthday:
     lft_key: 1
@@ -18,6 +19,7 @@ MemberProfile:
     tree_key: 2
     member_id: first_member
     profile_id: profile_birthday
+    public_flag: 1
 
   first_member_profile_birthday_year:
     lft_key: 2
@@ -52,6 +54,7 @@ MemberProfile:
     member_id: first_member
     profile_id: profile_self_intro
     value: "よろしくお願いします。"
+    public_flag: 1
 
 MemberConfig:
   first_member_pc_address:
