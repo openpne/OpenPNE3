@@ -146,13 +146,16 @@ class MemberProfile extends BaseMemberProfileNestedSet
 
     switch ($this->getPublicFlag())
     {
-      case ProfilePeer::PUBLIC_FLAG_PRIVATE:
-        return ($this->getMemberId == $memberId);
-      
       case ProfilePeer::PUBLIC_FLAG_FRIEND:
         $relation = MemberRelationshipPeer::retrieveByFromAndTo($this->getMemberId(), $memberId);
-        return ($relation && $relation->isFriend());
-      
+        if  ($relation && $relation->isFriend())
+        {
+          return true;
+        }
+
+      case ProfilePeer::PUBLIC_FLAG_PRIVATE:
+        return ($this->getMemberId() == $memberId);
+
       case ProfilePeer::PUBLIC_FLAG_SNS:
         return true;
     }

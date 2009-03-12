@@ -21,9 +21,14 @@ class MemberProfileForm extends sfForm
   {
     parent::__construct(array(), $options, $CSRFSecret);
 
+    $profiles = ProfilePeer::doSelect(new Criteria());
+
     foreach ($profileMember as $profile)
     {
-      $this->setDefault($profile->getName(), $profile->getValue());
+      $this->setDefault($profile->getName(), array(
+        'value' => $profile->getValue(),
+        'public_flag' => $profile->getPublicFlag()
+      ));
     }
   }
 
@@ -59,7 +64,7 @@ class MemberProfileForm extends sfForm
         $_values = array();
         if ('date' === $formType)
         {
-          $_values = explode('-', $value);
+          $_values = explode('-', $value['value']);
           $c = new Criteria();
           $c->addAscendingOrderByColumn(ProfileOptionPeer::SORT_ORDER);
           $options = $profile->getProfileOptions($c);
@@ -70,15 +75,22 @@ class MemberProfileForm extends sfForm
         }
         else
         {
-          $ids = $value;
+          $ids = $value['value'];
         }
         MemberProfilePeer::createChild($memberProfile, $memberId, $profile->getId(), $ids, $_values);
       }
       else
       {
-        $memberProfile->setValue($value);
-        $memberProfile->save();
+        $memberProfile->setValue($value['value']);
       }
+      
+      $memberProfile->setPublicFlag(1);
+      if (isset($value['public_flag']))
+      {
+        $memberProfile->setPublicFlag($value['public_flag']);
+      }
+
+      $memberProfile->save();
     }
 
     return true;
@@ -114,8 +126,18 @@ class MemberProfileForm extends sfForm
     {
       $profile_i18n = $profile->getProfileI18ns();
       $profileWithI18n = $profile->toArray() + $profile_i18n[0]->toArray();
-      $this->widgetSchema[$profile->getName()] = opFormItemGenerator::generateWidget($profileWithI18n, $this->getFormOptionsValue($profile->getId()));
-      $this->validatorSchema[$profile->getName()] = opFormItemGenerator::generateValidator($profileWithI18n, $this->getFormOptions($profile->getId()));
+      
+      $widgetOptions = array(
+        'widget' => opFormItemGenerator::generateWidget($profileWithI18n, $this->getFormOptionsValue($profile->getId())),
+        'is_edit_public_flag' => $profile->getIsEditPublicFlag(),
+      );
+      $validatorOptions = array(
+        'validator' => opFormItemGenerator::generateValidator($profileWithI18n, $this->getFormOptions($profile->getId())),
+        'is_edit_public_flag' => $profile->getIsEditPublicFlag(),
+      );
+
+      $this->widgetSchema[$profile->getName()] = new opWidgetFormProfile($widgetOptions);
+      $this->validatorSchema[$profile->getName()] = new opValidatorProfile($validatorOptions);
     }
   }
 
