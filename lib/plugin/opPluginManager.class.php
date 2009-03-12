@@ -50,25 +50,38 @@ class opPluginManager extends sfSymfonyPluginManager
     return $this->getChannel()->getBaseURL('REST1.1');
   }
 
-  public function retrieveChannelData($path)
+  public function retrieveChannelXml($path)
   {
     $rest = $this->getEnvironment()->getRest();
-    return $rest->_rest->retrieveData($this->getBaseURL().$path);
+    return $rest->_rest->retrieveXml($this->getBaseURL().$path);
   }
 
   public function getPluginInfo($plugin)
   {
-    return $this->retrieveChannelData('p/'.strtolower($plugin).'/info.xml');
+    $data = $this->retrieveChannelXml('p/'.strtolower($plugin).'/info.xml');
+    $result = array_merge(array(
+        'n' => $plugin,
+        'c' => opPluginManager::OPENPNE_PLUGIN_CHANNEL,
+        'l' => 'Apache',
+        's' => $plugin,
+        'd' => $plugin,
+    ), (array)$data);
+
+    return $result;
   }
 
   public function getPluginMaintainer($plugin)
   {
-    return $this->retrieveChannelData('p/'.strtolower($plugin).'/maintainers.xml');
-  }
+    $data = $this->retrieveChannelXml('p/'.strtolower($plugin).'/maintainers2.xml');
+    $result = array();
 
-  public function getMaintainerInfo($maintainer)
-  {
-    return $this->retrieveChannelData('m/'.strtolower($maintainer).'/info.xml');
+    foreach ($data->m as $maintainer)
+    {
+      $info = $this->retrieveChannelXml('m/'.strtolower((string)$maintainer->h).'/info.xml');
+      $result[] = array_merge((array)$maintainer, array('n' => (string)$info->n));
+    }
+
+    return $result;
   }
 
   public function isExistsPlugin($plugin)

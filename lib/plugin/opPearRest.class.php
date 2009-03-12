@@ -20,8 +20,14 @@ class opPearRest extends sfPearRest
   public function retrieveData($url, $accept = false, $forcestring = false, $channel = false)
   {
     $content = parent::retrieveData($url, $accept, true, $channel);
-
     $result = $this->parseXML($content);
+    return $result;
+  }
+
+  public function retrieveXml($url)
+  {
+    $content = $this->downloadHttp($url);
+    $result = @simplexml_load_string($content);
     return $result;
   }
 

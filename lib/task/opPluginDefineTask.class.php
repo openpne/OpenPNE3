@@ -21,7 +21,6 @@ class opPluginDefineTask extends sfBaseTask
       new sfCommandArgument('version', sfCommandArgument::REQUIRED, 'The plugin version'),
       new sfCommandArgument('stability', sfCommandArgument::REQUIRED, 'The plugin stability'),
       new sfCommandArgument('note', sfCommandArgument::REQUIRED, 'The plugin release note'),
-      new sfCommandArgument('user', sfCommandArgument::REQUIRED, 'Your username'),
     ));
 
     $this->namespace        = 'opPlugin';
@@ -51,12 +50,6 @@ EOF;
       );
     }
 
-    $user = $this->getPluginManager()->getMaintainerInfo($arguments['user']);
-    if (!$user)
-    {
-      throw new sfCommandException('Your account has not registerd yet.');
-    }
-
     $packageXml = new PEAR_PackageFileManager2();
     $options = array(
       'packagedirectory'  => sfConfig::get('sf_plugins_dir').'/'.$pluginName.'/',
@@ -73,13 +66,18 @@ EOF;
 
     $packageXml->_options['roles'] = array('*' => 'data');
 
+    $maintainers = $this->getPluginManager()->getPluginMaintainer($pluginName);
+    foreach ($maintainers as $maintainer)
+    {
+      $packageXml->addMaintainer($maintainer['r'], $maintainer['h'], $maintainer['n'], '');
+    }
+
     $packageXml->setPackage($pluginName);
     $packageXml->setChannel(opPluginManager::OPENPNE_PLUGIN_CHANNEL);
     $packageXml->setReleaseVersion($arguments['version']);
     $packageXml->setReleaseStability($arguments['stability']);
     $packageXml->setApiVersion($arguments['version']);
     $packageXml->setApiStability($arguments['stability']);
-    $packageXml->addMaintainer('lead', $user['h'], $user['n'], '');
     $packageXml->setNotes($arguments['note']);
     $packageXml->setPhpDep('5.2.3');
     $packageXml->setPearinstallerDep('1.4.0');
