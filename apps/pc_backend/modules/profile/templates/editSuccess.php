@@ -23,7 +23,7 @@
 <tr><th colspan="2">共通設定</th></tr>
 <?php echo $form['name']->renderRow() ?>
 <?php echo $form['is_required']->renderRow() ?>
-<?php echo $form['is_public_flag_edit']->renderRow() ?>
+<?php echo $form['is_edit_public_flag']->renderRow() ?>
 <?php echo $form['default_public_flag']->renderRow() ?>
 <?php echo $form['is_unique']->renderRow() ?>
 <?php echo $form['is_disp_regist']->renderRow() ?>

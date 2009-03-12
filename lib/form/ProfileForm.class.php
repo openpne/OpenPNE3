@@ -22,7 +22,7 @@ class ProfileForm extends BaseProfileForm
     $isDispOption = array('choices' => array('1' => '表示する', '0' => '表示しない'));
     $this->setWidgets(array(
       'name' => new sfWidgetFormInput(),
-      'is_public_flag_edit' => new sfWidgetFormSelectRadio(array('choices' => array('0' => '固定', '1' => 'メンバー選択'))),
+      'is_edit_public_flag' => new sfWidgetFormSelectRadio(array('choices' => array('0' => '固定', '1' => 'メンバー選択'))),
       'default_public_flag' => new sfWidgetFormSelect(array('choices' => ProfilePeer::getPublicFlags())),
       'is_disp_regist' => new sfWidgetFormSelectRadio($isDispOption),
       'is_disp_config' => new sfWidgetFormSelectRadio($isDispOption),
@@ -61,7 +61,7 @@ class ProfileForm extends BaseProfileForm
     $this->widgetSchema->setLabels(array(
       'name' => '識別名',
       'is_required' => '必須',
-      'is_public_flag_edit' => '公開設定の選択',
+      'is_edit_public_flag' => '公開設定の選択',
       'default_public_flag' => '公開設定デフォルト値',
       'is_unique' => '重複の可否',
       'form_type' => 'フォームタイプ',
