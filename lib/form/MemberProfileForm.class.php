@@ -126,15 +126,23 @@ class MemberProfileForm extends sfForm
     {
       $profile_i18n = $profile->getProfileI18ns();
       $profileWithI18n = $profile->toArray() + $profile_i18n[0]->toArray();
-      
+
       $widgetOptions = array(
         'widget' => opFormItemGenerator::generateWidget($profileWithI18n, $this->getFormOptionsValue($profile->getId())),
-        'is_edit_public_flag' => $profile->getIsEditPublicFlag(),
       );
       $validatorOptions = array(
         'validator' => opFormItemGenerator::generateValidator($profileWithI18n, $this->getFormOptions($profile->getId())),
-        'is_edit_public_flag' => $profile->getIsEditPublicFlag(),
       );
+
+      if ($profile->getIsEditPublicFlag())
+      {
+        $widgetOptions['is_edit_public_flag'] = $validatorOptions['is_edit_public_flag'] = true;
+        if (!$this->getDefault($profile->getName()))
+        {
+          $this->setDefault($profile->getName(), array('public_flag' => $profile->getDefaultPublicFlag()));
+        }
+        
+      }
 
       $this->widgetSchema[$profile->getName()] = new opWidgetFormProfile($widgetOptions);
       $this->validatorSchema[$profile->getName()] = new opValidatorProfile($validatorOptions);

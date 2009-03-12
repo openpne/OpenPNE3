@@ -51,9 +51,13 @@ class opWidgetFormProfile extends sfWidgetForm
    */
   public function render($name, $value = array(), $attributes = array(), $errors = array())
   {
-    if (!count($value))
+    if (!is_array($value))
     {
-      $value = array('value' => null, 'public_flag' => 1);
+      $value = array('value' => $value, 'public_flag' => ProfilePeer::PUBLIC_FLAG_SNS);
+    }
+    else
+    {
+      $value = array_merge(array('value' => null, 'public_flag' => ProfilePeer::PUBLIC_FLAG_SNS), $value);
     }
 
     $input = $this->getOption('widget')->render($name.'[value]', $value['value'], $attributes, $errors);
