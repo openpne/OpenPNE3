@@ -84,7 +84,7 @@ class MemberProfileForm extends sfForm
         $memberProfile->setValue($value['value']);
       }
       
-      $memberProfile->setPublicFlag(1);
+      $memberProfile->setPublicFlag($memberProfile->getProfile()->getDefaultPublicFlag());
       if (isset($value['public_flag']))
       {
         $memberProfile->setPublicFlag($value['public_flag']);

@@ -105,4 +105,24 @@ class ProfileForm extends BaseProfileForm
 
     return $values;
   }
+
+  public function save($con = null)
+  {
+    $profile  = parent::save($con);
+
+    $values = $this->getValues();
+    if (!$values['is_edit_public_flag'])
+    {
+      $con = Propel::getConnection(MemberProfilePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+
+      $sc = new Criteria(MemberProfilePeer::DATABASE_NAME);
+      $sc->add(MemberProfilePeer::LFT_KEY, 1);
+      $sc->add(MemberProfilePeer::PROFILE_ID, $profile->getId());
+
+      $uc = new Criteria(MemberProfilePeer::DATABASE_NAME);
+      $uc->add(MemberProfilePeer::PUBLIC_FLAG, $values['default_public_flag']);
+
+      BasePeer::doUpdate($sc, $uc, $con);
+    } 
+  }
 }

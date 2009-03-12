@@ -30,7 +30,7 @@ class opWidgetFormProfile extends sfWidgetForm
     $this->addRequiredOption('widget');
     $this->addOption('is_edit_public_flag', false);
     $this->addOption('public_flag_default', 1);
-    $this->addOption('template', '%input% %public_flag%');
+    $this->addOption('template', '%input%<br>%public_flag%');
 
     parent::__construct($options, $attributes);
 
