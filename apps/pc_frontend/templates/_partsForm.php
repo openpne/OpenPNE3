@@ -63,6 +63,11 @@ foreach ($forms as $form)
       continue;
     }
 
+    if ($widget instanceof opWidgetFormProfile)
+    {
+      $widget->setOption('template', '<div class="input">%input%</div>'."\n".'<div class="publicFlag">%public_flag%</div>');
+    }
+
     echo $field->renderRow($attributes);
   }
 }

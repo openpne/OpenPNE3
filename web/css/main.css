@@ -726,6 +726,19 @@ div.operation ul.moreInfo li {
   width: 98%;
 }
 
+.form .input {
+  float: left;
+  width: 70%;
+}
+
+.form .publicFlag {
+  float: right;
+}
+
+.form .publicFlag select {
+  width: 140px;
+}
+
 /*==============================================================================
  * news pager
  *----------------------------------------------------------------------------*/
