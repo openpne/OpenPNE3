@@ -115,7 +115,20 @@ abstract class sfOpenPNEMemberAction extends sfActions
     
     $this->forward404Unless($this->member, 'Undefined member.');
 
-    $this->communities = CommunityPeer::retrievesByMemberId($id);
+    $c = new Criteria();
+    $c->addAscendingOrderByColumn(Propel::getDB()->random(time()));
+
+    if (!$this->friendsSize)
+    {
+      $this->friendsSize = 9;
+    }
+    $this->friends = $this->member->getFriends($this->friendsSize, $c);
+
+    if (!$this->communitiesSize)
+    {
+      $this->communitiesSize = 9;
+    }
+    $this->communities = $this->member->getJoinCommunities($this->communitiesSize, $c);
     $this->crownIds = CommunityMemberPeer::getCommunityIdsOfAdminByMemberId($id);
 
     return sfView::SUCCESS;

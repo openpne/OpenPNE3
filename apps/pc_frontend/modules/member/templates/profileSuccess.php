@@ -25,7 +25,7 @@ op_include_parts('memberImageBox', 'memberImageBox', $options);
 <?php
 $options = array(
   'title' => __('Friends List'),
-  'list' => $member->getFriends(9),
+  'list' => $friends,
   'link_to' => 'member/profile?id=',
   'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $member->countFriends()), 'friend/list?id='.$member->getId())),
 );

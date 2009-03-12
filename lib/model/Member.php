@@ -84,6 +84,15 @@ class Member extends BaseMember
     return MemberPeer::doCount($c);
   }
 
+  public function getJoinCommunities($limit = null, Criteria $c = null)
+  {
+    if (!$c)
+    {
+      $c = new Criteria();
+    }
+    return CommunityPeer::retrievesByMemberId($this->getId(), $limit, $c);
+  }
+
   public function getFriendPreTo(Criteria $c = null)
   {
     if (!$c)

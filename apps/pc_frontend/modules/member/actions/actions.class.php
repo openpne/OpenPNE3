@@ -114,9 +114,6 @@ class memberActions extends sfOpenPNEMemberAction
     }
 
     $result = parent::executeProfile($request);
-
-    $this->communities = CommunityPeer::retrievesByMemberId($id, 9);
-
     return $result;
   }
 

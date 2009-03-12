@@ -33,6 +33,19 @@ class memberActions extends sfOpenPNEMemberAction
   }
 
  /**
+  * Executes profile action
+  *
+  * @params sfRequest $request A request object
+  */ 
+  public function executeProfile($request)
+  {
+    $this->friendsSize = 5;
+    $this->communitiesSize = 5;
+
+    return parent::executeProfile($request);
+  }
+  
+ /**
   * Executes configUID action
   *
   * @param sfRequest $request A request object

@@ -49,7 +49,7 @@
 
 <?php
 $list = array();
-foreach ($member->getFriends(5) as $friendMember)
+foreach ($friends as $friendMember)
 {
   $list[] = link_to(sprintf('%s(%d)', $friendMember->getName(), $friendMember->countFriends()), 'member/profile?id='.$friendMember->getId());
 }
