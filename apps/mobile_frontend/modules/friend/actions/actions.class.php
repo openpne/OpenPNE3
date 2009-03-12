@@ -17,4 +17,15 @@
  */
 class friendActions extends sfOpenPNEFriendAction
 {
+  /**
+   * Executes list action
+   *
+   * @param sfWebRequest $request a request object
+   */
+  public function executeList(sfWebRequest $request)
+  {
+    $this->size = 10;
+
+    parent::executeList($request);
+  }
 }

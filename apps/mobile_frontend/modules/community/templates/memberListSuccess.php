@@ -15,4 +15,4 @@ $option = array(
 op_include_list('memberList', $list, $option);
 ?>
 
-<?php echo pager_navigation($pager, 'friend/list?page=%d&id=' . $sf_params->get('id'), false); ?>
+<?php echo pager_navigation($pager, 'community/memberList?page=%d&id='.$id, false); ?>

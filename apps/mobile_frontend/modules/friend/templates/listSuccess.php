@@ -15,6 +15,6 @@ $option = array(
 op_include_list('friendList', $list, $option);
 ?>
 
-<?php echo pager_navigation($pager, 'friend/list?page=%d&id=' . $sf_params->get('id'), false); ?>
+<?php echo pager_navigation($pager, 'friend/list?page=%d&id='.$id , false); ?>
 
 <?php echo link_to(__('Manage friend'), 'friend/manage') ?>

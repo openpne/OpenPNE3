@@ -73,7 +73,7 @@ $option = array(
   'title' => __('Community list with this member'),
   'border' => true,
   'moreInfo' => array(
-    link_to(__('More'), 'community/joinlist?member_id='.$member->getId())
+    link_to(__('More'), 'community/joinlist?id='.$member->getId())
   ),
 );
 op_include_list('communityList', $list, $option);

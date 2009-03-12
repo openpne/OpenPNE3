@@ -92,7 +92,12 @@ abstract class sfOpenPNECommunityAction extends sfActions
     $this->member = MemberPeer::retrieveByPK($memberId);
     $this->forward404Unless($this->member);
 
-    $this->pager = CommunityPeer::getJoinCommunityListPager($memberId, $request->getParameter('page', 1));
+    if (!$this->size)
+    {
+      $this->size = 20;
+    }
+
+    $this->pager = CommunityPeer::getJoinCommunityListPager($memberId, $request->getParameter('page', 1), $this->size);
 
     if (!$this->pager->getNbResults())
     {
@@ -112,7 +117,13 @@ abstract class sfOpenPNECommunityAction extends sfActions
   public function executeMemberList($request)
   {
     $this->community = CommunityPeer::retrieveByPk($this->id);
-    $this->pager = CommunityPeer::getCommunityMemberListPager($this->id, $request->getParameter('page', 1));
+    $this->forward404Unless($this->community);
+
+    if (!$this->size)
+    {
+      $this->size = 20;
+    }
+    $this->pager = CommunityPeer::getCommunityMemberListPager($this->id, $request->getParameter('page', 1), $this->size);
 
     if (!$this->pager->getNbResults()) {
       return sfView::ERROR;

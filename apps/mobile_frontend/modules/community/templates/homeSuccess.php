@@ -41,8 +41,9 @@
 
 <?php
 $list = array();
-foreach ($community->getCommunityMembers() as $communityMember) {
-  $member = $communityMember->getMember();
+$c = new Criteria();
+$c->addAscendingOrderByColumn(Propel::getDB()->random(time()));
+foreach ($community->getMembers(5, $c) as $member) {
   $list[] = link_to($member->getName(), 'member/profile?id='.$member->getId());
 }
 $option = array(
