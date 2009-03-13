@@ -18,6 +18,18 @@
 class communityActions extends sfOpenPNECommunityAction
 {
   /**
+   * Executes home action
+   *
+   * @param sfWebRequest $request a request object
+   */
+  public function executeHome(sfWebRequest $request)
+  {
+    $this->membersSize = 5;
+
+    return parent::executeHome($request);
+  }
+
+  /**
    * Executes joinlist action
    *
    * @param sfWebRequest $request a request object

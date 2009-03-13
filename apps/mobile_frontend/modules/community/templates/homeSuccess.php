@@ -7,11 +7,16 @@
 </td></tr>
 
 <tr><td align="center" width="50%" valign="top">
+<?php echo image_tag_sf_image($community->getImageFileName(), array('size' => '120x120', 'format' => 'jpg')) ?>
 </td>
 
 <td valign="top">
 <font color="#999966">ID:</font><br>
 <?php echo $community->getId() ?><br>
+<font color="#999966"><?php echo __('Date Created') ?>:</font><br>
+<?php echo op_format_date($community->getCreatedAt(), 'D') ?><br>
+<font color="#999966"><?php echo __('Administrator') ?>:</font><br>
+<?php echo link_to($community_admin->getName(), 'member/profile?id='.$community_admin->getId()) ?><br>
 </td>
 </tr>
 
@@ -41,13 +46,11 @@
 
 <?php
 $list = array();
-$c = new Criteria();
-$c->addAscendingOrderByColumn(Propel::getDB()->random(time()));
-foreach ($community->getMembers(5, $c) as $member) {
+foreach ($members as $member) {
   $list[] = link_to($member->getName(), 'member/profile?id='.$member->getId());
 }
 $option = array(
-  'title' => __('Community member'),
+  'title' => __('Community Members'),
   'border' => true,
   'moreInfo' => array(
     link_to(__('More'), 'community/memberList?id='.$community->getId()),
