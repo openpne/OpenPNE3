@@ -7,7 +7,7 @@ Profile:
     is_disp_regist: 1
     is_disp_config: 1
     is_disp_search: 1
-    is_public_flag_edit: 0
+    is_edit_public_flag: 0
     default_public_flag: 1
     sort_order: 110
 
@@ -21,7 +21,7 @@ Profile:
     is_disp_search: 1
     value_min: "-100years"
     value_max: "now"
-    is_public_flag_edit: 0
+    is_edit_public_flag: 0
     default_public_flag: 1
     sort_order: 120
 
@@ -33,7 +33,7 @@ Profile:
     is_disp_regist: 1
     is_disp_config: 1
     is_disp_search: 1
-    is_public_flag_edit: 0
+    is_edit_public_flag: 0
     default_public_flag: 1
     sort_order: 130
 
