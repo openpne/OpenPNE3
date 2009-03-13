@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class communityComponents extends sfComponents
+class communityComponents extends sfOpenPNECommunityComponents
 {
   public function executeJoinListBox()
   {

@@ -24,6 +24,7 @@ class CommunityPeer extends BaseCommunityPeer
       $c = new Criteria();
     }
     $c->add(CommunityMemberPeer::MEMBER_ID, $memberId);
+    $c->add(CommunityMemberPeer::POSITION, 'pre', Criteria::NOT_EQUAL);
     $c->addJoin(self::ID, CommunityMemberPeer::COMMUNITY_ID);
     $c->setLimit($limit);
 
@@ -34,6 +35,7 @@ class CommunityPeer extends BaseCommunityPeer
   {
     $c = new Criteria();
     $c->add(CommunityMemberPeer::MEMBER_ID, $memberId);
+    $c->add(CommunityMemberPeer::POSITION, 'pre', Criteria::NOT_EQUAL);
     $c->addJoin(self::ID, CommunityMemberPeer::COMMUNITY_ID);
 
     $pager = new sfPropelPager('Community', $size);
@@ -48,6 +50,7 @@ class CommunityPeer extends BaseCommunityPeer
   {
     $c = new Criteria();
     $c->add(CommunityMemberPeer::COMMUNITY_ID, $communityId);
+    $c->add(CommunityMemberPeer::POSITION, 'pre', Criteria::NOT_EQUAL);
     $c->addJoin(MemberPeer::ID, CommunityMemberPeer::MEMBER_ID);
 
     $pager = new sfPropelPager('Member', $size);
@@ -65,6 +68,7 @@ class CommunityPeer extends BaseCommunityPeer
     $c = new Criteria();
     $c->clearSelectColumns()->addSelectColumn(self::ID);
     $c->add(CommunityMemberPeer::MEMBER_ID, $memberId);
+    $c->add(CommunityMemberPeer::POSITION, 'pre', Criteria::NOT_EQUAL);
     $c->addJoin(self::ID, CommunityMemberPeer::COMMUNITY_ID);
     $stmt = self::doSelectStmt($c);
 

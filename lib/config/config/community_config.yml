@@ -1,7 +1,17 @@
 general:
+  register_poricy:
+    Name:       "register_poricy"
+    Caption:    "Register poricy"
+    FormType:   "radio"
+    Default:    "open"
+    Choices:
+      open:     "Everyone can join"
+      close:    "Community's admin authorization needed"
+    IsUnique:   false
+    IsRequired: true
   description:
     Name:       "description"
-    Caption:    "説明文"
+    Caption:    "Description"
     FormType:   "textarea"
     ValueType:  "string"
     IsUnique:   false

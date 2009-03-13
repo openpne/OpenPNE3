@@ -31,10 +31,10 @@ class opFormItemGenerator
       case 'checkbox' :
       case 'select' :
       case 'radio' :
-        $params['choices'] = $choices;
-        if (!empty($field['Choices']))
+        $params['choices'] = array_map(array(sfContext::getInstance()->getI18N(), '__'), $choices);
+        if (!empty($field['Choices']) && is_array($field['Choices']))
         {
-          $params['choices'] = $field['Choices'];
+          $params['choices'] = array_map(array(sfContext::getInstance()->getI18N(), '__'), $field['Choices']);
         }
     }
 

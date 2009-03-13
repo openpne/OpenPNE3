@@ -123,6 +123,10 @@
         <target>%1%さんからフレンド申請がきています！</target>
       </trans-unit>
       <trans-unit id="">
+        <source>%1% send request for participation to %2%.</source>
+        <target>%1%さんが%2%への参加を希望しています。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Permits</source>
         <target>許可する</target>
       </trans-unit>
@@ -525,6 +529,18 @@
       <trans-unit id="">
         <source>Remove the current photo</source>
         <target>この写真を削除する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Register poricy</source>
+        <target>参加条件</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Everyone can join</source>
+        <target>誰でも参加可能</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Community's admin authorization needed</source>
+        <target>コミュニティ管理者の承認が必要</target>
       </trans-unit>
     </body>
   </file>

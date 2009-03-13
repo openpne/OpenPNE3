@@ -27,7 +27,22 @@ class CommunityMemberPeer extends BaseCommunityMemberPeer
 
   public static function isMember($memberId, $communityId)
   {
-    return (bool)self::retrieveByMemberIdAndCommunityId($memberId, $communityId);
+    $communityMember = self::retrieveByMemberIdAndCommunityId($memberId, $communityId);
+    if (!$communityMember)
+    {
+      return false;
+    }
+    return ($communityMember->getPosition() != 'pre');
+  }
+
+  public static function isPreMember($memberId, $communityId)
+  {
+    $communityMember = self::retrieveByMemberIdAndCommunityId($memberId, $communityId);
+    if (!$communityMember)
+    {
+      return false;
+    }
+    return ($communityMember->getPosition() == 'pre');
   }
 
   public static function isAdmin($memberId, $communityId)
@@ -44,15 +59,25 @@ class CommunityMemberPeer extends BaseCommunityMemberPeer
     return true;
   }
 
-  public static function join($memberId, $communityId)
+  public static function join($memberId, $communityId, $isRegisterPoricy = 'open')
   {
-    if (self::isMember($memberId, $communityId)) {
+    if (self::isPreMember($memberId, $communityId))
+    {
+      throw new Exception('This member has already applied this community.');
+    }
+
+    if (self::isMember($memberId, $communityId))
+    {
       throw new Exception('This member has already joined this community.');
     }
 
     $communityMember = new CommunityMember();
     $communityMember->setMemberId($memberId);
     $communityMember->setCommunityId($communityId);
+    if ($isRegisterPoricy == 'close')
+    {
+      $communityMember->setPosition('pre');
+    }
     $communityMember->save();
   }
 
@@ -93,5 +118,19 @@ class CommunityMemberPeer extends BaseCommunityMemberPeer
     }
 
     return $result;
+  }
+
+  public static function getCommunityMembersPre($memberId)
+  {
+    $adminCommunityIds = self::getCommunityIdsOfAdminByMemberId($memberId);
+    
+    if (count($adminCommunityIds))
+    {
+      $c = new Criteria();
+      $c->add(self::COMMUNITY_ID, $adminCommunityIds, Criteria::IN);
+      $c->add(self::POSITION, 'pre');
+      return self::doSelect($c);
+    }
+    return array();
   }
 }

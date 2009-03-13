@@ -6,6 +6,11 @@ homeSuccess:
       template: [friend, cautionAboutFriendPre]
       parts   : [information]
       target  : [bodyBottom]
+    cautionAboutCommunityMemberPre:
+      template    : [community, cautionAboutCommunityMemberPre]
+      parts       : [information]
+      target      : [bodyBottom]
+      is_component: true 
 
 profileSuccess:
   layout: layoutA

@@ -48,6 +48,7 @@ class Community extends BaseCommunity
       $c->setLimit($limit);
     }
     $c->add(CommunityMemberPeer::COMMUNITY_ID, $this->getId());
+    $c->add(CommunityMemberPeer::POSITION, 'pre', Criteria::NOT_EQUAL);
     $c->addJoin(MemberPeer::ID, CommunityMemberPeer::MEMBER_ID);
     return MemberPeer::doSelect($c);
   }
@@ -64,6 +65,7 @@ class Community extends BaseCommunity
   {
     $c = new Criteria();
     $c->add(CommunityMemberPeer::MEMBER_ID, $memberId);
+    $c->add(CommunityMemberPeer::POSITION, 'pre', Criteria::NOT_EQUAL);
 
     return (bool)$this->getCommunityMembers($c);
   }
@@ -75,5 +77,15 @@ class Community extends BaseCommunity
     $c->add(CommunityMemberPeer::POSITION, 'admin');
 
     return (bool)$this->getCommunityMembers($c);
+  }
+
+  public function countCommunityMembers(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+  {
+    if (is_null($criteria))
+    {
+      $criteria = new Criteria();
+    }
+    $criteria->add(CommunityMemberPeer::POSITION, 'pre', Criteria::NOT_EQUAL);
+    return parent::countCommunityMembers($criteria, $distinct, $con);
   }
 }

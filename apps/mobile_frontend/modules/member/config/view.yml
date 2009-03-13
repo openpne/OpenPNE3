@@ -4,3 +4,8 @@ homeSuccess:
       template: [friend, cautionAboutFriendPre]
       parts   : [information]
       target  : [bottom]
+    cautionAboutCommunityMemberPre:
+      template    : [community, cautionAboutCommunityMemberPre]
+      parts       : [information]
+      target      : [bottom]
+      is_component: true

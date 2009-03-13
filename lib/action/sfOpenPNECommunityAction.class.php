@@ -21,8 +21,10 @@ abstract class sfOpenPNECommunityAction extends sfActions
   {
     $this->id = $this->getRequestParameter('id');
 
-    $this->isCommunityMember = CommunityMemberPeer::isMember($this->getUser()->getMemberId(), $this->id);
-    $this->isAdmin = CommunityMemberPeer::isAdmin($this->getUser()->getMemberId(), $this->id);
+    $memberId = $this->getUser()->getMemberId();
+    $this->isCommunityMember = CommunityMemberPeer::isMember($memberId, $this->id);
+    $this->isCommunityPreMember = CommunityMemberPeer::isPreMember($memberId, $this->id);
+    $this->isAdmin = CommunityMemberPeer::isAdmin($memberId, $this->id);
     $this->isEditCommunity = $this->isAdmin;
   }
 
@@ -63,8 +65,8 @@ abstract class sfOpenPNECommunityAction extends sfActions
     if (!$this->community)
     {
       $this->community = new Community();
+      
     }
-
 
     $this->communityForm       = new CommunityForm($this->community);
     $this->communityConfigForm = new CommunityConfigForm(array(), array('community' => $this->community));
@@ -149,12 +151,54 @@ abstract class sfOpenPNECommunityAction extends sfActions
   */
   public function executeJoin($request)
   {
-    if ($this->isCommunityMember) {
+    if ($this->isCommunityMember || $this->isCommunityPreMember) {
       return sfView::ERROR;
     }
 
-    CommunityMemberPeer::join($this->getUser()->getMemberId(), $this->id);
+    $community = CommunityPeer::retrieveByPk($this->id);
+    $this->forward404Unless($community);
+
+    CommunityMemberPeer::join($this->getUser()->getMemberId(), $this->id, $community->getConfig('register_poricy'));
     $this->redirect('community/home?id=' . $this->id);
+  }
+
+  /**
+   * Executes joinAccept action
+   *
+   * @param sfRequest $request A request object
+   */
+  public function executeJoinAccept($request)
+  {
+    $this->forward404Unless($this->isAdmin);
+    
+    $communityMember = CommunityMemberPeer::retrieveByMemberIdAndCommunityId($request->getParameter('member_id'), $this->id);
+    $this->forward404Unless($communityMember);
+
+    if ($communityMember->getPosition() == 'pre')
+    {
+      $communityMember->setPosition('');
+      $communityMember->save();
+    }
+    $this->redirect('community/home?id='.$this->id);
+  }
+
+  /**
+   * Executes joinReject action
+   *
+   * @param sfRequest $request A request object
+   */
+  public function executeJoinReject($request)
+  {
+    $this->forward404Unless($this->isAdmin);
+    
+    $communityMember = CommunityMemberPeer::retrieveByMemberIdAndCommunityId($request->getParameter('member_id'), $this->id);
+    $this->forward404Unless($communityMember);
+
+    if ($communityMember->getPosition() == 'pre')
+    {
+      $communityMember->delete();
+    }
+    $this->redirect('community/home?id='.$this->id);   
   }
 
  /**

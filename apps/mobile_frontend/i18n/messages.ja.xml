@@ -122,6 +122,22 @@
         <source>Community Members</source>
         <target>ｺﾐｭﾆﾃｨﾒﾝﾊﾞｰ</target>
       </trans-unit>
+      <trans-unit>
+        <source>Register poricy</source>
+        <target>参加条件</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Everyone can join</source>
+        <target>誰でも参加できる</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Community's admin authorization needed</source>
+        <target>ｺﾐｭﾆﾃｨ管理者の承認が必要</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Description</source>
+        <target>説明文</target>
+      </trans-unit>
       <trans-unit id="">
         <source>Login Failed.</source>
         <target>ﾛｸﾞｲﾝに失敗しました。</target>
@@ -197,6 +213,10 @@
       <trans-unit id="">
         <source>Received from the friend link message from %1%!</source>
         <target>%1%からﾌﾚﾝﾄﾞ申請がきています！</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1% send request for participation to %2%.</source>
+        <target>%1%から%2%への参加申請がきています</target>
       </trans-unit>
       <trans-unit id="">
         <source>Click following URL, please. You finish register if you inputs your password at here.</source>

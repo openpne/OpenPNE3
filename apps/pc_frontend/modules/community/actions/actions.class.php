@@ -26,7 +26,7 @@ class communityActions extends sfOpenPNECommunityAction
   {
     $result = parent::executeEdit($request);
 
-    if (!$this->community) {
+    if ($this->community->isNew()) {
       sfConfig::set('sf_nav_type', 'default');
     }
 
