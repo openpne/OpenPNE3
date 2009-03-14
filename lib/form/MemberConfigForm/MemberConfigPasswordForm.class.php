@@ -36,4 +36,11 @@ class MemberConfigPasswordForm extends MemberConfigForm
 
     return $value;
   }
+
+  public function save()
+  {
+    unset($this->values['now_password']);
+
+    parent::save();
+  }
 }
