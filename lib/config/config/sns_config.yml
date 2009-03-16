@@ -20,7 +20,7 @@ general:
     Name:      "admin_mail_address"
     Caption:   "管理者メールアドレス"
     FormType:  "input"
-    ValueType:  "mail_address"
+    ValueType:  "email"
     Default:    "sns@example.com"
     IsRequired: true
 
@@ -45,6 +45,15 @@ general:
     Choices:
       - "使用しない"
       - "使用する"
+
+  image_max_filesize:
+    Name:        "image_max_filesize"
+    Caption:     "アップロード画像のファイルサイズ制限(bytes)"
+    FormType:    "input"
+    ValueType:   "regexp"
+    ValueRegexp: "/^[1-9]\d*[K|M]?$/"
+    IsRequired:  true
+    Default:     "300K"
 
 authentication:
   enable_registration:

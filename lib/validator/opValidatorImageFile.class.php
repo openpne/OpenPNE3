@@ -21,5 +21,6 @@ class opValidatorImageFile extends sfValidatorFile
   {
     parent::configure($options, $messages);
     $this->setOption('mime_types', 'web_images');
+    $this->setOption('max_size', opConfig::get('image_max_filesize'));
   }
 }
