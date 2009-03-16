@@ -303,8 +303,8 @@
         <target>写真は最大3枚までアップロードできます。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Please make it to GIF･JPEG･PNG within 300KB.</source>
-        <target>300KB以内のGIF・JPEG・PNGにしてください。</target>
+        <source>Please make it to GIF･JPEG･PNG within %max_size% bytes.</source>
+        <target>%max_size% bytes 以内のGIF・JPEG・PNGにしてください。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Photograph that hits violation of copyright and portrait right and violence and obscene photograph and other members are seen and revolted a press ban. Please publish by the self-responsibility.</source>
