@@ -1,7 +1,9 @@
 <table>
 <tr>
 <th><?php echo $form['name']->renderLabel() ?></th>
+<?php if (empty($forceAllowUserCommunity)) : ?>
 <th><?php echo $form['is_allow_user_community']->renderLabel() ?></th>
+<?php endif; ?>
 <th colspan="2"><?php echo __('操作') ?></th>
 </tr>
 
@@ -9,9 +11,11 @@
 <form action="<?php echo url_for('community/categoryEdit?id='.$category->getId()) ?>" method="post">
 <?php echo $category->getForm()->renderGlobalErrors() ?>
 <tr>
-<?php foreach ($category->getForm() as $row) : ?>
+<?php foreach ($category->getForm() as $key => $row) : ?>
 <?php if (!$row->isHidden()) : ?>
+<?php if (empty($forceAllowUserCommunity) || $key != 'is_allow_user_community') : ?>
 <td><?php echo $row->renderError() ?><?php echo $row ?></td>
+<?php endif; ?>
 <?php endif; ?>
 <?php endforeach; ?>
 
@@ -34,9 +38,11 @@
 <form action="<?php echo url_for('community/categoryList') ?>" method="post">
 <?php echo $form->renderGlobalErrors() ?>
 <tr>
-<?php foreach ($form as $row) : ?>
+<?php foreach ($form as $key => $row) : ?>
 <?php if (!$row->isHidden()) : ?>
+<?php if (empty($forceAllowUserCommunity) || $key != 'is_allow_user_community') : ?>
 <td><?php echo $row->renderError() ?><?php echo $row ?></td>
+<?php endif; ?>
 <?php endif; ?>
 <?php endforeach; ?>
 

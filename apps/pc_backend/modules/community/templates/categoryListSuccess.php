@@ -6,9 +6,10 @@
 
 <h3>大カテゴリ</h3>
 <?php include_partial('categoryListForm', array(
-  'form'       => $rootForm,
-  'categories' => $categories,
-  'deleteForm' => $deleteForm,
+  'form'                    => $rootForm,
+  'forceAllowUserCommunity' => true,
+  'categories'              => $categories,
+  'deleteForm'              => $deleteForm,
 )) ?>
 
 <h3>小カテゴリ</h3>

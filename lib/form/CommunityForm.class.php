@@ -26,13 +26,21 @@ class CommunityForm extends BaseCommunityForm
 
     $this->setValidator('name', new sfValidatorString(array('max_length' => 64, 'trim' => true)));
 
-    $this->setWidget('community_category_id', new opWidgetFormPropelChoiceTree(array(
+    $c = new Criteria();
+    if (1 != sfContext::getInstance()->getUser()->getMemberId())
+    {
+      $c->add(CommunityCategoryPeer::IS_ALLOW_USER_COMMUNITY, 1);
+    }
+    $this->setWidget('community_category_id', new sfWidgetFormPropelChoice(array(
       'model'       => 'CommunityCategory',
       'add_empty'   => false,
-      'peer_method' => 'retrieveAllRoots',
+      'peer_method' => 'retrieveAllChildren',
+      'criteria'    => $c,
     )));
     $this->widgetSchema->setLabel('community_category_id', 'Community Category');
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
+
+    $this->mergePostValidator(new sfValidatorCallback(array('callback' => array($this, 'checkCreatable'))));
   }
 
   public function updateObject($values = null)
@@ -53,5 +61,21 @@ class CommunityForm extends BaseCommunityForm
       $member->setMemberId(sfContext::getInstance()->getUser()->getMemberId());
       $member->setCommunity($community);
     }
+  }
+
+  public function checkCreatable($validator, $value)
+  {
+    $category = CommunityCategoryPeer::retrieveByPk($value['community_category_id']);
+    if ($category->getIsAllowUserCommunity())
+    {
+      return $value;
+    }
+
+    if (1 == sfContext::getInstance()->getUser()->getMemberId())
+    {
+      return $value;
+    }
+
+    throw new sfValidatorError($validator, 'invalid');
   }
 }

@@ -65,7 +65,6 @@ abstract class sfOpenPNECommunityAction extends sfActions
     if (!$this->community)
     {
       $this->community = new Community();
-      
     }
 
     $this->communityForm       = new CommunityForm($this->community);
