@@ -1,7 +1,7 @@
 <?php op_mobile_page_title($member->getName()) ?>
 
 <center>
-<?php echo pager_total($pager); ?>
+<?php op_include_pager_total($pager); ?>
 </center>
 
 <?php
@@ -15,4 +15,4 @@ $option = array(
 op_include_list('communityList', $list, $option);
 ?>
 
-<?php echo pager_navigation($pager, 'community/joinlist?page=%d&id='.$member->getId(), false); ?>
+<?php op_include_pager_navigation($pager, 'community/joinlist?page=%d&id='.$member->getId(), array('is_total' => false)); ?>

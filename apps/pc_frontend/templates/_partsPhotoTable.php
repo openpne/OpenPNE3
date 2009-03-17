@@ -10,7 +10,7 @@ $options->addRequiredOption('link_to');
 ?>
 
 <?php ob_start() ?>
-<?php include_partial('global/pagerRelative', array('pager' => $options->pager, 'link_to' => $options->getRaw('link_to_pager'))) ?>
+<?php op_include_pager_navigation($options->pager, $options->getRaw('link_to_pager')) ?>
 <?php $pager = ob_get_flush() ?>
 
 <table>

@@ -1,4 +1,4 @@
-<div class="pagerRelative"><p class="number"><?php echo pager_navigation($pager, 'friend/list?page=%d&id=' . $sf_params->get('id')); ?></p></div>
+<?php op_include_pager_navigation($pager, 'friend/list?page=%d&id=' . $sf_params->get('id')); ?>
 <?php foreach ($list as $res): ?>
 <dl>
 <dt><?php echo date( __('Y/m/d G:i'), strtotime($res['date'])) ?></dt>
@@ -25,4 +25,4 @@ else
 <?php endforeach; ?>
 </div>
 
-<div class="pagerRelative"><p class="number"><?php echo pager_navigation($pager, 'friend/list?page=%d&id=' . $sf_params->get('id')); ?></p></div>
+<?php op_include_pager_navigation($pager, 'friend/list?page=%d&id=' . $sf_params->get('id')); ?>

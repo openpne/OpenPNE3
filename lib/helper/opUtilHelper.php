@@ -18,8 +18,44 @@
  */
 
 /**
+ * Includes a navigation for paginated list
+ *
+ * @param sfPager $pager
+ * @param string  $link_to
+ * @param array   $options
+ */
+function op_include_pager_navigation($pager, $link_to, $options = array())
+{
+  $params = array(
+    'pager' => $pager,
+    'link_to' => $link_to,
+    'options' => new opPartsOptionHolder($options)
+  );
+  $pager = sfOutputEscaper::unescape($pager);
+  if ($pager instanceof sfReversiblePropelPager)
+  {
+    include_partial('global/pagerReversibleNavigation', $params);
+  }
+  else
+  {
+    include_partial('global/pagerNavigation', $params);
+  }
+}
+
+/**
+ * Includes pager total
+ *
+ * @param sfPager $pager
+ */
+function op_include_pager_total($pager)
+{
+  include_partial('global/pagerTotal', array('pager' => $pager));
+}
+
+/**
  * Returns a navigation for paginated list.
  *
+ * @deprecated since 3.0.3
  * @param  sfPager $pager
  * @param  string  $link_to  A path to go to next/previous page.
                              "%d" will be converted to number of page.
@@ -27,30 +63,27 @@
  */
 function pager_navigation($pager, $link_to, $is_total = true, $query_string = '')
 {
-  $navigation = '';
-
-  if ($pager->haveToPaginate()) {
-    if ($pager->getPreviousPage() != $pager->getPage()) {
-      $navigation .= link_to('&lt;前', sprintf($link_to, $pager->getPreviousPage()), array('query_string' => $query_string)) . '&nbsp;';
-    }
-  }
-
-  if ($is_total) {
-    $navigation .= pager_total($pager);
-  }
-
-  if ($pager->haveToPaginate()) {
-    if ($pager->getNextPage() != $pager->getPage()) {
-      $navigation .= '&nbsp;' . link_to('次&gt;', sprintf($link_to, $pager->getNextPage()), array('query_string' => $query_string));
-    }
-  }
-
-  return $navigation;
+  $params = array(
+    'pager' => $pager,
+    'link_to' => $link_to,
+    'options' => new opPartsOptionHolder(array(
+      'is_total' => $is_total,
+      'query_string' => $query_string
+    )
+  ));
+  return get_partial('global/pagerNavigation', $params);
 }
 
+/**
+ * Returns a pager total
+ *
+ * @deprecated since 3.0.3
+ * @param  sfPager $pager
+ * @return string 
+ */
 function pager_total($pager)
 {
-  return sprintf('%d件～%d件を表示', $pager->getFirstIndice(), $pager->getLastIndice());
+  return get_partial('global/pagerTotal', array('pager' => $pager));
 }
 
 function cycle_vars($name, $items, $delimiter = ',')

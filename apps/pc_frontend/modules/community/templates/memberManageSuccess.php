@@ -1,4 +1,4 @@
-<?php echo pager_navigation($pager, 'community/memberList?page=%d&id='.$sf_params->get('id')); ?>
+<?php op_include_pager_navigation($pager, 'community/memberManage?page=%d&id='.$sf_params->get('id')); ?>
 <ul>
 <?php foreach ($pager->getResults() as $member) : ?>
 <li>
@@ -11,4 +11,4 @@
 </li>
 <?php endforeach; ?>
 </ul>
-<?php echo pager_navigation($pager, 'community/memberList?page=%d&id='.$sf_params->get('id')); ?>
+<?php op_include_pager_navigation($pager, 'community/memberManage?page=%d&id='.$sf_params->get('id')); ?>

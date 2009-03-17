@@ -1,4 +1,4 @@
-<div class="pagerRelative"><p class="number"><?php echo pager_navigation($options['pager'], $options['link_to_page']); ?></p></div>
+<?php op_include_pager_navigation($options['pager'], $options['link_to_page']); ?>
 
 <div class="block">
 <?php foreach ($options['pager']->getResults() as $key => $result): ?>
@@ -26,4 +26,4 @@ echo key($list);
 <?php endforeach; ?>
 </div>
 
-<div class="pagerRelative"><p class="number"><?php echo pager_navigation($options['pager'], $options['link_to_page']); ?></p></div>
+<?php op_include_pager_navigation($options['pager'], $options['link_to_page']); ?>

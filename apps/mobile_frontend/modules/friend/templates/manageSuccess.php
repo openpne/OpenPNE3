@@ -1,7 +1,7 @@
 <?php op_mobile_page_title(__('Manage friend')) ?>
 
 <center>
-<?php echo pager_total($pager); ?>
+<?php op_include_pager_total($pager); ?>
 </center>
 
 <?php
@@ -24,4 +24,4 @@ $option = array(
 op_include_list('friendList', $list, $option);
 ?>
 
-<?php echo pager_navigation($pager, 'friend/list?page=%d&id=' . $sf_params->get('id'), false); ?>
+<?php op_include_pager_navigation($pager, 'friend/manage?page=%d&id=' . $sf_params->get('id'), array('is_total' => false)); ?>

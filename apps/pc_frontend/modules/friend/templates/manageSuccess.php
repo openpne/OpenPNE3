@@ -1,7 +1,7 @@
 <div class="dparts manageList"><div class="parts">
 <div class="partsHeading"><h3><?php echo __('My Friends Setting') ?></h3></div>
 
-<div class="pagerRelative"><p class="number"><?php echo pager_navigation($pager, 'friend/manage?page=%d'); ?></p></div>
+<?php echo op_include_pager_navigation($pager, 'friend/manage?page=%d'); ?>
 
 <div class="item"><table><tbody>
 <?php foreach ($pager->getResults() as $member): ?>
@@ -23,6 +23,6 @@
 <?php endforeach; ?>
 </tbody></table></div>
 
-<div class="pagerRelative"><p class="number"><?php echo pager_navigation($pager, 'friend/manage?page=%d'); ?></p></div>
+<?php echo op_include_pager_navigation($pager, 'friend/manage?page=%d'); ?>
 
 </div></div>

@@ -29,7 +29,7 @@
 
 <tr>
 <td colspan="<?php echo 6 + count($profiles) + 4 ?>">
-<?php echo pager_navigation($pager, 'member/list?page=%d', true, '?'.$sf_request->getCurrentQueryString()) ?>
+<?php op_include_pager_navigation($pager, 'member/list?page=%d', true, '?'.$sf_request->getCurrentQueryString()) ?>
 </td>
 </tr>
 
