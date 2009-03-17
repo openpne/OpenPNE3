@@ -24,11 +24,12 @@ op_include_parts('nineTable', 'frendList', $options);
 
 <?php
 $list = array(
-  __('Community Name')   => $community->getName(),
-  __('Date Created')         => op_format_date($community->getCreatedAt(), 'D'),
-  __('Administrator')    => $community_admin->getName(),
-  __('Count of Members') => $community->countCommunityMembers(),
-  __('Description')      => op_auto_link_text(nl2br($community->getConfig('description'))),
+  __('Community Name')     => $community->getName(),
+  __('Community Category') => $community->getCommunityCategory(),
+  __('Date Created')       => op_format_date($community->getCreatedAt(), 'D'),
+  __('Administrator')      => $community_admin->getName(),
+  __('Count of Members')   => $community->countCommunityMembers(),
+  __('Description')        => op_auto_link_text(nl2br($community->getConfig('description'))),
 );
 $options = array(
   'title' => __('Community'),

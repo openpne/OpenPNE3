@@ -10,6 +10,10 @@
         <source>Photo</source>
         <target>写真</target>
       </trans-unit>
+      <trans-unit id="3">
+        <source>Community Category</source>
+        <target>コミュニティカテゴリ</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

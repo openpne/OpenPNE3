@@ -542,6 +542,10 @@
         <source>Community's admin authorization needed</source>
         <target>コミュニティ管理者の承認が必要</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Community Category</source>
+        <target>コミュニティカテゴリ</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

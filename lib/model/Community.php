@@ -8,13 +8,6 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-/**
- * Subclass for representing a row from the 'community' table.
- *
- * 
- *
- * @package lib.model
- */ 
 class Community extends BaseCommunity
 {
   public function getImageFileName()
