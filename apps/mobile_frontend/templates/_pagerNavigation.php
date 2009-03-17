@@ -7,6 +7,7 @@ $options->setDefault('next_text', __('Next', array(), 'pager'));
 ?>
 
 <?php if ($options['is_total'] || $pager->haveToPaginate()): ?>
+<center>
 <?php if ($pager->getPreviousPage() != $pager->getPage()): ?>
 <?php echo link_to($options['prev_text'], sprintf($sf_data->getRaw('link_to'), $pager->getPreviousPage()), array('query_string' => $options['query_string'])) ?>&nbsp;
 <?php endif; ?>
@@ -16,4 +17,5 @@ $options->setDefault('next_text', __('Next', array(), 'pager'));
 <?php if ($pager->getNextPage() != $pager->getPage()): ?>
 &nbsp;<?php echo link_to($options['next_text'], sprintf($sf_data->getRaw('link_to'), $pager->getNextPage()), array('query_string' => $options['query_string'])) ?>
 <?php endif; ?>
+</center>
 <?php endif; ?>
