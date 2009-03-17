@@ -21,4 +21,5 @@
 </div>
 <?php endif; ?>
 <br>
+</div>
 <?php include_customizes($id, 'after') ?>
