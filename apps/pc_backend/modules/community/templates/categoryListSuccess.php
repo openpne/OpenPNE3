@@ -4,6 +4,8 @@
 
 <?php slot('title', __('コミュニティカテゴリ設定')); ?>
 
+<p><?php echo __('「メンバー作成コミュニティの許可」からチェックを外すと、 ID が 1 のメンバーしか、そのカテゴリ上でコミュニティの作成をおこなえなくなります。') ?></p>
+
 <h3>大カテゴリ</h3>
 <?php include_partial('categoryListForm', array(
   'form'                    => $rootForm,

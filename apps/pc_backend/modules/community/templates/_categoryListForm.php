@@ -2,7 +2,7 @@
 <tr>
 <th><?php echo $form['name']->renderLabel() ?></th>
 <?php if (empty($forceAllowUserCommunity)) : ?>
-<th><?php echo $form['is_allow_user_community']->renderLabel() ?></th>
+<th><?php echo $form['is_allow_member_community']->renderLabel() ?></th>
 <?php endif; ?>
 <th colspan="2"><?php echo __('操作') ?></th>
 </tr>
@@ -13,7 +13,7 @@
 <tr>
 <?php foreach ($category->getForm() as $key => $row) : ?>
 <?php if (!$row->isHidden()) : ?>
-<?php if (empty($forceAllowUserCommunity) || $key != 'is_allow_user_community') : ?>
+<?php if (empty($forceAllowUserCommunity) || $key != 'is_allow_member_community') : ?>
 <td><?php echo $row->renderError() ?><?php echo $row ?></td>
 <?php endif; ?>
 <?php endif; ?>
@@ -40,7 +40,7 @@
 <tr>
 <?php foreach ($form as $key => $row) : ?>
 <?php if (!$row->isHidden()) : ?>
-<?php if (empty($forceAllowUserCommunity) || $key != 'is_allow_user_community') : ?>
+<?php if (empty($forceAllowUserCommunity) || $key != 'is_allow_member_community') : ?>
 <td><?php echo $row->renderError() ?><?php echo $row ?></td>
 <?php endif; ?>
 <?php endif; ?>

@@ -26,5 +26,7 @@ class CommunityCategoryForm extends BaseCommunityCategoryForm
     {
       $this->setWidget('tree_key', new sfWidgetFormInputHidden(array('default' => $obj->getTreeKey())));
     }
+
+    $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
   }
 }

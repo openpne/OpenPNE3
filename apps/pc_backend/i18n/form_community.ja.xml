@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Name</source>
+        <target>名前</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Is allow member community</source>
+        <target>メンバー作成コミュニティの許可</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

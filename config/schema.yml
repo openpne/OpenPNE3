@@ -123,7 +123,7 @@ propel:
     tree_key : { type: integer, treeScopeKey: true, index: true }
     name: { type: varchar(64), required: true, defaultValue: "" }
     sort_order: { type: integer }
-    is_allow_user_community: { type: boolean, required: true, defaultValue: 0 }
+    is_allow_member_community: { type: boolean, required: true, defaultValue: 1 }
 
   gadget:
     id: ~

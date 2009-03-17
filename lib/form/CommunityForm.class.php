@@ -66,7 +66,7 @@ class CommunityForm extends BaseCommunityForm
   public function checkCreatable($validator, $value)
   {
     $category = CommunityCategoryPeer::retrieveByPk($value['community_category_id']);
-    if ($category->getIsAllowUserCommunity())
+    if ($category->getIsAllowMemberCommunity())
     {
       return $value;
     }
