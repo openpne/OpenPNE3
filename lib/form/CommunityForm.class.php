@@ -26,6 +26,7 @@ class CommunityForm extends BaseCommunityForm
 
     $this->setValidator('name', new sfValidatorString(array('max_length' => 64, 'trim' => true)));
 
+    $this->widgetSchema->setLabel('community_category_id', 'Community category');
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
   }
 

@@ -83,6 +83,7 @@ propel:
     id: ~
     name: { type: varchar(64), index: unique, required: true, defaultValue: "" }
     file_id: { type: integer, required: false, foreignTable: file, foreignReference: id, onDelete: setnull }
+    community_category_id: { type: integer, required: false, foreignTable: community_category, foreignReference: id, onDelete: setnull }
     created_at: ~
     updated_at: ~
 
@@ -113,6 +114,16 @@ propel:
     community_id: { type: integer, required: true, foreignTable: community, foreignReference: id, onDelete: cascade }
     name: { type: varchar(64), required: true, defaultValue: "" }
     value: { type: longvarchar }
+
+  community_category:
+    _attributes: { treeMode: NestedSet }
+    id: ~
+    lft_key: { type: integer, nestedSetLeftKey: true, index: true, defaultValue: 0 }
+    rht_key: { type: integer, nestedSetRightKey: true, index: true, defaultValue: 0 }
+    tree_key : { type: integer, treeScopeKey: true, index: true }
+    name: { type: varchar(64), required: true, defaultValue: "" }
+    sort_order: { type: integer }
+    is_allow_user_community: { type: boolean, required: true, defaultValue: 0 }
 
   gadget:
     id: ~
