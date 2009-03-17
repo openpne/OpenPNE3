@@ -6,7 +6,7 @@ $options->setDefault('prev_text', __('Previous', array(), 'pager'));
 $options->setDefault('next_text', __('Next', array(), 'pager'));
 ?>
 
-<?php if ($options['is_total'] || $pager->hasOrderPage()): ?>
+<?php if ($options['is_total'] || $pager->haveToPaginate()): ?>
 <div class="pagerRelative">
 <?php if ($pager->hasOlderPage()): ?>
 <p class="prev"><?php echo link_to($options['prev_text'], sprintf($sf_data->getRaw('link_to'), $pager->getOlderPage()), array('query_string' => $options['query_string'])) ?></p>
