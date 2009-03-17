@@ -29,7 +29,7 @@ class CommunityForm extends BaseCommunityForm
     $c = new Criteria();
     if (1 != sfContext::getInstance()->getUser()->getMemberId())
     {
-      $c->add(CommunityCategoryPeer::IS_ALLOW_USER_COMMUNITY, 1);
+      $c->add(CommunityCategoryPeer::IS_ALLOW_MEMBER_COMMUNITY, 1);
     }
     $this->setWidget('community_category_id', new sfWidgetFormPropelChoice(array(
       'model'       => 'CommunityCategory',
