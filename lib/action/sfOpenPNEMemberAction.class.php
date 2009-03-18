@@ -333,6 +333,38 @@ abstract class sfOpenPNEMemberAction extends sfActions
     return sfView::INPUT;
   }
 
+  public function executeConfigImage($request)
+  {
+    return sfView::SUCCESS;
+  }
+
+  public function executeDeleteImage($request)
+  {
+    $image = MemberImagePeer::retrieveByPk($request->getParameter('member_image_id'));
+    $this->forward404Unless($image);
+    $this->forward404Unless($image->getMemberId() == $this->getUser()->getMemberId());
+
+    $image->delete();
+
+    $this->redirect('member/configImage');
+  }
+
+  public function executeChangeMainImage($request)
+  {
+    $image = MemberImagePeer::retrieveByPk($request->getParameter('member_image_id'));
+    $this->forward404Unless($image);
+    $this->forward404Unless($image->getMemberId() == $this->getUser()->getMemberId());
+
+    $currentImage = $this->getUser()->getMember()->getImage();
+    $currentImage->setIsPrimary(false);
+    $currentImage->save();
+    $image->setIsPrimary(true);
+    $image->save();
+
+    $this->redirect('member/configImage');
+  }
+
+
   protected function sendDeleteAccountMail($member)
   {
     $param = array(

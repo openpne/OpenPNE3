@@ -351,6 +351,14 @@
         <target>写真を見る</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Edit Photo</source>
+        <target>写真編集</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Main Photo</source>
+        <target>ﾒｲﾝ写真</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>%1%'s Profile</source>
         <target>%1%さんのﾌﾟﾛﾌｨｰﾙ</target>
       </trans-unit>

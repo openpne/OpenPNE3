@@ -9,9 +9,9 @@
 [
 <?php echo link_to(__('Delete'), 'member/deleteImage?member_image_id='.$image->getId()) ?> |
 <?php if ($image->getIsPrimary()) : ?>
-<?php echo(__('メイン写真')) ?>
+<?php echo(__('Main Photo')) ?>
 <?php else: ?>
-<?php echo link_to(__('メイン写真'), 'member/changeMainImage?member_image_id='.$image->getId()) ?>
+<?php echo link_to(__('Main Photo'), 'member/changeMainImage?member_image_id='.$image->getId()) ?>
 <?php endif; ?>
 ]
 <?php endif; ?>

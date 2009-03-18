@@ -150,42 +150,6 @@ class memberActions extends sfOpenPNEMemberAction
   }
 
  /**
-  * Executes deleteImage action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeDeleteImage($request)
-  {
-    $image = MemberImagePeer::retrieveByPk($request->getParameter('member_image_id'));
-    $this->forward404Unless($image);
-    $this->forward404Unless($image->getMemberId() == $this->getUser()->getMemberId());
-
-    $image->delete();
-
-    $this->redirect('member/configImage');
-  }
-
- /**
-  * Executes changeMainImage action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeChangeMainImage($request)
-  {
-    $image = MemberImagePeer::retrieveByPk($request->getParameter('member_image_id'));
-    $this->forward404Unless($image);
-    $this->forward404Unless($image->getMemberId() == $this->getUser()->getMemberId());
-
-    $currentImage = $this->getUser()->getMember()->getImage();
-    $currentImage->setIsPrimary(false);
-    $currentImage->save();
-    $image->setIsPrimary(true);
-    $image->save();
-
-    $this->redirect('member/configImage');
-  }
-
- /**
   * Executes registerMobileToRegisterEnd action
   *
   * @param sfRequest $request A request object
