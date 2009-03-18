@@ -21,6 +21,35 @@ class opValidatorImageFile extends sfValidatorFile
   {
     parent::configure($options, $messages);
     $this->setOption('mime_types', 'web_images');
-    $this->setOption('max_size', opConfig::get('image_max_filesize'));
+
+    $maxFilesize = opConfig::get('image_max_filesize');
+    switch (strtoupper(substr($maxFilesize, -1)))
+    {
+      case 'K' :
+        $maxFilesize = (int)$maxFilesize * 1024;
+        break;
+      case 'M' :
+        $maxFilesize = (int)$maxFilesize * 1024 * 1024;
+        break;
+    }
+    
+    $this->setOption('max_size', (int)$maxFilesize);
+  }
+
+  protected function doClean($value)
+  {
+    try
+    {
+      return parent::doClean($value);
+    }
+    catch (sfValidatorError $e)
+    {
+      if ($e->getCode() == 'max_size')
+      {
+        $arguments = $e->getArguments(true);
+        throw new sfValidatorError($this, 'max_size', array('max_size' => opConfig::get('image_max_filesize'), 'size' => $arguments['size']));
+      }
+      throw $e;
+    }
   }
 }
