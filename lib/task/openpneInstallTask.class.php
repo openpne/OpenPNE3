@@ -70,6 +70,7 @@ EOF;
 
     if ($this->askConfirmation('Is it OK to start this task? (y/n)'))
     {
+      $this->installPlugins();
       @$this->fixPerms();
       @$this->clearCache();
       $this->configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock);
@@ -188,7 +189,7 @@ EOF;
       {
         $this->getFilesystem()->copy($file, $tmpdir.'/'.sprintf('%03d_%s_%s.yml', $i, basename($file, '.yml'), md5(uniqid(rand(), true))));
       }
-      $i++; 
+      $i++;
     }
 
     $buildAllLoad = new sfPropelBuildAllLoadTask($this->dispatcher, $this->formatter);
@@ -196,6 +197,12 @@ EOF;
 
     $this->getFilesystem()->remove(sfFinder::type('file')->in(array($tmpdir)));
     $this->getFilesystem()->remove($tmpdir);
+  }
+
+  protected function installPlugins()
+  {
+    $task = new opPluginSyncTask($this->dispatcher, $this->formatter);
+    $task->run();
   }
 
   protected function fixPerms()

@@ -60,6 +60,8 @@ EOF;
       throw new sfCommandException("You can't specify the to-version option or the to-revision option without the target option");
     }
 
+    $this->installPlugins();
+
     if (!$options['no-build-model'])
     {
       $this->buildModel();
@@ -114,6 +116,16 @@ EOF;
     $task = new sfCacheClearTask($this->dispatcher, $this->formatter);
     $task->run();
     $task = new openpnePermissionTask($this->dispatcher, $this->formatter);
+    $task->run();
+  }
+
+  protected function installPlugins()
+  {
+    $task = new sfCacheClearTask($this->dispatcher, $this->formatter);
+    $task->run();
+    $task = new openpnePermissionTask($this->dispatcher, $this->formatter);
+    $task->run();
+    $task = new opPluginSyncTask($this->dispatcher, $this->formatter);
     $task->run();
   }
 
