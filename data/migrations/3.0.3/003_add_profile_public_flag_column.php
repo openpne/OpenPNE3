@@ -10,7 +10,7 @@
 
 /**
  * addProfilePublicFlagColumn
- * This is a migrate script for revision '4'
+ * This is a migrate script for revision '3'
  *
  * @package OpenPNE 
  * @author  Shogo Kawahara <kawahara@tejimaya.net>
