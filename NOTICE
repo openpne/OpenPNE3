@@ -18,8 +18,6 @@ This product includes also software developed by :
     - New BSD License
   - JanRain, Inc. (http://www.janrain.com/)
     - Apache License 2.0
-  - Chris Corbyn (http://www.swiftmailer.org/)
-    - GNU Lesser General Public License
 
 This product needs the third-party softwares listed blow to run.
   - PHP: Hypertext Preprocessor (5.2.x)
