@@ -37,6 +37,19 @@ Call it with:
 EOF;
   }
 
+  protected function execute($arguments = array(), $options = array())
+  {
+    if ($this->isSelfInstalledPlugins($arguments['name']))
+    {
+      $str = "\"%s\" is already installed manually, so it will not be reinstalled.\n"
+           . "If you want to manage it automatically, delete it manually and retry this command.";
+      $this->logBlock(sprintf($str, $arguments['name']), 'INFO');
+      return false;
+    }
+
+    parent::execute($arguments, $options);
+  }
+
   public function getPluginManager()
   {
     if (is_null($this->pluginManager))
@@ -45,5 +58,21 @@ EOF;
     }
 
     return $this->pluginManager;
+  }
+
+  public function isSelfInstalledPlugins($pluginName)
+  {
+    if (!$this->isPluginExists($pluginName))
+    {
+      return false;
+    }
+
+    $registry = $this->getPluginManager()->getEnvironment()->getRegistry();
+    return !(bool)$registry->getPackage($pluginName, opPluginManager::OPENPNE_PLUGIN_CHANNEL);
+  }
+
+  public function isPluginExists($pluginName)
+  {
+    return in_array($pluginName, array_keys($this->configuration->getAllPluginPaths()));
   }
 }
