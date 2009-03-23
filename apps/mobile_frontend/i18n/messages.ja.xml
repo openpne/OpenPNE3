@@ -366,6 +366,18 @@
         <source>Expansion</source>
         <target>大</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Community Name</source>
+        <target>ｺﾐｭﾆﾃｨ名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Date Created</source>
+        <target>開設日</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Administrator</source>
+        <target>管理者</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
