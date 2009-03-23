@@ -25,22 +25,11 @@ class sfOpenPNEWebRequest extends sfWebRequest
   public function initialize(sfEventDispatcher $dispatcher, $parameters = array(), $attributes = array(), $options = array())
   {
     parent::initialize($dispatcher, $parameters, $attributes, $options);
-
-    require_once 'Net/UserAgent/Mobile.php';
   }
 
   public function getMobile()
   {
-    if (!$this->userAgentMobileInstance)
-    {
-      $this->userAgentMobileInstance = Net_UserAgent_Mobile::factory();
-      if ($this->userAgentMobileInstance instanceof Net_UserAgent_Mobile_Error)
-      {
-        $this->userAgentMobileInstance = new Net_UserAgent_Mobile_NonMobile('');
-      }
-    }
-
-    return $this->userAgentMobileInstance;
+    return opMobileUserAgent::getInstance()->getMobile();
   }
 
   public function isMobile()
@@ -136,19 +125,7 @@ class sfOpenPNEWebRequest extends sfWebRequest
 
   public function isCookie()
   {
-    if ($this->getMobile()->isDoCoMo())
-    {
-      return false;
-    }
-    elseif ($this->getMobile()->isSoftBank())
-    {
-      if (!$this->getMobile()->isType3GC() && !$this->getMobile()->isTypeW())
-      {
-        return false;
-      }
-    }
-
-    return true;
+    return opMobileUserAgent::getInstance()->isCookie();
   }
 
   public function getCurrentQueryString()

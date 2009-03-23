@@ -73,10 +73,9 @@ all:
 #      default_culture: %SF_DEFAULT_CULTURE%
 #
   storage:
-    class: opMobileSessionStorage
+    class: sfSessionStorage
     param:
       session_name: OpenPNE_mobile_frontend
-
 #
 #  view_cache:
 #    class: sfFileCache
