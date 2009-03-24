@@ -28,12 +28,14 @@ $list = array(
   __('Community Category') => $community->getCommunityCategory(),
   __('Date Created')       => op_format_date($community->getCreatedAt(), 'D'),
   __('Administrator')      => $community_admin->getName(),
-  __('Count of Members')   => $community->countCommunityMembers(),
+  __('Count of Members')   => $community->countCommunityMembers()
 );
 foreach ($community->getConfigs() as $key => $config)
 {
   $list[__($key, array(), 'form_community')] = $config;
 }
+$list[__('Description', array(), 'form_community')] = op_auto_link_text(nl2br($community->getConfig('description')));
+
 $options = array(
   'title' => __('Community'),
   'list' => $list,
