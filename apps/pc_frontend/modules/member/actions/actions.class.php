@@ -173,7 +173,7 @@ class memberActions extends sfOpenPNEMemberAction
   /**
    * Executes changeLanguage action
    *
-   * @param sfRequest $request a request object
+   * @param sfWebRequest $request a request object
    */
   public function executeChangeLanguage(sfWebRequest $request)
   {

@@ -58,18 +58,11 @@ op_include_list('profileEdit', $list, array('title' => __('Edit profile')))
 
 <?php
 $list = array();
-$attributes = sfConfig::get('openpne_member_category_attribute');
-foreach (sfConfig::get('openpne_member_category') as $key => $value)
+foreach ($categories as $key => $value)
 {
-  $title = $key;
-  if (!empty($attributes[$key]['caption']))
-  {
-    $title = $attributes[$key]['caption'];
-  }
-
   if (count($value))
   {
-    $list[] = link_to(__($title), 'member/config?category='.$key);
+    $list[] = link_to(__($categoryCaptions[$key]), 'member/config?category='.$key);
   }
 }
 $list[] = link_to(__('Setting easy login'), 'member/configUID');

@@ -222,9 +222,25 @@ abstract class sfOpenPNEMemberAction extends sfActions
 
     $this->categoryCaptions = array();
     $categoryAttributes = sfConfig::get('openpne_member_category_attribute');
+
     foreach ($this->categories as $key => $value)
     {
       $title = $key;
+
+      $enabledKey = 'enable_pc';
+      if (sfConfig::get('sf_app') == 'mobile_frontend')
+      {
+        $enabledKey = 'enable_mobile';
+      }
+
+      if (isset($categoryAttributes[$key][$enabledKey]))
+      {
+        if (!$categoryAttributes[$key][$enabledKey])
+        {
+          unset($this->categories[$key]);
+          continue;
+        }
+      }
 
       if (!empty($categoryAttributes[$key]['caption']))
       {

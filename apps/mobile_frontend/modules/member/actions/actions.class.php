@@ -29,6 +29,31 @@ class memberActions extends sfOpenPNEMemberAction
     $this->mobileContentsGadgets = GadgetPeer::retrieveMobileContentsGadgets();
     $this->mobileBottomGadgets = GadgetPeer::retrieveMobileBottomGadgets();
 
+    $this->categories = sfConfig::get('openpne_member_category');
+    $this->categoryCaptions = array();
+    $attributes = sfConfig::get('openpne_member_category_attribute');
+    foreach ($this->categories as $key => $value)
+    {
+      $title = $key;
+      
+      if (isset($attributes[$key]['enable_mobile']))
+      {
+        if (!$attributes[$key]['enable_mobile'])
+        {
+          unset($this->categories[$key]);
+          continue;
+        }
+      }
+
+      if (!empty($attributes[$key]['caption']))
+      {
+        $title = $attributes[$key]['caption'];
+      }
+
+      $this->categoryCaptions[$key] = $title;
+    }
+    
+
     return parent::executeHome($request);
   }
 
