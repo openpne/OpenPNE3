@@ -128,4 +128,9 @@ class Community extends BaseCommunity
     $criteria->add(CommunityMemberPeer::POSITION, 'pre', Criteria::NOT_EQUAL);
     return parent::countCommunityMembers($criteria, $distinct, $con);
   }
+
+  public function getNameAndCount($format = '%s (%d)')
+  {
+    return sprintf($format, $this->getName(), $this->countCommunityMembers());
+  }
 }

@@ -8,4 +8,4 @@
 <?php echo image_tag('no_image.gif', $imgParam) ?>
 <?php endif; ?>
 </p>
-<p class="text"><?php echo $options->object->getName() ?></p>
+<p class="text"><?php echo $options->object->getNameAndCount() ?></p>

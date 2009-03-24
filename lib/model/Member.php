@@ -71,7 +71,7 @@ class Member extends BaseMember
     $c->addJoin(MemberPeer::ID, MemberRelationshipPeer::MEMBER_ID_FROM);
     return MemberPeer::doSelect($c);
   }
-
+  
   public function countFriends(Criteria $c = null)
   {
     if (!$c)
@@ -83,7 +83,12 @@ class Member extends BaseMember
     $c->addJoin(MemberPeer::ID, MemberRelationshipPeer::MEMBER_ID_FROM);
     return MemberPeer::doCount($c);
   }
-
+  
+  public function getNameAndCount($format = '%s (%d)')
+  {
+    return sprintf($format, $this->getName(), $this->countFriends());
+  }
+  
   public function getJoinCommunities($limit = null, Criteria $c = null)
   {
     if (!$c)

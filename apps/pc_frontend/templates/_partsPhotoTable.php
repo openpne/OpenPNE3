@@ -32,7 +32,7 @@ $options->addRequiredOption('link_to');
 <tr class="text">
 <?php for ($j = ($i * $options->col) - $options->col; ($i * $options->col) > $j; $j++): ?>
 <td><?php if (!empty($options->list[$j])): ?>
-<?php echo link_to($options->list[$j]->getName(), $options->link_to.$options->list[$j]->getId()) ?>
+<?php echo link_to($options->list[$j]->getNameAndCount(), $options->link_to.$options->list[$j]->getId()) ?>
 <?php endif; ?></td>
 <?php endfor; ?>
 </tr>
