@@ -41,6 +41,7 @@ class CommunityConfigForm extends sfForm
     }
 
     $this->widgetSchema->setNameFormat('community_config[%s]');
+    $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
   }

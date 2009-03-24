@@ -29,8 +29,11 @@ $list = array(
   __('Date Created')       => op_format_date($community->getCreatedAt(), 'D'),
   __('Administrator')      => $community_admin->getName(),
   __('Count of Members')   => $community->countCommunityMembers(),
-  __('Description')        => op_auto_link_text(nl2br($community->getConfig('description'))),
 );
+foreach ($community->getConfigs() as $key => $config)
+{
+  $list[__($key, array(), 'form_community')] = $config;
+}
 $options = array(
   'title' => __('Community'),
   'list' => $list,

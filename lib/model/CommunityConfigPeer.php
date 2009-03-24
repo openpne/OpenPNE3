@@ -10,6 +10,14 @@
 
 class CommunityConfigPeer extends BaseCommunityConfigPeer
 {
+  public static function retrievesByCommunityId($communityId)
+  {
+    $c = new Criteria();
+    $c->add(self::COMMUNITY_ID, $communityId);
+
+    return self::doSelect($c);
+  }
+
   public static function retrieveByNameAndCommunityId($name, $communityId)
   {
     $c = new Criteria();

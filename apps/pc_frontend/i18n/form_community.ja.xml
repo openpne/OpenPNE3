@@ -14,6 +14,14 @@
         <source>Community Category</source>
         <target>コミュニティカテゴリ</target>
       </trans-unit>
+      <trans-unit id="4">
+        <source>Register poricy</source>
+        <target>参加条件</target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>Description</source>
+        <target>コミュニティ説明文</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -19,6 +19,53 @@ class Community extends BaseCommunity
     return '';
   }
 
+  public function getConfigs()
+  {
+    $configs = sfConfig::get('openpne_community_config');
+
+    $myConfigs = CommunityConfigPeer::retrievesByCommunityId($this->getId());
+
+    $result = array();
+
+    // initialize
+    foreach ($configs as $key => $config)
+    {
+      $result[$config['Caption']] = '';
+      if (isset($config[$key]['Default']))
+      {
+        $result[$config['Caption']] = $config[$key]['Default'];
+      }
+    }
+    
+    // set my configure
+    foreach ($myConfigs as $myConfig)
+    {
+      $name = $myConfig->getName();
+      if (isset($configs[$name]))
+      {
+        switch ($configs[$name]['FormType'])
+        {
+          case 'checkbox' :
+          // FIXME
+          case 'radio' :
+          case 'select' :
+            $value = $myConfig->getValue();
+            if (isset($configs[$name]['Choices'][$value]))
+            {
+              $i18n = sfContext::getInstance()->getI18N();
+              $result[$configs[$name]['Caption']] = $i18n->__($configs[$name]['Choices'][$value]);
+            }
+            break;
+          default :
+            $result[$configs[$name]['Caption']] = $myConfig->getValue();
+        }
+        $configs[$myConfig->getName()] = $myConfig->getValue();
+      }
+    }
+
+    return $result;
+  }
+
   public function getConfig($configName)
   {
     $config = CommunityConfigPeer::retrieveByNameAndCommunityId($configName, $this->getId());
