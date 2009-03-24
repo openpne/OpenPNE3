@@ -28,7 +28,7 @@ class opMobileFrontWebController extends sfFrontWebController
     }
 
     $isSid = false;
-
+    
     if (is_string($parameters) && false !== ($sidPos = strpos($parameters, SID)))
     {
       $isSid = true;
@@ -36,14 +36,14 @@ class opMobileFrontWebController extends sfFrontWebController
       $paramFoot = substr($parameters, $sidPos + strlen(SID) + 1);
       $parameters = $paramHead.$paramFoot;
     }
-    elseif (is_array($parameters) && in_array(session_name(), $parameters))
+    elseif (is_array($parameters) && in_array(session_name(), $parameters, true))
     {
       $isSid = true;
       unset($parameters[session_name()]);
     }
-
+    
     $url = parent::genUrl($parameters, $absolute);
-
+    
     if ($isSid)
     {
       $fragment = '';
@@ -55,7 +55,6 @@ class opMobileFrontWebController extends sfFrontWebController
 
       $url .= '?'.SID.$fragment;
     }
-
     return $url;
   }
 
@@ -66,8 +65,17 @@ class opMobileFrontWebController extends sfFrontWebController
   {
     if (!$this->context->getRequest()->isCookie())
     {
-      $url = $url.'?'.SID;
+      $matchd = '/'.preg_quote(session_name(),'/').'=.*([&|#]?)/';
+      if (preg_match($matchd, $url))
+      {
+        $url = preg_replace($matchd, SID.'\1', $url);
+      }
+      else
+      {
+        $url .= '?'.SID;
+      }
     }
+
     parent::redirect($url, $delay, $statusCode);
   }
 }
