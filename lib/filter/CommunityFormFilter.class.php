@@ -32,9 +32,8 @@ class CommunityFormFilter extends BaseCommunityFormFilter
       'name'       => new sfValidatorPass(),
     ));
 
-    $this->widgetSchema->setLabel('name', 'Community Name');
-
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
     $this->widgetSchema->setNameFormat('community[%s]');
+    $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
   }
 }
