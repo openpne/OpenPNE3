@@ -79,4 +79,17 @@ class CommunityPeer extends BaseCommunityPeer
 
     return $result;
   }
+
+  static public function getDefaultCommunities($c = null)
+  {
+    if (is_null($c))
+    {
+      $c = new Criteria();
+    }
+    $c->add(CommunityConfigPeer::NAME, 'is_default');
+    $c->add(CommunityConfigPeer::VALUE, true);
+    $c->addJoin(self::ID, CommunityConfigPeer::COMMUNITY_ID);
+
+    return self::doSelect($c);
+  }
 }

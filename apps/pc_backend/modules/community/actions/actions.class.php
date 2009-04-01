@@ -17,21 +17,100 @@
  */
 class communityActions extends sfActions
 {
- /**
-  * Executes index action
-  *
-  * @param sfRequest $request A request object
-  */
+  /**
+   * Executes index action
+   *
+   * @param sfWebRequest $request A request object
+   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->forward('community', 'categoryList');
+    $this->forward('community', 'list');
   }
 
- /**
-  * Executes categoryList action
-  *
-  * @param sfRequest $request A request object
-  */
+  /**
+   * Executes list action
+   *
+   * @param sfWebRequest $request A request object
+   */
+  public function executeList(sfWebRequest $request)
+  {
+    $this->form = new CommunitySearchForm();
+    $this->form->bind($request->getParameter('community'), array());
+
+    $this->pager = new sfPropelPager('Community', 20);
+    if ($request->hasParameter('community'))
+    {
+      $this->pager->setCriteria($this->form->getCriteria());
+    }
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
+    return sfView::SUCCESS;
+  }
+
+  /**
+   * Executes delete action
+   *
+   * @param sfWebRequest $request A request object
+   */
+  public function executeDelete(sfWebRequest $request)
+  {
+    $this->community = CommunityPeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($this->community);
+
+    if ($request->isMethod(sfRequest::POST))
+    {
+      $this->community->delete();
+      $this->getUser()->setFlash('notice', 'Deleted.');
+      $this->redirect('community/list');
+    }
+    return sfView::SUCCESS;
+  }
+
+  /**
+   * Executes defaultCommunityList
+   *
+   * @param sfWebRequest $request A request object
+   */
+  public function executeDefaultCommunityList(sfWebRequest $request)
+  {
+    $this->form = new DefaultCommunityForm();
+    if ($request->hasParameter('community'))
+    {
+      $this->form->bind($request->getParameter('community'));
+      if ($this->form->isValid())
+      {
+        if ($this->form->save())
+        {
+          $this->getUser()->setFlash('notice', 'Saved.');
+        }
+      }
+    }
+    
+    $this->communities = CommunityPeer::getDefaultCommunities();
+    return sfView::SUCCESS;
+  }
+
+  /**
+   * Executes removeDefaultCommunity
+   *
+   * @param sfWebRequest $request A request object 
+   */
+  public function executeRemoveDefaultCommunity(sfWebRequest $request)
+  {
+    $communityConfig = CommunityConfigPeer::retrieveByNameAndCommunityId('is_default', $request->getParameter('id'));
+    $this->forward404Unless($communityConfig);
+    
+    $communityConfig->delete();
+    $this->getUser()->setFlash('notice', 'Deleted.');
+    
+    $this->redirect('community/defaultCommunityList');
+  }
+
+  /**
+   * Executes categoryList action
+   *
+   * @param sfWebRequest $request A request object
+   */
   public function executeCategoryList(sfWebRequest $request)
   {
     $this->categories = CommunityCategoryPeer::retrieveAllRoots();
@@ -59,11 +138,11 @@ class communityActions extends sfActions
     }
   }
 
- /**
-  * Executes categoryList action
-  *
-  * @param sfRequest $request A request object
-  */
+  /**
+   * Executes categoryList action
+   *
+   * @param sfWebRequest $request A request object
+   */
   public function executeCategoryEdit(sfWebRequest $request)
   {
     $form = new CommunityCategoryForm(CommunityCategoryPeer::retrieveByPk($request->getParameter('id')));
@@ -81,11 +160,11 @@ class communityActions extends sfActions
     $this->redirect('community/categoryList');
   }
 
- /**
-  * Executes categoryDelete action
-  *
-  * @param sfRequest $request A request object
-  */
+  /**
+   * Executes categoryDelete action
+   *
+   * @param sfWebRequest $request A request object
+   */
   public function executeCategoryDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();

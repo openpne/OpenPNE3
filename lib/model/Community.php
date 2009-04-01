@@ -93,6 +93,11 @@ class Community extends BaseCommunity
     return MemberPeer::doSelect($c);
   }
 
+  public function getAdminMember()
+  {
+    return CommunityMemberPeer::getCommunityAdmin($this->getId())->getMember();
+  }
+
   public function checkPrivilegeBelong($memberId)
   {
     if (!$this->isPrivilegeBelong($memberId))
@@ -125,7 +130,9 @@ class Community extends BaseCommunity
     {
       $criteria = new Criteria();
     }
+    $criteria->add(MemberPeer::IS_ACTIVE, true);
     $criteria->add(CommunityMemberPeer::POSITION, 'pre', Criteria::NOT_EQUAL);
+    $criteria->addJoin(CommunityMemberPeer::MEMBER_ID, MemberPeer::ID);
     return parent::countCommunityMembers($criteria, $distinct, $con);
   }
 
@@ -134,3 +141,4 @@ class Community extends BaseCommunity
     return sprintf($format, $this->getName(), $this->countCommunityMembers());
   }
 }
+

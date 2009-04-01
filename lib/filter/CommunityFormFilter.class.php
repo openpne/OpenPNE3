@@ -24,13 +24,9 @@ class CommunityFormFilter extends BaseCommunityFormFilter
 
   public function configure()
   {
-    $this->setWidgets(array(
-      'name'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
-    ));
-
-    $this->setValidators(array(
-      'name'       => new sfValidatorPass(),
-    ));
+    unset($this['file_id'], $this['community_category_id'], $this['created_at'], $this['updated_at']);
+    $this->setWidget('name', new sfWidgetFormFilterInput(array('with_empty' => false)));
+    $this->setValidator('name', new sfValidatorPass());
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
     $this->widgetSchema->setNameFormat('community[%s]');
