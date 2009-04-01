@@ -162,6 +162,12 @@ abstract class opAuthRegisterForm extends sfForm
         $this->getMember()->setConfig('mobile_uid', $this->getValue('mobile_uid'));
       }
 
+      $communities = CommunityPeer::getDefaultCommunities();
+      foreach ($communities as $community)
+      {
+        CommunityMemberPeer::join($this->getMember()->getId(), $community->getId());
+      }
+
       return $this->getMember()->getId();
     }
 

@@ -124,11 +124,5 @@ class InviteForm extends MemberConfigPcAddressForm
       }
       $relation->setFriend();
     }
-
-    $communities = CommunityPeer::getDefaultCommunities();
-    foreach ($communities as $community)
-    {
-      CommunityMemberPeer::join($this->member->getId(), $community->getId());
-    }
   }
 }
