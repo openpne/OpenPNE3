@@ -17,12 +17,25 @@
  */
 class PickHomeLayoutForm extends sfForm
 {
-  public $choices = array('layoutA', 'layoutB', 'layoutC');
+  public $choices = array();
+  protected $layoutName;
 
   public function configure()
   {
-    $default = 0;
-    $snsConfig = SnsConfigPeer::retrieveByName($this->getOption('layout_name', 'home_layout'));
+    $gadgetConfigs = sfConfig::get('op_gadget_config', array());
+
+    $layoutName = $this->getOption('layout_name', 'gadget');
+    $this->choices = $gadgetConfigs[$layoutName]['layout']['choices'];
+    $default = array_search($gadgetConfigs[$layoutName]['layout']['default'], $this->choices);
+
+    if ($layoutName === 'gadget')
+    {
+      $layoutName = 'home';
+    }
+    $this->layoutName = $layoutName.'_layout';
+
+    $snsConfig = SnsConfigPeer::retrieveByName($this->layoutName);
+
     if ($snsConfig)
     {
       $default = array_search($snsConfig->getValue(), $this->choices);
@@ -48,11 +61,11 @@ class PickHomeLayoutForm extends sfForm
       return false;
     }
 
-    $snsConfig = SnsConfigPeer::retrieveByName($this->getOption('layout_name', 'home_layout'));
+    $snsConfig = SnsConfigPeer::retrieveByName($this->layoutName);
     if (!$snsConfig)
     {
       $snsConfig = new SnsConfig();
-      $snsConfig->setName($this->getOption('layout_name', 'home_layout'));
+      $snsConfig->setName($this->layoutName);
     }
     $value = $this->choices[$this->values['layout']];
     $snsConfig->setValue($value);

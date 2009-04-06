@@ -41,7 +41,8 @@ class defaultComponents extends sfComponents
 
   public function executeSideBannerGadgets()
   {
-    $this->gadgets = GadgetPeer::retrieveSideBannerContentsGadgets();
+    $gadgets = GadgetPeer::retrieveGadgetsByTypesName('sideBanner');
+    $this->gadgets = $gadgets['sideBannerContents'];
   }
 
   public function executeInformationBox()

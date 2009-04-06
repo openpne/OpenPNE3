@@ -24,7 +24,7 @@ class designActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->forward('design', 'homeLayout');
+    $this->forward('design', 'layout');
   }
 
  /**
@@ -32,21 +32,32 @@ class designActions extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeHomeLayout(sfWebRequest $request)
+  public function executeLayout(sfWebRequest $request)
   {
     $option = array();
-    $params = '';
-    if ($request->getParameter('login'))
+
+    $this->configs = array();
+    $gadgetConfigs = sfConfig::get('op_gadget_config', array());
+    foreach ($gadgetConfigs as $key => $config)
     {
-      $option['layout_name'] = 'login_layout';
-      $params = '?login=1';
+      if (isset($config['layout']['choices']))
+      {
+        $this->configs[$key] = $config;
+      }
     }
+
+    $type = $request->getParameter('type', 'gadget');
+    $this->forward404Unless(isset($this->configs[$type]));
+    $this->subtitle = $this->configs[$type]['name'];
+
+    $option['layout_name'] = $type;
+    
     $this->form = new PickHomeLayoutForm(array(), $option);
 
     if ($request->isMethod(sfRequest::POST))
     {
       $this->form->bind($request->getParameter('pick_home_layout'));
-      $this->redirectIf($this->form->save(), 'design/homeLayout'.$params);
+      $this->redirectIf($this->form->save(), 'design/layout?type='.$type);
     }
 
     return sfView::SUCCESS;
@@ -59,8 +70,17 @@ class designActions extends sfActions
   */
   public function executeGadget(sfWebRequest $request)
   {
-    $this->type = $request->getParameter('type', GadgetPeer::HOME_TYPES);
+    $this->configs = sfConfig::get('op_gadget_config', array());
+    $layouts = sfConfig::get('op_gadget_layout_config', array());
+    $this->type = $request->getParameter('type', 'gadget');
+    
+    $this->forward404Unless(isset($this->configs[$this->type]));
+    
+    $this->subtitle = $this->configs[$this->type]['name'];
+    $this->plotAction = $this->configs[$this->type]['plot_action'];
+
     $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName($this->type);
+    
 
     $this->sortForm = new GadgetSortForm(array(), array('current_gadgets' => $this->gadgets));
     $this->addForm = new GadgetAddForm(array(), array('current_gadgets' => $this->gadgets));
@@ -84,11 +104,9 @@ class designActions extends sfActions
   */
   public function executeHomeGadgetPlot(sfWebRequest $request)
   {
-    $this->layoutPattern = 'layoutA';
-    $this->topGadgets = (array)GadgetPeer::retrieveTopGadgets();
-    $this->sideMenuGadgets = (array)GadgetPeer::retrieveSideMenuGadgets();
-    $this->contentsGadgets = (array)GadgetPeer::retrieveContentsGadgets();
-    $this->bottomGadgets = (array)GadgetPeer::retrieveBottomGadgets();
+    $configs = opConfig::get('op_gadget_config');
+    $this->layoutPattern = $configs['gadget']['layout']['default'];
+    $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('gadget');
     $this->gadgetConfig = sfConfig::get('op_gadget_list');
 
     $layout = SnsConfigPeer::retrieveByName('home_layout');
@@ -107,11 +125,9 @@ class designActions extends sfActions
   */
   public function executeLoginGadgetPlot(sfWebRequest $request)
   {
-    $this->layoutPattern = 'layoutA';
-    $this->topGadgets = (array)GadgetPeer::retrieveLoginTopGadgets();
-    $this->sideMenuGadgets = (array)GadgetPeer::retrieveLoginSideMenuGadgets();
-    $this->contentsGadgets = (array)GadgetPeer::retrieveLoginContentsGadgets();
-    $this->bottomGadgets = (array)GadgetPeer::retrieveLoginBottomGadgets();
+    $configs = opConfig::get('op_gadget_config');
+    $this->layoutPattern = $configs['login']['layout']['default'];
+    $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('login');
     $this->gadgetConfig = sfConfig::get('op_login_gadget_list');
 
     $layout = SnsConfigPeer::retrieveByName('login_layout');
@@ -119,6 +135,31 @@ class designActions extends sfActions
     {
       $this->layoutPattern = $layout->getValue();
     }
+    return sfView::SUCCESS;
+  }
+ 
+ /**
+  * Executes mobile home gadget plot action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeMobileHomeGadgetPlot(sfWebRequest $request)
+  {
+    $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('mobile');
+    $this->gadgetConfig = sfConfig::get('op_mobile_gadget_list');
+
+    return sfView::SUCCESS;
+  }
+
+ /**
+  * Executes side banner home gadget plot action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeSideBannerGadgetPlot(sfWebRequest $request)
+  {
+    $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('sideBanner');
+    $this->gadgetConfig = sfConfig::get('op_side_banner_gadget_list');
 
     return sfView::SUCCESS;
   }
@@ -130,7 +171,7 @@ class designActions extends sfActions
   */
   public function executeAddGadget(sfWebRequest $request)
   {
-    $this->type = $request->getParameter('type', GadgetPeer::TOP_TYPE);
+    $this->type = $request->getParameter('type', 'top');
     $this->config = GadgetPeer::getGadgetConfigListByType($this->type);
 
     return sfView::SUCCESS;
@@ -165,34 +206,6 @@ class designActions extends sfActions
         }
       }
     }
-
-    return sfView::SUCCESS;
-  }
-
- /**
-  * Executes mobile home gadget plot action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeMobileHomeGadgetPlot(sfWebRequest $request)
-  {
-    $this->mobileTopGadgets = (array)GadgetPeer::retrieveMobileTopGadgets();
-    $this->mobileContentsGadgets = (array)GadgetPeer::retrieveMobileContentsGadgets();
-    $this->mobileBottomGadgets = (array)GadgetPeer::retrieveMobileBottomGadgets();
-    $this->gadgetConfig = sfConfig::get('op_mobile_gadget_list');
-
-    return sfView::SUCCESS;
-  }
-
- /**
-  * Executes side banner home gadget plot action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeSideBannerGadgetPlot(sfWebRequest $request)
-  {
-    $this->sideBannerContentsGadgets = (array)GadgetPeer::retrieveSideBannerContentsGadgets();
-    $this->gadgetConfig = sfConfig::get('op_side_banner_gadget_list');
 
     return sfView::SUCCESS;
   }

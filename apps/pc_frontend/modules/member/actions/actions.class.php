@@ -25,22 +25,20 @@ class memberActions extends sfOpenPNEMemberAction
   public function executeHome($request)
   {
     $this->gadgetConfig = sfConfig::get('op_gadget_list');
-    $layout = SnsConfigPeer::retrieveByName('home_layout');
-    if ($layout)
+    $gadgets = GadgetPeer::retrieveGadgetsByTypesName('gadget');
+    $layout = SnsConfigPeer::get('home_layout', 'layoutA');
+    $this->setLayout($layout);
+
+    switch ($layout)
     {
-      $this->setLayout($layout->getValue());
+      case 'layoutA' :
+        $this->topGadgets = $gadgets['top'];
+      case 'layoutB' :
+        $this->sideMenuGadgets = $gadgets['sideMenu'];
     }
 
-    if (!$layout || $layout->getValue() === 'layoutA')
-    {
-      $this->topGadgets = GadgetPeer::retrieveTopGadgets();
-    }
-    if (!$layout || $layout->getValue() === 'layoutA' || $layout->getValue() === 'layoutB')
-    {
-      $this->sideMenuGadgets = GadgetPeer::retrieveSideMenuGadgets();
-    }
-    $this->contentsGadgets = GadgetPeer::retrieveContentsGadgets();
-    $this->bottomGadgets = GadgetPeer::retrieveBottomGadgets();
+    $this->contentsGadgets = $gadgets['contents'];
+    $this->bottomGadgets = $gadgets['bottom'];
 
     return parent::executeHome($request);
   }
@@ -53,22 +51,20 @@ class memberActions extends sfOpenPNEMemberAction
   public function executeLogin($request)
   {
     $this->gadgetConfig = sfConfig::get('op_login_gadget_list');
-    $layout = SnsConfigPeer::retrieveByName('login_layout');
-    if ($layout)
+    $gadgets = GadgetPeer::retrieveGadgetsByTypesName('login');
+    $layout = SnsConfigPeer::get('login_layout', 'layoutA');
+    $this->setLayout($layout);
+    
+    switch($layout)
     {
-      $this->setLayout($layout->getValue());
+      case 'layoutA' :
+        $this->topGadgets = $gadgets['loginTop'];
+      case 'layoutB' :
+        $this->sideMenuGadgets = $gadgets['loginSideMenu'];
     }
 
-    if (!$layout || $layout->getValue() === 'layoutA')
-    {
-      $this->topGadgets = GadgetPeer::retrieveLoginTopGadgets();
-    }
-    if (!$layout || $layout->getValue() === 'layoutA' || $layout->getValue() === 'layoutB')
-    {
-      $this->sideMenuGadgets = GadgetPeer::retrieveLoginSideMenuGadgets();
-    }
-    $this->contentsGadgets = GadgetPeer::retrieveLoginContentsGadgets();
-    $this->bottomGadgets = GadgetPeer::retrieveLoginBottomGadgets();
+    $this->contentsGadgets = $gadgets['loginContents'];
+    $this->bottomGadgets = $gadgets['loginBottom'];
 
     return parent::executeLogin($request);
   }

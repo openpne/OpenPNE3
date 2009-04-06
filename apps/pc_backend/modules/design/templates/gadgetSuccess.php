@@ -2,26 +2,14 @@
 <?php include_partial('submenu'); ?>
 <?php end_slot(); ?>
 
-<h2>
-<?php switch ($type): ?>
-<?php case 'login': ?>
-<?php echo __('ログイン画面ガジェット設定'); break; ?>
-<?php case 'mobileHome': ?>
-<?php echo __('携帯版ホーム画面ガジェット設定'); break; ?>
-<?php case 'sideBanner': ?>
-<?php echo __('サイドバナー領域ガジェット設定'); break; ?>
-<?php default: ?>
-<?php echo __('ホーム画面ガジェット設定'); ?>
-<?php endswitch; ?>
-</h2>
+<h2><?php echo $subtitle ?>ガジェット設定</h2>
 
 <p><?php echo __('特定のページや領域に対して、あらかじめ用意された部品（ガジェット）を自由に配置、設定することができます。') ?></p>
 
 <ul>
-<li><?php echo link_to(__('ホーム画面ガジェット設定'), 'design/gadget?type=home') ?></li>
-<li><?php echo link_to(__('ログイン画面ガジェット設定'), 'design/gadget?type=login') ?></li>
-<li><?php echo link_to(__('サイドバナー領域ガジェット設定'), 'design/gadget?type=sideBanner') ?></li>
-<li><?php echo link_to(__('携帯版ホーム画面ガジェット設定'), 'design/gadget?type=mobileHome') ?></li>
+<?php foreach (sfConfig::get('op_gadget_config', array()) as $key => $config): ?>
+<li><?php echo link_to($config['name'].'ガジェット設定', 'design/gadget?type='.$key) ?></li>
+<?php endforeach; ?>
 </ul>
 
 
@@ -51,7 +39,7 @@ function adjustByIframeContens(obj)
 ");
 ?>
 
-<iframe src="<?php echo url_for('design/'.$type.'GadgetPlot') ?>" width="600" height="410" onload="adjustByIframeContens(this)" scrolling="no" frameborder="0">
+<iframe src="<?php echo url_for($plotAction[0].'/'.$plotAction[1]) ?>" width="600" height="410" onload="adjustByIframeContens(this)" scrolling="no" frameborder="0">
 </iframe>
 
 <?php echo make_modal_box('modal', '<iframe width="400" height="400"></iframe>', 400, 400) ?>

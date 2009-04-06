@@ -1,6 +1,6 @@
 <?php use_helper('Javascript') ?>
 
-<?php if ($topGadgets): ?>
+<?php if (isset($topGadgets)): ?>
 <?php slot('op_top') ?>
 <?php foreach ($topGadgets as $gadget): ?>
 <?php if ($gadget->isEnabled()): ?>
@@ -11,7 +11,7 @@
 <?php echo sortable_element('Top', array('tag' => 'div', 'handle' => 'partsHeading', 'onChange' => 'function(obj){storeSort(obj)}')) ?>
 <?php endif; ?>
 
-<?php if ($sideMenuGadgets): ?>
+<?php if (isset($sideMenuGadgets)): ?>
 <?php slot('op_sidemenu') ?>
 <?php foreach ($sideMenuGadgets as $gadget): ?>
 <?php if ($gadget->isEnabled()): ?>
@@ -22,7 +22,7 @@
 <?php echo sortable_element('Left', array('tag' => 'div', 'handle' => 'partsHeading', 'onChange' => 'function(obj){storeSort(obj)}')) ?>
 <?php endif; ?>
 
-<?php if ($contentsGadgets): ?>
+<?php if (isset($contentsGadgets)): ?>
 <?php foreach ($contentsGadgets as $gadget): ?>
 <?php if ($gadget->isEnabled()): ?>
 <?php include_component($gadget->getComponentModule(), $gadget->getComponentAction(), array('gadget' => $gadget)); ?>
@@ -31,7 +31,7 @@
 <?php echo sortable_element('Center', array('tag' => 'div', 'handle' => 'partsHeading', 'onChange' => 'function(obj){storeSort(obj)}')) ?>
 <?php endif; ?>
 
-<?php if ($bottomGadgets): ?>
+<?php if (isset($bottomGadgets)): ?>
 <?php slot('op_bottom') ?>
 <?php foreach ($bottomGadgets as $gadget): ?>
 <?php if ($gadget->isEnabled()): ?>

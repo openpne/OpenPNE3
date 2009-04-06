@@ -1,0 +1,25 @@
+gadget:
+  name: "ホーム画面"
+  layout:
+    default: layoutA
+    choices: [layoutA, layoutB, layoutC]
+  plot_action: [design, homeGadgetPlot]
+
+login:
+  name: "ログイン画面"
+  layout:
+    default: layoutA
+    choices: [layoutA, layoutB, layoutC]
+  plot_action: [design, loginGadgetPlot]
+
+sideBanner:
+  name: "サイドバナー"
+  layout:
+    default: layoutD
+  plot_action: [design, sideBannerGadgetPlot]
+
+mobile:
+  name: "携帯版ホーム画面"
+  layout:
+    default: layoutE
+  plot_action: [design, mobileHomeGadgetPlot]

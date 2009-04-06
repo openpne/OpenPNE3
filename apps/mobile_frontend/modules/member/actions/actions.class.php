@@ -25,9 +25,10 @@ class memberActions extends sfOpenPNEMemberAction
   public function executeHome($request)
   {
     $this->gadgetConfig = sfConfig::get('op_mobile_gadget_list');
-    $this->mobileTopGadgets = GadgetPeer::retrieveMobileTopGadgets();
-    $this->mobileContentsGadgets = GadgetPeer::retrieveMobileContentsGadgets();
-    $this->mobileBottomGadgets = GadgetPeer::retrieveMobileBottomGadgets();
+    $gadgets = GadgetPeer::retrieveGadgetsByTypesName('mobile');
+    $this->mobileTopGadgets = $gadgets['mobileTop'];
+    $this->mobileContentsGadgets = $gadgets['mobileContents'];
+    $this->mobileBottomGadgets = $gadgets['mobileBottom'];
 
     $this->categories = sfConfig::get('openpne_member_category');
     $this->categoryCaptions = array();

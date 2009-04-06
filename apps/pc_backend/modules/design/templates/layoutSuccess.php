@@ -2,22 +2,17 @@
 <?php include_partial('submenu'); ?>
 <?php end_slot() ?>
 
-<h2>
-<?php if ($sf_request->getParameter('login')) : ?>
-<?php echo __('ログイン画面レイアウト設定'); ?>
-<?php else: ?>
-<?php echo __('ホーム画面レイアウト設定') ?>
-<?php endif; ?>
-</h2>
+<h2><?php echo $subtitle.'レイアウト設定' ?></h2>
 
 <p><?php echo __('特定ページのレイアウトパターンを設定できます。ここで設定したレイアウトに従って、ガジェットを配置することができます。') ?></p>
 
 <ul>
-<li><?php echo link_to(__('ホーム画面レイアウト設定'), 'design/homeLayout') ?></li>
-<li><?php echo link_to(__('ログイン画面レイアウト設定'), 'design/homeLayout?login=1') ?></li>
+<?php foreach ($configs as $key => $config): ?>
+<li><?php echo link_to($config['name'].'レイアウト設定', 'design/layout?type='.$key) ?></li>
+<?php endforeach; ?>
 </ul>
 
-<?php echo $form->renderFormTag(url_for('design/homeLayout')) ?>
+<?php echo $form->renderFormTag(url_for('design/layout?type='.$sf_request->getParameter('type', 'gadget'))) ?>
 <p><input type="submit" value="<?php echo __('設定変更') ?>" /></p>
 <?php echo $form['layout']->render() ?>
 <?php echo $form->renderHiddenFields() ?>
