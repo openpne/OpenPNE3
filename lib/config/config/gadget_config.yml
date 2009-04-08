@@ -23,3 +23,9 @@ mobile:
   layout:
     default: layoutE
   plot_action: [design, mobileHomeGadgetPlot]
+
+mobileLogin:
+  name: "携帯版ログイン画面"
+  layout:
+    default: layoutD
+  plot_action: [design, mobileLoginGadgetPlot]

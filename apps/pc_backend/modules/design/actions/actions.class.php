@@ -151,6 +151,19 @@ class designActions extends sfActions
     return sfView::SUCCESS;
   }
 
+  /**
+   * Executes mobile login gadget plot action
+   *
+   * @param sfWebRequest $request A request object
+   */
+  public function executeMobileLoginGadgetPlot(sfWebRequest $request)
+  {
+    $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('mobileLogin');
+    $this->gadgetConfig = sfConfig::get('op_mobile_login_gadget_list');
+    
+    return sfView::SUCCESS;
+  }
+
  /**
   * Executes side banner home gadget plot action
   *

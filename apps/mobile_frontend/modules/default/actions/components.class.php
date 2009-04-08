@@ -18,4 +18,13 @@ class defaultComponents extends sfComponents
   public function executeInformationBox()
   {
   }
+
+  public function executeFreeAreaBox()
+  {
+  }
+
+  public function executeLoginFormBox()
+  {
+    $this->forms = $this->getUser()->getAuthForms();
+  }
 }

@@ -59,6 +59,19 @@ class memberActions extends sfOpenPNEMemberAction
   }
 
  /**
+  * Executes login action
+  *
+  * @param sfWebRequest $request A request object
+  */
+  public function executeLogin($request)
+  {
+    $gadgets = GadgetPeer::retrieveGadgetsByTypesName('mobileLogin');
+    $this->mobileLoginContentsGadgets = $gadgets['mobileLoginContents'];
+      
+    return parent::executeLogin($request);
+  }
+
+ /**
   * Executes profile action
   *
   * @params sfRequest $request A request object

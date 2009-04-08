@@ -1,4 +1,5 @@
 <div id="plot<?php echo ucfirst($type) ?>">
+<?php if ($gadgets instanceof sfOutputEscaperArrayDecorator) : ?>
 <?php foreach ($gadgets as $gadget) : ?>
 <div class="sortable" id="plot<?php echo ucfirst($type) ?>_gadget_<?php echo $gadget->getId() ?>">
 <?php
@@ -6,6 +7,7 @@ echo link_to_function($gadgetConfig[$gadget->getName()]['caption']['ja_JP'], 'sh
 ?>
 </div>
 <?php endforeach; ?>
+<?php endif; ?>
 <div class="emptyGadget">
 <?php echo link_to_function(__('ガジェットを追加'), 'showModalOnParent(\''.url_for('design/addGadget?type='.$type).'\')') ?>
 </div>

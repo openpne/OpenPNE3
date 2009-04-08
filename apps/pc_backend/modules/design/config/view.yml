@@ -24,3 +24,6 @@ sideBannerGadgetPlotSuccess:
 
 mobileHomeGadgetPlotSuccess:
   <<: *homeGadgetPlotSuccess
+
+mobileLoginGadgetPlotSuccess:
+  <<: *homeGadgetPlotSuccess

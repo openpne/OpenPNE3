@@ -80,7 +80,8 @@ body
 #plotSideBannerContents div,
 #plotMobileTop div,
 #plotMobileContents div,
-#plotMobileBottom div
+#plotMobileBottom div,
+#plotMobileLoginContents div
 {
   width: 100%;
   height: 35px;
@@ -102,7 +103,8 @@ body
 #plotSideBannerContents div.emptyGadget,
 #plotMobileTop div.emptyGadget,
 #plotMobileContents div.emptyGadget,
-#plotMobileBottom div.emptyGadget
+#plotMobileBottom div.emptyGadget,
+#plotMobileLoginContents div.emptyGadget
 {
   background-color: transparent;
   border-style: dashed;

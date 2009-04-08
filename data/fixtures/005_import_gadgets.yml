@@ -38,3 +38,8 @@ Gadget:
     type: "loginTop"
     name: "loginForm"
     sort_order: 10
+
+  mobile_login_gadget_login_form_box:
+    type: "mobileLoginContents"
+    name: "loginForm"
+    sort_order: 10
