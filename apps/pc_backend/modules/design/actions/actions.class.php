@@ -104,7 +104,7 @@ class designActions extends sfActions
   */
   public function executeHomeGadgetPlot(sfWebRequest $request)
   {
-    $configs = opConfig::get('op_gadget_config');
+    $configs = sfConfig::get('op_gadget_config');
     $this->layoutPattern = $configs['gadget']['layout']['default'];
     $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('gadget');
     $this->gadgetConfig = sfConfig::get('op_gadget_list');
@@ -125,7 +125,7 @@ class designActions extends sfActions
   */
   public function executeLoginGadgetPlot(sfWebRequest $request)
   {
-    $configs = opConfig::get('op_gadget_config');
+    $configs = sfConfig::get('op_gadget_config');
     $this->layoutPattern = $configs['login']['layout']['default'];
     $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('login');
     $this->gadgetConfig = sfConfig::get('op_login_gadget_list');
