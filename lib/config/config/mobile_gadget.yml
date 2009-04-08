@@ -29,4 +29,5 @@ freeArea:
       Name:       "value"
       Caption:    "内容"
       FormType:   "rich_textarea"
+      ValueType:  "text"
       IsRequired: false
