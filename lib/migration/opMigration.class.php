@@ -105,7 +105,7 @@ class opMigration extends Doctrine_Migration
     if ($name && $name !== 'OpenPNE')
     {
       $this->targetName = $name;
-      $this->pluginInstance = opPlugin::getInstance($this->targetName);
+      $this->pluginInstance = opPlugin::getInstance($this->targetName, $this->dispatcher);
     }
     else
     {

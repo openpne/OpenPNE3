@@ -25,7 +25,7 @@ class opPlugin
     $version,
     $summary;
 
-  private function __construct($pluginName)
+  private function __construct($pluginName, sfEventDispatcher $dispatcher)
   {
     $this->name = $pluginName;
 
@@ -43,7 +43,7 @@ class opPlugin
     }
     else
     {
-      $manager = new opPluginManager(sfContext::getInstance()->getEventDispatcher());
+      $manager = new opPluginManager($dispatcher);
       $package = $manager->getEnvironment()->getRegistry()->getPackage($pluginName, opPluginManager::OPENPNE_PLUGIN_CHANNEL);
       if ($package)
       {
@@ -53,11 +53,16 @@ class opPlugin
     }
   }
 
-  public static function getInstance($pluginName)
+  public static function getInstance($pluginName, sfEventDispatcher $dispatcher = null)
   {
+    if (is_null($dispatcher))
+    {
+      $dispatcher = sfContext::getInstance()->getEventDispatcher();
+    }
+
     if (empty(self::$instances[$pluginName]))
     {
-      self::$instances[$pluginName] = new opPlugin($pluginName);
+      self::$instances[$pluginName] = new opPlugin($pluginName, $dispatcher);
     }
 
     return self::$instances[$pluginName];
