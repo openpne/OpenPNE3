@@ -10,22 +10,6 @@
 
 class GadgetPeer extends BaseGadgetPeer
 {
-  const TOP_TYPE = 'top';
-  const SIDE_MENU_TYPE = 'sideMenu';
-  const CONTENTS_TYPE = 'contents';
-  const BOTTOM_TYPE = 'bottom';
-
-  const LOGIN_TOP_TYPE = 'loginTop';
-  const LOGIN_SIDE_MENU_TYPE = 'loginSideMenu';
-  const LOGIN_CONTENTS_TYPE = 'loginContents';
-  const LOGIN_BOTTOM_TYPE = 'loginBottom';
-
-  const MOBILE_TOP_TYPE = 'mobileTop';
-  const MOBILE_CONTENTS_TYPE = 'mobileContents';
-  const MOBILE_BOTTOM_TYPE = 'mobileBottom';
-
-  const SIDE_BANNER_CONTENTS_TYPE = 'sideBannerContents';
-
   static protected $results;
 
   static protected function getTypes($typesName)
