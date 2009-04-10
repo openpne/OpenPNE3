@@ -9,6 +9,9 @@ class ProjectConfiguration extends sfProjectConfiguration
   {
     $this->enableAllPluginsExcept(array('sfCompat10Plugin'));
     $this->setIncludePath();
+
+    //HTTP proxy to use when downloading plugin packages
+    sfConfig::set('op_http_proxy', null);
   }
 
   public function setIncludePath()

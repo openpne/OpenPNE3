@@ -26,15 +26,59 @@ EOF;
   protected function execute($arguments = array(), $options = array())
   {
     require sfConfig::get('sf_data_dir').'/version.php';
+    
+    sfToolkit::addIncludePath(array(sfConfig::get('sf_lib_dir').'/vendor/'));
 
-    $browser = new sfWebBrowser();
-    $browser->get('http://'.opPluginManager::OPENPNE_PLUGIN_CHANNEL.'/packages/'.OPENPNE_VERSION.'.yml');
-    if ($browser->responseIsError())
+    $config = array(
+      'adapter'  => 'Zend_Http_Client_Adapter_Proxy'
+    );
+
+    if ($proxy = parse_url(sfConfig::get('op_http_proxy')))
     {
-      throw new sfException('Unable to retrieve the bandled packages list.');
+      if (isset($proxy['host']))
+      {
+        $config['proxy_host'] = $proxy['host'];
+      }
+
+      if (isset($proxy['port']))
+      {
+        $config['proxy_port'] = $proxy['port'];
+      }
+
+      if (isset($proxy['user']))
+      {
+        $config['proxy_user'] = $proxy['user'];
+      }
+
+      if (isset($proxy['pass']))
+      {
+        $config['proxy_pass'] = $proxy['pass'];
+      }
     }
 
-    $pluginList = sfYaml::load($browser->getResponseText());
+    $pluginList = array();
+
+    try
+    {
+      $client = new Zend_Http_Client('http://'.opPluginManager::OPENPNE_PLUGIN_CHANNEL.'/packages/'.OPENPNE_VERSION.'.yml', $config);
+      $response = $client->request();
+
+      if ($response->isSuccessful())
+      {
+        $pluginList = sfYaml::load($response->getBody());
+      }
+      else
+      {
+        $str = "Failed to download plugin list.";
+        $this->logBlock($str, 'ERROR');
+      }
+    }
+    catch (Zend_Http_Client_Adapter_Exception $e)
+    {
+      $str = "Failed to download plugins list.";
+      $this->logBlock($str, 'ERROR');
+    }
+
     foreach ($pluginList as $name => $info)
     {
       if (!preg_match('/^op[a-zA-Z0-9_\-]+Plugin$/', $name))
@@ -51,9 +95,16 @@ EOF;
       {
         $option[] = '--channel='.$info['channel'];
       }
-
-      $task = new opPluginInstallTask($this->dispatcher, $this->formatter);
-      $task->run(array('name' => $name), $option);
+      try
+      {
+        $task = new opPluginInstallTask($this->dispatcher, $this->formatter);
+        $task->run(array('name' => $name), $option);
+      }
+      catch (sfCommandException $e)
+      {
+        $str = "Failed install";
+        $this->logBlock($str, 'ERROR');
+      }
     }
   }
 }

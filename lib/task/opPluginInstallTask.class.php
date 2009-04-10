@@ -39,6 +39,12 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
+    if (sfConfig::get('op_http_proxy'))
+    {
+      $config = $this->getPluginManager()->getEnvironment()->getConfig();
+      $config->set('http_proxy', sfConfig::get('op_http_proxy'), 'user', 'pear.php.net');
+    }
+
     if ($this->isSelfInstalledPlugins($arguments['name']))
     {
       $str = "\"%s\" is already installed manually, so it will not be reinstalled.\n"
