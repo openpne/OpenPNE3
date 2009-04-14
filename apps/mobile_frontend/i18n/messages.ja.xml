@@ -179,8 +179,20 @@
         <target>ｺﾐｭﾆﾃｨﾒﾝﾊﾞｰがいません。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Mobile UID is already setting.</source>
+        <target>個体識別番号が登録されています。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Setting mobile UID.</source>
         <target>携帯個体識別番号を登録します。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your mobile UID was set successfully.</source>
+        <target>個体識別番号が登録されました。</target> 
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your mobile UID was deleted successfully.</source>
+        <target>個体識別番号を削除しました。</target>
       </trans-unit>
       <trans-unit id="">
         <source>You register mobile UID.</source>

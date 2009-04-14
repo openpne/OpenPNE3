@@ -93,18 +93,34 @@ class memberActions extends sfOpenPNEMemberAction
   {
     $option = array('member' => $this->getUser()->getMember());
     $this->passwordForm = new sfOpenPNEPasswordForm(array(), $option);
+    $mobileUid = MemberConfigPeer::retrieveByNameAndMemberId('mobile_uid', $this->getUser()->getMemberId());
+    $this->isSetMobileUid = !is_null($mobileUid);
+    $this->isDeletableUid = ((int)opConfig::get('retrieve_uid') < 2) && $this->isSetMobileUid;
 
     if ($request->isMethod('post')) {
       $this->passwordForm->bind($request->getParameter('password'));
-      if ($this->passwordForm->isValid()) {
-        $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId('mobile_uid', $this->getUser()->getMemberId());
-        if (!$memberConfig) {
-          $memberConfig = new MemberConfig();
-          $memberConfig->setMember($this->getUser()->getMember());
-          $memberConfig->setName('mobile_uid');
+      if ($this->passwordForm->isValid()) 
+      {
+        if ($request->hasParameter('update'))
+        {
+          $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId('mobile_uid', $this->getUser()->getMemberId());
+          if (!$memberConfig)
+          {
+            $memberConfig = new MemberConfig();
+            $memberConfig->setMember($this->getUser()->getMember());
+            $memberConfig->setName('mobile_uid');
+          }
+          $memberConfig->setValue($request->getMobileUID());
+          $memberConfig->save();
+          $this->getUser()->setFlash('notice', 'Your mobile UID was set successfully.');
+          $this->redirect('member/configUID');
         }
-        $memberConfig->setValue($request->getMobileUID());
-        $this->redirectIf($memberConfig->save(), 'member/configUID');
+        elseif ($request->hasParameter('delete') && $this->isDeletableUid)
+        {
+          $mobileUid->delete();
+          $this->getUser()->setFlash('notice', 'Your mobile UID was deleted successfully.'); 
+          $this->redirect('member/configUID');
+        }
       }
     }
 
