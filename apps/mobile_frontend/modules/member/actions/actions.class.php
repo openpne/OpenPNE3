@@ -25,7 +25,8 @@ class memberActions extends sfOpenPNEMemberAction
   public function executeHome($request)
   {
     $this->gadgetConfig = sfConfig::get('op_mobile_gadget_list');
-    $gadgets = GadgetPeer::retrieveGadgetsByTypesName('mobile');
+
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobile');
     $this->mobileTopGadgets = $gadgets['mobileTop'];
     $this->mobileContentsGadgets = $gadgets['mobileContents'];
     $this->mobileBottomGadgets = $gadgets['mobileBottom'];
@@ -65,7 +66,7 @@ class memberActions extends sfOpenPNEMemberAction
   */
   public function executeLogin($request)
   {
-    $gadgets = GadgetPeer::retrieveGadgetsByTypesName('mobileLogin');
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileLogin');
     $this->mobileLoginContentsGadgets = $gadgets['mobileLoginContents'];
       
     return parent::executeLogin($request);
@@ -93,17 +94,17 @@ class memberActions extends sfOpenPNEMemberAction
   {
     $option = array('member' => $this->getUser()->getMember());
     $this->passwordForm = new sfOpenPNEPasswordForm(array(), $option);
-    $mobileUid = MemberConfigPeer::retrieveByNameAndMemberId('mobile_uid', $this->getUser()->getMemberId());
+    $mobileUid = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('mobile_uid', $this->getUser()->getMemberId());
     $this->isSetMobileUid = !is_null($mobileUid);
     $this->isDeletableUid = ((int)opConfig::get('retrieve_uid') < 2) && $this->isSetMobileUid;
 
     if ($request->isMethod('post')) {
       $this->passwordForm->bind($request->getParameter('password'));
-      if ($this->passwordForm->isValid()) 
+      if ($this->passwordForm->isValid())
       {
         if ($request->hasParameter('update'))
         {
-          $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId('mobile_uid', $this->getUser()->getMemberId());
+          $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('mobile_uid', $this->getUser()->getMemberId());
           if (!$memberConfig)
           {
             $memberConfig = new MemberConfig();
@@ -138,7 +139,7 @@ class memberActions extends sfOpenPNEMemberAction
     $id = $request->getParameter('id');
     $token = $request->getParameter('token');
 
-    $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId('register_mobile_token', $id);
+    $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('register_mobile_token', $id);
 
     $this->forward404Unless($memberConfig && $token === $memberConfig->getValue());
 

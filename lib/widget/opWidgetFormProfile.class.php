@@ -53,11 +53,11 @@ class opWidgetFormProfile extends sfWidgetForm
   {
     if (!is_array($value))
     {
-      $value = array('value' => $value, 'public_flag' => ProfilePeer::PUBLIC_FLAG_SNS);
+      $value = array('value' => $value, 'public_flag' => ProfileTable::PUBLIC_FLAG_SNS);
     }
     else
     {
-      $value = array_merge(array('value' => null, 'public_flag' => ProfilePeer::PUBLIC_FLAG_SNS), $value);
+      $value = array_merge(array('value' => null, 'public_flag' => ProfileTable::PUBLIC_FLAG_SNS), $value);
     }
 
     $input = $this->getOption('widget')->render($name.'[value]', $value['value'], $attributes, $errors);
@@ -65,7 +65,7 @@ class opWidgetFormProfile extends sfWidgetForm
     {
       return $input;
     }
-    $publicFlagWidget = new sfWidgetFormSelect(array('choices' => ProfilePeer::getPublicFlags()));
+    $publicFlagWidget = new sfWidgetFormSelect(array('choices' => ProfileTable::getPublicFlags()));
 
     return strtr($this->getOption('template'), array('%input%' => $input, '%public_flag%' =>$publicFlagWidget->render($name.'[public_flag]', $value['public_flag'], $attributes, $errors)));
   }

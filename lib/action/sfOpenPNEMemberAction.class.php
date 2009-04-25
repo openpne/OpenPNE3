@@ -21,7 +21,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
   {
     $this->id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
 
-    $this->relation = MemberRelationshipPeer::retrieveByFromAndTo($this->getUser()->getMemberId(), $this->id);
+    $this->relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($this->getUser()->getMemberId(), $this->id);
     if (!$this->relation) {
       $this->relation = new MemberRelationship();
       $this->relation->setMemberIdFrom($this->getUser()->getMemberId());
@@ -72,6 +72,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
   */
   public function executeRegisterInput($request)
   {
+    opActivateBehavior::disable();
     $mode = (sfConfig::get('app_is_mobile') ? 'mobile' : 'pc');
     $this->forward404Unless(opToolkit::isEnabledRegistration($mode));
 
@@ -83,10 +84,12 @@ abstract class sfOpenPNEMemberAction extends sfActions
       if ($this->form->isValidAll())
       {
         $result = $this->getUser()->register($this->form);
+        opActivateBehavior::enable();
         $this->redirectIf($result, $this->getUser()->getRegisterEndAction());
       }
     }
 
+    opActivateBehavior::enable();
     return sfView::SUCCESS;
   }
 
@@ -111,25 +114,22 @@ abstract class sfOpenPNEMemberAction extends sfActions
     $this->redirectIf($this->relation->isAccessBlocked(), '@error');
 
     $id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
-    $this->member = MemberPeer::retrieveByPk($id);
+    $this->member = Doctrine::getTable('Member')->find($id);
     
     $this->forward404Unless($this->member, 'Undefined member.');
-
-    $c = new Criteria();
-    $c->addAscendingOrderByColumn(Propel::getDB()->random(time()));
 
     if (!$this->friendsSize)
     {
       $this->friendsSize = 9;
     }
-    $this->friends = $this->member->getFriends($this->friendsSize, $c);
+    $this->friends = $this->member->getFriends($this->friendsSize, true);
 
     if (!$this->communitiesSize)
     {
       $this->communitiesSize = 9;
     }
-    $this->communities = $this->member->getJoinCommunities($this->communitiesSize, $c);
-    $this->crownIds = CommunityMemberPeer::getCommunityIdsOfAdminByMemberId($id);
+    $this->communities = $this->member->getJoinCommunities($this->communitiesSize, true);
+    $this->crownIds = Doctrine::getTable('CommunityMember')->getCommunityIdsOfAdminByMemberId($id);
 
     return sfView::SUCCESS;
   }
@@ -174,7 +174,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
 
     $memberId = $request->getParameter('id');
 
-    $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId($type.'_token', $memberId);
+    $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_token', $memberId);
     $this->forward404Unless($memberConfig);
     $this->forward404Unless((bool)$request->getParameter('token') !== $memberConfig->getValue());
 
@@ -186,8 +186,8 @@ abstract class sfOpenPNEMemberAction extends sfActions
       $this->form->bind($request->getParameter('password'));
       if ($this->form->isValid())
       {
-        $config = MemberConfigPeer::retrieveByNameAndMemberId($type, $memberId);
-        $pre = MemberConfigPeer::retrieveByNameAndMemberId($type.'_pre', $memberId);
+        $config = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type, $memberId);
+        $pre = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_pre', $memberId);
 
         if (!$config)
         {
@@ -200,7 +200,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
         if ($config->save())
         {
           $pre->delete();
-          $token = MemberConfigPeer::retrieveByNameAndMemberId($type.'_token', $memberId);
+          $token = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_token', $memberId);
           $token->delete();
         }
 
@@ -356,7 +356,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
 
   public function executeDeleteImage($request)
   {
-    $image = MemberImagePeer::retrieveByPk($request->getParameter('member_image_id'));
+    $image = Doctrine::getTable('MemberImage')->find($request->getParameter('member_image_id'));
     $this->forward404Unless($image);
     $this->forward404Unless($image->getMemberId() == $this->getUser()->getMemberId());
 
@@ -367,7 +367,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
 
   public function executeChangeMainImage($request)
   {
-    $image = MemberImagePeer::retrieveByPk($request->getParameter('member_image_id'));
+    $image = Doctrine::getTable('MemberImage')->find($request->getParameter('member_image_id'));
     $this->forward404Unless($image);
     $this->forward404Unless($image->getMemberId() == $this->getUser()->getMemberId());
 

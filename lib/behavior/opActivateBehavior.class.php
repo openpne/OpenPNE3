@@ -1,22 +1,21 @@
 <?php
-class opActivateBehavior
+
+/**
+ * This file is part of the OpenPNE package.
+ * (c) OpenPNE Project (http://www.openpne.jp/)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file and the NOTICE file that were distributed with this source code.
+ */
+
+class opActivateBehavior extends Doctrine_Template
 {
-  static protected $enabled = true;
+  protected static $enabled = true;
 
-  public function doSelectStmt($class, Criteria $criteria, $con = null)
+  public function setTableDefinition()
   {
-    if (self::$enabled)
-    {
-      $criteria->add(call_user_func(array($class, 'translateFieldName'), 'is_active', BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_COLNAME), 0, Criteria::NOT_EQUAL);
-    }
-  }
-
-  public function doCount($class, Criteria $criteria, $con = null)
-  {
-    if (self::$enabled)
-    {
-      $criteria->add(call_user_func(array($class, 'translateFieldName'), 'is_active', BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_COLNAME), 0, Criteria::NOT_EQUAL);
-    }
+    $this->hasColumn('is_active', 'boolean', 1, array('default' => false, 'notnull' => true));
+    $this->addListener(new opActivateListener());
   }
 
   public static function enable()
@@ -27,5 +26,10 @@ class opActivateBehavior
   public static function disable()
   {
     self::$enabled = false;
+  }
+
+  public static function getEnabled()
+  {
+    return self::$enabled;
   }
 }

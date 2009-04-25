@@ -25,7 +25,7 @@ class MemberConfigMobileAddressForm extends MemberConfigForm
     {
       $this->savePreConfig($name, $value);
 
-      $memberConfig = MemberConfigPeer::retrieveByNameAndMemberId('mobile_address_token', $this->member->getId(), true);
+      $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('mobile_address_token', $this->member->getId(), true);
       $token = $memberConfig->getValue();
       $this->sendConfirmMail($token, $value, array(
         'id'   => $this->member->getId(),

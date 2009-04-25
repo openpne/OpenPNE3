@@ -39,15 +39,15 @@ class memberActions extends sfActions
     $this->form = new opMemberProfileSearchForm();
     $this->form->bind($params);
 
-    $this->pager = new sfPropelPager('Member', 20);
+    $this->pager = new sfDoctrinePager('Member', 20);
     if ($params)
     {
-      $this->pager->setCriteria($this->form->getCriteria());
+      $this->pager->setQuery($this->form->getQuery());
     }
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
 
-    $this->profiles = ProfilePeer::retrievesAll();
+    $this->profiles = Doctrine::getTable('Profile')->retrievesAll();
 
     return sfView::SUCCESS;
   }
@@ -65,7 +65,7 @@ class memberActions extends sfActions
       return sfView::ERROR;
     }
 
-    $this->member = MemberPeer::retrieveByPK($id);
+    $this->member = Doctrine::getTable('Member')->find($id);
     $this->forward404Unless($this->member);
 
     $this->form = new sfForm();
@@ -120,7 +120,7 @@ class memberActions extends sfActions
   {
     $uid = $request->getParameter('uid');
 
-    $this->pager = new sfPropelPager('Blacklist', 20);
+    $this->pager = new sfDoctrinePager('Blacklist', 20);
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
 
@@ -145,7 +145,7 @@ class memberActions extends sfActions
   */
   public function executeBlacklistDelete(sfWebRequest $request)
   {
-    $this->blacklist = BlacklistPeer::retrieveByPK($request->getParameter('id'));
+    $this->blacklist = Doctrine::getTable('Blacklist')->find($request->getParameter('id'));
     $this->forward404Unless($this->blacklist);
 
     $this->form = new sfForm();
@@ -171,7 +171,7 @@ class memberActions extends sfActions
   public function executeReissuePassword(sfWebRequest $request)
   {
     $id = $request->getParameter('id');
-    $this->member = MemberPeer::retrieveByPk($id);
+    $this->member = Doctrine::getTable('Member')->find($id);
     $this->forward404Unless($this->member);
 
     $this->form = new ReissuePasswordForm($this->member);

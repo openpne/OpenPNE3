@@ -7,6 +7,7 @@
 <th colspan="2"><?php echo __('操作') ?></th>
 </tr>
 
+<?php if ($categories): ?>
 <?php foreach ($categories as $category): ?>
 <form action="<?php echo url_for('community/categoryEdit?id='.$category->getId()) ?>" method="post">
 <?php echo $category->getForm()->renderGlobalErrors() ?>
@@ -34,6 +35,7 @@
 </td>
 </tr>
 <?php endforeach; ?>
+<?php endif; ?>
 
 <form action="<?php echo url_for('community/categoryList') ?>" method="post">
 <?php echo $form->renderGlobalErrors() ?>

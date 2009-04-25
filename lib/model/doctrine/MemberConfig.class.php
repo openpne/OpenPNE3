@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * This file is part of the OpenPNE package.
+ * (c) OpenPNE Project (http://www.openpne.jp/)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file and the NOTICE file that were distributed with this source code.
+ */
+
+class MemberConfig extends BaseMemberConfig
+{
+  public function savePre()
+  {
+    $name = $this->getName();
+    if (strrpos($name, '_pre') === false)
+    {
+      $name = $name.'_pre';
+    }
+
+    $pre = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($name, $this->getMember()->getId());
+    if (!$pre)
+    {
+      $pre = new MemberConfig();
+      $pre->setName($name);
+      $pre->setMember($this->Member);
+    }
+
+    $pre->setValue($this->getValue());
+    return $pre->save();
+  }
+
+  public function saveToken()
+  {
+    $baseName = $this->getName();
+    if (strrpos($baseName, '_pre'))
+    {
+      $tokenName = str_replace('_pre', '_token', $baseName);
+    }
+    else
+    {
+      $tokenName = $baseName.'_token';
+    }
+
+    $pre = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($tokenName, $this->getMemberId());
+    if (!$pre)
+    {
+      $pre = new MemberConfig();
+      $pre->setName($tokenName);
+      $pre->setMember($this->getMember());
+    }
+    else
+    {
+      $pre = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($tokenName, $this->getMemberId());
+    }
+
+    $pre->setValue($this->createHash());
+    return $pre->save();
+  }
+
+  private function createHash()
+  {
+    return md5(uniqid(mt_rand(), true));
+  }
+
+  public function getSetting()
+  {
+    $name = $this->getName();
+    if (!$name)
+    {
+      return array();
+    }
+
+    if (empty($config[$this->getName()]))
+    {
+      return array();
+    }
+
+    return $config[$this->getName()];
+  }
+}

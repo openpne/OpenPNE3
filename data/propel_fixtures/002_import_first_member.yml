@@ -1,0 +1,69 @@
+Member:
+  first_member:
+    id: ~
+    name: "OpenPNE君"
+    is_active: 1
+
+MemberProfile:
+  first_member_profile_sex:
+    lft_key: 1
+    rht_key: 2
+    member_id: first_member
+    profile_id: profile_sex
+    profile_option_id: profile_option_sex_man
+    public_flag: 1
+
+  first_member_profile_birthday:
+    lft_key: 1
+    rht_key: 8
+    tree_key: 2
+    member_id: first_member
+    profile_id: profile_birthday
+    public_flag: 1
+
+  first_member_profile_birthday_year:
+    lft_key: 2
+    rht_key: 3
+    tree_key: 2
+    member_id: first_member
+    profile_id: profile_birthday
+    profile_option_id: profile_option_birthday_year
+    value: "1988"
+
+  first_member_profile_birthday_month:
+    lft_key: 4
+    rht_key: 5
+    tree_key: 2
+    member_id: first_member
+    profile_id: profile_birthday
+    profile_option_id: profile_option_birthday_month
+    value: "4"
+
+  first_member_profile_birthday_day:
+    lft_key: 6
+    rht_key: 7
+    tree_key: 2
+    member_id: first_member
+    profile_id: profile_birthday
+    profile_option_id: profile_option_birthday_day
+    value: "23"
+
+  first_member_profile_self_intro:
+    lft_key: 1
+    rht_key: 2
+    member_id: first_member
+    profile_id: profile_self_intro
+    value: "よろしくお願いします。"
+    public_flag: 1
+
+MemberConfig:
+  first_member_pc_address:
+    member_id: first_member
+    name: "pc_address"
+    value: "sns@example.com"
+
+  first_member_password:
+    member_id: first_member
+    name: "password"
+    value: <?php echo md5('password') . "\n"; ?>
+

@@ -94,7 +94,7 @@ abstract class opAuthAdapter
       return $setting['Default'];
     }
 
-    return SnsConfigPeer::get('op_auth_'.$this->authModeName.'_plugin_'.$name, $setting['Default']);
+    return Doctrine::getTable('SnsConfig')->get('op_auth_'.$this->authModeName.'_plugin_'.$name, $setting['Default']);
   }
 
   public function setAuthConfig($name, $value)
@@ -110,7 +110,7 @@ abstract class opAuthAdapter
       return false;
     }
 
-    return SnsConfigPeer::set('op_auth_'.$this->authModeName.'_plugin_'.$name, $value);
+    return Doctrine::getTable('SnsConfig')->set('op_auth_'.$this->authModeName.'_plugin_'.$name, $value);
   }
 
   public function getAuthForm($forceAuthForm = false)
@@ -298,9 +298,12 @@ abstract class opAuthAdapter
   */
   public function activate()
   {
+    opActivateBehavior::disable();
     $member = sfContext::getInstance()->getUser()->getMember();
     $member->setIsActive(true);
-    return $member->save();
+    $result = $member->save();
+    opActivateBehavior::enable();
+    return $result;
   }
 
   /**

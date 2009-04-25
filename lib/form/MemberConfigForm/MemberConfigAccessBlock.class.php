@@ -23,7 +23,7 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
 
   public function configure()
   {
-    $relations = MemberRelationshipPeer::retrievesByMemberIdFrom($this->member->getId());
+    $relations = Doctrine::getTable('MemberRelationship')->retrievesByMemberIdFrom($this->member->getId());
     foreach ($relations as $relation)
     {
       if ($relation->getIsAccessBlock())
@@ -42,7 +42,7 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
 
     foreach ($value as $memberId)
     {
-      $relation = MemberRelationshipPeer::retrieveByFromAndTo($this->member->getId(), $memberId);
+      $relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($this->member->getId(), $memberId);
       if (!$relation)
       {
         $relation = new MemberRelationship();
@@ -90,7 +90,7 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
         continue;
       }
 
-      if (!MemberPeer::retrieveByPK($memberId))
+      if (!Doctrine::getTable('Member')->find($memberId))
       {
         throw new sfValidatorError($validator, 'invalid');
       }

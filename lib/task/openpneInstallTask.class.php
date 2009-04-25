@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class openpneInstallTask extends sfPropelBaseTask
+class openpneInstallTask extends sfDoctrineBaseTask
 {
   protected function configure()
   {
@@ -31,21 +31,31 @@ EOF;
       || !in_array($dbms, array('mysql', 'pgsql', 'sqlite'))
     );
 
-    while (
-      !($username = $this->ask('Type database username'))
-    );
+    $username = '';
+    $password = '';
+    $hostname = '';
+    $port = '';
+    if ($dbms !== 'sqlite') {
+      while (
+        !($username = $this->ask('Type database username'))
+      );
 
-    $password = $this->ask('Type database password (optional)');
+      $password = $this->ask('Type database password (optional)');
 
-    while (
-      !($hostname = $this->ask('Type database hostname'))
-    );
-
-    $port = $this->ask('Type database port number (optional)');
+      while (
+        !($hostname = $this->ask('Type database hostname'))
+      );
+      $port = $this->ask('Type database port number (optional)');
+    }
 
     while (
       !($dbname = $this->ask('Type database name'))
     );
+
+    if ($dbms == 'sqlite')
+    {
+      $dbname = realpath(dirname($dbname)).DIRECTORY_SEPARATOR.basename($dbname);
+    }
 
     $sock = '';
     if ($dbms == 'mysql' && ($hostname == 'localhost' || $hostname == '127.0.0.1')) {
@@ -75,6 +85,12 @@ EOF;
       @$this->clearCache();
       $this->configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock);
       $this->buildDb();
+
+      if ($dbms === 'sqlite')
+      {
+        $this->getFilesystem()->chmod($dbname, 0666);
+      }
+
       $this->publishAssets();
       $this->clearCache();
     }
@@ -88,7 +104,14 @@ EOF;
 
     if ($dbname)
     {
-      $data[] = 'dbname='.$dbname;
+      if ($dbms === 'sqlite')
+      {
+        $data[] = $dbname;
+      }
+      else
+      {
+        $data[] = 'dbname='.$dbname;
+      }
     }
 
     if ($hostname)
@@ -115,7 +138,7 @@ EOF;
     $dsn = $this->createDSN($dbms, $hostname, $port, $dbname, $sock);
 
     $file = sfConfig::get('sf_config_dir').'/databases.yml';
-    $config = array('dev' => array('propel' => array('param' => array(
+    $config = array('dev' => array('doctrine' => array('param' => array(
       'classname' => 'DebugPDO',
     ))));
 
@@ -124,41 +147,24 @@ EOF;
       $config = sfYaml::load($file);
     }
 
-    $config['all']['propel'] = array(
-      'class' => 'sfPropelDatabase',
+    $config['all']['doctrine'] = array(
+      'class' => 'sfDoctrineDatabase',
       'param' => array(
         'dsn'        => $dsn,
         'username'   => $username,
         'encoding'   => 'utf8',
-        'classname'  => 'PropelPDO',
-        'persistent' => true,
-        'pooling'    => true,
+        'attributes' => array(
+           Doctrine::ATTR_USE_DQL_CALLBACKS => true,
+        ),
       ),
     );
 
     if ($password)
     {
-      $config['all']['propel']['param']['password'] = $password;
+      $config['all']['doctrine']['param']['password'] = $password;
     }
 
     file_put_contents($file, sfYaml::dump($config, 4));
-
-    // update propel.ini
-    $propelini = sfConfig::get('sf_config_dir').'/propel.ini';
-
-
-    if (!file_exists($propelini)) {
-      copy($propelini.'.sample', $propelini);
-    }
-
-    $content = file_get_contents($propelini);
-    $content = preg_replace('/^propel\.database(\s*)=(\s*)(.+?)$/m', 'propel.database$1=$2'.$dbms, $content);
-    $content = preg_replace('/^propel\.driver(\s*)=(\s*)(.+?)$/m', 'propel.driver$1=$2'.$dbms, $content);
-    $content = preg_replace('/^propel\.database\.url(\s*)=(\s*)(.+?)$/m', 'propel.database.url$1=$2'.$dsn, $content);
-    $content = preg_replace('/^propel\.user(\s*)=(\s*)(.+?)$/m', 'propel.user$1=$2'.$username, $content);
-    $content = preg_replace('/^propel\.password(\s*)=(\s*)(.+?)$/m', 'propel.password$1=$2'.$password, $content);
-
-    file_put_contents($propelini, $content);
   }
 
   protected function clearCache()
@@ -192,7 +198,7 @@ EOF;
       $i++;
     }
 
-    $buildAllLoad = new sfPropelBuildAllLoadTask($this->dispatcher, $this->formatter);
+    $buildAllLoad = new sfDoctrineBuildAllReloadTask($this->dispatcher, $this->formatter);
     $buildAllLoad->run(array(), array('--no-confirmation', '--dir='.$tmpdir));
 
     $this->getFilesystem()->remove(sfFinder::type('file')->in(array($tmpdir)));

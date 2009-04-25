@@ -24,9 +24,13 @@ class memberActions extends sfOpenPNEMemberAction
   */
   public function executeHome($request)
   {
+    $this->topGadgets = null;
+    $this->sideMenuGadgets = null;
+
     $this->gadgetConfig = sfConfig::get('op_gadget_list');
-    $gadgets = GadgetPeer::retrieveGadgetsByTypesName('gadget');
-    $layout = SnsConfigPeer::get('home_layout', 'layoutA');
+
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('gadget');
+    $layout = Doctrine::getTable('SnsConfig')->get('home_layout', 'layoutA');
     $this->setLayout($layout);
 
     switch ($layout)
@@ -51,10 +55,10 @@ class memberActions extends sfOpenPNEMemberAction
   public function executeLogin($request)
   {
     $this->gadgetConfig = sfConfig::get('op_login_gadget_list');
-    $gadgets = GadgetPeer::retrieveGadgetsByTypesName('login');
-    $layout = SnsConfigPeer::get('login_layout', 'layoutA');
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('login');
+    $layout = Doctrine::getTable('SnsConfig')->get('login_layout', 'layoutA');
     $this->setLayout($layout);
-    
+
     switch($layout)
     {
       case 'layoutA' :
@@ -82,13 +86,12 @@ class memberActions extends sfOpenPNEMemberAction
       $params['name']['text'] = $request->getParameter('search_query');
     }
 
-    $this->filters = new MemberFormFilter();
+    $this->filters = new opMemberProfileSearchForm();
     $this->filters->bind($params);
 
-    $this->pager = new sfPropelPager('Member', 20);
-    $c = $this->filters->getCriteria();
-    $c->addDescendingOrderByColumn(MemberPeer::ID);
-    $this->pager->setCriteria($c);
+    $this->pager = new sfDoctrinePager('Member', 20);
+    $q = $this->filters->getQuery()->orderBy('id');
+    $this->pager->setQuery($q);
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
 

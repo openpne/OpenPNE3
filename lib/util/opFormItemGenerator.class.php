@@ -17,9 +17,24 @@
  */
 class opFormItemGenerator
 {
+ /**
+  * This method exists only for BC
+  */
+  public static function arrayKeyCamelize(array $array)
+  {
+    foreach ($array as $key => $value)
+    {
+      unset($array[$key]);
+      $array[sfInflector::classify($key)] = $value;
+    }
+
+    return $array;
+  }
+
   public static function generateWidgetParams($field, $choices = array())
   {
     $params = array();
+    $field = self::arrayKeyCamelize($field);
 
     if ($field['Caption'])
     {
@@ -49,6 +64,7 @@ class opFormItemGenerator
   public static function generateWidget($field, $choices = array())
   {
     $params = self::generateWidgetParams($field, $choices);
+    $field = self::arrayKeyCamelize($field);
 
     switch ($field['FormType'])
     {
@@ -92,6 +108,7 @@ class opFormItemGenerator
 
   public static function generateValidator($field, $choices = array())
   {
+    $field = self::arrayKeyCamelize($field);
     $option = array('required' => $field['IsRequired'], 'trim' => $field['IsRequired']);
     if (!$choices && !empty($field['Choices']))
     {
@@ -176,6 +193,7 @@ class opFormItemGenerator
   public static function generateSearchWidget($field, $choices = array())
   {
     $params = self::generateWidgetParams($field, $choices);
+    $field = self::arrayKeyCamelize($field);
 
     switch ($field['FormType'])
     {
@@ -206,16 +224,18 @@ class opFormItemGenerator
     return $obj;
   }
 
-  public static function filterSearchCriteria($c, $column, $value, $field, $choices = array())
+  public static function filterSearchQuery($q, $column, $value, $field, $choices = array())
   {
-    if (!$c)
+    $field = self::arrayKeyCamelize($field);
+
+    if (!$q)
     {
-      $c = new Criteria();
+      $q = new Doctrine_Query();
     }
 
     if (empty($value))
     {
-      return $c;
+      return $q;
     }
 
     switch ($field['FormType'])
@@ -226,13 +246,13 @@ class opFormItemGenerator
       case 'radio':
         if (count($value) == 1)
         {
-          $c->add($column, array_shift($value));
+          $q->andWhere($column.' = ?', array_shift($value));
         }
         else
         {
           foreach ($value as $item)
           {
-            $c->addOr($column, $item);
+            $q->orWhere($column.' = ?', $item);
           }
         }
         break;
@@ -243,9 +263,9 @@ class opFormItemGenerator
         break;
       // text and something else
       default:
-        $c->add($column, '%'.$value.'%', Criteria::LIKE);
+        $q->andWhere($column.' LIKE ?', '%'.$value.'%');
     }
 
-    return $c;
+    return $q;
   }
 }

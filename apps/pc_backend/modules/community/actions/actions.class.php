@@ -37,10 +37,10 @@ class communityActions extends sfActions
     $this->form = new CommunitySearchForm();
     $this->form->bind($request->getParameter('community'), array());
 
-    $this->pager = new sfPropelPager('Community', 20);
+    $this->pager = new sfDoctrinePager('Community', 20);
     if ($request->hasParameter('community'))
     {
-      $this->pager->setCriteria($this->form->getCriteria());
+      $this->pager->setQuery($this->form->getQuery());
     }
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
@@ -54,7 +54,7 @@ class communityActions extends sfActions
    */
   public function executeDelete(sfWebRequest $request)
   {
-    $this->community = CommunityPeer::retrieveByPk($request->getParameter('id'));
+    $this->community = Doctrine::getTable('Community')->retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->community);
 
     if ($request->isMethod(sfRequest::POST))
@@ -86,7 +86,7 @@ class communityActions extends sfActions
       }
     }
     
-    $this->communities = CommunityPeer::getDefaultCommunities();
+    $this->communities = Doctrine::getTable('Community')->getDefaultCommunities();
     return sfView::SUCCESS;
   }
 
@@ -97,7 +97,7 @@ class communityActions extends sfActions
    */
   public function executeRemoveDefaultCommunity(sfWebRequest $request)
   {
-    $communityConfig = CommunityConfigPeer::retrieveByNameAndCommunityId('is_default', $request->getParameter('id'));
+    $communityConfig = Doctrine::getTable('CommunityConfig')->retrieveByNameAndCommunityId('is_default', $request->getParameter('id'));
     $this->forward404Unless($communityConfig);
     
     $communityConfig->delete();
@@ -113,7 +113,7 @@ class communityActions extends sfActions
    */
   public function executeCategoryList(sfWebRequest $request)
   {
-    $this->categories = CommunityCategoryPeer::retrieveAllRoots();
+    $this->categories = Doctrine::getTable('CommunityCategory')->retrieveAllRoots();
     $this->rootForm = new CommunityCategoryForm();
     $this->deleteForm = new sfForm();
     $this->categoryForms = array();
@@ -145,7 +145,7 @@ class communityActions extends sfActions
    */
   public function executeCategoryEdit(sfWebRequest $request)
   {
-    $form = new CommunityCategoryForm(CommunityCategoryPeer::retrieveByPk($request->getParameter('id')));
+    $form = new CommunityCategoryForm(Doctrine::getTable('CommunityCategory')->find($request->getParameter('id')));
     if ($request->isMethod(sfRequest::POST))
     {
       if ($form->bindAndSave($request->getParameter('community_category')))
@@ -169,7 +169,7 @@ class communityActions extends sfActions
   {
     $request->checkCSRFProtection();
 
-    $category = CommunityCategoryPeer::retrieveByPk($request->getParameter('id'));
+    $category = Doctrine::getTable('CommunityCategory')->find($request->getParameter('id'));
     $this->forward404Unless($category);
 
     $category->delete();

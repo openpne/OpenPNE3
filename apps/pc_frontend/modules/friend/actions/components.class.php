@@ -13,10 +13,8 @@ class friendComponents extends sfOpenPNEFriendComponents
   public function executeFriendListBox()
   {
     $this->member = sfContext::getInstance()->getUser()->getMember();
-    $c = new Criteria();
-    $c->addAscendingOrderByColumn(Propel::getDB()->random(time()));
     $this->row = $this->gadget->getConfig('row');
     $this->col = $this->gadget->getConfig('col');
-    $this->friends = $this->member->getFriends($this->row * $this->col, $c);
+    $this->friends = $this->member->getFriends($this->row * $this->col, true);
   }
 }

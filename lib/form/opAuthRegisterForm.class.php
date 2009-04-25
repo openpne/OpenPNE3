@@ -42,11 +42,11 @@ abstract class opAuthRegisterForm extends sfForm
     }
     else
     {
-      $this->setMember(MemberPeer::createPre());
+      $this->setMember(Doctrine::getTable('Member')->createPre());
     }
 
     $this->memberForm = new MemberForm($this->getMember());
-    $this->profileForm = new MemberProfileForm($this->getMember()->getMemberProfiles());
+    $this->profileForm = new MemberProfileForm($this->getMember()->getMemberProfile());
     $this->profileForm->setRegisterWidgets();
     $this->configForm = new MemberConfigForm($this->getMember());
 
@@ -135,7 +135,7 @@ abstract class opAuthRegisterForm extends sfForm
       {
         throw new sfValidatorError($validator, 'A mobile UID is required. Please check settings of your mobile phone and retry.');
       }
-      elseif (BlacklistPeer::retrieveByUid($uid))
+      elseif (Doctrine::getTable('Blacklist')->retrieveByUid($uid))
       {
         throw new sfValidatorError($validator, 'A mobile UID is invalid.');
       }
@@ -162,10 +162,10 @@ abstract class opAuthRegisterForm extends sfForm
         $this->getMember()->setConfig('mobile_uid', $this->getValue('mobile_uid'));
       }
 
-      $communities = CommunityPeer::getDefaultCommunities();
+      $communities = Doctrine::getTable('Community')->getDefaultCommunities();
       foreach ($communities as $community)
       {
-        CommunityMemberPeer::join($this->getMember()->getId(), $community->getId());
+        Doctrine::getTable('CommunityMember')->join($this->getMember()->getId(), $community->getId());
       }
 
       return $this->getMember()->getId();

@@ -45,7 +45,7 @@ class opAdminLoginForm extends sfForm
 
   public static function validate($validator, $values, $arguments = array())
   {
-    $adminUser = AdminUserPeer::retrieveByUsername($values['username']);
+    $adminUser = Doctrine::getTable('AdminUser')->retrieveByUsername($values['username']);
     if (!$adminUser)
     {
       throw new sfValidatorError($validator, 'invalid');

@@ -21,6 +21,6 @@ abstract class sfOpenPNECommunityComponents extends sfComponents
   {
     $memberId = sfContext::getInstance()->getUser()->getMemberId();
     
-    $this->communityMembers = CommunityMemberPeer::getCommunityMembersPre($memberId);
+    $this->communityMembers = Doctrine::getTable('CommunityMember')->getCommunityMembersPre($memberId);
   }
 }

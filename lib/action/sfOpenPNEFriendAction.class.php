@@ -22,7 +22,7 @@ abstract class sfOpenPNEFriendAction extends sfActions
   {
     $this->id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
 
-    $this->relation = MemberRelationshipPeer::retrieveByFromAndTo($this->getUser()->getMemberId(), $this->id);
+    $this->relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($this->getUser()->getMemberId(), $this->id);
     if (!$this->relation) {
       $this->relation = new MemberRelationship();
       $this->relation->setMemberIdFrom($this->getUser()->getMemberId());
@@ -43,9 +43,10 @@ abstract class sfOpenPNEFriendAction extends sfActions
     {
       $this->size = 20;
     }
-    $this->pager = MemberRelationshipPeer::getFriendListPager($this->id, $request->getParameter('page', 1), $this->size);
+    $this->pager = Doctrine::getTable('MemberRelationship')->getFriendListPager($this->id, $request->getParameter('page', 1), $this->size);
 
-    if (!$this->pager->getNbResults()) {
+    if (!$this->pager->getNbResults())
+    {
       return sfView::ERROR;
     }
 
@@ -148,7 +149,7 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeManage($request)
   {
-    $this->pager = MemberRelationshipPeer::getFriendListPager($this->getUser()->getMemberId(), $request->getParameter('page', 1));
+    $this->pager = Doctrine::getTable('MemberRelationship')->getFriendListPager($this->getUser()->getMemberId(), $request->getParameter('page', 1));
 
     if (!$this->pager->getNbResults()) {
       return sfView::ERROR;
@@ -166,7 +167,7 @@ abstract class sfOpenPNEFriendAction extends sfActions
   {
     $this->forward404Unless($this->id);
 
-    $this->member = MemberPeer::retrieveByPk($this->id);
+    $this->member = Doctrine::getTable('Member')->find($this->id);
     $this->forward404Unless($this->member, 'Undefined member.');
 
     return sfView::SUCCESS;

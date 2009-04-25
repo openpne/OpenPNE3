@@ -22,9 +22,9 @@ abstract class sfOpenPNECommunityAction extends sfActions
     $this->id = $this->getRequestParameter('id');
 
     $memberId = $this->getUser()->getMemberId();
-    $this->isCommunityMember = CommunityMemberPeer::isMember($memberId, $this->id);
-    $this->isCommunityPreMember = CommunityMemberPeer::isPreMember($memberId, $this->id);
-    $this->isAdmin = CommunityMemberPeer::isAdmin($memberId, $this->id);
+    $this->isCommunityMember = Doctrine::getTable('CommunityMember')->isMember($memberId, $this->id);
+    $this->isCommunityPreMember = Doctrine::getTable('CommunityMember')->isPreMember($memberId, $this->id);
+    $this->isAdmin = Doctrine::getTable('CommunityMember')->isAdmin($memberId, $this->id);
     $this->isEditCommunity = $this->isAdmin;
   }
 
@@ -35,18 +35,16 @@ abstract class sfOpenPNECommunityAction extends sfActions
   */
   public function executeHome($request)
   {
-    $this->community = CommunityPeer::retrieveByPk($this->id);
+    $this->community = Doctrine::getTable('Community')->find($this->id);
     $this->forward404Unless($this->community, 'Undefined community.');
-    $this->community_admin = CommunityMemberPeer::getCommunityAdmin($this->id);
-    $this->community_admin = MemberPeer::retrieveByPk($this->community_admin->getMemberId());
+    $this->community_admin = Doctrine::getTable('CommunityMember')->getCommunityAdmin($this->id);
+    $this->community_admin = Doctrine::getTable('Member')->find($this->community_admin->getMemberId());
 
     if (!$this->membersSize)
     {
       $this->membersSize = 9;
     }
-    $c = new Criteria();
-    $c->addAscendingOrderByColumn(Propel::getDB()->random(time()));
-    $this->members = $this->community->getMembers($this->membersSize, $c);
+    $this->members = $this->community->getMembers($this->membersSize, true);
   }
 
  /**
@@ -61,7 +59,7 @@ abstract class sfOpenPNECommunityAction extends sfActions
       $this->forward('default', 'secure');
     }
 
-    $this->community = CommunityPeer::retrieveByPk($this->id);
+    $this->community = Doctrine::getTable('Community')->find($this->id);
     if (!$this->community)
     {
       $this->community = new Community();
@@ -98,7 +96,7 @@ abstract class sfOpenPNECommunityAction extends sfActions
   {
     $memberId = $request->getParameter('id', $this->getUser()->getMemberId());
 
-    $this->member = MemberPeer::retrieveByPK($memberId);
+    $this->member = Doctrine::getTable('Member')->find($memberId);
     $this->forward404Unless($this->member);
 
     if (!$this->size)
@@ -106,14 +104,14 @@ abstract class sfOpenPNECommunityAction extends sfActions
       $this->size = 20;
     }
 
-    $this->pager = CommunityPeer::getJoinCommunityListPager($memberId, $request->getParameter('page', 1), $this->size);
+    $this->pager = Doctrine::getTable('Community')->getJoinCommunityListPager($memberId, $request->getParameter('page', 1), $this->size);
 
     if (!$this->pager->getNbResults())
     {
       return sfView::ERROR;
     }
 
-    $this->crownIds = CommunityMemberPeer::getCommunityIdsOfAdminByMemberId($memberId);
+    $this->crownIds = Doctrine::getTable('CommunityMember')->getCommunityIdsOfAdminByMemberId($memberId);
 
     return sfView::SUCCESS;
   }
@@ -125,20 +123,20 @@ abstract class sfOpenPNECommunityAction extends sfActions
   */
   public function executeMemberList($request)
   {
-    $this->community = CommunityPeer::retrieveByPk($this->id);
+    $this->community = Doctrine::getTable('Community')->find($this->id);
     $this->forward404Unless($this->community);
 
     if (!$this->size)
     {
       $this->size = 20;
     }
-    $this->pager = CommunityPeer::getCommunityMemberListPager($this->id, $request->getParameter('page', 1), $this->size);
+    $this->pager = Doctrine::getTable('Community')->getCommunityMemberListPager($this->id, $request->getParameter('page', 1), $this->size);
 
     if (!$this->pager->getNbResults()) {
       return sfView::ERROR;
     }
     
-    $this->crownIds = array(CommunityMemberPeer::getCommunityAdmin($this->id)->getMemberId());
+    $this->crownIds = array(Doctrine::getTable('CommunityMember')->getCommunityAdmin($this->id)->getMemberId());
     
     return sfView::SUCCESS;
   }
@@ -154,10 +152,10 @@ abstract class sfOpenPNECommunityAction extends sfActions
       return sfView::ERROR;
     }
 
-    $community = CommunityPeer::retrieveByPk($this->id);
+    $community = Doctrine::getTable('Community')->find($this->id);
     $this->forward404Unless($community);
 
-    CommunityMemberPeer::join($this->getUser()->getMemberId(), $this->id, $community->getConfig('register_poricy'));
+    Doctrine::getTable('CommunityMember')->join($this->getUser()->getMemberId(), $this->id, $community->getConfig('register_poricy'));
     $this->redirect('community/home?id=' . $this->id);
   }
 
@@ -170,7 +168,7 @@ abstract class sfOpenPNECommunityAction extends sfActions
   {
     $this->forward404Unless($this->isAdmin);
     
-    $communityMember = CommunityMemberPeer::retrieveByMemberIdAndCommunityId($request->getParameter('member_id'), $this->id);
+    $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($request->getParameter('member_id'), $this->id);
     $this->forward404Unless($communityMember);
 
     if ($communityMember->getPosition() == 'pre')
@@ -190,7 +188,7 @@ abstract class sfOpenPNECommunityAction extends sfActions
   {
     $this->forward404Unless($this->isAdmin);
     
-    $communityMember = CommunityMemberPeer::retrieveByMemberIdAndCommunityId($request->getParameter('member_id'), $this->id);
+    $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($request->getParameter('member_id'), $this->id);
     $this->forward404Unless($communityMember);
 
     if ($communityMember->getPosition() == 'pre')
@@ -212,7 +210,7 @@ abstract class sfOpenPNECommunityAction extends sfActions
       return sfView::ERROR;
     }
 
-    CommunityMemberPeer::quit($this->getUser()->getMemberId(), $this->id);
+    Doctrine::getTable('CommunityMember')->quit($this->getUser()->getMemberId(), $this->id);
     $this->redirect('community/home?id=' . $this->id);
   }
 
@@ -225,8 +223,8 @@ abstract class sfOpenPNECommunityAction extends sfActions
   {
     $this->redirectUnless($this->isAdmin, '@error');
 
-    $this->community = CommunityPeer::retrieveByPk($this->id);
-    $this->pager = CommunityPeer::getCommunityMemberListPager($this->id, $request->getParameter('page', 1));
+    $this->community = Doctrine::getTable('Community')->find($this->id);
+    $this->pager = Doctrine::getTable('Community')->getCommunityMemberListPager($this->id, $request->getParameter('page', 1));
 
     if (!$this->pager->getNbResults())
     {
@@ -244,15 +242,15 @@ abstract class sfOpenPNECommunityAction extends sfActions
   public function executeDropMember($request)
   {
     $this->redirectUnless($this->isAdmin, '@error');
-    $member = MemberPeer::retrieveByPk($request->getParameter('member_id'));
+    $member = Doctrine::getTable('Member')->find($request->getParameter('member_id'));
     $this->forward404Unless($member);
 
-    $isCommunityMember = CommunityMemberPeer::isMember($member->getId(), $this->id);
+    $isCommunityMember = Doctrine::getTable('CommunityMember')->isMember($member->getId(), $this->id);
     $this->redirectUnless($this->isAdmin, '@error');
-    $isAdmin = CommunityMemberPeer::isAdmin($member->getId(), $this->id);
+    $isAdmin = Doctrine::getTable('CommunityMember')->isAdmin($member->getId(), $this->id);
     $this->redirectIf($isAdmin, '@error');
 
-    CommunityMemberPeer::quit($member->getId(), $this->id);
+    Doctrine::getTable('CommunityMember')->quit($member->getId(), $this->id);
     $this->redirect('community/memberManage?id='.$this->id);
   }
 

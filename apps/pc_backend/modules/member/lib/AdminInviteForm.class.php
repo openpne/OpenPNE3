@@ -73,14 +73,14 @@ class AdminInviteForm extends InviteForm
 
     foreach ($this->getValue('pc') as $value)
     {
-      $this->member = MemberPeer::createPre();
+      $this->member = Doctrine::getTable('Member')->createPre();
       $this->saveConfig('pc_address', $value);
       $this->member->setConfig('register_auth_mode', $authMode);
     }
 
     foreach ($this->getValue('mobile') as $value)
     {
-      $this->member = MemberPeer::createPre();
+      $this->member = Doctrine::getTable('Member')->createPre();
       $this->saveConfig('mobile_address', $value);
       $this->member->setConfig('register_auth_mode', $authMode);
     }

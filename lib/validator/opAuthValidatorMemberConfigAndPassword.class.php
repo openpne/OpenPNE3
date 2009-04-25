@@ -40,7 +40,7 @@ class opAuthValidatorMemberConfigAndPassword extends opAuthValidatorMemberConfig
       opActivateBehavior::enable();
     }
 
-    $valid_password = MemberConfigPeer::retrieveByNameAndMemberId('password', $values['member']->getId())->getValue();
+    $valid_password = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('password', $values['member']->getId())->getValue();
     opActivateBehavior::enable();
     if (md5($values['password']) !== $valid_password)
     {

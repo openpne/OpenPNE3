@@ -32,7 +32,7 @@ class opConfig extends sfConfig implements ArrayAccess
 
     if (isset($setting[$name]))
     {
-      $result = SnsConfigPeer::get($name, $default);
+      $result = Doctrine::getTable('SnsConfig')->get($name, $default);
       if (is_null($result))
       {
         $result = $setting[$name]['Default'];

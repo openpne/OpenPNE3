@@ -58,7 +58,7 @@ class opAuthValidatorMemberConfig extends sfValidatorSchema
     {
       $fieldName = $configName;
     }
-    $memberConfig = MemberConfigPeer::retrieveByNameAndValue($configName, $values[$fieldName]);
+    $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndValue($configName, $values[$fieldName]);
     if ($memberConfig)
     {
       $values['member'] = $memberConfig->getMember();

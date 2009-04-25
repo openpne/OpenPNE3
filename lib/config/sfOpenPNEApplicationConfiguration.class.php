@@ -29,7 +29,6 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     $this->dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
 
     $this->setConfigHandlers();
-    $this->setBehaviors();
   }
 
   public function setup()
@@ -297,14 +296,6 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     }
 
     return $dirs;
-  }
-
-  protected function setBehaviors()
-  {
-    sfPropelBehavior::registerHooks('activate', array (
-      'Peer:doSelectStmt:doSelectStmt' => array('opActivateBehavior', 'doSelectStmt'),
-      'Peer:doCount:doCount'           => array('opActivateBehavior', 'doCount'),
-    ));
   }
 
   protected function setConfigHandlers()

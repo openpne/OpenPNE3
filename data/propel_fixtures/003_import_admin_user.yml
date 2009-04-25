@@ -1,0 +1,5 @@
+AdminUser:
+  first_admin:
+    id: ~
+    username: "admin"
+    password: "password"

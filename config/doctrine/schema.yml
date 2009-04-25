@@ -1,0 +1,451 @@
+CommunityMember:
+  tableName: community_member
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    community_id:
+      type: integer(4)
+      notnull: true
+    member_id:
+      type: integer(4)
+      notnull: true
+    position:
+      type: string(32)
+      default: ""
+  relations:
+    Community:
+      local: community_id
+      foreign: id
+      type: one
+    Member:
+      local: member_id
+      foreign: id
+      type: one
+  options:
+    charset: utf8
+AdminUser:
+  tableName: admin_user
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    username:
+      type: string(64)
+      default: ""
+      notnull: true
+    password:
+      type: string(40)
+      default: ""
+      notnull: true
+  options:
+    charset: utf8
+Community:
+  tableName: community
+  actAs: [Timestampable]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(64)
+      default: ""
+      notnull: true
+    file_id: integer(4)
+    community_category_id: integer(4)
+  relations:
+    File:
+      local: file_id
+      foreign: id
+      type: one
+    CommunityCategory:
+      local: community_category_id
+      foreign: id
+      type: one
+  options:
+    charset: utf8
+MemberRelationship:
+  tableName: member_relationship
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    member_id_to:
+      type: integer(4)
+      notnull: true
+    member_id_from:
+      type: integer(4)
+      notnull: true
+    is_friend: boolean
+    is_friend_pre: boolean
+    is_access_block: boolean
+  relations:
+    Member:
+      local: member_id_to
+      foreign: id
+      type: one
+    Member_2:
+      class: Member
+      local: member_id_from
+      foreign: id
+      type: one
+  options:
+    charset: utf8
+CommunityConfig:
+  tableName: community_config
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    community_id:
+      type: integer(4)
+      notnull: true
+    name:
+      type: string(64)
+      default: ""
+      notnull: true
+    value: string(2147483647)
+  relations:
+    Community:
+      local: community_id
+      foreign: id
+      type: one
+  options:
+    charset: utf8
+MemberConfig:
+  tableName: member_config
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    member_id:
+      type: integer(4)
+      notnull: true
+    name:
+      type: string(64)
+      default: ""
+      notnull: true
+    value: string(2147483647)
+  relations:
+    Member:
+      local: member_id
+      foreign: id
+      type: one
+  options:
+    charset: utf8
+Profile:
+  tableName: profile
+  actAs:
+    I18n:
+      fields: [caption, info]
+      length: 5
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(64)
+      default: ""
+      notnull: true
+    is_required:
+      type: boolean
+      default: false
+      notnull: true
+    is_unique:
+      type: boolean
+      default: false
+      notnull: true
+    is_edit_public_flag:
+      type: boolean
+      default: false
+      notnull: true
+    default_public_flag:
+      type: integer(1)
+      default: '1'
+      notnull: true
+    form_type:
+      type: string(32)
+      default: ""
+      notnull: true
+    value_type:
+      type: string(32)
+      default: ""
+      notnull: true
+    is_disp_regist:
+      type: boolean
+      default: false
+      notnull: true
+    is_disp_config:
+      type: boolean
+      default: false
+      notnull: true
+    is_disp_search:
+      type: boolean
+      default: false
+      notnull: true
+    value_regexp: string(2147483647)
+    value_min: string(32)
+    value_max: string(32)
+    sort_order: integer(4)
+    caption:
+      type: string(2147483647)
+      notnull: true
+    info: string(2147483647)
+  options:
+    charset: utf8
+SnsConfig:
+  tableName: sns_config
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(64)
+      default: ""
+      notnull: true
+    value: string(2147483647)
+  options:
+    charset: utf8
+MemberImage:
+  tableName: member_image
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    member_id:
+      type: integer(4)
+      notnull: true
+    file_id:
+      type: integer(4)
+      notnull: true
+    is_primary: boolean
+  relations:
+    Member:
+      local: member_id
+      foreign: id
+      type: one
+    File:
+      local: file_id
+      foreign: id
+      type: one
+  options:
+    charset: utf8
+Blacklist:
+  tableName: blacklist
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    uid:
+      type: string(32)
+      default: ""
+      notnull: true
+    memo: string(2147483647)
+  options:
+    charset: utf8
+MemberProfile:
+  tableName: member_profile
+  actAs:
+    NestedSet:
+      hasManyRoots: true
+      rootColumnName: tree_key
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    member_id:
+      type: integer(4)
+      notnull: true
+    profile_id:
+      type: integer(4)
+      notnull: true
+    profile_option_id: integer(4)
+    value: string(2147483647)
+    public_flag: integer(1)
+  relations:
+    Member:
+      local: member_id
+      foreign: id
+      type: one
+    Profile:
+      local: profile_id
+      foreign: id
+      type: one
+    ProfileOption:
+      local: profile_option_id
+      foreign: id
+      type: one
+  options:
+    charset: utf8
+FileBin:
+  tableName: file_bin
+  columns:
+    file_id:
+      type: integer(4)
+      primary: true
+    bin: blob(2147483647)
+  options:
+    charset: utf8
+CommunityCategory:
+  tableName: community_category
+  actAs:
+    NestedSet:
+      hasManyRoots: true
+      rootColumnName: tree_key
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(64)
+      default: ""
+      notnull: true
+    is_allow_member_community:
+      type: boolean
+      default: true
+      notnull: true
+    tree_key: integer(4)
+    sort_order: integer(4)
+  options:
+    charset: utf8
+GadgetConfig:
+  tableName: gadget_config
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(64)
+      default: ""
+      notnull: true
+    gadget_id: integer(4)
+    value: string(2147483647)
+  relations:
+    Gadget:
+      local: gadget_id
+      foreign: id
+      type: one
+  options:
+    charset: utf8
+ProfileOption:
+  tableName: profile_option
+  actAs:
+    I18n:
+      fields: [value]
+      length: 5
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    profile_id:
+      type: integer(4)
+      notnull: true
+    value: string(2147483647)
+    sort_order: integer(4)
+  relations:
+    Profile:
+      local: profile_id
+      foreign: id
+      type: one
+  options:
+    charset: utf8
+Gadget:
+  tableName: gadget
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    type:
+      type: string(64)
+      default: ""
+      notnull: true
+    name:
+      type: string(64)
+      default: ""
+      notnull: true
+    sort_order: integer(4)
+  options:
+    charset: utf8
+File:
+  tableName: file
+  actAs: [Timestampable]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(64)
+      default: ""
+      notnull: true
+    type:
+      type: string(64)
+      default: ""
+      notnull: true
+    original_filename: string(2147483647)
+  relations:
+    FileBin:
+      local: id
+      foreign: file_id
+      type: one
+  options:
+    charset: utf8
+Navigation:
+  tableName: navigation
+  actAs:
+    I18n:
+      fields: [caption]
+      length: 5
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    caption:
+      type: string(2147483647)
+      notnull: true
+    type:
+      type: string(64)
+      default: ""
+      notnull: true
+    uri:
+      type: string(2147483647)
+      notnull: true
+    sort_order: integer(4)
+  options:
+    charset: utf8
+Member:
+  tableName: member
+  actAs: [Timestampable,opActivateBehavior]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(64)
+      default: ""
+      notnull: true
+    invite_member_id: integer(4)
+  relations:
+    Member:
+      local: invite_member_id
+      foreign: id
+      type: one
+  options:
+    charset: utf8

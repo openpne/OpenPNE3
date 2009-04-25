@@ -33,7 +33,7 @@ class GadgetSortForm extends sfForm
   {
     foreach ($this->values as $type => $gadgets)
     {
-      $ids = GadgetPeer::getGadgetsIds($type);
+      $ids = Doctrine::getTable('Gadget')->getGadgetsIds($type);
       if (!$gadgets)
       {
         $gadgets = array();
@@ -41,7 +41,7 @@ class GadgetSortForm extends sfForm
 
       foreach ($ids as $id)
       {
-        $gadget = GadgetPeer::retrieveByPk($id);
+        $gadget = Doctrine::getTable('Gadget')->find($id);
         $key = array_search($id, $gadgets);
 
         if ($key === false)
@@ -66,7 +66,7 @@ class GadgetSortForm extends sfForm
 
     foreach ($value as $id)
     {
-      $gadget = GadgetPeer::retrieveByPk($id);
+      $gadget = Doctrine::getTable('Gadget')->find($id);
       if ($gadget) 
       {
         if (array_key_exists($gadget->getName(), sfConfig::get('op_gadget_list'))

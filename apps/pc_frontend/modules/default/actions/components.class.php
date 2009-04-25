@@ -16,7 +16,7 @@ class defaultComponents extends sfComponents
     if ($this->isSecurePage()) {
       $type = 'secure_global';
     }
-    $this->navs = NavigationPeer::retrieveByType($type);
+    $this->navs = Doctrine::getTable('Navigation')->retrieveByType($type);
   }
 
   public function executeLocalNav()
@@ -31,7 +31,7 @@ class defaultComponents extends sfComponents
 
     $this->type = sfConfig::get('sf_nav_type', sfConfig::get('mod_' . $module . '_default_nav', 'default'));
 
-    $this->navs = NavigationPeer::retrieveByType($this->type);
+    $this->navs = Doctrine::getTable('Navigation')->retrieveByType($this->type);
 
     if ('default' !== $this->type)
     {
@@ -41,13 +41,13 @@ class defaultComponents extends sfComponents
 
   public function executeSideBannerGadgets()
   {
-    $gadgets = GadgetPeer::retrieveGadgetsByTypesName('sideBanner');
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('sideBanner');
     $this->gadgets = $gadgets['sideBannerContents'];
   }
 
   public function executeInformationBox()
   {
-    $this->information = SnsConfigPeer::retrieveByName('pc_home_information');
+    $this->information = Doctrine::getTable('SnsConfig')->get('pc_home_information');
   }
 
   public function executeFreeAreaBox()

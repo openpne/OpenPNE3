@@ -19,7 +19,9 @@ class opAuthAction extends sfActions
 {
   public function executeRegisterEnd(sfWebRequest $request)
   {
+    opActivateBehavior::disable();
     $member = $this->getUser()->getMember();
+    opActivateBehavior::enable();
     $this->forward404Unless($member);
 
     if (opConfig::get('retrieve_uid') == 3

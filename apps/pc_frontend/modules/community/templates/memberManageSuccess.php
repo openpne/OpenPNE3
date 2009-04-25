@@ -3,7 +3,7 @@
 <?php foreach ($pager->getResults() as $member) : ?>
 <li>
 <?php echo link_to($member->getName(), 'member/profile?id='.$member->getId()); ?>
-<?php $communityMembers = $member->getCommunityMembers(); ?>
+<?php $communityMembers = $member->getCommunityMember(); ?>
 <?php if ($communityMembers[0]->getPosition() !== 'admin') : ?>
 &nbsp;
 <?php echo link_to(__('Drop this member'), 'community/dropMember?id='.$community->getId().'&member_id='.$member->getId()) ?>

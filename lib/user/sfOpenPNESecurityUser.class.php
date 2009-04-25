@@ -127,7 +127,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
   public function getMember()
   {
-    return MemberPeer::retrieveByPk($this->getMemberId());
+    return Doctrine::getTable('Member')->find($this->getMemberId());
   }
 
   public function getRegisterEndAction()
@@ -210,10 +210,13 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     $this->setIsSNSRegisterBegin(false);
     $this->setIsSNSRegisterFinish(false);
 
+    opActivateBehavior::disable();
     if (!$this->getMember())
     {
+      opActivateBehavior::enable();
       return false;
     }
+    opActivateBehavior::enable();
 
     if ($memberId && $isRegisterFinish)
     {

@@ -51,8 +51,8 @@ class communityActions extends sfOpenPNECommunityAction
     $this->filters = new CommunityFormFilter();
     $this->filters->bind($params);
 
-    $this->pager = new sfPropelPager('Community', 20);
-    $this->pager->setCriteria($this->filters->getCriteria());
+    $this->pager = new sfDoctrinePager('Community', 20);
+    $this->pager->setQuery($this->filters->getQuery());
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
 

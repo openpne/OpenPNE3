@@ -23,6 +23,11 @@ class sfOpenPNEExecutionFilter extends sfExecutionFilter
     $actionName = $actionInstance->getActionName();
     $dispatcher = sfContext::getInstance()->getEventDispatcher();
 
+    // sfDoctrinePlugin needs to notify this event for enabling i18n
+    $dispatcher->notify(new sfEvent(
+      $this, 'user.change_culture', array('culture' => sfContext::getInstance()->getUser()->getCulture())
+    ));
+
     $dispatcher->notify(new sfEvent($this, 'op_action.pre_execute_'.$moduleName.'_'.$actionName, array(
       'moduleName'     => $moduleName,
       'actionName'     => $actionName,

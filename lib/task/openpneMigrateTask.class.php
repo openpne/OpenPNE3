@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class openpneMigrateTask extends sfPropelBaseTask
+class openpneMigrateTask extends sfDoctrineBaseTask
 {
   protected function configure()
   {
@@ -107,11 +107,11 @@ EOF;
 
   protected function buildModel()
   {
-    $task = new sfPropelBuildModelTask($this->dispatcher, $this->formatter);
+    $task = new sfDoctrineBuildModelTask($this->dispatcher, $this->formatter);
     $task->run();
-    $task = new sfPropelBuildFormsTask($this->dispatcher, $this->formatter);
+    $task = new sfDoctrineBuildFormsTask($this->dispatcher, $this->formatter);
     $task->run();
-    $task = new sfPropelBuildFiltersTask($this->dispatcher, $this->formatter);
+    $task = new sfDoctrineBuildFiltersTask($this->dispatcher, $this->formatter);
     $task->run();
     $task = new sfCacheClearTask($this->dispatcher, $this->formatter);
     $task->run();

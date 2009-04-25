@@ -36,7 +36,7 @@ class sfOpenPNEPasswordForm extends sfForm
   public function isValidPassword($validator, $value)
   {
     $member = $this->options['member'];
-    if (md5($value) !== MemberConfigPeer::retrieveByNameAndMemberId('password', $member->getId())->getValue())
+    if (md5($value) !== Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('password', $member->getId())->getValue())
     {
       throw new sfValidatorError(new sfValidatorPass(), 'invalid', array('value' => $value));
     }

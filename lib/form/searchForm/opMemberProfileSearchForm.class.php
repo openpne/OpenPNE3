@@ -21,33 +21,48 @@ class opMemberProfileSearchForm extends sfForm
   {
     $this->disableCSRFProtection();
 
-    $this->setWidget('member][name', new sfWidgetFormInput());
-    $this->widgetSchema->setLabel('member][name', 'Nickname');
+    $widgets = array('name' => new sfWidgetFormInput());
+    $validators = array('name' => new sfValidatorPass());
 
-    foreach (ProfilePeer::retrievesAll() as $profile)
+    foreach ($this->getProfiles() as $profile)
     {
-      $choices = $profile->getOptionsArray();
-      $this->setWidget('profile]['.$profile->getName(), opFormItemGenerator::generateSearchWidget($profile->toArray(), $choices));
+      $widgets[$profile->getName()] = opFormItemGenerator::generateSearchWidget($profile->toArray(), $profile->getOptionsArray());
+      $validators[$profile->getName()] = new sfValidatorPass();
     }
 
-    $this->setValidators(array(
-      'member' => new sfValidatorPass(),
-      'profile' => new sfValidatorPass(),
-    ));
+    $this->setWidgets($widgets);
+    $this->setValidators($validators);
+
+    $this->widgetSchema->setLabel('name', 'Nickname');
 
     $this->widgetSchema->setNameFormat('member[%s]');
   }
 
-  public function getCriteria()
+  public function getQuery()
   {
-    $c = new Criteria();
+    $ids = Doctrine::getTable('Member')->searchMemberIds($this->getValue('name'));
 
-    $ids = MemberPeer::searchMemberIds($this->getValue('member'));
-    $ids = MemberProfilePeer::searchMemberIds($this->getValue('profile'), $ids);
+    $profileValues = array();
+    foreach ($this->getProfiles() as $profile)
+    {
+      $value = $this->getValue($profile->getName());
+      if (!empty($value))
+      {
+        $profileValues[$profile->getName()] = $value;
+      }
+    }
 
-    $c->add(MemberPeer::ID, $ids, Criteria::IN);
+    $ids = Doctrine::getTable('MemberProfile')->searchMemberIds($profileValues, $ids);
 
-    return $c;
+    $q = Doctrine::getTable('Member')->createQuery()
+      ->whereIn('id', $ids);
+
+    return $q;
+  }
+
+  protected function getProfiles()
+  {
+    return Doctrine::getTable('Profile')->retrievesAll();
   }
 }
 

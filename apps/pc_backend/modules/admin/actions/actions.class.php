@@ -34,7 +34,7 @@ class adminActions extends sfActions
   */
   public function executeManageUser(sfWebRequest $request)
   {
-    $this->users = AdminUserPeer::retrievesAll();
+    $this->users = Doctrine::getTable('AdminUser')->retrievesAll();
   }
 
  /**
@@ -59,7 +59,7 @@ class adminActions extends sfActions
   */
   public function executeDeleteUser(sfWebRequest $request)
   {
-    $this->user = AdminUserPeer::retrieveByPk($request->getParameter('id'));
+    $this->user = Doctrine::getTable('AdminUser')->find($request->getParameter('id'));
     $this->forward404Unless($this->user);
     $this->forward404If($this->user->getId() == $this->getUser()->getId());
     $this->forward404If($this->user->getId() == 1);
@@ -84,7 +84,7 @@ class adminActions extends sfActions
   */
   public function executeEditPassword(sfWebRequest $request)
   {
-    $user = AdminUserPeer::retrieveByPk($this->getUser()->getId());
+    $user = Doctrine::getTable('AdminUser')->find($this->getUser()->getId());
     $this->form = new AdminUserEditPasswordForm($user);
     if ($request->isMethod(sfWebRequest::POST))
     {

@@ -25,15 +25,13 @@ class profileActions extends sfActions
   */
   public function executeList($request)
   {
-    $this->profiles = ProfilePeer::retrievesAll();
+    $this->profiles = Doctrine::getTable('Profile')->retrievesAll();
     $this->option_form = array();
 
-    $criteria = new Criteria();
-    $criteria->addAscendingOrderByColumn(ProfileOptionPeer::SORT_ORDER);
     foreach ($this->profiles as $value) {
       $this->option_form[$value->getId()] = array();
-      foreach ($value->getProfileOptions($criteria) as $option) {
-        $this->option_form[$value->getId()][$option->getId()] = new ProfileOptionForm(ProfileOptionPeer::retrieveByPk($option->getId()));
+      foreach ($value->getProfileOption() as $option) {
+        $this->option_form[$value->getId()][$option->getId()] = new ProfileOptionForm(Doctrine::getTable('ProfileOption')->find($option->getId()));
       }
       $newProfileOption = new ProfileOption();
       $newProfileOption->setProfileId($value->getId());
@@ -48,14 +46,14 @@ class profileActions extends sfActions
   */
   public function executeEdit($request)
   {
-    $this->profile = ProfilePeer::retrieveByPk($request->getParameter('id'));
+    $this->profile = Doctrine::getTable('Profile')->find($request->getParameter('id'));
     $this->form = new ProfileForm($this->profile);
 
     if ($request->isMethod('post')) {
       $parameter = $request->getParameter('profile');
       if ($this->form->getObject()->isNew())
       {
-        $parameter['sort_order'] = ProfilePeer::getMaxSortOrder();
+        $parameter['sort_order'] = Doctrine::getTable('Profile')->getMaxSortOrder();
       }
       $this->form->bind($parameter);
       if ($this->form->isValid()) {
@@ -72,14 +70,14 @@ class profileActions extends sfActions
   */
   public function executeEditOption($request)
   {
-    $this->profileOption = ProfileOptionPeer::retrieveByPk($request->getParameter('id'));
+    $this->profileOption = Doctrine::getTable('ProfileOption')->find($request->getParameter('id'));
     $this->form = new ProfileOptionForm($this->profileOption);
 
     if ($request->isMethod('post')) {
       $parameter = $request->getParameter('profile_option');
       if ($this->form->getObject()->isNew())
       {
-        $parameter['sort_order'] = ProfileOptionPeer::getMaxSortOrder();
+        $parameter['sort_order'] = Doctrine::getTable('ProfileOption')->getMaxSortOrder();
       }
       $this->form->bind($parameter);
       if ($this->form->isValid()) {
@@ -96,7 +94,7 @@ class profileActions extends sfActions
   */
   public function executeDelete($request)
   {
-    $this->profile = ProfilePeer::retrieveByPk($request->getParameter('id'));
+    $this->profile = Doctrine::getTable('Profile')->find($request->getParameter('id'));
     $this->forward404Unless($this->profile);
 
     if ($request->isMethod('post')) {
@@ -112,7 +110,7 @@ class profileActions extends sfActions
   */
   public function executeDeleteOption($request)
   {
-    $this->profileOption = ProfileOptionPeer::retrieveByPk($request->getParameter('id'));
+    $this->profileOption = Doctrine::getTable('ProfileOption')->find($request->getParameter('id'));
     $this->forward404Unless($this->profileOption);
 
     if ($request->isMethod('post')) {
@@ -133,7 +131,7 @@ class profileActions extends sfActions
       $order = $request->getParameter('profiles');
       for ($i = 0; $i < count($order); $i++)
       {
-        $profile = ProfilePeer::retrieveByPk($order[$i]);
+        $profile = Doctrine::getTable('Profile')->find($order[$i]);
         if ($profile)
         {
           $profile->setSortOrder($i * 10);
@@ -162,7 +160,7 @@ class profileActions extends sfActions
           $order = $parameters->get($match[0]);
           for ($i = 0; $i < count($order); $i++)
           {
-            $profileOption = ProfileOptionPeer::retrieveByPk($order[$i]);
+            $profileOption = Doctrine::getTable('ProfileOption')->find($order[$i]);
             if ($profileOption)
             {
               $profileOption->setSortOrder($i * 10);

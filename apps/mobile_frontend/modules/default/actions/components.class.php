@@ -12,7 +12,7 @@ class defaultComponents extends sfComponents
 {
   public function executeNav()
   {
-    $this->navs = NavigationPeer::retrieveByType($this->type);
+    $this->navs = Doctrine::getTable('Navigation')->retrieveByType($this->type);
   }
 
   public function executeInformationBox()

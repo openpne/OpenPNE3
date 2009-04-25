@@ -1,0 +1,226 @@
+Navigation:
+  secure_global_navigation_home:
+    type: "secure_global"
+    uri: "@homepage"
+    sort_order: 0
+
+  secure_global_navigation_member_search:
+    type: "secure_global"
+    uri: "member/search"
+    sort_order: 10
+
+  secure_global_navigation_community_search:
+    type: "secure_global"
+    uri: "community/search"
+    sort_order: 20
+
+  secure_global_navigation_config:
+    type: "secure_global"
+    uri: "member/config"
+    sort_order: 30
+
+  secure_global_navigation_invite:
+    type: "secure_global"
+    uri: "member/invite"
+    sort_order: 40
+
+  secure_global_navigation_logout:
+    type: "secure_global"
+    uri: "member/logout"
+    sort_order: 50
+
+  default_navigation_home:
+    type: "default"
+    uri: "@homepage"
+    sort_order: 0
+
+  default_navigation_friend_list:
+    type: "default"
+    uri: "friend/list"
+    sort_order: 10
+
+  default_navigation_profile_confirm:
+    type: "default"
+    uri: "member/profile"
+    sort_order: 20
+
+  default_navigation_profile_edit:
+    type: "default"
+    uri: "member/editProfile"
+    sort_order: 30
+
+  friend_navigation_home:
+    type: "friend"
+    uri: "member/profile"
+    sort_order: 10
+
+  friend_navigation_friend_list:
+    type: "friend"
+    uri: "friend/list"
+    sort_order: 20
+
+  community_navigation_home:
+    type: "community"
+    uri: "community/home"
+    sort_order: 0
+
+  community_navigation_join:
+    type: "community"
+    uri: "community/join"
+    sort_order: 10
+
+  community_navigation_quit:
+    type: "community"
+    uri: "community/quit"
+    sort_order: 20
+
+NavigationI18n:
+  secure_global_navigation_home_i18n:
+    id: secure_global_navigation_home
+    caption: "マイホーム"
+    culture: "ja_JP"
+
+  secure_global_navigation_member_search_i18n:
+    id: secure_global_navigation_member_search
+    caption: "メンバー検索"
+    culture: "ja_JP"
+
+  secure_global_navigation_community_search_i18n:
+    id: secure_global_navigation_community_search
+    caption: "コミュニティ検索"
+    culture: "ja_JP"
+
+  secure_global_navigation_config_i18n:
+    id: secure_global_navigation_config
+    caption: "設定変更"
+    culture: "ja_JP"
+
+  secure_global_navigation_invite_i18n:
+    id: secure_global_navigation_invite
+    caption: "友人を招待する"
+    culture: "ja_JP"
+
+  secure_global_navigation_logout_i18n:
+    id: secure_global_navigation_logout
+    caption: "ログアウト"
+    culture: "ja_JP"
+
+  default_navigation_home_i18n:
+    id: default_navigation_home
+    caption: "ホーム"
+    culture: "ja_JP"
+
+  default_navigation_friend_list_i18n:
+    id: default_navigation_friend_list
+    caption: "マイフレンド"
+    culture: "ja_JP"
+
+  default_navigation_profile_confirm_i18n:
+    id: default_navigation_profile_confirm
+    caption: "プロフィール確認"
+    culture: "ja_JP"
+
+  default_navigation_profile_edit_i18n:
+    id: default_navigation_profile_edit
+    caption: "プロフィール編集"
+    culture: "ja_JP"
+
+  friend_navigation_home_i18n:
+    id: friend_navigation_home
+    caption: "ホーム"
+    culture: "ja_JP"
+
+  friend_navigation_friend_list_i18n:
+    id: friend_navigation_friend_list
+    caption: "フレンドリスト"
+    culture: "ja_JP"
+
+  community_navigation_home_i18n:
+    id: community_navigation_home
+    caption: "コミュニティトップ"
+    culture: "ja_JP"
+
+  community_navigation_join_i18n:
+    id: community_navigation_join
+    caption: "コミュニティに参加"
+    culture: "ja_JP"
+
+  community_navigation_quit_i18n:
+    id: community_navigation_quit
+    caption: "コミュニティを退会"
+    culture: "ja_JP"
+
+  secure_global_navigation_home_i18n_en:
+    id: secure_global_navigation_home
+    caption: "My Home"
+    culture: "en"
+
+  secure_global_navigation_member_search_i18n_en:
+    id: secure_global_navigation_member_search
+    caption: "Search Members"
+    culture: "en"
+
+  secure_global_navigation_community_search_i18n_en:
+    id: secure_global_navigation_community_search
+    caption: "Search Communities"
+    culture: "en"
+
+  secure_global_navigation_config_i18n_en:
+    id: secure_global_navigation_config
+    caption: "Settings"
+    culture: "en"
+
+  secure_global_navigation_invite_i18n_en:
+    id: secure_global_navigation_invite
+    caption: "Invite"
+    culture: "en"
+
+  secure_global_navigation_logout_i18n_en:
+    id: secure_global_navigation_logout
+    caption: "Logout"
+    culture: "en"
+
+  default_navigation_home_i18n_en:
+    id: default_navigation_home
+    caption: "Home"
+    culture: "en"
+
+  default_navigation_friend_list_i18n_en:
+    id: default_navigation_friend_list
+    caption: "My Friends"
+    culture: "en"
+
+  default_navigation_profile_confirm_i18n_en:
+    id: default_navigation_profile_confirm
+    caption: "Profile"
+    culture: "en"
+
+  default_navigation_profile_edit_i18n_en:
+    id: default_navigation_profile_edit
+    caption: "Edit Profile"
+    culture: "en"
+
+  friend_navigation_home_i18n_en:
+    id: friend_navigation_home
+    caption: "Home"
+    culture: "en"
+
+  friend_navigation_friend_list_i18n_en:
+    id: friend_navigation_friend_list
+    caption: "Friends"
+    culture: "en"
+
+  community_navigation_home_i18n_en:
+    id: community_navigation_home
+    caption: "Community Top"
+    culture: "en"
+
+  community_navigation_join_i18n_en:
+    id: community_navigation_join
+    caption: "Join Community"
+    culture: "en"
+
+  community_navigation_quit_i18n_en:
+    id: community_navigation_quit
+    caption: "Leave Community"
+    culture: "en"

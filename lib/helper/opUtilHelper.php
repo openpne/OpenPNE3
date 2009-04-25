@@ -32,7 +32,7 @@ function op_include_pager_navigation($pager, $link_to, $options = array())
     'options' => new opPartsOptionHolder($options)
   );
   $pager = sfOutputEscaper::unescape($pager);
-  if ($pager instanceof sfReversiblePropelPager)
+  if ($pager instanceof sfReversibleDoctrinePager)
   {
     include_partial('global/pagerReversibleNavigation', $params);
   }

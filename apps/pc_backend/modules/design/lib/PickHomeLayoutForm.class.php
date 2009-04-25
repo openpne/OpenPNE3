@@ -34,11 +34,11 @@ class PickHomeLayoutForm extends sfForm
     }
     $this->layoutName = $layoutName.'_layout';
 
-    $snsConfig = SnsConfigPeer::retrieveByName($this->layoutName);
+    $snsConfig = Doctrine::getTable('SnsConfig')->retrieveByName($this->layoutName);
 
     if ($snsConfig)
     {
-      $default = array_search($snsConfig->getValue(), $this->choices);
+      $default = array_search($snsConfig, $this->choices);
     }
 
     $this->setWidget('layout', new sfWidgetFormSelectPhotoRadio(array(
@@ -61,7 +61,7 @@ class PickHomeLayoutForm extends sfForm
       return false;
     }
 
-    $snsConfig = SnsConfigPeer::retrieveByName($this->layoutName);
+    $snsConfig = Doctrine::getTable('SnsConfig')->retrieveByName($this->layoutName);
     if (!$snsConfig)
     {
       $snsConfig = new SnsConfig();

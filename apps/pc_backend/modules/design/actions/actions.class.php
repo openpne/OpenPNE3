@@ -78,9 +78,9 @@ class designActions extends sfActions
     
     $this->subtitle = $this->configs[$this->type]['name'];
     $this->plotAction = $this->configs[$this->type]['plot_action'];
-
-    $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName($this->type);
     
+
+    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName($this->type);
 
     $this->sortForm = new GadgetSortForm(array(), array('current_gadgets' => $this->gadgets));
     $this->addForm = new GadgetAddForm(array(), array('current_gadgets' => $this->gadgets));
@@ -106,13 +106,13 @@ class designActions extends sfActions
   {
     $configs = sfConfig::get('op_gadget_config');
     $this->layoutPattern = $configs['gadget']['layout']['default'];
-    $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('gadget');
+    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('gadget');
     $this->gadgetConfig = sfConfig::get('op_gadget_list');
 
-    $layout = SnsConfigPeer::retrieveByName('home_layout');
+    $layout = Doctrine::getTable('SnsConfig')->get('home_layout');
     if ($layout)
     {
-      $this->layoutPattern = $layout->getValue();
+      $this->layoutPattern = $layout;
     }
 
     return sfView::SUCCESS;
@@ -127,10 +127,11 @@ class designActions extends sfActions
   {
     $configs = sfConfig::get('op_gadget_config');
     $this->layoutPattern = $configs['login']['layout']['default'];
-    $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('login');
+    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('login');
+
     $this->gadgetConfig = sfConfig::get('op_login_gadget_list');
 
-    $layout = SnsConfigPeer::retrieveByName('login_layout');
+    $layout = Doctrine::getTable('SnsConfig')->get('login_layout');
     if ($layout)
     {
       $this->layoutPattern = $layout->getValue();
@@ -145,7 +146,7 @@ class designActions extends sfActions
   */
   public function executeMobileHomeGadgetPlot(sfWebRequest $request)
   {
-    $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('mobile');
+    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobile');
     $this->gadgetConfig = sfConfig::get('op_mobile_gadget_list');
 
     return sfView::SUCCESS;
@@ -158,7 +159,7 @@ class designActions extends sfActions
    */
   public function executeMobileLoginGadgetPlot(sfWebRequest $request)
   {
-    $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('mobileLogin');
+    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileLogin');
     $this->gadgetConfig = sfConfig::get('op_mobile_login_gadget_list');
     
     return sfView::SUCCESS;
@@ -171,7 +172,7 @@ class designActions extends sfActions
   */
   public function executeSideBannerGadgetPlot(sfWebRequest $request)
   {
-    $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('sideBanner');
+    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('sideBanner');
     $this->gadgetConfig = sfConfig::get('op_side_banner_gadget_list');
 
     return sfView::SUCCESS;
@@ -185,7 +186,7 @@ class designActions extends sfActions
   public function executeAddGadget(sfWebRequest $request)
   {
     $this->type = $request->getParameter('type', 'top');
-    $this->config = GadgetPeer::getGadgetConfigListByType($this->type);
+    $this->config = Doctrine::getTable('Gadget')->getGadgetConfigListByType($this->type);
 
     return sfView::SUCCESS;
   }
@@ -197,10 +198,10 @@ class designActions extends sfActions
   */
   public function executeEditGadget(sfWebRequest $request)
   {
-    $this->gadget = GadgetPeer::retrieveByPK($request->getParameter('id'));
+    $this->gadget = Doctrine::getTable('Gadget')->find($request->getParameter('id'));
 
     $type = $this->gadget->getType();
-    $config = GadgetPeer::getGadgetConfigListByType($type);
+    $config = Doctrine::getTable('Gadget')->getGadgetConfigListByType($type);
 
     $this->forward404Unless($this->gadget && $config);
     $this->config = $config[$this->gadget->getName()];
@@ -235,11 +236,11 @@ class designActions extends sfActions
 
     $this->list = array();
 
-    $types = NavigationPeer::retrieveTypes($isMobile);
+    $types = Doctrine::getTable('Navigation')->retrieveTypes($isMobile);
 
     foreach ($types as $type)
     {
-      $navs = NavigationPeer::retrieveByType($type);
+      $navs = Doctrine::getTable('Navigation')->retrieveByType($type);
       foreach ($navs as $nav)
       {
         $this->list[$type][] = new NavigationForm($nav);
@@ -258,7 +259,7 @@ class designActions extends sfActions
     $nav = $request->getParameter('nav');
     $app = $request->getParameter('app', 'pc');
 
-    $model = NavigationPeer::retrieveByPk($nav['id']);
+    $model = Doctrine::getTable('Navigation')->find($nav['id']);
     $this->form = new NavigationForm($model);
     if ($request->isMethod('post'))
     {
@@ -283,7 +284,7 @@ class designActions extends sfActions
 
     if ($request->isMethod('post'))
     {
-      $model = NavigationPeer::retrieveByPk($request->getParameter('id'));
+      $model = Doctrine::getTable('Navigation')->find($request->getParameter('id'));
       $this->forward404Unless($model);
       $model->delete();
     }
@@ -312,7 +313,7 @@ class designActions extends sfActions
         $order = $parameters->get($key);
         for ($i = 0; $i < count($order); $i++)
         {
-          $nav = NavigationPeer::retrieveByPk($order[$i]);
+          $nav = Doctrine::getTable('Navigation')->find($order[$i]);
           if ($nav)
           {
             $nav->setSortOrder($i * 10);
