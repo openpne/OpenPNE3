@@ -1,0 +1,30 @@
+Navigation:
+  mobile_home_side_navigation_invite:
+    type: "mobile_home_side"
+    uri: "member/invite"
+    sort_order: 0
+    Translation:
+      ja_JP:
+        caption: "友人を誘う"
+      en:
+        caption: "Invite"
+
+  mobile_home_navigation_friend:
+    type: "mobile_home"
+    uri: "friend/list"
+    sort_order: 0
+    Translation:
+      ja_JP:
+        caption: "ﾏｲﾌﾚﾝﾄﾞ"
+      en:
+        caption: "My Friends"
+
+  mobile_home_navigation_community:
+    type: "mobile_home"
+    uri: "community/joinlist"
+    sort_order: 10
+    Translation:
+      ja_JP:
+        caption: "参加ｺﾐｭﾆﾃｨ"
+      en:
+        caption: "Communities"

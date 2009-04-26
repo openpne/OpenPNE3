@@ -1,0 +1,19 @@
+CommunityCategory:
+  community_category:
+    name: "コミュニティカテゴリ"
+    is_allow_member_community: 1
+
+  community_category_local:
+    name: "地域"
+    tree_key: 1
+    is_allow_member_community: 1
+
+  community_category_gourmet:
+    name: "グルメ"
+    tree_key: 1
+    is_allow_member_community: 1
+
+  community_category_sports:
+    name: "スポーツ"
+    tree_key: 1
+    is_allow_member_community: 1
