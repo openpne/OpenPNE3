@@ -1,3 +1,6 @@
+options:
+  charset: utf8
+
 Member:
   tableName: member
   actAs: [Timestampable,opActivateBehavior]
@@ -7,8 +10,6 @@ Member:
     invite_member_id: { type: integer(4) }
   relations:
     Member: { local: invite_member_id, foreign: id }
-  options:
-    charset: utf8
 
 MemberRelationship:
   tableName: member_relationship
@@ -22,8 +23,6 @@ MemberRelationship:
   relations:
     Member: { local: member_id_to, foreign: id }
     Member_2: { class: Member, local: member_id_from, foreign: id }
-  options:
-    charset: utf8
 
 MemberImage:
   tableName: member_image
@@ -35,8 +34,6 @@ MemberImage:
   relations:
     Member: { local: member_id, foreign: id }
     File: { local: file_id, foreign: id }
-  options:
-    charset: utf8
 
 File:
   tableName: file
@@ -48,16 +45,12 @@ File:
     original_filename: { type: string }
   relations:
     FileBin: { local: id, foreign: file_id }
-  options:
-    charset: utf8
 
 FileBin:
   tableName: file_bin
   columns:
     file_id: { type: integer(4), primary: true }
     bin: { type: blob }
-  options:
-    charset: utf8
 
 Profile:
   tableName: profile
@@ -83,8 +76,6 @@ Profile:
     sort_order: { type: integer(4) }
     caption: { type: string, notnull: true }
     info: { type: string }
-  options:
-    charset: utf8
 
 ProfileOption:
   tableName: profile_option
@@ -99,8 +90,6 @@ ProfileOption:
     sort_order: { type: integer(4) }
   relations:
     Profile: { local: profile_id, foreign: id }
-  options:
-    charset: utf8
 
 MemberProfile:
   tableName: member_profile
@@ -119,8 +108,6 @@ MemberProfile:
     Member: { local: member_id, foreign: id }
     Profile: { local: profile_id, foreign: id }
     ProfileOption: { local: profile_option_id, foreign: id }
-  options:
-    charset: utf8
 
 Community:
   tableName: community
@@ -133,8 +120,6 @@ Community:
   relations:
     File: { local: file_id, foreign: id }
     CommunityCategory: { local: community_category_id, foreign: id }
-  options:
-    charset: utf8
 
 CommunityMember:
   tableName: community_member
@@ -146,8 +131,6 @@ CommunityMember:
   relations:
     Community: { local: community_id, foreign: id }
     Member: { local: member_id, foreign: id }
-  options:
-    charset: utf8
 
 AdminUser:
   tableName: admin_user
@@ -155,8 +138,6 @@ AdminUser:
     id: { type: integer(4), primary: true, autoincrement: true }
     username: { type: string(64), default: "", notnull: true }
     password: { type: string(40), default: "", notnull: true }
-  options:
-    charset: utf8
 
 SnsConfig:
   tableName: sns_config
@@ -164,8 +145,6 @@ SnsConfig:
     id: { type: integer(4), primary: true, autoincrement: true }
     name: { type: string(64), default: "", notnull: true }
     value: { type: string }
-  options:
-    charset: utf8
 
 MemberConfig:
   tableName: member_config
@@ -176,8 +155,6 @@ MemberConfig:
     value: { type: string }
   relations:
     Member: { local: member_id, foreign: id }
-  options:
-    charset: utf8
 
 CommunityConfig:
   tableName: community_config
@@ -188,8 +165,6 @@ CommunityConfig:
     value: { type: string }
   relations:
     Community: { local: community_id, foreign: id }
-  options:
-    charset: utf8
 
 CommunityCategory:
   tableName: community_category
@@ -203,8 +178,6 @@ CommunityCategory:
     is_allow_member_community: { type: boolean, default: true, notnull: true }
     tree_key: { type: integer(4) }
     sort_order: { type: integer(4) }
-  options:
-    charset: utf8
 
 Gadget:
   tableName: gadget
@@ -213,8 +186,6 @@ Gadget:
     type: { type: string(64), default: "", notnull: true }
     name: { type: string(64), default: "", notnull: true }
     sort_order: { type: integer(4) }
-  options:
-    charset: utf8
 
 GadgetConfig:
   tableName: gadget_config
@@ -225,8 +196,6 @@ GadgetConfig:
     value: { type: string }
   relations:
     Gadget: { local: gadget_id, foreign: id }
-  options:
-    charset: utf8
 
 Navigation:
   tableName: navigation
@@ -240,8 +209,6 @@ Navigation:
     type: { type: string(64), default: "", notnull: true }
     uri: { type: string, notnull: true }
     sort_order: { type: integer(4) }
-  options:
-    charset: utf8
 
 Blacklist:
   tableName: blacklist
@@ -249,5 +216,3 @@ Blacklist:
     id: { type: integer(4), primary: true, autoincrement: true }
     uid: { type: string(32), default: "", notnull: true }
     memo: { type: string }
-  options:
-    charset: utf8
