@@ -2,7 +2,6 @@ options:
   charset: utf8
 
 Member:
-  tableName: member
   actAs: [Timestampable,opActivateBehavior]
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
@@ -12,7 +11,6 @@ Member:
     Member: { local: invite_member_id, foreign: id }
 
 MemberRelationship:
-  tableName: member_relationship
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     member_id_to: { type: integer(4), notnull: true }
@@ -25,7 +23,6 @@ MemberRelationship:
     Member_2: { class: Member, local: member_id_from, foreign: id }
 
 MemberImage:
-  tableName: member_image
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     member_id: { type: integer(4), notnull: true }
@@ -36,7 +33,6 @@ MemberImage:
     File: { local: file_id, foreign: id }
 
 File:
-  tableName: file
   actAs: [Timestampable]
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
@@ -47,13 +43,11 @@ File:
     FileBin: { local: id, foreign: file_id }
 
 FileBin:
-  tableName: file_bin
   columns:
     file_id: { type: integer(4), primary: true }
     bin: { type: blob }
 
 Profile:
-  tableName: profile
   actAs:
     I18n:
       fields: [caption, info]
@@ -78,7 +72,6 @@ Profile:
     info: { type: string }
 
 ProfileOption:
-  tableName: profile_option
   actAs:
     I18n:
       fields: [value]
@@ -92,7 +85,6 @@ ProfileOption:
     Profile: { local: profile_id, foreign: id }
 
 MemberProfile:
-  tableName: member_profile
   actAs:
     NestedSet:
       hasManyRoots: true
@@ -110,7 +102,6 @@ MemberProfile:
     ProfileOption: { local: profile_option_id, foreign: id }
 
 Community:
-  tableName: community
   actAs: [Timestampable]
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
@@ -122,7 +113,6 @@ Community:
     CommunityCategory: { local: community_category_id, foreign: id }
 
 CommunityMember:
-  tableName: community_member
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     community_id: { type: integer(4), notnull: true }
@@ -133,21 +123,18 @@ CommunityMember:
     Member: { local: member_id, foreign: id }
 
 AdminUser:
-  tableName: admin_user
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     username: { type: string(64), default: "", notnull: true }
     password: { type: string(40), default: "", notnull: true }
 
 SnsConfig:
-  tableName: sns_config
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     name: { type: string(64), default: "", notnull: true }
     value: { type: string }
 
 MemberConfig:
-  tableName: member_config
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     member_id: { type: integer(4), notnull: true }
@@ -157,7 +144,6 @@ MemberConfig:
     Member: { local: member_id, foreign: id }
 
 CommunityConfig:
-  tableName: community_config
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     community_id: { type: integer(4), notnull: true }
@@ -167,7 +153,6 @@ CommunityConfig:
     Community: { local: community_id, foreign: id }
 
 CommunityCategory:
-  tableName: community_category
   actAs:
     NestedSet:
       hasManyRoots: true
@@ -180,7 +165,6 @@ CommunityCategory:
     sort_order: { type: integer(4) }
 
 Gadget:
-  tableName: gadget
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     type: { type: string(64), default: "", notnull: true }
@@ -188,7 +172,6 @@ Gadget:
     sort_order: { type: integer(4) }
 
 GadgetConfig:
-  tableName: gadget_config
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     name: { type: string(64), default: "", notnull: true }
@@ -198,7 +181,6 @@ GadgetConfig:
     Gadget: { local: gadget_id, foreign: id }
 
 Navigation:
-  tableName: navigation
   actAs:
     I18n:
       fields: [caption]
@@ -211,7 +193,6 @@ Navigation:
     sort_order: { type: integer(4) }
 
 Blacklist:
-  tableName: blacklist
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     uid: { type: string(32), default: "", notnull: true }
