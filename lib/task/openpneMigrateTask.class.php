@@ -50,59 +50,71 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
-    if (!in_array('sfDoctrinePlugin', $this->configuration->getPlugins()))
-    {
-      throw new sfCommandException("This task requires sfDoctrinePlugin.\nPlease enable the plugin by your config/ProjectConfiguration.class.php");
-    }
-
-    if (!$options['target'] && ($options['to-version'] || $options['to-revision']))
-    {
-      throw new sfCommandException("You can't specify the to-version option or the to-revision option without the target option");
-    }
-
     $this->installPlugins();
 
-    if (!$options['no-build-model'])
-    {
-      $this->buildModel();
-    }
+    $targets = array_merge(array('OpenPNE'), $this->getEnabledOpenPNEPlugin());
 
     $databaseManager = new sfDatabaseManager($this->configuration);
-
-    if (!empty($options['target']))
-    {
-      $targets = array($options['target']);
-    }
-    else
-    {
-      $targets = array_merge(array('OpenPNE'), $this->getEnabledOpenPNEPlugin());
-    }
-
     foreach ($targets as $target)
     {
       $params = array(
         'version'  => $options['to-version'],
         'revision' => $options['to-revision'],
       );
-      $this->migrate($target, $databaseManager, $params);
+      $this->migrateFromScript($target, $databaseManager, $params);
     }
+
+    if (!$options['no-build-model'])
+    {
+      $this->buildModel();
+    }
+
+    $this->migrateFromDiff();
   }
 
-  protected function migrate($target, $databaseManager, $params)
+  protected function migrateFromScript($target, $databaseManager, $params)
   {
     try
     {
       $migration = new opMigration($this->dispatcher, $databaseManager, $target, null, $params);
+      if (!$migration->hasMigrationScriptDirectory())
+      {
+        $this->logSection('migrate', sprintf('%s is not supporting migration.', $target));
+        return false;
+      }
+
       $migration->migrate();
     }
     catch (Doctrine_Migration_Exception $e)
     {
-      if (0 !== strpos($e->getMessage(), 'Already at version #'))
-      {
-        throw $e;
-      }
+      $this->throwSpecifiedException($e);
     }
     $this->logSection('migrate', sprintf('%s is now at revision %d.', $target, $migration->getCurrentVersion()));
+  }
+
+  protected function throwSpecifiedException(Exception $e)
+  {
+    if (0 !== strpos($e->getMessage(), '1 error(s) encountered during migration'))
+    {
+      throw $e;
+    }
+
+    if (false === strpos($e->getMessage(), 'Already at version #'))
+    {
+      throw $e;
+    }
+  }
+
+  protected function migrateFromDiff()
+  {
+    $tmpdir = sfConfig::get('sf_cache_dir').'/models_tmp';
+    $this->getFilesystem()->mkdirs($tmpdir);
+    $this->getFilesystem()->remove(sfFinder::type('file')->in(array($tmpdir)));
+
+    @exec('./symfony openpne:generate-migrations');
+
+    $migrationsPath = sfConfig::get('sf_data_dir').'/migrations/generated';
+    $this->callDoctrineCli('migrate', array('migrations_path' => $migrationsPath));
   }
 
   protected function buildModel()

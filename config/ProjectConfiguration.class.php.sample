@@ -22,4 +22,9 @@ class ProjectConfiguration extends sfProjectConfiguration
       dirname(__FILE__).'/../lib/vendor/PEAR/',
     ));
   }
+
+  public function configureDoctrine($manager)
+  {
+    $manager->setAttribute(Doctrine::ATTR_MODEL_LOADING, 2);
+  }
 }

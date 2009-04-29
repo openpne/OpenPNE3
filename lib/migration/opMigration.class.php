@@ -172,7 +172,7 @@ class opMigration extends Doctrine_Migration
  /**
   * @see Doctrine_Migration
   */
-  protected function setCurrentVersion($number)
+  public function setCurrentVersion($number)
   {
     Doctrine::getTable('SnsConfig')->set($this->targetName.'_revision', $number);
   }
@@ -196,12 +196,10 @@ class opMigration extends Doctrine_Migration
  /**
   * @see Doctrine_Migration
   */
-  protected function getMigrationClass($num)
+  public function getMigrationClass($num)
   {
-    foreach ($this->_migrationClasses as $classMigrationNum => $info)
+    foreach ($this->_migrationClasses as $classMigrationNum => $className)
     {
-      $className = $info['className'];
-
       if ($classMigrationNum == $num)
       {
         return new $className($this->dispatcher, $this->dbManager, $this->targetName, $this->connectionName);
@@ -232,6 +230,11 @@ class opMigration extends Doctrine_Migration
     }
 
     return $dir;
+  }
+
+  public function hasMigrationScriptDirectory()
+  {
+    return (!is_null($this->getMigrationScriptDirectory()));
   }
 
   public function getVersion()

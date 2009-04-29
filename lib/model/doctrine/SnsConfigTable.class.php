@@ -33,8 +33,6 @@ class SnsConfigTable extends Doctrine_Table
     }
     $config->setValue($value);
 
-    $this->configs[$name] = $value;
-
     return $config->save();
   }
 
