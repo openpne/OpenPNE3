@@ -27,9 +27,9 @@
 <td><?php echo $value->getId() ?></td>
 <td><?php echo $value->getCaption() ?></td>
 <td><?php echo $value->getName() ?></td>
-<td><?php echo ($value->getIsRequired() ? '○' : '×') ?></t
-<td><?php echo ($value->getIsEditPublicFlag() ? '○' :'×') ?></>
-<td><?php echo (Doctrine::getTable('Profile')->getPublicFlag($value->getDefaultPublicFlag())) ?> </td>
+<td><?php echo ($value->getIsRequired() ? '○' : '×') ?></td>
+<td><?php echo ($value->getIsEditPublicFlag() ? '○' :'×') ?></td>
+<td><?php echo (ProfilePeer::getPublicFlag($value->getDefaultPublicFlag())) ?></td>
 <td><?php echo ($value->getIsUnique() ? '×' :'○') ?></td>
 <td><?php echo $value->getFormType() ?></td>
 <td>
