@@ -53,7 +53,15 @@ EOF;
       return false;
     }
 
-    parent::execute($arguments, $options);
+    try
+    {
+      parent::execute($arguments, $options);
+    }
+    catch (sfPluginException $e)
+    {
+      $this->logBlock($e->getMessage(), 'ERROR');
+      return false;
+    }
   }
 
   public function getPluginManager()
