@@ -1,4 +1,5 @@
 <table>
+<?php include_customizes($id, 'firstRow') ?>
 <?php foreach ($options['list'] as $key => $value): ?>
 <tr>
 <th><?php echo $key ?></th>

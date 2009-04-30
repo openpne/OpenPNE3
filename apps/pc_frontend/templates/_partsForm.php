@@ -2,6 +2,8 @@
 $options->setDefault('button', __('Send'));
 $options->setDefault('url', url_for(sfContext::getInstance()->getRouting()->getCurrentInternalUri()));
 $options->setDefault('method','post');
+$options->setDefault('firstRow', '');
+$options->setDefault('lastRow', '');
 ?>
 
 <form action="<?php echo $options->getRaw('url') ?>" method="post"<?php if (!empty($options['isMultipart'])): ?> enctype="multipart/form-data"<?php endif; ?>>
@@ -14,6 +16,8 @@ $options->setDefault('method','post');
 <?php endif ?>
 
 <table>
+<?php include_customizes($id, 'firstRow') ?>
+<?php echo $options->getRaw('firstRow') ?>
 <?php
 $forms = ($options['form'] instanceof sfForm) ? array($options['form']) : $options['form'];
 
@@ -72,6 +76,7 @@ foreach ($forms as $form)
   }
 }
 ?>
+<?php echo $options->getRaw('lastRow') ?>
 <?php include_customizes($id, 'lastRow') ?>
 </table>
 
