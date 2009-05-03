@@ -299,6 +299,27 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     return $dirs;
   }
 
+  public function getGlobalTemplateDir($templateFile)
+  {
+    foreach ($this->getGlobalTemplateDirs() as $dir)
+    {
+      if (is_readable($dir.'/'.$templateFile))
+      {
+        return $dir;
+      }
+    }
+
+    return null;
+  }
+
+  public function getGlobalTemplateDirs()
+  {
+    $dirs = array();
+    $dirs[] = sfConfig::get('sf_root_dir').'/templates';
+    $dirs   = array_merge($dirs, $this->getPluginSubPaths('/templates'));
+    return $dirs;
+  }
+
   protected function setBehaviors()
   {
     sfPropelBehavior::registerHooks('activate', array (
