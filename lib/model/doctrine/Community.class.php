@@ -115,12 +115,12 @@ class Community extends BaseCommunity
 
   public function isPrivilegeBelong($memberId)
   {
-    return Doctrine::getTable('CommunityMember')->isMember($memberId, $this->communityId);
+    return Doctrine::getTable('CommunityMember')->isMember($memberId, $this->id);
   }
 
   public function isAdmin($memberId)
   {
-    return Doctrine::getTable('CommunityMember')->isAdmin($memberId, $this->communityId);
+    return Doctrine::getTable('CommunityMember')->isAdmin($memberId, $this->id);
   }
 
   public function countCommunityMembers()
