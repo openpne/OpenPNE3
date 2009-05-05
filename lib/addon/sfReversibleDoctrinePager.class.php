@@ -39,7 +39,9 @@ class sfReversibleDoctrinePager extends sfDoctrinePager
 
       if ($this->sqlOrder !== $this->listOrder)
       {
-        $this->results = array_reverse($this->results);
+        $obj = new Doctrine_Collection($this->results->getTable(), $this->results->getKeyColumn());
+        $obj->fromArray(array_reverse($this->results->toArray(true)));
+        $this->results = $obj;
       }
     }
 
@@ -80,11 +82,11 @@ class sfReversibleDoctrinePager extends sfDoctrinePager
   {
     if (self::ASC === $this->listOrder)
     {
-      return reset($this->getResults());
+      return $this->getResults()->getFirst();
     }
     else
     {
-      return end($this->getResults());
+      return $this->getResults()->getLast();
     }
   }
 
@@ -92,11 +94,11 @@ class sfReversibleDoctrinePager extends sfDoctrinePager
   {
     if (self::ASC === $this->listOrder)
     {
-      return end($this->getResults());
+      return $this->getResults()->getLast();
     }
     else
     {
-      return reset($this->getResults());
+      return $this->getResults()->getFirst();
     }
   }
 
