@@ -147,6 +147,10 @@
         <target>現在フレンド申請中です。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>You have requested friend link.</source>
+        <target>フレンド申請が完了しました。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>You don't have any friends.</source>
         <target>フレンドがいません。</target>
       </trans-unit>

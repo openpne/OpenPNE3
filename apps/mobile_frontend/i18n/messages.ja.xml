@@ -263,6 +263,10 @@
         <target>既にﾌﾚﾝﾄﾞ申請済みです。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>You have requested friend link.</source>
+        <target>ﾌﾚﾝﾄﾞ申請が完了しました。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>This member is not your friend.</source>
         <target>ﾌﾚﾝﾄﾞではありません。</target>
       </trans-unit>
