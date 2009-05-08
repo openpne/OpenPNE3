@@ -15,7 +15,7 @@ class DesignFooterForm extends sfForm
   {
     $type = $this->getOption('type');
     $this->key .= $type;
-    $snsConfig = SnsConfigPeer::retrieveByName($this->key);
+    $snsConfig = Doctrine::getTable('SnsConfig')->retrieveByName($this->key);
 
     $this->setWidgets(array(
       $type => new sfWidgetFormTextarea(),
@@ -34,7 +34,7 @@ class DesignFooterForm extends sfForm
     $type = $this->getOption('type');
     $values = $this->getValues();
 
-    $snsConfig = SnsConfigPeer::retrieveByName($this->key);
+    $snsConfig = Doctrine::getTable('SnsConfig')->retrieveByName($this->key);
     if (!$snsConfig)
     {
       $snsConfig = new SnsConfig();
