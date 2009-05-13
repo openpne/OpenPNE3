@@ -27,7 +27,7 @@ class GadgetConfigTable extends Doctrine_Table
       $objects = $this->createQuery()->execute();
       foreach ($objects as $object)
       {
-        $this->results[$object->gadgetId][$object->name] = $object;
+        $this->results[$object->getGadgetId()][$object->getName()] = $object;
       }
     }
 
