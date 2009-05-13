@@ -390,6 +390,30 @@
         <source>Administrator</source>
         <target>管理者</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Search</source>
+        <target>検索</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Create a new community</source>
+        <target>ｺﾐｭﾆﾃｨ作成</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Search Communities</source>
+        <target>ｺﾐｭﾆﾃｨ検索</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Categories</source>
+        <target>ｶﾃｺﾞﾘｰ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your search queries did not match any communities.</source>
+        <target>該当するｺﾐｭﾆﾃｨはありませんでした。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>All categories</source>
+        <target>すべてのｶﾃｺﾞﾘｰ</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -52,4 +52,46 @@ class communityActions extends sfOpenPNECommunityAction
 
     parent::executeMemberList($request);
   }
+
+  /**
+   * Executes search action
+   *
+   * @param sfWebRequest $request a request object
+   */
+  public function executeSearch(sfWebRequest $request)
+  {
+    sfConfig::set('sf_nav_type', 'default');
+
+    $params = $request->getParameter('community', array());
+    $params['community_category_id'] = $request->getParameter('community_category_id');
+    $this->isResult = false;
+    $this->category_id = 0;
+    if (isset($params['name']))
+    {
+      $params['name'] = $params['name'];
+      $this->isResult = true;
+    }
+    if (isset($params['community_category_id']))
+    {
+      $this->category_id = $params['community_category_id'];
+      $params['community_category_id'] = $this->category_id;
+      $this->isResult = true;
+    }
+
+    $this->filters = new CommunityFormFilter();
+    $this->filters->bind($params);
+    $q = $this->filters->getQuery();
+
+    $this->pager = new sfDoctrinePager('Community', 20);
+    $this->pager->setQuery($q);
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
+
+    $this->categorys = Doctrine::getTable('CommunityCategory')
+      ->createQuery()
+      ->where('lft > 1')
+      ->execute();
+
+    return sfView::SUCCESS;
+  }
 }

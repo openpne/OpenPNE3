@@ -546,6 +546,10 @@
         <source>Community Category</source>
         <target>コミュニティカテゴリ</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>All categories</source>
+        <target>すべてのカテゴリー</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

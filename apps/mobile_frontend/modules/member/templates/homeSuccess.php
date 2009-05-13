@@ -51,6 +51,13 @@
 
 <?php
 $list = array(
+  link_to(__('Search Communities'), 'community/search'),
+);
+op_include_list('search', $list, array('title' => __('Search')))
+?>
+
+<?php
+$list = array(
   link_to(__('Edit profile'), 'member/editProfile'),
 );
 op_include_list('profileEdit', $list, array('title' => __('Edit profile')))
