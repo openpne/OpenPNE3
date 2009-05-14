@@ -59,6 +59,14 @@
         <target>拒否</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Delete</source>
+        <target>削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>More</source>
+        <target>もっと見る</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Makes friends</source>
         <target>ﾌﾚﾝﾄﾞに加える</target>
       </trans-unit>
@@ -369,6 +377,10 @@
       <trans-unit id="">
         <source>Main Photo</source>
         <target>ﾒｲﾝ写真</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>There are no photos.</source>
+        <target>写真は登録されていません。</target>
       </trans-unit>
       <trans-unit id="">
         <source>%1%'s Profile</source>
