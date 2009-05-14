@@ -40,22 +40,42 @@ class opMemberProfileSearchForm extends sfForm
 
   public function getQuery()
   {
-    $ids = Doctrine::getTable('Member')->searchMemberIds($this->getValue('name'));
+    $isWhere = false;
+    $ids = null;
+    if ($this->getValue('name'))
+    {
+      $ids = Doctrine::getTable('Member')->searchMemberIds($this->getValue('name'));
+      if (!$ids)
+      {
+        $ids = array();
+      }
+      $isWhere = true;
+    }
 
     $profileValues = array();
     foreach ($this->getProfiles() as $profile)
     {
-      $value = $this->getValue($profile->getName());
+      $key = $profile->getName();
+      $value = $this->getValue($key);
       if (!empty($value))
       {
-        $profileValues[$profile->getName()] = $value;
+        $profileValues[$key] = $value;
+        $isWhere = true;
       }
     }
 
     $ids = Doctrine::getTable('MemberProfile')->searchMemberIds($profileValues, $ids);
 
-    $q = Doctrine::getTable('Member')->createQuery()
-      ->whereIn('id', $ids);
+    $q = Doctrine::getTable('Member')->createQuery();
+
+    if ($isWhere)
+    {
+      if (!count($ids))
+      {
+        $ids[] = 0;
+      }
+      $q->whereIn('id', $ids);
+    }
 
     return $q;
   }

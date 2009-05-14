@@ -68,7 +68,7 @@ class MemberProfileTable extends Doctrine_Table
       ->fetchOne();
   }
 
-  public function searchMemberIds($profile = array(), $ids = array())
+  public function searchMemberIds($profile = array(), $ids = null)
   {
     foreach ($profile as $key => $value)
     {
