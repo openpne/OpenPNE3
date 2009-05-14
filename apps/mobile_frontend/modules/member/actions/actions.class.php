@@ -162,4 +162,29 @@ class memberActions extends sfOpenPNEMemberAction
 
     return sfView::SUCCESS;
   }
+
+ /**
+  * Executes search action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeSearch($request)
+  {
+    $params = $request->getParameter('member', array());
+    if ($request->hasParameter('search_query'))
+    {
+      $params['name']['text'] = $request->getParameter('search_query');
+    }
+
+    $this->filters = new opMemberProfileSearchForm();
+    $this->filters->bind($params);
+
+    $this->pager = new sfDoctrinePager('Member', 20);
+    $q = $this->filters->getQuery()->orderBy('id');
+    $this->pager->setQuery($q);
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
+
+    return sfView::SUCCESS;
+  }
 }

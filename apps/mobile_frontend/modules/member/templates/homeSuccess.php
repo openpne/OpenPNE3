@@ -51,6 +51,7 @@
 
 <?php
 $list = array(
+  link_to(__('Search Members'), 'member/search'),
   link_to(__('Search Communities'), 'community/search'),
 );
 op_include_list('search', $list, array('title' => __('Search')))

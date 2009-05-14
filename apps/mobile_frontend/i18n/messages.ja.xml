@@ -414,6 +414,18 @@
         <source>All categories</source>
         <target>すべてのｶﾃｺﾞﾘｰ</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Nickname</source>
+        <target>ﾆｯｸﾈｰﾑ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Search Members</source>
+        <target>ﾒﾝﾊﾞｰ検索</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your search queries did not match any members.</source>
+        <target>該当するメンバーはいませんでした。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
