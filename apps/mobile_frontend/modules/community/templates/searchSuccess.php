@@ -1,0 +1,57 @@
+<?php op_mobile_page_title(__('Search Communities')) ?>
+
+<?php if ($isResult): ?>
+<?php if ($pager->getNbResults()): ?>
+<center>
+<?php op_include_pager_total($pager); ?>
+</center>
+<?php
+$list = array();
+foreach ($pager->getResults() as $community)
+{
+  $list[] = link_to(sprintf('%s(%d)', $community->getName(), $community->countCommunityMembers()), 'community/home?id='.$community->getId());
+}
+$option = array(
+  'border' => true,
+);
+op_include_list('communityList', $list, $option);
+?>
+<?php else: ?>
+<?php echo __('Your search queries did not match any communities.') ?>
+<?php endif ?>
+<?php endif ?>
+
+<?php
+$options = array(
+  'url'    => url_for('community/search'),
+  'button' => __('Search'),
+);
+if (!$isResult)
+{
+  $options['moreInfo'] = array(link_to(__('Create a new community'), 'community/edit'));
+}
+
+op_include_form('searchCommunity', $filters, $options);
+?>
+
+<?php if ($isResult): ?>
+
+<?php else: ?>
+<?php
+$list = array();
+foreach ($categorys as $category)
+{
+  $list[] = link_to(sprintf('%s', $category->getName()), 'community/search?community_category_id='.$category->getId());
+}
+$option = array(
+  'border' => true,
+  'title' => __('Categories')
+);
+op_include_list('searchCategory', $list, $option);
+?>
+<?php endif ?>
+
+<?php if ($isResult): ?>
+<hr color="#b3ceef">
+<?php echo link_to(__('Search communities top'), 'community/search'); ?>
+<?php endif ?>
