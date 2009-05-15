@@ -13,10 +13,7 @@ $options->setDefault('no_method', 'post');
 <?php echo $options['body'] ?>
 </div>
 <?php endif ?>
-
-<div class="operation">
-<ul class="moreInfo button">
-<li>
+<center>
 <form action="<?php echo $options['yes_url'] ?>" method="<?php echo $options['yes_method'] ?>">
 <?php $yesFomrs = ($options['yes_form'] instanceof sfForm) ? array($options['yes_form']) : $options['yes_form'] ?>
 <?php if(is_array($yesFomrs)): ?>
@@ -28,8 +25,6 @@ $options->setDefault('no_method', 'post');
 <?php endif ?>
 <input type="submit" class="input_submit" value="<?php echo $options['yes_button'] ?>" />
 </form>
-</li>
-<li>
 <form action="<?php echo $options['no_url'] ?>" method="<?php echo $options['no_method'] ?>">
 <?php $noForms = ($options['no_form'] instanceof sfForm) ? array($options['no_form']) : $options['no_form'] ?>
 <?php if(is_array($noForms)): ?>
@@ -41,6 +36,4 @@ $options->setDefault('no_method', 'post');
 <?php endif ?>
 <input type="submit" class ="input_submit" value="<?php echo $options['no_button'] ?>" />
 </form>
-</li>
-</ul>
-</div>
+</center>

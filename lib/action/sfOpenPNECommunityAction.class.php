@@ -64,6 +64,13 @@ abstract class sfOpenPNECommunityAction extends sfActions
     {
       $this->community = new Community();
     }
+    else
+    {
+      if ($request->isMethod('post') && $request->hasParameter('is_delete'))
+      {
+        $this->redirect('community/delete');
+      }
+    }
 
     $this->communityForm       = new CommunityForm($this->community);
     $this->communityConfigForm = new CommunityConfigForm(array(), array('community' => $this->community));
@@ -85,6 +92,37 @@ abstract class sfOpenPNECommunityAction extends sfActions
         $this->redirect('community/home?id='.$this->community->getId());
       }
     }
+  }
+
+ /**
+  * Executes delete action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeDelete($request)
+  {
+    if ($this->id && !$this->isEditCommunity)
+    {
+      $this->forward('default', 'secure');
+    }
+
+    if ($request->isMethod('post'))
+    {
+      if($request->hasParameter('is_delete'))
+      {
+        $community = Doctrine::getTable('Community')->find($this->id);
+        if ($community)
+        {
+          $community->delete();
+        }
+        $this->redirect('community/search');
+      }
+      else
+      {
+        $this->redirect('community/home?id=' . $this->id);
+      }
+    }
+    $this->community = Doctrine::getTable('Community')->find($this->id);
   }
 
  /**

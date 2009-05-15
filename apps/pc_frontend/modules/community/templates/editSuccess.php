@@ -15,4 +15,16 @@ else
 }
 
 op_include_form('formCommunity', array($communityForm, $communityConfigForm, $communityFileForm), $options);
+
+if (!$communityForm->isNew())
+{
+  op_include_parts('buttonBox', 'deleteForm', array(
+    'title' => __('Delete this community'),
+    'body' => __('delete this community.if you delete this community please to report in advance for all this community members.'),
+    'button' => __('Delete'),
+    'method' => 'get',
+    'url' => url_for('community/delete?id=' . $community->getId()),
+  ));
+}
+
 ?>
