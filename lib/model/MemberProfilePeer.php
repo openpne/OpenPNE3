@@ -87,6 +87,7 @@ class MemberProfilePeer extends BaseMemberProfileNestedSetPeer
 
   public static function searchMemberIds($profile = array(), $ids = array())
   {
+    if (!is_array($profile)) return $ids;
     foreach ($profile as $key => $value)
     {
       $item = ProfilePeer::retrieveByName($key);

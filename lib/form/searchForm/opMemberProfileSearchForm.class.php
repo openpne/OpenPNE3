@@ -45,7 +45,10 @@ class opMemberProfileSearchForm extends sfForm
     $ids = MemberPeer::searchMemberIds($this->getValue('member'));
     $ids = MemberProfilePeer::searchMemberIds($this->getValue('profile'), $ids);
 
-    $c->add(MemberPeer::ID, $ids, Criteria::IN);
+    if ($this->getValue('member') || $this->getValue('profile'))
+    {
+      $c->add(MemberPeer::ID, $ids, Criteria::IN);
+    }
 
     return $c;
   }
