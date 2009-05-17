@@ -26,5 +26,11 @@ class ProjectConfiguration extends sfProjectConfiguration
   public function configureDoctrine($manager)
   {
     $manager->setAttribute(Doctrine::ATTR_MODEL_LOADING, 2);
+
+    if (extension_loaded('apc'))
+    {
+      $cacheDriver = new Doctrine_Cache_Apc();
+      $manager->setAttribute(Doctrine::ATTR_QUERY_CACHE, $cacheDriver);
+    }
   }
 }
