@@ -42,10 +42,19 @@ class MemberRelationshipTable extends Doctrine_Table
 
   public function getFriendMemberIds($memberId)
   {
-    return $this->createQuery()
+    $result = array();
+
+    $collection = $this->createQuery()
       ->select('id')
       ->where('member_id_to = ?', $memberId)
       ->andWhere('is_friend = ?', true)
-      ->fetchArray();
+      ->execute();
+
+    foreach ($collection as $record)
+    {
+      $result[] = $record->id;
+    }
+
+    return $result;
   }
 }
