@@ -17,7 +17,8 @@
  */
 class sfOpenPNESecurityUser extends sfBasicSecurityUser
 {
-  protected $authAdapter = null;
+  protected
+    $authAdapters = array();
 
   /**
    * Initializes the current user.
@@ -35,8 +36,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
       $this->setCurrentAuthMode($authMode);
     }
 
-    $containerClass = self::getAuthAdapterClassName($this->getCurrentAuthMode());
-    $this->authAdapter = new $containerClass($this->getCurrentAuthMode());
+    $this->createAuthAdapter($this->getCurrentAuthMode());
 
     $this->initializeCredentials();
   }
@@ -67,9 +67,25 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     return $result;
   }
 
-  public function getAuthAdapter()
+  public function getAuthAdapter($authMode = null)
   {
-    return $this->authAdapter;
+    if (!$authMode)
+    {
+      $authMode = $this->getCurrentAuthMode();
+    }
+
+    $this->createAuthAdapter($authMode);
+
+    return $this->authAdapters[$authMode];
+  }
+
+  public function createAuthAdapter($authMode)
+  {
+    if (empty($this->authAdapters[$authMode]))
+    {
+      $containerClass = self::getAuthAdapterClassName($authMode);
+      $this->authAdapters[$authMode] = new $containerClass($authMode);
+    }
   }
 
   public function getAuthForm()
@@ -82,7 +98,8 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     $result = array();
 
     $authModes = $this->getAuthModes();
-    foreach ($authModes as $authMode) {
+    foreach ($authModes as $authMode)
+    {
       $adapterClass = self::getAuthAdapterClassName($authMode);
       $adapter = new $adapterClass($authMode);
       $result[$authMode] = $adapter->getAuthForm();
@@ -109,6 +126,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   public function setCurrentAuthMode($authMode)
   {
     $this->setAttribute('auth_mode', $authMode, 'sfOpenPNESecurityUser');
+    $this->createAuthAdapter($this->getCurrentAuthMode());
   }
 
   public function getCurrentAuthMode()
