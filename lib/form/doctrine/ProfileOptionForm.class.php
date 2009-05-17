@@ -39,5 +39,6 @@ class ProfileOptionForm extends BaseProfileOptionForm
     $this->widgetSchema->setNameFormat('profile_option[%s]');
 
     $this->embedI18n(array('ja_JP'));
+    unset($this['created_at'], $this['updated_at']);
   }
 }

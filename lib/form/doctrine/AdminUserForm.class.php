@@ -41,5 +41,7 @@ class AdminUserForm extends BaseAdminUserForm
     $this->mergePostValidator(new sfValidatorDoctrineUnique(array(
       'model' => 'AdminUser', 'column' => array('username')
     )));
+
+    unset($this['created_at'], $this['updated_at']);
   }
 }

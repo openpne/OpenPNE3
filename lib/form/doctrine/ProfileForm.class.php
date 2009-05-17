@@ -19,6 +19,8 @@ class ProfileForm extends BaseProfileForm
 {
   public function configure()
   {
+    unset($this['created_at'], $this['updated_at']);
+
     $isDispOption = array('choices' => array('1' => '表示する', '0' => '表示しない'));
     $this->setWidgets(array(
       'name' => new sfWidgetFormInput(),
