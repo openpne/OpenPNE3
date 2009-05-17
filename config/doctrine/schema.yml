@@ -9,7 +9,7 @@ Member:
     name: { type: string(64), default: "", notnull: true }
     invite_member_id: { type: integer(4) }
   relations:
-    Member: { local: invite_member_id, foreign: id }
+    Member: { local: invite_member_id, foreign: id, onDelete: set null }
 
 MemberRelationship:
   columns:
@@ -20,8 +20,8 @@ MemberRelationship:
     is_friend_pre: { type: boolean }
     is_access_block: { type: boolean }
   relations:
-    Member: { local: member_id_to, foreign: id }
-    Member_2: { class: Member, local: member_id_from, foreign: id }
+    Member: { local: member_id_to, foreign: id, onDelete: cascade }
+    Member_2: { class: Member, local: member_id_from, foreign: id, onDelete: cascade }
   indexes:
     member_id_to_from_UNIQUE:
       fields: [member_id_to, member_id_from]
@@ -37,8 +37,8 @@ MemberImage:
     file_id: { type: integer(4), notnull: true }
     is_primary: boolean
   relations:
-    Member: { local: member_id, foreign: id }
-    File: { local: file_id, foreign: id }
+    Member: { local: member_id, foreign: id, onDelete: cascade }
+    File: { local: file_id, foreign: id, onDelete: cascade }
 
 File:
   columns:
@@ -99,7 +99,7 @@ ProfileOption:
     value: { type: string }
     sort_order: { type: integer(4) }
   relations:
-    Profile: { local: profile_id, foreign: id }
+    Profile: { local: profile_id, foreign: id, onDelete: cascade }
 
 MemberProfile:
   actAs:
@@ -115,9 +115,9 @@ MemberProfile:
     value: { type: string }
     public_flag: { type: integer(1) }
   relations:
-    Member: { local: member_id, foreign: id }
-    Profile: { local: profile_id, foreign: id }
-    ProfileOption: { local: profile_option_id, foreign: id }
+    Member: { local: member_id, foreign: id, onDelete: cascade }
+    Profile: { local: profile_id, foreign: id, onDelete: cascade }
+    ProfileOption: { local: profile_option_id, foreign: id, onDelete: cascade }
 
 Community:
   columns:
@@ -126,8 +126,8 @@ Community:
     file_id: { type: integer(4) }
     community_category_id: { type: integer(4) }
   relations:
-    File: { local: file_id, foreign: id }
-    CommunityCategory: { local: community_category_id, foreign: id }
+    File: { local: file_id, foreign: id, onDelete: set null }
+    CommunityCategory: { local: community_category_id, foreign: id, onDelete: set null }
   indexes:
     name_UNIQUE:
       fields: [name]
@@ -140,8 +140,8 @@ CommunityMember:
     member_id: { type: integer(4), notnull: true }
     position: { type: string(32), default: "" }
   relations:
-    Community: { local: community_id, foreign: id }
-    Member: { local: member_id, foreign: id }
+    Community: { local: community_id, foreign: id, onDelete: cascade }
+    Member: { local: member_id, foreign: id, onDelete: cascade }
 
 AdminUser:
   columns:
@@ -171,7 +171,7 @@ MemberConfig:
     name: { type: string(64), default: "", notnull: true }
     value: { type: string }
   relations:
-    Member: { local: member_id, foreign: id }
+    Member: { local: member_id, foreign: id, onDelete: cascade }
 
 CommunityConfig:
   columns:
@@ -180,7 +180,7 @@ CommunityConfig:
     name: { type: string(64), default: "", notnull: true }
     value: { type: string }
   relations:
-    Community: { local: community_id, foreign: id }
+    Community: { local: community_id, foreign: id, onDelete: cascade }
 
 CommunityCategory:
   actAs:
@@ -209,7 +209,7 @@ GadgetConfig:
     gadget_id: { type: integer(4) }
     value: { type: string }
   relations:
-    Gadget: { local: gadget_id, foreign: id }
+    Gadget: { local: gadget_id, foreign: id, onDelete: cascade }
 
 Navigation:
   actAs:
