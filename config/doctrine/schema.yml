@@ -22,6 +22,13 @@ MemberRelationship:
   relations:
     Member: { local: member_id_to, foreign: id }
     Member_2: { class: Member, local: member_id_from, foreign: id }
+  indexes:
+    member_id_to_from_UNIQUE:
+      fields: [member_id_to, member_id_from]
+      type: unique
+    member_id_from_to_UNIQUE:
+      fields: [member_id_from, member_id_to]
+      type: unique
 
 MemberImage:
   columns:
@@ -41,6 +48,10 @@ File:
     original_filename: { type: string }
   relations:
     FileBin: { local: id, foreign: file_id }
+  indexes:
+    name_UNIQUE:
+      fields: [name]
+      type: unique
 
 FileBin:
   columns:
@@ -71,6 +82,10 @@ Profile:
     sort_order: { type: integer(4) }
     caption: { type: string, notnull: true }
     info: { type: string }
+  indexes:
+    name_UNIQUE:
+      fields: [name]
+      type: unique
 
 ProfileOption:
   actAs:
@@ -113,6 +128,10 @@ Community:
   relations:
     File: { local: file_id, foreign: id }
     CommunityCategory: { local: community_category_id, foreign: id }
+  indexes:
+    name_UNIQUE:
+      fields: [name]
+      type: unique
 
 CommunityMember:
   columns:
@@ -129,6 +148,10 @@ AdminUser:
     id: { type: integer(4), primary: true, autoincrement: true }
     username: { type: string(64), default: "", notnull: true }
     password: { type: string(40), default: "", notnull: true }
+  indexes:
+    username_UNIQUE:
+      fields: [username]
+      type: unique
 
 SnsConfig:
   actAs: []
@@ -136,6 +159,10 @@ SnsConfig:
     id: { type: integer(4), primary: true, autoincrement: true }
     name: { type: string(64), default: "", notnull: true }
     value: { type: string }
+  indexes:
+    name_UNIQUE:
+      fields: [name]
+      type: unique
 
 MemberConfig:
   columns:
@@ -202,3 +229,7 @@ Blacklist:
     id: { type: integer(4), primary: true, autoincrement: true }
     uid: { type: string(32), default: "", notnull: true }
     memo: { type: string }
+  indexes:
+    uid_UNIQUE:
+      fields: [uid]
+      type: unique
