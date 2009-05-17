@@ -17,4 +17,5 @@
  */
 abstract class opAclBuilder
 {
+  abstract static public function buildResource($resource, $targetMembers);
 }
