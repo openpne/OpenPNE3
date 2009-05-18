@@ -397,7 +397,7 @@ function op_truncate($string, $width = 80, $etc = '', $rows = 1, $is_html = true
       {
         $p_string = substr($p_string, strlen($result[$i - 1]));
       }
-      if (!$p_string)
+      if (!$p_string && ($p_string !== '0'))
       {
         break;
       }
