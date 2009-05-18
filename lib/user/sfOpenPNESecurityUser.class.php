@@ -192,9 +192,13 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   */
   public function logout()
   {
+    $authMode = $this->getCurrentAuthMode();
+
     $this->setAuthenticated(false);
     $this->getAttributeHolder()->removeNamespace('sfOpenPNESecurityUser');
     $this->clearCredentials();
+
+    $this->setCurrentAuthMode($authMode);
   }
 
  /**
