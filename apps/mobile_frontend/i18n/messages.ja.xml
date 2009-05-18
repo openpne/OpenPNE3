@@ -430,6 +430,30 @@
         <source>Your search queries did not match any members.</source>
         <target>該当するメンバーはいませんでした。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>delete this community.if you delete this community please to report in advance for all this community members.</source>
+        <target>このｺﾐｭﾆﾃｨを削除します。このｺﾐｭﾆﾃｨを削除する場合は、事前にこのｺﾐｭﾆﾃｨのメンバーに報告してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete</source>
+        <target>削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete this community</source>
+        <target>ｺﾐｭﾆﾃｨを削除する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you delete this community?</source>
+        <target>削除してよろしいですか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Yes</source>
+        <target>はい</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>No</source>
+        <target>いいえ</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

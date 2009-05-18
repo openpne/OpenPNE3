@@ -546,6 +546,34 @@
         <source>Community Category</source>
         <target>コミュニティカテゴリ</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>All categories</source>
+        <target>すべてのカテゴリー</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>delete this community.if you delete this community please to report in advance for all this community members.</source>
+        <target>このコミュニティを削除します。このコミュニティを削除する場合は、事前にこのコミュニティのメンバーに報告してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete</source>
+        <target>削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete this community</source>
+        <target>コミュニティを削除する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you delete this community?</source>
+        <target>削除してよろしいですか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Yes</source>
+        <target>はい</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>No</source>
+        <target>いいえ</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
