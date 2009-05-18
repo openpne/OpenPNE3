@@ -19,7 +19,9 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
 {
   protected
     $category = 'accessBlock',
-    $blockedId = array();
+    $blockedId = array(),
+    $blockedRelationshipId = array(),
+    $setBlockedId = array();
 
   public function configure()
   {
@@ -29,6 +31,7 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
       if ($relation->getIsAccessBlock())
       {
         $this->blockedId[] = $relation->getMemberIdTo();
+        $this->blockedRelationshipId[] = $relation->getId();
       }
     }
   }
@@ -40,19 +43,60 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
       return parent::saveConfig($name, $value);
     }
 
+    $value = $this->setBlockedIds;
+    $key = 0;
     foreach ($value as $memberId)
     {
-      $relation = MemberRelationshipPeer::retrieveByFromAndTo($this->member->getId(), $memberId);
-      if (!$relation)
+      $defaultId = 0;
+      if ($key + 1 <= count($this->blockedId))
       {
-        $relation = new MemberRelationship();
-        $relation->setMemberIdFrom($this->member->getId());
-        $relation->setMemberIdTo($memberId);
+        $defaultId = $this->blockedId[$key];
       }
 
-      $relation->setIsAccessBlock(in_array($memberId, $value));
-      $relation->save();
+      switch ($memberId)
+      {
+      case '':
+        // delete
+        if (!$defaultId) break;
+        $relationship = MemberRelationshipPeer::retrieveByFromAndTo($this->member->getId(), $defaultId);
+        if (!$relationship) break;
+        $relationship->delete();
+        break;
+      case $defaultId:
+        // equal
+        break;
+      default:
+        $relationship = MemberRelationshipPeer::retrieveByFromAndTo($this->member->getId(), $memberId);
+        // update
+        if ($defaultId)
+        {
+          if (!$relationship)
+          {
+            $relationship = MemberRelationshipPeer::retrieveByFromAndTo($this->member->getId(), $defaultId);
+          }
+        }
+        // insert
+        else
+        {
+          if (!$relationship)
+          {
+            $relationship = new MemberRelationship();
+            $relationship->setMemberIdFrom($this->member->getId());
+          }
+        }
+        $relationship->setMemberIdTo($memberId);
+        $relationship->setIsAccessBlock(true);
+        $relationship->save();
+      }
+      if ($key >= count($this->blockedId)) break;
+      $key++;
     }
+  }
+
+  public function bind($params)
+  {
+    $this->setBlockedIds = $params['access_block'];
+    return parent::bind($params);
   }
 
   public function setMemberConfigWidget($name)
