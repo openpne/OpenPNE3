@@ -233,6 +233,10 @@ pre {
 /*----------------------------------------------
  * Base Layout
  *--------------------------------------------*/
+#Container {
+  min-width: 950px;
+}
+
 #HeaderContainer,
 #ContentsContainer,
 #FooterContainer {
