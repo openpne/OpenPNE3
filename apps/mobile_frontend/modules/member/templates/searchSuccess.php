@@ -8,7 +8,7 @@
 $list = array();
 foreach ($pager->getResults() as $member)
 {
-  $list[] = link_to(sprintf('%s', $member->getName()), 'community/home?id=' . $member->getId());
+  $list[] = link_to(sprintf('%s', $member->getName()), 'member/profile?id=' . $member->getId());
 }
 $option = array(
   'border' => true,
