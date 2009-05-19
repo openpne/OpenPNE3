@@ -93,7 +93,8 @@ abstract class sfOpenPNEFriendAction extends sfActions
       }
     }
 
-    $this->member = MemberPeer::retrieveByPk($this->id);
+    $this->member = Doctrine::getTable('Member')->find($this->id);
+
     return sfView::INPUT;
   }
 

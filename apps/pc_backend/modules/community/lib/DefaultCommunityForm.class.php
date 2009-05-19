@@ -32,14 +32,14 @@ class DefaultCommunityForm extends sfForm
 
   public function save()
   {
-    $community = CommunityPeer::retrieveByPk($this->getValue('id'));
+    $community = Doctrine::getTable('Community')->find($this->getValue('id'));
 
     if (!$community)
     {
       return false;
     }
 
-    $communityConfig = CommunityConfigPeer::retrieveByNameAndCommunityId('is_default', $community->getId());
+    $communityConfig = Doctrine::getTable('CommunityConfig')->retrieveByNameAndCommunityId('is_default', $community->getId());
 
     if (!$communityConfig)
     {
@@ -47,8 +47,9 @@ class DefaultCommunityForm extends sfForm
     }
     $communityConfig->setCommunity($community);
     $communityConfig->setName('is_default');
-    $communityConfig->setValue(true);
+    $communityConfig->setValue(1);
     $communityConfig->save();
+
     return true;
   }
 }
