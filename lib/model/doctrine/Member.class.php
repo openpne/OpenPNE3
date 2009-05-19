@@ -88,18 +88,15 @@ class Member extends BaseMember
     return Doctrine::getTable('Community')->retrievesByMemberId($this->getId(), $limit, $isRandom);
   }
 
-  public function getFriendPreTo(Criteria $c = null)
+  public function getFriendPreTo(Doctrine_Query $q = null)
   {
-  /*
-    if (!$c)
+    if (!$q)
     {
-      $c = new Criteria();
+      $q = Doctrine::getTable('MemberRelationship')->createQuery();
     }
-    $c->add(MemberRelationshipPeer::IS_FRIEND_PRE, true);
-    return $this->getMemberRelationshipsRelatedByMemberIdTo($c);
-    */
-
-    return array();
+    $q->where('member_id_to = ?', $this->getId());
+    $q->addWhere('is_friend_pre = ?', true);
+    return $q->execute();
   }
 
   public function countFriendPreTo(Criteria $c = null)
