@@ -96,49 +96,44 @@ class Member extends BaseMember
     }
     $q->where('member_id_to = ?', $this->getId());
     $q->addWhere('is_friend_pre = ?', true);
+
     return $q->execute();
   }
 
-  public function countFriendPreTo(Criteria $c = null)
+  public function countFriendPreTo(Doctrine_Query $q = null)
   {
-  /*
-    if (!$c)
+    if (!$q)
     {
-      $c = new Criteria();
+      $q = Doctrine::getTable('MemberRelationship')->createQuery();
     }
-    $c->add(MemberRelationshipPeer::IS_FRIEND_PRE, true);
-    return $this->countMemberRelationshipsRelatedByMemberIdTo($c);
-    */
+    $q->where('member_id_to = ?', $this->getId());
+    $q->addWhere('is_friend_pre = ?', true);
 
-    return array();
+    return $q->count();
   }
 
-  public function getFriendPreFrom(Criteria $c = null)
+  public function getFriendPreFrom(Doctrine_Query $q = null)
   {
-  /*
-    if (!$c)
+    if (!$q)
     {
-      $c = new Criteria();
+      $q = Doctrine::getTable('MemberRelationship')->createQuery();
     }
-    $c->add(MemberRelationshipPeer::IS_FRIEND_PRE, true);
-    return $this->getMemberRelationshipsRelatedByMemberIdFrom($c);
-    */
+    $q->where('member_id_from = ?', $this->getId());
+    $q->addWhere('is_friend_pre = ?', true);
 
-    return array();
+    return $q->execute();
   }
 
-  public function countFriendPreFrom(Criteria $c = null)
+  public function countFriendPreFrom(Doctrine_Query $q = null)
   {
-  /*
-    if (!$c)
+    if (!$q)
     {
-      $c = new Criteria();
+      $q = Doctrine::getTable('MemberRelationship')->createQuery();
     }
-    $c->add(MemberRelationshipPeer::IS_FRIEND_PRE, true);
-    return $this->countMemberRelationshipsRelatedByMemberIdFrom($c);
-    */
+    $q->where('member_id_from = ?', $this->getId());
+    $q->addWhere('is_friend_pre = ?', true);
 
-    return 0;
+    return $q->count();
   }
 
   public function getImage()
