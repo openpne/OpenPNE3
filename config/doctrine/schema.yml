@@ -21,7 +21,7 @@ MemberRelationship:
     is_access_block: { type: boolean }
   relations:
     Member: { local: member_id_to, foreign: id, onDelete: cascade }
-    Member_2: { class: Member, local: member_id_from, foreign: id, onDelete: cascade }
+    MemberRelatedByMemberIdFrom: { class: Member, local: member_id_from, foreign: id, onDelete: cascade }
   indexes:
     member_id_to_from_UNIQUE:
       fields: [member_id_to, member_id_from]

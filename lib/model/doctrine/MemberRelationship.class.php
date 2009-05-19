@@ -104,9 +104,4 @@ class MemberRelationship extends BaseMemberRelationship
     $this->toInstance = $relation;
     return $this->toInstance;
   }
-
-  public function getMemberRelatedByMemberIdFrom()
-  {
-    return $this->getMember_2();
-  }
 }
