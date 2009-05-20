@@ -16,6 +16,9 @@ editGadgetSuccess:
   stylesheets: [-backend]
   javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
 
+profileGadgetPlotSuccess:
+  <<: *homeGadgetPlotSuccess
+
 loginGadgetPlotSuccess:
   <<: *homeGadgetPlotSuccess
 
@@ -23,6 +26,9 @@ sideBannerGadgetPlotSuccess:
   <<: *homeGadgetPlotSuccess
 
 mobileHomeGadgetPlotSuccess:
+  <<: *homeGadgetPlotSuccess
+
+mobileProfileGadgetPlotSuccess:
   <<: *homeGadgetPlotSuccess
 
 mobileLoginGadgetPlotSuccess:

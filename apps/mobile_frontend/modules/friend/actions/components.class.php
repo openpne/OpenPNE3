@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class friendComponents extends sfOpenPNEFriendComponents
+class friendComponents extends sfOpenPNECommunityComponents
 {
   public function executeFriendListBox($request)
   {
@@ -19,7 +19,6 @@ class friendComponents extends sfOpenPNEFriendComponents
     }
     $this->member = Doctrine::getTable('Member')->find($memberId);
     $this->row = $this->gadget->getConfig('row');
-    $this->col = $this->gadget->getConfig('col');
-    $this->friends = $this->member->getFriends($this->row * $this->col, true);
+    $this->friends = $this->member->getFriends($this->row, true);
   }
 }

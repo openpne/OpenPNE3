@@ -82,9 +82,14 @@ class memberActions extends sfOpenPNEMemberAction
     $this->friendsSize = 5;
     $this->communitiesSize = 5;
 
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileProfile');
+    $this->mobileTopGadgets = $gadgets['mobileProfileTop'];
+    $this->mobileContentsGadgets = $gadgets['mobileProfileContents'];
+    $this->mobileBottomGadgets = $gadgets['mobileProfileBottom'];
+
     return parent::executeProfile($request);
   }
-  
+
  /**
   * Executes configUID action
   *

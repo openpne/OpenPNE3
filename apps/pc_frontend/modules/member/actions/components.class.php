@@ -8,9 +8,9 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class friendComponents extends sfOpenPNEFriendComponents
+class memberComponents extends sfComponents
 {
-  public function executeFriendListBox($request)
+  public function executeProfileListBox($request)
   {
     $memberId = $this->getUser()->getMemberId();
     if ($request->hasParameter('id'))
@@ -18,8 +18,5 @@ class friendComponents extends sfOpenPNEFriendComponents
       $memberId = $request->getParameter('id');
     }
     $this->member = Doctrine::getTable('Member')->find($memberId);
-    $this->row = $this->gadget->getConfig('row');
-    $this->col = $this->gadget->getConfig('col');
-    $this->friends = $this->member->getFriends($this->row * $this->col, true);
   }
 }

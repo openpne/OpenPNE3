@@ -43,3 +43,33 @@ Gadget:
     type: "mobileLoginContents"
     name: "loginForm"
     sort_order: 10
+
+  profile_gadget_member_image:
+    type: "profileSideMenu"
+    name: "memberImageBox"
+    sort_order: 10
+
+  profile_gadget_friend_table:
+    type: "profileSideMenu"
+    name: "friendListBox"
+    sort_order: 20
+
+  profile_gadget_community_table:
+    type: "profileSideMenu"
+    name: "communityJoinListBox"
+    sort_order: 30
+
+  profile_gadget_profile:
+    type: "profileContents"
+    name: "profileListBox"
+    sort_order: 10
+
+  mobile_profile_gadget_friend_table:
+    type: "mobileProfileBottom"
+    name: "friendListBox"
+    sort_order: 10
+
+  mobile_profile_gadget_community_table:
+    type: "mobileProfileBottom"
+    name: "communityJoinListBox"
+    sort_order: 20

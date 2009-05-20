@@ -112,8 +112,23 @@ class memberActions extends sfOpenPNEMemberAction
       sfConfig::set('sf_nav_type', 'friend');
     }
 
-    $result = parent::executeProfile($request);
-    return $result;
+    $this->gadgetConfig = sfConfig::get('op_profile_gadget_list');
+
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('profile');
+    $layout = Doctrine::getTable('SnsConfig')->get('profile_layout', 'layoutA');
+    $this->setLayout($layout);
+
+    switch ($layout)
+    {
+      case 'layoutA' :
+        $this->topGadgets = $gadgets['profileTop'];
+      case 'layoutB' :
+        $this->sideMenuGadgets = $gadgets['profileSideMenu'];
+    }
+    $this->contentsGadgets = $gadgets['profileContents'];
+    $this->bottomGadgets = $gadgets['profileBottom'];
+
+    return parent::executeProfile($request);
   }
 
  /**

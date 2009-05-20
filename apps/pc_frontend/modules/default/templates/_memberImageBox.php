@@ -1,6 +1,6 @@
 <?php
 $options = array(
-  'object'      => $sf_user->getMember(),
+  'object'      => $member,
   'moreInfo' => array(
     link_to(__('Edit Photo'), 'member/configImage'),
     link_to(__('Show Profile'), 'member/profile'),

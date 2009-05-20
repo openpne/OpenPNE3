@@ -18,12 +18,14 @@ body
 }
 
 #plotTop,
+#plotProfileTop
 #plotLoginTop
 {
   width: 100%;
 }
 
 .layoutA #plotSideMenu,
+.layoutA #plotProfileSideMenu,
 .layoutA #plotLoginSideMenu
 {
   width: 150px;
@@ -32,6 +34,7 @@ body
 }
 
 .layoutA #plotContents,
+.layoutA #plotProfileContents,
 .layoutA #plotLoginContents
 {
   width: 380px;
@@ -41,6 +44,7 @@ body
 }
 
 .layoutB #plotSideMenu,
+.layoutB #plotProfileSideMenu,
 .layoutB #plotLoginSideMenu
 {
   width: 100px;
@@ -48,6 +52,7 @@ body
 }
 
 .layoutB #plotContents,
+.layoutB #plotProfileContents,
 .layoutB #plotLoginContents
 {
   width: 430px;
@@ -56,6 +61,7 @@ body
 }
 
 .layoutC #plotContents,
+.layoutC #plotProfileContents,
 .layoutC #plotLoginContents
 {
   width: 540px;
@@ -63,6 +69,7 @@ body
 }
 
 #plotBottom,
+#plotProfileBottom,
 #plotLoginBottom
 {
   width: 100%;
@@ -73,6 +80,10 @@ body
 #plotSideMenu div,
 #plotContents div,
 #plotBottom div,
+#plotProfileTop div,
+#plotProfileSideMenu div,
+#plotProfileContents div,
+#plotProfileBottom div,
 #plotLoginTop div,
 #plotLoginSideMenu div,
 #plotLoginContents div,
@@ -81,7 +92,10 @@ body
 #plotMobileTop div,
 #plotMobileContents div,
 #plotMobileBottom div,
-#plotMobileLoginContents div
+#plotMobileLoginContents div,
+#plotMobileProfileTop div,
+#plotMobileProfileContents div,
+#plotMobileProfileBottom div
 {
   width: 100%;
   height: 35px;
@@ -96,6 +110,10 @@ body
 #plotSideMenu div.emptyGadget,
 #plotContents div.emptyGadget,
 #plotBottom div.emptyGadget,
+#plotProfileTop div.emptyGadget,
+#plotProfileSideMenu div.emptyGadget,
+#plotProfileContents div.emptyGadget,
+#plotProfileBottom div.emptyGadget,
 #plotLoginTop div.emptyGadget,
 #plotLoginSideMenu div.emptyGadget,
 #plotLoginContents div.emptyGadget,
@@ -104,6 +122,9 @@ body
 #plotMobileTop div.emptyGadget,
 #plotMobileContents div.emptyGadget,
 #plotMobileBottom div.emptyGadget,
+#plotMobileProfileTop div.emptyGadget,
+#plotMobileProfileContents div.emptyGadget,
+#plotMobileProfileBottom div.emptyGadget,
 #plotMobileLoginContents div.emptyGadget
 {
   background-color: transparent;
