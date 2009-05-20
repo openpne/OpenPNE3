@@ -51,10 +51,12 @@
 
 <?php include_customizes('menu', 'bottom') ?>
 </td></tr>
+
+<tr><td colspan="2" align="center">
+<hr color="#0d6ddf" size="3">
+</td></tr>
 </table>
-
 <br>
-
 <?php if ($mobileContentsGadgets) : ?>
 <?php foreach ($mobileContentsGadgets as $gadget) : ?>
 <?php if ($gadget->isEnabled()) : ?>
