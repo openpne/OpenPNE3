@@ -45,14 +45,14 @@ class MemberRelationshipTable extends Doctrine_Table
     $result = array();
 
     $collection = $this->createQuery()
-      ->select('id')
-      ->where('member_id_to = ?', $memberId)
+      ->select('member_id_to')
+      ->where('member_id_from = ?', $memberId)
       ->andWhere('is_friend = ?', true)
       ->execute();
 
     foreach ($collection as $record)
     {
-      $result[] = $record->id;
+      $result[] = $record->member_id_to;
     }
 
     return $result;
