@@ -27,4 +27,16 @@ class defaultComponents extends sfComponents
   {
     $this->forms = $this->getUser()->getAuthForms();
   }
+
+  public function executeHeaderGadgets()
+  {
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileHeader');
+    $this->gadgets = $gadgets['mobileHeaderContents'];
+  }
+
+  public function executeFooterGadgets()
+  {
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileFooter');
+    $this->gadgets = $gadgets['mobileFooterContents'];
+  }
 }

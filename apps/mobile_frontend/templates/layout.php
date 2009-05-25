@@ -20,6 +20,8 @@
 
 <a name="#top"></a>
 
+<?php include_component('default', 'headerGadgets'); ?>
+
 <?php if (!include_slot('op_mobile_header')): ?>
 <table width="100%">
 <tr><td align="center" bgcolor="#0D6DDF">
@@ -36,11 +38,17 @@
 
 <?php echo $sf_content ?>
 
+<?php include_component('default', 'footerGadgets'); ?>
+
+<?php if (!has_slot('op_mobile_footer_menu')): ?>
+<?php include_slot('op_mobile_footer_menu'); ?>
+<?php endif; ?>
+
 <a name="#bottom"></a>
 
 <?php include_component('default', 'nav', array('type' => 'mobile_global')) ?>
 
-<?php if(!include_slot('op_mobile_footer')): ?>
+<?php if (!include_slot('op_mobile_footer')): ?>
 <table width="100%">
 <tbody><tr><td align="center" bgcolor="#0d6ddf">
 <font color="#eeeeee"><a href="<?php echo url_for('member/home') ?>" accesskey="0"><font color="#eeeeee">0.<?php echo __('home') ?></font></a> / <a href="#top" accesskey="2"><font color="#eeeeee">2. <?php echo __('top') ?></font></a> / <a href="#bottom" accesskey="8"><font color="#eeeeee">8. <?php echo __('bottom') ?></font></a></font><br>

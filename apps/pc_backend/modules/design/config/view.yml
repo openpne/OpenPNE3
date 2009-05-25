@@ -33,3 +33,9 @@ mobileProfileGadgetPlotSuccess:
 
 mobileLoginGadgetPlotSuccess:
   <<: *homeGadgetPlotSuccess
+
+mobileHeaderGadgetPlotSuccess:
+  <<: *homeGadgetPlotSuccess
+
+mobileFooterGadgetPlotSuccess:
+  <<: *homeGadgetPlotSuccess

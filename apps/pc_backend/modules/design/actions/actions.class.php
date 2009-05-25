@@ -213,6 +213,28 @@ class designActions extends sfActions
   }
 
  /**
+  * Executes mobile header gadget plot action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeMobileHeaderGadgetPlot(sfWebRequest $request)
+  {
+    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileHeader');
+    $this->gadgetConfig = sfConfig::get('op_mobile_header_gadget_list');
+  }
+
+ /**
+  * Executes mobile footer gadget plot action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeMobileFooterGadgetPlot(sfWebRequest $request)
+  {
+    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileFooter');
+    $this->gadgetConfig = sfConfig::get('op_mobile_footer_gadget_list');
+  }
+
+ /**
   * Executes add gadget action
   *
   * @param sfRequest $request A request object

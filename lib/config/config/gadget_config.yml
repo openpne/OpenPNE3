@@ -42,3 +42,15 @@ mobileLogin:
   layout:
     default: layoutD
   plot_action: [design, mobileLoginGadgetPlot]
+
+mobileHeader:
+  name: "携帯版ヘッダー"
+  layout:
+    default: layoutD
+  plot_action: [design, mobileHeaderGadgetPlot]
+
+mobileFooter:
+  name: "携帯版フッター"
+  layout:
+    default: layoutD
+  plot_action: [design, mobileFooterGadgetPlot]
