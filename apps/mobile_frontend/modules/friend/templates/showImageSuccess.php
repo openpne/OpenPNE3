@@ -8,4 +8,6 @@
 <?php endfor; ?>
 </center>
 <hr color="#cccccc">
-<?php echo link_to(__("%1%'s Profile", array('%1%' => $member->getName())), 'member/profile?id='.$member->getId());
+<?php slot('op_mobile_footer_menu') ?>
+<?php echo link_to(__("%1%'s Profile", array('%1%' => $member->getName())), 'member/profile?id='.$member->getId()); ?>
+<?php end_slot(); ?>

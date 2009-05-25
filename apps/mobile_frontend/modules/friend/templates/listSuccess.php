@@ -17,4 +17,6 @@ op_include_list('friendList', $list, $option);
 
 <?php op_include_pager_navigation($pager, 'friend/list?page=%d&id='.$id , array('is_total' => false)); ?><br>
 
+<?php slot('op_mobile_footer_menu') ?>
 <?php echo link_to(__('Manage friend'), 'friend/manage') ?>
+<?php end_slot(); ?>

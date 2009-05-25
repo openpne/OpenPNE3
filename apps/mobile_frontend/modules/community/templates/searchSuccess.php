@@ -52,6 +52,7 @@ op_include_list('searchCategory', $list, $option);
 <?php endif ?>
 
 <?php if ($isResult): ?>
-<hr color="#b3ceef">
+<?php slot('op_mobile_footer_menu') ?>
 <?php echo link_to(__('back'), 'community/search'); ?>
+<?php end_slot(); ?>
 <?php endif ?>

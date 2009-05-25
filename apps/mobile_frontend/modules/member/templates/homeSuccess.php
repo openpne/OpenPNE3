@@ -86,9 +86,9 @@ op_include_list('configEdit', $list, array('title' => __('Settings')));
 <?php endforeach; ?>
 <?php endif; ?>
 
-<hr color="#0d6ddf">
-
+<?php slot('op_mobile_footer_menu') ?>
 ■<?php echo link_to(__('Logout'), 'member/logout') ?><br>
+<?php end_slot(); ?>
 
 <?php slot('op_mobile_footer') ?>
 <table width="100%">

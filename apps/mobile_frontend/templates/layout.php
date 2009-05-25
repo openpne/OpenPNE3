@@ -40,7 +40,8 @@
 
 <?php include_component('default', 'footerGadgets'); ?>
 
-<?php if (!has_slot('op_mobile_footer_menu')): ?>
+<?php if (has_slot('op_mobile_footer_menu')): ?>
+<hr color="#0d6ddf">
 <?php include_slot('op_mobile_footer_menu'); ?>
 <?php endif; ?>
 
