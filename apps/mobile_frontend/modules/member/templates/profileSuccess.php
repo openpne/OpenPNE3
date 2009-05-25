@@ -7,6 +7,14 @@
 </font>
 <?php endif; ?>
 
+<?php if ($mobileTopGadgets) : ?>
+<?php foreach ($mobileTopGadgets as $gadget) : ?>
+<?php if ($gadget->isEnabled()) : ?>
+<?php include_component($gadget->getComponentModule(), $gadget->getComponentAction(), array('gadget' => $gadget)); ?>
+<?php endif; ?>
+<?php endforeach; ?>
+<?php endif; ?>
+
 <table width="100%" bgcolor="#EEEEFF">
 <tr><td colspan="2" align="center">
 <?php include_customizes('menu', 'top') ?>
@@ -43,41 +51,29 @@
 
 <?php include_customizes('menu', 'bottom') ?>
 </td></tr>
+
+<tr><td colspan="2" align="center">
+<hr color="#0d6ddf" size="3">
+</td></tr>
 </table>
+<br>
+<?php if ($mobileContentsGadgets) : ?>
+<?php foreach ($mobileContentsGadgets as $gadget) : ?>
+<?php if ($gadget->isEnabled()) : ?>
+<?php include_component($gadget->getComponentModule(), $gadget->getComponentAction(), array('gadget' => $gadget)); ?>
+<?php endif; ?>
+<?php endforeach; ?>
+<?php endif; ?>
 
 <br>
 
-<?php
-$list = array();
-foreach ($friends as $friendMember)
-{
-  $list[] = link_to(sprintf('%s(%d)', $friendMember->getName(), $friendMember->countFriends()), 'member/profile?id='.$friendMember->getId());
-}
-$option = array(
-  'title' => __('Friend list'),
-  'border' => true,
-  'moreInfo' => array(
-    link_to(__('More'), 'friend/list?id='.$member->getId())
-  ),
-);
-op_include_list('friendList', $list, $option);
-?>
-
-<?php
-$list = array();
-foreach ($communities as $community)
-{
-  $list[] = link_to($community->getName(), 'community/home?id='.$community->getId());
-}
-$option = array(
-  'title' => __('Community list with this member'),
-  'border' => true,
-  'moreInfo' => array(
-    link_to(__('More'), 'community/joinlist?id='.$member->getId())
-  ),
-);
-op_include_list('communityList', $list, $option);
-?>
+<?php if ($mobileBottomGadgets) : ?>
+<?php foreach ($mobileBottomGadgets as $gadget) : ?>
+<?php if ($gadget->isEnabled()) : ?>
+<?php include_component($gadget->getComponentModule(), $gadget->getComponentAction(), array('gadget' => $gadget)); ?>
+<?php endif; ?>
+<?php endforeach; ?>
+<?php endif; ?>
 
 <?php slot('op_mobile_footer') ?>
 <table width="100%">

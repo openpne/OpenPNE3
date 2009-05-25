@@ -8,9 +8,9 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class communityComponents extends sfOpenPNECommunityComponents
+class friendComponents extends sfOpenPNECommunityComponents
 {
-  public function executeJoinListBox($request)
+  public function executeFriendListBox($request)
   {
     $memberId = $this->getUser()->getMemberId();
     if ($request->hasParameter('id'))
@@ -21,8 +21,6 @@ class communityComponents extends sfOpenPNECommunityComponents
     $c = new Criteria();
     $c->addAscendingOrderByColumn(Propel::getDB()->random(time()));
     $this->row = $this->gadget->getConfig('row');
-    $this->col = $this->gadget->getConfig('col');
-    $this->crownIds = CommunityMemberPeer::getCommunityIdsOfAdminByMemberId($this->member->getId());
-    $this->communities = CommunityPeer::retrievesByMemberId($this->member->getId(), $this->row * $this->col, $c);
+    $this->friends = $this->member->getFriends($this->row, $c);
   }
 }

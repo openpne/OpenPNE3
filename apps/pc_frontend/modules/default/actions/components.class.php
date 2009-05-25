@@ -55,8 +55,14 @@ class defaultComponents extends sfComponents
   {
   }
 
-  public function executeMemberImageBox()
+  public function executeMemberImageBox($request)
   {
+    $memberId = $this->getUser()->getMemberId();
+    if ($request->hasParameter('id'))
+    {
+      $memberId = $request->getParameter('id');
+    }
+    $this->member = MemberPeer::retrieveByPk($memberId);
   }
 
   public function executeSearchBox()

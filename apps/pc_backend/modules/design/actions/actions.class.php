@@ -118,6 +118,27 @@ class designActions extends sfActions
     return sfView::SUCCESS;
   }
 
+  /**
+  * Executes profile gadget plot action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeProfileGadgetPlot(sfWebRequest $request)
+  {
+    $configs = sfConfig::get('op_gadget_config');
+    $this->layoutPattern = $configs['profile']['layout']['default'];
+    $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('profile');
+    $this->gadgetConfig = sfConfig::get('op_profile_gadget_list');
+
+    $layout = SnsConfigPeer::retrieveByName('profile_layout');
+    if ($layout)
+    {
+      $this->layoutPattern = $layout;
+    }
+
+    return sfView::SUCCESS;
+  }
+
  /**
   * Executes login gadget plot action
   *
@@ -147,6 +168,19 @@ class designActions extends sfActions
   {
     $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('mobile');
     $this->gadgetConfig = sfConfig::get('op_mobile_gadget_list');
+
+    return sfView::SUCCESS;
+  }
+
+ /**
+  * Executes mobile profile gadget plot action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeMobileProfileGadgetPlot(sfWebRequest $request)
+  {
+    $this->gadgets = GadgetPeer::retrieveGadgetsByTypesName('mobileProfile');
+    $this->gadgetConfig = sfConfig::get('op_mobile_profile_gadget_list');
 
     return sfView::SUCCESS;
   }

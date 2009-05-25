@@ -10,9 +10,14 @@
 
 class friendComponents extends sfOpenPNEFriendComponents
 {
-  public function executeFriendListBox()
+  public function executeFriendListBox($request)
   {
-    $this->member = sfContext::getInstance()->getUser()->getMember();
+    $memberId = $this->getUser()->getMemberId();
+    if ($request->hasParameter('id'))
+    {
+      $memberId = $request->getParameter('id');
+    }
+    $this->member = MemberPeer::retrieveByPk($memberId);
     $c = new Criteria();
     $c->addAscendingOrderByColumn(Propel::getDB()->random(time()));
     $this->row = $this->gadget->getConfig('row');

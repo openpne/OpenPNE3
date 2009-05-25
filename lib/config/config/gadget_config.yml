@@ -5,6 +5,13 @@ gadget:
     choices: [layoutA, layoutB, layoutC]
   plot_action: [design, homeGadgetPlot]
 
+profile:
+  name: "プロフィール画面"
+  layout:
+    default: layoutA
+    choices: [layoutA, layoutB, layoutC]
+  plot_action: [design, profileGadgetPlot]
+
 login:
   name: "ログイン画面"
   layout:
@@ -23,6 +30,12 @@ mobile:
   layout:
     default: layoutE
   plot_action: [design, mobileHomeGadgetPlot]
+
+mobileProfile:
+  name: "携帯版プロフィール画面"
+  layout:
+    default: layoutE
+  plot_action: [design, mobileProfileGadgetPlot]
 
 mobileLogin:
   name: "携帯版ログイン画面"

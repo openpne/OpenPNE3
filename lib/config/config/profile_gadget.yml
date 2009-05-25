@@ -1,0 +1,103 @@
+freeArea:
+  caption:
+    ja_JP: "フリーエリア"
+  description:
+    ja_JP: "フリーエリアを設置できます"
+  component: [default, freeAreaBox]
+  config:
+    title:
+      Name:       "title"
+      Caption:    "タイトル"
+      FormType:   "input"
+      ValueType:  "text"
+      IsRequired: false
+    value:
+      Name:       "value"
+      Caption:    "内容"
+      FormType:   "rich_textarea"
+      ValueType:  "text"
+      IsRequired: false
+
+memberImageBox:
+  caption:
+    ja_JP: "プロフィール写真"
+  description:
+    ja_JP: "メンバーの登録した写真をホームに表示します"
+  component: [default, memberImageBox]
+
+friendListBox:
+  caption:
+    ja_JP: "フレンドリスト"
+  description:
+    ja_JP: "メンバーのフレンドリストを表示します"
+  component: [friend, friendListBox]
+  config:
+    row:
+      Name:      "row"
+      Caption:   "表示する行"
+      FormType:  "select"
+      ValueType:  "int"
+      IsRequired: true
+      Default:    3
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
+    col:
+      Name:      "col"
+      Caption:   "表示する列"
+      FormType:  "select"
+      ValueType:  "int"
+      IsRequired: true
+      Default:    3
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
+    type:
+      Name:      "type"
+      Caption:   "表示タイプ"
+      FormType:  "radio"
+      ValueType: "text"
+      IsRequired: true
+      Default:    "full"
+      Choices:
+        full:       "画像と名前の両方を表示"
+        only_image: "画像のみ表示"
+        only_name:  "名前のみ表示"
+
+communityJoinListBox:
+  caption:
+    ja_JP: "参加コミュニティリスト"
+  description:
+    ja_JP: "メンバーが参加しているコミュニティのリストを表示します"
+  component: [community, joinListBox]
+  config:
+    row:
+      Name:      "row"
+      Caption:   "表示する行"
+      FormType:  "select"
+      ValueType:  "int"
+      IsRequired: true
+      Default:    3
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
+    col:
+      Name:      "col"
+      Caption:   "表示する列"
+      FormType:  "select"
+      ValueType:  "int"
+      IsRequired: true
+      Default:    3
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
+    type:
+      Name:      "type"
+      Caption:   "表示タイプ"
+      FormType:  "radio"
+      ValueType: "text"
+      IsRequired: true
+      Default:    "full"
+      Choices:
+        full:       "画像と名前の両方を表示"
+        only_image: "画像のみ表示"
+        only_name:  "名前のみ表示"
+
+profileListBox:
+  caption:
+    ja_JP: "プロフィール"
+  description:
+    ja_JP: "プロフィール情報のリストを表示します"
+  component: [member, profileListBox]
