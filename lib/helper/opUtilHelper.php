@@ -483,4 +483,31 @@ function op_within_page_link($marker = '▼')
   return content_tag('a', $marker, $options);
 }
 
+function op_banner($name)
+{
+  $banner = BannerPeer::retrieveByName($name);
+  if (!$banner)
+  {
+    return false;
+  }
+
+  if ($banner->getIsUseHtml())
+  {
+    return $banner->getHtml();
+  }
+
+  $bannerImage = $banner->getRandomImage();
+  if (!$bannerImage)
+  {
+    return false;
+  }
+  $imgHtml = image_tag_sf_image($bannerImage->getFile(), array('alt' => $bannerImage->getName()));
+  if ($bannerImage->getUrl() != '')
+  {
+    return link_to($imgHtml, $bannerImage->getUrl(), array('target' => '_blank'));
+  }
+
+  return $imgHtml;
+}
+
 ?>

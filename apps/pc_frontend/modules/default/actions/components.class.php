@@ -82,4 +82,8 @@ class defaultComponents extends sfComponents
   {
     $this->forms = $this->getUser()->getAuthForms();
   }
+
+  public function executeSideBanner()
+  {
+  }
 }

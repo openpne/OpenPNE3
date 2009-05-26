@@ -3,3 +3,4 @@
 <li><?php echo link_to(__('ナビ設定'), 'design/navigation') ?></li>
 <li><?php echo link_to(__('フッターデザイン設定'), 'design/footer?type=before') ?></li>
 <li><?php echo link_to(__('携帯版ナビ設定'), 'design/navigation?app=mobile') ?></li>
+<li><?php echo link_to(__('バナー設定'), 'design/banner') ?></li>

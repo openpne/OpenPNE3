@@ -1,0 +1,45 @@
+Banner:
+  banner_top_before:
+    name: "top_before"
+  banner_side_before:
+    name: "side_before"
+
+  banner_top_after:
+    name: "top_after"
+  banner_side_after:
+    name: "side_after"
+
+BannerI18n:
+  banner_i18n_top_before:
+    id: banner_top_before
+    caption: "トップバナー（ログイン前）"
+    culture: "ja_JP"
+  banner_i18n_side_before:
+    id: banner_side_before
+    caption: "サイドバナー（ログイン前）"
+    culture: "ja_JP"
+  banner_i18n_top_before_en:
+    id: banner_top_before
+    caption: "Top banner(before login)"
+    culture: "en"
+  banner_i18n_side_before_en:
+    id: banner_side_before
+    caption: "Side banner(before login)"
+    culture: "en"
+
+  banner_i18n_top_after:
+    id: banner_top_after
+    caption: "トップバナー（ログイン後）"
+    culture: "ja_JP"
+  banner_i18n_side_after:
+    id: banner_side_after
+    caption: "サイドバナー（ログイン後）"
+    culture: "ja_JP"
+  banner_i18n_top_after_en:
+    id: banner_top_after
+    caption: "Top banner (after login)"
+    culture: "en"
+  banner_i18n_side_after_en:
+    id: banner_side_after
+    caption: "Side banner (after login)"
+    culture: "en"

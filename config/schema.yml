@@ -150,3 +150,23 @@ propel:
     id: ~
     uid: { type: varchar(32), index: unique, required: true, defaultValue: "" }
     memo: { type: longvarchar }
+
+  banner:
+    id: ~
+    name: { type: varchar(32), index: unique, required: true }
+    html: { type: longvarchar }
+    is_use_html: { type: boolean }
+
+  banner_i18n:
+    caption: { type: longvarchar, required: true }
+
+  banner_image:
+    id: ~
+    file_id: { type: integer, required: true, foreignTable: file, foreignReference: id, onDelete: cascade }
+    url: { type: longvarchar }
+    name: { type: varchar(64) }
+
+  banner_use_image:
+    id: ~
+    banner_id: { type: integer, required: true, foreignTable: banner, foreignReference: id }
+    banner_image_id: { type: integer, required: true, foreignTable: banner_image, foreignReference: id }

@@ -19,3 +19,9 @@ languageSelecterBox:
     ja_JP: "他の言語に切り替えるために必要なボックスを設置できます。"
   component: [default, languageSelecterBox]
 
+sideBanner:
+  caption:
+    ja_JP: "サイドバナー"
+  description:
+    ja_JP: "バナー設定のサイドバナーを設置できます。"
+  component: [default, sideBanner]

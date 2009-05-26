@@ -29,6 +29,11 @@ Gadget:
     name: "languageSelecterBox"
     sort_order: 10
 
+  gadget_sidebanner:
+    type: "sideBannerContents"
+    name: "sideBanner"
+    sort_order: 20
+
   mobile_gadget_information:
     type: "mobileTop"
     name: "informationBox"
