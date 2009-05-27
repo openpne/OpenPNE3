@@ -10,11 +10,16 @@
 
 class opActivateBehavior extends Doctrine_Template
 {
+  protected $_options = array(
+    'name'    => 'is_active',
+    'default' => false,
+  );
+
   protected static $enabled = true;
 
   public function setTableDefinition()
   {
-    $this->hasColumn('is_active', 'boolean', 1, array('default' => false, 'notnull' => true));
+    $this->hasColumn($this->_options['name'], 'boolean', 1, array('default' => $this->_options['default'], 'notnull' => true));
     $this->addListener(new opActivateListener());
   }
 
