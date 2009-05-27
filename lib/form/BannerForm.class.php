@@ -17,7 +17,7 @@
  */
 class BannerForm extends BaseBannerForm
 {
-  private $bannerUseImageIdList = false;
+  private $bannerImageIdList = false;
 
   public function configure()
   {
@@ -71,10 +71,10 @@ class BannerForm extends BaseBannerForm
   {
     if (isset($taintedValues['banner_use_image_id']))
     {
-      $this->bannerUseImageIdList = $taintedValues['banner_use_image_id'];
+      $this->bannerImageIdList = $taintedValues['banner_use_image_id'];
       unset($taintedValues['banner_use_image_id']);
     }
-    foreach($this->bannerUseImageIdList as $key => $bannerUseImageId)
+    foreach($this->bannerImageIdList as $key => $bannerUseImageId)
     {
       $taintedValues['banner_use_image_id]['.$key] = $bannerUseImageId;
     }
@@ -84,7 +84,7 @@ class BannerForm extends BaseBannerForm
 
   public function isValid()
   {
-    if (!$this->bannerUseImageIdList)
+    if (!$this->bannerImageIdList)
     {
       return false;
     }
@@ -95,10 +95,11 @@ class BannerForm extends BaseBannerForm
   public function save()
   {
     // use banner image
-    foreach($this->bannerUseImageIdList as $bannerUseImageId => $isUse)
+    foreach($this->bannerImageIdList as $bannerImageId => $isUse)
     {
       $c = new Criteria();
-      $c->add(BannerUseImagePeer::BANNER_IMAGE_ID, $bannerUseImageId);
+      $c->add(BannerUseImagePeer::BANNER_ID, $this->getObject()->getId());
+      $c->add(BannerUseImagePeer::BANNER_IMAGE_ID, $bannerImageId);
       $bannerUseImage = BannerUseImagePeer::doSelectOne($c);
       if ($isUse)
       {
@@ -107,7 +108,7 @@ class BannerForm extends BaseBannerForm
           $bannerUseImage = new BannerUseImage();
         }
         $bannerUseImage->setBannerId($this->getObject()->getId());
-        $bannerUseImage->setBannerImageId($bannerUseImageId);
+        $bannerUseImage->setBannerImageId($bannerImageId);
         $bannerUseImage->save();
         continue;
       }

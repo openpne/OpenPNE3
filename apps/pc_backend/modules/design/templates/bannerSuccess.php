@@ -23,7 +23,7 @@
 <table>
 <tbody>
 <tr>
-<th><input type="radio" name="banner[is_use_html]" value="0" <?php if (!$form->getValue('is_use_html')): ?>checked="checked"<?php endif ?> /></th>
+<th><input type="radio" name="banner[is_use_html]" value="0" <?php if (!$form->getObject()->getIsUseHtml()): ?>checked="checked"<?php endif ?> /></th>
 <td>
 <?php if (count($bannerImageList)): ?>
 <p><?php echo __('Select banner images you want to display') ?></p>
@@ -65,7 +65,7 @@ echo link_to(
 </td>
 </tr>
 <tr>
-<th><input type="radio" name="banner[is_use_html]" value="1" <?php if ($form->getValue('is_use_html')): ?>checked="checked"<?php endif ?> /></th>
+<th><input type="radio" name="banner[is_use_html]" value="1" <?php if ($form->getObject()->getIsUseHtml()): ?>checked="checked"<?php endif ?> /></th>
 <td>
 <p><?php echo __('It displays by arbitrary HTML') ?></p>
 <?php echo $form['html']->render() ?>
