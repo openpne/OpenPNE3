@@ -4,7 +4,7 @@
 
 <?php $imgParam = array('size' => '180x180', 'alt' => '') ?>
 
-<h2><?php echo __('バナー変更') ?></h2>
+<h2><?php echo __('Modify a banner image') ?></h2>
 
 <form action="" method="post" enctype="multipart/form-data">
 <table><tbody>
@@ -19,7 +19,7 @@ echo link_to(
 </tr>
 <?php echo $form ?>
 <tr>
-<td colspan="2"><input type="submit" value="<?php echo __('変更する') ?>" /></td>
+<td colspan="2"><input type="submit" value="<?php echo __('Modify') ?>" /></td>
 </tr>
 </tbody></table>
 </form>

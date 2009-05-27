@@ -17,7 +17,106 @@
  */
 class BannerForm extends BaseBannerForm
 {
+  private $bannerUseImageIdList = false;
+
   public function configure()
   {
+    unset($this['id'], $this['name']);
+
+    $id = $this->getObject()->getId();
+
+    // banner use image
+    $c = new Criteria();
+    $bannerImageList = BannerImagePeer::doSelect($c);
+    foreach ($bannerImageList as $bannerImage)
+    {
+      $bannerUseImage = BannerUseImagePeer::retrieveByBannerAndImageId($id, $bannerImage->getId());
+      $name = 'banner_use_image_id]['.$bannerImage->getId();
+      $this->setWidget(
+        $name,
+        new sfWidgetFormChoice(array(
+          'choices'  => array('1' => '表示する', '0' => '表示しない'),
+          'expanded' => true,
+          'default' => $bannerUseImage ? '1' : '0'))
+      );
+      $this->setValidator(
+        $name,
+        new sfValidatorChoice(array('choices' => array('1', '0')))
+      );
+    }
+    // html
+    $this->setWidget(
+      'html',
+      new sfWidgetFormTextarea(array(), array('cols' => 72, 'rows' => 5))
+    );
+    $this->setValidator('html', new sfValidatorPass());
+
+    // is use html
+    $this->setWidget(
+      'is_use_html',
+      new sfWidgetFormChoice(array(
+        'choices'  => array('0' => 'is_html', '1' => 'is_no_html'),
+        'expanded' => true,
+        'default' => $this->getObject()->getIsUseHtml() ? '1' : '0'))
+    );
+    $this->setValidator(
+      'is_use_html',
+      new sfValidatorChoice(array('choices' => array('1', '0')))
+    );
+
+    $this->widgetSchema->setNameFormat('banner[%s]');
+  }
+
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+    if (isset($taintedValues['banner_use_image_id']))
+    {
+      $this->bannerUseImageIdList = $taintedValues['banner_use_image_id'];
+      unset($taintedValues['banner_use_image_id']);
+    }
+    foreach($this->bannerUseImageIdList as $key => $bannerUseImageId)
+    {
+      $taintedValues['banner_use_image_id]['.$key] = $bannerUseImageId;
+    }
+
+    return parent::bind($taintedValues, $taintedFiles);
+  }
+
+  public function isValid()
+  {
+    if (!$this->bannerUseImageIdList)
+    {
+      return false;
+    }
+
+    return parent::isValid();
+  }
+
+  public function save()
+  {
+    // use banner image
+    foreach($this->bannerUseImageIdList as $bannerUseImageId => $isUse)
+    {
+      $c = new Criteria();
+      $c->add(BannerUseImagePeer::BANNER_IMAGE_ID, $bannerUseImageId);
+      $bannerUseImage = BannerUseImagePeer::doSelectOne($c);
+      if ($isUse)
+      {
+        if (!$bannerUseImage)
+        {
+          $bannerUseImage = new BannerUseImage();
+        }
+        $bannerUseImage->setBannerId($this->getObject()->getId());
+        $bannerUseImage->setBannerImageId($bannerUseImageId);
+        $bannerUseImage->save();
+        continue;
+      }
+      if ($bannerUseImage)
+      {
+        $bannerUseImage->delete();
+      }
+    }
+
+    return parent::save();
   }
 }

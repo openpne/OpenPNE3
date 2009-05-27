@@ -29,9 +29,9 @@ class BannerImageForm extends BaseBannerImageForm
       'name' => new sfValidatorPass(),
     ));
     $this->widgetSchema->setLabels(array(
-      'file' => '画像',
-      'url' => 'リンク先',
-      'name' => 'バナー名',
+      'file' => 'Image',
+      'url' => 'Link place',
+      'name' => 'Banner name',
     ));
     $this->widgetSchema->setNameFormat('banner_image[%s]');
   }

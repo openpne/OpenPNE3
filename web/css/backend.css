@@ -155,7 +155,13 @@ th {
 body#design_banner p {
   margin: 4px;
 }
+
 body#design_banner p.add_banner_image {
   text-align: right;
   padding-right: 16px;
+}
+
+body#design_banner ul.radio_list li {
+  float: left;
+  margin: 0 6px 0 6px;
 }

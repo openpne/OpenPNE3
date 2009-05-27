@@ -389,11 +389,10 @@ class designActions extends sfActions
   */
   public function executeBanner(sfWebRequest $request)
   {
-    $c = new Criteria();
     $id = $request->getParameter('id', 0);
     if (!$id)
     {
-      $this->banner = BannerPeer::doSelectOne($c);
+      $this->banner = BannerPeer::retrieveTop();
     }
     else
     {
@@ -404,57 +403,18 @@ class designActions extends sfActions
       return sfView::ERROR;
     }
 
+    $this->form = new BannerForm($this->banner);
     if ($request->isMethod(sfRequest::POST))
     {
-      $bannerUseImageIds = array();
-      if ($request->hasParameter('banner_use_image_ids'))
+      $this->form->bind($request->getParameter('banner'));
+      if ($this->form->isValid())
       {
-        $bannerUseImageIds = $request->getParameter('banner_use_image_ids');
+        $this->form->save();
       }
-      foreach($bannerUseImageIds as $bannerUseImageId => $isUse)
-      {
-        $cc = new Criteria();
-        $cc->add(BannerUseImagePeer::BANNER_IMAGE_ID, $bannerUseImageId);
-        $bannerUseImage = BannerUseImagePeer::doSelectOne($cc);
-        if ($isUse)
-        {
-          if (!$bannerUseImage)
-          {
-            $bannerUseImage = new BannerUseImage();
-          }
-          $bannerUseImage->setBannerId($this->banner->getId());
-          $bannerUseImage->setBannerImageId($bannerUseImageId);
-          $bannerUseImage->save();
-        }
-        else
-        {
-          if ($bannerUseImage)
-          {
-            $bannerUseImage->delete();
-          }
-        }
-      }
-
-      $this->banner->setIsUseHtml($request->getParameter('is_use_html'));
-      $this->banner->setHtml($request->getParameter('html'));
-      $this->banner->save();
-    }
-    $c->add(BannerUseImagePeer::BANNER_ID, $this->banner->getId());
-    $bannerUseImageList = BannerUseImagePeer::doSelect($c);
-    $this->useBannerImageList = array();
-    foreach($bannerUseImageList as $bannerUseImage)
-    {
-      $id = $bannerUseImage->getBannerImageId();
-      $this->useBannerImageList[$id] = $id;
     }
 
-    $c = new Criteria();
-    $c->addAscendingOrderByColumn(BannerImagePeer::ID);
-    $this->bannerImageList = BannerImagePeer::doSelect($c);
-    $c = new Criteria();
-
-    $c->addAscendingOrderByColumn(BannerPeer::ID);
-    $this->bannerList = BannerPeer::doSelect($c);
+    $this->bannerImageList = BannerImagePeer::retrievesAll();
+    $this->bannerList = BannerPeer::retrievesAll();
   }
 
  /**

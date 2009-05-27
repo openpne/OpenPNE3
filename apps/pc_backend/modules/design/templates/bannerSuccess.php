@@ -4,27 +4,29 @@
 
 <?php $imgParam = array('size' => '180x180', 'alt' => '') ?>
 
-<h2><?php echo $banner->getCaption().__('設定') ?></h2>
+<?php echo $form->renderGlobalErrors() ?>
+
+<h2><?php echo $form->getObject()->getCaption().__(' settings') ?></h2>
 
 <?php if ($bannerList): ?>
 <div>
 <ul>
 <?php foreach ($bannerList as $b) : ?>
-<li><?php echo link_to($b->getCaption().__('設定'), 'design/banner?id='.$b->getId()) ?></li>
+<li><?php echo link_to($b->getCaption().__(' settings'), 'design/banner?id='.$b->getId()) ?></li>
 <?php endforeach ?>
 </ul>
 </div>
 <?php endif ?>
 
 <form action="" method="post">
-<input type="hidden" name="banner_type_id" value="<?php echo $banner->getId() ?>" />
+<?php echo $form->renderHiddenFields() ?>
 <table>
 <tbody>
 <tr>
-<th><input type="radio" name="is_use_html" value="0" <?php if (!$banner->getIsUseHtml()): ?>checked="checked"<?php endif ?> /></th>
+<th><input type="radio" name="banner[is_use_html]" value="0" <?php if (!$form->getValue('is_use_html')): ?>checked="checked"<?php endif ?> /></th>
 <td>
 <?php if (count($bannerImageList)): ?>
-<p><?php echo __('表示したいバナー画像を選択する') ?></p>
+<p><?php echo __('Select banner images you want to display') ?></p>
 <table><tbody>
 <?php for ($i = 0; isset($bannerImageList[$i]); $i += 4): ?>
 <tr>
@@ -45,35 +47,31 @@ echo link_to(
 <?php $bannerImage = $bannerImageList[$j] ?>
 <td><ul>
 <li>
-<?php $name = 'banner_use_image_ids['.$bannerImage->getId().']' ?>
-<input type="radio" id="banner_image<?php echo $j ?>" name="<?php echo $name ?>" value="1" <?php if (isset($useBannerImageList[$bannerImage->getId()])): ?> checked="checked"<?php endif ?> />
-<label for="banner_image<?php echo $j ?>"><?php echo __('表示する') ?></label>
-<input type="radio" id="banner_uimage<?php echo $j ?>" name="<?php echo $name ?>" value="0" <?php if (!isset($useBannerImageList[$bannerImage->getId()])): ?> checked="checked"<?php endif ?> />
-<label for="banner_uimage<?php echo $j ?>"><?php echo __('表示しない') ?></label>
+<?php echo $form['banner_use_image_id]['.$bannerImage->getId()]->render() ?>
 </li>
-<li><label><?php echo __('URL') ?>:</label><?php echo $bannerImage->getUrl() ?></li>
-<li><label><?php echo __('バナー名') ?>:</label><?php echo $bannerImage->getName() ?></li>
-<li><?php echo link_to( __('変更'), 'design/banneredit?id='.$bannerImage->getId()) ?></li>
-<li><?php echo link_to(__('削除'), 'design/bannerdelete?id='.$bannerImage->getId()) ?></li>
+<li><label><?php echo __('Link place') ?>:</label><?php echo $bannerImage->getUrl() ?></li>
+<li><label><?php echo __('Banner name') ?>:</label><?php echo $bannerImage->getName() ?></li>
+<li><?php echo link_to( __('Modify'), 'design/banneredit?id='.$bannerImage->getId()) ?></li>
+<li><?php echo link_to(__('Delete'), 'design/bannerdelete?id='.$bannerImage->getId()) ?></li>
 </ul></td>
 <?php endfor ?>
 </tr>
 <?php endfor ?>
 </tbody></table>
 <?php else: ?>
-<p><?php echo __('未設定（アップロードされている画像はありません）') ?></p>
+<p><?php echo __('No uploaded image') ?></p>
 <?php endif ?>
-<p class="add_banner_image"><?php echo link_to(__('【バナー画像を追加】'), 'design/banneradd') ?></p>
+<p class="add_banner_image"><?php echo link_to(__('Add a banner image'), 'design/banneradd') ?></p>
 </td>
 </tr>
 <tr>
-<th><input type="radio" name="is_use_html" value="1" <?php if ($banner->getIsUseHtml()): ?>checked="checked"<?php endif ?> /></th>
+<th><input type="radio" name="banner[is_use_html]" value="1" <?php if ($form->getValue('is_use_html')): ?>checked="checked"<?php endif ?> /></th>
 <td>
-<p><?php echo __('任意HTMLで表示する') ?></p>
-<textarea name="html" cols="72" rows="5"><?php echo $banner->getHtml() ?></textarea>
+<p><?php echo __('It displays by arbitrary HTML') ?></p>
+<?php echo $form['html']->render() ?>
 </td>
 </tr>
 </tbody>
 </table>
-<input type="submit" value="<?php echo __('設定を確定する') ?>" />
+<input type="submit" value="<?php echo __('Decide settings') ?>" />
 </form>
