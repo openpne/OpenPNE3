@@ -65,7 +65,7 @@ class opWidgetFormProfile extends sfWidgetForm
     {
       return $input;
     }
-    $publicFlagWidget = new sfWidgetFormSelect(array('choices' => ProfileTable::getPublicFlags()));
+    $publicFlagWidget = new sfWidgetFormSelect(array('choices' => Doctrine::getTable('Profile')->getPublicFlags()));
 
     return strtr($this->getOption('template'), array('%input%' => $input, '%public_flag%' =>$publicFlagWidget->render($name.'[public_flag]', $value['public_flag'], $attributes, $errors)));
   }
