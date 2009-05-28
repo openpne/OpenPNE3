@@ -233,3 +233,37 @@ Blacklist:
     uid_UNIQUE:
       fields: [uid]
       type: unique
+
+OAuthConsumerInformation:
+  tableName: oauth_consumer
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    name: { type: string(64), default: "", notnull: true }
+    description: { type: string }
+    type: { type: enum, values: [browser, client], default: "browser" }
+    name: { type: string(64), default: "", notnull: true }
+    key_string: { type: string(16), default: "", notnull: true }
+    secret: { type: string(32), default: "", notnull: true }
+    file_id: { type: integer(4) }
+  relations:
+    Image: { class: File, local: file_id, foreign: id, onDelete: set null }
+  indexes:
+    key_secret_UNIQUE:
+      fields: [key_string, secret]
+      type: unique
+
+OAuthTokenManager:
+  tableName: oauth_token
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    oauth_consumer_id: { type: integer(4), notnull: true }
+    key_string: { type: string(16), default: "", notnull: true }
+    secret: { type: string(32), default: "", notnull: true }
+    type: { type: enum, values: [request, access], default: "request" }
+    expires_at: { type: timestamp }
+  relations:
+    Consumer: { class: OAuthConsumerInformation, local: oauth_consumer_id, foreign: id, onDelete: cascade }
+  indexes:
+    key_secret_UNIQUE:
+      fields: [key_string, secret]
+      type: unique
