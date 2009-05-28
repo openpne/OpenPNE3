@@ -20,6 +20,7 @@ class ProjectConfiguration extends sfProjectConfiguration
     sfToolkit::addIncludePath(array(
       //PEAR
       dirname(__FILE__).'/../lib/vendor/PEAR/',
+      dirname(__FILE__).'/../lib/vendor/OAuth/',
     ));
   }
 
