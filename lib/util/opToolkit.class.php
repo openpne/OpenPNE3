@@ -141,7 +141,7 @@ class opToolkit
     return $string;
   }
 
-  function extractEnclosedStrings($string, $enclosure = '"')
+  public static function extractEnclosedStrings($string, $enclosure = '"')
   {
     $result = array('base' => $string, 'enclosed' => array());
     $enclosureCount = substr_count($string, $enclosure);
@@ -163,6 +163,26 @@ class opToolkit
     }
 
     $result['base'] = $string;
+    return $result;
+  }
+
+  public static function generatePasswordString($length = 12, $is_use_mark = true)
+  {
+    $result = '';
+
+    $str = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    if ($is_use_mark)
+    {
+      $str .= '#$-=?@[]_';
+    }
+
+    $range = strlen($str) - 1;
+
+    while ($length > strlen($result))
+    {
+      $result .= $str[rand(0, $range)];
+    }
+
     return $result;
   }
 }
