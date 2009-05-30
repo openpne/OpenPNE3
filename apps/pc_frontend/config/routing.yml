@@ -26,6 +26,19 @@ error:
   url: /default/error
   param: { module: default, action: error }
 
+# oauth rules
+oauth_request_token:
+  url:   /oauth/request_token
+  param: { module: oauth, action: requestToken }
+
+oauth_authorize_token:
+  url:   /oauth/authorize
+  param: { module: oauth, action: authorizeToken }
+
+oauth_access_token:
+  url:   /oauth/access_token
+  param: { module: oauth, action: accessToken }
+
 # default rules
 default_symfony:
   url:   /symfony/:action/*
