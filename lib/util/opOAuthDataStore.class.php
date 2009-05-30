@@ -38,11 +38,12 @@ class opOAuthDataStore extends OAuthDataStore
       $key = opToolkit::generatePasswordString(16, false);
       $secret = opToolkit::generatePasswordString(32, false);
 
-      $manager = new OAuthTokenManager();
-      $manager->setKeyString($key);
-      $manager->setSecret($secret);
-      $manager->setConsumer($information);
-      $manager->save();
+      $adminToken = new OAuthAdminToken();
+      $adminToken->setKeyString($key);
+      $adminToken->setSecret($secret);
+      $adminToken->setConsumer($information);
+      $adminToken->setAdminUserId(1);
+      $adminToken->save();
 
       return new OAuthToken($key, $secret);
     }
@@ -58,12 +59,13 @@ class opOAuthDataStore extends OAuthDataStore
       $key = opToolkit::generatePasswordString(16, false);
       $secret = opToolkit::generatePasswordString(32);
 
-      $manager = new OAuthTokenManager();
-      $manager->setKeyString($key);
-      $manager->setSecret($secret);
-      $manager->setConsumer($information);
-      $manager->setType('access');
-      $manager->save();
+      $adminToken = new OAuthAdminToken();
+      $adminToken->setKeyString($key);
+      $adminToken->setSecret($secret);
+      $adminToken->setConsumer($information);
+      $adminToken->setType('access');
+      $adminToken->setAdminUserId(1);
+      $adminToken->save();
 
       return new OAuthToken($key, $secret);
     }
@@ -73,10 +75,10 @@ class opOAuthDataStore extends OAuthDataStore
 
   public function lookup_token($consumer, $token_type, $token)
   {
-    $manager = Doctrine::getTable('OAuthTokenManager')->findByKeyString($token, $token_type);
-    if ($manager)
+    $adminToken = Doctrine::getTable('OAuthAdminToken')->findByKeyString($token, $token_type);
+    if ($adminToken)
     {
-      return new OAuthToken($manager->getKeyString(), $manager->getSecret());
+      return new OAuthToken($adminToken->getKeyString(), $adminToken->getSecret());
     }
 
     return null;

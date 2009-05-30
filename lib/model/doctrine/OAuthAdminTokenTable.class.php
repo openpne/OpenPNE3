@@ -1,7 +1,7 @@
 <?php
 /**
  */
-class OAuthTokenManagerTable extends Doctrine_Table
+class OAuthAdminTokenTable extends Doctrine_Table
 {
   public function findByKeyString($key, $type = 'request')
   {

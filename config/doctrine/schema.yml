@@ -252,16 +252,18 @@ OAuthConsumerInformation:
       fields: [key_string, secret]
       type: unique
 
-OAuthTokenManager:
-  tableName: oauth_token
+OAuthAdminToken:
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     oauth_consumer_id: { type: integer(4), notnull: true }
+    admin_user_id: { type: integer(4), notnull: true }
     key_string: { type: string(16), default: "", notnull: true }
     secret: { type: string(32), default: "", notnull: true }
     type: { type: enum, values: [request, access], default: "request" }
     expires_at: { type: timestamp }
+    is_active: { type: boolean, default: true, notnull: true  }
   relations:
+    AdminUser: { local: admin_user_id, foreign: id, onDelete: cascade }
     Consumer: { class: OAuthConsumerInformation, local: oauth_consumer_id, foreign: id, onDelete: cascade }
   indexes:
     key_secret_UNIQUE:

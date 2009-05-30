@@ -32,7 +32,7 @@ class oauthActions extends sfActions
   public function executeAuthorizeToken(sfWebRequest $request)
   {
     $token = $request->getParameter('oauth_token');
-    $this->information = Doctrine::getTable('OAuthTokenManager')->findByKeyString($token);
+    $this->information = Doctrine::getTable('OAuthAdminToken')->findByKeyString($token);
     $this->forward404Unless($this->information);
   }
 
