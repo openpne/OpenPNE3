@@ -483,4 +483,15 @@ function op_within_page_link($marker = '▼')
   return content_tag('a', $marker, $options);
 }
 
+function op_maiL_to($route, $params = array(), $name = '', $options = array(), $default_value = array())
+{
+  $routing = new opMailRouting(new sfEventDispatcher());
+  $config = new sfRoutingConfigHandler();
+  $routes = $config->evaluate(array(sfConfig::get('sf_apps_dir').'/mobile_mail_frontend/config/routing.yml'));
+
+  $routing->setRoutes(array_merge(sfContext::getInstance()->getRouting()->getRoutes(), $routes));
+
+  return mail_to($routing->generate($route, $params), $name, $options, $default_value);
+}
+
 ?>

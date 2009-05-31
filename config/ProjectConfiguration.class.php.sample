@@ -13,6 +13,9 @@ class ProjectConfiguration extends sfProjectConfiguration
 
     //HTTP proxy to use when downloading plugin packages
     sfConfig::set('op_http_proxy', null);
+
+    sfConfig::set('op_mail_domain', 'example.com');
+    sfConfig::set('op_is_mail_address_contain_hash', false);
   }
 
   public function setIncludePath()

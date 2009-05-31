@@ -1,0 +1,16 @@
+member_add_image:
+  url: m
+  class: opMailRoute
+  param: { module: member, action: image }
+
+# default rules
+homepage:
+  url:   /
+  param: { module: member, action: index }
+
+#default_index:
+#  url:   /:module
+#  param: { action: index }
+#
+#default:
+#  url:   /:module/:action/*

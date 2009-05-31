@@ -24,3 +24,8 @@ else
 <?php echo __('There are no photos.') ?>
 <?php endif; ?>
 </center>
+
+<?php if (3 > $images->count()): ?>
+<?php echo __('Send E-mail that has a photo to use as your image.') ?><br>
+<?php echo op_maiL_to('member_add_image', array(), __('Send E-mail')) ?>
+<?php endif; ?>

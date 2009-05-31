@@ -347,6 +347,18 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     self::$zendLoaded = true;
   }
 
+  static public function unregisterZend()
+  {
+    if (!self::$zendLoaded)
+    {
+      return true;
+    }
+
+    require_once 'Zend/Loader.php';
+    Zend_Loader::registerAutoLoad('Zend_Loader', false);
+    self::$zendLoaded = false;
+  }
+
   static public function registerJanRainOpenID()
   {
     $DS = DIRECTORY_SEPARATOR;
