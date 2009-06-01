@@ -65,8 +65,8 @@ class CommunityMemberTable extends Doctrine_Table
     }
 
     $communityMember = new CommunityMember();
-    $communityMember->memberId = $memberId;
-    $communityMember->communityId = $communityId;
+    $communityMember->setMemberId($memberId);
+    $communityMember->setCommunityId($communityId);
     if ($isRegisterPoricy == 'close')
     {
       $communityMember->position = 'pre';
