@@ -239,7 +239,7 @@ class Member extends BaseMember
     return $result;
   }
 
-	public function delete(PropelPDO $con = null)
+  public function delete(PropelPDO $con = null)
   {
     $memberId = $this->getId();
     $adminCommunityIds = CommunityMemberPeer::getCommunityIdsOfAdminByMemberId($this->getId());
