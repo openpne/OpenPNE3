@@ -133,4 +133,13 @@ class CommunityMemberPeer extends BaseCommunityMemberPeer
     }
     return array();
   }
+
+  public static function getCommunityMemberCount($communityId)
+  {
+    $c = new Criteria();
+    $c->add(self::COMMUNITY_ID, $communityId);
+    $c->add(self::POSITION, '');
+
+    return self::doCount($c);
+  }
 }

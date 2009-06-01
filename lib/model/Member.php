@@ -238,4 +238,30 @@ class Member extends BaseMember
 
     return $result;
   }
+
+	public function delete(PropelPDO $con = null)
+  {
+    $memberId = $this->getId();
+    $adminCommunityIds = CommunityMemberPeer::getCommunityIdsOfAdminByMemberId($this->getId());
+    foreach ($adminCommunityIds as $communityId)
+    {
+      if (!CommunityMemberPeer::getCommunityMemberCount($communityId))
+      {
+        $community = CommunityPeer::retrieveByPk($communityId);
+        $community->delete();
+        continue;
+      }
+      $c = new Criteria();
+      $c->addAscendingOrderByColumn(Propel::getDB()->random(time()));
+      $c->add(CommunityMemberPeer::COMMUNITY_ID, $communityId);
+      $c->add(CommunityMemberPeer::POSITION, '');
+      $communityMember = CommunityMemberPeer::doSelectOne($c);
+      $communityMember->setPosition('admin');
+      $communityMember->save();
+      $communityMember = CommunityMemberPeer::retrieveByMemberIdAndCommunityId($memberId, $communityId);
+      $communityMember->delete();
+    }
+
+    return parent::delete($con);
+  }
 }
