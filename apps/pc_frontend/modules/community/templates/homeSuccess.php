@@ -7,7 +7,6 @@ op_include_parts('memberImageBox', 'communityImageBox', $options);
 ?>
 
 <?php
-/*
 $options = array(
   'title' => __('Community Members'),
   'list' => $members,
@@ -20,7 +19,6 @@ if ($isAdmin)
   $options['moreInfo'][] = link_to(__('Management member'), 'community/memberManage?id='.$community->getId());
 }
 op_include_parts('nineTable', 'frendList', $options);
-*/
 ?>
 <?php end_slot(); ?>
 
