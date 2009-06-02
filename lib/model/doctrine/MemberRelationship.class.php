@@ -73,8 +73,7 @@ class MemberRelationship extends BaseMemberRelationship
     $this->save();
 
     $this->getToInstance()->setIsFriend(false);
-
-    return true;
+    return $this->getToInstance()->save();
   }
 
   public function removeFriendPre()
