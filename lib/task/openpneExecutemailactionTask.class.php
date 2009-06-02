@@ -37,7 +37,7 @@ EOF;
     sfOpenPNEApplicationConfiguration::registerZend();
 
     $stdin = file_get_contents('php://stdin');
-    $message = new Zend_Mail_Message(array('raw' => $stdin));
+    $message = new opMailMessage(array('raw' => $stdin));
     opMailRequest::setMailMessage($message);
 
     sfOpenPNEApplicationConfiguration::unregisterZend();

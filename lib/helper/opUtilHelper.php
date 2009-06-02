@@ -485,13 +485,15 @@ function op_within_page_link($marker = '▼')
 
 function op_maiL_to($route, $params = array(), $name = '', $options = array(), $default_value = array())
 {
+  $configuration = sfContext::getInstance()->getConfiguration();
+  $configPath = '/mobile_mail_frontend/config/routing.yml';
+  $files = array_merge(array(sfConfig::get('sf_apps_dir').$configPath), $configuration->globEnablePlugin('/apps'.$configPath));
+
   $routing = new opMailRouting(new sfEventDispatcher());
   $config = new sfRoutingConfigHandler();
-  $routes = $config->evaluate(array(sfConfig::get('sf_apps_dir').'/mobile_mail_frontend/config/routing.yml'));
+  $routes = $config->evaluate($files);
 
   $routing->setRoutes(array_merge(sfContext::getInstance()->getRouting()->getRoutes(), $routes));
 
   return mail_to($routing->generate($route, $params), $name, $options, $default_value);
 }
-
-?>
