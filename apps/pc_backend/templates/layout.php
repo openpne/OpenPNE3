@@ -17,16 +17,9 @@
 <?php if ($sf_user->isAuthenticated()) : ?>
 <div id="menu">
 <ul>
-<li><?php echo link_to(__('管理画面トップ'), 'default/top'); ?></li>
-<li><?php echo link_to(__('メンバー管理'), 'member/index'); ?></li>
-<li><?php echo link_to(__('コミュニティ管理'), 'community/index'); ?></li>
-<li><?php echo link_to(__('SNS設定'), 'sns/config'); ?></li>
-<li><?php echo link_to(__('デザイン設定'), 'design/index'); ?></li>
-<li><?php echo link_to(__('プロフィール項目設定'), 'profile/list'); ?></li>
-<li><?php echo link_to(__('プラグイン設定'), 'plugin/list'); ?></li>
-<li><?php echo link_to(__('連携設定'), 'connection/index'); ?></li>
-<li><?php echo link_to(__('管理画面設定'), 'admin/index'); ?></li>
-<li><?php echo link_to(__('ログアウト'), 'default/logout'); ?></li>
+<li><?php echo link_to(__('管理画面トップ'), '@homepage') ?></li>
+<?php include_component('default', 'sideMenu') ?>
+<li><?php echo link_to(__('ログアウト'), 'default/logout') ?></li>
 </ul>
 </div>
 <?php endif; ?>

@@ -20,7 +20,7 @@ class adminActions extends sfActions
  /**
   * Executes index action
   *
-  * @param sfRequest $request A request object
+  * @param sfWebRequest $request A request object
   */
   public function executeIndex(sfWebRequest $request)
   {
@@ -30,7 +30,7 @@ class adminActions extends sfActions
  /**
   * Executes manageUser action
   *
-  * @param sfRequest $request A request object
+  * @param sfWebRequest $request A request object
   */
   public function executeManageUser(sfWebRequest $request)
   {
@@ -40,7 +40,7 @@ class adminActions extends sfActions
  /**
   * Executes adminUser action
   *
-  * @param sfRequest $request A request object
+  * @param sfWebRequest $request A request object
   */
   public function executeAddUser(sfWebRequest $request)
   {
@@ -55,7 +55,7 @@ class adminActions extends sfActions
  /**
   * Executes deleteUser action
   *
-  * @param sfRequest $request A request object
+  * @param sfWebRequest $request A request object
   */
   public function executeDeleteUser(sfWebRequest $request)
   {
@@ -80,7 +80,7 @@ class adminActions extends sfActions
  /**
   * Executes editPassword action
   *
-  * @param sfRequest $request A request object
+  * @param sfWebRequest $request A request object
   */
   public function executeEditPassword(sfWebRequest $request)
   {
@@ -96,7 +96,7 @@ class adminActions extends sfActions
  /**
   * Executes changeLanguage action
   *
-  * @param sfRequest $request A request object
+  * @param sfWebRequest $request A request object
   */
   public function executeChangeLanguage(sfWebRequest $request)
   {

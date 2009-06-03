@@ -1,0 +1,72 @@
+Navigation:
+  backend_side_member:
+    type: "backend_side"
+    uri:  "member/index"
+    sort_order: 10
+    Translation:
+      ja_JP:
+        caption: "メンバー管理"
+
+  backend_side_community:
+    type: "backend_side"
+    uri:  "community/index"
+    sort_order: 20
+    Translation:
+      ja_JP:
+        caption: "コミュニティ管理"
+
+  backend_side_sns_config:
+    type: "backend_side"
+    uri:  "sns/config"
+    sort_order: 30
+    Translation:
+      ja_JP:
+        caption: "SNS設定"
+
+  backend_side_design:
+    type: "backend_side"
+    uri:  "design/index"
+    sort_order: 40
+    Translation:
+      ja_JP:
+        caption: "デザイン設定"
+
+  backend_side_navigation:
+    type: "backend_side"
+    uri:  "navigation/index"
+    sort_order: 50
+    Translation:
+      ja_JP:
+        caption: "ナビゲーション設定"
+
+  backend_side_profile_list:
+    type: "backend_side"
+    uri:  "profile/list"
+    sort_order: 60
+    Translation:
+      ja_JP:
+        caption: "プロフィール項目設定"
+
+  backend_side_plugin_list:
+    type: "backend_side"
+    uri:  "plugin/list"
+    sort_order: 70
+    Translation:
+      ja_JP:
+        caption: "プラグイン設定"
+
+  backend_side_connection:
+    type: "backend_side"
+    uri:  "connection/index"
+    sort_order: 80
+    Translation:
+      ja_JP:
+        caption: "連携設定"
+
+  backend_side_admin:
+    type: "backend_side"
+    uri:  "admin/index"
+    sort_order: 90
+    Translation:
+      ja_JP:
+        caption: "管理画面設定"

@@ -32,7 +32,9 @@ class NavigationForm extends BaseNavigationForm
       $maxSortOrder = 0;
 
       $navs = Doctrine::getTable('Navigation')->retrieveByType($nav->getType());
-      $finalNav = array_pop($navs);
+
+      $finalNav = $navs->getLast();
+
       if ($finalNav)
       {
         $maxSortOrder = $finalNav->getSortOrder();

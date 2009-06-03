@@ -18,7 +18,7 @@
 <?php foreach ($nav as $form) : ?>
 <tbody id="type_<?php echo str_replace(' ', '_', $type) ?>_<?php echo $form->getObject()->getId() ?>"<?php if (!$form->isNew()) : ?> class="sortable"<?php endif; ?>>
 <tr>
-<td><form action="<?php echo url_for('design/navigationEdit?app='.$app) ?>" method="post">
+<td><form action="<?php echo url_for('navigation/edit?app='.$sf_request->getParameter('app', 'pc')) ?>" method="post">
 <?php echo $form->renderHiddenFields() ?>
 <?php echo $form['uri']->render() ?></td>
 <td><?php echo $form['ja_JP']['caption']->render() ?><?php echo $form['type']->render(array('value' => $type)) ?></td>
@@ -27,7 +27,7 @@
 <?php else : ?>
 <td><?php echo $form['id']->render() ?>
 <input type="submit" value="<?php echo __('編集') ?>" /></form></td>
-<td><form action="<?php echo url_for('design/navigationDelete?id=' . $form->getObject()->getId()) ?>" method="post" /><input type="submit" value="<?php echo __('削除') ?>" /></form></td>
+<td><form action="<?php echo url_for('navigation/delete?app='.$sf_request->getParameter('app', 'pc').'&id=' . $form->getObject()->getId()) ?>" method="post" /><input type="submit" value="<?php echo __('削除') ?>" /></form></td>
 <?php endif; ?>
 </tr>
 </tbody>
@@ -37,7 +37,7 @@
 <?php echo sortable_element('type_'.str_replace(' ', '_', $type), array(
   'tag'  => 'tbody',
   'only' => 'sortable',
-  'url'  => 'design/navigationSort'
+  'url'  => 'navigation/sort'
 )) ?>
 
 <?php endforeach; ?>
