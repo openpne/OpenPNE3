@@ -1,9 +1,10 @@
 <?php
 $options = array(
-  'title'   => __('Search Communities'),
-  'url'    => url_for('community/search'),
-  'button' => __('Search'),
-  'moreInfo' => array(link_to(__('Create a new community'), 'community/edit'))
+  'title'    => __('Search Communities'),
+  'url'      => url_for('community/search'),
+  'button'   => __('Search'),
+  'moreInfo' => array(link_to(__('Create a new community'), 'community/edit')),
+  'method'   => 'get'
 );
 
 op_include_form('searchCommunity', $filters, $options);
