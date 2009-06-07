@@ -4,11 +4,11 @@
     <body>
       <trans-unit id="1">
         <source>Previous</source>
-        <target>前を表示</target>
+        <target>[i:128]前を表示</target>
       </trans-unit>
       <trans-unit id="2">
         <source>Next</source>
-        <target>次を表示</target>
+        <target>[i:130]次を表示</target>
       </trans-unit>
       <trans-unit id="3">
         <source>%first% - %last% of %total%</source>

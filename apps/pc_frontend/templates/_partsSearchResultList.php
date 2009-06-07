@@ -1,4 +1,7 @@
-<?php op_include_pager_navigation($options['pager'], $options['link_to_page']); ?>
+<?php slot('pager') ?>
+<?php op_include_pager_navigation($options['pager'], $options['link_to_page'], array('use_current_query_string' => true)); ?>
+<?php end_slot(); ?>
+<?php include_slot('pager') ?>
 
 <div class="block">
 <?php foreach ($options['pager']->getResults() as $key => $result): ?>
@@ -26,4 +29,4 @@ echo key($list);
 <?php endforeach; ?>
 </div>
 
-<?php op_include_pager_navigation($options['pager'], $options['link_to_page']); ?>
+<?php include_slot('pager') ?>

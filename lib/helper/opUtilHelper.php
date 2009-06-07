@@ -18,17 +18,80 @@
  */
 
 /**
+ * Creates a <a> link tag for the pager link
+ *
+ * @param string  $name
+ * @param string  $internal_uri
+ * @param integer $page_no
+ * @param options $options
+ * @return string
+ */
+function op_link_to_for_pager($name, $internal_uri, $page_no, $options)
+{
+  $html_options = _parse_attributes($options);
+
+  $html_options = _convert_options_to_javascript($html_options);
+
+  $absolute = false;
+  if (isset($html_options['absolute_url']))
+  {
+    $absolute = (boolean) $html_options['absolute'];
+    unset($html_options['absolute_url']);
+  }
+  
+  $internal_uri = sprintf($internal_uri, $page_no);
+  $html_options['href'] = url_for($internal_uri, $absolute);
+
+  if (isset($html_options['query_string']))
+  {
+    if (strpos($html_options['href'], '?') !== false)
+    {
+      $html_options['href'] .= '&'.$html_options['query_string'];
+    }
+    else
+    {
+      $html_options['href'] .= '?'.$html_options['query_string'];
+    }
+    unset($html_options['query_string']);
+  }
+
+  if (!strlen($name))
+  {
+    $name = $html_options['href'];
+  }
+ 
+  return content_tag('a', $name, $html_options);
+}
+
+/**
  * Includes a navigation for paginated list
  *
  * @param sfPager $pager
- * @param string  $link_to
+ * @param string  $internal_uri
  * @param array   $options
  */
-function op_include_pager_navigation($pager, $link_to, $options = array())
+function op_include_pager_navigation($pager, $internal_uri, $options = array())
 {
+  $uri = url_for($internal_uri);
+
+  if (isset($options['use_current_query_string']) && $options['use_current_query_string'])
+  {
+    $options['query_string'] = sfContext::getInstance()->getRequest()->getCurrentQueryString();
+    $pageFieldName = isset($options['page_field_name']) ? $options['page_field_name'] : 'page';
+    $options['query_string'] = preg_replace('/'.$pageFieldName.'=\d\&*/', '', $options['query_string']);
+    unset($options['page_field_name']);
+    unset($options['use_current_query_string']);
+  }
+
+  if (isset($options['query_string']))
+  {
+    $options['link_options']['query_string'] = $options['query_string'];
+    unset($options['query_string']);
+  }
+
   $params = array(
     'pager' => $pager,
-    'link_to' => $link_to,
+    'internalUri' => $internal_uri,
     'options' => new opPartsOptionHolder($options)
   );
   $pager = sfOutputEscaper::unescape($pager);

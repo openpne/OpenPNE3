@@ -3,6 +3,7 @@ $options = array(
   'title'  => __('メンバー検索'),
   'url'    => url_for('member/search'),
   'button' => __('Search'),
+  'method' => 'get'
 );
 
 op_include_form('searchMember', $filters, $options);
