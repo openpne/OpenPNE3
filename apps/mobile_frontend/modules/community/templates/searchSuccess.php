@@ -25,6 +25,7 @@ op_include_list('communityList', $list, $option);
 $options = array(
   'url'    => url_for('community/search'),
   'button' => __('Search'),
+  'method' => 'get'
 );
 if (!$isResult)
 {

@@ -4,7 +4,7 @@
 
 <?php slot('title', __('コミュニティリスト')); ?>
 
-<?php echo $form->renderFormTag(url_for('community/list')) ?>
+<?php echo $form->renderFormTag(url_for('community/list'), array('method' => 'get')) ?>
 <table>
 <?php echo $form ?>
 <tr>
@@ -16,7 +16,7 @@
 <?php echo __('該当するコミュニティは存在しません。') ?></p>
 <?php else: ?>
 <?php ob_start() ?>
-<p><?php op_include_pager_navigation($pager, 'community/list?page=%d') ?></p>
+<p><?php op_include_pager_navigation($pager, 'community/list?page=%d', array('use_current_query_string' => true)) ?></p>
 <?php $pagerNavi = ob_get_flush() ?>
 <?php foreach ($pager->getResults() as $community): ?>
 <?php include_partial('community/communityInfo', array(

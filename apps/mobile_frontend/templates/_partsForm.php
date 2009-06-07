@@ -1,6 +1,7 @@
 <?php
-$options->setDefault('method','post');
+$options->setDefault('method', 'post');
 ?>
+
 <form action="<?php echo $options['url'] ?>" method="<?php echo $options['method'] ?>">
 <?php include_customizes($id, 'formTop') ?>
 <?php $forms = ($options['form'] instanceof sfForm) ? array($options['form']): $options['form'] ?>
