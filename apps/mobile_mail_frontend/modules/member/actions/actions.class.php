@@ -30,7 +30,7 @@ class memberActions extends sfActions
       $count = $member->getMemberImage()->count();
       if ($count >= 3)
       {
-        throw new opRuntimeException('Cannot add an image any more.');
+        return sfView::ERROR;
       }
 
       $tok = strtok($part->contentType, ';');

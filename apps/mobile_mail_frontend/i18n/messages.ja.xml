@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Cannot add an image any more.</source>
+        <target>これ以上画像を追加できません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Some errors occurred while processing your mail</source>
+        <target>メールの処理中にエラーが発生しました</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
