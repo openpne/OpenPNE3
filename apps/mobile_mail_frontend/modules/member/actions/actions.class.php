@@ -20,6 +20,10 @@ class memberActions extends sfActions
   public function executeImage(sfWebRequest $request)
   {
     $member = $this->getRoute()->getMember();
+    if (!$member)
+    {
+      return sfView::NONE;
+    }
 
     foreach ($request->getMailMessage() as $part)
     {
@@ -61,5 +65,7 @@ class memberActions extends sfActions
 
       $memberImage->save();
     }
+
+    return sfView::NONE;
   }
 }

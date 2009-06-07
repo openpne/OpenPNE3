@@ -49,5 +49,13 @@ EOF;
     ob_start();
     $context->getController()->dispatch();
     $retval = ob_get_clean();
+
+    if ($retval)
+    {
+      $subject = $context->getResponse()->getTitle();
+      $to = $message->from;
+      $from = $message->to;
+      sfOpenPNEMailSend::execute($subject, $to, $from, $retval);
+    }
   }
 }
