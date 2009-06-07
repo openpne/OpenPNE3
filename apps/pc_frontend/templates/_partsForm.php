@@ -6,7 +6,7 @@ $options->setDefault('firstRow', '');
 $options->setDefault('lastRow', '');
 ?>
 
-<form action="<?php echo $options->getRaw('url') ?>" method="<?php $options['method'] ?>"<?php if (!empty($options['isMultipart'])): ?> enctype="multipart/form-data"<?php endif; ?>>
+<form action="<?php echo $options->getRaw('url') ?>" method="<?php echo $options['method'] ?>"<?php if (!empty($options['isMultipart'])): ?> enctype="multipart/form-data"<?php endif; ?>>
 <?php include_customizes($id, 'formTop') ?>
 
 <?php if (isset($options['body'])): ?>
