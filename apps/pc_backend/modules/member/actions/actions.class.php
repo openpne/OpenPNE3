@@ -36,7 +36,7 @@ class memberActions extends sfActions
   {
     $params = $request->getParameter('member', array());
 
-    $this->form = new opMemberProfileSearchForm();
+    $this->form = new opMemberProfileSearchForm(array(), array('use_id' => true));
     $this->form->bind($params);
 
     $this->pager = new sfDoctrinePager('Member', 20);

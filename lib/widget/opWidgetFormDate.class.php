@@ -39,10 +39,14 @@ class opWidgetFormDate extends sfWidgetFormI18nDate
   {
     if (is_array($value))
     {
-      $value = sprintf('%04d-%02d-%02d', $value['year'], $value['month'], $value['day']);
+      $dateTimeValue = sprintf('%04d-%02d-%02d', $value['year'], $value['month'], $value['day']);
+    }
+    else
+    {
+      $dateTimeValue = $value;
     }
 
-    $dateTime = new DateTime($value);
+    $dateTime = new DateTime($dateTimeValue);
     if (!$dateTime)
     {
       throw new sfException('Invaid date format.');
@@ -52,10 +56,7 @@ class opWidgetFormDate extends sfWidgetFormI18nDate
 
     $days = $this->getOption('days');
     $months = $this->getOption('months');
-
-    $dayDefault = $dateTime->format('j');
-    $monthDefault = $dateTime->format('n');
-    $year = $dateTime->format('Y');
+    
     if ($this->getOption('can_be_empty'))
     {
       $days = array('' => $emptyValues['day']) + $days;
@@ -64,6 +65,18 @@ class opWidgetFormDate extends sfWidgetFormI18nDate
       $dayDefault = $emptyValues['day'];
       $monthDefault = $emptyValues['month'];
       $year = $emptyValues['year'];
+    }
+    if (is_array($value) && !checkdate((int)$value['month'], (int)$value['day'], (int)$value['year']))
+    {
+      $dayDefault = $value['day'];
+      $monthDefault = $value['month'];
+      $year = $value['year'];
+    }
+    elseif (!is_null($value))
+    {
+      $dayDefault = $dateTime->format('j');
+      $monthDefault = $dateTime->format('n');
+      $year = $dateTime->format('Y');
     }
 
     // days

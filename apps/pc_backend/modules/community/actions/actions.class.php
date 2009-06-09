@@ -34,7 +34,7 @@ class communityActions extends sfActions
    */
   public function executeList(sfWebRequest $request)
   {
-    $this->form = new CommunitySearchForm();
+    $this->form = new CommunityFormFilter(array(), array('use_id' => true));
     $this->form->bind($request->getParameter('community'), array());
 
     $this->pager = new sfDoctrinePager('Community', 20);
@@ -54,7 +54,7 @@ class communityActions extends sfActions
    */
   public function executeDelete(sfWebRequest $request)
   {
-    $this->community = Doctrine::getTable('Community')->retrieveByPk($request->getParameter('id'));
+    $this->community = Doctrine::getTable('Community')->find($request->getParameter('id'));
     $this->forward404Unless($this->community);
 
     if ($request->isMethod(sfRequest::POST))

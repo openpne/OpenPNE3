@@ -17,17 +17,33 @@
  */
 class opMemberProfileSearchForm extends sfForm
 {
+  protected static $profileFieldPrefix = 'profile_';
+ 
+  protected function getProfiles()
+  {
+    return Doctrine::getTable('Profile')->retrievesAll();
+  }
+  
   public function configure()
   {
     $this->disableCSRFProtection();
 
-    $widgets = array('name' => new sfWidgetFormInput());
-    $validators = array('name' => new sfValidatorPass());
+    $widgets = array();
+    $validators = array();
+
+    if ($this->getOption('use_id'))
+    {
+      $widgets += array('id' => new sfWidgetFormInput());
+      $validators += array('id' => new sfValidatorPass());
+    }
+
+    $widgets += array('name' => new sfWidgetFormInput());
+    $validators += array('name' => new opValidatorSearchQueryString(array('required' => false)));
 
     foreach ($this->getProfiles() as $profile)
     {
-      $widgets[$profile->getName()] = opFormItemGenerator::generateSearchWidget($profile->toArray(), $profile->getOptionsArray());
-      $validators[$profile->getName()] = new sfValidatorPass();
+      $widgets[self::$profileFieldPrefix.$profile->getName()] = opFormItemGenerator::generateSearchWidget($profile->toArray(), $profile->getOptionsArray());
+      $validators[self::$profileFieldPrefix.$profile->getName()] = new sfValidatorPass();
     }
 
     $this->setWidgets($widgets);
@@ -38,25 +54,69 @@ class opMemberProfileSearchForm extends sfForm
     $this->widgetSchema->setNameFormat('member[%s]');
   }
 
+  protected function addIdColumnQuery(Doctrine_Query $query, $value)
+  {
+    if (!empty($value))
+    {
+      $query->andWhere('id = ?', $value);
+    }
+  }
+
+  protected function addNameColumnQuery(Doctrine_Query $query, $value)
+  {
+    if (!empty($value))
+    {
+      if (is_array($value))
+      {
+        foreach ($value as $v)
+        {
+          $query->addWhere('name LIKE ?', '%'.$v.'%');
+        }
+      }
+      else
+      {
+        if (!empty($value))
+        {
+          $query->addWhere('name LIKE ?', '%'.$values.'%');
+        }
+      }
+    }
+  }
+
   public function getQuery()
   {
     $isWhere = false;
     $ids = null;
-    if ($this->getValue('name'))
+    $q = Doctrine::getTable('Member')->createQuery();
+
+    if ($this->getOption('use_id'))
     {
-      $ids = Doctrine::getTable('Member')->searchMemberIds($this->getValue('name'));
-      if (!$ids)
-      {
-        $ids = array();
-      }
-      $isWhere = true;
+      $this->addIdColumnQuery($q, $this->getValue('id'));
     }
+
+    $this->addNameColumnQuery($q, $this->getValue('name'));
 
     $profileValues = array();
     foreach ($this->getProfiles() as $profile)
     {
       $key = $profile->getName();
-      $value = $this->getValue($key);
+      $value = $this->getValue(self::$profileFieldPrefix.$key);
+
+      if (is_array($value))
+      {
+        $isEmpty = true;
+        foreach ($value as $v)
+        {
+          if(!empty($v))
+          {
+            $isEmpty = false;
+          }
+        }
+        if ($isEmpty)
+        {
+          $value = null;
+        }
+      }
       if (!empty($value))
       {
         $profileValues[$key] = $value;
@@ -65,8 +125,6 @@ class opMemberProfileSearchForm extends sfForm
     }
 
     $ids = Doctrine::getTable('MemberProfile')->searchMemberIds($profileValues, $ids);
-
-    $q = Doctrine::getTable('Member')->createQuery();
 
     if ($isWhere)
     {
@@ -78,11 +136,6 @@ class opMemberProfileSearchForm extends sfForm
     }
 
     return $q;
-  }
-
-  protected function getProfiles()
-  {
-    return Doctrine::getTable('Profile')->retrievesAll();
-  }
+ }
 }
 

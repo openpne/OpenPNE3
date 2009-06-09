@@ -25,24 +25,45 @@ class CommunityFormFilter extends BaseCommunityFormFilter
   public function configure()
   {
     $q = Doctrine::getTable('CommunityCategory')->createQuery()->where('lft > 1');
-    $this->setWidgets(array(
-      'name'                  => new sfWidgetFormFilterInput(array('with_empty' => false)),
+    $widgets = array(
+      'name'                  => new sfWidgetFormInput(),
       'community_category_id' => new sfWidgetFormDoctrineChoice(array(
         'model'       => 'CommunityCategory',
         'add_empty'   => sfContext::getInstance()->getI18N()->__('All categories'),
         'query'    => $q,
         'default' => 0)),
-    ));
+    );
 
-    $this->setValidators(array(
-      'name'                  => new sfValidatorPass(),
+    $validators = array(
+      'name'                  => new opValidatorSearchQueryString(array('required' => false)),
       'community_category_id' => new sfValidatorPass(),
-    ));
+    );
+
+    if ($this->getOption('use_id'))
+    {
+      $widgets = array('id' => new sfWidgetFormFilterInput(array('with_empty' => false))) + $widgets;
+      $validators = array('id' => new sfValidatorPass()) + $validators;
+    }
+
+    $this->setWidgets($widgets);
+    $this->setValidators($validators);
 
     $this->widgetSchema->setLabel('community_category_id', 'Community Category');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
     $this->widgetSchema->setNameFormat('community[%s]');
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
+  }
+
+  protected function addNameColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+    $fieldName = $this->getFieldName($field);
+    if (is_array($values))
+    {
+      foreach ($values as $value)
+      {
+        $query->addWhere('r.'.$fieldName.' LIKE ?', '%'.$value.'%');
+      }
+    }
   }
 }

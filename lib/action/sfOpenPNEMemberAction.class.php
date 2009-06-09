@@ -105,6 +105,32 @@ abstract class sfOpenPNEMemberAction extends sfActions
   }
 
  /**
+  * Executes search action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeSearch($request)
+  {
+    $params = $request->getParameter('member', array());
+
+    $this->filters = new opMemberProfileSearchForm();
+    $this->filters->bind($params);
+
+    if (!isset($this->size))
+    {
+      $this->size = 20;
+    }
+
+    $this->pager = new sfDoctrinePager('Member', $this->size);
+    $q = $this->filters->getQuery()->orderBy('id');
+    $this->pager->setQuery($q);
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
+
+    return sfView::SUCCESS;
+  }
+
+ /**
   * Executes profile action
   *
   * @param sfRequest $request A request object
