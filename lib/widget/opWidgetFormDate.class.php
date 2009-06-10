@@ -57,6 +57,10 @@ class opWidgetFormDate extends sfWidgetFormI18nDate
     $days = $this->getOption('days');
     $months = $this->getOption('months');
     
+    $dayDefault = $dateTime->format('j');
+    $monthDefault = $dateTime->format('n');
+    $year = $dateTime->format('Y');
+    
     if ($this->getOption('can_be_empty'))
     {
       $days = array('' => $emptyValues['day']) + $days;
@@ -66,17 +70,12 @@ class opWidgetFormDate extends sfWidgetFormI18nDate
       $monthDefault = $emptyValues['month'];
       $year = $emptyValues['year'];
     }
+
     if (is_array($value) && !checkdate((int)$value['month'], (int)$value['day'], (int)$value['year']))
     {
       $dayDefault = $value['day'];
       $monthDefault = $value['month'];
       $year = $value['year'];
-    }
-    elseif (!is_null($value))
-    {
-      $dayDefault = $dateTime->format('j');
-      $monthDefault = $dateTime->format('n');
-      $year = $dateTime->format('Y');
     }
 
     // days
