@@ -188,8 +188,8 @@ function include_customizes($id, $name, $vars = null)
 function op_mobile_page_title($title, $subtitle = '')
 {
   $params = array(
-    'title' => $title,
-    'subtitle' => $subtitle,
+    'title' => sfOutputEscaper::unescape($title),
+    'subtitle' => sfOutputEscaper::unescape($subtitle),
   );
 
   slot('op_mobile_header', get_partial('global/partsPageTitle', $params));
