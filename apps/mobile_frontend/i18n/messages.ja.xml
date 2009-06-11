@@ -462,6 +462,30 @@
         <source>No</source>
         <target>いいえ</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Required.</source>
+        <target>必須項目です</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>"%value%" is not an integer.</source>
+        <target>数値ではありません</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>"%value%" must be less than %max%.</source>
+        <target>%max%以下の数値にしてください</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>"%value%" must be greater than %min%.</source>
+        <target>%min%以下の数値にしてください</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>"%value%" is too long (%max_length% characters max).</source>
+        <target>%max_length%文字以内で入力してください</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>"%value%" is too short (%min_length% characters min).'</source>
+        <target>%min_length%文字以上で入力してください</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
