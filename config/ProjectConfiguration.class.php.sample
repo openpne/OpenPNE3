@@ -10,6 +10,7 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enableAllPluginsExcept(array('sfCompat10Plugin', 'sfPropelPlugin'));
     $this->setIncludePath();
     sfConfig::set('sfDoctrinePlugin_doctrine_lib_path', sfConfig::get('sf_lib_dir').'/vendor/doctrine/Doctrine.php');
+    $this->dispatcher->connect('command.pre_command', array('opActivateBehavior', 'disable'));
 
     //HTTP proxy to use when downloading plugin packages
     sfConfig::set('op_http_proxy', null);
