@@ -7,20 +7,24 @@
         <target>コミュニティ名</target>
       </trans-unit>
       <trans-unit id="2">
-        <source>Photo</source>
-        <target>写真</target>
-      </trans-unit>
-      <trans-unit id="3">
         <source>Community Category</source>
         <target>コミュニティカテゴリ</target>
       </trans-unit>
-      <trans-unit id="4">
+      <trans-unit id="3">
         <source>Register poricy</source>
         <target>参加条件</target>
       </trans-unit>
-      <trans-unit id="5">
+      <trans-unit id="4">
         <source>Description</source>
         <target>コミュニティ説明文</target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>Invalid.</source>
+        <target>正しくありません。</target>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>Required.</source>
+        <target>必須項目です。</target>
       </trans-unit>
     </body>
   </file>
