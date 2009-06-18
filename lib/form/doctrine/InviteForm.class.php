@@ -32,7 +32,7 @@ class InviteForm extends MemberConfigPcAddressForm
     $callback = new sfValidatorCallback(array(
         'callback' => array($this, 'validate'),
     ));
-    $callback->setMessage('invalid', 'メールアドレスが無効です');
+    $callback->setMessage('invalid', 'invalid e-mail address');
     $this->validatorSchema->setPostValidator($callback);
   }
 
