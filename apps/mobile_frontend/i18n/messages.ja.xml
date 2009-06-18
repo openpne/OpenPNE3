@@ -543,6 +543,10 @@
         <source>"%value%" does not match the time format (%time_format%).</source>
         <target>%time_format%形式で入力してください。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>invalid e-mail address</source>
+        <target>ﾒｰﾙｱﾄﾞﾚｽが無効です</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

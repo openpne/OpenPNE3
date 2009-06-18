@@ -29,9 +29,11 @@ class InviteForm extends MemberConfigPcAddressForm
       $this->widgetSchema->setLabel('message', 'Message(Arbitrary)');
     }
 
-    $this->validatorSchema->setPostValidator(new sfValidatorCallback(array(
+    $callback = new sfValidatorCallback(array(
         'callback' => array($this, 'validate'),
-    )));
+    ));
+    $callback->setMessage('invalid', 'invalid e-mail address');
+    $this->validatorSchema->setPostValidator($callback);
   }
 
   public function validate($validator, $values, $arguments = array())
