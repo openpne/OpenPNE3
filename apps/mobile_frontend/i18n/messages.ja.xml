@@ -404,7 +404,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>Categories</source>
-        <target>ｶﾃｺﾞﾘｰ</target>
+        <target>ｶﾃｺﾞﾘ</target>
       </trans-unit>
       <trans-unit id="">
         <source>Your search queries did not match any communities.</source>
@@ -412,7 +412,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>All categories</source>
-        <target>すべてのｶﾃｺﾞﾘｰ</target>
+        <target>すべてのｶﾃｺﾞﾘ</target>
       </trans-unit>
       <trans-unit id="">
         <source>Search communities top</source>
