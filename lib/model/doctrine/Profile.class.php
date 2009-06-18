@@ -33,14 +33,4 @@ class Profile extends BaseProfile
   {
     return (bool)('radio' === $this->getFormType() || 'select' === $this->getFormType());
   }
-
-  public function toArray($deep = false, $prefixKey = false)
-  {
-    $result = parent::toArray($deep, $prefixKey);
-    $i18n = $this->getTranslation()->toArray($deep, $prefixKey);
-
-    $result = $result + $i18n['ja_JP'];
-
-    return $result;
-  }
 }
