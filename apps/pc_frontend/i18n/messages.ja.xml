@@ -556,7 +556,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>All categories</source>
-        <target>すべてのカテゴリー</target>
+        <target>すべてのカテゴリ</target>
       </trans-unit>
       <trans-unit id="">
         <source>delete this community.if you delete this community please to report in advance for all this community members.</source>
@@ -671,6 +671,7 @@
         <source>"%value%" does not match the time format (%time_format%).</source>
         <target>%time_format%形式で入力してください。</target>
       </trans-unit>
+
       <trans-unit id="">
         <source>invalid e-mail address</source>
         <target>メールアドレスが無効です</target>
