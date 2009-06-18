@@ -29,7 +29,7 @@ class CommunityFormFilter extends BaseCommunityFormFilter
       'name'                  => new sfWidgetFormInput(),
       'community_category_id' => new sfWidgetFormDoctrineChoice(array(
         'model'       => 'CommunityCategory',
-        'add_empty'   => sfContext::getInstance()->getI18N()->__('All categories'),
+        'add_empty'   => sfContext::getInstance()->getI18N()->__('All categories', array(), 'form_community'),
         'query'    => $q,
         'default' => 0)),
     );

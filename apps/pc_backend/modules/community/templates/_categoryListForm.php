@@ -2,7 +2,7 @@
 <tr>
 <th><?php echo $form['name']->renderLabel() ?></th>
 <?php if (empty($forceAllowUserCommunity)) : ?>
-<th><?php echo $form['is_allow_member_community']->renderLabel() ?></th>
+<th><?php echo __($form['is_allow_member_community']->renderLabel(), array(), 'form_community') ?></th>
 <?php endif; ?>
 <th colspan="2"><?php echo __('操作') ?></th>
 </tr>
