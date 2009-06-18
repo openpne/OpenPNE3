@@ -123,7 +123,7 @@ class MemberProfileForm extends sfForm
   {
     foreach ($profiles as $profile)
     {
-      $profileI18n = $profile->Translation['ja_JP']->toArray();
+      $profileI18n = $profile->Translation[sfContext::getInstance()->getUser()->getCulture()]->toArray();
       $profileWithI18n = $profile->toArray() + $profileI18n;
 
       $widgetOptions = array(

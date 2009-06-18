@@ -7,6 +7,19 @@
         <target>誰でも参加可能</target>
       </trans-unit>
       <trans-unit id="">
+        <source>All Members</source>
+        <target>全員に公開</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>My Friends</source>
+        <target>マイフレンドまで公開</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Private</source>
+        <target>公開しない</target>
+      </trans-unit>
+
+      <trans-unit id="">
         <source>You can't access this page.</source>
         <target>このページにはアクセスできません。</target>
       </trans-unit>

@@ -95,6 +95,18 @@
         <target>ﾌﾟﾛﾌｨｰﾙ変更</target>
       </trans-unit>
       <trans-unit id="">
+        <source>All Members</source>
+        <target>全員に公開</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>My Friends</source>
+        <target>ﾏｲﾌﾚﾝﾄﾞまで公開</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Private</source>
+        <target>公開しない</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Register mobile</source>
         <target>携帯電話を登録する</target>
       </trans-unit>
