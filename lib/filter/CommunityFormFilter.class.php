@@ -31,7 +31,7 @@ class CommunityFormFilter extends BaseCommunityFormFilter
       'name'                  => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'community_category_id' => new sfWidgetFormPropelChoice(array(
         'model'       => 'CommunityCategory',
-        'add_empty'   => sfContext::getInstance()->getI18N()->__('All categories'),
+        'add_empty'   => sfContext::getInstance()->getI18N()->__('All categories', array(), 'form_community'),
         'criteria'    => $c,
         'default' => 0)),
     ));
