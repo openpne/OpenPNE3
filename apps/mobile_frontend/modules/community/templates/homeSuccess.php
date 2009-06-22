@@ -17,6 +17,17 @@
 <?php echo op_format_date($community->getCreatedAt(), 'D') ?><br>
 <font color="#999966"><?php echo __('Administrator') ?>:</font><br>
 <?php echo link_to($community_admin->getName(), 'member/profile?id='.$community_admin->getId()) ?><br>
+<font color="#999966"><?php echo __('Community Category', array(), 'form_community') ?>:</font><br>
+<?php echo $community->getCommunityCategory() ?><br>
+<font color="#999966"><?php echo __('Register poricy', array(), 'form_community') ?>:</font><br>
+<?php echo __($community->getRegisterPoricy()) ?><br>
+</td>
+</tr>
+
+<tr>
+<td colspan="2">
+<font color="#999966"><?php echo __('Description') ?>:</font><br>
+<?php echo op_auto_link_text(nl2br($community->getConfig('description'))) ?><br>
 </td>
 </tr>
 
