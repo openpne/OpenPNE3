@@ -132,4 +132,17 @@ class Community extends BaseCommunity
   {
     return sprintf($format, $this->getName(), $this->countCommunityMembers());
   }
+
+  public function getRegisterPoricy()
+  {
+    $public_flag = $this->getConfig('public_flag');
+    if ('public' === $public_flag)
+    {
+      return 'Everyone can join';
+    }
+    else if ('auth_commu_member' === $public_flag)
+    {
+      return 'Community\'s admin authorization needed';
+    }
+  }
 }
