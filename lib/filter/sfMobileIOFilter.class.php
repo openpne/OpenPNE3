@@ -24,6 +24,14 @@ class sfMobileIOFilter extends sfFilter
    */
   public function execute($filterChain)
   {
+    // This filter should affect only real mobile phone
+    if (sfConfig::get('sf_environment') === 'test')
+    {
+      $filterChain->execute();
+
+      return null;
+    }
+
     $this->convertEmojiForInput();
     $this->convertEncodingForInput();
 
