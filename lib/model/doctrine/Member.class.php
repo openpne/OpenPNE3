@@ -231,4 +231,33 @@ class Member extends BaseMember
 
     return $result;
   }
+
+  public function delete(Doctrine_Connection $conn = null)
+  {
+    $memberId = $this->getId();
+    $communityMemberTable = Doctrine::getTable('CommunityMember');
+    $adminCommunity = $communityMemberTable->getCommunityIdsOfAdminByMemberId($this->getId());
+    foreach ($adminCommunity as $community)
+    {
+      $communityId = $community['community_id'];
+      $memberCount = $communityMemberTable->getCommunityMemberCount($communityId);
+      if (!$memberCount)
+      {
+          $community = Doctrine::getTable('Community')->find($communityId);
+          $community->delete();
+          continue;
+      }
+      $communityMember = $communityMemberTable->createQuery()
+        ->where('community_id = ?', $communityId)
+        ->addWhere('position = ?', '')
+        ->orderBy('random()')
+        ->limit(1)
+        ->fetchOne();
+      $communityMember->setPosition('admin');
+      $communityMember->save();
+      $communityMember = $communityMemberTable->retrieveByMemberIdAndCommunityId($memberId, $communityId);
+      $communityMember->delete();
+    }
+    return parent::delete($conn);
+  }
 }

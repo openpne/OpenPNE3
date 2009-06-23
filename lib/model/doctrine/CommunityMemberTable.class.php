@@ -119,4 +119,15 @@ class CommunityMemberTable extends Doctrine_Table
 
     return array();
   }
+
+  public function getCommunityMemberCount($communityId)
+  {
+    $communityMember = $this->createQuery()
+      ->select('COUNT(*)')
+      ->where('community_id = ?', $communityId)
+      ->addWhere('position = ?', '')
+      ->fetchArray();
+
+    return $communityMember[0]['COUNT'];
+  }
 }
