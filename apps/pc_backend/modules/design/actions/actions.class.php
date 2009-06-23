@@ -360,29 +360,6 @@ class designActions extends sfActions
   }
 
  /**
-  * Execute footer action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeFooter(sfWebRequest $request)
-  {
-    $this->type = $request->getParameter('type');
-    $this->forward404Unless(in_array($this->type, array('before', 'after')));
-
-    $option = array();
-    $option['type'] = $this->type;
-    $this->form = new DesignFooterForm(array(), $option);
-    if ($request->isMethod('post'))
-    {
-      $params = $request->getParameter('design_footer');
-      $this->form->bind($params);
-      $this->form->save();
-      $this->getUser()->setFlash('notice', 'Footer design is changed.');
-      $this->redirect('design/footer?type=' . $this->type);
-    }
-  }
-
- /**
   * Execute banner action
   *
   * @param sfRequest $request A request object
