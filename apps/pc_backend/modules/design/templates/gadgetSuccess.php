@@ -16,7 +16,7 @@
 <?php use_helper('opJavascript') ?>
 
 <div>
-<form id="gadgetForm" action="<?php url_for('design/gadget?type='.$type) ?>" method="post">
+<form id="gadgetForm" action="<?php echo url_for('design/gadget?type='.$type) ?>" method="post">
 <?php foreach ($gadgets as $gadgetType => $item): ?>
 <?php if ($item): ?>
 <?php foreach ($item as $key => $gadget): ?>

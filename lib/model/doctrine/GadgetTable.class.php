@@ -64,11 +64,20 @@ class GadgetTable extends Doctrine_Table
 
   public function getGadgetsIds($type)
   {
-    return $this->createQuery()
+    $_result = $this->createQuery()
       ->select('id')
-      ->where('type', $type)
+      ->where('type = ?', $type)
       ->orderBy('sort_order')
-      ->fetchArray();
+      ->execute();
+    
+    $result = array();
+
+    foreach ($_result as $value)
+    {
+      $result[] = $value->getId();
+    }
+
+    return $result;
   }
 
   protected function getResults()
