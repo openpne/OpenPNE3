@@ -12,9 +12,10 @@ class CommunityTable extends Doctrine_Table
 {
   public function retrievesByMemberId($memberId, $limit = 5, $isRandom = false)
   {
-    $q = Doctrine::getTable('Community')->createQuery()
-        ->where('Community.CommunityMember.position <> ?', 'pre')
-        ->leftJoin('Community.CommunityMember');
+    $q = $this->createQuery('c')
+        ->leftJoin('c.CommunityMember cm')
+        ->where('cm.position <> ?', 'pre')
+        ->andWhere('cm.member_id = ?', $memberId);
 
     if (!is_null($limit))
     {
@@ -32,9 +33,10 @@ class CommunityTable extends Doctrine_Table
 
   public function getJoinCommunityListPager($memberId, $page = 1, $size = 20)
   {
-    $q = Doctrine::getTable('Community')->createQuery()
+    $q = $this->createQuery('c')
+      ->leftJoin('c.CommunityMember cm')
       ->where('cm.position <> ?', 'pre')
-      ->leftJoin('Community.CommunityMember cm');
+      ->andWhere('cm.member_id = ?', $memberId);
 
     $pager = new sfDoctrinePager('Community', $size);
     $pager->setQuery($q);
@@ -47,8 +49,9 @@ class CommunityTable extends Doctrine_Table
   public function getCommunityMemberListPager($communityId, $page = 1, $size = 20)
   {
     $q = Doctrine::getTable('Member')->createQuery()
+      ->leftJoin('Member.CommunityMember cm')
       ->where('cm.position <> ?', 'pre')
-      ->leftJoin('Member.CommunityMember cm');
+      ->andWhere('cm.community_id = ?', $communityId);
 
     $pager = new sfDoctrinePager('Member', $size);
     $pager->setQuery($q);
@@ -64,9 +67,9 @@ class CommunityTable extends Doctrine_Table
 
     $resultSet = $this->createQuery()
       ->select('id')
+      ->leftJoin('Community.CommunityMember cm')
       ->where('cm.member_id = ?', $memberId)
       ->andWhere('cm.position <> ?', 'pre')
-      ->leftJoin('Community.CommunityMember cm')
       ->execute();
 
     foreach ($resultSet as $value)
