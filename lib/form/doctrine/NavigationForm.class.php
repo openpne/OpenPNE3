@@ -20,14 +20,14 @@ class NavigationForm extends BaseNavigationForm
     $this->widgetSchema->setNameFormat('nav[%s]');
     $this->embedI18n(array('ja_JP'));
 
-    unset($this['created_at'], $this['updated_at']);
+    unset($this['sort_order'], $this['created_at'], $this['updated_at']);
   }
 
   public function updateObject($values = null)
   {
     $nav = parent::updateObject($values);
 
-    if (!$nav->getSortOrder())
+    if ($this->isNew())
     {
       $maxSortOrder = 0;
 

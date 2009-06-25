@@ -18,16 +18,18 @@
 <?php foreach ($nav as $form) : ?>
 <tbody id="type_<?php echo str_replace(' ', '_', $type) ?>_<?php echo $form->getObject()->getId() ?>"<?php if (!$form->isNew()) : ?> class="sortable"<?php endif; ?>>
 <tr>
-<td><form action="<?php echo url_for('navigation/edit?app='.$sf_request->getParameter('app', 'pc')) ?>" method="post">
+<form action="<?php echo url_for('navigation/edit?app='.$sf_request->getParameter('app', 'pc')) ?>" method="post">
+<td>
 <?php echo $form->renderHiddenFields() ?>
 <?php echo $form['uri']->render() ?></td>
-<td><?php echo $form['ja_JP']['caption']->render() ?><?php echo $form['type']->render(array('value' => $type)) ?></td>
+<td><?php echo $form['ja_JP']['caption']->render() ?></td>
 <?php if ($form->isNew()) : ?>
-<td colspan="2"><input type="submit" value="<?php echo __('追加') ?>" /></form></td>
+<td colspan="2"><input type="submit" value="<?php echo __('追加') ?>" /></td>
+</form>
 <?php else : ?>
-<td><?php echo $form['id']->render() ?>
-<input type="submit" value="<?php echo __('編集') ?>" /></form></td>
-<td><form action="<?php echo url_for('navigation/delete?app='.$sf_request->getParameter('app', 'pc').'&id=' . $form->getObject()->getId()) ?>" method="post" /><input type="submit" value="<?php echo __('削除') ?>" /></form></td>
+<td><input type="submit" value="<?php echo __('編集') ?>" /></td>
+</form>
+<td><form action="<?php echo url_for('navigation/delete?app='.$sf_request->getParameter('app', 'pc').'&id='.$form->getObject()->getId()) ?>" method="post" /><input type="submit" value="<?php echo __('削除') ?>" /></form></td>
 <?php endif; ?>
 </tr>
 </tbody>

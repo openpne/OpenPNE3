@@ -46,7 +46,9 @@ class navigationActions extends sfActions
       {
         $this->list[$type][] = new NavigationForm($nav);
       }
-      $this->list[$type][] = new NavigationForm();
+      $nav = new Navigation();
+      $nav->setType($type);
+      $this->list[$type][] = new NavigationForm($nav);
     }
   }
 
@@ -58,7 +60,6 @@ class navigationActions extends sfActions
   public function executeEdit(sfWebRequest $request)
   {
     $nav = $request->getParameter('nav');
-
     $this->forward404Unless(isset($nav['id']));
     $model = Doctrine::getTable('Navigation')->find($nav['id']);
 
