@@ -89,7 +89,7 @@ class MemberProfileTable extends Doctrine_Table
         }
         continue;
       }
-      elseif (is_array($value))
+      elseif ($item->isMultipleSelect() || $item->isSingleSelect())
       {
         $column = 'profile_option_id';
       }

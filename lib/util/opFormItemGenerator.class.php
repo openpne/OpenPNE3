@@ -201,7 +201,7 @@ class opFormItemGenerator
       case 'checkbox':
       case 'select':
       case 'radio':
-        $obj = new sfWidgetFormSelectCheckbox($params);
+        $obj = new sfWidgetFormSelect($params);
         break;
       // doesn't allow searching
       case 'increased_input':
@@ -244,17 +244,7 @@ class opFormItemGenerator
       case 'checkbox':
       case 'select':
       case 'radio':
-        if (count($value) == 1)
-        {
-          $q->andWhere($column.' = ?', array_shift($value));
-        }
-        else
-        {
-          foreach ($value as $item)
-          {
-            $q->orWhere($column.' = ?', $item);
-          }
-        }
+        $q->andWhere($column.' = ?', $value);
         break;
       // doesn't allow searching
       case 'increased_input':

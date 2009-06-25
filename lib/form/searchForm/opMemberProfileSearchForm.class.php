@@ -45,7 +45,7 @@ class opMemberProfileSearchForm extends sfForm
       $profileI18n = $profile->Translation[sfContext::getInstance()->getUser()->getCulture()]->toArray();
       $profileWithI18n = $profile->toArray() + $profileI18n;
 
-      $widgets[self::$profileFieldPrefix.$profile->getName()] = opFormItemGenerator::generateSearchWidget($profileWithI18n, $profile->getOptionsArray());
+      $widgets[self::$profileFieldPrefix.$profile->getName()] = opFormItemGenerator::generateSearchWidget($profileWithI18n, array('' => '') + $profile->getOptionsArray());
       $validators[self::$profileFieldPrefix.$profile->getName()] = new sfValidatorPass();
     }
 
