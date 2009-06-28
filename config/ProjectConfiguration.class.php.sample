@@ -17,6 +17,10 @@ class ProjectConfiguration extends sfProjectConfiguration
 
     sfConfig::set('op_mail_domain', 'example.com');
     sfConfig::set('op_is_mail_address_contain_hash', false);
+
+    sfConfig::set('doctrine_model_builder_options', array(
+      'baseClassName' => 'opDoctrineRecord',
+    ));
   }
 
   public function setIncludePath()
@@ -33,6 +37,7 @@ class ProjectConfiguration extends sfProjectConfiguration
     $manager->setAttribute(Doctrine::ATTR_MODEL_LOADING, Doctrine::MODEL_LOADING_CONSERVATIVE);
     $manager->setAttribute(Doctrine::ATTR_AUTOLOAD_TABLE_CLASSES, true);
     $manager->setAttribute(Doctrine::ATTR_RECURSIVE_MERGE_FIXTURES, true);
+    $manager->setAttribute(Doctrine::ATTR_QUERY_CLASS, 'opDoctrineQuery');
 
     if (extension_loaded('apc'))
     {
