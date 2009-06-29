@@ -18,9 +18,28 @@ class ProjectConfiguration extends sfProjectConfiguration
     sfConfig::set('op_mail_domain', 'example.com');
     sfConfig::set('op_is_mail_address_contain_hash', false);
 
+    $this->configureSessionStorage('file');
+
     sfConfig::set('doctrine_model_builder_options', array(
       'baseClassName' => 'opDoctrineRecord',
     ));
+  }
+
+  protected function configureSessionStorage($name, $options = array())
+  {
+    $sessionName = 'OpenPNE_'.sfConfig::get('sf_app', 'default');
+
+    if ('memcache' === $name)
+    {
+      sfConfig::set('sf_factory_storage', 'sfCacheSessionStorage');
+      sfConfig::set('sf_factory_storage_parameters', array(
+        'session_name' => $sessionName,
+        'cache' => array(
+          'class' => 'sfMemcacheCache',
+          'param' => $options,
+        )
+      ));
+    }
   }
 
   public function setIncludePath()
