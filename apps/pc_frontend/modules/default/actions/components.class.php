@@ -106,4 +106,8 @@ class defaultComponents extends sfComponents
 
     return true;
   }
+
+  public function executeSideBanner()
+  {
+  }
 }

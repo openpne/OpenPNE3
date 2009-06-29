@@ -261,7 +261,7 @@ OAuthAdminToken:
     secret: { type: string(32), default: "", notnull: true }
     type: { type: enum, values: [request, access], default: "request" }
     expires_at: { type: timestamp }
-    is_active: { type: boolean, default: true, notnull: true  }
+    is_active: { type: boolean, default: true, notnull: true }
   relations:
     AdminUser: { local: admin_user_id, foreign: id, onDelete: cascade }
     Consumer: { class: OAuthConsumerInformation, local: oauth_consumer_id, foreign: id, onDelete: cascade }
@@ -269,3 +269,37 @@ OAuthAdminToken:
     key_secret_UNIQUE:
       fields: [key_string, secret]
       type: unique
+
+Banner:
+  actAs:
+    I18n:
+      fields: [caption]
+      length: 5
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    name: { type: string(64), default: "", notnull: true }
+    html: { type: string }
+    is_use_html: { type: boolean, default: false, notnull: true }
+    caption: { type: string, notnull: true }
+  indexes:
+    name_UNIQUE:
+      fields: [name]
+      type: unique
+
+BannerImage:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    file_id: { type: integer(4), notnull: true }
+    url: { type: string }
+    name: { type: string(64) }
+  relations:
+    File: { local: file_id, foreign: id, onDelete: cascade }
+
+BannerUseImage:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    banner_id: { type: integer(4), notnull: true }
+    banner_image_id: { type: integer(4), notnull: true }
+  relations:
+    Banner: { local: banner_id, foreign: id }
+    BannerImage: { local: banner_image_id, foreign: id }

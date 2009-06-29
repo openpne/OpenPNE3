@@ -560,3 +560,32 @@ function op_maiL_to($route, $params = array(), $name = '', $options = array(), $
 
   return mail_to($routing->generate($route, $params), $name, $options, $default_value);
 }
+
+function op_banner($name)
+{
+  $banner = Doctrine::getTable('Banner')->findByName($name);
+  if (!$banner)
+  {
+    return false;
+  }
+
+  if ($banner->getIsUseHtml())
+  {
+    return $banner->getHtml();
+  }
+
+  $bannerImage = $banner->getRandomImage();
+  if (!$bannerImage)
+  {
+    return false;
+  }
+  $imgHtml = image_tag_sf_image($bannerImage->getFile(), array('alt' => $bannerImage->getName()));
+  if ($bannerImage->getUrl() != '')
+  {
+    return link_to($imgHtml, $bannerImage->getUrl(), array('target' => '_blank'));
+  }
+
+  return $imgHtml;
+}
+
+?>

@@ -284,6 +284,14 @@ pre {
   margin: 0 auto;
 }
 
+#topBanner {
+  height: 48px;
+  left: 474px;
+  position: absolute;
+  top: 2px;
+  width: 468px;
+}
+
 #sideBanner {
   float: right;
   width: 225px;

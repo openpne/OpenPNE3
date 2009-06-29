@@ -1,0 +1,29 @@
+Banner:
+  banner_top_before:
+    name: "top_before"
+    Translation:
+      ja_JP:
+        caption: "トップバナー（ログイン前）"
+      en:
+        caption: "Top banner(before login)"
+  banner_side_before:
+    name: "side_before"
+    Translation:
+      ja_JP:
+        caption: "サイドバナー（ログイン前）"
+      en:
+        caption: "Side banner(before login)"
+  banner_top_after:
+    name: "top_after"
+    Translation:
+      ja_JP:
+        caption: "トップバナー（ログイン後）"
+      en:
+        caption: "Top banner (after login)"
+  banner_side_after:
+    name: "side_after"
+    Translation:
+      ja_JP:
+        caption: "サイドバナー（ログイン後）"
+      en:
+        caption: "Side banner (after login)"

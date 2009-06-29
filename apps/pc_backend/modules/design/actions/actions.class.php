@@ -279,4 +279,113 @@ class designActions extends sfActions
 
     return sfView::SUCCESS;
   }
+
+ /**
+  * Execute banner action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeBanner(sfWebRequest $request)
+  {
+    $id = $request->getParameter('id', 0);
+    if (!$id)
+    {
+      $this->banner = Doctrine::getTable('Banner')->retrieveTop();
+    }
+    else
+    {
+      $this->banner = Doctrine::getTable('Banner')->find($id);
+    }
+    if (!$this->banner)
+    {
+      return sfView::ERROR;
+    }
+
+    $this->form = new BannerForm($this->banner);
+    if ($request->isMethod(sfRequest::POST))
+    {
+      $this->form->bind($request->getParameter('banner'));
+      if ($this->form->isValid())
+      {
+        $this->form->save();
+      }
+    }
+
+    $this->bannerImageList = Doctrine::getTable('BannerImage')->createQuery()->execute();
+    $this->bannerList = Doctrine::getTable('Banner')->createQuery()->execute();
+  }
+
+ /**
+  * Execute banneradd action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeBanneradd(sfWebRequest $request)
+  {
+    $this->form = new BannerImageForm();
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $params = $request->getParameter('banner_image');
+      $files = $request->getFiles('banner_image');
+      $this->form->bind($params, $files);
+      if ($this->form->isValid())
+      {
+        $this->form->save();
+        $this->redirect('design/banner');
+      }
+    }
+  }
+
+ /**
+  * Execute banneredit action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeBanneredit(sfWebRequest $request)
+  {
+    $banner = Doctrine::getTable('BannerImage')->find($request->getParameter('id', 0));
+    if (!$banner)
+    {
+      return sfView::ERROR;
+    }
+    $this->form = new BannerImageForm($banner);
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $params = $request->getParameter('banner_image');
+      $files = $request->getFiles('banner_image');
+      $this->form->bind($params, $files);
+      if ($this->form->isValid())
+      {
+        $this->form->save();
+        $this->redirect('design/banner');
+      }
+      if (!isset($params['file']))
+      {
+        $banner->setName($params['name']);
+        $banner->setUrl($params['url']);
+        $banner->save();
+        $this->redirect('design/banner');
+      }
+    }
+  }
+
+ /**
+  * Execute bannerdelete action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeBannerdelete(sfWebRequest $request)
+  {
+    $banner = Doctrine::getTable('BannerImage')->find($request->getParameter('id', 0));
+    if (!$banner)
+    {
+      return sfView::ERROR;
+    }
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $banner->delete();
+      $this->redirect('design/banner');
+    }
+  }
 }

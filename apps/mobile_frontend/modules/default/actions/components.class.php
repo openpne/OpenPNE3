@@ -39,4 +39,8 @@ class defaultComponents extends sfComponents
     $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileFooter');
     $this->gadgets = $gadgets['mobileFooterContents'];
   }
+
+  public function executeSideBanner()
+  {
+  }
 }
