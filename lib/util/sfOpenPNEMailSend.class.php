@@ -31,6 +31,15 @@ class sfOpenPNEMailSend
     $this->body = $body;
   }
 
+  public function setGlobalTemplate($template, $params = array())
+  {
+    $template = '_'.$template;
+    $view = new opGlobalPartialView(sfContext::getInstance(), 'superGlobal', $template, '');
+    $view->setPartialVars($params);
+    $body = $view->render();
+    $this->body = $body;
+  }
+
   public function send($to, $from)
   {
     return self::execute($this->subject, $to, $from, $this->body);
