@@ -414,7 +414,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
     );
     $mail = new sfOpenPNEMailSend();
     $mail->setSubject(opConfig::get('sns_name') . '退会者情報');
-    $mail->setTemplate('global/deleteAccountMail', $param);
+    $mail->setGlobalTemplate('deleteAccountMail', $param);
     $mail->send(opConfig::get('admin_mail_address'), opConfig::get('admin_mail_address'));
   }
 }
