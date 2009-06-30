@@ -31,6 +31,6 @@ class friendActions extends sfOpenPNEFriendAction
   {
     $this->size = 50;
 
-    parent::executeList($request);
+    return parent::executeList($request);
   }
 }
