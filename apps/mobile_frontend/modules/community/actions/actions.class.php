@@ -38,7 +38,7 @@ class communityActions extends sfOpenPNECommunityAction
   {
     $this->size = 10;
 
-    parent::executeJoinlist($request);
+    return parent::executeJoinlist($request);
   }
 
   /**
@@ -50,7 +50,7 @@ class communityActions extends sfOpenPNECommunityAction
   {
     $this->size = 10;
 
-    parent::executeMemberList($request);
+    return parent::executeMemberList($request);
   }
 
   /**
