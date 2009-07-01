@@ -291,6 +291,18 @@
         <target>ﾌﾚﾝﾄﾞではありません。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Add friends</source>
+        <target>ﾏｲﾌﾚﾝﾄﾞに追加</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Message</source>
+        <target>ﾒｯｾｰｼﾞ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Submit</source>
+        <target>送信</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>General Configuration</source>
         <target>一般設定</target>
       </trans-unit>
