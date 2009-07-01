@@ -17,6 +17,23 @@
  */
 class opConfig extends sfConfig implements ArrayAccess
 {
+  protected static function getConfigurationSetting()
+  {
+    return parent::$config['openpne_sns_config'];
+  }
+
+  protected static function getDefaultValue($name)
+  {
+    $setting = self::getConfigurationSetting();
+
+    if (isset($setting[$name]['Default']))
+    {
+      return $setting[$name]['Default'];
+    }
+
+    return null;
+  }
+
  /**
   * Retrieves a config parameter.
   *
@@ -27,7 +44,7 @@ class opConfig extends sfConfig implements ArrayAccess
   */
   public static function get($name, $default = null)
   {
-    $setting = parent::$config['openpne_sns_config'];
+    $setting = self::getConfigurationSetting();
     $result = null;
 
     if (isset($setting[$name]))
@@ -35,7 +52,7 @@ class opConfig extends sfConfig implements ArrayAccess
       $result = Doctrine::getTable('SnsConfig')->get($name, $default);
       if (is_null($result))
       {
-        $result = $setting[$name]['Default'];
+        $result = self::getDefaultValue($name);
       }
     }
 
