@@ -10,11 +10,11 @@ security:  ~
 deny:
   class: sfDenyFromNonMobileFilter
 
-emoji:
-  class: opEmojiFilter
-
 io:
   class: sfMobileIOFilter
+
+emoji:
+  class: opEmojiFilter
 
 cache:     ~
 common:    ~
