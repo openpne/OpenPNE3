@@ -27,10 +27,14 @@ class MemberRelationshipTable extends Doctrine_Table
 
   public function getFriendListPager($memberId, $page = 1, $size = 20)
   {
+    $subQuery = Doctrine::getTable('MemberRelationship')->createQuery()
+        ->select('mr.member_id_to')
+        ->from('MemberRelationship mr')
+        ->where('member_id_from = ?')
+        ->andWhere('is_friend = ?');
+
     $q = Doctrine::getTable('Member')->createQuery()
-      ->where('mr.member_id_to = ?', $memberId)
-      ->andWhere('mr.is_friend = ?', true)
-      ->leftJoin('Member.MemberRelationship mr ON mr.member_id_from = Member.id');
+        ->where('id IN ('.$subQuery->getDql().')', array($memberId, true));
 
     $pager = new sfDoctrinePager('Member', $size);
     $pager->setQuery($q);
