@@ -185,4 +185,11 @@ class opToolkit
 
     return $result;
   }
+
+  public static function stripNullByteDeep($value)
+  {
+    return is_array($value) ?
+      array_map(array('opToolkit', 'stripNullByteDeep'), $value) :
+      (is_string($value) ? preg_replace("/[\x{0}-\x{08}\x{0b}-\x{1f}\x{7f}-\x{9f}\x{ad}]/u", '', $value) : $value);
+  }
 }
