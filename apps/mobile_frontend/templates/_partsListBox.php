@@ -1,21 +1,21 @@
 <table id="<?php echo $id ?>" width="100%">
 <?php if (isset($options['title'])): ?>
 <tr><td bgcolor="<?php echo $op_color["core_color_5"] ?>">
-<font color="#000000"><?php echo $options['title'] ?></font><br>
+<font color="<?php echo $op_color["core_color_25"] ?>"><?php echo $options['title'] ?></font><br>
 </td></tr>
 <?php else: ?>
-<tr><td bgcolor="#ffffff">
-<hr color="#b3ceef">
+<tr><td bgcolor="<?php echo $op_color["core_color_7"] ?>">
+<hr color="<?php echo $op_color["core_color_12"] ?>">
 </td></tr>
 <?php endif; ?>
 
 <?php foreach ($options['list'] as $key => $value): ?>
-<tr><td bgcolor="<?php echo cycle_vars($id, '#e0eaef,#ffffff') ?>">
+<tr><td bgcolor="<?php echo cycle_vars($id, $op_color["core_color_6"].','.$op_color["core_color_7"]) ?>">
 <?php echo $options['list']->getRaw($key) ?><br>
 </td></tr>
 <?php if (!empty($options['border'])): ?>
-<tr><td bgcolor="#ffffff">
-<hr color="#b3ceef">
+<tr><td bgcolor="<?php echo $op_color["core_color_7"] ?>">
+<hr color="<?php echo $op_color["core_color_12"] ?>">
 </td></tr>
 <?php endif; ?>
 <?php endforeach; ?>
