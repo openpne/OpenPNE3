@@ -1,9 +1,9 @@
 <?php include_customizes($id, 'before') ?>
 
 <table id="<?php echo $id ?>" width="100%">
-<tr><td bgcolor="#0D6DDF"><font color="#EEEEEE"><?php echo $form->getAuthMode() ?></font></td></tr>
+<tr><td bgcolor="<?php echo $op_color["core_color_11"] ?>"><font color="<?php echo $op_color["core_color_18"] ?>"><?php echo $form->getAuthMode() ?></font></td></tr>
 
-<tr><td bgcolor="#EEEEFF">
+<tr><td bgcolor="<?php echo $op_color["core_color_4"] ?>">
 <form action="<?php echo $link_to ?>" method="post"<?php if ($form->isUtn()): ?> utn<?php endif; ?>>
 <?php echo $form ?>
 <center>

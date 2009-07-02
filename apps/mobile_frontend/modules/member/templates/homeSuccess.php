@@ -6,10 +6,10 @@
 <?php endforeach; ?>
 <?php endif; ?>
 
-<table width="100%" bgcolor="#EEEEFF">
+<table width="100%" bgcolor="<?php echo $op_color["core_color_4"] ?>">
 <tr><td colspan="2" align="center">
 <?php include_customizes('menu', 'top') ?>
-<hr color="#0D6DDF" size="3">
+<hr color="<?php echo $op_color["core_color_11"] ?>" size="3">
 </td></tr>
 
 <tr><td align="center" width="50%" valign="top">
@@ -24,9 +24,9 @@
 </tr>
 
 <tr><td colspan="2" align="center">
-<hr color="#0d6ddf" size="3">
+<hr color="<?php echo $op_color["core_color_11"] ?>" size="3">
 <?php echo link_to(__('Profile'), 'member/profile') ?>
-<hr color="#0d6ddf" size="3">
+<hr color="<?php echo $op_color["core_color_11"] ?>" size="3">
 </td></tr>
 
 <tr><td colspan="2">
@@ -92,7 +92,7 @@ op_include_list('configEdit', $list, array('title' => __('Settings')));
 
 <?php slot('op_mobile_footer') ?>
 <table width="100%">
-<tbody><tr><td align="center" bgcolor="#0d6ddf">
-<font color="#eeeeee"><a href="<?php echo url_for('member/home') ?>" accesskey="0"><font color="#eeeeee">0. <?php echo __('home') ?></font></a> / <a href="#top"><font color="#eeeeee"><?php echo __('top') ?></font></a> / <a href="#bottom" accesskey="8"><font color="#eeeeee">8. <?php echo __('bottom') ?></font></a></font><br>
+<tbody><tr><td align="center" bgcolor="<?php echo $op_color["core_color_11"] ?>">
+<font color="<?php echo $op_color["core_color_18"] ?>"><a href="<?php echo url_for('member/home') ?>" accesskey="0"><font color="<?php echo $op_color["core_color_18"] ?>">0. <?php echo __('home') ?></font></a> / <a href="#top"><font color="<?php echo $op_color["core_color_18"] ?>"><?php echo __('top') ?></font></a> / <a href="#bottom" accesskey="8"><font color="<?php echo $op_color["core_color_18"] ?>">8. <?php echo __('bottom') ?></font></a></font><br>
 </td></tr></tbody></table>
 <?php end_slot(); ?>

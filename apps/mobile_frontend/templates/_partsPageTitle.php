@@ -1,6 +1,6 @@
 <table width="100%">
-<tr><td align="center" bgcolor="#0D6DDF">
-<font color="#EEEEEE"><a name="top"><?php echo $title ?></a></font><br>
+<tr><td align="center" bgcolor="<?php echo $op_color["core_color_11"] ?>">
+<font color="<?php echo $op_color["core_color_18"] ?>"><a name="top"><?php echo $title ?></a></font><br>
 </td></tr>
 <?php if (isset($subtitle) && $subtitle !== ''): ?>
 <tr><td align="center" bgcolor="#DDDDDD">

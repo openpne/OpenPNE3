@@ -7,7 +7,7 @@
 <?php echo '['.link_to(__('Expansion'), sf_image_path($image->getFile(), array('size' => '320x320', 'format' => 'jpg'))).']' ?><br><br>
 <?php endfor; ?>
 </center>
-<hr color="#cccccc">
+<hr color="<?php echo $op_color["core_color_11"] ?>">
 <?php slot('op_mobile_footer_menu') ?>
 <?php echo link_to(__("%1%'s Profile", array('%1%' => $member->getName())), 'member/profile?id='.$member->getId()); ?>
 <?php end_slot(); ?>

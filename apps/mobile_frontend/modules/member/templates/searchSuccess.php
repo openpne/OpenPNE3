@@ -29,8 +29,8 @@ $options = array(
 ?>
 
 <table width="100%">
-<tbody><tr><td bgcolor="#7ddadf">
-<font color="#000000">
+<tbody><tr><td bgcolor="<?php echo $op_color["core_color_5"] ?>">
+<font color="<?php $op_color["core_color_25"] ?>">
 <?php echo __('Search Members') ?>
 </font><br/>
 </td></tr>

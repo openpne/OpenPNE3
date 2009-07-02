@@ -8,7 +8,7 @@
 <?php endforeach; ?>
 
 <?php if ($type !== 'mobile_home_side' && $type !== 'mobile_global') : ?>
-<hr color="#0d6ddf" size="3">
+<hr color="<?php echo $op_color["core_color_11"] ?>" size="3">
 <?php endif; ?>
 
 <?php endif; ?>

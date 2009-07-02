@@ -173,6 +173,9 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $parameters['op_config']  = new opConfig();
     sfOutputEscaper::markClassAsSafe('opConfig');
+
+    $parameters['op_color']  = new opColorConfig();
+
     return $parameters;
   }
 

@@ -1,6 +1,6 @@
 <table id="<?php echo $id ?>" width="100%">
 <?php if (isset($options['title'])): ?>
-<tr><td bgcolor="#7ddadf">
+<tr><td bgcolor="<?php echo $op_color["core_color_5"] ?>">
 <font color="#000000"><?php echo $options['title'] ?></font><br>
 </td></tr>
 <?php else: ?>
