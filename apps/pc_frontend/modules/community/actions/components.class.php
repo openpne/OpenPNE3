@@ -12,12 +12,14 @@ class communityComponents extends sfOpenPNECommunityComponents
 {
   public function executeJoinListBox($request)
   {
-    $memberId = $this->getUser()->getMemberId();
-    if ($request->hasParameter('id'))
+    if ($request->hasParameter('id') && $request->getParameter('module') == 'member' && $request->getParameter('action') == 'profile')
     {
-      $memberId = $request->getParameter('id');
+      $this->member = Doctrine::getTable('Member')->find($request->getParameter('id'));
     }
-    $this->member = Doctrine::getTable('Member')->find($memberId);
+    else
+    {
+      $this->member = $this->getUser()->getMember();
+    }
     $this->row = $this->gadget->getConfig('row');
     $this->col = $this->gadget->getConfig('col');
     $this->crownIds = Doctrine::getTable('CommunityMember')->getCommunityIdsOfAdminByMemberId($this->member->getId());

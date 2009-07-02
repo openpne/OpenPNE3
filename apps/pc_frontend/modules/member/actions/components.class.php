@@ -12,11 +12,13 @@ class memberComponents extends sfComponents
 {
   public function executeProfileListBox($request)
   {
-    $memberId = $this->getUser()->getMemberId();
     if ($request->hasParameter('id'))
     {
-      $memberId = $request->getParameter('id');
+      $this->member = Doctrine::getTable('Member')->find($request->getParameter('id'));
     }
-    $this->member = Doctrine::getTable('Member')->find($memberId);
+    else
+    {
+      $this->member = $this->getUser()->getMember();
+    }
   }
 }

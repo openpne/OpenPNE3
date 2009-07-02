@@ -12,12 +12,14 @@ class friendComponents extends sfOpenPNEFriendComponents
 {
   public function executeFriendListBox($request)
   {
-    $memberId = $this->getUser()->getMemberId();
-    if ($request->hasParameter('id'))
+    if ($request->hasParameter('id') && $request->getParameter('module') == 'member' && $request->getParameter('action') == 'profile')
     {
-      $memberId = $request->getParameter('id');
+      $this->member = Doctrine::getTable('Member')->find($request->getParameter('id'));
     }
-    $this->member = Doctrine::getTable('Member')->find($memberId);
+    else
+    {
+      $this->member = $this->getUser()->getMember();
+    }
     $this->row = $this->gadget->getConfig('row');
     $this->col = $this->gadget->getConfig('col');
     $this->friends = $this->member->getFriends($this->row * $this->col, true);

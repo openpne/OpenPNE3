@@ -56,12 +56,14 @@ class defaultComponents extends sfComponents
 
   public function executeMemberImageBox($request)
   {
-    $memberId = $this->getUser()->getMemberId();
-    if ($request->hasParameter('id'))
+    if ($request->hasParameter('id') && $request->getParameter('module') == 'member' && $request->getParameter('action') == 'profile')
     {
-      $memberId = $request->getParameter('id');
+      $this->member = Doctrine::getTable('Member')->find($request->getParameter('id'));
     }
-    $this->member = Doctrine::getTable('Member')->find($memberId);
+    else
+    {
+      $this->member = $this->getUser()->getMember();
+    }
   }
 
   public function executeSearchBox()
