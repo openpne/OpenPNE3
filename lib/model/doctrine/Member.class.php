@@ -54,10 +54,14 @@ class Member extends BaseMember
 
   public function getFriends($limit = null, $isRandom = false)
   {
+    $subQuery = Doctrine::getTable('MemberRelationship')->createQuery()
+        ->select('mr.member_id_to')
+        ->from('MemberRelationship mr')
+        ->where('member_id_from = ?')
+        ->andWhere('is_friend = ?');
+
     $q = Doctrine::getTable('Member')->createQuery()
-        ->where('mr.member_id_to = ?', $this->getId())
-        ->andWhere('mr.is_friend = ?', true)
-        ->leftJoin('Member.MemberRelationship mr ON mr.member_id_from = Member.id');
+        ->where('id IN ('.$subQuery->getDql().')', array($this->getId(), true));
 
     if (!is_null($limit))
     {
