@@ -12,12 +12,14 @@ class friendComponents extends sfOpenPNEFriendComponents
 {
   public function executeFriendListBox($request)
   {
-    $memberId = $this->getUser()->getMemberId();
-    if ($request->hasParameter('id'))
+    if ($request->hasParameter('id') && $request->getParameter('module') == 'member' && $request->getParameter('action') == 'profile')
     {
-      $memberId = $request->getParameter('id');
+      $this->member = MemberPeer::retrieveByPk($request->getParameter('id'));
     }
-    $this->member = MemberPeer::retrieveByPk($memberId);
+    else
+    {
+      $this->member = $this->getUser()->getMember();
+    }
     $c = new Criteria();
     $c->addAscendingOrderByColumn(Propel::getDB()->random(time()));
     $this->row = $this->gadget->getConfig('row');
