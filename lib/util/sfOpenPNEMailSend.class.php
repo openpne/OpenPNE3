@@ -49,6 +49,8 @@ class sfOpenPNEMailSend
   {
     sfOpenPNEApplicationConfiguration::registerZend();
 
+    $subject = mb_convert_kana($subject, 'KV');
+
     $mailer = new Zend_Mail('iso-2022-jp');
     $mailer->setHeaderEncoding(Zend_Mime::ENCODING_BASE64)
       ->setFrom($from)
