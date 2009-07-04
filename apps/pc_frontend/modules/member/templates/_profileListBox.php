@@ -1,4 +1,4 @@
-<?
+<?php
 
 $list = array();
 foreach ($member->getProfiles(true) as $profile)
