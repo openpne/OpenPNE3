@@ -98,6 +98,27 @@ class opMailMessage extends Zend_Mail_Message
       $result = mb_decode_mimeheader($result);
     }
 
+    if ('from' === strtolower($name) || 'to' === strtolower($name))
+    {
+      $result = $this->extractAddrSpec($result);
+    }
+
     return $result;
+  }
+
+  protected function extractAddrSpec($mailAddress)
+  {
+    // stripped double-quotes (")
+    $mailAddress = str_replace('"', '', $mailAddress);
+
+    // extract addr-spec
+    $matches = array();
+    $regx = '/([\.\w!#$%&\'*+\-\/=?^`{|}~]+@[\w!#$%&\'*+\-\/=?^`{|}~]+(\.[\w!#$%&\'*+\-\/=?^`{|}~]+)*)/';
+    if (preg_match_all($regx, $mailAddress, $matches))
+    {
+      return array_pop($matches[1]);
+    }
+
+    return '';
   }
 }
