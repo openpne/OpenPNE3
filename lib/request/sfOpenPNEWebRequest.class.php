@@ -112,7 +112,12 @@ class sfOpenPNEWebRequest extends sfWebRequest
     }
 
     // OpenPNE doesn't need to know a plain mobile UID
-    return md5($uid);
+    if ($uid)
+    {
+      return md5($uid);
+    }
+
+    return false;
   }
 
  /**
