@@ -17,7 +17,7 @@
  */
 class BannerForm extends BaseBannerForm
 {
-  private $bannerImageIdList = false;
+  private $bannerImageIdList = array();
 
   public function configure()
   {
@@ -84,7 +84,7 @@ class BannerForm extends BaseBannerForm
 
   public function isValid()
   {
-    if (!$this->bannerImageIdList)
+    if (!count($this->bannerImageIdList))
     {
       return false;
     }
