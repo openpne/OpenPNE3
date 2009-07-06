@@ -579,6 +579,14 @@
         <source>invalid e-mail address</source>
         <target>ﾒｰﾙｱﾄﾞﾚｽが無効です</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Manage member</source>
+        <target>ﾒﾝﾊﾞｰ管理</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Drop this member</source>
+        <target>退会させる</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
