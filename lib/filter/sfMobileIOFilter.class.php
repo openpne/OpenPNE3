@@ -74,7 +74,7 @@ class sfMobileIOFilter extends sfFilter
 
   private function convertEmojiForInput()
   {
-    $request = $this->getContext(false)->getRequest();
+    $request = $this->getContext()->getRequest();
     $parameter_holder = $request->getParameterHolder();
 
     foreach ($parameter_holder->getAll(false) as $key => $value) {
