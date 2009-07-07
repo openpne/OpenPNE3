@@ -68,9 +68,13 @@ $option = array(
   'border' => true,
   'moreInfo' => array(
     link_to(__('More'), 'community/memberList?id='.$community->getId()),
-    link_to(__('Manage member'), 'community/memberManage?id='.$community->getId()),
   ),
 );
+if ($isAdmin)
+{
+  $option['moreInfo'][] = link_to(__('Manage member'), 'community/memberManage?id='.$community->getId())
+;
+}
 op_include_list('communityMember', $list, $option);
 ?>
 
