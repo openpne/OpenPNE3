@@ -31,7 +31,9 @@ EOF;
     $tmpdir = sfConfig::get('sf_cache_dir').'/models_tmp';
     $migrationsPath = sfConfig::get('sf_data_dir').'/migrations/generated';
 
+    $config = $this->getCliConfig();
+
     $this->callDoctrineCli('generate-models-db', array('models_path' => $tmpdir));
-    $this->callDoctrineCli('generate-migrations-diff', array('models_path' => $tmpdir, 'migrations_path' => $migrationsPath));
+    $this->callDoctrineCli('generate-migrations-diff', array('models_path' => $tmpdir, 'migrations_path' => $migrationsPath, 'yaml_schema_path' => $config['models_path']));
   }
 }
