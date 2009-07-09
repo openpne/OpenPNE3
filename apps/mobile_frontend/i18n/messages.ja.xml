@@ -66,6 +66,10 @@
         <source>More</source>
         <target>もっと見る</target>
       </trans-unit>
+       <trans-unit id="">
+        <source>Back</source>
+        <target>戻る</target>
+      </trans-unit>
       <trans-unit id="">
         <source>Makes friends</source>
         <target>ﾌﾚﾝﾄﾞに加える</target>

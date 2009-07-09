@@ -25,7 +25,8 @@ op_include_list('communityList', $list, $option);
 $options = array(
   'url'    => url_for('community/search'),
   'button' => __('Search'),
-  'method' => 'get'
+  'method' => 'get',
+  'align'  => 'center'
 );
 if (!$isResult)
 {
@@ -54,6 +55,6 @@ op_include_list('searchCategory', $list, $option);
 
 <?php if ($isResult): ?>
 <?php slot('op_mobile_footer_menu') ?>
-<?php echo link_to(__('back'), 'community/search'); ?>
+<?php echo link_to(__('Back'), 'community/search'); ?>
 <?php end_slot(); ?>
 <?php endif ?>

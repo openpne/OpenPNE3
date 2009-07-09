@@ -24,7 +24,8 @@ op_include_list('memberList', $list, $option);
 $options = array(
   'url'    => url_for('member/search'),
   'button' => __('Search'),
-  'method' => 'get'
+  'method' => 'get',
+  'align'  => 'center'
 );
 ?>
 
