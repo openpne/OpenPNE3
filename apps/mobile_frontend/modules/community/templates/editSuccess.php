@@ -15,15 +15,11 @@ else
 
 <?php op_mobile_page_title($title, $subtitle) ?>
 
-<form action="<?php echo url_for($url) ?>" method="post">
-<table>
-<?php echo $communityForm ?>
-<?php echo $communityConfigForm ?>
-<tr>
-<td colspan="2"><input type="submit" value="<?php echo __('Save') ?>" /></td>
-</tr>
-</table>
-</form>
+<?php op_include_form('communityForm', array($communityForm, $communityConfigForm), array(
+  'url' => url_for($url),
+  'button' => __('Save'),
+  'align' => 'center',
+)) ?>
 
 <?php
 if (!$communityForm->isNew())
