@@ -3,42 +3,55 @@
 require_once '##SYMFONY_LIB_DIR##/autoload/sfCoreAutoload.class.php';
 sfCoreAutoload::register();
 
+define('OPENPNE_CONFIGURAIOTN_SAMPLE_HASH', '64b6863a70e4a74930c6c00e140d61f7');
+
 class ProjectConfiguration extends sfProjectConfiguration
 {
   public function setup()
   {
     $this->enableAllPluginsExcept(array('sfCompat10Plugin', 'sfPropelPlugin'));
     $this->setIncludePath();
+
+    $this->setOpenPNEConfiguration();
+
     sfConfig::set('sfDoctrinePlugin_doctrine_lib_path', sfConfig::get('sf_lib_dir').'/vendor/doctrine/Doctrine.php');
-    $this->dispatcher->connect('command.pre_command', array('opActivateBehavior', 'disable'));
-
-    //HTTP proxy to use when downloading plugin packages
-    sfConfig::set('op_http_proxy', null);
-
-    sfConfig::set('op_mail_domain', 'example.com');
-    sfConfig::set('op_is_mail_address_contain_hash', false);
-
-    $this->configureSessionStorage('file');
-
     sfConfig::set('doctrine_model_builder_options', array(
       'baseClassName' => 'opDoctrineRecord',
     ));
+
+    $this->dispatcher->connect('command.pre_command', array('opActivateBehavior', 'disable'));
   }
 
   protected function configureSessionStorage($name, $options = array())
   {
     $sessionName = 'OpenPNE_'.sfConfig::get('sf_app', 'default');
+    $params = array('session_name' => $sessionName);
 
     if ('memcache' === $name)
     {
       sfConfig::set('sf_factory_storage', 'sfCacheSessionStorage');
-      sfConfig::set('sf_factory_storage_parameters', array(
-        'session_name' => $sessionName,
+      sfConfig::set('sf_factory_storage_parameters', array_merge(array(
         'cache' => array(
           'class' => 'sfMemcacheCache',
-          'param' => $options,
+          'param' => (array)$options,
         )
-      ));
+      ), $params));
+    }
+    elseif ('database' === $name)
+    {
+      sfConfig::set('sf_factory_storage', 'opPDODatabaseSessionStorage');
+      sfConfig::set('sf_factory_storage_parameters', array_merge(array(
+        'db_table'    => 'session',
+        'database'    => 'doctrine',
+        'db_id_col'   => 'id',
+        'db_data_col' => 'data',
+        'db_time_col' => 'time',
+      ), (array)$options, $params));
+    }
+    elseif ('file' !== $name)
+    {
+      sfConfig::set('sf_factory_storage', $name);
+      sfConfig::set('sf_factory_storage_parameters', array_merge((array)$options, $params));
     }
   }
 
@@ -62,6 +75,30 @@ class ProjectConfiguration extends sfProjectConfiguration
     {
       $cacheDriver = new Doctrine_Cache_Apc();
       $manager->setAttribute(Doctrine::ATTR_QUERY_CACHE, $cacheDriver);
+    }
+  }
+
+  protected function setOpenPNEConfiguration()
+  {
+    $path = dirname(__FILE__).'/OpenPNE.yml';
+
+    if (md5_file($path.'.sample') !== OPENPNE_CONFIGURAIOTN_SAMPLE_HASH)
+    {
+      die('You must use original '.dirname(__FILE__).DIRECTORY_SEPARATOR.'OpenPNE.yml.sample or you must use new '.dirname(__FILE__).DIRECTORY_SEPARATOR.'ProjectConfiguration.class.php');
+    }
+
+    $config = sfYaml::load($path.'.sample');
+    if (is_readable($path))
+    {
+      $config = array_merge($config, sfYaml::load($path));
+    }
+
+    $this->configureSessionStorage($config['session_storage']['name'], (array)$config['session_storage']['options']);
+    unset($config['session_storage']);
+
+    foreach ($config as $key => $value)
+    {
+      sfConfig::set('op_'.$key, $value);
     }
   }
 }

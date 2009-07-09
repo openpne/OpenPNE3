@@ -303,3 +303,10 @@ BannerUseImage:
   relations:
     Banner: { local: banner_id, foreign: id }
     BannerImage: { local: banner_image_id, foreign: id }
+
+Session:
+  actAs: []
+  columns:
+    id: { type: integer(4), primary: true }
+    data: { type: string }
+    time: { type: string }

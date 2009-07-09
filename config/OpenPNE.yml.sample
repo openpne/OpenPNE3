@@ -1,0 +1,40 @@
+######################################
+# 基本設定 (Basic)
+######################################
+
+# SNS の URL
+# URL of the SNS
+base_url: "http://example.com/"
+
+
+######################################
+# メール (Mail)
+######################################
+
+# SNS からのメール送信に使うドメイン
+# Domain to use for sending e-mail from the SNS
+mail_domain: "example.com"
+
+# メール投稿アドレスにメンバー毎にユニークなハッシュを含める
+# Contain an individual hash to an e-mail address that is used for posting something to the SNS
+is_mail_address_contain_hash: false
+
+
+######################################
+# セッション (Session)
+######################################
+
+# セッションストレージ設定
+# Configure Session storage
+session_storage:
+  name: "file"
+  options:
+
+######################################
+# プロキシ (Proxy)
+######################################
+
+# インターネット接続に使用するプロキシ (ホスト名:ポート番号)
+# Proxy to access the Internet (hostname:port)
+http_proxy: ""
+
