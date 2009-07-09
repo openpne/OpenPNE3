@@ -197,4 +197,9 @@ abstract class opAuthRegisterForm extends sfForm
   {
     return $this->getFormFieldSchema();
   }
+
+  public function getAllForms()
+  {
+    return array($this->memberForm, $this->profileForm, $this, $this->configForm);
+  }
 }

@@ -4,9 +4,14 @@ $options->setDefault('url', url_for(sfContext::getInstance()->getRouting()->getC
 $options->setDefault('method','post');
 ?>
 
+<?php if ($options['form'] instanceof opAuthRegisterForm): ?>
+<?php echo $options['form']->renderFormTag($options['url'], array('method' => $options['method'])) ?>
+<?php $forms = $options['form']->getAllForms() ?>
+<?php else: ?>
 <form action="<?php echo $options['url'] ?>" method="<?php echo $options['method'] ?>">
-<?php include_customizes($id, 'formTop') ?>
 <?php $forms = ($options['form'] instanceof sfForm) ? array($options['form']): $options['form'] ?>
+<?php endif; ?>
+<?php include_customizes($id, 'formTop') ?>
 <?php foreach ($forms as $form): ?>
 <?php if ($form->hasGlobalErrors()): ?>
 <?php echo $form->renderGlobalErrors(); ?>
