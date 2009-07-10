@@ -48,7 +48,10 @@ class mobile_frontendConfiguration extends sfOpenPNEApplicationConfiguration
     $prefix = 'op_'.sfConfig::get('sf_app').'_color_config_';
     foreach ($colors as $key => $value)
     {
-      sfConfig::set($prefix.$key, $value);
+      if (!sfConfig::has($prefix.$key))
+      {
+        sfConfig::set($prefix.$key, $value);
+      }
     }
   }
 
