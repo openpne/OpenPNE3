@@ -52,7 +52,7 @@ class opMobileUserAgent
   {
     $mobile = $this->getMobile();
 
-    if ($mobile->isDoCoMo() || ($mobile->isSoftBank() && !($mobile->isType3GC() || $mobile->isTypeW())))
+    if (($mobile->isDoCoMo() && '1.0' == $mobile->getBrowserVersion()) || ($mobile->isSoftBank() && !($mobile->isType3GC() || $mobile->isTypeW())))
     {
       return false;
     }
