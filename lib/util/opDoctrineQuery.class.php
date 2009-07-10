@@ -17,7 +17,11 @@
  */
 class opDoctrineQuery extends Doctrine_Query
 {
-  protected $shouldGoToMaster = false;
+  protected static
+    $detectedSlave = null;
+
+  protected
+    $shouldGoToMaster = false;
 
   public function connectToMaster($isMaster = false)
   {
@@ -28,34 +32,56 @@ class opDoctrineQuery extends Doctrine_Query
 
   static public function getSlaveConnection()
   {
-    $prefix = 'slave_';
-
-    $connections = Doctrine_Manager::getInstance()->getConnections();
-    shuffle($connections);
-
-    foreach ($connections as $name => $conn)
+    if (!is_null(self::$detectedSlave))
     {
-      if (substr($name, 0, strlen($prefix)) === $prefix)
+      return self::$detectedSlave;
+    }
+
+    $prefix = 'slave_';
+    $list = array();
+
+    $manager = sfContext::getInstance()->getDatabaseManager();
+    foreach ($manager->getNames() as $name)
+    {
+      if (substr($name, 0, strlen($prefix)) === $prefix
+        || 'doctrine' === $name
+        || 'master' === $name)
       {
-        return $conn;
+        $db = $manager->getDatabase($name);
+        $list = array_pad($list, count($list) + (int)$db->getParameter('priority', 1), $name);
       }
     }
 
-    return self::getMasterConnection();
+    shuffle($list);
+    $key = array_shift($list);
+
+    try
+    {
+      $connection = $manager->getDatabase($key)->getDoctrineConnection();
+
+      self::$detectedSlave = $connection;
+    }
+    catch (Doctrine_Connection_Exception $e)
+    {
+      self::$detectedSlave = self::getMasterConnection();
+    }
+
+    return self::$detectedSlave;
   }
 
   static public function getMasterConnection()
   {
     $conn = null;
+    $manager = sfContext::getInstance()->getDatabaseManager();
 
     try
     {
-      $conn = Doctrine_Manager::getInstance()->getConnection('master');
+      $conn = $manager->getDatabase('master')->getDoctrineConnection();
     }
-    catch (Doctrine_Manager_Exception $e)
+    catch (sfDatabaseException $e)
     {
       // retry getting connection by the old connection name
-      $conn = Doctrine_Manager::getInstance()->getConnection('doctrine');
+      $conn = $manager->getDatabase('doctrine')->getDoctrineConnection();
     }
 
     return $conn;
