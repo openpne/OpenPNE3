@@ -4,34 +4,42 @@
 /**
  * PHP versions 4 and 5
  *
- * LICENSE: This source file is subject to version 3.0 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
+ * Copyright (c) 2003-2009 KUBO Atsuhiro <kubo@iteman.jp>,
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
  * @category   Networking
  * @package    Net_UserAgent_Mobile
- * @author     KUBO Atsuhiro <iteman@users.sourceforge.net>
- * @copyright  2003-2008 KUBO Atsuhiro <iteman@users.sourceforge.net>
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Mobile.php,v 1.39 2008/05/10 12:23:26 kuboa Exp $
+ * @author     KUBO Atsuhiro <kubo@iteman.jp>
+ * @copyright  2003-2009 KUBO Atsuhiro <kubo@iteman.jp>
+ * @license    http://www.opensource.org/licenses/bsd-license.php  New BSD License
+ * @version    CVS: $Id: Mobile.php,v 1.1 2009/05/26 08:48:16 kuboa Exp $
  * @since      File available since Release 0.1
  */
 
+require_once 'Net/UserAgent/Mobile/Error.php';
 require_once 'PEAR.php';
 
-// {{{ constants
-
-/**
- * Constants for error handling.
- */
-define('NET_USERAGENT_MOBILE_OK',               1);
-define('NET_USERAGENT_MOBILE_ERROR',           -1);
-define('NET_USERAGENT_MOBILE_ERROR_NOMATCH',   -2);
-define('NET_USERAGENT_MOBILE_ERROR_NOT_FOUND', -3);
-
-// }}}
 // {{{ GLOBALS
 
 /**
@@ -83,10 +91,10 @@ $GLOBALS['NET_USERAGENT_MOBILE_FallbackOnNomatch'] = false;
  *
  * @category   Networking
  * @package    Net_UserAgent_Mobile
- * @author     KUBO Atsuhiro <iteman@users.sourceforge.net>
- * @copyright  2003-2008 KUBO Atsuhiro <iteman@users.sourceforge.net>
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.0.0RC1
+ * @author     KUBO Atsuhiro <kubo@iteman.jp>
+ * @copyright  2003-2009 KUBO Atsuhiro <kubo@iteman.jp>
+ * @license    http://www.opensource.org/licenses/bsd-license.php  New BSD License
+ * @version    Release: 1.0.0
  * @since      Class available since Release 0.1
  */
 class Net_UserAgent_Mobile
@@ -159,8 +167,10 @@ class Net_UserAgent_Mobile
             }
         }
 
-        $instance = &new $class($userAgent);
-        $error = &$instance->isError();
+        PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
+        $instance = new $class($userAgent);
+        PEAR::staticPopErrorHandling();
+        $error = &$instance->getError();
         if (Net_UserAgent_Mobile::isError($error)) {
             if ($GLOBALS['NET_USERAGENT_MOBILE_FallbackOnNomatch']
                 && $error->getCode() == NET_USERAGENT_MOBILE_ERROR_NOMATCH
@@ -169,7 +179,7 @@ class Net_UserAgent_Mobile
                 return $instance;
             }
 
-            $instance = &$error;
+            return PEAR::raiseError($error);
         }
 
         return $instance;
@@ -383,84 +393,6 @@ class Net_UserAgent_Mobile
         }
 
         return false;
-    }
-
-    /**#@-*/
-
-    /**#@+
-     * @access private
-     */
-
-    /**#@-*/
-
-    // }}}
-}
-
-// }}}
-// {{{ Net_UserAgent_Mobile_Error
-
-/**
- * Net_UserAgent_Mobile_Error implements a class for reporting user agent error
- * messages
- *
- * @category   Networking
- * @package    Net_UserAgent_Mobile
- * @author     KUBO Atsuhiro <iteman@users.sourceforge.net>
- * @copyright  2003-2008 KUBO Atsuhiro <iteman@users.sourceforge.net>
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.0.0RC1
- * @since      Class available since Release 0.1
- */
-class Net_UserAgent_Mobile_Error extends PEAR_Error
-{
-
-    // {{{ properties
-
-    /**#@+
-     * @access public
-     */
-
-    /**#@-*/
-
-    /**#@+
-     * @access private
-     */
-
-    /**#@-*/
-
-    /**#@+
-     * @access public
-     */
-
-    // }}}
-    // {{{ constructor
-
-    /**
-     * constructor
-     *
-     * @param mixed   $code     Net_UserAgent_Mobile error code, or string with error
-     *     message.
-     * @param integer $mode     what 'error mode' to operate in
-     * @param integer $level    what error level to use for $mode and
-     *     PEAR_ERROR_TRIGGER
-     * @param mixed   $userinfo additional user/debug info
-     */
-    function Net_UserAgent_Mobile_Error($code = NET_USERAGENT_MOBILE_ERROR,
-                                        $mode = PEAR_ERROR_RETURN,
-                                        $level = E_USER_NOTICE,
-                                        $userinfo = null
-                                        )
-    {
-        if (is_int($code)) {
-            $this->PEAR_Error('Net_UserAgent_Mobile Error: ' .
-                              Net_UserAgent_Mobile::errorMessage($code),
-                              $code, $mode, $level, $userinfo
-                              );
-        } else {
-            $this->PEAR_Error("Net_UserAgent_Mobile Error: $code",
-                              NET_USERAGENT_MOBILE_ERROR, $mode, $level, $userinfo
-                              );
-        }
     }
 
     /**#@-*/
