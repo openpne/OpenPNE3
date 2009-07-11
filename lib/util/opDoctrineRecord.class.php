@@ -21,7 +21,7 @@ abstract class opDoctrineRecord extends sfDoctrineRecord
   {
     if (is_null($conn))
     {
-      $conn = opDoctrineQuery::getMasterConnection();
+      $conn = opDoctrineQuery::chooseConnection(true);
     }
 
     parent::save($conn);
