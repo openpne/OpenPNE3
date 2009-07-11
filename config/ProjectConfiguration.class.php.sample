@@ -29,13 +29,8 @@ class ProjectConfiguration extends sfProjectConfiguration
 
     if ('memcache' === $name)
     {
-      sfConfig::set('sf_factory_storage', 'sfCacheSessionStorage');
-      sfConfig::set('sf_factory_storage_parameters', array_merge(array(
-        'cache' => array(
-          'class' => 'sfMemcacheCache',
-          'param' => (array)$options,
-        )
-      ), $params));
+      sfConfig::set('sf_factory_storage', 'opMemcacheSessionStorage');
+      sfConfig::set('sf_factory_storage_parameters', array_merge((array)$options, $params));
     }
     elseif ('database' === $name)
     {
