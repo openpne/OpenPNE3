@@ -129,15 +129,21 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     $this->createAuthAdapter($this->getCurrentAuthMode());
   }
 
-  public function getCurrentAuthMode()
+  public function getCurrentAuthMode($allowGuess = true)
   {
     $authMode = $this->getAttribute('auth_mode', null, 'sfOpenPNESecurityUser');
 
     $authModes = $this->getAuthModes();
     if (!in_array($authMode, $authModes))
     {
-      $authMode = array_shift($authModes);
-      $this->setCurrentAuthMode($authMode);
+      if ($allowGuess)
+      {
+        $authMode = array_shift($authModes);
+      }
+      else
+      {
+        $authMode = null;
+      }
     }
 
     return $authMode;
