@@ -168,6 +168,12 @@ abstract class opAuthRegisterForm extends sfForm
         Doctrine::getTable('CommunityMember')->join($this->getMember()->getId(), $community->getId());
       }
 
+      if (sfConfig::get('op_is_mail_address_contain_hash'))
+      {
+        $str = opToolkit::generatePasswordString(sfConfig::get('op_mail_address_hash_length', 12), false);
+        $this->getMember()->setConfig('mail_address_hash', strtolower($str));
+      }
+
       return $this->getMember()->getId();
     }
 
