@@ -87,15 +87,40 @@ class opDoctrineQuery extends Doctrine_Query
     return $conn;
   }
 
+  static public function getMasterConnectionDirect()
+  {
+    $conn = null;
+
+    try
+    {
+      $conn = Doctrine_Manager::getInstance()->getConnection('master');
+    }
+    catch (Doctrine_Manager_Exception $e)
+    {
+      // retry getting connection by the old connection name
+      $conn = Doctrine_Manager::getInstance()->getConnection('doctrine');
+    }
+
+    return $conn;
+  }
+
+  static public function chooseConnection($shouldGoToMaster = true, $queryType = self::SELECT)
+  {
+    if (!sfContext::hasInstance())
+    {
+      return self::getMasterConnectionDirect();
+    }
+
+    elseif (self::SELECT === $queryType && !$shouldGoToMaster)
+    {
+      return self::getSlaveConnection();
+    }
+
+    return self::getMasterConnection();
+  }
+
   public function preQuery()
   {
-    if (self::SELECT === $this->getType() && !$this->shouldGoToMaster)
-    {
-      $this->_conn = self::getSlaveConnection();
-    }
-    else
-    {
-      $this->_conn = self::getMasterConnection();
-    }
+    $this->_conn = self::chooseConnection($this->shouldGoToMaster, $this->getType());
   }
 }
