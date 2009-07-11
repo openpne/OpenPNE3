@@ -17,7 +17,7 @@ class MemberImage extends BaseMemberImage
       return true;
     }
 
-    $primaryImage = $this->Member->Image;
+    $primaryImage = $this->Member->MemberImage;
     if ($primaryImage)
     {
       return (bool)($primaryImage->id == $this->id);

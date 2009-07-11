@@ -27,6 +27,14 @@ class opMailRoute extends sfRoute
       if ($config)
       {
         $this->member = $config->getMember();
+        if (isset($this->requirements['hash']))
+        {
+          $hash = $this->member->getMailAddressHash();
+          if (!isset($this->parameters['hash']) || $hash !== $this->parameters['hash'])
+          {
+            $this->member = null;
+          }
+        }
       }
     }
 

@@ -264,4 +264,20 @@ class Member extends BaseMember
     }
     return parent::delete($conn);
   }
+
+  public function getMailAddressHash($length = null)
+  {
+    if (is_null($length))
+    {
+      $length = sfConfig::get('op_mail_address_hash_length', 12);
+    }
+
+    $hash = $this->getConfig('mail_address_hash');
+    if (!$hash)
+    {
+      $hash = md5(strval($this->id).$this->getConfig('password'));
+    }
+
+    return substr($hash, 0, (int)$length);
+  }
 }

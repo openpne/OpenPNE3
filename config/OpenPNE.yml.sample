@@ -16,8 +16,12 @@ base_url: "http://example.com/"
 mail_domain: "example.com"
 
 # メール投稿アドレスにメンバー毎にユニークなハッシュを含める
-# Contain an individual hash to an e-mail address that is used for posting something to the SNS
-is_mail_address_contain_hash: false
+# Contain an individual hash for an e-mail address that is used to post something to the SNS
+is_mail_address_contain_hash: true
+
+# メール投稿アドレスのハッシュの長さ
+# Length of hash for an e-mail address for posting
+mail_address_hash_length: 12
 
 
 ######################################
@@ -29,6 +33,7 @@ is_mail_address_contain_hash: false
 session_storage:
   name: "file"
   options:
+
 
 ######################################
 # プロキシ (Proxy)

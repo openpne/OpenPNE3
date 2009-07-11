@@ -552,6 +552,13 @@ function op_maiL_to($route, $params = array(), $name = '', $options = array(), $
   $configPath = '/mobile_mail_frontend/config/routing.yml';
   $files = array_merge(array(sfConfig::get('sf_apps_dir').$configPath), $configuration->globEnablePlugin('/apps'.$configPath));
 
+  $user = sfContext::getInstance()->getUser();
+
+  if (sfConfig::get('op_is_mail_address_contain_hash') && $user->hasCredential('SNSMember'))
+  {
+    $params['hash'] = $user->getMember()->getMailAddressHash();
+  }
+
   $routing = new opMailRouting(new sfEventDispatcher());
   $config = new sfRoutingConfigHandler();
   $routes = $config->evaluate($files);

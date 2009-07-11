@@ -3,7 +3,7 @@
 require_once '##SYMFONY_LIB_DIR##/autoload/sfCoreAutoload.class.php';
 sfCoreAutoload::register();
 
-define('OPENPNE_CONFIGURAIOTN_SAMPLE_HASH', '64b6863a70e4a74930c6c00e140d61f7');
+define('OPENPNE_CONFIGURAIOTN_SAMPLE_HASH', 'ffc9f45bbeb1cb8832c211b87f225c8d');
 
 class ProjectConfiguration extends sfProjectConfiguration
 {
