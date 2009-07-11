@@ -79,7 +79,7 @@ class ProjectConfiguration extends sfProjectConfiguration
 
     if (md5_file($path.'.sample') !== OPENPNE_CONFIGURAIOTN_SAMPLE_HASH)
     {
-      die('You must use original '.dirname(__FILE__).DIRECTORY_SEPARATOR.'OpenPNE.yml.sample or you must use new '.dirname(__FILE__).DIRECTORY_SEPARATOR.'ProjectConfiguration.class.php');
+      die('You must use original '.dirname(__FILE__).DIRECTORY_SEPARATOR.'OpenPNE.yml.sample or you must use new '.dirname(__FILE__).DIRECTORY_SEPARATOR.'ProjectConfiguration.class.php'.PHP_EOL);
     }
 
     $config = sfYaml::load($path.'.sample');
