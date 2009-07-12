@@ -34,6 +34,20 @@ EOF;
     $config = $this->getCliConfig();
 
     $this->callDoctrineCli('generate-models-db', array('models_path' => $tmpdir));
-    $this->callDoctrineCli('generate-migrations-diff', array('models_path' => $tmpdir, 'migrations_path' => $migrationsPath, 'yaml_schema_path' => $config['models_path']));
+
+    $migration = new Doctrine_Migration($migrationsPath);
+    $diff = new opMigrationDiff($tmpdir, $config['models_path'], $migration);
+    $changes = $diff->generateMigrationClasses();
+
+    $numChanges = count($changes, true) - count($changes);
+
+    if (!$numChanges)
+    {
+      throw new Doctrine_Task_Exception('Could not generate migration classes from difference');
+    }
+    else
+    {
+      $this->dispatcher->notify(new sfEvent($this, 'command.log', array($this->formatter->formatSection('doctrine', 'Generated migration classes successfully from difference'))));
+    }
   }
 }
