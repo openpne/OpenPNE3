@@ -18,6 +18,8 @@
 class opMigration extends Doctrine_Migration
 {
   protected
+    $migrationBase = null,
+
     $dispatcher = null,
     $dbManager = null,
     $pluginInstance = null,
@@ -33,6 +35,8 @@ class opMigration extends Doctrine_Migration
   */
   public function __construct($dispatcher, $dbManager, $targetName = '', $connectionName = '', $params = array())
   {
+    $this->migrationBase = new opMigrationBase();
+
     $this->dispatcher = $dispatcher;
     $this->dbManager = $dbManager;
     $this->setConnectionName($connectionName);
@@ -138,7 +142,7 @@ class opMigration extends Doctrine_Migration
   */
   protected function doMigrate($direction)
   {
-    $method = 'pre'.$direction;
+    $method = 'pre'.ucfirst($direction);
     $this->$method();
 
     if (method_exists($this, $direction))
@@ -157,7 +161,7 @@ class opMigration extends Doctrine_Migration
       }
     }
 
-    $method = 'post'.$direction;
+    $method = 'post'.ucfirst($direction);
     $this->$method();
   }
 
@@ -308,6 +312,40 @@ class opMigration extends Doctrine_Migration
     }
 
     return $revision;
+  }
+
+
+  public function __call($name, $arguments)
+  {
+    if (method_exists($this->migrationBase, $name))
+    {
+      return call_user_func_array(array($this->migrationBase, $name), $arguments);
+    }
+
+    throw new BadMethodCallException('Undefined method '.get_class($this).'::'.$name.'()');
+  }
+
+  public function __get($name)
+  {
+    return $this->migrationBase->getProperty($name);
+  }
+
+  public function __set($name, $value)
+  {
+    $this->migrationBase->setProperty($name, $value);
+  }
+}
+
+class opMigrationBase extends Doctrine_Migration_Base
+{
+  public function getProperty($name)
+  {
+    return $this->$name;
+  }
+
+  public function setProperty($name, $value)
+  {
+    $this->$name = $value;
   }
 }
 

@@ -29,15 +29,46 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
 
     $tmpdir = sfConfig::get('sf_cache_dir').'/models_tmp';
+    $ymlTmp = $tmpdir.'/yaml';
+    $modelTmp = $tmpdir.'/model';
+    $this->getFileSystem()->mkdirs($ymlTmp);
+    $this->getFileSystem()->mkdirs($modelTmp);
     $migrationsPath = sfConfig::get('sf_data_dir').'/migrations/generated';
 
     $config = $this->getCliConfig();
 
-    $this->callDoctrineCli('generate-models-db', array('models_path' => $tmpdir));
+    $manager = Doctrine_Manager::getInstance();
+    $oldAttr = $manager->getAttribute(Doctrine::ATTR_MODEL_LOADING);
+    $manager->setAttribute(Doctrine::ATTR_MODEL_LOADING, Doctrine::MODEL_LOADING_AGGRESSIVE);
+
+    sfSimpleAutoload::unregister();
+    Doctrine::generateYamlFromDb($ymlTmp.'/from.yml', array(), array('generateBaseClasses' => false));
+    sfSimpleAutoload::register();
+    $manager->setAttribute(Doctrine::ATTR_MODEL_LOADING, $oldAttr);
+
+    $models = sfFinder::type('file')->name('*.php')->in($config['models_path']);
+    foreach ($models as $model)
+    {
+      $dirname = basename(dirname($model));
+      $filename = basename($model);
+      if ('base' !== $dirname)
+      {
+        continue;
+      }
+
+      $content = file_get_contents($model);
+      $content = str_replace('abstract class Base', 'class ToPrfx', $content);
+      $content = str_replace('extends opDoctrineRecord', 'extends Doctrine_Record', $content);
+
+      file_put_contents($modelTmp.'/'.str_replace('Base', 'ToPrfx', $filename), $content);
+    }
 
     $migration = new Doctrine_Migration($migrationsPath);
-    $diff = new opMigrationDiff($tmpdir, $config['models_path'], $migration);
+    $diff = new opMigrationDiff($ymlTmp.'/from.yml', $modelTmp, $migration);
     $changes = $diff->generateMigrationClasses();
+
+    $this->getFileSystem()->remove($ymlTmp);
+    $this->getFileSystem()->remove($modelTmp);
 
     $numChanges = count($changes, true) - count($changes);
 

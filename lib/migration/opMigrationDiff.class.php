@@ -42,4 +42,21 @@ class opMigrationDiff extends Doctrine_Migration_Diff
 
     return $info;
   }
+
+  protected function _diff($from, $to)
+  {
+    $fromModels = Doctrine::initializeModels(Doctrine::loadModels($from, Doctrine::MODEL_LOADING_AGGRESSIVE));
+    $toModels = Doctrine::initializeModels(Doctrine::loadModels($to, Doctrine::MODEL_LOADING_AGGRESSIVE));
+
+    // Build schema information for the models
+    $fromInfo = $this->_buildModelInformation($fromModels);
+    $toInfo = $this->_buildModelInformation($toModels);
+
+    // Build array of changes between the from and to information
+    $changes = $this->_buildChanges($fromInfo, $toInfo);
+
+    $this->_cleanup();
+
+    return $changes;
+  }
 }
