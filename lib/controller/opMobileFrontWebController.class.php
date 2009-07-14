@@ -28,7 +28,7 @@ class opMobileFrontWebController extends sfFrontWebController
     }
 
     $isSid = false;
-    
+
     if (is_string($parameters) && false !== ($sidPos = strpos($parameters, SID)))
     {
       $isSid = true;
@@ -41,9 +41,9 @@ class opMobileFrontWebController extends sfFrontWebController
       $isSid = true;
       unset($parameters[session_name()]);
     }
-    
+
     $url = parent::genUrl($parameters, $absolute);
-    
+
     if ($isSid)
     {
       $fragment = '';
@@ -53,8 +53,13 @@ class opMobileFrontWebController extends sfFrontWebController
         $url = substr($url, 0, $fragPos);
       }
 
-      $url .= '?'.SID.$fragment;
+      if (strpos($url, '?') === false)
+      {
+        $url .= '?';
+      }
+      $url .= SID.$fragment;
     }
+
     return $url;
   }
 
@@ -72,7 +77,16 @@ class opMobileFrontWebController extends sfFrontWebController
       }
       else
       {
-        $url .= '?'.SID;
+        if (strpos($url, '?') !== false)
+        {
+          $url .= '&';
+        }
+        else
+        {
+          $url .= '?';
+        }
+
+        $url .= SID;
       }
     }
 
