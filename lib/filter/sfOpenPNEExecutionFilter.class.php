@@ -42,6 +42,15 @@ class sfOpenPNEExecutionFilter extends sfExecutionFilter
     {
       $this->forwardToErrorAction();
     }
+    catch (sfValidatorErrorSchema $e)
+    {
+      if (isset($e['_csrf_token']))
+      {
+        $this->forwardToCSRFErrorAction();
+      }
+
+      throw $e;
+    }
 
     $dispatcher->notify(new sfEvent($this, 'op_action.post_execute_'.$moduleName.'_'.$actionName, array(
       'moduleName'     => $moduleName,
@@ -56,6 +65,13 @@ class sfOpenPNEExecutionFilter extends sfExecutionFilter
   protected function forwardToErrorAction()
   {
     $this->context->getController()->forward('default', 'error');
+
+    throw new sfStopException();
+  }
+
+  protected function forwardToCSRFErrorAction()
+  {
+    $this->context->getController()->forward('default', 'csrfError');
 
     throw new sfStopException();
   }
