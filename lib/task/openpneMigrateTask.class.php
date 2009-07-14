@@ -54,6 +54,11 @@ EOF;
 
     $targets = array_merge(array('OpenPNE'), $this->getEnabledOpenPNEPlugin());
 
+    if (!$options['no-build-model'])
+    {
+      $this->buildModel();
+    }
+
     $databaseManager = new sfDatabaseManager($this->configuration);
     foreach ($targets as $target)
     {
@@ -62,11 +67,6 @@ EOF;
         'revision' => $options['to-revision'],
       );
       $this->migrateFromScript($target, $databaseManager, $params);
-    }
-
-    if (!$options['no-build-model'])
-    {
-      $this->buildModel();
     }
 
     $this->migrateFromDiff();
