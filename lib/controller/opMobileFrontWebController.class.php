@@ -68,6 +68,8 @@ class opMobileFrontWebController extends sfFrontWebController
   */
   public function redirect($url, $delay = 0, $statusCode = 302)
   {
+    $url = $this->genUrl($url, true);
+
     if (!$this->context->getRequest()->isCookie())
     {
       $matchd = '/'.preg_quote(session_name(),'/').'=.*([&|#]?)/';
