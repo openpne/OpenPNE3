@@ -40,7 +40,8 @@ class opMailMessage extends Zend_Mail_Message
         if ('text/plain' === $tok)
         {
           $this->firstTextPos = $this->key();
-          $content = $this->current()->getContent();
+          $content = mb_convert_encoding($this->current()->getContent(), 'UTF-8', 'JIS');
+
           break;
         }
       }
@@ -50,7 +51,7 @@ class opMailMessage extends Zend_Mail_Message
       return $content;
     }
 
-    return parent::getContent();
+    return mb_convert_encoding(parent::getContent(), 'UTF-8', 'JIS');
   }
 
   public function getImages()
