@@ -21,6 +21,7 @@ class openpneMigrateTask extends sfDoctrineBaseTask
       new sfCommandOption('target', null, sfCommandOption::PARAMETER_OPTIONAL, 'The target of migration. This must be "OpenPNE" or a plugin name.'),
       new sfCommandOption('to-version', 'v', sfCommandOption::PARAMETER_OPTIONAL, 'A version'),
       new sfCommandOption('to-revision', 'r', sfCommandOption::PARAMETER_OPTIONAL, 'A revision'),
+      new sfCommandOption('no-update-plugin', null, sfCommandOption::PARAMETER_NONE, 'Do not update plugins'),
       new sfCommandOption('no-build-model', null, sfCommandOption::PARAMETER_NONE, 'Do not build model classes'),
     ));
 
@@ -50,15 +51,17 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
-    $this->installPlugins();
-
-    $targets = array_merge(array('OpenPNE'), $this->getEnabledOpenPNEPlugin());
+    if (!$options['no-update-plugin'])
+    {
+      $this->installPlugins();
+    }
 
     if (!$options['no-build-model'])
     {
       $this->buildModel();
     }
 
+    $targets = array_merge(array('OpenPNE'), $this->getEnabledOpenPNEPlugin());
     $databaseManager = new sfDatabaseManager($this->configuration);
     foreach ($targets as $target)
     {
