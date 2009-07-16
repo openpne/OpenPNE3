@@ -7,13 +7,14 @@ $options->setDefault('yes_url', $url);
 $options->setDefault('no_url', $url);
 $options->setDefault('yes_method', 'post');
 $options->setDefault('no_method', 'post');
+$options->setDefault('align', '');
 ?>
 <?php if(isset($options['body'])): ?>
 <div class="block">
 <?php echo $options['body'] ?>
 </div>
 <?php endif ?>
-<center>
+<div<?php if ($options['align']): ?> align="<?php echo $options['align'] ?>"<?php endif;?>>
 <form action="<?php echo $options['yes_url'] ?>" method="<?php echo $options['yes_method'] ?>">
 <?php $yesFomrs = ($options['yes_form'] instanceof sfForm) ? array($options['yes_form']) : $options['yes_form'] ?>
 <?php if(is_array($yesFomrs)): ?>
@@ -36,4 +37,4 @@ $options->setDefault('no_method', 'post');
 <?php endif ?>
 <input type="submit" class ="input_submit" value="<?php echo $options['no_button'] ?>" />
 </form>
-</center>
+</div>
