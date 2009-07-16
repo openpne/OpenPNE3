@@ -431,6 +431,10 @@
         <target>管理者</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Count of Members</source>
+        <target>ﾒﾝﾊﾞｰ数</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Search</source>
         <target>検索</target>
       </trans-unit>
@@ -590,6 +594,10 @@
       <trans-unit id="">
         <source>Drop this member</source>
         <target>退会させる</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Detail of community</source>
+        <target>ｺﾐｭﾆﾃｨ詳細</target>
       </trans-unit>
     </body>
   </file>

@@ -14,6 +14,7 @@
  * @package    OpenPNE
  * @subpackage community
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
+ * @author     Eitarow Fukamachi <fukamachi@tejimaya.net>
  */
 class communityActions extends sfOpenPNECommunityAction
 {
@@ -91,6 +92,21 @@ class communityActions extends sfOpenPNECommunityAction
       ->createQuery()
       ->where('lft > 1')
       ->execute();
+
+    return sfView::SUCCESS;
+  }
+
+  /**
+   * Executes detail action
+   *
+   * @param sfWebRequest $request a request object
+   */
+  public function executeDetail(sfWebRequest $request)
+  {
+    $this->community = Doctrine::getTable('Community')->find($this->id);
+    $this->forward404Unless($this->community, 'Undefined community.');
+    $this->community_admin = Doctrine::getTable('CommunityMember')->getCommunityAdmin($this->id);
+    $this->community_admin = Doctrine::getTable('Member')->find($this->community_admin->getMemberId());
 
     return sfView::SUCCESS;
   }
