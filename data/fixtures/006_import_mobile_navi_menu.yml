@@ -5,7 +5,7 @@ Navigation:
     sort_order: 0
     Translation:
       ja_JP:
-        caption: "友人を誘う"
+        caption: "[i:140]友人を誘う"
       en:
         caption: "Invite"
 
@@ -15,7 +15,7 @@ Navigation:
     sort_order: 0
     Translation:
       ja_JP:
-        caption: "ﾏｲﾌﾚﾝﾄﾞ"
+        caption: "[i:140]ﾏｲﾌﾚﾝﾄﾞ"
       en:
         caption: "My Friends"
 
@@ -25,6 +25,16 @@ Navigation:
     sort_order: 10
     Translation:
       ja_JP:
-        caption: "参加ｺﾐｭﾆﾃｨ"
+        caption: "[i:155]参加ｺﾐｭﾆﾃｨ"
       en:
         caption: "Communities"
+
+  mobile_home_center_navigation_profile:
+    type: "mobile_home_center"
+    uri: "member/profile"
+    sort_order: 0
+    Translation:
+      ja_JP:
+        caption: "[i:140]ﾌﾟﾛﾌｨｰﾙ"
+      en:
+        caption: "Profile"

@@ -26,6 +26,7 @@ class NavigationTable extends Doctrine_Table
         return array(
           'mobile_global',
           'mobile_home',
+          'mobile_home_center',
           'mobile_home_side',
           'mobile_friend',
           'mobile_community',

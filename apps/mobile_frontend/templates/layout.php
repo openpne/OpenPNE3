@@ -47,7 +47,7 @@
 
 <a name="#bottom"></a>
 
-<?php include_component('default', 'nav', array('type' => 'mobile_global')) ?>
+<?php include_component('default', 'nav', array('type' => 'mobile_global', 'line' => false)) ?>
 
 <?php if (!include_slot('op_mobile_footer')): ?>
 <table width="100%">

@@ -19,14 +19,13 @@
 </td>
 
 <td valign="top">
-<?php include_component('default', 'nav', array('type' => 'mobile_home_side')) ?>
+<?php include_component('default', 'nav', array('type' => 'mobile_home_side', 'line' => false)) ?>
 </td>
 </tr>
 
 <tr><td colspan="2" align="center">
 <hr color="<?php echo $op_color["core_color_11"] ?>" size="3">
-<?php echo link_to(__('Profile'), 'member/profile') ?>
-<hr color="<?php echo $op_color["core_color_11"] ?>" size="3">
+<?php include_component('default', 'nav', array('type' => 'mobile_home_center', 'separator' => ' / ')) ?>
 </td></tr>
 
 <tr><td colspan="2">
