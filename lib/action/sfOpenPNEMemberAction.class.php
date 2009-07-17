@@ -244,37 +244,9 @@ abstract class sfOpenPNEMemberAction extends sfActions
   */
   public function executeConfig($request)
   {
-    $this->categories = sfConfig::get('openpne_member_category');
-
-    $this->categoryCaptions = array();
-    $categoryAttributes = sfConfig::get('openpne_member_category_attribute');
-
-    foreach ($this->categories as $key => $value)
-    {
-      $title = $key;
-
-      $enabledKey = 'enable_pc';
-      if (sfConfig::get('sf_app') == 'mobile_frontend')
-      {
-        $enabledKey = 'enable_mobile';
-      }
-
-      if (isset($categoryAttributes[$key][$enabledKey]))
-      {
-        if (!$categoryAttributes[$key][$enabledKey])
-        {
-          unset($this->categories[$key]);
-          continue;
-        }
-      }
-
-      if (!empty($categoryAttributes[$key]['caption']))
-      {
-        $title = $categoryAttributes[$key]['caption'];
-      }
-
-      $this->categoryCaptions[$key] = $title;
-    }
+    $filteredCategory = $this->filterConfigCategory();
+    $this->categories = $filteredCategory['category'];
+    $this->categoryCaptions = $filteredCategory['captions'];
 
     $this->categoryName = $request->getParameter('category', null);
     if ($this->categoryName)
@@ -406,7 +378,6 @@ abstract class sfOpenPNEMemberAction extends sfActions
     $this->redirect('member/configImage');
   }
 
-
   protected function sendDeleteAccountMail($member)
   {
     $param = array(
@@ -416,5 +387,51 @@ abstract class sfOpenPNEMemberAction extends sfActions
     $mail->setSubject(opConfig::get('sns_name') . '退会者情報');
     $mail->setGlobalTemplate('deleteAccountMail', $param);
     $mail->send(opConfig::get('admin_mail_address'), opConfig::get('admin_mail_address'));
+  }
+
+  protected function filterConfigCategory()
+  {
+    $categories = sfConfig::get('openpne_member_category');
+    $categoryCaptions = array();
+    $categoryAttributes = sfConfig::get('openpne_member_category_attribute');
+
+    foreach ($categories as $key => $value)
+    {
+      $title = $key;
+
+      if (isset($categoryAttributes[$key]['depending_sns_config']))
+      {
+        $snsConfig = $categoryAttributes[$key]['depending_sns_config'];
+        if (!Doctrine::getTable('SnsConfig')->get($snsConfig))
+        {
+          unset($categories[$key]);
+          continue;
+        }
+      }
+
+      $enabledKey = 'enable_pc';
+      if (sfConfig::get('sf_app') == 'mobile_frontend')
+      {
+        $enabledKey = 'enable_mobile';
+      }
+
+      if (isset($categoryAttributes[$key][$enabledKey]))
+      {
+        if (!$categoryAttributes[$key][$enabledKey])
+        {
+          unset($categories[$key]);
+          continue;
+        }
+      }
+
+      if (!empty($categoryAttributes[$key]['caption']))
+      {
+        $title = $categoryAttributes[$key]['caption'];
+      }
+
+      $categoryCaptions[$key] = $title;
+    }
+
+    return array('category' => $categories, 'captions' => $categoryCaptions);
   }
 }

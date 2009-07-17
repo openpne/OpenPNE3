@@ -19,6 +19,7 @@ pcAddress:
     caption: "PC E-mail Address Configuration"
     enable_pc:     true
     enable_mobile: true
+    depending_sns_config: enable_pc
   pc_address:
     Name:       "pc_address"
     Caption:    "PC E-mail Address"
@@ -35,6 +36,7 @@ mobileAddress:
     caption: "Mobile E-mail Address Configuration"
     enable_pc:     true
     enable_mobile: true
+    depending_sns_config: enable_mobile
   mobile_address:
     Name:       "mobile_address"
     Caption:    "Mobile E-mail Address"
