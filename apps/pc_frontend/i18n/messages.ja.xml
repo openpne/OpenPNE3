@@ -671,10 +671,13 @@
         <source>"%value%" does not match the time format (%time_format%).</source>
         <target>%time_format%形式で入力してください。</target>
       </trans-unit>
-
       <trans-unit id="">
         <source>invalid e-mail address</source>
         <target>メールアドレスが無効です</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>An object with the same "%column%" already exist.</source>
+        <target>その %column% は既に使われています。</target>
       </trans-unit>
     </body>
   </file>

@@ -599,6 +599,10 @@
         <source>Detail of community</source>
         <target>ｺﾐｭﾆﾃｨ詳細</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>An object with the same "%column%" already exist.</source>
+        <target>その %column% は既に使われています。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

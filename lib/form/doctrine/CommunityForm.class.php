@@ -39,6 +39,10 @@ class CommunityForm extends BaseCommunityForm
     $this->widgetSchema->setLabel('community_category_id', 'Community Category');
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
 
+    $uniqueValidator = new sfValidatorDoctrineUnique(array('model' => 'Community', 'column' => array('name')));
+    $uniqueValidator->setMessage('invalid', 'An object with the same "name" already exist.');
+    $this->validatorSchema->setPostValidator($uniqueValidator);
+
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array($this, 'checkCreatable'))));
   }
 

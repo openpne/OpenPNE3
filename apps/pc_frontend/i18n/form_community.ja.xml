@@ -30,6 +30,10 @@
         <source>All categories</source>
         <target>すべてのカテゴリ</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>An object with the same "name" already exist.</source>
+        <target>そのコミュニティ名は既に使われています。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
