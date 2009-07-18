@@ -25,6 +25,11 @@ foreach ($form as $field)
   $attributes = array();
   $widget = $field->getWidget();
 
+  if ($widget instanceof sfWidgetFormInputPassword)
+  {
+    $widget = opToolkit::appendMobileInputModeAttributesForFormWidget($widget, 'alphabet');
+  }
+
   if ($widget instanceof opWidgetFormProfile)
   {
     $widget = $widget->getOption('widget');
