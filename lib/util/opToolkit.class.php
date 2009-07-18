@@ -192,4 +192,22 @@ class opToolkit
       array_map(array('opToolkit', 'stripNullByteDeep'), $value) :
       (is_string($value) ? preg_replace("/[\x{0}-\x{08}\x{0b}-\x{1f}\x{7f}-\x{9f}\x{ad}]/u", '', $value) : $value);
   }
+
+  public static function appendMobileInputModeAttributesForFormWidget(sfWidget &$widget, $mode = 'alphabet')
+  {
+    $modes = array(
+      'hiragana'    => 1,
+      'hankakukana' => 2,
+      'alphabet'    => 3,
+      'numeric'     => 4,
+    );
+
+    if (empty($modes[$mode]))
+    {
+      return false;
+    }
+
+    $widget->setAttribute('istyle', $modes[$mode]);
+    $widget->setAttribute('mode', $mode);
+  }
 }
