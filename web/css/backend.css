@@ -30,11 +30,16 @@ body.insecure #body {
 }
 
 #menu {
-  margin-left: 10px;
   position: fixed;
+  top: 40px;
+  left: 10px;
   width: 200px;
   line-height: 150%;
   padding-top: 10px;
+}
+* html #header,
+* html #menu {
+  position: absolute;
 }
 
 #menu a {
@@ -164,4 +169,8 @@ body#design_banner p.add_banner_image {
 body#design_banner ul.radio_list li {
   float: left;
   margin: 0 6px 0 6px;
+}
+
+* html {
+  overflow-x: hidden;
 }
