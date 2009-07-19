@@ -603,6 +603,38 @@
         <source>An object with the same "%column%" already exist.</source>
         <target>その %column% は既に使われています。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Send E-mail that has a photo to use as your image.</source>
+        <target>ﾒｰﾙを送信して写真を登録してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Send E-mail</source>
+        <target>ﾒｰﾙ送信</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete Photo</source>
+        <target>写真削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you delete this photo?</source>
+        <target>この写真を削除しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Edit Community Photo</source>
+        <target>ｺﾐｭﾆﾃｨ写真編集</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>This community doesn't have a photo.</source>
+        <target>まだ写真が登録されていません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Send E-mail that has a photo to use as community's image.</source>
+        <target>ﾒｰﾙを送信して写真を登録してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>This community already has a photo. If you want to register a new one, you must delete this photo.</source>
+        <target>既に写真が登録されています。新しい写真を登録したい場合は、古い画像を削除してください。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
