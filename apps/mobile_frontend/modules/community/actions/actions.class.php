@@ -110,4 +110,37 @@ class communityActions extends sfOpenPNECommunityAction
 
     return sfView::SUCCESS;
   }
+
+  /**
+   * Executes configImage action
+   *
+   * @param sfWebRequest $request a request object
+   */
+  public function executeConfigImage(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->id && $this->isEditCommunity);
+    $this->community = Doctrine::getTable('Community')->find($this->id);
+  }
+
+  /**
+   * Executes deleteImage action
+   *
+   * @param sfWebRequest $request a request object
+   */
+  public function executeDeleteImage($request)
+  {
+    $this->forward404Unless($this->id && $this->isEditCommunity);
+
+    $this->community = Doctrine::getTable('Community')->find($this->id);
+    $this->forward404Unless($this->community->getImageFileName());
+
+    $this->form = new sfForm();
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $request->checkCSRFProtection();
+
+      $this->community->getFile()->delete();
+      $this->redirect('community/configImage?id='.$this->id);
+    }
+  }
 }
