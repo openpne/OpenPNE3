@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<a name="#top"></a>
+<a name="top"></a>
 
 <?php if (!include_slot('op_mobile_header')): ?>
 <table width="100%">
@@ -36,7 +36,7 @@
 
 <?php echo $sf_content ?>
 
-<a name="#bottom"></a>
+<a name="bottom"></a>
 
 <?php include_component('default', 'nav', array('type' => 'mobile_global')) ?>
 
