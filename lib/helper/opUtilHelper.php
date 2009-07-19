@@ -482,8 +482,6 @@ function op_truncate_callback($string, $width, $etc = '')
 {
   if (mb_strwidth($string) > $width)
   {
-    $width = $width - mb_strwidth($etc);
-
     // for Emoji
     $offset = 0;
     $tmp_string = $string;
