@@ -158,4 +158,20 @@ class memberActions extends sfOpenPNEMemberAction
 
     return sfView::SUCCESS;
   }
+
+  public function executeDeleteImage($request)
+  {
+    $this->image = Doctrine::getTable('MemberImage')->find($request->getParameter('member_image_id'));
+    $this->forward404Unless($this->image);
+    $this->forward404Unless($this->image->getMemberId() == $this->getUser()->getMemberId());
+
+    $this->form = new sfForm();
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $request->checkCSRFProtection();
+
+      $this->image->delete();
+      $this->redirect('member/configImage');
+    }
+  }
 }

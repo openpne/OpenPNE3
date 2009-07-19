@@ -25,7 +25,9 @@ class memberActions extends sfActions
       return sfView::NONE;
     }
 
-    foreach ($request->getMailMessage() as $part)
+    $message = $request->getMailMessage();
+    $images = $message->getImages();
+    foreach ($images as $image)
     {
       $count = $member->getMemberImage()->count();
       if ($count >= 3)
@@ -33,23 +35,8 @@ class memberActions extends sfActions
         return sfView::ERROR;
       }
 
-      $tok = strtok($part->contentType, ';');
-      if ('text/plain' === $tok)
-      {
-        continue;
-      }
-
-      $tmppath = tempnam(sys_get_temp_dir(), 'IMG');
-
-      $fh = fopen($tmppath, 'w');
-      fwrite($fh, base64_decode($part->getContent(), true));
-      fclose($fh);
-
       $validator = new opValidatorImageFile();
-      $validFile = $validator->clean(array(
-        'tmp_name' => $tmppath,
-        'type'     => $tok,
-      ));
+      $validFile = $validator->clean($image);
 
       $file = new File();
       $file->setFromValidatedFile($validFile);
