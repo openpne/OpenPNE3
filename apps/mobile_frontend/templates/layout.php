@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<a name="#top"></a>
+<a name="top"></a>
 
 <?php include_component('default', 'headerGadgets'); ?>
 
@@ -45,7 +45,7 @@
 <?php include_slot('op_mobile_footer_menu'); ?>
 <?php endif; ?>
 
-<a name="#bottom"></a>
+<a name="bottom"></a>
 
 <?php include_component('default', 'nav', array('type' => 'mobile_global', 'line' => false)) ?>
 
