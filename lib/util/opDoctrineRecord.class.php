@@ -26,4 +26,15 @@ abstract class opDoctrineRecord extends sfDoctrineRecord
 
     parent::save($conn);
   }
+
+  public function hasColumn($name, $type = null, $length = null, $options = array())
+  {
+    // Temporary coping with the problem reported in http://trac.symfony-project.org/ticket/6873
+    if ('string' === $type && is_null($length))
+    {
+      $length = 2147483647;
+    }
+
+    return parent::hasColumn($name, $type, $length, $options);
+  }
 }
