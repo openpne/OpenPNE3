@@ -53,7 +53,11 @@
 <?php echo link_to(__('Join community'), 'community/join?id=' . $community->getId()) ?><br>
 <?php endif; ?>
 <?php endif; ?>
+
+<?php include_customizes('menu', 'communityTop') ?>
 <?php include_component('default', 'nav', array('type' => 'mobile_community', 'id' => $community->getId())) ?>
+<?php include_customizes('menu', 'communityBottom') ?>
+
 <hr color="<?php echo $op_color["core_color_11"] ?>" size="3">
 
 <?php include_customizes('menu', 'bottom') ?>
