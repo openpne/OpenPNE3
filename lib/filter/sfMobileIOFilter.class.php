@@ -58,7 +58,7 @@ class sfMobileIOFilter extends sfFilter
     $request = $this->getContext()->getRequest();
     $parameter_holder = $request->getParameterHolder();
 
-    foreach ($parameter_holder->getAll() as $key => $value) {
+    foreach ($parameter_holder->getAll(false) as $key => $value) {
       $parameter_holder->set($key, $this->convertEncodingForInputCallback($value));
     }
   }
@@ -77,7 +77,7 @@ class sfMobileIOFilter extends sfFilter
     $request = $this->getContext()->getRequest();
     $parameter_holder = $request->getParameterHolder();
 
-    foreach ($parameter_holder->getAll() as $key => $value) {
+    foreach ($parameter_holder->getAll(false) as $key => $value) {
       $parameter_holder->set($key, $this->convertEmojiForInputCallback($value));
     }
   }

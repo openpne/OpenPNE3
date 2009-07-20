@@ -17,7 +17,8 @@
  */
 class sfOpenPNEWebRequest extends sfWebRequest
 {
-  protected $userAgentMobileInstance = null;
+  protected 
+    $userAgentMobileInstance = null;
 
  /**
   * @see sfWebRequest
@@ -25,6 +26,31 @@ class sfOpenPNEWebRequest extends sfWebRequest
   public function initialize(sfEventDispatcher $dispatcher, $parameters = array(), $attributes = array(), $options = array())
   {
     parent::initialize($dispatcher, $parameters, $attributes, $options);
+
+    $this->parameterHolder = new opParameterHolder();
+    $this->attributeHolder = new opParameterHolder();
+
+    $this->parameterHolder->add($parameters);
+    $this->attributeHolder->add($attributes);
+
+    // POST parameters
+    $this->getParameters = get_magic_quotes_gpc() ? sfToolkit::stripslashesDeep($_GET) : $_GET;
+    $this->parameterHolder->add($this->getParameters);
+
+    // POST parameters
+    $this->postParameters = get_magic_quotes_gpc() ? sfToolkit::stripslashesDeep($_POST) : $_POST;
+    $this->parameterHolder->add($this->postParameters);
+
+    if ($this->isMethod(sfWebRequest::POST))
+    {
+      $this->parameterHolder->remove('sf_method');
+    }
+
+    // additional parameters
+    $this->requestParameters = $this->parseRequestParameters();
+    $this->parameterHolder->add($this->requestParameters);
+
+    $this->fixParameters();
   }
 
   public function getMobile()
@@ -131,5 +157,70 @@ class sfOpenPNEWebRequest extends sfWebRequest
   public function getCurrentQueryString()
   {
     return http_build_query($this->getGetParameters());
+  }
+
+  public function getParameter($name, $default = null, $isStripNullbyte = true)
+  {
+    return $this->parameterHolder->get($name, $default, $isStripNullbyte);
+  }
+
+  public function getGetParameters($isStripNullbyte = true)
+  {
+    if ($isStripNullbyte)
+    {
+      return opToolkit::stripNullByteDeep(parent::getGetParameters());
+    }
+    else
+    {
+      return parent::getGetParameters();
+    }
+  }
+
+  public function getPostParameters($isStripNullbyte = true)
+  {
+    if ($isStripNullbyte)
+    {
+      return opToolkit::stripNullByteDeep(parent::getPostParameters());
+    }
+    else
+    {
+      return parent::getPostParameters();
+    }
+  }
+
+  public function getGetParameter($name, $default = null, $isStripNullbyte = true)
+  {
+    if ($isStripNullbyte)
+    {
+      return opToolkit::stripNullByteDeep(parent::getGetParameter($name, $default));
+    }
+    else
+    {
+      return parent::getGetParameter($name, $default);
+    }
+  }
+
+  public function getPostParameter($name, $default = null, $isStripNullbyte = true)
+  {
+    if ($isStripNullbyte)
+    {
+      return opToolkit::stripNullByteDeep(parent::getPostParameter($name, $default));
+    }
+    else
+    {
+      return parent::getPostParameters($name, $default);
+    }
+  }
+
+  public function getUrlParameter($name, $default = null, $isStripNullbyte = true)
+  {
+    if ($isStripNullbyte)
+    {
+      return opToolkit::stripNullByteDeep(parent::getUrlParameter($name, $default));
+    }
+    else
+    {
+      return parent::getUrlParameter($name, $default);
+    }
   }
 }
