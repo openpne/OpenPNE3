@@ -56,16 +56,46 @@ class InviteForm extends MemberConfigPcAddressForm
       throw new sfValidatorError($validator, 'invalid');
     }
 
-    if (!empty($values['mobile_address']) && Doctrine::getTable('MemberConfig')->retrieveByNameAndValue('mobile_address', $values['mobile_address']))
+    if (!empty($values['mobile_address']) && !$this->validateAddress('mobile_address', $values['mobile_address']))
     {
       throw new sfValidatorError($validator, 'invalid');
     }
-    if (!empty($values['pc_address']) && Doctrine::getTable('MemberConfig')->retrieveByNameAndValue('pc_address', $values['pc_address']))
+    if (!empty($values['pc_address']) && !$this->validateAddress('pc_address', $values['pc_address']))
     {
       throw new sfValidatorError($validator, 'invalid');
     }
 
     return $values;
+  }
+
+  protected function validateAddress($configName, $configValue)
+  {
+    $activation = opActivateBehavior::getEnabled();
+    opActivateBehavior::disable();
+
+    if ($config = Doctrine::getTable('MemberConfig')->retrieveByNameAndValue($configName, $configValue))
+    {
+      if ($config->getMember()->getIsActive() || !$config->getMember()->getConfig($configName.'_token'))
+      {
+        if ($activation)
+        {
+          opActivateBehavior::enable();
+        }
+        return false;
+      }
+
+      $this->member = $config->getMember();
+    }
+    elseif ($config = Doctrine::getTable('MemberConfig')->retrieveByNameAndValue($configName.'_pre', $configValue))
+    {
+      $this->member = $config->getMember();
+    }
+
+    if ($activation)
+    {
+      opActivateBehavior::enable();
+    }
+    return true;
   }
 
   public function saveConfig($name, $value)

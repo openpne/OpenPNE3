@@ -46,7 +46,7 @@ abstract class opAuthRegisterForm extends sfForm
     }
 
     $this->memberForm = new MemberForm($this->getMember());
-    $this->profileForm = new MemberProfileForm($this->getMember()->getMemberProfile());
+    $this->profileForm = new MemberProfileForm($this->getMember()->getProfiles());
     $this->profileForm->setRegisterWidgets();
     $this->configForm = new MemberConfigForm($this->getMember());
 

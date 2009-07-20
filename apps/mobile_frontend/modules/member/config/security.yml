@@ -3,7 +3,7 @@ all:
   credentials: SNSMember
 
 registerInput:
-  credentials: SNSRegisterBegin
+  credentials: [[SNSRegisterBegin, SNSRegisterFinish]]
 
 configComplete:
   is_secure: off
