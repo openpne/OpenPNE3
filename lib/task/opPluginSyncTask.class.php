@@ -64,6 +64,11 @@ EOF;
         continue;
       }
 
+      if (isset($info['install']) && false === $info['install'])
+      {
+        continue;
+      }
+
       $option = array();
       if (isset($info['version']))
       {
@@ -98,6 +103,7 @@ EOF;
       if ($response->isSuccessful())
       {
         $list = sfYaml::load($response->getBody());
+        $list = $this->applyLocalPluginList($list);
       }
       else
       {
@@ -112,5 +118,46 @@ EOF;
     }
 
     return $list;
+  }
+
+  protected function applyLocalPluginList($pluginList)
+  {
+    $path = sfConfig::get('sf_config_dir').'/plugins.yml';
+    if (!is_readable($path))
+    {
+      return $pluginList;
+    }
+
+    $mergedList = array();
+    $localList = (array)sfYaml::load($path);
+
+    $default = array();
+    if (isset($localList['all']))
+    {
+      $default = $localList['all'];
+      unset($localList['all']);
+    }
+
+    foreach ($pluginList as $key => $value)
+    {
+      if (array_key_exists($key, $localList))
+      {
+        $mergedList[$key] = sfToolkit::arrayDeepMerge($value, (array)$localList[$key]);
+      }
+      else
+      {
+        $mergedList[$key] = sfToolkit::arrayDeepMerge($value, (array)$default);
+      }
+    }
+
+    foreach ($localList as $key => $value)
+    {
+      if (!isset($mergedList[$key]))
+      {
+        $mergedList[$key] = $value;
+      }
+    }
+
+    return $mergedList;
   }
 }
