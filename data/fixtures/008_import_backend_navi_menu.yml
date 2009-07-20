@@ -55,14 +55,6 @@ Navigation:
       ja_JP:
         caption: "プラグイン設定"
 
-  backend_side_connection:
-    type: "backend_side"
-    uri:  "connection/index"
-    sort_order: 80
-    Translation:
-      ja_JP:
-        caption: "連携設定"
-
   backend_side_admin:
     type: "backend_side"
     uri:  "admin/index"
