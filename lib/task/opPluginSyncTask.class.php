@@ -56,29 +56,7 @@ EOF;
       }
     }
 
-    $pluginList = array();
-
-    try
-    {
-      $client = new Zend_Http_Client('http://'.opPluginManager::OPENPNE_PLUGIN_CHANNEL.'/packages/'.OPENPNE_VERSION.'.yml', $config);
-      $response = $client->request();
-
-      if ($response->isSuccessful())
-      {
-        $pluginList = sfYaml::load($response->getBody());
-      }
-      else
-      {
-        $str = "Failed to download plugin list.";
-        $this->logBlock($str, 'ERROR');
-      }
-    }
-    catch (Zend_Http_Client_Adapter_Exception $e)
-    {
-      $str = "Failed to download plugins list.";
-      $this->logBlock($str, 'ERROR');
-    }
-
+    $pluginList = $this->getPluginList();
     foreach ($pluginList as $name => $info)
     {
       if (!preg_match('/^op[a-zA-Z0-9_\-]+Plugin$/', $name))
@@ -106,5 +84,33 @@ EOF;
         $this->logBlock($str, 'ERROR');
       }
     }
+  }
+
+  protected function getPluginList()
+  {
+    $list = array();
+
+    try
+    {
+      $client = new Zend_Http_Client('http://'.opPluginManager::OPENPNE_PLUGIN_CHANNEL.'/packages/'.OPENPNE_VERSION.'.yml', $config);
+      $response = $client->request();
+
+      if ($response->isSuccessful())
+      {
+        $list = sfYaml::load($response->getBody());
+      }
+      else
+      {
+        $str = "Failed to download plugin list.";
+        $this->logBlock($str, 'ERROR');
+      }
+    }
+    catch (Zend_Http_Client_Adapter_Exception $e)
+    {
+      $str = "Failed to download plugins list.";
+      $this->logBlock($str, 'ERROR');
+    }
+
+    return $list;
   }
 }
