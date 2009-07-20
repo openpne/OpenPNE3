@@ -47,7 +47,9 @@
 <?php echo link_to(__('Makes friends'), 'friend/link?id='.$member->getId()) ?><br>
 <?php endif; ?>
 
+<?php include_customizes('menu', 'friendTop') ?>
 <?php include_component('default', 'nav', array('type' => 'mobile_friend', 'id' => $member->getId())) ?>
+<?php include_customizes('menu', 'friendBottom') ?>
 
 <?php include_customizes('menu', 'bottom') ?>
 </td></tr>
