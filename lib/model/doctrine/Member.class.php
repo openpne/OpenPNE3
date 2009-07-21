@@ -244,7 +244,8 @@ class Member extends BaseMember
     foreach ($adminCommunity as $community)
     {
       $communityId = $community['community_id'];
-      $memberCount = $communityMemberTable->getCommunityMemberCount($communityId);
+      
+      $memberCount = $communityMemberTable->getCommunityMembers($communityId)->count();
       if (!$memberCount)
       {
           $community = Doctrine::getTable('Community')->find($communityId);
