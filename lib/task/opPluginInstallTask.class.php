@@ -37,6 +37,23 @@ Call it with:
 EOF;
   }
 
+  // copied from sfDoctrineBaseTask
+  protected function createConfiguration($application, $env)
+  {
+    $configuration = parent::createConfiguration($application, $env);
+
+    $autoloader = sfSimpleAutoload::getInstance();
+    $config = new sfAutoloadConfigHandler();
+    $mapping = $config->evaluate($configuration->getConfigPaths('config/autoload.yml'));
+    foreach ($mapping as $class => $file)
+    {
+      $autoloader->setClassPath($class, $file);
+    }
+    $autoloader->register();
+
+    return $configuration;
+  }
+
   protected function execute($arguments = array(), $options = array())
   {
     if (sfConfig::get('op_http_proxy'))
@@ -55,7 +72,14 @@ EOF;
 
     try
     {
+      $isExists = $this->isPluginExists($arguments['name']);
       parent::execute($arguments, $options);
+
+      if (!$isExists)
+      {
+        $databaseManager = new sfDatabaseManager($this->configuration);
+        Doctrine::getTable('SnsConfig')->set($arguments['name'].'_needs_data_load', '1');
+      }
     }
     catch (sfPluginException $e)
     {

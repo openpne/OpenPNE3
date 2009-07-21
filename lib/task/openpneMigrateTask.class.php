@@ -10,6 +10,8 @@
 
 class openpneMigrateTask extends sfDoctrineBaseTask
 {
+  protected $migrationException = null;
+
   protected function configure()
   {
     $this->namespace        = 'openpne';
@@ -73,6 +75,16 @@ EOF;
     }
 
     $this->migrateFromDiff();
+
+    foreach ($targets as $target)
+    {
+      $this->dataLoadForInitializePlugin($target);
+    }
+
+    if ($this->migrationException)
+    {
+      throw $this->migrationException;
+    }
   }
 
   protected function migrateFromScript($target, $databaseManager, $params)
@@ -93,6 +105,28 @@ EOF;
       $this->throwSpecifiedException($e);
     }
     $this->logSection('migrate', sprintf('%s is now at revision %d.', $target, $migration->getCurrentVersion()));
+  }
+
+  protected function dataLoadForInitializePlugin($pluginName)
+  {
+    if ('OpenPNE' === $pluginName)
+    {
+      return null;
+    }
+
+    $fixturesDir = sfConfig::get('sf_plugins_dir').'/'.$pluginName.'/data/fixtures';
+    if ((bool)Doctrine::getTable('SnsConfig')->get($pluginName.'_needs_data_load', false)
+      && is_readable($fixturesDir))
+    {
+      $this->logSection('doctrine', sprintf('loading data fixtures for "%s"', $pluginName));
+
+      $config = $this->getCliConfig();
+
+      Doctrine::loadModels($config['models_path']);
+      Doctrine::loadData(array($fixturesDir), true);
+    }
+
+    Doctrine::getTable('SnsConfig')->set($pluginName.'_needs_data_load', '0');
   }
 
   protected function throwSpecifiedException(Exception $e)
@@ -117,7 +151,15 @@ EOF;
     @exec('./symfony openpne:generate-migrations');
 
     $migrationsPath = sfConfig::get('sf_data_dir').'/migrations/generated';
-    $this->callDoctrineCli('migrate', array('migrations_path' => $migrationsPath));
+
+    try
+    {
+      $this->callDoctrineCli('migrate', array('migrations_path' => $migrationsPath));
+    }
+    catch (Exception $e)
+    {
+      $this->migrationException = $e;
+    }
   }
 
   protected function buildModel()

@@ -31,4 +31,12 @@ Call it with:
   [./symfony opPlugin:uninstall opSamplePlugin|INFO]
 EOF;
   }
+
+  public function getPluginManager()
+  {
+    $oldPluginManager = parent::getPluginManager();
+    $pluginManager = new opPluginManager($this->dispatcher, $oldPluginManager->getEnvironment());
+
+    return $pluginManager;
+  }
 }

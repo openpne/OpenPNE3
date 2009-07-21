@@ -88,4 +88,29 @@ class opPluginManager extends sfSymfonyPluginManager
   {
     return (bool)$this->getPluginInfo($plugin);
   }
+
+  public function ListenToPluginPostUninstall($event)
+  {
+    parent::ListenToPluginPostUninstall($event);
+
+    $this->uninstallModelFiles($event['plugin']);
+  }
+
+  public function uninstallModelFiles($plugin)
+  {
+    $filesystem = new sfFilesystem();
+
+    $baseDir = sfConfig::get('sf_lib_dir');
+    $subpackages = array('model', 'form', 'filter');
+
+    foreach ($subpackages as $subpackage)
+    {
+      $targetDir = $baseDir.DIRECTORY_SEPARATOR.$subpackage.DIRECTORY_SEPARATOR.'doctrine'.DIRECTORY_SEPARATOR.$plugin;
+      if (is_dir($targetDir))
+      {
+        $filesystem->remove(sfFinder::type('any')->in($targetDir));
+        $filesystem->remove($targetDir);
+      }
+    }
+  }
 }
