@@ -8,9 +8,6 @@
 
 <tr><td align="center" width="50%" valign="top">
 <?php echo image_tag_sf_image($community->getImageFileName(), array('size' => '120x120', 'format' => 'jpg')) ?>
-<?php if ($isAdmin) : ?>
-<br><?php echo link_to(__('Edit Photo'), 'community/edit?id='.$community->getId()) ?>
-<?php endif; ?>
 </td>
 
 <td valign="top">
