@@ -32,6 +32,11 @@ class opWidgetFormInputHiddenNextUri extends sfWidgetFormInputHidden
       $value .= '?'.str_replace('openid_', 'openid.', $params);
     }
 
+    if ($request->getMethod(sfWebRequest::POST))
+    {
+      $value = 'default/csrfError';
+    }
+
     $this->setAttribute('value', $value);
   }
 }
