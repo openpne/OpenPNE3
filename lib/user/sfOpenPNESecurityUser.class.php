@@ -171,16 +171,16 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     if ($memberId)
     {
       $this->setMemberId($memberId);
-      if (!$this->getMember())
-      {
-        return false;
-      }
 
+      opActivateBehavior::disable();
       if ($this->getMember()->isOnBlacklist())
       {
+        opActivateBehavior::enable();
         $this->logout();
+
         return false;
       }
+      opActivateBehavior::enable();
 
       $this->setAuthenticated(true);
     }
