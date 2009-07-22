@@ -241,6 +241,17 @@ class opMigration extends Doctrine_Migration
     return (!is_null($this->getMigrationScriptDirectory()));
   }
 
+  public function loadMigrationClass($name, $path = null)
+  {
+    // ignores generated directory
+    if (!is_null($path) && 'generated' === basename(dirname($path)))
+    {
+      return false;
+    }
+
+    return parent::loadMigrationClass($name, $path);
+  }
+
   public function getVersion()
   {
     if ($this->version)
@@ -290,7 +301,7 @@ class opMigration extends Doctrine_Migration
       $direction = 'down';
     }
 
-    $files = sfFinder::type('file')->name('*.php')->in($directory);
+    $files = sfFinder::type('file')->name('*.php')->prune('generated')->in($directory);
     $iterator = new CompareMigrateDirectoryVersionFilterIterator($files, str_replace('-dev', '', $version), $direction);
     $targets = array();
     foreach ($iterator as $file)
