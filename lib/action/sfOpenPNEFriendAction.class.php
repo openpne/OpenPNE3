@@ -105,10 +105,7 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeLinkAccept($request)
   {
-    if (!$this->relation->isFriendPreTo())
-    {
-      return sfView::ERROR;
-    }
+    $this->forward404Unless($this->relation->isFriendPreTo());
 
     $this->redirectToHomeIfIdIsNotValid();
 
@@ -124,10 +121,7 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeLinkReject($request)
   {
-    if (!$this->relation->isFriendPreTo())
-    {
-      return sfView::ERROR;
-    }
+    $this->forward404Unless($this->relation->isFriendPreTo());
 
     $this->redirectToHomeIfIdIsNotValid();
 
