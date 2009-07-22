@@ -117,7 +117,10 @@ class MemberProfile extends BaseMemberProfile
     if ($this->getTreeKey())
     {
       $parent = $this->getTable()->find($this->getTreeKey());
-      $this->getNode()->insertAsLastChildOf($parent);
+      if ($parent)
+      {
+        $this->getNode()->insertAsLastChildOf($parent);
+      }
     }
     else
     {

@@ -22,11 +22,10 @@ class CommunityCategory extends BaseCommunityCategory
       if ($this->getTreeKey())
       {
         $parent = Doctrine::getTable('CommunityCategory')->find($this->getTreeKey());
-        if (!$parent)
+        if ($parent)
         {
-          new OutOfBoundsException();
+          $this->getNode()->insertAsLastChildOf($parent);
         }
-        $this->getNode()->insertAsLastChildOf($parent);
       }
       else
       {
