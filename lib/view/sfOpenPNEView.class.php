@@ -116,6 +116,9 @@ class sfOpenPNEView extends sfPHPView
     }
 
     $customizes = array_intersect($categoryCustomizes, $partsCustomizes, $targetCustomizes);
+
+    sort($customizes);
+    
     foreach ($customizes as $customize)
     {
       $result[] = $this->customizeTemplates[$customize];
