@@ -53,10 +53,13 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
+    $oldPluginList = sfFinder::type('dir')->in(sfConfig::get('sf_plugins_dir'));
     if (!$options['no-update-plugin'])
     {
       $this->installPlugins();
     }
+    $newPluginList = sfFinder::type('dir')->name('op*Plugin')->maxdepth(1)->in(sfConfig::get('sf_plugins_dir'));
+    $installedPlugins = array_map('basename', array_diff($newPluginList, $oldPluginList));
 
     if (!$options['no-build-model'])
     {
@@ -76,6 +79,7 @@ EOF;
 
     $this->migrateFromDiff();
 
+    $targets = array_merge($targets, $installedPlugins);
     foreach ($targets as $target)
     {
       $this->dataLoadForInitializePlugin($target);
