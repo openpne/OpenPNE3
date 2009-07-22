@@ -122,7 +122,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
     }
 
     $this->pager = new sfDoctrinePager('Member', $this->size);
-    $q = $this->filters->getQuery()->orderBy('id');
+    $q = $this->filters->getQuery()->orderBy('id desc');
     $this->pager->setQuery($q);
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
