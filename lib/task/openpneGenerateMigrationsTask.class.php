@@ -60,7 +60,18 @@ EOF;
       $content = str_replace('abstract class Base', 'class ToPrfx', $content);
       $content = str_replace('extends opDoctrineRecord', 'extends Doctrine_Record', $content);
 
-      file_put_contents($modelTmp.'/'.str_replace('Base', 'ToPrfx', $filename), $content);
+      $matches = array();
+      if (preg_match('/\$this->setTableName\(\'([^\']+)\'\);/', $content, $matches))
+      {
+        $tableName = $matches[1];
+        $content = preg_replace('/class [a-zA-Z0-9_]+/', 'class ToPrfx'.Doctrine_Inflector::classify($tableName), $content);
+        file_put_contents($modelTmp.'/ToPrfx'.Doctrine_Inflector::classify($tableName).'.class.php', $content);
+        file_put_contents('/tmp/ubeToPrfx'.Doctrine_Inflector::classify($tableName).'.class.php', $content);
+      }
+      else
+      {
+        file_put_contents($modelTmp.'/'.str_replace('Base', 'ToPrfx', $filename), $content);
+      }
     }
 
     $migration = new Doctrine_Migration($migrationsPath);
