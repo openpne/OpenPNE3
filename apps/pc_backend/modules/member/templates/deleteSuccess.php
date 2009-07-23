@@ -18,7 +18,7 @@
 <?php foreach ($member->getProfiles() as $profile): ?>
 <tr>
 <th><?php echo $profile->getCaption() ?></th>
-<td><?php echo $profile->getValue() ?></td>
+<td><?php echo $member->getProfile($profile->getName()) ?></td>
 </tr>
 <?php endforeach ?>
 <tr>
