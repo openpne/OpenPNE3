@@ -24,8 +24,7 @@ $options->setDefault('align', '');
 <?php else: ?>
 <?php echo $rawOptions['yes_form'] ?>
 <?php endif ?>
-<input type="submit" class="input_submit" value="<?php echo $options['yes_button'] ?>">
-<br>
+<input type="submit" class="input_submit" value="<?php echo $options['yes_button'] ?>"><br>
 </form>
 <form action="<?php echo $options['no_url'] ?>" method="<?php echo $options['no_method'] ?>">
 <?php $noForms = ($options['no_form'] instanceof sfForm) ? array($options['no_form']) : $options['no_form'] ?>
