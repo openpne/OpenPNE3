@@ -125,7 +125,7 @@ class CommunityMemberTable extends Doctrine_Table
         ->execute();
     }
 
-    return null;
+    return array();
   }
 
   public function getCommunityMembers($communityId)
