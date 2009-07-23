@@ -75,7 +75,7 @@ EOF;
       $isExists = $this->isPluginExists($arguments['name']);
       parent::execute($arguments, $options);
 
-      if (!$isExists)
+      if (count(sfFinder::type('file')->name('databases.yml')->in(sfConfig::get('sf_config_dir'))) && !$isExists)
       {
         $databaseManager = new sfDatabaseManager($this->configuration);
         Doctrine::getTable('SnsConfig')->set($arguments['name'].'_needs_data_load', '1');
