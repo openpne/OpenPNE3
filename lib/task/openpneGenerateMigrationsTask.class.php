@@ -66,7 +66,6 @@ EOF;
         $tableName = $matches[1];
         $content = preg_replace('/class [a-zA-Z0-9_]+/', 'class ToPrfx'.Doctrine_Inflector::classify($tableName), $content);
         file_put_contents($modelTmp.'/ToPrfx'.Doctrine_Inflector::classify($tableName).'.class.php', $content);
-        file_put_contents('/tmp/ubeToPrfx'.Doctrine_Inflector::classify($tableName).'.class.php', $content);
       }
       else
       {

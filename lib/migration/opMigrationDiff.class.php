@@ -52,11 +52,60 @@ class opMigrationDiff extends Doctrine_Migration_Diff
     $fromInfo = $this->_buildModelInformation($fromModels);
     $toInfo = $this->_buildModelInformation($toModels);
 
+    $this->_decreaseInformations($fromInfo, $toInfo);
+
     // Build array of changes between the from and to information
     $changes = $this->_buildChanges($fromInfo, $toInfo);
 
     $this->_cleanup();
 
     return $changes;
+  }
+
+  protected function _decreaseInformations(&$fromInfo, &$toInfo)
+  {
+    $_changes = array_intersect_key($fromInfo, $toInfo);
+
+    foreach ($_changes as $tableName => $tableInfo)
+    {
+      foreach ($tableInfo['columns'] as $columnName => $columnInfo)
+      {
+        if (!empty($fromInfo[$tableName]['columns'][$columnName])
+            && !empty($toInfo[$tableName]['columns'][$columnName]))
+        {
+          $fromColumn =& $fromInfo[$tableName]['columns'][$columnName];
+          $toColumn =& $toInfo[$tableName]['columns'][$columnName];
+
+          if (('integer' === $fromColumn['type'] && '1' == $fromColumn['length'])
+              || ('integer' === $toColumn['type'] && '1' == $toColumn['length']))
+          {
+            $fromColumn['type'] = 'boolean';
+            $fromColumn['length'] = '1';
+            $toColumn['type'] = 'boolean';
+            $toColumn['length'] = '1';
+          }
+
+          $this->_removedSpecifiedEmptyParameter('unsigned', $fromColumn, $toColumn);
+          $this->_removedSpecifiedEmptyParameter('fixed', $fromColumn, $toColumn);
+          $this->_removedSpecifiedEmptyParameter('primary', $fromColumn, $toColumn);
+          $this->_removedSpecifiedEmptyParameter('autoincrement', $fromColumn, $toColumn);
+          $this->_removedSpecifiedEmptyParameter('notnull', $fromColumn, $toColumn);
+          $this->_removedSpecifiedEmptyParameter('default', $fromColumn, $toColumn);
+        }
+      }
+    }
+  }
+
+  protected function _removedSpecifiedEmptyParameter($key, &$array1, &$array2)
+  {
+    if ((isset($array1[$key]) || isset($array2[$key])) && !(isset($array1[$key]) && isset($array2[$key])))
+    {
+      if (empty($array1[$key]) && empty($array2[$key]))
+      {
+        $array1[$key] = null;
+        $array2[$key] = null;
+        unset($array1[$key], $array2[$key]);
+      }
+    }
   }
 }
