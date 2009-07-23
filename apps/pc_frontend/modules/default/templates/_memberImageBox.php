@@ -1,6 +1,6 @@
 <?php
 $photoLink = '';
-if ($relation->isSelf())
+if ($member->getId() === $id)
 {
   $photoLink = link_to(__('Edit Photo'), 'member/configImage');
 }

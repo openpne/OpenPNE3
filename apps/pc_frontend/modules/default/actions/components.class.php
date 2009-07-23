@@ -64,13 +64,7 @@ class defaultComponents extends sfComponents
     {
       $this->member = $this->getUser()->getMember();
     }
-
-    $this->relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($this->getUser()->getMemberId(), $this->member->getId());
-    if (!$this->relation) {
-      $this->relation = new MemberRelationship();
-      $this->relation->setMemberIdFrom($this->getUser()->getMemberId());
-      $this->relation->setMemberIdTo($this->member->getId());
-    }
+    $this->id = $this->getUser()->getMemberId();
   }
 
   public function executeSearchBox()
