@@ -98,11 +98,19 @@ class CommunityMemberTable extends Doctrine_Table
 
   public function getCommunityIdsOfAdminByMemberId($memberId)
   {
-    return $this->createQuery()
+    $ids = array();
+
+    $results = $this->createQuery()
         ->select('community_id')
         ->where('member_id = ?', $memberId)
         ->andWhere('position = ?', 'admin')
-        ->fetchArray();
+        ->execute();
+
+    foreach ($results as $result)
+    {
+      $ids[] = $result->getCommunityId();
+    }
+    return $ids;
   }
 
   public function getCommunityMembersPre($memberId)
@@ -113,11 +121,11 @@ class CommunityMemberTable extends Doctrine_Table
     {
       return $this->createQuery()
         ->whereIn('community_id', $adminCommunityIds)
-        ->where('position', 'pre')
+        ->where('position = ?', 'pre')
         ->execute();
     }
 
-    return array();
+    return null;
   }
 
   public function getCommunityMembers($communityId)

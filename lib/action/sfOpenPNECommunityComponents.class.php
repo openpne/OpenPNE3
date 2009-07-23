@@ -20,7 +20,7 @@ abstract class sfOpenPNECommunityComponents extends sfComponents
   public function executeCautionAboutCommunityMemberPre()
   {
     $memberId = sfContext::getInstance()->getUser()->getMemberId();
-    
+
     $this->communityMembers = Doctrine::getTable('CommunityMember')->getCommunityMembersPre($memberId);
   }
 }
