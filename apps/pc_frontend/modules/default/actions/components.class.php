@@ -64,6 +64,7 @@ class defaultComponents extends sfComponents
     {
       $this->member = $this->getUser()->getMember();
     }
+    $this->id = $this->getUser()->getMemberId();
   }
 
   public function executeSearchBox()
