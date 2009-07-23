@@ -24,7 +24,6 @@ class opWidgetFormInputHiddenNextUri extends sfWidgetFormInputHidden
     $routing = sfContext::getInstance()->getRouting();
     $request = sfContext::getInstance()->getRequest();
 
-    // FIXME
     $params = http_build_query($request->getGetParameters());
     $value = $routing->getCurrentInternalUri();
     if ($params)
@@ -38,5 +37,11 @@ class opWidgetFormInputHiddenNextUri extends sfWidgetFormInputHidden
     }
 
     $this->setAttribute('value', $value);
+  }
+
+  public function render($name, $value = null, $attributes = array(), $errors = array())
+  {
+    $attributes = array_merge($attributes, $this->getAttributes());
+    return parent::render($name, $value, $attributes, $errors);
   }
 }
