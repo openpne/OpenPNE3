@@ -6,13 +6,13 @@
 
 <?php echo $form->renderGlobalErrors() ?>
 
-<h2><?php echo $form->getObject()->getCaption().__(' settings') ?></h2>
+<h2><?php echo __('%1% settings', array('%1%' => $form->getObject()->getCaption())) ?></h2>
 
 <?php if ($bannerList): ?>
 <div>
 <ul>
 <?php foreach ($bannerList as $b) : ?>
-<li><?php echo link_to($b->getCaption().__(' settings'), 'design/banner?id='.$b->getId()) ?></li>
+<li><?php echo link_to(__('%1% settings', array('%1%' => $b->getCaption())), 'design/banner?id='.$b->getId()) ?></li>
 <?php endforeach ?>
 </ul>
 </div>

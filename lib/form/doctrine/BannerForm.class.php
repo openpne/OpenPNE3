@@ -83,7 +83,7 @@ class BannerForm extends BaseBannerForm
 
   public function isValid()
   {
-    if (!count($this->bannerImageIdList))
+    if (!$this->getValue('is_use_html') && !count($this->bannerImageIdList))
     {
       return false;
     }

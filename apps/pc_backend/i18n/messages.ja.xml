@@ -122,8 +122,8 @@
         <target>%time_format%形式で入力してください。</target>
       </trans-unit>
       <trans-unit id="">
-        <source> settings</source>
-        <target>設定</target>
+        <source>%1% settings</source>
+        <target>%1%設定</target>
       </trans-unit>
       <trans-unit id="">
         <source>Select banner images you want to display</source>
