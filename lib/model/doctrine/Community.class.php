@@ -135,12 +135,12 @@ class Community extends BaseCommunity
 
   public function getRegisterPoricy()
   {
-    $public_flag = $this->getConfig('public_flag');
-    if ('public' === $public_flag)
+    $register_policy = $this->getConfig('register_poricy');
+    if ('open' === $register_policy)
     {
       return 'Everyone can join';
     }
-    else if ('auth_commu_member' === $public_flag)
+    else if ('close' === $register_policy)
     {
       return 'Community\'s admin authorization needed';
     }
