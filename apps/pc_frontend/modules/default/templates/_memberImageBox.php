@@ -1,7 +1,4 @@
 <?php
-$options = array(
-  'object'   => $member,
-);
 $photoLink = '';
 if ($relation->isSelf())
 {
@@ -9,10 +6,13 @@ if ($relation->isSelf())
 }
 elseif ($member->getImageFileName())
 {
-  $photoLink = link_to(__('Show Photo'), 'friend/showImage?id='.$member->getId());
+  $photoLink = link_to(__('Show more Photos'), 'friend/showImage?id='.$member->getId());
 }
-$options['moreInfo'] = array(
-  $photoLink,
-  link_to(__('Show Profile'), 'member/profile'),
+$options = array(
+  'object'   => $member,
+  'moreInfo' => array(
+    $photoLink,
+    link_to(__('Show Profile'), 'member/profile'),
+  ),
 );
 op_include_parts('memberImageBox', 'memberImageBox_'.$gadget->getId(), $options);

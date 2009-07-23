@@ -191,10 +191,6 @@
         <target>写真</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Show Photo</source>
-        <target>写真を見る</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Edit Photo</source>
         <target>写真を編集する</target>
       </trans-unit>
