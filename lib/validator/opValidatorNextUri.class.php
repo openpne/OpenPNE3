@@ -21,7 +21,9 @@ class opValidatorNextUri extends sfValidatorString
   {
     parent::configure($options, $messages);
     $this->setOption('required', false);
+    $this->setOption('trim', true);
     $this->setOption('empty_value', '@homepage');
+    $this->addOption('logout_uri', 'member/logout');
   }
 
   /**
@@ -29,15 +31,37 @@ class opValidatorNextUri extends sfValidatorString
    */
   protected function doClean($value)
   {
-    $routing = sfContext::getInstance()->getRouting();
-    $routeInfo = $routing->findRoute($value);
+    $clean = parent::doClean($value);
 
-    if (sfConfig::get('sf_login_module') === $routeInfo['parameters']['module']
-      && sfConfig::get('sf_login_action') === $routeInfo['parameters']['action'])
+    $routing = sfContext::getInstance()->getRouting();
+
+    $routeInfo = $routing->findRoute($clean);
+    if ($routeInfo)
     {
-      return '@homepage';
+      $module = $routeInfo['parameters']['module'];
+      $action = $routeInfo['parameters']['action'];
+    }
+    else
+    {
+      return $this->getOption('empty_value');
     }
 
-    return $value;
+    if ($this->getOption('logout_uri'))
+    {
+      $logoutRouteInfo = $routing->findRoute($this->getOption('logout_uri'));
+      $logoutModule = $logoutRouteInfo['parameters']['module'];
+      $logoutAction = $logoutRouteInfo['parameters']['action'];
+      if ($logoutModule === $module &&  $logoutAction === $action)
+      {
+        return $this->getOption('empty_value');
+      }
+    }
+
+    if (sfConfig::get('sf_login_module') === $module && sfConfig::get('sf_login_action') === $action)
+    {
+      return $this->getOption('empty_value');
+    }
+
+    return $clean;
   }
 }
