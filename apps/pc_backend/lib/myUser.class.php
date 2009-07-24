@@ -10,8 +10,32 @@
 
 class myUser extends sfBasicSecurityUser
 {
+  public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = array())
+  {
+    parent::initialize($dispatcher, $storage, $options);
+
+    $adminUserId = AdminUserPeer::retrieveByPk($this->getId());
+    if (!$adminUserId)
+    {
+      $this->logout();
+    }
+  }
+
   public function getId()
   {
     return $this->getAttribute('adminUserId', null, 'adminUser');
+  }
+
+  public function login($adminUserId)
+  {
+    $this->setAuthenticated(true);
+    $this->setAttribute('adminUserId', $adminUserId, 'adminUser');
+  }
+
+  public function logout()
+  {
+    $this->setAuthenticated(false);
+    $this->getAttributeHolder()->removeNamespace('adminUser');
+    $this->clearCredentials();
   }
 }

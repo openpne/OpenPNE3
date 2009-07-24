@@ -24,9 +24,7 @@ class logoutAction extends sfAction
   */
   public function execute($request)
   {
-    $this->getUser()->setAuthenticated(false);
-    $this->getUser()->getAttributeHolder()->removeNamespace('adminUser');
-    $this->getUser()->clearCredentials();
+    $this->getUser()->logout();
     $this->getUser()->setFlash('notice', 'Logged out.');
     $this->redirect('default/login');
   }

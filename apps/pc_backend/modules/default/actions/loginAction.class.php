@@ -33,8 +33,7 @@ class loginAction extends sfAction
       $this->form->bind($request->getParameter('admin_user'));
       if ($this->form->isValid())
       {
-        $this->getUser()->setAuthenticated(true);
-        $this->getUser()->setAttribute('adminUserId', $this->form->getValue('adminUser')->getId(), 'adminUser');
+        $this->getUser()->login($this->form->getValue('adminUser')->getId());
         $this->redirect('default/top');
       }
       return sfView::ERROR;
