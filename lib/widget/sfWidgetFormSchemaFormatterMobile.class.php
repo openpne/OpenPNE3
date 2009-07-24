@@ -18,13 +18,13 @@
 class sfWidgetFormSchemaFormatterMobile extends sfWidgetFormSchemaFormatter
 {
   protected
-    $errorRowFormatInARow      = "%error%<br>\n",
-    $namedErrorRowFormatInARow = "%name%: %error%<br>\n", 
+    $errorRowFormatInARow      = "<br>%error%\n",
+    $namedErrorRowFormatInARow = "<br>%name%: %error%\n", 
     $helpFormat                = '<br>%help%';
 
   public function __construct(sfWidgetFormSchema $widgetSchema)
   {
-    $this->rowFormat = '<br><font color="'.opColorConfig::get('core_color_19').'">%label%:</font><br>%field%%help%%hidden_fields%%error%<br>';
+    $this->rowFormat = '<font color="'.opColorConfig::get('core_color_19').'">%label%:</font><br>%field%%help%%hidden_fields%%error%<br><br>';
     $this->errorListFormatInARow = '<font color="'.opColorConfig::get('core_color_22').'">'."\n".'%errors%</font>';
 
     $this->setWidgetSchema($widgetSchema);
