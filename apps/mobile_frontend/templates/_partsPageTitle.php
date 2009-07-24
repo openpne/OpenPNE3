@@ -1,5 +1,5 @@
 <table width="100%">
-<tr><td align="center" bgcolor="<?php echo $op_color["core_color_11"] ?>">
+<tr><td align="center" bgcolor="<?php echo $op_color["core_color_2"] ?>">
 <font color="<?php echo $op_color["core_color_18"] ?>"><a name="top"><?php echo $title ?></a></font><br>
 </td></tr>
 <?php if (isset($subtitle) && $subtitle !== ''): ?>
