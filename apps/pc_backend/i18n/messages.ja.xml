@@ -7,6 +7,10 @@
         <target>誰でも参加可能</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Community's admin authorization needed</source>
+        <target>コミュニティ参加者の承認が必要</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>%1% settings</source>
         <target>%1%設定</target>
       </trans-unit>
