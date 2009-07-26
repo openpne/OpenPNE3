@@ -480,6 +480,8 @@ function op_truncate($string, $width = 80, $etc = '', $rows = 1, $is_html = true
 
 function op_truncate_callback($string, $width, $etc = '')
 {
+  $width = $width - mb_strwidth($etc);
+
   if (mb_strwidth($string) > $width)
   {
     // for Emoji
@@ -519,7 +521,7 @@ function op_truncate_callback($string, $width, $etc = '')
       $tmp_string = substr($string, $offset);
     }
 
-    $string = mb_strimwidth($string, 0, $width, $etc, 'UTF-8');
+    $string = mb_strimwidth($string, 0, $width, '', 'UTF-8');
   }
 
   return $string;
