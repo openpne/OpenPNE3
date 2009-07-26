@@ -16,6 +16,7 @@ $option = array(
 );
 op_include_list('communityList', $list, $option);
 ?>
+<?php op_include_pager_navigation($pager, 'community/search?page=%d', array('is_total' => false, 'use_current_query_string' => true)) ?>
 <?php else: ?>
 <?php echo __('Your search queries did not match any communities.') ?>
 <?php endif ?>
