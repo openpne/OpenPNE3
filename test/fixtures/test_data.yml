@@ -316,21 +316,41 @@ MemberRelationship:
     MemberRelatedByMemberIdFrom: first_member
 
 Community:
-  first_community:
+  community_1:
     name: "最初のコミュニティ"
-  second_community:
+  community_2:
     name: "2番目のコミュニティ"
+  community_3:
+    name: "3番目のコミュニティ"
+  community_4:
+    name: "4番目のコミュニティ"
+
+CommunityConfig:
+  default_community_1:
+    Community: community_1
+    name: "is_default"
+    value: true
+  default_community_3:
+    Community: community_3
+    name: "is_default"
+    value: true
 
 CommunityMember:
-  first_community_first_member:
-    Community: first_community
+  community_1_first_member:
+    Community: community_1
     Member: first_member
     position: "admin"
-  first_community_second_member:
-    Community: first_community
+  community_3_first_member:
+    Community: community_3
+    Member: first_member
+  community_4_first_member:
+    Community: community_4
+    Member: first_member
+  community_1_second_member:
+    Community: community_1
     Member: second_member
-  second_community_second_member:
-    Community: second_community
+  community_2_second_member:
+    Community: community_2
     Member: second_member
     position: "admin"
 
