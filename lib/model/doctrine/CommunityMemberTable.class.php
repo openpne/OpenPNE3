@@ -121,7 +121,7 @@ class CommunityMemberTable extends Doctrine_Table
     {
       return $this->createQuery()
         ->whereIn('community_id', $adminCommunityIds)
-        ->where('position = ?', 'pre')
+        ->andWhere('position = ?', 'pre')
         ->execute();
     }
 
