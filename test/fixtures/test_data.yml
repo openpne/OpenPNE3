@@ -326,6 +326,18 @@ Community:
     name: "4番目のコミュニティ"
 
 CommunityConfig:
+  community_1_description:
+    Community: community_1
+    name: "description"
+    value: "IDが1番のコミュニティ"
+  community_1_register_policy:
+    Community: community_1
+    name: "register_poricy"
+    value: "open"
+  community_2_register_policy:
+    Community: community_2
+    name: "register_poricy"
+    value: "close"
   default_community_1:
     Community: community_1
     name: "is_default"
