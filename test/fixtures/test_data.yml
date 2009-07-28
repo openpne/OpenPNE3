@@ -1,5 +1,6 @@
 Profile:
   profile_sex:
+    id: ~
     is_required: 1
     name: "sex"
     form_type: "select"
@@ -7,9 +8,37 @@ Profile:
     is_disp_regist: 1
     is_disp_config: 1
     is_disp_search: 1
+    is_edit_public_flag: 0
+    default_public_flag: 1
     sort_order: 110
+    Translation:
+      ja_JP:
+        caption: "性別"
+      en:
+        caption: "Sex"
+
+  profile_birthday:
+    id: ~
+    is_required: 1
+    name: "birthday"
+    form_type: "date"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    value_min: "-100years"
+    value_max: "now"
+    is_edit_public_flag: 0
+    default_public_flag: 1
+    sort_order: 120
+    Translation:
+      ja_JP:
+        caption: "誕生日"
+      en:
+        caption: "Birthday"
 
   profile_self_intro:
+    id: ~
     is_required: 1
     name: "self_intro"
     form_type: "textarea"
@@ -17,38 +46,50 @@ Profile:
     is_disp_regist: 1
     is_disp_config: 1
     is_disp_search: 1
-    sort_order: 120
-
-ProfileI18n:
-  profile_i18n_sex:
-    id: profile_sex
-    caption: "性別"
-    culture: "ja_JP"
-
-  profile_i18n_self_intro:
-    id: profile_self_intro
-    caption: "自己紹介"
-    culture: "ja_JP"
+    is_edit_public_flag: 0
+    default_public_flag: 1
+    sort_order: 130
+    Translation:
+      ja_JP:
+        caption: "自己紹介"
+      en:
+        caption: "Self Introduction"
 
 ProfileOption:
   profile_option_sex_man:
-    profile_id: profile_sex
+    id: ~
     sort_order: 0
+    Profile: profile_sex
+    Translation:
+      ja_JP:
+        value: "男性"
+      en:
+        value: "Male"
 
   profile_option_sex_woman:
-    profile_id: profile_sex
+    id: ~
     sort_order: 1
+    Profile: profile_sex
+    Translation:
+      ja_JP:
+        value: "女性"
+      en:
+        value: "Female"
 
-ProfileOptionI18n:
-  profile_option_sex_man:
-    id: profile_option_sex_man
-    value: "男性"
-    culture: "ja_JP"
+  profile_option_birthday_year:
+    id: ~
+    sort_order: 0
+    Profile: profile_birthday
 
-  profile_option_sex_woman:
-    id: profile_option_sex_woman
-    value: "女性"
-    culture: "ja_JP"
+  profile_option_birthday_month:
+    id: ~
+    sort_order: 1
+    Profile: profile_birthday
+
+  profile_option_birthday_day:
+    id: ~
+    sort_order: 2
+    Profile: profile_birthday
 
 Member:
   first_member:
@@ -64,29 +105,50 @@ Member:
 
 MemberProfile:
   first_member_profile_sex:
-    lft_key: 1
-    rht_key: 2
-    member_id: first_member
-    profile_id: profile_sex
-    profile_option_id: profile_option_sex_man
+    public_flag: 1
+    Member: first_member
+    Profile: profile_sex
+    ProfileOption: profile_option_sex_man
+    children: []
+
+  first_member_profile_birthday:
+    public_flag: 1
+    Member: first_member
+    Profile: profile_birthday
+    children:
+      first_member_profile_birthday_day:
+        value: "23"
+        Member: first_member
+        Profile: profile_birthday
+        ProfileOption: profile_option_birthday_day
+      first_member_profile_birthday_month:
+        value: "4"
+        Member: first_member
+        Profile: profile_birthday
+        ProfileOption: profile_option_birthday_month
+      first_member_profile_birthday_year:
+        value: "1988"
+        Member: first_member
+        Profile: profile_birthday
+        ProfileOption: profile_option_birthday_year
 
   first_member_profile_self_intro:
-    lft_key: 1
-    rht_key: 2
-    member_id: first_member
-    profile_id: profile_self_intro
     value: "よろしくお願いします。"
+    public_flag: 1
+    Member: first_member
+    Profile: profile_self_intro
+    children: []
 
 MemberConfig:
   first_member_pc_address:
-    member_id: first_member
     name: "pc_address"
     value: "sns@example.com"
+    Member: first_member
 
   first_member_password:
-    member_id: first_member
     name: "password"
     value: <?php echo md5('password') . "\n"; ?>
+    Member: first_member
 
 AdminUser:
   first_admin:
@@ -99,235 +161,159 @@ Navigation:
     type: "secure_global"
     uri: "@homepage"
     sort_order: 0
+    Translation:
+      ja_JP:
+        caption: "マイホーム"
+      en:
+        caption: "My Home"
 
   secure_global_navigation_member_search:
     type: "secure_global"
     uri: "member/search"
     sort_order: 10
+    Translation:
+      ja_JP:
+        caption: "メンバー検索"
+      en:
+        caption: "Search Members"
 
   secure_global_navigation_community_search:
     type: "secure_global"
     uri: "community/search"
     sort_order: 20
+    Translation:
+      ja_JP:
+        caption: "コミュニティ検索"
+      en:
+        caption: "Search Communities"
 
   secure_global_navigation_config:
     type: "secure_global"
     uri: "member/config"
     sort_order: 30
+    Translation:
+      ja_JP:
+        caption: "設定変更"
+      en:
+        caption: "Settings"
 
   secure_global_navigation_invite:
     type: "secure_global"
     uri: "member/invite"
     sort_order: 40
+    Translation:
+      ja_JP:
+        caption: "友人を招待する"
+      en:
+        caption: "Invite"
 
   secure_global_navigation_logout:
     type: "secure_global"
     uri: "member/logout"
     sort_order: 50
+    Translation:
+      ja_JP:
+        caption: "ログアウト"
+      en:
+        caption: "Logout"
 
   default_navigation_home:
     type: "default"
     uri: "@homepage"
     sort_order: 0
+    Translation:
+      ja_JP:
+        caption: "ホーム"
+      en:
+        caption: "Home"
 
   default_navigation_friend_list:
     type: "default"
     uri: "friend/list"
     sort_order: 10
+    Translation:
+      ja_JP:
+        caption: "マイフレンド"
+      en:
+        caption: "My Friends"
 
   default_navigation_profile_confirm:
     type: "default"
     uri: "member/profile"
     sort_order: 20
+    Translation:
+      ja_JP:
+        caption: "プロフィール確認"
+      en:
+        caption: "Profile"
 
   default_navigation_profile_edit:
     type: "default"
     uri: "member/editProfile"
     sort_order: 30
+    Translation:
+      ja_JP:
+        caption: "プロフィール編集"
+      en:
+        caption: "Edit Profile"
 
   friend_navigation_home:
     type: "friend"
     uri: "member/profile"
     sort_order: 10
+    Translation:
+      ja_JP:
+        caption: "ホーム"
+      en:
+        caption: "Home"
 
   friend_navigation_friend_list:
     type: "friend"
     uri: "friend/list"
     sort_order: 20
+    Translation:
+      ja_JP:
+        caption: "フレンドリスト"
+      en:
+        caption: "Friends"
 
   community_navigation_home:
     type: "community"
     uri: "community/home"
     sort_order: 0
+    Translation:
+      ja_JP:
+        caption: "コミュニティトップ"
+      en:
+        caption: "Community Top"
 
   community_navigation_join:
     type: "community"
     uri: "community/join"
     sort_order: 10
+    Translation:
+      ja_JP:
+        caption: "コミュニティに参加"
+      en:
+        caption: "Join Community"
 
   community_navigation_quit:
     type: "community"
     uri: "community/quit"
     sort_order: 20
-
-NavigationI18n:
-  secure_global_navigation_home_i18n:
-    id: secure_global_navigation_home
-    caption: "マイホーム"
-    culture: "ja_JP"
-
-  secure_global_navigation_member_search_i18n:
-    id: secure_global_navigation_member_search
-    caption: "メンバー検索"
-    culture: "ja_JP"
-
-  secure_global_navigation_community_search_i18n:
-    id: secure_global_navigation_community_search
-    caption: "コミュニティ検索"
-    culture: "ja_JP"
-
-  secure_global_navigation_config_i18n:
-    id: secure_global_navigation_config
-    caption: "設定変更"
-    culture: "ja_JP"
-
-  secure_global_navigation_invite_i18n:
-    id: secure_global_navigation_invite
-    caption: "友人を招待する"
-    culture: "ja_JP"
-
-  secure_global_navigation_logout_i18n:
-    id: secure_global_navigation_logout
-    caption: "ログアウト"
-    culture: "ja_JP"
-
-  default_navigation_home_i18n:
-    id: default_navigation_home
-    caption: "ホーム"
-    culture: "ja_JP"
-
-  default_navigation_friend_list_i18n:
-    id: default_navigation_friend_list
-    caption: "マイフレンド"
-    culture: "ja_JP"
-
-  default_navigation_profile_confirm_i18n:
-    id: default_navigation_profile_confirm
-    caption: "プロフィール確認"
-    culture: "ja_JP"
-
-  default_navigation_profile_edit_i18n:
-    id: default_navigation_profile_edit
-    caption: "プロフィール編集"
-    culture: "ja_JP"
-
-  friend_navigation_home_i18n:
-    id: friend_navigation_home
-    caption: "ホーム"
-    culture: "ja_JP"
-
-  friend_navigation_friend_list_i18n:
-    id: friend_navigation_friend_list
-    caption: "フレンドリスト"
-    culture: "ja_JP"
-
-  community_navigation_home_i18n:
-    id: community_navigation_home
-    caption: "コミュニティトップ"
-    culture: "ja_JP"
-
-  community_navigation_join_i18n:
-    id: community_navigation_join
-    caption: "コミュニティに参加"
-    culture: "ja_JP"
-
-  community_navigation_quit_i18n:
-    id: community_navigation_quit
-    caption: "コミュニティを退会"
-    culture: "ja_JP"
-
-  secure_global_navigation_home_i18n_en:
-    id: secure_global_navigation_home
-    caption: "My Home"
-    culture: "en"
-
-  secure_global_navigation_member_search_i18n_en:
-    id: secure_global_navigation_member_search
-    caption: "Search Members"
-    culture: "en"
-
-  secure_global_navigation_community_search_i18n_en:
-    id: secure_global_navigation_community_search
-    caption: "Search Communities"
-    culture: "en"
-
-  secure_global_navigation_config_i18n_en:
-    id: secure_global_navigation_config
-    caption: "Settings"
-    culture: "en"
-
-  secure_global_navigation_invite_i18n_en:
-    id: secure_global_navigation_invite
-    caption: "Invite"
-    culture: "en"
-
-  secure_global_navigation_logout_i18n_en:
-    id: secure_global_navigation_logout
-    caption: "Logout"
-    culture: "en"
-
-  default_navigation_home_i18n_en:
-    id: default_navigation_home
-    caption: "Home"
-    culture: "en"
-
-  default_navigation_friend_list_i18n_en:
-    id: default_navigation_friend_list
-    caption: "My Friends"
-    culture: "en"
-
-  default_navigation_profile_confirm_i18n_en:
-    id: default_navigation_profile_confirm
-    caption: "Profile"
-    culture: "en"
-
-  default_navigation_profile_edit_i18n_en:
-    id: default_navigation_profile_edit
-    caption: "Edit Profile"
-    culture: "en"
-
-  friend_navigation_home_i18n_en:
-    id: friend_navigation_home
-    caption: "Home"
-    culture: "en"
-
-  friend_navigation_friend_list_i18n_en:
-    id: friend_navigation_friend_list
-    caption: "Friends"
-    culture: "en"
-
-  community_navigation_home_i18n_en:
-    id: community_navigation_home
-    caption: "Community Top"
-    culture: "en"
-
-  community_navigation_join_i18n_en:
-    id: community_navigation_join
-    caption: "Join Community"
-    culture: "en"
-
-  community_navigation_quit_i18n_en:
-    id: community_navigation_quit
-    caption: "Leave Community"
-    culture: "en"
+    Translation:
+      ja_JP:
+        caption: "コミュニティを退会"
+      en:
+        caption: "Leave Community"
 
 MemberRelationship:
   first_member_second_member:
-    member_id_to: first_member
-    member_id_from: second_member
+    Member: first_member
+    MemberRelatedByMemberIdFrom: second_member
   second_member_first_member:
-    member_id_to: second_member
-    member_id_from: first_member
+    Member: second_member
+    MemberRelatedByMemberIdFrom: first_member
 
 Community:
   first_community:
@@ -337,15 +323,15 @@ Community:
 
 CommunityMember:
   first_community_first_member:
-    community_id: first_community
-    member_id: first_member
+    Community: first_community
+    Member: first_member
     position: "admin"
   first_community_second_member:
-    community_id: first_community
-    member_id: second_member
+    Community: first_community
+    Member: second_member
   second_community_second_member:
-    community_id: second_community
-    member_id: second_member
+    Community: second_community
+    Member: second_member
     position: "admin"
 
 Gadget:
@@ -383,3 +369,43 @@ Gadget:
     type: "mobileTop"
     name: "informationBox"
     sort_order: 10
+
+  login_gadget_login_form_box:
+    type: "loginTop"
+    name: "loginForm"
+    sort_order: 10
+
+  mobile_login_gadget_login_form_box:
+    type: "mobileLoginContents"
+    name: "loginForm"
+    sort_order: 10
+
+  profile_gadget_member_image:
+    type: "profileSideMenu"
+    name: "memberImageBox"
+    sort_order: 10
+
+  profile_gadget_friend_table:
+    type: "profileSideMenu"
+    name: "friendListBox"
+    sort_order: 20
+
+  profile_gadget_community_table:
+    type: "profileSideMenu"
+    name: "communityJoinListBox"
+    sort_order: 30
+
+  profile_gadget_profile:
+    type: "profileContents"
+    name: "profileListBox"
+    sort_order: 10
+
+  mobile_profile_gadget_friend_table:
+    type: "mobileProfileBottom"
+    name: "friendListBox"
+    sort_order: 10
+
+  mobile_profile_gadget_community_table:
+    type: "mobileProfileBottom"
+    name: "communityJoinListBox"
+    sort_order: 20

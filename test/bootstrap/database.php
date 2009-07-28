@@ -1,10 +1,7 @@
 <?php
 
-new sfDatabaseManager(ProjectConfiguration::getApplicationConfiguration('pc_frontend', 'test', true));
+$configuration = ProjectConfiguration::getApplicationConfiguration('pc_frontend', 'test', true);
+new sfDatabaseManager($configuration);
 
-// execute propel:insert-sql task
-$task = new sfPropelInsertSqlTask(new sfEventDispatcher(), new sfAnsiColorFormatter());
-$task->run(array(), array('no-confirmation'));
-
-$loader = new sfPropelData();
-$loader->loadData(dirname(__FILE__).'/../fixtures');
+$task = new sfDoctrineBuildAllReloadTask($configuration->getEventDispatcher(), new sfFormatter());
+$task->run(array('--no-confirmation', '--dir='.dirname(__FILE__).'/../fixtures', '--skip-forms'));
