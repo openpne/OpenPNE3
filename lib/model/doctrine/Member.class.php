@@ -238,29 +238,25 @@ class Member extends BaseMember
 
   public function delete(Doctrine_Connection $conn = null)
   {
-    $memberId = $this->getId();
     $communityMemberTable = Doctrine::getTable('CommunityMember');
-    $adminCommunity = $communityMemberTable->getCommunityIdsOfAdminByMemberId($this->getId());
-    foreach ($adminCommunity as $community)
+    $communityIds = $communityMemberTable->getCommunityIdsOfAdminByMemberId($this->getId());
+
+    foreach ($communityIds as $communityId)
     {
-      $communityId = $community['community_id'];
-      
-      $memberCount = $communityMemberTable->getCommunityMembers($communityId)->count();
-      if (!$memberCount)
+      if (!$communityMemberTable->getCommunityMembers($communityId)->count())
       {
-          $community = Doctrine::getTable('Community')->find($communityId);
-          $community->delete();
-          continue;
+        $community = Doctrine::getTable('Community')->find($communityId);
+        $community->delete();
+        continue;
       }
       $communityMember = $communityMemberTable->createQuery()
         ->where('community_id = ?', $communityId)
         ->addWhere('position = ?', '')
-        ->orderBy('random()')
-        ->limit(1)
         ->fetchOne();
       $communityMember->setPosition('admin');
       $communityMember->save();
-      $communityMember = $communityMemberTable->retrieveByMemberIdAndCommunityId($memberId, $communityId);
+
+      $communityMember = $communityMemberTable->retrieveByMemberIdAndCommunityId($this->getId(), $communityId);
       $communityMember->delete();
     }
     return parent::delete($conn);
