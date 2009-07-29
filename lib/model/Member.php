@@ -241,7 +241,6 @@ class Member extends BaseMember
 
   public function delete(PropelPDO $con = null)
   {
-    $memberId = $this->getId();
     $adminCommunityIds = CommunityMemberPeer::getCommunityIdsOfAdminByMemberId($this->getId());
     foreach ($adminCommunityIds as $communityId)
     {
@@ -252,13 +251,12 @@ class Member extends BaseMember
         continue;
       }
       $c = new Criteria();
-      $c->addAscendingOrderByColumn(Propel::getDB()->random(time()));
       $c->add(CommunityMemberPeer::COMMUNITY_ID, $communityId);
       $c->add(CommunityMemberPeer::POSITION, '');
       $communityMember = CommunityMemberPeer::doSelectOne($c);
       $communityMember->setPosition('admin');
       $communityMember->save();
-      $communityMember = CommunityMemberPeer::retrieveByMemberIdAndCommunityId($memberId, $communityId);
+      $communityMember = CommunityMemberPeer::retrieveByMemberIdAndCommunityId($this->getId(), $communityId);
       $communityMember->delete();
     }
 
