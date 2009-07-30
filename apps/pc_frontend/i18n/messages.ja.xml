@@ -227,6 +227,10 @@
         <target>マイフレンドまで公開</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Only Open to My Friends</source>
+        <target>マイフレンドまで公開</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Private</source>
         <target>公開しない</target>
       </trans-unit>

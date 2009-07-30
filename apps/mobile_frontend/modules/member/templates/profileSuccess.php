@@ -33,6 +33,9 @@
 <?php foreach ($member->getProfiles(true) as $profile) : ?>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo $profile->getCaption() ?>:</font><br>
 <?php echo $profile ?><br>
+<?php if ($member->getId() == $sf_user->getMemberId() && $profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_FRIEND): ?>
+<font color="<?php echo $op_color["core_color_22"] ?>">(<?php echo __('Only Open to My Friends') ?>)</font><br>
+<?php endif; ?>
 <?php endforeach; ?>
 </td>
 </tr>

@@ -145,8 +145,10 @@ class MemberProfile extends BaseMemberProfile
           return true;
         }
 
-      case ProfileTable::PUBLIC_FLAG_PRIVATE:
         return ($this->getMemberId() == $memberId);
+
+      case ProfileTable::PUBLIC_FLAG_PRIVATE:
+        return false;
 
       case ProfileTable::PUBLIC_FLAG_SNS:
         return true;
