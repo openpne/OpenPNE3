@@ -51,13 +51,17 @@ class GadgetAddForm extends sfForm
   public function validate($validator, $value)
   {
     $result = array();
-
     foreach ($value as $key => $item)
     {
       if (array_key_exists($item, sfConfig::get('op_gadget_list'))
+        || array_key_exists($item, sfConfig::get('op_profile_gadget_list'))
         || array_key_exists($item, sfConfig::get('op_login_gadget_list'))
+        || array_key_exists($item, sfConfig::get('op_side_banner_gadget_list'))
         || array_key_exists($item, sfConfig::get('op_mobile_gadget_list'))
-        || array_key_exists($item, sfConfig::get('op_side_banner_gadget_list')))
+        || array_key_exists($item, sfConfig::get('op_mobile_profile_gadget_list'))
+        || array_key_exists($item, sfConfig::get('op_mobile_login_gadget_list'))
+        || array_key_exists($item, sfConfig::get('op_mobile_header_gadget_list'))
+        || array_key_exists($item, sfConfig::get('op_mobile_footer_gadget_list')))
       {
         $result[] = $item;
       }
