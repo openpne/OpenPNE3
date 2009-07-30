@@ -25,3 +25,7 @@ $list[__('Description', array(), 'form_community')] = op_auto_link_text(nl2br($c
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo $key ?>:</font><br>
 <?php echo $value ?><br>
 <?php endforeach; ?>
+
+<hr color="<?php echo $op_color['core_color_11'] ?>">
+
+<?php echo link_to(__('Community Top'), 'community/home?id='.$community->getId()) ?>
