@@ -69,6 +69,7 @@ class GadgetSortForm extends sfForm
       $gadget = Doctrine::getTable('Gadget')->find($id);
       if ($gadget) 
       {
+        $item = $gadget->getName();
         if (array_key_exists($item, sfConfig::get('op_gadget_list'))
           || array_key_exists($item, sfConfig::get('op_profile_gadget_list'))
           || array_key_exists($item, sfConfig::get('op_login_gadget_list'))
