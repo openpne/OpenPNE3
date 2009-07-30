@@ -37,3 +37,7 @@ if (!$communityForm->isNew())
   ));
 }
 ?>
+
+<hr color="<?php echo $op_color['core_color_11'] ?>">
+
+<?php echo link_to(__('Community Top'), 'community/home?id='.$community->getId()) ?>
