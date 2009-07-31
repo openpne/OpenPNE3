@@ -112,7 +112,7 @@ class designActions extends sfActions
     $layout = SnsConfigPeer::retrieveByName('home_layout');
     if ($layout)
     {
-      $this->layoutPattern = $layout->getValue();
+      $this->layoutPattern = $layout;
     }
 
     return sfView::SUCCESS;
