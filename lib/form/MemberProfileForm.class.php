@@ -141,11 +141,12 @@ class MemberProfileForm extends sfForm
         {
           $this->setDefault($profile->getName(), array('public_flag' => $profile->getDefaultPublicFlag()));
         }
-        
       }
 
       $this->widgetSchema[$profile->getName()] = new opWidgetFormProfile($widgetOptions);
       $this->validatorSchema[$profile->getName()] = new opValidatorProfile($validatorOptions);
+
+      $this->widgetSchema->setHelp($profile->getName(), $profileWithI18n['Info']);
     }
   }
 
