@@ -16,6 +16,7 @@ $option = array(
 );
 op_include_list('communityList', $list, $option);
 ?>
+<?php op_include_pager_navigation($pager, 'community/search?page=%d', array('is_total' => false, 'use_current_query_string' => true)) ?>
 <?php else: ?>
 <?php echo __('Your search queries did not match any communities.') ?>
 <?php endif ?>
@@ -42,7 +43,7 @@ op_include_form('searchCommunity', $filters, $options);
 $list = array();
 foreach ($categorys as $category)
 {
-  $list[] = link_to(sprintf('%s', $category->getName()), 'community/search?community_category_id='.$category->getId());
+  $list[] = link_to(sprintf('%s', $category->getName()), 'community/search', array('query_string' => 'community_category_id='.$category->getId()));
 }
 $option = array(
   'border' => true,
