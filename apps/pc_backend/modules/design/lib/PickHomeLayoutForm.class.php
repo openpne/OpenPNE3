@@ -38,7 +38,7 @@ class PickHomeLayoutForm extends sfForm
 
     if ($snsConfig)
     {
-      $default = array_search($snsConfig, $this->choices);
+      $default = array_search($snsConfig->getValue(), $this->choices);
     }
 
     $this->setWidget('layout', new sfWidgetFormSelectPhotoRadio(array(
