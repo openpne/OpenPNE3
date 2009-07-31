@@ -14,7 +14,7 @@ $options->setDefault('method','post');
 <?php include_customizes($id, 'formTop') ?>
 <?php foreach ($forms as $form): ?>
 <?php if ($form->hasGlobalErrors()): ?>
-<?php echo $form->renderGlobalErrors(); ?>
+<?php echo $form->renderGlobalErrors() ?><br><br>
 <?php endif; ?>
 <?php echo $form->renderHiddenFields() ?>
 <?php
