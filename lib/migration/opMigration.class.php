@@ -347,19 +347,6 @@ class opMigration extends Doctrine_Migration
   }
 }
 
-class opMigrationBase extends Doctrine_Migration_Base
-{
-  public function getProperty($name)
-  {
-    return $this->$name;
-  }
-
-  public function setProperty($name, $value)
-  {
-    $this->$name = $value;
-  }
-}
-
 class CompareMigrateDirectoryVersionFilterIterator extends FilterIterator
 {
   protected
