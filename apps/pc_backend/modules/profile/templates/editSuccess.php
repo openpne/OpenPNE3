@@ -1,6 +1,12 @@
 <?php use_helper('Javascript') ?>
 
-<h2><?php echo __('プロフィール項目追加') ?></h2>
+<h2>
+<?php if ($form->isNew()) : ?>
+<?php echo __('プロフィール項目追加') ?>
+<?php else : ?>
+<?php echo __('プロフィール項目編集') ?>
+<?php endif; ?>
+</h2>
 
 <?php if ($form->hasGlobalErrors()) : ?>
 <ul>
@@ -68,7 +74,7 @@
 <?php endif; ?>
 
 <?php echo $form->renderHiddenFields() ?>
-<input type="submit" value="<?php echo __('追加する') ?>" />
+<input type="submit" value="<?php echo $form->isNew() ? __('Add') : __('Modify') ?>" />
 </form>
 
 <?php echo javascript_tag('
