@@ -155,7 +155,7 @@ class designActions extends sfActions
     $layout = Doctrine::getTable('SnsConfig')->get('login_layout');
     if ($layout)
     {
-      $this->layoutPattern = $layout->getValue();
+      $this->layoutPattern = $layout;
     }
     return sfView::SUCCESS;
   }
