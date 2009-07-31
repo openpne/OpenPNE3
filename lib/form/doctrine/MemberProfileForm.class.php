@@ -21,7 +21,7 @@ class MemberProfileForm extends sfForm
   {
     parent::__construct(array(), $options, $CSRFSecret);
 
-    $profiles = Doctrine::getTable('Profile')->createQuery()->execute();
+    $profiles = Doctrine::getTable('Profile')->findAll();
 
     foreach ($profileMember as $profile)
     {
@@ -140,11 +140,12 @@ class MemberProfileForm extends sfForm
         {
           $this->setDefault($profile->getName(), array('public_flag' => $profile->getDefaultPublicFlag()));
         }
-        
       }
 
       $this->widgetSchema[$profile->getName()] = new opWidgetFormProfile($widgetOptions);
       $this->validatorSchema[$profile->getName()] = new opValidatorProfile($validatorOptions);
+
+      $this->widgetSchema->setHelp($profile->getName(), $profileWithI18n['info']);
     }
   }
 
