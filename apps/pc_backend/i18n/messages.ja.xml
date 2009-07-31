@@ -67,8 +67,8 @@
         <target>本当に削除してもよろしいですか？</target>
       </trans-unit>
       <trans-unit id="">
-        <source>追加する</source>
-        <target>Add</target>
+        <source>Add</source>
+        <target>追加</target>
       </trans-unit>
       <trans-unit id="">
         <source>Image</source>
