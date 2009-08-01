@@ -133,6 +133,12 @@ class opMigration extends Doctrine_Migration
     }
 
     parent::migrate($to);
+
+    $file = $this->getMigrationFixtureFile();
+    if ($file)
+    {
+      Doctrine::loadData($file, true);
+    }
   }
 
  /**
@@ -234,6 +240,28 @@ class opMigration extends Doctrine_Migration
     }
 
     return $dir;
+  }
+
+ /**
+  * Get a migration fixture file
+  *
+  * @return string
+  */
+  protected function getMigrationFixtureFile()
+  {
+    $dir = $this->getMigrationScriptDirectory();
+    if (!$dir)
+    {
+      return false;
+    }
+
+    $result = sfFinder::type('file')->name(str_pad($this->getCurrentVersion(), 3, '0', STR_PAD_LEFT).'_*.yml')->in($dir);
+    if ($result)
+    {
+      return array_shift($result);
+    }
+
+    return false;
   }
 
   public function hasMigrationScriptDirectory()
