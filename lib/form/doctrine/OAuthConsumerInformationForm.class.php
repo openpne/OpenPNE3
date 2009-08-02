@@ -28,17 +28,30 @@ class OAuthConsumerInformationForm extends BaseOAuthConsumerInformationForm
     $this->setValidator('image', new opValidatorImageFile(array('required' => false)));
   }
 
-  public function save($con = null)
+  public function updateObject($values = null)
   {
-    parent::save($con);
-
-    if ($this->getValue('image'))
+    if (is_null($values))
     {
+      $values = $this->getValues();
+    }
+
+    $image = null;
+    if (isset($values['image']))
+    {
+      $image = $values['image'];
+      unset($values['image']);
+    }
+
+    $obj = parent::updateObject($values);
+
+    if ($image instanceof sfValidatedFile)
+    {
+      unset($obj->Image);
+
       $file = new File();
-      $file->setFromValidatedFile($this->getValue('image'));
-      $file->setName('oauth_'.$this->getObject()->getId().'_'.$file->getName());
-      $this->getObject()->setImage($file);
-      $this->getObject()->save();
+      $file->setFromValidatedFile($image);
+      $file->setName('oauth_'.$obj->getId().'_'.$file->getName());
+      $obj->setImage($file);
     }
   }
 
