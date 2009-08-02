@@ -15,6 +15,10 @@ class openpneDataMaskTask extends sfDoctrineBaseTask
     $this->namespace        = 'openpne';
     $this->name             = 'data-mask';
 
+    $this->addOptions(array(
+      new sfCommandOption('file', 'f', sfCommandOption::PARAMETER_OPTIONAL, 'The path to masking rule definition file.', sfConfig::get('sf_config_dir').'/mask.yml'),
+    ));
+
     $this->briefDescription = 'mask data';
     $this->detailedDescription = <<<EOF
 The [openpne:data-mask|INFO] task masks data.
@@ -24,7 +28,7 @@ EOF;
   protected function execute($arguments = array(), $options = array())
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
-    $yaml = sfYaml::load(sfConfig::get('sf_config_dir').'/mask.yml');
+    $yaml = sfYaml::load($options['file']);
 
     Doctrine::initializeModels(array_keys($yaml));
 
