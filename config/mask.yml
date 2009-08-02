@@ -1,0 +1,62 @@
+Member:
+  normal:
+    values:
+      name: "*masked*"
+
+File:
+  normal:
+    values:
+      type: "image/gif"
+      original_filename: "masked.gif"
+
+FileBin:
+  normal:
+    values:
+      bin: "<?php echo base64_encode(file_get_contents(sfConfig::get('sf_data_dir').'/masked.gif')) ?>"
+    options:
+      filter: "base64_decode"
+
+MemberProfile:
+  normal:
+    values:
+      value: "**masked**"
+    condition:
+      Profile:
+        value_type: "string"
+
+Community:
+  normal:
+    values:
+      name: "**masked**"
+    options:
+      unique: on
+
+MemberConfig:
+  pc_mail_address:
+    values:
+      value: "@example.com"
+    condition:
+      name: "pc_address"
+    options:
+      unique: on
+      unique_id_column: member_id
+  mobile_mail_address:
+    values:
+      value: "@ezweb.ne.jp"
+    condition:
+      name: "mobile_address"
+    options:
+      unique: on
+      unique_id_column: member_id
+  password:
+    values:
+      value: "<?php echo md5('password') ?>"
+    condition:
+      name: "password"
+
+CommunityConfig:
+  normal:
+    values:
+      value: "**masked**"
+    condition:
+      name: "description"
