@@ -28,7 +28,16 @@ class opWidgetFormInputHiddenNextUri extends sfWidgetFormInputHidden
     $value = $routing->getCurrentInternalUri();
     if ($params)
     {
-      $value .= '?'.str_replace('openid_', 'openid.', $params);
+      if (false !== strpos($value, '?'))
+      {
+        $value .= '&';
+      }
+      else
+      {
+        $value .= '?';
+      }
+
+      $value .= str_replace('openid_', 'openid.', $params);
     }
 
     if ($request->isMethod(sfWebRequest::POST))
