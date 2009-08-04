@@ -118,6 +118,9 @@ MemberProfile:
     Member: { local: member_id, foreign: id, onDelete: cascade }
     Profile: { local: profile_id, foreign: id, onDelete: cascade }
     ProfileOption: { local: profile_option_id, foreign: id, onDelete: cascade }
+  indexes:
+    lft_INDEX:
+      fields: [lft]
 
 Community:
   columns:
@@ -172,6 +175,9 @@ MemberConfig:
     value: { type: string }
   relations:
     Member: { local: member_id, foreign: id, onDelete: cascade }
+  indexes:
+    name_INDEX:
+      fields: [name]
 
 CommunityConfig:
   columns:
@@ -194,6 +200,9 @@ CommunityCategory:
     is_allow_member_community: { type: boolean, default: true, notnull: true }
     tree_key: { type: integer(4) }
     sort_order: { type: integer(4) }
+  indexes:
+    lft_INDEX:
+      fields: [lft]
 
 Gadget:
   columns:
@@ -201,6 +210,9 @@ Gadget:
     type: { type: string(64), default: "", notnull: true }
     name: { type: string(64), default: "", notnull: true }
     sort_order: { type: integer(4) }
+  indexes:
+    sort_order_INDEX:
+      fields: [sort_order]
 
 GadgetConfig:
   columns:
@@ -223,6 +235,9 @@ Navigation:
     type: { type: string(64), default: "", notnull: true }
     uri: { type: string, notnull: true }
     sort_order: { type: integer(4) }
+  indexes:
+    type_sort_order_INDEX:
+      fields: [type, sort_order]
 
 Blacklist:
   columns:
