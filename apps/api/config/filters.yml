@@ -1,5 +1,7 @@
 rendering: ~
-security:  ~
+
+security:
+  class: opAPISecurityFilter
 
 # insert your own filters here
 

@@ -293,7 +293,6 @@ OAuthConsumerInformation:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
     name: { type: string(64), default: "", notnull: true, comment: "Consumer name" }
     description: { type: string, comment: "Consumer description" }
-    type: { type: enum, values: [browser, client], default: "browser", comment: "Consumer type" }
     key_string: { type: string(16), default: "", notnull: true, comment: "Token for this consumer" }
     secret: { type: string(32), default: "", notnull: true, comment: "Password for this consumer" }
     file_id: { type: integer(4), comment: "Image file id of this consumer" }
@@ -309,15 +308,14 @@ OAuthConsumerInformation:
 OAuthAdminToken:
   columns:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
-    oauth_consumer_id: { type: integer(4), notnull: true, comment: "OAuthConsumer id" }
-    admin_user_id: { type: integer(4), notnull: true, comment: "Administrator\'s user id" }
-    key_string: { type: string(16), default: "", notnull: true, comment: "Administration token" }
-    secret: { type: string(32), default: "", notnull: true, comment: "Administration password" }
-    type: { type: enum, values: [request, access], default: "request", comment: "Authorization type" }
-    expires_at: { type: timestamp, comment: "Expiration date" }
-    is_active: { type: boolean, default: true, notnull: true, comment: "This is active token" }
+    oauth_consumer_id: { type: integer(4), notnull: true, comment: "OAuth Consumer id" }
+    key_string: { type: string(16), default: "", notnull: true, comment: "Key string of this token" }
+    secret: { type: string(32), default: "", notnull: true, comment: "Secret string of this token" }
+    type: { type: enum, values: [request, access], default: "request", comment: "Token type" }
+    is_active: { type: boolean, default: true, notnull: true, comment: "Activation flag" }
+    callback_url: { type: string, comment: "Callback url"  }
+    verifier: { type: string, comment: "Token verifier" }
   relations:
-    AdminUser: { local: admin_user_id, foreign: id, onDelete: cascade }
     Consumer: { class: OAuthConsumerInformation, local: oauth_consumer_id, foreign: id, onDelete: cascade }
   indexes:
     key_secret_UNIQUE:

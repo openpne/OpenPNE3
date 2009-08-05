@@ -37,12 +37,19 @@ class opOAuthDataStore extends OAuthDataStore
     {
       $key = opToolkit::generatePasswordString(16, false);
       $secret = opToolkit::generatePasswordString(32, false);
+      $verifier = opToolkit::generatePasswordString(8, false);
 
-      $adminToken = new OAuthAdminToken();
+      $adminToken = Doctrine::getTable('OAuthAdminToken')
+        ->findOneByOauthConsumerIdAndType($information->id, 'request');
+      if (!$adminToken)
+      {
+        $adminToken = new OAuthAdminToken();
+      }
+
       $adminToken->setKeyString($key);
       $adminToken->setSecret($secret);
       $adminToken->setConsumer($information);
-      $adminToken->setAdminUserId(1);
+      $adminToken->setVerifier($verifier);
       $adminToken->save();
 
       return new OAuthToken($key, $secret);
@@ -57,14 +64,18 @@ class opOAuthDataStore extends OAuthDataStore
     if ($information)
     {
       $key = opToolkit::generatePasswordString(16, false);
-      $secret = opToolkit::generatePasswordString(32);
+      $secret = opToolkit::generatePasswordString(32, false);
 
-      $adminToken = new OAuthAdminToken();
+      $adminToken = Doctrine::getTable('OAuthAdminToken')
+        ->findOneByOauthConsumerIdAndType($information->id, 'access');
+      if (!$adminToken)
+      {
+        $adminToken = new OAuthAdminToken();
+      }
       $adminToken->setKeyString($key);
       $adminToken->setSecret($secret);
       $adminToken->setConsumer($information);
       $adminToken->setType('access');
-      $adminToken->setAdminUserId(1);
       $adminToken->save();
 
       return new OAuthToken($key, $secret);
@@ -78,7 +89,12 @@ class opOAuthDataStore extends OAuthDataStore
     $adminToken = Doctrine::getTable('OAuthAdminToken')->findByKeyString($token, $token_type);
     if ($adminToken)
     {
-      return new OAuthToken($adminToken->getKeyString(), $adminToken->getSecret());
+      $token = new OAuthToken($adminToken->getKeyString(), '');
+      if ('request' !== $token_type)
+      {
+        $token->secret = $adminToken->getSecret();
+      }
+      return $token;
     }
 
     return null;
