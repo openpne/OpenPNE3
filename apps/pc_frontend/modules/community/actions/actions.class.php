@@ -30,6 +30,8 @@ class communityActions extends sfOpenPNECommunityAction
       sfConfig::set('sf_nav_type', 'default');
     }
 
+    $this->communityFileForm   = new CommunityFileForm(array(), array('community' => $this->community));
+
     return $result;
   }
 

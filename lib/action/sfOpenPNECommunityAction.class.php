@@ -74,7 +74,6 @@ abstract class sfOpenPNECommunityAction extends sfActions
 
     $this->communityForm       = new CommunityForm($this->community);
     $this->communityConfigForm = new CommunityConfigForm(array(), array('community' => $this->community));
-    $this->communityFileForm   = new CommunityFileForm(array(), array('community' => $this->community));
 
     if ($request->isMethod('post'))
     {
