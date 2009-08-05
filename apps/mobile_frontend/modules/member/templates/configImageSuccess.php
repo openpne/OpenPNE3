@@ -27,5 +27,5 @@ else
 <?php if (3 > $images->count()): ?>
 <hr color="<?php echo $op_color["core_color_12"] ?>">
 <?php echo __('Send E-mail that has a photo to use as your image.') ?><br>
-<?php echo op_maiL_to('member_add_image', array(), __('Send E-mail')) ?>
+<?php echo op_mail_to('member_add_image', array(), __('Send E-mail')) ?>
 <?php endif; ?>

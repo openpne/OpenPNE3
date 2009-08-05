@@ -546,7 +546,7 @@ function op_within_page_link($marker = '▼')
   return content_tag('a', $marker, $options);
 }
 
-function op_maiL_to($route, $params = array(), $name = '', $options = array(), $default_value = array())
+function op_mail_to($route, $params = array(), $name = '', $options = array(), $default_value = array())
 {
   $configuration = sfContext::getInstance()->getConfiguration();
   $configPath = '/mobile_mail_frontend/config/routing.yml';

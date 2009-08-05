@@ -14,7 +14,7 @@
 <hr color="<?php echo $op_color["core_color_12"] ?>">
 <?php if (!$community->getImageFileName()): ?>
 <?php echo __('Send E-mail that has a photo to use as community\'s image.') ?><br>
-<?php echo op_maiL_to('community_add_image', array('id' => $community->id), __('Send E-mail')) ?>
+<?php echo op_mail_to('community_add_image', array('id' => $community->id), __('Send E-mail')) ?>
 <?php else: ?>
 <?php echo __('This community already has a photo. If you want to register a new one, you must delete this photo.') ?><br>
 <?php endif; ?>
