@@ -5,20 +5,22 @@ actAs: [Timestampable]
 Member:
   actAs: [Timestampable, opActivateBehavior]
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    name: { type: string(64), default: "", notnull: true }
-    invite_member_id: { type: integer(4) }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    name: { type: string(64), default: "", notnull: true, comment: "Nickname" }
+    invite_member_id: { type: integer(4), comment: "Member id of the person who invited this member" }
   relations:
     Member: { local: invite_member_id, foreign: id, onDelete: set null }
+  options:
+    comment: "Saves informations of members"
 
 MemberRelationship:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    member_id_to: { type: integer(4), notnull: true }
-    member_id_from: { type: integer(4), notnull: true }
-    is_friend: { type: boolean }
-    is_friend_pre: { type: boolean }
-    is_access_block: { type: boolean }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    member_id_to: { type: integer(4), notnull: true, comment: "Target member id" }
+    member_id_from: { type: integer(4), notnull: true, comment: "Subject member id" }
+    is_friend: { type: boolean, comment: "The members are friends" }
+    is_friend_pre: { type: boolean, comment: "The members are going to be friends" }
+    is_access_block: { type: boolean, comment: "The subject member is blocked the target" }
   relations:
     Member: { local: member_id_to, foreign: id, onDelete: cascade }
     MemberRelatedByMemberIdFrom: { class: Member, local: member_id_from, foreign: id, onDelete: cascade }
@@ -29,34 +31,42 @@ MemberRelationship:
     member_id_from_to_UNIQUE:
       fields: [member_id_from, member_id_to]
       type: unique
+  options:
+    comment: "Saves ralationships of each members"
 
 MemberImage:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    member_id: { type: integer(4), notnull: true }
-    file_id: { type: integer(4), notnull: true }
-    is_primary: boolean
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    member_id: { type: integer(4), notnull: true, comment: "Member id" }
+    file_id: { type: integer(4), notnull: true, comment: "Image file id in the \'file\' table" }
+    is_primary: { type: boolean, comment: "This is primary" }
   relations:
     Member: { local: member_id, foreign: id, onDelete: cascade }
     File: { local: file_id, foreign: id, onDelete: cascade }
+  options:
+    comment: "Saves images in member profiles"
 
 File:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    name: { type: string(64), default: "", notnull: true }
-    type: { type: string(64), default: "", notnull: true }
-    original_filename: { type: string }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    name: { type: string(64), default: "", notnull: true, comment: "File name" }
+    type: { type: string(64), default: "", notnull: true, comment: "Type of this file" }
+    original_filename: { type: string, comment: "Original filename" }
   relations:
     FileBin: { local: id, foreign: file_id }
   indexes:
     name_UNIQUE:
       fields: [name]
       type: unique
+  options:
+    comment: "Saves informations of files uploaded"
 
 FileBin:
   columns:
-    file_id: { type: integer(4), primary: true }
-    bin: { type: blob }
+    file_id: { type: integer(4), primary: true, comment: "File id" }
+    bin: { type: blob, comment: "Content of file" }
+  options:
+    comment: "Saves content of files"
 
 Profile:
   actAs:
@@ -65,27 +75,29 @@ Profile:
       length: 5
     Timestampable:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    name: { type: string(64), default: "", notnull: true }
-    is_required: { type: boolean, default: false, notnull: true }
-    is_unique: { type: boolean, default: false, notnull: true }
-    is_edit_public_flag: { type: boolean, default: false, notnull: true }
-    default_public_flag: { type: integer(1), default: '1', notnull: true }
-    form_type: { type: string(32), default: "", notnull: true }
-    value_type: { type: string(32), default: "", notnull: true }
-    is_disp_regist: { type: boolean, default: false, notnull: true }
-    is_disp_config: { type: boolean, default: false, notnull: true }
-    is_disp_search: { type: boolean, default: false, notnull: true }
-    value_regexp: { type: string }
-    value_min: { type: string(32) }
-    value_max: { type: string(32) }
-    sort_order: { type: integer(4) }
-    caption: { type: string, notnull: true }
-    info: { type: string }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    name: { type: string(64), default: "", notnull: true, comment: "Identified profile name (ASCII)" }
+    is_required: { type: boolean, default: false, notnull: true, comment: "This is a required" }
+    is_unique: { type: boolean, default: false, notnull: true, comment: "Cannot select duplicate item" }
+    is_edit_public_flag: { type: boolean, default: false, notnull: true, comment: "Settable public flag" }
+    default_public_flag: { type: integer(1), default: '1', notnull: true, comment: "Default of public flag" }
+    form_type: { type: string(32), default: "", notnull: true, comment: "Form type to input/select" }
+    value_type: { type: string(32), default: "", notnull: true, comment: "Type of input value" }
+    is_disp_regist: { type: boolean, default: false, notnull: true, comment: "Shows when registeration" }
+    is_disp_config: { type: boolean, default: false, notnull: true, comment: "Shows when edit" }
+    is_disp_search: { type: boolean, default: false, notnull: true, comment: "Shows when searching" }
+    value_regexp: { type: string, comment: "Regular expression" }
+    value_min: { type: string(32), comment: "Minimum value" }
+    value_max: { type: string(32), comment: "Maximum value" }
+    sort_order: { type: integer(4), comment: "Order to sort" }
+    caption: { type: string, notnull: true, comment: "Item name to show" }
+    info: { type: string, comment: "Description" }
   indexes:
     name_UNIQUE:
       fields: [name]
       type: unique
+  options:
+    comment: "Saves input/select items for the member profile"
 
 ProfileOption:
   actAs:
@@ -94,12 +106,14 @@ ProfileOption:
       length: 5
     Timestampable:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    profile_id: { type: integer(4), notnull: true }
-    value: { type: string }
-    sort_order: { type: integer(4) }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    profile_id: { type: integer(4), notnull: true, comment: "Profile id" }
+    value: { type: string, comment: "Choice" }
+    sort_order: { type: integer(4), comment: "Order to sort" }
   relations:
     Profile: { local: profile_id, foreign: id, onDelete: cascade }
+  options:
+    comment: "Saves options of profile items"
 
 MemberProfile:
   actAs:
@@ -108,12 +122,12 @@ MemberProfile:
       rootColumnName: tree_key
     Timestampable:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    member_id: { type: integer(4), notnull: true }
-    profile_id: { type: integer(4), notnull: true }
-    profile_option_id: { type: integer(4) }
-    value: { type: string }
-    public_flag: { type: integer(1) }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    member_id: { type: integer(4), notnull: true, comment: "Member id" }
+    profile_id: { type: integer(4), notnull: true, comment: "Profile id" }
+    profile_option_id: { type: integer(4), comment: "Profile option id" }
+    value: { type: string, comment: "Text content for this profile item" }
+    public_flag: { type: integer(1), comment: "Public flag" }
   relations:
     Member: { local: member_id, foreign: id, onDelete: cascade }
     Profile: { local: profile_id, foreign: id, onDelete: cascade }
@@ -121,13 +135,15 @@ MemberProfile:
   indexes:
     lft_INDEX:
       fields: [lft]
+  options:
+    comment: "Saves informations of every member\'s profile"
 
 Community:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    name: { type: string(64), default: "", notnull: true }
-    file_id: { type: integer(4) }
-    community_category_id: { type: integer(4) }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    name: { type: string(64), default: "", notnull: true, comment: "Community name" }
+    file_id: { type: integer(4), comment: "Top image file id" }
+    community_category_id: { type: integer(4), comment: "Community category id" }
   relations:
     File: { local: file_id, foreign: id, onDelete: set null }
     CommunityCategory: { local: community_category_id, foreign: id, onDelete: set null }
@@ -135,58 +151,70 @@ Community:
     name_UNIQUE:
       fields: [name]
       type: unique
+  options:
+    comment: "Saves informations of communities"
 
 CommunityMember:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    community_id: { type: integer(4), notnull: true }
-    member_id: { type: integer(4), notnull: true }
-    position: { type: string(32), default: "" }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    community_id: { type: integer(4), notnull: true, comment: "Community id" }
+    member_id: { type: integer(4), notnull: true, comment: "Member id" }
+    position: { type: string(32), default: "", comment: "Member\'s position in this community" }
   relations:
     Community: { local: community_id, foreign: id, onDelete: cascade }
     Member: { local: member_id, foreign: id, onDelete: cascade }
+  options:
+    comment: "Saves informations of members joined"
 
 AdminUser:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    username: { type: string(64), default: "", notnull: true }
-    password: { type: string(40), default: "", notnull: true }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    username: { type: string(64), default: "", notnull: true, comment: "Administrator\'s username" }
+    password: { type: string(40), default: "", notnull: true, comment: "Administrator\'s password" }
   indexes:
     username_UNIQUE:
       fields: [username]
       type: unique
+  options:
+    comment: "Saves informations to login administration page"
 
 SnsConfig:
   actAs: []
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    name: { type: string(64), default: "", notnull: true }
-    value: { type: string }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    name: { type: string(64), default: "", notnull: true, comment: "Configuration name" }
+    value: { type: string, comment: "Configuration value" }
   indexes:
     name_UNIQUE:
       fields: [name]
       type: unique
+  options:
+    comment: "Saves configurations of this SNS"
 
 MemberConfig:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    member_id: { type: integer(4), notnull: true }
-    name: { type: string(64), default: "", notnull: true }
-    value: { type: string }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    member_id: { type: integer(4), notnull: true, comment: "Member id" }
+    name: { type: string(64), default: "", notnull: true, comment: "Configuration name" }
+    value: { type: string, comment: "Configuration value" }
   relations:
     Member: { local: member_id, foreign: id, onDelete: cascade }
   indexes:
     name_INDEX:
       fields: [name]
+  options:
+    comment: "Saves configurations of each members"
 
 CommunityConfig:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    community_id: { type: integer(4), notnull: true }
-    name: { type: string(64), default: "", notnull: true }
-    value: { type: string }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    community_id: { type: integer(4), notnull: true, comment: "Community id" }
+    name: { type: string(64), default: "", notnull: true, comment: "Configuration name" }
+    value: { type: string, comment: "Configuration value" }
   relations:
     Community: { local: community_id, foreign: id, onDelete: cascade }
+  options:
+    comment: "Saves configurations of communities"
 
 CommunityCategory:
   actAs:
@@ -195,33 +223,39 @@ CommunityCategory:
       rootColumnName: tree_key
     Timestampable:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    name: { type: string(64), default: "", notnull: true }
-    is_allow_member_community: { type: boolean, default: true, notnull: true }
-    tree_key: { type: integer(4) }
-    sort_order: { type: integer(4) }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    name: { type: string(64), default: "", notnull: true, comment: "Category name" }
+    is_allow_member_community: { type: boolean, default: true, notnull: true, comment: "Member can create this category community" }
+    tree_key: { type: integer(4), comment: "Nested tree key" }
+    sort_order: { type: integer(4), comment: "Order to sort" }
+  options:
+    comment: "Saves categories of community"
   indexes:
     lft_INDEX:
       fields: [lft]
 
 Gadget:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    type: { type: string(64), default: "", notnull: true }
-    name: { type: string(64), default: "", notnull: true }
-    sort_order: { type: integer(4) }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    type: { type: string(64), default: "", notnull: true, comment: "Gadget type" }
+    name: { type: string(64), default: "", notnull: true, comment: "Gadget name" }
+    sort_order: { type: integer(4), comment: "Order to sort" }
+  options:
+    comment: "Saves informations of gadget"
   indexes:
     sort_order_INDEX:
       fields: [sort_order]
 
 GadgetConfig:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    name: { type: string(64), default: "", notnull: true }
-    gadget_id: { type: integer(4) }
-    value: { type: string }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    name: { type: string(64), default: "", notnull: true, comment: "Configuration name" }
+    gadget_id: { type: integer(4), comment: "Gadget id" }
+    value: { type: string, comment: "Configuration value" }
   relations:
     Gadget: { local: gadget_id, foreign: id, onDelete: cascade }
+  options:
+    comment: "Saves configurations of gadget"
 
 Navigation:
   actAs:
@@ -230,53 +264,58 @@ Navigation:
       length: 5
     Timestampable:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    caption: { type: string, notnull: true }
-    type: { type: string(64), default: "", notnull: true }
-    uri: { type: string, notnull: true }
-    sort_order: { type: integer(4) }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    caption: { type: string, notnull: true, comment: "Description" }
+    type: { type: string(64), default: "", notnull: true, comment: "Navigation type" }
+    uri: { type: string, notnull: true, comment: "Linked page\'s URI" }
+    sort_order: { type: integer(4), comment: "Order to sort" }
+  options:
+    comment: "Saves informations of navigation items"
   indexes:
     type_sort_order_INDEX:
       fields: [type, sort_order]
 
 Blacklist:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    uid: { type: string(32), default: "", notnull: true }
-    memo: { type: string }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    uid: { type: string(32), default: "", notnull: true, comment: "Mobile identified number" }
+    memo: { type: string, comment: "Free memo" }
   indexes:
     uid_UNIQUE:
       fields: [uid]
       type: unique
+  options:
+    comment: "Saves informations of blacklist"
 
 OAuthConsumerInformation:
   tableName: oauth_consumer
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    name: { type: string(64), default: "", notnull: true }
-    description: { type: string }
-    type: { type: enum, values: [browser, client], default: "browser" }
-    name: { type: string(64), default: "", notnull: true }
-    key_string: { type: string(16), default: "", notnull: true }
-    secret: { type: string(32), default: "", notnull: true }
-    file_id: { type: integer(4) }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    name: { type: string(64), default: "", notnull: true, comment: "Consumer name" }
+    description: { type: string, comment: "Consumer description" }
+    type: { type: enum, values: [browser, client], default: "browser", comment: "Consumer type" }
+    key_string: { type: string(16), default: "", notnull: true, comment: "Token for this consumer" }
+    secret: { type: string(32), default: "", notnull: true, comment: "Password for this consumer" }
+    file_id: { type: integer(4), comment: "Image file id of this consumer" }
   relations:
     Image: { class: File, local: file_id, foreign: id, onDelete: set null }
   indexes:
     key_secret_UNIQUE:
       fields: [key_string, secret]
       type: unique
+  options:
+    comment: "Saves informations of OAuth Consumer"
 
 OAuthAdminToken:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    oauth_consumer_id: { type: integer(4), notnull: true }
-    admin_user_id: { type: integer(4), notnull: true }
-    key_string: { type: string(16), default: "", notnull: true }
-    secret: { type: string(32), default: "", notnull: true }
-    type: { type: enum, values: [request, access], default: "request" }
-    expires_at: { type: timestamp }
-    is_active: { type: boolean, default: true, notnull: true }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    oauth_consumer_id: { type: integer(4), notnull: true, comment: "OAuthConsumer id" }
+    admin_user_id: { type: integer(4), notnull: true, comment: "Administrator\'s user id" }
+    key_string: { type: string(16), default: "", notnull: true, comment: "Administration token" }
+    secret: { type: string(32), default: "", notnull: true, comment: "Administration password" }
+    type: { type: enum, values: [request, access], default: "request", comment: "Authorization type" }
+    expires_at: { type: timestamp, comment: "Expiration date" }
+    is_active: { type: boolean, default: true, notnull: true, comment: "This is active token" }
   relations:
     AdminUser: { local: admin_user_id, foreign: id, onDelete: cascade }
     Consumer: { class: OAuthConsumerInformation, local: oauth_consumer_id, foreign: id, onDelete: cascade }
@@ -284,6 +323,8 @@ OAuthAdminToken:
     key_secret_UNIQUE:
       fields: [key_string, secret]
       type: unique
+  options:
+    comment: "Saves administration tokens of OAuth"
 
 Banner:
   actAs:
@@ -291,37 +332,45 @@ Banner:
       fields: [caption]
       length: 5
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    name: { type: string(64), default: "", notnull: true }
-    html: { type: string }
-    is_use_html: { type: boolean, default: false, notnull: true }
-    caption: { type: string, notnull: true }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    name: { type: string(64), default: "", notnull: true, comment: "Banner name" }
+    html: { type: string, comment: "HTML of free input banner" }
+    is_use_html: { type: boolean, default: false, notnull: true, comment: "This is free HTML banner" }
+    caption: { type: string, notnull: true, comment: "Description" }
   indexes:
     name_UNIQUE:
       fields: [name]
       type: unique
+  options:
+    comment: "Saves informations about banner"
 
 BannerImage:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    file_id: { type: integer(4), notnull: true }
-    url: { type: string }
-    name: { type: string(64) }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    file_id: { type: integer(4), notnull: true, comment: "An image\'s file id" }
+    url: { type: string, comment: "URL of linked Web page" }
+    name: { type: string(64), comment: "Banner image name" }
   relations:
     File: { local: file_id, foreign: id, onDelete: cascade }
+  options:
+    comment: "Saves informations about banner image files"
 
 BannerUseImage:
   columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    banner_id: { type: integer(4), notnull: true }
-    banner_image_id: { type: integer(4), notnull: true }
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    banner_id: { type: integer(4), notnull: true, comment: "Banner id" }
+    banner_image_id: { type: integer(4), notnull: true, comment: "BannerImage id" }
   relations:
     Banner: { local: banner_id, foreign: id }
     BannerImage: { local: banner_image_id, foreign: id }
+  options:
+    comment: "Saves relations between banners and their images"
 
 Session:
   actAs: []
   columns:
-    id: { type: integer(4), primary: true }
-    data: { type: string }
-    time: { type: string }
+    id: { type: integer(4), primary: true, comment: "Serial number" }
+    data: { type: string, comment: "Session information" }
+    time: { type: string, comment: "Timestamp of generated time" }
+  options:
+    comment: "Saves session data"
