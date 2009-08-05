@@ -157,6 +157,9 @@ abstract class sfOpenPNEMemberAction extends sfActions
     $this->communities = $this->member->getJoinCommunities($this->communitiesSize, true);
     $this->crownIds = Doctrine::getTable('CommunityMember')->getCommunityIdsOfAdminByMemberId($id);
 
+    $birthday = Doctrine::getTable('MemberProfile')->retrieveByMemberIdAndProfileName($id, 'birthday');
+    $this->targetDay = opToolkit::extractTargetDay((string)$birthday);
+
     return sfView::SUCCESS;
   }
 

@@ -38,7 +38,7 @@ class opToolkit
   {
     $pieces = explode('@', $string, 2);
     $domain = array_pop($pieces);
-    
+
     return in_array($domain, self::getMobileMailAddressDomains());
   }
 
@@ -209,5 +209,38 @@ class opToolkit
 
     $widget->setAttribute('istyle', $modes[$mode]);
     $widget->setAttribute('mode', $mode);
+  }
+
+/**
+ * This method calculates how many days to go until specified day.
+ *
+ * @param string $targetDay
+ * @return int between from target days.
+ */
+  public static function extractTargetDay($targetDay)
+  {
+    list(, $m, $d) = explode('-', $targetDay);
+
+    $m = (int)$m;
+    $d = (int)$d;
+
+    if ($m == 0 || $d == 0) {
+      return -1;
+    }
+
+    $y = date('Y');
+
+    $today = mktime(0, 0, 0);
+
+    $theday_thisyear = mktime(0, 0, 0, $m, $d, $y);
+    $theday_nextyear = mktime(0, 0, 0, $m, $d, $y + 1);
+
+    if ($theday_thisyear < $today) {
+      $theday_next = $theday_nextyear;
+    } else {
+      $theday_next = $theday_thisyear;
+    }
+
+    return ($theday_next - $today) / 86400;
   }
 }

@@ -639,6 +639,14 @@
         <source>This community already has a photo. If you want to register a new one, you must delete this photo.</source>
         <target>既に写真が登録されています。新しい写真を登録したい場合は、古い画像を削除してください。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Happy Birthday!</source>
+        <target>今日は誕生日です</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>It is member's birthday soon.</source>
+        <target>もうすぐ誕生日です</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

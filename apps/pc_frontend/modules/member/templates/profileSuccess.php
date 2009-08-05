@@ -44,6 +44,7 @@
 
 <?php slot('op_top'); ?>
 <?php if ($relation->isSelf()): ?>
+<?php include_partial('member/birthdayBox', array('targetDay' => $targetDay)); ?>
 <?php ob_start() ?>
 <p><?php echo __('Other members look your page like this.') ?></p>
 <p><?php echo __('If you teach your page to other members, please use following URL.') ?><br />
