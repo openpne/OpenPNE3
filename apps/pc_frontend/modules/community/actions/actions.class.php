@@ -24,11 +24,13 @@ class communityActions extends sfOpenPNECommunityAction
   */
   public function executeEdit($request)
   {
+    $this->enableImage = true;
     $result = parent::executeEdit($request);
 
     if ($this->community->isNew()) {
       sfConfig::set('sf_nav_type', 'default');
     }
+
 
     return $result;
   }
