@@ -3,8 +3,7 @@
 <?php $_member = $sf_user->getMember() ?>
 <?php $images = $_member->getMemberImage() ?>
 <?php if ($images->count()): ?>
-<?php for ($i = 0; $i < 3 && $i < $images->count(); $i++) : ?>
-<?php $image = $images[$i] ?>
+<?php foreach ($images as $image) : ?>
 <?php echo image_tag_sf_image($image->getFile(), array('size' => '120x120', 'format' => 'jpg')) ?><br>
 <?php echo sprintf('[%s]',link_to(__('Expansion'), sf_image_path($image->getFile(), array('size' => '320x320', 'format' => 'jpg')))) ?><br>
 <?php 
@@ -19,7 +18,7 @@ else
 ?>
 <?php echo sprintf('[%s|%s]', link_to(__('Delete'), 'member/deleteImage?member_image_id='.$image->getId()), $main) ?>
 <br><br>
-<?php endfor; ?>
+<?php endforeach; ?>
 <?php else: ?>
 <?php echo __('There are no photos.') ?>
 <?php endif; ?>
