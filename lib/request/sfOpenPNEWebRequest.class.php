@@ -229,34 +229,27 @@ class sfOpenPNEWebRequest extends sfWebRequest
     }
   }
 
-  public function convertEncodingParametersTo($from_encoding)
+  public function convertEncodingParametersToSJIS()
   {
-    $parameter_holder = $this->getContext()->getRequest()->getParameterHolder();
-
-    foreach ($parameter_holder->getAll(false) as $key => $value)
-    {
-      $parameter_holder->set($key, $this->convertEncodingParametersToCallback($value, $from_encoding));
-    }
-
     foreach (array('getParameters', 'postParameters', 'requestParameters') as $parameters)
     {
       foreach ($this->$parameters as $key => $value)
       {
         if (0 !== stripos($key, '_sf_'))
         {
-          $this->{$parameters}[$key] = $this->convertEncodingParametersToCallback($value, $from_encoding);
+          $this->{$parameters}[$key] = $this->convertEncodingParametersToSJISCallback($value);
         }
       }
     }
   }
 
-  private function convertEncodingParametersToCallback($value, $fromEncoding)
+  private function convertEncodingParametersToSJISCallback($value)
   {
     if (is_array($value))
     {
-      return array_map(array($this, 'convertEncodingParametersToCallback'), $value);
+      return array_map(array($this, 'convertEncodingParametersToSJISCallback'), $value);
     }
 
-    return mb_convert_encoding($value, 'UTF-8', $from_encoding);
+    return mb_convert_encoding($value, 'UTF-8', 'SJIS-win');
   }
 }

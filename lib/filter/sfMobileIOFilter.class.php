@@ -34,6 +34,7 @@ class sfMobileIOFilter extends sfFilter
 
     $this->convertEmojiForInput();
     $this->convertEncodingForInput();
+    sfContext::getInstance()->getRequest()->convertEncodingParametersToSJIS();
 
     $filterChain->execute();
 
@@ -55,7 +56,21 @@ class sfMobileIOFilter extends sfFilter
    */
   private function convertEncodingForInput()
   {
-    sfContext::getInstance()->getRequest()->convertEncodingParametersTo('SJIS-win');
+    $request = $this->getContext()->getRequest();
+    $parameter_holder = $request->getParameterHolder();
+
+    foreach ($parameter_holder->getAll(false) as $key => $value) {
+      $parameter_holder->set($key, $this->convertEncodingForInputCallback($value));
+    }
+  }
+
+  private function convertEncodingForInputCallback($value)
+  {
+    if (is_array($value)) {
+      return array_map(array($this, 'convertEncodingForInputCallback'), $value);
+    }
+
+    return mb_convert_encoding($value, 'UTF-8', 'SJIS-win');
   }
 
   private function convertEmojiForInput()
