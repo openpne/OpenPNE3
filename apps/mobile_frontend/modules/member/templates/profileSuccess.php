@@ -5,8 +5,9 @@
 <?php echo __('This is your page other member see.') ?><br>
 <?php echo __('If you edit profile, access %1%.', array('%1%' => link_to('「'. __('Edit profile') .'」', 'member/editProfile'))) ?>
 </font>
-<?php endif; ?>
+<?php else: ?>
 <?php include_partial('member/birthdayBox', array('targetDay' => $targetDay)); ?>
+<?php endif; ?>
 
 <?php if ($mobileTopGadgets) : ?>
 <?php foreach ($mobileTopGadgets as $gadget) : ?>

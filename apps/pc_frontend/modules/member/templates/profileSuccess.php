@@ -44,7 +44,6 @@
 
 <?php slot('op_top'); ?>
 <?php if ($relation->isSelf()): ?>
-<?php include_partial('member/birthdayBox', array('targetDay' => $targetDay)); ?>
 <?php ob_start() ?>
 <p><?php echo __('Other members look your page like this.') ?></p>
 <p><?php echo __('If you teach your page to other members, please use following URL.') ?><br />
@@ -53,6 +52,7 @@
 <?php $content = ob_get_clean() ?>
 <?php op_include_parts('descriptionBox', 'informationAboutThisIsYourProfilePage', array('body' => $content)) ?>
 <?php elseif (!$relation->isFriend()): ?>
+<?php include_partial('member/birthdayBox', array('targetDay' => $targetDay)); ?>
 <?php ob_start() ?>
 <p><?php echo __('If %1% is your friend, let us add to friends it!', array('%1%' => $member->getName())) ?><br />
 <?php echo link_to(__('Add friends'), 'friend/link?id='.$member->getId()) ?>
