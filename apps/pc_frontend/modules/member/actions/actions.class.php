@@ -134,6 +134,7 @@ class memberActions extends sfOpenPNEMemberAction
       {
         $this->getUser()->setFlash('error', $e->getMessage());
       }
+      $this->redirect('member/configImage');
     }
   }
 
