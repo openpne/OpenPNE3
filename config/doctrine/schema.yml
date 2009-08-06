@@ -187,6 +187,8 @@ CommunityMember:
     community_id: { type: integer(4), notnull: true, comment: "Community id" }
     member_id: { type: integer(4), notnull: true, comment: "Member id" }
     position: { type: string(32), default: "", comment: "Member\'s position in this community" }
+    is_receive_mail_pc: { type: boolean, default: false, notnull: true }
+    is_receive_mail_mobile: { type: boolean, default: false, notnull: true }
   relations:
     Community: { local: community_id, foreign: id, onDelete: cascade }
     Member: { local: member_id, foreign: id, onDelete: cascade }

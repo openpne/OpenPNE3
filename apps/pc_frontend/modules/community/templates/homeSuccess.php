@@ -44,6 +44,26 @@ $options = array(
 op_include_parts('listBox', 'communityHome', $options);
 ?>
 
+<?php if ($isCommunityMember): ?>
+<div id="communityNotification" class="dparts listBox">
+<?php echo $form->renderFormTag(url_for('community/home?id=' . $community->getId())) ?>
+<div class="parts">
+<div class="partsHeading">
+<h3>Community Notification</h3>
+</div>
+<table>
+<?php echo $form ?>
+<tr>
+<td colspan="2">
+<input type="submit" />
+</td>
+</tr>
+</table>
+</div>
+</form>
+</div>
+<?php endif; ?>
+
 <ul>
 <?php if ($isEditCommunity): ?>
 <li><?php echo link_to(__('Edit this community'), 'community/edit?id=' . $community->getId()) ?></li>
