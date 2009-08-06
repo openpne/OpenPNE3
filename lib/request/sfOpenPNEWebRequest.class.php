@@ -20,6 +20,9 @@ class sfOpenPNEWebRequest extends sfWebRequest
   protected 
     $userAgentMobileInstance = null;
 
+  private
+    $outsideEncoding = null;
+
  /**
   * @see sfWebRequest
   */
@@ -161,7 +164,7 @@ class sfOpenPNEWebRequest extends sfWebRequest
 
   public function getCurrentQueryString()
   {
-    return http_build_query($this->getGetParameters());
+    return http_build_query($this->convertEncodingForOutputCallback($this->getGetParameters()));
   }
 
   public function getParameter($name, $default = null, $isStripNullbyte = true)
@@ -229,27 +232,45 @@ class sfOpenPNEWebRequest extends sfWebRequest
     }
   }
 
-  public function convertEncodingParametersToSJIS()
+  public function convertEncodingForInput($from_encoding)
   {
+    $this->outsideEncoding = $from_encoding;
+    $parameter_holder = sfContext::getInstance()->getRequest()->getParameterHolder();
+
+    foreach ($parameter_holder->getAll(false) as $key => $value)
+    {
+      $parameter_holder->set($key, $this->convertEncodingForInputCallback($value));
+    }
+
     foreach (array('getParameters', 'postParameters', 'requestParameters') as $parameters)
     {
       foreach ($this->$parameters as $key => $value)
       {
         if (0 !== stripos($key, '_sf_'))
         {
-          $this->{$parameters}[$key] = $this->convertEncodingParametersToSJISCallback($value);
+          $this->{$parameters}[$key] = $this->convertEncodingForInputCallback($value);
         }
       }
     }
   }
 
-  private function convertEncodingParametersToSJISCallback($value)
+  private function convertEncodingForInputCallback($value)
   {
     if (is_array($value))
     {
-      return array_map(array($this, 'convertEncodingParametersToSJISCallback'), $value);
+      return array_map(array($this, 'convertEncodingForInputCallback'), $value);
     }
 
-    return mb_convert_encoding($value, 'UTF-8', 'SJIS-win');
+    return mb_convert_encoding($value, 'UTF-8', $this->outsideEncoding);
+  }
+
+  private function convertEncodingForOutputCallback($value)
+  {
+    if (is_array($value))
+    {
+      return array_map(array($this, 'convertEncodingForOutputCallback'), $value);
+    }
+
+    return mb_convert_encoding($value, $this->outsideEncoding, 'UTF-8');
   }
 }
