@@ -34,6 +34,7 @@ class sfMobileIOFilter extends sfFilter
 
     $this->convertEmojiForInput();
     $this->convertEncodingForInput();
+    sfContext::getInstance()->getRequest()->convertEncodingParametersToSJIS();
 
     $filterChain->execute();
 
