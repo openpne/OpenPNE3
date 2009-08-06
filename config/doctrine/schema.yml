@@ -11,6 +11,9 @@ Member:
   relations:
     Member: { local: invite_member_id, foreign: id, onDelete: set null }
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves informations of members"
 
 MemberRelationship:
@@ -32,6 +35,9 @@ MemberRelationship:
       fields: [member_id_from, member_id_to]
       type: unique
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves ralationships of each members"
 
 MemberImage:
@@ -44,6 +50,9 @@ MemberImage:
     Member: { local: member_id, foreign: id, onDelete: cascade }
     File: { local: file_id, foreign: id, onDelete: cascade }
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves images in member profiles"
 
 File:
@@ -59,6 +68,9 @@ File:
       fields: [name]
       type: unique
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves informations of files uploaded"
 
 FileBin:
@@ -66,6 +78,9 @@ FileBin:
     file_id: { type: integer(4), primary: true, comment: "File id" }
     bin: { type: blob, comment: "Content of file" }
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves content of files"
 
 Profile:
@@ -97,6 +112,9 @@ Profile:
       fields: [name]
       type: unique
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves input/select items for the member profile"
 
 ProfileOption:
@@ -113,6 +131,9 @@ ProfileOption:
   relations:
     Profile: { local: profile_id, foreign: id, onDelete: cascade }
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves options of profile items"
 
 MemberProfile:
@@ -136,6 +157,9 @@ MemberProfile:
     lft_INDEX:
       fields: [lft]
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves informations of every member\'s profile"
 
 Community:
@@ -152,6 +176,9 @@ Community:
       fields: [name]
       type: unique
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves informations of communities"
 
 CommunityMember:
@@ -164,6 +191,9 @@ CommunityMember:
     Community: { local: community_id, foreign: id, onDelete: cascade }
     Member: { local: member_id, foreign: id, onDelete: cascade }
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves informations of members joined"
 
 AdminUser:
@@ -176,6 +206,9 @@ AdminUser:
       fields: [username]
       type: unique
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves informations to login administration page"
 
 SnsConfig:
@@ -189,6 +222,9 @@ SnsConfig:
       fields: [name]
       type: unique
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves configurations of this SNS"
 
 MemberConfig:
@@ -203,6 +239,9 @@ MemberConfig:
     name_INDEX:
       fields: [name]
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves configurations of each members"
 
 CommunityConfig:
@@ -214,6 +253,9 @@ CommunityConfig:
   relations:
     Community: { local: community_id, foreign: id, onDelete: cascade }
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves configurations of communities"
 
 CommunityCategory:
@@ -228,11 +270,14 @@ CommunityCategory:
     is_allow_member_community: { type: boolean, default: true, notnull: true, comment: "Member can create this category community" }
     tree_key: { type: integer(4), comment: "Nested tree key" }
     sort_order: { type: integer(4), comment: "Order to sort" }
-  options:
-    comment: "Saves categories of community"
   indexes:
     lft_INDEX:
       fields: [lft]
+  options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
+    comment: "Saves categories of community"
 
 Gadget:
   columns:
@@ -240,11 +285,14 @@ Gadget:
     type: { type: string(64), default: "", notnull: true, comment: "Gadget type" }
     name: { type: string(64), default: "", notnull: true, comment: "Gadget name" }
     sort_order: { type: integer(4), comment: "Order to sort" }
-  options:
-    comment: "Saves informations of gadget"
   indexes:
     sort_order_INDEX:
       fields: [sort_order]
+  options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
+    comment: "Saves informations of gadget"
 
 GadgetConfig:
   columns:
@@ -255,6 +303,9 @@ GadgetConfig:
   relations:
     Gadget: { local: gadget_id, foreign: id, onDelete: cascade }
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves configurations of gadget"
 
 Navigation:
@@ -269,11 +320,14 @@ Navigation:
     type: { type: string(64), default: "", notnull: true, comment: "Navigation type" }
     uri: { type: string, notnull: true, comment: "Linked page\'s URI" }
     sort_order: { type: integer(4), comment: "Order to sort" }
-  options:
-    comment: "Saves informations of navigation items"
   indexes:
     type_sort_order_INDEX:
       fields: [type, sort_order]
+  options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
+    comment: "Saves informations of navigation items"
 
 Blacklist:
   columns:
@@ -285,6 +339,9 @@ Blacklist:
       fields: [uid]
       type: unique
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves informations of blacklist"
 
 OAuthConsumerInformation:
@@ -303,6 +360,9 @@ OAuthConsumerInformation:
       fields: [key_string, secret]
       type: unique
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves informations of OAuth Consumer"
 
 OAuthAdminToken:
@@ -322,6 +382,9 @@ OAuthAdminToken:
       fields: [key_string, secret]
       type: unique
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves administration tokens of OAuth"
 
 Banner:
@@ -340,6 +403,9 @@ Banner:
       fields: [name]
       type: unique
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves informations about banner"
 
 BannerImage:
@@ -351,6 +417,9 @@ BannerImage:
   relations:
     File: { local: file_id, foreign: id, onDelete: cascade }
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves informations about banner image files"
 
 BannerUseImage:
@@ -362,6 +431,9 @@ BannerUseImage:
     Banner: { local: banner_id, foreign: id }
     BannerImage: { local: banner_image_id, foreign: id }
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves relations between banners and their images"
 
 Session:
@@ -371,4 +443,7 @@ Session:
     data: { type: string, comment: "Session information" }
     time: { type: string, comment: "Timestamp of generated time" }
   options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
     comment: "Saves session data"
