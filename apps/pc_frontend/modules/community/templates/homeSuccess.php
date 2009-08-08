@@ -49,13 +49,13 @@ op_include_parts('listBox', 'communityHome', $options);
 <?php echo $form->renderFormTag(url_for('community/home?id=' . $community->getId())) ?>
 <div class="parts">
 <div class="partsHeading">
-<h3>Community Notification</h3>
+<h3><?php echo __('Community Notification') ?></h3>
 </div>
 <table>
 <?php echo $form ?>
 <tr>
 <td colspan="2">
-<input type="submit" />
+<input type="submit" class="input_submit" value="<?php echo __('Send') ?>" />
 </td>
 </tr>
 </table>

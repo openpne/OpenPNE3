@@ -52,7 +52,7 @@ abstract class sfOpenPNECommunityAction extends sfActions
         $this->id
       );
     $this->form = new CommunityMemberForm($this->community_member);
-    if ($request->isMethod('put'))
+    if ($request->isMethod(sfWebRequest::PUT))
     {
       $params = $request->getParameter('community_member');
       $this->form->bind($params);
