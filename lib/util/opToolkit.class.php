@@ -243,4 +243,31 @@ class opToolkit
 
     return ($theday_next - $today) / 86400;
   }
+
+ public static function retrieveAPIList()
+ {
+    $result = array();
+
+    $configuration = ProjectConfiguration::getApplicationConfiguration('api', 'prod', false);
+    $context = sfContext::createInstance($configuration, 'api_for_get_routing');
+
+    $config = new sfRoutingConfigHandler();
+
+    $routing = new sfPatternRouting($context->getEventDispatcher());
+    $routing->setRoutes($config->evaluate($configuration->getConfigPaths('config/routing.yml')));
+
+    $context->getEventDispatcher()->notify(new sfEvent($routing, 'routing.load_configuration'));
+
+    $routes = $routing->getRoutes();
+
+    foreach ($routes as $route)
+    {
+      if ($route instanceof opAPIRouteInterface)
+      {
+        $result[$route->getAPIName()] = $route->getAPICaption();
+      }
+    }
+
+    return $result;
+ }
 }
