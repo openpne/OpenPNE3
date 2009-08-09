@@ -355,6 +355,7 @@ OAuthConsumerInformation:
     key_string: { type: string(16), default: "", notnull: true, comment: "Token for this consumer" }
     secret: { type: string(32), default: "", notnull: true, comment: "Password for this consumer" }
     file_id: { type: integer(4), comment: "Image file id of this consumer" }
+    using_apis: { type: array, comment: "API list that this consumer uses" }
   relations:
     Image: { class: File, local: file_id, foreign: id, onDelete: set null }
   indexes:
@@ -375,7 +376,7 @@ OAuthAdminToken:
     secret: { type: string(32), default: "", notnull: true, comment: "Secret string of this token" }
     type: { type: enum, values: [request, access], default: "request", comment: "Token type" }
     is_active: { type: boolean, default: true, notnull: true, comment: "Activation flag" }
-    callback_url: { type: string, comment: "Callback url"  }
+    callback_url: { type: string, comment: "Callback url" }
     verifier: { type: string, comment: "Token verifier" }
   relations:
     Consumer: { class: OAuthConsumerInformation, local: oauth_consumer_id, foreign: id, onDelete: cascade }

@@ -21,6 +21,17 @@
 <th><?php echo __('説明') ?></th>
 <td><?php echo nl2br($consumer->getDescription()) ?></td>
 </tr>
+
+<tr>
+<th><?php echo __('使用する API') ?></th>
+<td>
+<ul>
+<?php foreach ($consumer->getAPICaptions() as $api) : ?>
+  <li><?php echo $api ?></li>
+<?php endforeach; ?>
+</ul>
+</td>
+</tr>
 </table>
 
 <h3><?php echo __('連携に必要な情報') ?></h3>

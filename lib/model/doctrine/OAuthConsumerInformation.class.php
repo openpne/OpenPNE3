@@ -18,4 +18,19 @@ class OAuthConsumerInformation extends BaseOAuthConsumerInformation
       $this->secret = opToolkit::generatePasswordString(32);
     }
   }
+
+  public function getAPICaptions()
+  {
+    $apiList = array();
+
+    foreach (opToolkit::retrieveAPIList() as $key => $value)
+    {
+      if (in_array($key, $this->getUsingApis()))
+      {
+        $apiList[] = $value;
+      }
+    }
+
+    return $apiList;
+  }
 }

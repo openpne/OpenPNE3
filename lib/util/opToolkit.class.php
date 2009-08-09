@@ -248,16 +248,16 @@ class opToolkit
  {
     $result = array();
 
-    $configuration = ProjectConfiguration::getApplicationConfiguration('api', 'prod', false);
-    $context = sfContext::createInstance($configuration, 'api_for_get_routing');
-
+    $context = sfContext::getInstance();
     $config = new sfRoutingConfigHandler();
+    $currentApp = sfConfig::get('sf_app');
 
+    sfConfig::set('sf_app', 'api');
     $routing = new sfPatternRouting($context->getEventDispatcher());
-    $routing->setRoutes($config->evaluate($configuration->getConfigPaths('config/routing.yml')));
+    $routing->setRoutes($config->evaluate($context->getConfiguration()->getConfigPaths('config/routing.yml')));
+    sfConfig::set('sf_app', $currentApp);
 
     $context->getEventDispatcher()->notify(new sfEvent($routing, 'routing.load_configuration'));
-
     $routes = $routing->getRoutes();
 
     foreach ($routes as $route)
