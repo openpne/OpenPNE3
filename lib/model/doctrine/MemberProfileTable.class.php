@@ -107,6 +107,7 @@ class MemberProfileTable extends Doctrine_Table
     $list = opFormItemGenerator::filterSearchQuery($q, $column, $value, $item->toArray(), array())
       ->select('member_id')
       ->andWhere('profile_id = ?', $item->getId())
+      ->andWhere('public_flag = ?', 1)
       ->execute();
 
     foreach ($list as $value)
@@ -134,6 +135,7 @@ class MemberProfileTable extends Doctrine_Table
       ->select('member_id')
       ->where($column.'= ?', $value)
       ->andWhere('profile_option_id = ?', $item->getId())
+      ->andWhere('public_flag = ?', 1)
       ->execute();
 
     foreach ($list as $value)
