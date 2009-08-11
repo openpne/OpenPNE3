@@ -23,7 +23,10 @@ class GadgetAddForm extends sfForm
 
     foreach ($gadgets as $key => $value)
     {
-      $this->setValidator($key, new sfValidatorCallback(array('callback' => array($this, 'validate'))));
+      $this->setValidator($key, new sfValidatorCallback(array(
+        'callback' => array($this, 'validate'),
+        'arguments' => array('type' => $key)
+      )));
     }
 
     $this->getWidgetSchema()->setNameFormat('new[%s]');
@@ -48,25 +51,17 @@ class GadgetAddForm extends sfForm
     }
   }
 
-  public function validate($validator, $value)
+  public function validate($validator, $value, $args)
   {
     $result = array();
-    foreach ($value as $key => $item)
+    $gadgetList = Doctrine::getTable('Gadget')->getGadgetConfigListByType($args['type']);
+    foreach ($value as $item)
     {
-      if (array_key_exists($item, sfConfig::get('op_gadget_list'))
-        || array_key_exists($item, sfConfig::get('op_profile_gadget_list'))
-        || array_key_exists($item, sfConfig::get('op_login_gadget_list'))
-        || array_key_exists($item, sfConfig::get('op_side_banner_gadget_list'))
-        || array_key_exists($item, sfConfig::get('op_mobile_gadget_list'))
-        || array_key_exists($item, sfConfig::get('op_mobile_profile_gadget_list'))
-        || array_key_exists($item, sfConfig::get('op_mobile_login_gadget_list'))
-        || array_key_exists($item, sfConfig::get('op_mobile_header_gadget_list'))
-        || array_key_exists($item, sfConfig::get('op_mobile_footer_gadget_list')))
+      if (array_key_exists($item, $gadgetList))
       {
         $result[] = $item;
       }
     }
-
     return $result;
   }
 }
