@@ -34,6 +34,27 @@ class connectionActions extends sfActions
   */
   public function executeList(sfWebRequest $request)
   {
+    $this->consumers = Doctrine::getTable('OAuthConsumerInformation')->findAll();
+  }
+
+ /**
+  * Executes edit action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeEdit(sfWebRequest $request)
+  {
+    $this->consumer = Doctrine::getTable('OAuthConsumerInformation')->find($request->getParameter('id'));
+    $this->forward404Unless($this->consumer);
+
+    $this->form = new OAuthConsumerInformationForm($this->consumer);
+    if ($request->isMethod(sfWebRequest::PUT))
+    {
+      if ($this->form->bindAndSave($request->getParameter('o_auth_consumer_information'), $request->getFiles('o_auth_consumer_information')))
+      {
+        $this->redirect('connection/show?id='.$this->form->getObject()->getId());
+      }
+    }
   }
 
  /**

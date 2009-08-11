@@ -33,4 +33,9 @@ class OAuthConsumerInformation extends BaseOAuthConsumerInformation
 
     return $apiList;
   }
+
+  public function getOAuthAdminAccessToken()
+  {
+    return Doctrine::getTable('OAuthAdminToken')->findOneByOauthConsumerIdAndType($this->id, 'access');
+  }
 }
