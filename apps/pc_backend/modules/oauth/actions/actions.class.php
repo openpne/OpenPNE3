@@ -28,6 +28,7 @@ class oauthActions extends sfActions
     if ($adminToken)
     {
       $adminToken->setCallbackUrl($request->getParameter('oauth_callback', 'oob'));
+      $adminToken->setIsActive(false);
       $adminToken->save();
     }
 
@@ -49,6 +50,9 @@ class oauthActions extends sfActions
       $params = array('oauth_token' => $this->token, 'oauth_verifier' => $this->information->getVerifier());
       $query = (false === strpos($url, '?') ? '?' : '&' ).OAuthUtil::build_http_query($params);
 
+      $this->information->setIsActive(true);
+      $this->information->save();
+
       $this->redirectUnless('oob' === $url, $url.$query);
 
       return sfView::SUCCESS;
@@ -64,6 +68,7 @@ class oauthActions extends sfActions
     $requestToken = $request->getParameter('oauth_token');
     $this->information = Doctrine::getTable('OAuthAdminToken')->findByKeyString($requestToken);
     $this->forward404Unless($this->information);
+    $this->forward404Unless($this->information->getIsActive());
     $this->forward404Unless($this->information->getVerifier() === $request->getParameter('oauth_verifier'));
 
     $authRequest = OAuthRequest::from_request();
