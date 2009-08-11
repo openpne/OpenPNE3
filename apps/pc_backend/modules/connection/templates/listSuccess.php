@@ -15,11 +15,12 @@
 <td><?php echo image_tag_sf_image((string)$consumer->getImage()) ?></td>
 <td><?php echo link_to($consumer->name, 'connection/show?id='.$consumer->id) ?></td>
 <td>
+<ul>
 <?php if ($consumer->getOAuthAdminAccessToken()): ?>
-<?php echo link_to(__('Remove Admin Token'), 'connection/removeToken?id='.$consumer->id); ?>
-&nbsp;
+<li><?php echo link_to(__('Remove Admin Token'), 'connection/removeToken?id='.$consumer->id); ?></li>
 <?php endif; ?>
-<?php echo link_to(__('Edit'), 'connection/edit?id='.$consumer->id); ?>
+<li><?php echo link_to(__('Edit'), 'connection/edit?id='.$consumer->id); ?></li>
+</ul>
 </td>
 </tr>
 <?php endforeach; ?>

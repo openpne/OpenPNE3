@@ -75,6 +75,31 @@ class connectionActions extends sfActions
   }
 
  /**
+  * Executes removeToken action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeRemoveToken(sfWebRequest $request)
+  {
+    $this->consumer = Doctrine::getTable('OAuthConsumerInformation')->find($request->getParameter('id'));
+    $this->forward404Unless($this->consumer);
+    $this->forward404Unless($this->consumer->getOAuthAdminAccessToken());
+
+    $this->form = new sfForm();
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $field = $this->form->getCSRFFieldName();
+      $this->form->bind(array($field => $request->getParameter($field)));
+      if ($this->form->isValid())
+      {
+        $this->consumer->getOAuthAdminAccessToken()->delete();
+        $this->redirect('connection/list');
+      }
+    }
+  }
+
+ /**
   * Executes show action
   *
   * @param sfRequest $request A request object
