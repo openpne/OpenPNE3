@@ -118,3 +118,5 @@ policy:
     ValueType:  "string"
     IsRequired: true
     Default:    "プライバシーポリシーはただいま準備中です。\nThe Privacy Policy is under construction."
+
+permit_member_config:

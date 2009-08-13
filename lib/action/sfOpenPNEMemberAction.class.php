@@ -398,6 +398,12 @@ abstract class sfOpenPNEMemberAction extends sfActions
     $categoryCaptions = array();
     $categoryAttributes = sfConfig::get('openpne_member_category_attribute');
 
+    $ignoredSnsConfig = Doctrine::getTable('SnsConfig')->get('ignored_sns_config', array());
+    if ($ignoredSnsConfig)
+    {
+      $ignoredSnsConfig = unserialize($ignoredSnsConfig);
+    }
+
     foreach ($categories as $key => $value)
     {
       $title = $key;
@@ -410,6 +416,12 @@ abstract class sfOpenPNEMemberAction extends sfActions
           unset($categories[$key]);
           continue;
         }
+      }
+
+      if (in_array($key, $ignoredSnsConfig))
+      {
+        unset($categories[$key]);
+        continue;
       }
 
       $enabledKey = 'enable_pc';

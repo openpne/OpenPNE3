@@ -25,13 +25,24 @@ class snsActions extends sfActions
   public function executeConfig(sfWebRequest $request)
   {
     $this->category = $request->getParameter('category', 'general');
-    $this->form = new SnsConfigForm(array(), array('category' => $this->category));
+
+    $formName = 'op'.sfInflector::camelize($this->category).'SnsConfigForm';
+    if (class_exists($formName, true))
+    {
+      $this->form = new $formName();
+    }
+    else
+    {
+      $this->form = new SnsConfigForm(array(), array('category' => $this->category));
+    }
+
     if ($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('sns_config'));
       if ($this->form->isValid())
       {
         $this->form->save();
+        $this->getUser()->setFlash('notice', 'Saved.');
         $this->redirect('sns/config?category='.$this->category);
       }
     }
