@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class renameColumnsForDoctrine extends Doctrine_Migration_Base
+class Revision15_renameColumnsForDoctrine extends Doctrine_Migration_Base
 {
 
   public function up()
