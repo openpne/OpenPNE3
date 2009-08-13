@@ -19,7 +19,7 @@ class OAuthConsumerInformationForm extends BaseOAuthConsumerInformationForm
 {
   public function configure()
   {
-    unset($this['created_at'], $this['updated_at'], $this['file_id'], $this['key_string'], $this['secret']);
+    unset($this['created_at'], $this['updated_at'], $this['file_id'], $this['key_string'], $this['secret'], $this['member_id']);
 
     $this->setWidget('image', new sfWidgetFormInputFile());
     $this->setValidator('image', new opValidatorImageFile(array('required' => false)));
