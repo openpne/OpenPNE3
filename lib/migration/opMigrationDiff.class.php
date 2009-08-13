@@ -22,11 +22,16 @@ class opMigrationDiff extends Doctrine_Migration_Diff
     $info = array();
     foreach ($models as $key => $model)
     {
+      $classRef = new ReflectionClass($model);
+      if ($classRef->isAbstract())
+      {
+        continue;
+      }
+
       $table = Doctrine::getTable($model);
       if ($table->getTableName() !== $this->_migration->getTableName())
       {
         $info[$model] = $table->getExportableFormat();
-
         foreach ($table->getTemplates() as $name => $template)
         {
           $plugin = $template->getPlugin();

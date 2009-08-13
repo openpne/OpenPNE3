@@ -356,7 +356,9 @@ OAuthConsumerInformation:
     secret: { type: string(32), default: "", notnull: true, comment: "Password for this consumer" }
     file_id: { type: integer(4), comment: "Image file id of this consumer" }
     using_apis: { type: array, comment: "API list that this consumer uses" }
+    member_id: { type: integer(4), notnull: false, comment: "Member id" }
   relations:
+    Member: { local: member_id, foreign: id, onDelete: cascade }
     Image: { class: File, local: file_id, foreign: id, onDelete: set null }
   indexes:
     key_secret_UNIQUE:
@@ -368,7 +370,8 @@ OAuthConsumerInformation:
     charset: utf8
     comment: "Saves informations of OAuth Consumer"
 
-OAuthAdminToken:
+OAuthAbstractToken:
+  abstract: true
   columns:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
     oauth_consumer_id: { type: integer(4), notnull: true, comment: "OAuth Consumer id" }
@@ -378,17 +381,37 @@ OAuthAdminToken:
     is_active: { type: boolean, default: true, notnull: true, comment: "Activation flag" }
     callback_url: { type: string, comment: "Callback url" }
     verifier: { type: string, comment: "Token verifier" }
-  relations:
-    Consumer: { class: OAuthConsumerInformation, local: oauth_consumer_id, foreign: id, onDelete: cascade }
   indexes:
     key_secret_UNIQUE:
       fields: [key_string, secret]
       type: unique
+
+OAuthAdminToken:
+  inheritance:
+    extends: OAuthAbstractToken
+    type: concrete
+  relations:
+    Consumer: { class: OAuthConsumerInformation, local: oauth_consumer_id, foreign: id, onDelete: cascade }
   options:
     type: INNODB
     collate: utf8_unicode_ci
     charset: utf8
     comment: "Saves administration tokens of OAuth"
+
+OAuthMemberToken:
+  inheritance:
+    extends: OAuthAbstractToken
+    type: concrete
+  columns:
+    member_id: { type: integer(4), notnull: true, comment: "Member id" }
+  relations:
+    Consumer: { class: OAuthConsumerInformation, local: oauth_consumer_id, foreign: id, onDelete: cascade }
+    Member: { local: member_id, foreign: id, onDelete: cascade }
+  options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
+    comment: "Saves memebr tokens of OAuth"
 
 Banner:
   actAs:

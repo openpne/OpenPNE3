@@ -56,6 +56,13 @@ EOF;
         continue;
       }
 
+      $normalModelName = str_replace('Base', '', basename($model, '.class.php'));
+      $normalModelRefClass = new ReflectionClass($normalModelName);
+      if ($normalModelRefClass && $normalModelRefClass->isAbstract())
+      {
+        continue;
+      }
+
       $content = file_get_contents($model);
       $content = str_replace('abstract class Base', 'class ToPrfx', $content);
       $content = str_replace('extends opDoctrineRecord', 'extends Doctrine_Record', $content);
