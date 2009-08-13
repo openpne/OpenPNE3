@@ -403,7 +403,7 @@ OAuthMemberToken:
     extends: OAuthAbstractToken
     type: concrete
   columns:
-    member_id: { type: integer(4), notnull: true, comment: "Member id" }
+    member_id: { type: integer(4), notnull: false, comment: "Member id" }
   relations:
     Consumer: { class: OAuthConsumerInformation, local: oauth_consumer_id, foreign: id, onDelete: cascade }
     Member: { local: member_id, foreign: id, onDelete: cascade }

@@ -1,13 +1,6 @@
 <?php
 /**
  */
-class OAuthAdminTokenTable extends Doctrine_Table
+class OAuthAdminTokenTable extends OAuthAbstractTokenTable
 {
-  public function findByKeyString($key, $type = 'request')
-  {
-    return $this->createQuery()
-      ->where('key_string = ?', $key)
-      ->andWhere('type = ?', $type)
-      ->fetchOne();
-  }
 }

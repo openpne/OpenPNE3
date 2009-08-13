@@ -9,35 +9,41 @@
  */
 
 /**
- * oauth actions.
+ * opOAuthTokenAction
  *
  * @package    OpenPNE
  * @subpackage action
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class oauthActions extends opOAuthTokenAction
+abstract class opOAuthTokenAction extends sfActions
 {
-  protected function getTokenModelName()
+  protected $dataStore = null;
+
+  abstract protected function getTokenModelName();
+
+  protected function getTokenTable()
   {
-    return 'OAuthMemberToken';
+    return Doctrine::getTable($this->getTokenModelName());
   }
 
-  public function setRecordTemplate(Doctrine_Record $record = null)
+  public function executeRequestToken(sfWebRequest $request)
   {
-    $class = $this->getTokenModelName();
-    $record = new $class();
+    require_once 'OAuth.php';
 
-    $record->setMemberId($this->getUser()->getMemberId());
+    $authRequest = OAuthRequest::from_request();
+    $token = $this->getServer()->fetch_request_token($authRequest);
 
-    parent::setRecordTemplate($record);
-  }
+    $this->tokenRecord = $this->getTokenTable()->findByKeyString($token->key);
+    if ($this->tokenRecord)
+    {
+      $this->tokenRecord->setCallbackUrl($request->getParameter('oauth_callback', 'oob'));
+      $this->tokenRecord->setIsActive(false);
+      $this->tokenRecord->save();
+    }
 
-  public function setQueryTemplate(Doctrine_Query $q = null)
-  {
-    $q = $this->getTokenTable()->createQuery()
-      ->andWhere('member_id = ?', $this->getUser()->getMemberId());
+    $this->getResponse()->setContent((string)$token.'&oauth_callback_confirmed=true');
 
-    parent::setQueryTemplate($q);
+    return sfView::NONE;
   }
 
   public function executeAuthorizeToken(sfWebRequest $request)
@@ -54,7 +60,6 @@ class oauthActions extends opOAuthTokenAction
       $query = (false === strpos($url, '?') ? '?' : '&' ).OAuthUtil::build_http_query($params);
 
       $this->information->setIsActive(true);
-      $this->information->setMemberId($this->getUser()->getMemberId());
       $this->information->save();
 
       $this->redirectUnless('oob' === $url, $url.$query);
@@ -75,13 +80,53 @@ class oauthActions extends opOAuthTokenAction
     $this->forward404Unless($this->information->getIsActive());
     $this->forward404Unless($this->information->getVerifier() === $request->getParameter('oauth_verifier'));
 
-    $this->getUser()->setMemberId($this->information->getMemberId());
-
     $authRequest = OAuthRequest::from_request();
     $token = $this->getServer()->fetch_access_token($authRequest);
 
     $this->getResponse()->setContent((string)$token);
 
     return sfView::NONE;
+  }
+
+  protected function getDataStore()
+  {
+    if (is_null($this->dataStore))
+    {
+      $this->dataStore = new opOAuthDataStore();
+    }
+
+    return $this->dataStore;
+  }
+
+  public function setRecordTemplate(Doctrine_Record $record = null)
+  {
+    if (!$record)
+    {
+      $class = $this->getTokenModelName();
+      $record = new $class();
+    }
+
+    $this->getDataStore()->setRecordTemplate($record);
+  }
+
+  public function setQueryTemplate(Doctrine_Query $q = null)
+  {
+    if (!$q)
+    {
+      $q = $this->getTokenTable()->createQuery();
+    }
+
+    $this->getDataStore()->setQueryTemplate($q);
+  }
+
+  protected function getServer()
+  {
+    $this->getDataStore()->setTokenModelName($this->getTokenModelName());
+    $this->setRecordTemplate();
+    $this->setQueryTemplate();
+
+    $server = new opOAuthServer($this->getDataStore());
+
+    return $server;
   }
 }

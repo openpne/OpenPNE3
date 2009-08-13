@@ -63,7 +63,11 @@ class opCheckOAuthAccessTokenFilter extends sfFilter
 
   protected function getServer()
   {
-    $server = new opOAuthServer(new opOAuthDataStore());
+    $tokenType = $this->context->getRequest()->getParameter('token_type', 'member');
+    $dataStore = new opOAuthDataStore();
+
+    $dataStore->setTokenModelName('OAuth'.ucfirst($tokenType).'Token');
+    $server = new opOAuthServer($dataStore);
 
     return $server;
   }

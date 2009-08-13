@@ -19,6 +19,27 @@ require_once 'OAuth.php';
  */
 class opOAuthDataStore extends OAuthDataStore
 {
+  protected
+    $tokenModelName = null,
+
+    $queryTemplate = null,
+    $recordTemplate = null;
+
+  public function setTokenModelName($name)
+  {
+    $this->tokenModelName = $name;
+  }
+
+  public function getTokenModelName()
+  {
+    return $this->tokenModelName;
+  }
+
+  protected function getTokenTable()
+  {
+    return Doctrine::getTable($this->getTokenModelName());
+  }
+
   public function lookup_consumer($consumer_key)
   {
     $information = Doctrine::getTable('OAuthConsumerInformation')->findByKeyString($consumer_key);
@@ -39,18 +60,12 @@ class opOAuthDataStore extends OAuthDataStore
       $secret = opToolkit::generatePasswordString(32, false);
       $verifier = opToolkit::generatePasswordString(8, false);
 
-      $adminToken = Doctrine::getTable('OAuthAdminToken')
-        ->findOneByOauthConsumerIdAndType($information->id, 'request');
-      if (!$adminToken)
-      {
-        $adminToken = new OAuthAdminToken();
-      }
-
-      $adminToken->setKeyString($key);
-      $adminToken->setSecret($secret);
-      $adminToken->setConsumer($information);
-      $adminToken->setVerifier($verifier);
-      $adminToken->save();
+      $tokenRecord = $this->recordTemplate;
+      $tokenRecord->setKeyString($key);
+      $tokenRecord->setSecret($secret);
+      $tokenRecord->setConsumer($information);
+      $tokenRecord->setVerifier($verifier);
+      $tokenRecord->save();
 
       return new OAuthToken($key, $secret);
     }
@@ -66,17 +81,20 @@ class opOAuthDataStore extends OAuthDataStore
       $key = opToolkit::generatePasswordString(16, false);
       $secret = opToolkit::generatePasswordString(32, false);
 
-      $adminToken = Doctrine::getTable('OAuthAdminToken')
-        ->findOneByOauthConsumerIdAndType($information->id, 'access');
-      if (!$adminToken)
+      $tokenRecord = $this->queryTemplate
+        ->andWhere('oauth_consumer_id = ?', $information->id)
+        ->andWhere('type = ?', 'access')
+        ->fetchOne();
+
+      if (!$tokenRecord)
       {
-        $adminToken = new OAuthAdminToken();
+        $tokenRecord = $this->recordTemplate;
       }
-      $adminToken->setKeyString($key);
-      $adminToken->setSecret($secret);
-      $adminToken->setConsumer($information);
-      $adminToken->setType('access');
-      $adminToken->save();
+      $tokenRecord->setKeyString($key);
+      $tokenRecord->setSecret($secret);
+      $tokenRecord->setConsumer($information);
+      $tokenRecord->setType('access');
+      $tokenRecord->save();
 
       return new OAuthToken($key, $secret);
     }
@@ -86,17 +104,27 @@ class opOAuthDataStore extends OAuthDataStore
 
   public function lookup_token($consumer, $token_type, $token)
   {
-    $adminToken = Doctrine::getTable('OAuthAdminToken')->findByKeyString($token, $token_type);
-    if ($adminToken)
+    $tokenRecord = $this->getTokenTable()->findByKeyString($token, $token_type, $this->queryTemplate);
+    if ($tokenRecord)
     {
-      $token = new OAuthToken($adminToken->getKeyString(), '');
+      $token = new OAuthToken($tokenRecord->getKeyString(), '');
       if ('request' !== $token_type)
       {
-        $token->secret = $adminToken->getSecret();
+        $token->secret = $tokenRecord->getSecret();
       }
       return $token;
     }
 
     return null;
+  }
+
+  public function setRecordTemplate(Doctrine_Record $record)
+  {
+    $this->recordTemplate = $record;
+  }
+
+  public function setQueryTemplate(Doctrine_Query $q)
+  {
+    $this->queryTemplate = $q;
   }
 }

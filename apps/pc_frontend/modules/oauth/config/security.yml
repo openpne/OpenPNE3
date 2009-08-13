@@ -1,0 +1,6 @@
+all:
+  is_secure: off
+
+authorizeToken:
+  is_secure: on
+  credentials: SNSMember
