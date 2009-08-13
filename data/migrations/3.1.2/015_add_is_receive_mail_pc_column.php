@@ -17,13 +17,13 @@ class renameColumnsForDoctrine extends Doctrine_Migration_Base
     $columns = array(
       'is_receive_mail_pc' => array(
         'type' => 'boolean',
-        'notnull' => 1
-        'default' => false
+        'notnull' => 1,
+        'default' => false,
       ),
       'is_receive_mail_mobile' => array(
         'type' => 'boolean',
-        'notnull' => 1
-        'default' => false
+        'notnull' => 1,
+        'default' => false,
       ),
     );
 
