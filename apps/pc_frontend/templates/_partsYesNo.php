@@ -10,7 +10,7 @@ $options->setDefault('no_method', 'post');
 ?>
 <?php if(isset($options['body'])): ?>
 <div class="block">
-<?php echo $options['body'] ?>
+<?php echo $options->getRaw('body') ?>
 </div>
 <?php endif ?>
 
