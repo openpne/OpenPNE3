@@ -598,6 +598,10 @@
         <source>No</source>
         <target>いいえ</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>%0% is required field.</source>
+        <target>%0%は必須項目です。</target>
+      </trans-unit>
 
       <trans-unit id="">
         <source>Invalid.</source>

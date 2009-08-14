@@ -751,6 +751,19 @@ div.operation ul.moreInfo li {
   width: 140px;
 }
 
+.form strong {
+  color: #FF0000;
+  font-weight: normal;
+}
+
+.form td .error {
+  color: #FF0000;
+}
+
+.form td .help {
+  color: #FF0000;
+}
+
 /*==============================================================================
  * news pager
  *----------------------------------------------------------------------------*/
