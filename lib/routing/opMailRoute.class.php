@@ -17,7 +17,19 @@
  */
 class opMailRoute extends sfRoute
 {
-  protected $member = null;
+  protected
+    $member = null,
+    $nonAuth = false;
+
+  public function __construct($pattern, array $defaults = array(), array $requirements = array(), array $options = array())
+  {
+    parent::__construct($pattern, $defaults, $requirements, $options);
+
+    if (isset($this->options['non_auth']))
+    {
+      $this->nonAuth = $this->options['non_auth'];
+    }
+  }
 
   public function getMember()
   {
@@ -27,7 +39,7 @@ class opMailRoute extends sfRoute
       if ($config)
       {
         $this->member = $config->getMember();
-        if (isset($this->requirements['hash']) && empty($this->options['non-auth']))
+        if (isset($this->requirements['hash']) && !$this->nonAuth)
         {
           $hash = $this->member->getMailAddressHash();
           if (!isset($this->parameters['hash']) || $hash !== $this->parameters['hash'])
@@ -45,7 +57,7 @@ class opMailRoute extends sfRoute
   {
     parent::fixSuffix();
 
-    if (sfConfig::get('op_is_mail_address_contain_hash', false) && empty($this->options['non-auth']))
+    if (sfConfig::get('op_is_mail_address_contain_hash', false) && !$this->nonAuth)
     {
       $this->pattern = $this->pattern.'.:hash';
     }
