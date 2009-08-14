@@ -18,7 +18,10 @@ class OpenPNE3_Sniffs_NamingConventions_ValidClassNameSniff extends Squiz_Sniffs
 {
   public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
   {
-    if (false !== strpos($phpcsFile->getFilename(), 'model'))
+    if (false !== strpos($phpcsFile->getFilename(), 'model')
+       || false !== strpos($phpcsFile->getFilename(), 'form') 
+       || false !== strpos($phpcsFile->getFilename(), 'filter') 
+    )
     {
       return null;
     }
