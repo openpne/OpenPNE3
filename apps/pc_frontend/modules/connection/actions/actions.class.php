@@ -23,24 +23,26 @@ class connectionActions extends opOAuthConsumerAction
       ->getListPager($this->getUser()->getMemberId());
   }
 
-  public function executeRegister(sfWebRequest $request)
+  public function executeNew(sfWebRequest $request)
   {
     $this->form = new OAuthConsumerInformationForm();
-    if ($request->isMethod(sfWebRequest::POST))
+  }
+
+  public function executeCreate(sfWebRequest $request)
+  {
+    $this->form = new OAuthConsumerInformationForm();
+    $this->form->getObject()->setMemberId($this->getUser()->getMemberId());
+    if ($this->form->bindAndSave($request->getParameter('o_auth_consumer_information'), $request->getFiles('o_auth_consumer_information')))
     {
-      $this->form->getObject()->setMemberId($this->getUser()->getMemberId());
-      if ($this->form->bindAndSave($request->getParameter('o_auth_consumer_information'), $request->getFiles('o_auth_consumer_information')))
-      {
-        $this->redirect('connection/show?id='.$this->form->getObject()->getId());
-      }
+      $this->redirect('connection/show?id='.$this->form->getObject()->getId());
     }
+
+    $this->setTemplate('new');
   }
 
   public function executeEdit(sfWebRequest $request)
   {
-    $this->consumer = Doctrine::getTable('OAuthConsumerInformation')->find($request->getParameter('id'));
-    $this->forward404Unless($this->consumer);
-    $this->forward404Unless($this->consumer->getMemberId() === $this->getUser()->getMemberId());
+    $this->consumer = $this->getRoute()->getObject();
 
     return parent::executeEdit($request);
   }
