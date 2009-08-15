@@ -49,6 +49,13 @@ class oauthActions extends opOAuthTokenAction
 
     if ($request->isMethod(sfWebRequest::POST))
     {
+      if (!$request->getParameter('allow'))
+      {
+        $this->information->delete();
+
+        return 'Delete';
+      }
+
       $url = $this->information->getCallbackUrl();
       $params = array('oauth_token' => $this->token, 'oauth_verifier' => $this->information->getVerifier());
       $query = (false === strpos($url, '?') ? '?' : '&' ).OAuthUtil::build_http_query($params);

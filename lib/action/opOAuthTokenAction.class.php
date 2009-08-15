@@ -83,6 +83,8 @@ abstract class opOAuthTokenAction extends sfActions
     $authRequest = OAuthRequest::from_request();
     $token = $this->getServer()->fetch_access_token($authRequest);
 
+    $this->information->delete();
+
     $this->getResponse()->setContent((string)$token);
 
     return sfView::NONE;
