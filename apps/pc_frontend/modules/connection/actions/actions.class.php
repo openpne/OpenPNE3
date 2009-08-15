@@ -19,8 +19,8 @@ class connectionActions extends opOAuthConsumerAction
 {
   public function executeList(sfWebRequest $request)
   {
-    $this->consumers = Doctrine::getTable('OAuthConsumerInformation')
-      ->findByMemberId($this->getUser()->getMemberId());
+    $this->pager = Doctrine::getTable('OAuthConsumerInformation')
+      ->getListPager($this->getUser()->getMemberId());
   }
 
   public function executeRegister(sfWebRequest $request)

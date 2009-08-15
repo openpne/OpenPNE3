@@ -1,28 +1,10 @@
-<div class="dparts manageList"><div class="parts">
-<div class="partsHeading"><h3><?php echo __('My Friends Setting') ?></h3></div>
-
-<?php echo op_include_pager_navigation($pager, 'friend/manage?page=%d'); ?>
-
-<div class="item"><table><tbody>
-<?php foreach ($pager->getResults() as $member): ?>
-<?php $comp_vars = array('id' => $member->getId()) ?>
-
-<tr>
-
-<?php include_customizes('id_photo', 'before', $comp_vars) ?>
-<td class="photo">
-<?php echo link_to(image_tag_sf_image($member->getImageFilename(), array('size' => '76x76')), 'member/profile?id=' . $member->getId()); ?><br />
-<?php echo link_to( $member->getName(), 'member/profile?id=' . $member->getId()) ?>
-</td>
-<?php include_customizes('id_photo', 'after', $comp_vars) ?>
-
-<?php include_customizes('id_friend', 'before', $comp_vars) ?>
-<td class="delete"><?php echo link_to(__('Delete from my friends.'), 'friend/unlink?id='.$member->getId()) ?></td>
-<?php include_customizes('id_friend', 'after', $comp_vars) ?>
-</tr>
-<?php endforeach; ?>
-</tbody></table></div>
-
-<?php echo op_include_pager_navigation($pager, 'friend/manage?page=%d'); ?>
-
-</div></div>
+<?php echo op_include_parts('manageList', 'manageList', array(
+  'pager' => $pager,
+  'pager_url'=> 'friend/manage?page=%d',
+  'item_url' => 'obj_member_profile',
+  'image_filename_method' => 'getImageFilename',
+  'title' => __('My Friends Setting'),
+  'menus' => array(
+    array('text' => __('Delete from my friends.'), 'url' => 'obj_friend_unlink', 'class' => 'delete'),
+  ),
+)); ?>

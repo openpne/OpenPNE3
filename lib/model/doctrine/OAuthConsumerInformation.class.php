@@ -38,4 +38,9 @@ class OAuthConsumerInformation extends BaseOAuthConsumerInformation
   {
     return Doctrine::getTable('OAuthAdminToken')->findOneByOauthConsumerIdAndType($this->id, 'access');
   }
+
+  public function getImageFileName()
+  {
+    return (string)$this->getImage();
+  }
 }

@@ -1,48 +1,33 @@
-<h2><?php echo __('アプリケーション情報閲覧') ?></h2>
+<?php
+op_include_parts('memberImageBox', 'consumerImageBox', array(
+  'object' => $consumer,
+  'name_method' => 'getName',
+));
+?>
 
-<h3>基本情報</h3>
-<table>
-<tr>
-<td colspan="2"><?php echo image_tag_sf_image((string)$consumer->getImage()) ?></td>
-</tr>
-
-<tr>
-<th><?php echo __('名前') ?></th>
-<td><?php echo $consumer->getName() ?></td>
-</tr>
-
-<tr>
-<th><?php echo __('説明') ?></th>
-<td><?php echo nl2br($consumer->getDescription()) ?></td>
-</tr>
-
-<tr>
-<th><?php echo __('使用する API') ?></th>
-<td>
+<?php slot('_api_list'); ?>
 <ul>
 <?php foreach ($consumer->getAPICaptions() as $api) : ?>
   <li><?php echo $api ?></li>
 <?php endforeach; ?>
 </ul>
-</td>
-</tr>
-</table>
+<?php end_slot(); ?>
 
-<h3><?php echo __('連携に必要な情報') ?></h3>
+<?php
+op_include_parts('listBox', 'consumerInformation', array(
+  'list' => array(
+    __('説明') => nl2br($consumer->getDescription()),
+    __('使用する API') => get_slot('_api_list'),
+    __('Consumer key') => $consumer->getKeyString(),
+    __('Consumer secret') => $consumer->getSecret(),
+    __('Request token URL') => url_for('oauth_request_token', array(), true),
+    __('Access token URL') => url_for('oauth_access_token', array(), true),
+    __('Authorize URL') => url_for('oauth_authorize_token', array(), true),
+   __('対応している署名方式') => 'HMAC-SHA1',
+)));
+?>
 
-<h4>Consumer key</h4>
-<p><?php echo $consumer->getKeyString() ?></p>
-
-<h4>Consumer secret</h4>
-<p><?php echo $consumer->getSecret() ?></p>
-
-<h4>Request token URL</h4>
-<p>http://example.com/oauth/request_token</p>
-
-<h4>Access token URL</h4>
-<p>http://example.com/oauth/access_token</p>
-
-<h4><?php echo __('対応している署名方式') ?></h4>
 <ul>
-  <li>HMAC-SHA1</li>
+  <li><?php echo link_to('このアプリケーションを編集', 'connection_edit', $consumer) ?></li>
+  <li><?php echo link_to('連携済みアプリケーション一覧', 'connection_list') ?></li>
 </ul>

@@ -3,24 +3,27 @@ homepage:
   url:   /
   param: { module: member, action: home }
 
+obj_member_profile:
+  url:     /member/:id
+  class:   sfDoctrineRoute
+  options: { model: Member, type: object }
+  param:   { module: member, action: profile }
+  requirements:
+    id:        \d+
+    sf_method: [get]
+
+obj_friend_unlink:
+  url:     /friend/unlink/:id
+  class:   sfDoctrineRoute
+  options: { model: Member, type: object }
+  param:   { module: friend, action: unlink }
+  requirements:
+    id: \d+
+    sf_method: [get, post]
+
 member_index:
   url:   /member
   param: { module: member, action: home }
-
-member_profile:
-  url:   /member/:id
-  param: { module: member, action: profile }
-  requirements: { id: \d+ }
-
-friend_show_image:
-  url:   /friend/showImage/:id
-  param: { module: friend, action: showImage }
-  requirements: { id: \d+ }
-
-community_home:
-  url:   /community/:id
-  param: { module: community, action: home }
-  requirements: { id: \d+ }
 
 error:
   url: /default/error
@@ -38,6 +41,44 @@ oauth_authorize_token:
 oauth_access_token:
   url:   /oauth/access_token
   param: { module: oauth, action: accessToken }
+
+connection_list:
+  url:     /connection
+  param:   { module: connection, action: list }
+
+connection_show:
+  url:     /connection/:id
+  class:   sfDoctrineRoute
+  options: { model: OAuthConsumerInformation, type: object }
+  param:   { module: connection, action: show }
+  requirements:
+    id: \d+
+    sf_method: [get]
+
+connection_edit:
+  url:     /connection/edit/:id
+  class:   sfDoctrineRoute
+  options: { model: OAuthConsumerInformation, type: object }
+  param:   { module: connection, action: edit }
+  requirements:
+    id: \d+
+    sf_method: [get, post, put]
+
+# for BC
+member_profile:
+  url:   /member/:id
+  param: { module: member, action: profile }
+  requirements: { id: \d+ }
+
+friend_show_image:
+  url:   /friend/showImage/:id
+  param: { module: friend, action: showImage }
+  requirements: { id: \d+ }
+
+community_home:
+  url:   /community/:id
+  param: { module: community, action: home }
+  requirements: { id: \d+ }
 
 # default rules
 default_symfony:
