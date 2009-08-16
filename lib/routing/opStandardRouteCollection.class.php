@@ -102,7 +102,7 @@ class opStandardRouteCollection extends sfDoctrineRouteCollection
     return new $this->routeClass(
       sprintf('%s/:%s', $this->options['prefix_path'], $this->options['column']),
       array('module' => $this->options['module'], 'action' => $this->getActionMethod('update'), 'sf_format' => 'html'),
-      array_merge($this->options['requirements'], array('sf_method' => 'put')),
+      array_merge($this->options['requirements'], array('sf_method' => array('put', 'post'))),
       array('model' => $this->options['model'], 'type' => 'object', 'method' => $this->options['model_methods']['object'], 'privilege' => $this->getPrivilege('edit'))
     );
   }
@@ -112,7 +112,7 @@ class opStandardRouteCollection extends sfDoctrineRouteCollection
     return new $this->routeClass(
       sprintf('%s/:%s', $this->options['prefix_path'], $this->options['column']),
       array('module' => $this->options['module'], 'action' => $this->getActionMethod('delete'), 'sf_format' => 'html'),
-      array('sf_method' => 'delete'),
+      array('sf_method' => array('delete', 'post')),
       array('model' => $this->options['model'], 'type' => 'object', 'method' => $this->options['model_methods']['object'], 'privilege' => $this->getPrivilege('delete'))
     );
   }

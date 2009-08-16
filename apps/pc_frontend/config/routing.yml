@@ -51,45 +51,6 @@ connection_list:
   url:     /connection
   param:   { module: connection, action: list }
 
-# connection_show:
-#   url:     /connection/:id
-#   class:   sfDoctrineRoute
-#   options: { model: OAuthConsumerInformation, type: object }
-#   param:   { module: connection, action: show }
-#   requirements:
-#     id: \d+
-#     sf_method: [get]
-# 
-# connection_new:
-#   url:     /connection/new
-#   class:   sfRequestRoute
-#   param:   { module: connection, action: new }
-# 
-# connection_create:
-#   url:     /connection/create
-#   class:   sfRequestRoute
-#   param:   { module: connection, action: create }
-#   requirements:
-#     sf_method: [post]
-# 
-# connection_edit:
-#   url:     /connection/edit/:id
-#   class:   sfDoctrineRoute
-#   options: { model: OAuthConsumerInformation, type: object }
-#   param:   { module: connection, action: edit }
-#   requirements:
-#     id: \d+
-#     sf_method: [get]
-# 
-# connection_update:
-#   url:     /connection/update/:id
-#   class:   sfDoctrineRoute
-#   options: { model: OAuthConsumerInformation, type: object }
-#   param:   { module: connection, action: update }
-#   requirements:
-#     id: \d+
-#     sf_method: [put]
-
 # for BC
 member_profile:
   url:   /member/:id

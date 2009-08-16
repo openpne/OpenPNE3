@@ -34,7 +34,7 @@ class connectionActions extends opOAuthConsumerAction
     $this->form->getObject()->setMemberId($this->getUser()->getMemberId());
     if ($this->form->bindAndSave($request->getParameter('o_auth_consumer_information'), $request->getFiles('o_auth_consumer_information')))
     {
-      $this->redirect('connection/show?id='.$this->form->getObject()->getId());
+      $this->redirect('@connection_show?id='.$this->form->getObject()->getId());
     }
 
     $this->setTemplate('new');
@@ -43,7 +43,18 @@ class connectionActions extends opOAuthConsumerAction
   public function executeEdit(sfWebRequest $request)
   {
     $this->consumer = $this->getRoute()->getObject();
+    $this->form = new OAuthConsumerInformationForm($this->consumer);
+  }
 
-    return parent::executeEdit($request);
+  public function executeUpdate(sfWebRequest $request)
+  {
+    $this->consumer = $this->getRoute()->getObject();
+    $this->form = new OAuthConsumerInformationForm($this->consumer);
+    if ($this->form->bindAndSave($request->getParameter('o_auth_consumer_information'), $request->getFiles('o_auth_consumer_information')))
+    {
+      $this->redirect('@connection_show?id='.$this->form->getObject()->getId());
+    }
+
+    $this->setTemplate('edit');
   }
 }
