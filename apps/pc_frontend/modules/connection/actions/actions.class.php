@@ -27,6 +27,6 @@ class connectionActions extends opOAuthConsumerAction
   {
     $this->getForm()->getObject()->setMemberId($this->getUser()->getMemberId());
 
-    parent::executeCreate(sfWebRequest $request);
+    parent::executeCreate($request);
   }
 }
