@@ -38,7 +38,7 @@ class OAuthConsumerInformationForm extends BaseOAuthConsumerInformationForm
     }
 
     $image = null;
-    if (isset($values['image']))
+    if (array_key_exists('image', $values))
     {
       $image = $values['image'];
       unset($values['image']);
