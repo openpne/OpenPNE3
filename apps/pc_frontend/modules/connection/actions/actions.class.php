@@ -23,38 +23,10 @@ class connectionActions extends opOAuthConsumerAction
       ->getListPager($this->getUser()->getMemberId());
   }
 
-  public function executeNew(sfWebRequest $request)
-  {
-    $this->form = new OAuthConsumerInformationForm();
-  }
-
   public function executeCreate(sfWebRequest $request)
   {
-    $this->form = new OAuthConsumerInformationForm();
-    $this->form->getObject()->setMemberId($this->getUser()->getMemberId());
-    if ($this->form->bindAndSave($request->getParameter('o_auth_consumer_information'), $request->getFiles('o_auth_consumer_information')))
-    {
-      $this->redirect('@connection_show?id='.$this->form->getObject()->getId());
-    }
+    $this->getForm()->getObject()->setMemberId($this->getUser()->getMemberId());
 
-    $this->setTemplate('new');
-  }
-
-  public function executeEdit(sfWebRequest $request)
-  {
-    $this->consumer = $this->getRoute()->getObject();
-    $this->form = new OAuthConsumerInformationForm($this->consumer);
-  }
-
-  public function executeUpdate(sfWebRequest $request)
-  {
-    $this->consumer = $this->getRoute()->getObject();
-    $this->form = new OAuthConsumerInformationForm($this->consumer);
-    if ($this->form->bindAndSave($request->getParameter('o_auth_consumer_information'), $request->getFiles('o_auth_consumer_information')))
-    {
-      $this->redirect('@connection_show?id='.$this->form->getObject()->getId());
-    }
-
-    $this->setTemplate('edit');
+    parent::executeCreate(sfWebRequest $request);
   }
 }

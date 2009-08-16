@@ -11,6 +11,15 @@ oauth_access_token:
   url:   /oauth/access_token
   param: { module: oauth, action: accessToken }
 
+# connection rules
+connection:
+  class: opStandardRouteCollection
+  options: { model: OAuthConsumerInformation, actions: [show, new, create, edit, update] }
+
+connection_list:
+  url:     /connection
+  param:   { module: connection, action: list }
+
 # default rules
 homepage:
   url:   /

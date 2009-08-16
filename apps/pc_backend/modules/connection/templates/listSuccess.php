@@ -12,8 +12,8 @@
 </tr>
 <?php foreach ($consumers as $consumer): ?>
 <tr>
-<td><?php echo image_tag_sf_image((string)$consumer->getImage()) ?></td>
-<td><?php echo link_to($consumer->name, 'connection/show?id='.$consumer->id) ?></td>
+<td><?php echo image_tag_sf_image((string)$consumer->getImage(), array('size' => '76x76')) ?></td>
+<td><?php echo link_to($consumer->name, 'connection_show', $consumer) ?></td>
 <td>
 <ul>
 <?php if ($consumer->getOAuthAdminAccessToken()): ?>

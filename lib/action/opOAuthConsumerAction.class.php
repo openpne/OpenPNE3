@@ -17,9 +17,16 @@
  */
 abstract class opOAuthConsumerAction extends sfActions
 {
-  public function executeIndex(sfWebRequest $request)
+  protected function getForm($consumer = null)
   {
-    $this->forward('connection', 'list');
+    if ($this->form)
+    {
+      return $this->form;
+    }
+
+    $this->form = new OAuthConsumerInformationForm($consumer);
+
+    return $this->form;
   }
 
   public function executeList(sfWebRequest $request)
@@ -27,12 +34,28 @@ abstract class opOAuthConsumerAction extends sfActions
     $this->consumers = Doctrine::getTable('OAuthConsumerInformation')->findAll();
   }
 
+  public function executeNew(sfWebRequest $request)
+  {
+    $this->form = $this->getForm();
+  }
+
+  public function executeCreate(sfWebRequest $request)
+  {
+    $this->form = $this->getForm();
+
+    if ($this->form->bindAndSave($request->getParameter('o_auth_consumer_information'), $request->getFiles('o_auth_consumer_information')))
+    {
+      $this->redirect('@connection_show?id='.$this->form->getObject()->getId());
+    }
+
+    $this->setTemplate('new');
+  }
+
   public function executeEdit(sfWebRequest $request)
   {
-    $this->consumer = Doctrine::getTable('OAuthConsumerInformation')->find($request->getParameter('id'));
-    $this->forward404Unless($this->consumer);
+    $this->consumer = $this->getRoute()->getObject();
+    $this->form = $this->getForm($this->consumer);
 
-    $this->form = new OAuthConsumerInformationForm($this->consumer);
     if ($request->isMethod(sfWebRequest::PUT))
     {
       if ($this->form->bindAndSave($request->getParameter('o_auth_consumer_information'), $request->getFiles('o_auth_consumer_information')))
@@ -42,16 +65,16 @@ abstract class opOAuthConsumerAction extends sfActions
     }
   }
 
-  public function executeRegister(sfWebRequest $request)
+  public function executeUpdate(sfWebRequest $request)
   {
-    $this->form = new OAuthConsumerInformationForm();
-    if ($request->isMethod(sfWebRequest::POST))
+    $this->consumer = $this->getRoute()->getObject();
+    $this->form = new OAuthConsumerInformationForm($this->consumer);
+    if ($this->form->bindAndSave($request->getParameter('o_auth_consumer_information'), $request->getFiles('o_auth_consumer_information')))
     {
-      if ($this->form->bindAndSave($request->getParameter('o_auth_consumer_information'), $request->getFiles('o_auth_consumer_information')))
-      {
-        $this->redirect('connection/show?id='.$this->form->getObject()->getId());
-      }
+      $this->redirect('@connection_show?id='.$this->form->getObject()->getId());
     }
+
+    $this->setTemplate('edit');
   }
 
   public function executeRemoveToken(sfWebRequest $request)
@@ -76,7 +99,6 @@ abstract class opOAuthConsumerAction extends sfActions
 
   public function executeShow(sfWebRequest $request)
   {
-    $this->consumer = Doctrine::getTable('OAuthConsumerInformation')->find($request->getParameter('id'));
-    $this->forward404Unless($this->consumer);
+    $this->consumer = $this->getRoute()->getObject();
   }
 }

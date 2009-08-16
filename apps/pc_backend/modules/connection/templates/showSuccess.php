@@ -9,7 +9,7 @@
 <h3>基本情報</h3>
 <table>
 <tr>
-<td colspan="2"><?php echo image_tag_sf_image((string)$consumer->getImage()) ?></td>
+<td colspan="2"><?php echo image_tag_sf_image((string)$consumer->getImage(), array('size' => '180x180')) ?></td>
 </tr>
 
 <tr>
@@ -43,10 +43,13 @@
 <p><?php echo $consumer->getSecret() ?></p>
 
 <h4>Request token URL</h4>
-<p>http://example.com/oauth/request_token</p>
+<p><?php echo url_for('oauth_request_token', array(), true) ?></p>
 
 <h4>Access token URL</h4>
-<p>http://example.com/oauth/access_token</p>
+<p><?php echo url_for('oauth_access_token', array(), true) ?></p>
+
+<h4>Authorize URL</h4>
+<p><?php echo url_for('oauth_authorize_token', array(), true) ?></p>
 
 <h4><?php echo __('対応している署名方式') ?></h4>
 <ul>
