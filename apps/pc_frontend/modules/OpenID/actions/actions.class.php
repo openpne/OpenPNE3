@@ -52,7 +52,7 @@ class OpenIDActions extends sfActions
         else
         {
           $this->getRequest()->setMethod(sfWebRequest::GET);
-          $_SERVER['QUERY_STRING'] = str_replace('http://example.com/?', '', $openIDRequest->encodeToURL('http://example.com/'));
+          $_SERVER['QUERY_STRING'] = http_build_query($openIDRequest->message->toPostArgs());
           $this->forwardUnless($this->getUser()->isAuthenticated() && $this->getUser()->getMember(), 'member', 'login');
 
           $this->info = $openIDRequest;
@@ -121,6 +121,22 @@ class OpenIDActions extends sfActions
       );
       $sregResp = Auth_OpenID_SRegResponse::extractResponse($sregRequest, $userData);
       $response->addExtension($sregResp);
+    }
+
+    $axRequest = Auth_OpenID_AX_FetchRequest::fromOpenIDRequest($info);
+    $axResp = new Auth_OpenID_AX_FetchResponse();
+
+    if ($axRequest && !($axRequest instanceof Auth_OpenID_AX_Error))
+    {
+      foreach ($axRequest->requested_attributes as $k => $v)
+      {
+        if (strpos($k, 'namePerson/friendly'))
+        {
+          $axResp->addValue($k, $this->getUser()->getMember()->name);
+        }
+      }
+
+      $response->addExtension($axResp);
     }
 
     $response = $server->encodeResponse($response);
