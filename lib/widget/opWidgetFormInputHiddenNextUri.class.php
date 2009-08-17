@@ -24,9 +24,8 @@ class opWidgetFormInputHiddenNextUri extends sfWidgetFormInputHidden
     $routing = sfContext::getInstance()->getRouting();
     $request = sfContext::getInstance()->getRequest();
 
-    $params = http_build_query($request->getGetParameters());
     $value = $routing->getCurrentInternalUri();
-    if ($params)
+    if ($_SERVER['QUERY_STRING'])
     {
       if (false !== strpos($value, '?'))
       {
@@ -37,7 +36,7 @@ class opWidgetFormInputHiddenNextUri extends sfWidgetFormInputHidden
         $value .= '?';
       }
 
-      $value .= str_replace('openid_', 'openid.', $params);
+      $value .= $_SERVER['QUERY_STRING'];
     }
 
     if ($request->isMethod(sfWebRequest::POST))

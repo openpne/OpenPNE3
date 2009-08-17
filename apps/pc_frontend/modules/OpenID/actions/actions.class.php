@@ -101,6 +101,8 @@ class OpenIDActions extends sfActions
     sfOpenPNEApplicationConfiguration::registerJanRainOpenID();
     require_once 'Auth/OpenID/Server.php';
     require_once 'Auth/OpenID/FileStore.php';
+    require_once 'Auth/OpenID/SReg.php';
+    require_once 'Auth/OpenID/AX.php';
 
     $info = unserialize($_SESSION['request']);
     $this->forward404Unless($info);
@@ -120,7 +122,19 @@ class OpenIDActions extends sfActions
     {
       unset($_SESSION['request']);
       $server = new Auth_OpenID_Server(new Auth_OpenID_FileStore(sfConfig::get('sf_cache_dir')), $info->identity);
-      $response = $server->encodeResponse($info->answer(true, null, $reqUrl));
+      $response = $info->answer(true, null, $reqUrl);
+
+      $sregRequest = Auth_OpenID_SRegRequest::fromOpenIDRequest($info);
+      if ($sregRequest)
+      {
+        $userData = array(
+          'nickname' => $this->getUser()->getMember()->name,
+        );
+        $sregResp = Auth_OpenID_SRegResponse::extractResponse($sregRequest, $userData);
+        $response->addExtension($sregResp);
+      }
+
+      $response = $server->encodeResponse($response);
       $this->writeResponse($response);
     }
 
