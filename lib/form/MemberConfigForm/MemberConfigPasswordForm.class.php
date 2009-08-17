@@ -22,7 +22,7 @@ class MemberConfigPasswordForm extends MemberConfigForm
   public function configure()
   {
     $this->setWidget('now_password', new sfWidgetFormInputPassword());
-    $this->setValidator('now_password', new sfValidatorCallback(array('callback' => array($this, 'isValidPassword'))));
+    $this->setValidator('now_password', new sfValidatorCallback(array('required' => true, 'callback' => array($this, 'isValidPassword'))));
     $this->widgetSchema->setLabel('now_password', 'Your current password');
   }
 
