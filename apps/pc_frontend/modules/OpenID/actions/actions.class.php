@@ -55,6 +55,13 @@ class OpenIDActions extends sfActions
           $_SERVER['QUERY_STRING'] = http_build_query($openIDRequest->message->toPostArgs());
           $this->forwardUnless($this->getUser()->isAuthenticated() && $this->getUser()->getMember(), 'member', 'login');
 
+          $trusted = unserialize($this->getUser()->getMember()->getConfig('trusted_openid_rp'));
+          if ($trusted && in_array($openIDRequest->trust_root, $trusted))
+          {
+            $request->setParameter('trust', '1');
+            $this->forward('OpenID', 'trust');
+          }
+
           $this->info = $openIDRequest;
           return 'Trust';
         }
@@ -70,6 +77,13 @@ class OpenIDActions extends sfActions
       else
       {
         $this->forwardUnless($this->getUser()->isAuthenticated() && $this->getUser()->getMember(), 'member', 'login');
+
+        $trusted = unserialize($this->getUser()->getMember()->getConfig('trusted_openid_rp'));
+        if ($trusted && in_array($openIDRequest->trust_root, $trusted))
+        {
+          $request->setParameter('trust', '1');
+          $this->forward('OpenID', 'trust');
+        }
 
         $this->info = $openIDRequest;
         return 'Trust';
@@ -95,7 +109,7 @@ class OpenIDActions extends sfActions
     $info = unserialize($_SESSION['request']);
     $this->forward404Unless($info);
 
-    $trusted = $request->hasParameter('trust');
+    $trusted = ($request->hasParameter('trust') || $request->hasParameter('permanent'));
     if (!$trusted)
     {
       unset($_SESSION['request']);
@@ -107,6 +121,19 @@ class OpenIDActions extends sfActions
     if (!$info->idSelect())
     {
       $this->forward404Unless($reqUrl === $info->identity, 'request:'.$reqUrl.'/identity:'.$info->identity);
+    }
+
+    if ($request->hasParameter('permanent'))
+    {
+      $trusted = unserialize($this->getUser()->getMember()->getConfig('trusted_openid_rp'));
+      if (!$trusted)
+      {
+        $trusted = array();
+      }
+
+      $trusted[] = $info->trust_root;
+
+      $this->getUser()->getMember()->setConfig('trusted_openid_rp', serialize($trusted));
     }
 
     unset($_SESSION['request']);
