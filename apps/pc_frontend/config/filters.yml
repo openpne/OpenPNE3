@@ -6,6 +6,9 @@ cache_control:
 enable_app:
   class: opCheckEnabledApplicationFilter
 
+xrds_header:
+  class: opAppendXRDSHeaderFilter
+
 security:  ~
 
 emoji:

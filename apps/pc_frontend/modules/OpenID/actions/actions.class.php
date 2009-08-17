@@ -9,22 +9,6 @@
  */
 
 /**
- * Copyright (C) 2005-2009 OpenPNE Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/**
  * OpenID actions.
  *
  * @package    OpenPNE
@@ -47,12 +31,12 @@ class OpenIDActions extends sfActions
     $url = $this->getController()->genUrl('OpenID/index', true);
     $server = new Auth_OpenID_Server(new Auth_OpenID_FileStore(sfConfig::get('sf_cache_dir')), $url);
 
-//    header('X-XRDS-Location: '.$this->getController()->genUrl('OpenID/idpXrds'));
+    $this->getResponse()->setHttpHeader('X-XRDS-Location', $this->getController()->genUrl('OpenID/signonXrds', true));
 
     $openIDRequest = $server->decodeRequest();
     if (!$openIDRequest)
     {
-      $_SESSION['request'] = serialize($openIDRequest);
+      $_SESSION['request'] = null;
       return sfView::SUCCESS;
     }
 
@@ -67,6 +51,10 @@ class OpenIDActions extends sfActions
         }
         else
         {
+          $this->getRequest()->setMethod(sfWebRequest::GET);
+          $_SERVER['QUERY_STRING'] = str_replace('http://example.com/?', '', $openIDRequest->encodeToURL('http://example.com/'));
+          $this->forwardUnless($this->getUser()->isAuthenticated() && $this->getUser()->getMember(), 'member', 'login');
+
           $this->info = $openIDRequest;
           return 'Trust';
         }
@@ -116,29 +104,28 @@ class OpenIDActions extends sfActions
     }
 
     $reqUrl = $this->getController()->genUrl('OpenID/member?id='.$this->getUser()->getMemberId(), true);
-    $this->forward404Unless($reqUrl === $info->identity, 'request:'.$reqUrl.'/identity:'.$info->identity);
-
-    if ($trusted)
+    if (!$info->idSelect())
     {
-      unset($_SESSION['request']);
-      $server = new Auth_OpenID_Server(new Auth_OpenID_FileStore(sfConfig::get('sf_cache_dir')), $info->identity);
-      $response = $info->answer(true, null, $reqUrl);
-
-      $sregRequest = Auth_OpenID_SRegRequest::fromOpenIDRequest($info);
-      if ($sregRequest)
-      {
-        $userData = array(
-          'nickname' => $this->getUser()->getMember()->name,
-        );
-        $sregResp = Auth_OpenID_SRegResponse::extractResponse($sregRequest, $userData);
-        $response->addExtension($sregResp);
-      }
-
-      $response = $server->encodeResponse($response);
-      $this->writeResponse($response);
+      $this->forward404Unless($reqUrl === $info->identity, 'request:'.$reqUrl.'/identity:'.$info->identity);
     }
 
-    $this->forward404();
+    unset($_SESSION['request']);
+    $server = new Auth_OpenID_Server(new Auth_OpenID_FileStore(sfConfig::get('sf_cache_dir')), $info->identity);
+    $response = $info->answer(true, null, $reqUrl);
+
+    $sregRequest = Auth_OpenID_SRegRequest::fromOpenIDRequest($info);
+    if ($sregRequest)
+    {
+      $userData = array(
+        'nickname' => $this->getUser()->getMember()->name,
+      );
+      $sregResp = Auth_OpenID_SRegResponse::extractResponse($sregRequest, $userData);
+      $response->addExtension($sregResp);
+    }
+
+    $response = $server->encodeResponse($response);
+
+    $this->writeResponse($response);
   }
 
   public function executeMember(sfWebRequest $request)
@@ -149,11 +136,33 @@ class OpenIDActions extends sfActions
   {
     header('Content-type: application/xrds+xml');
     $type = Auth_OpenID_TYPE_2_0_IDP;
-    $uri = $this->getController()->genUrl('OpenID/index');
+    $uri = $this->getController()->genUrl('OpenID/index', true);
     echo <<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <xrds:XRDS
     xmlns:xrds="xri://\$xrds"
+    xmlns="xri://\$xrd*(\$v*2.0)">
+  <XRD>
+    <Service priority="0">
+      <Type>$type</Type>
+      <URI>$uri</URI>
+    </Service>
+  </XRD>
+</xrds:XRDS>
+EOF;
+    return sfView::NONE;
+  }
+
+  public function executeSignonXrds(sfWebRequest $request)
+  {
+    header('Content-type: application/xrds+xml');
+    $type = Auth_OpenID_TYPE_2_0;
+    $uri = $this->getController()->genUrl('OpenID/index', true);
+    echo <<<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<xrds:XRDS
+    xmlns:xrds="xri://\$xrds"
+    xmlns:openid="http://openid.net/xmlns/1.0"
     xmlns="xri://\$xrd*(\$v*2.0)">
   <XRD>
     <Service priority="0">
