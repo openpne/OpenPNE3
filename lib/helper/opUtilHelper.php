@@ -521,7 +521,7 @@ function op_truncate_callback($string, $width, $etc = '')
       $tmp_string = substr($string, $offset);
     }
 
-    $string = mb_strimwidth($string, 0, $width, '', 'UTF-8');
+    $string = mb_strimwidth($string, 0, $width, '', 'UTF-8').$etc;
   }
 
   return $string;
