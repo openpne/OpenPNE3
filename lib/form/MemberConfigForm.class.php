@@ -95,6 +95,11 @@ class MemberConfigForm extends sfForm
         'arguments' => array('name' => $name),
       )));
     }
+
+    if (!empty($config['Info']))
+    {
+      $this->widgetSchema->setHelp($name, $config['Info']);
+    }
   }
 
   public function isUnique($validator, $value, $arguments = array())
