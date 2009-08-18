@@ -56,6 +56,7 @@ password:
   password:
     Name:       "password"
     Caption:    "Password"
+    Info:       "Password must be 6-12 characters."
     FormType:   "password"
     ValueType:  "password"
     IsRegist:   true

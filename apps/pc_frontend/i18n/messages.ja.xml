@@ -423,6 +423,10 @@
         <target>パスワード(確認)</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Password must be 6-12 characters.</source>
+        <target>パスワードは6～12文字の半角英数で入力してください。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Access Block Configuration</source>
         <target>アクセスブロック設定</target>
       </trans-unit>
