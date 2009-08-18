@@ -10,25 +10,17 @@
 
 class Revision15_renameColumnsForDoctrine extends Doctrine_Migration_Base
 {
-
   public function up()
   {
+    $this->addColumn('community_member', 'is_receive_mail_pc', 'boolean', null, array(
+      'notnull' => 1,
+      'default' => 0,
+    ));
 
-    $columns = array(
-      'is_receive_mail_pc' => array(
-        'type' => 'boolean',
-        'notnull' => 1,
-        'default' => false,
-      ),
-      'is_receive_mail_mobile' => array(
-        'type' => 'boolean',
-        'notnull' => 1,
-        'default' => false,
-      ),
-    );
-
-    // community_member
-    $this->addColumn('community_member', $columns);
+    $this->addColumn('community_member', 'is_receive_mail_mobile', 'boolean', null, array(
+      'notnull' => 1,
+      'default' => 0,
+    ));
   }
 
   public function down()
