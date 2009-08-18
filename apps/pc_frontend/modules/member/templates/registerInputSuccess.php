@@ -2,7 +2,6 @@
 $options = array(
   'title' => __('Member Registration'),
   'url'   => url_for('member/registerInput'),
-  'mark_required_field' => true,
   'button' => __('Register'),
 );
 op_include_form('RegisterForm', $form, $options);

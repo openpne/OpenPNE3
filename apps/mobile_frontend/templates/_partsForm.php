@@ -2,7 +2,7 @@
 $options->setDefault('button', __('Send'));
 $options->setDefault('url', url_for(sfContext::getInstance()->getRouting()->getCurrentInternalUri()));
 $options->setDefault('method','post');
-$options->setDefault('mark_required_field', false);
+$options->setDefault('mark_required_field', true);
 ?>
 
 <?php if ($options['form'] instanceof opAuthRegisterForm): ?>
@@ -12,15 +12,13 @@ $options->setDefault('mark_required_field', false);
 <form action="<?php echo $options['url'] ?>" method="<?php echo $options['method'] ?>">
 <?php $forms = ($options['form'] instanceof sfForm) ? array($options['form']): $options['form'] ?>
 <?php endif; ?>
-<?php if ($options['mark_required_field']): ?>
-<?php echo __('%0% is required field.', array('%0%' => sprintf('<font color="%s">*</font>', opColorConfig::get('core_color_22')))) ?>
-<hr color="<?php echo opColorConfig::get('core_color_11') ?>">
-<?php endif; ?>
+
 <?php include_customizes($id, 'formTop') ?>
+
+<?php $hasRequiredField = false ?>
+
+<?php slot('form') ?>
 <?php foreach ($forms as $form): ?>
-<?php if ($form->hasGlobalErrors()): ?>
-<?php echo $form->renderGlobalErrors() ?><br><br>
-<?php endif; ?>
 <?php echo $form->renderHiddenFields() ?>
 <?php
 foreach ($form as $name => $field)
@@ -38,6 +36,7 @@ foreach ($form as $name => $field)
   if ($widget instanceof opWidgetFormProfile)
   {
     $widget = $widget->getOption('widget');
+    $validator = $validator->getOption('validator');
   }
 
   if ($widget instanceof sfWidgetFormChoice)
@@ -58,16 +57,39 @@ foreach ($form as $name => $field)
     $widget->setOption('separator', "<br>\n");
   }
 
-  if ($options['mark_required_field'] && !($validator instanceof sfValidatorPass) && $validator->getOption('required'))
+  if ($options['mark_required_field'] 
+    && !($validator instanceof sfValidatorPass)
+    && !($validator instanceof sfValidatorSchema)
+    && $validator->getOption('required'))
   {
     echo sprintf('<font color="%s">*</font>', opColorConfig::get('core_color_22'));
+    $hasRequiredField = true;
   }
 
   echo $field->renderRow($attributes);
 }
 ?>
 <?php endforeach; ?>
-<?php include_customizes($id, 'lastRow') ?>
+<?php end_slot(); ?>
+
+<?php if ($hasRequiredField): ?>
+<?php echo __('%0% is required field.', array('%0%' => sprintf('<font color="%s">*</font>', opColorConfig::get('core_color_22')))) ?>
+<hr color="<?php echo opColorConfig::get('core_color_11') ?>">
+<?php endif; ?>
+
+<?php slot('form_global_error') ?>
+<?php foreach ($forms as $form): ?>
+<?php if ($form->hasGlobalErrors()): ?>
+<?php echo $form->renderGlobalErrors() ?>
+<?php endif; ?>
+<?php endforeach; ?>
+<?php end_slot(); ?>
+<?php if (get_slot('form_global_error')): ?>
+<?php echo get_slot('form_global_error') ?><br><br>
+<?php endif; ?>
+
+<?php include_slot('form') ?>
+
 <?php if (!empty($options['align'])): ?>
 <div align="<?php echo $options['align'] ?>">
 <?php else: ?>

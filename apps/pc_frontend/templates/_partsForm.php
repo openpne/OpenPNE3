@@ -4,7 +4,7 @@ $options->setDefault('url', url_for(sfContext::getInstance()->getRouting()->getC
 $options->setDefault('method','post');
 $options->setDefault('firstRow', '');
 $options->setDefault('lastRow', '');
-$options->setDefault('mark_required_field', false);
+$options->setDefault('mark_required_field', true);
 ?>
 
 <?php if ($options['form'] instanceof opAuthRegisterForm): ?>
@@ -23,20 +23,20 @@ $options->setDefault('mark_required_field', false);
 </div>
 <?php endif ?>
 
-
 <?php slot('form_global_error') ?>
 <?php foreach ($forms as $form): ?>
-<?php if($form->hasglobalerrors()): ?>
-<?php echo $form->renderglobalerrors() ?>
+<?php if($form->hasGlobalErrors()): ?>
+<?php echo $form->renderGlobalErrors() ?>
 <?php endif; ?>
 <?php endforeach; ?>
 <?php end_slot(); ?>
 <?php if (get_slot('form_global_error')): ?>
 <?php op_include_parts('alertBox', 'FormGlobalError', array('body' => get_slot('form_global_error'))) ?>
 <?php endif; ?>
-<?php if ($options['mark_required_field']): ?>
-<?php echo __('%0% is required field.', array('%0%' => '<strong>*</strong>')) ?>
-<?php endif; ?>
+
+<?php $hasRequiredField = false ?>
+
+<?php slot('form_table') ?>
 <table>
 <?php include_customizes($id, 'firstRow') ?>
 <?php echo $options->getRaw('firstRow') ?>
@@ -54,6 +54,7 @@ if ($widget instanceof opWidgetFormProfile)
 {
   $widget->setOption('template', '<div class="input">%input%</div>'."\n".'<div class="publicFlag">%public_flag%</div>');
   $widget = $widget->getOption('widget');
+  $validator = $validator->getOption('validator');
 }
 
 if ($widget instanceof sfWidgetFormInput)
@@ -85,9 +86,13 @@ elseif ($widget instanceof sfWidgetFormSelectCheckbox)
   $attributes = array('class' => 'input_checkbox');
 }
 
-if ($options['mark_required_field'] && $validator->getOption('required'))
+if ($options['mark_required_field'] 
+  && !($validator instanceof sfValidatorPass)
+  && !($validator instanceof sfValidatorSchema)
+  && $validator->getOption('required'))
 {
   $labelSuffix = ' <strong>*</strong>';
+  $hasRequiredField = true;
 }
 
 ?>
@@ -108,11 +113,19 @@ if ($options['mark_required_field'] && $validator->getOption('required'))
 <?php echo $options->getRaw('lastRow') ?>
 <?php include_customizes($id, 'lastRow') ?>
 </table>
+<?php end_slot(); ?>
+
+<?php if ($hasRequiredField): ?>
+<?php echo __('%0% is required field.', array('%0%' => '<strong>*</strong>')) ?>
+<?php endif; ?>
+
+<?php include_slot('form_table') ?>
 
 <div class="operation">
 <ul class="moreInfo button">
 <li>
-<?php foreach ($forms as $form) echo $form->renderHiddenFields() ?><input type="submit" class="input_submit" value="<?php echo $options['button'] ?>" />
+<?php foreach($forms as $form): echo $form->renderHiddenFields(); endforeach; ?>
+<input type="submit" class="input_submit" value="<?php echo $options['button'] ?>" />
 </li>
 </ul>
 </div>
