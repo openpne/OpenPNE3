@@ -270,4 +270,28 @@ class opToolkit
 
     return $result;
  }
+
+  static public function getCultureChoices($cultures)
+  {
+    $choices = array();
+    foreach ($cultures as $culture)
+    {
+      $c = explode('_', $culture);
+      try
+      {
+        $cultureInfo = sfCultureInfo::getInstance($culture);
+        $choices[$culture] = $cultureInfo->getLanguage($c[0]);
+        if (isset($c[1]))
+        {
+          $choices[$culture] .= ' ('.$cultureInfo->getCountry($c[1]).')';
+        }
+      }
+      catch (sfException $e)
+      {
+        $choices[$culture] = $culture;
+      }
+    }
+
+    return $choices;
+  }
 }

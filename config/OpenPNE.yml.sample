@@ -43,3 +43,10 @@ session_storage:
 # Proxy to access the Internet (hostname:port)
 http_proxy: ""
 
+####################################
+# 言語設定
+####################################
+
+# 対応言語
+supported_languages: ['en', 'ja_JP']
+

@@ -99,6 +99,11 @@ class opFormItemGenerator
       case 'increased_input':
         $obj = new opWidgetFormInputIncreased($params);
         break;
+      case 'language_select':
+        $languages = sfConfig::get('op_supported_languages');
+        $choices = opToolkit::getCultureChoices($languages);
+        $obj = new sfWidgetFormChoice(array('choices' => $choices));
+        break;
       default:
         $obj = new sfWidgetFormInput($params);
     }
@@ -205,6 +210,7 @@ class opFormItemGenerator
         break;
       // doesn't allow searching
       case 'increased_input':
+      case 'language_select':
       case 'password':
         $obj = null;
         break;
@@ -248,6 +254,7 @@ class opFormItemGenerator
         break;
       // doesn't allow searching
       case 'increased_input':
+      case 'language_select':
       case 'password':
         // pass
         break;

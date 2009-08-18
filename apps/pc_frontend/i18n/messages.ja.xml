@@ -703,6 +703,18 @@
         <source>An object with the same "%column%" already exist.</source>
         <target>その %column% は既に使われています。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Language and Time Zone Configuration</source>
+        <target>言語とタイムゾーンの設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Language</source>
+        <target>使用する言語</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Time Zone</source>
+        <target>使用するタイムゾーン</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
