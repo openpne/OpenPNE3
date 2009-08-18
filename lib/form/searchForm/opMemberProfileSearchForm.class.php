@@ -21,7 +21,7 @@ class opMemberProfileSearchForm extends sfForm
  
   protected function getProfiles()
   {
-    return Doctrine::getTable('Profile')->retrievesAll();
+    return Doctrine::getTable('Profile')->retrieveByIsDispSearch();
   }
   
   public function configure()
