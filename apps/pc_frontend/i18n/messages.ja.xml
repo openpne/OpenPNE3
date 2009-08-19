@@ -915,6 +915,26 @@
         <source>Okinawa</source>
         <target>沖縄県</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Sex</source>
+        <target>性別</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Birthday</source>
+        <target>誕生日</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Country</source>
+        <target>国または地域</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Region</source>
+        <target>都市（都道府県や州など）</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Region in Japan</source>
+        <target>都道府県</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

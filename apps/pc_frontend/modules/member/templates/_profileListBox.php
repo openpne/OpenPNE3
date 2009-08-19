@@ -4,6 +4,12 @@ $list = array();
 foreach ($member->getProfiles(true) as $profile)
 {
   $caption = $profile->getCaption();
+  if ($profile->getProfile()->isPreset())
+  {
+    $presetConfig = $profile->getProfile()->getPresetConfig();
+    $caption = __($presetConfig['Caption']);
+  }
+
   $profileValue = (string)$profile;
   if ($profile->getFormType() === 'textarea')
   {

@@ -121,6 +121,8 @@ class MemberProfileForm extends sfForm
 
   protected function setProfileWidgets($profiles)
   {
+    $presetList = opToolkit::getPresetProfileList();
+
     foreach ($profiles as $profile)
     {
       $profileI18n = $profile->Translation[sfContext::getInstance()->getUser()->getCulture()]->toArray();
@@ -144,6 +146,11 @@ class MemberProfileForm extends sfForm
 
       $this->widgetSchema[$profile->getName()] = new opWidgetFormProfile($widgetOptions);
       $this->validatorSchema[$profile->getName()] = new opValidatorProfile($validatorOptions);
+
+      if ($profile->isPreset())
+      {
+        $this->widgetSchema->setLabel($profile->getName(), $presetList[$profile->getRawPresetName()]['Caption']);
+      }
 
       $this->widgetSchema->setHelp($profile->getName(), $profileWithI18n['info']);
     }

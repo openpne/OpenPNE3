@@ -46,6 +46,25 @@ class Profile extends BaseProfile
       return false;
     }
 
-    return substr($this->getName(), strlen('op_preset_'));
+    $name = substr($this->getName(), strlen('op_preset_'));
+
+    if ('region_select' === $this->getFormType()
+        && 'string' !== $this->getValueType())
+    {
+      $name .= '_'.$this->getValueType();
+    }
+
+    return $name;
+  }
+
+  public function getPresetConfig()
+  {
+    $list = opToolkit::getPresetProfileList();
+    if (!empty($list[$this->getRawPresetName()]))
+    {
+      return $list[$this->getRawPresetName()];
+    }
+
+    return array();
   }
 }

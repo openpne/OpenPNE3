@@ -44,7 +44,11 @@ class MemberProfile extends BaseMemberProfile
 
   public function getValue()
   {
-    if ('date' !== $this->getFormType() && $this->getProfileOptionId())
+    if ($this->getProfile()->isPreset())
+    {
+      return $this->getValuePreset();
+    }
+    elseif ('date' !== $this->getFormType() && $this->getProfileOptionId())
     {
       return $this->getProfileOptionId();
     }
@@ -66,6 +70,25 @@ class MemberProfile extends BaseMemberProfile
     }
 
     return parent::rawGet('value');
+  }
+
+  protected function getValuePreset()
+  {
+    $i18n = sfContext::getInstance()->getI18N();
+
+    if ('country_select' === $this->getProfile()->getFormType())
+    {
+      $culture = sfCultureInfo::getInstance(sfContext::getInstance()->getUser()->getCulture());
+
+      return $culture->getCountry($this->_get('value'));
+    }
+    elseif ($this->getProfile()->isSingleSelect())
+    {
+      $config = $this->getProfile()->getPresetConfig();
+      return $i18n->__($config['Choices'][$this->_get('value')]);
+    }
+
+    return $i18n->__($this->_get('value'));
   }
 
   protected function getChildrenValues($isToString = false)
