@@ -46,9 +46,16 @@ class MemberProfile extends BaseMemberProfileNestedSet
     {
       if ('date' === $this->getFormType())
       {
-        $obj = new DateTime();
-        $obj->setDate($children[0], $children[1], $children[2]);
-        return $obj->format('Y-m-d');
+        if (count($children) == 3 && $children[0] && $children[1] && $children[2])
+        {
+          $obj = new DateTime();
+          $obj->setDate($children[0], $children[1], $children[2]);
+          return $obj->format('Y-m-d');
+        }
+        else
+        {
+          return null;
+        }
       }
       return $children;
     }

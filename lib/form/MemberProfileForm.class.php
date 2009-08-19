@@ -81,7 +81,10 @@ class MemberProfileForm extends sfForm
       }
       else
       {
-        $memberProfile->setValue($value['value']);
+        if ($value['value'])
+        {
+          $memberProfile->setValue($value['value']);
+        }
       }
       
       $memberProfile->setPublicFlag($memberProfile->getProfile()->getDefaultPublicFlag());

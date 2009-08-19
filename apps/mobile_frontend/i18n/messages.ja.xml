@@ -470,6 +470,10 @@
         <source>No</source>
         <target>いいえ</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Please Select</source>
+        <target>選択してください</target>
+      </trans-unit>
 
       <trans-unit id="">
         <source>Invalid.</source>
