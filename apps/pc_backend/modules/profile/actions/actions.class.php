@@ -48,16 +48,26 @@ class profileActions extends sfActions
   {
     $this->profile = Doctrine::getTable('Profile')->find($request->getParameter('id'));
     $this->form = new ProfileForm($this->profile);
+    $this->presetForm = new opPresetProfileForm();
 
-    if ($request->isMethod('post')) {
+    if ($request->isMethod('post'))
+    {
+      $form = $this->form;
+      if ('preset' === $request->getParameter('type'))
+      {
+        $form = $this->presetForm;
+      }
+
       $parameter = $request->getParameter('profile');
-      if ($this->form->getObject()->isNew())
+      if ($form->getObject()->isNew())
       {
         $parameter['sort_order'] = Doctrine::getTable('Profile')->getMaxSortOrder();
       }
-      $this->form->bind($parameter);
-      if ($this->form->isValid()) {
-        $this->form->save();
+
+      $form->bind($parameter);
+      if ($form->isValid())
+      {
+        $form->save();
         $this->redirect('profile/list');
       }
     }

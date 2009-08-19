@@ -55,6 +55,11 @@ class opFormItemGenerator
       $params['default'] = $field['Default'];
     }
 
+    if (!empty($field['Params']))
+    {
+      $params = array_merge($params, $field['Params']);
+    }
+
     return $params;
   }
 
@@ -120,6 +125,10 @@ class opFormItemGenerator
         $languages = sfConfig::get('op_supported_languages');
         $choices = opToolkit::getCultureChoices($languages);
         $obj = new sfWidgetFormChoice(array('choices' => $choices));
+        break;
+      case 'country_select':
+        $info = sfCultureInfo::getInstance(sfContext::getInstance()->getUser()->getCulture());
+        $obj = new sfWidgetFormChoice(array('choices' => $info->getCountries()));
         break;
       default:
         $obj = new sfWidgetFormInput($params);
@@ -231,6 +240,7 @@ class opFormItemGenerator
       // doesn't allow searching
       case 'increased_input':
       case 'language_select':
+      case 'country_select':
       case 'password':
         $obj = null;
         break;
@@ -275,6 +285,7 @@ class opFormItemGenerator
       // doesn't allow searching
       case 'increased_input':
       case 'language_select':
+      case 'country_select':
       case 'password':
         // pass
         break;

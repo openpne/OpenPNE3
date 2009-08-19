@@ -8,6 +8,28 @@
 <?php endif; ?>
 </h2>
 
+<div style="margin-bottom: 1em;">
+<select id="original_preset">
+  <option>プリセットから選ぶ</option>
+  <option>自分で入力する</option>
+</select>
+</div>
+
+<div id="preset">
+<?php if ($presetForm->isNew()): ?>
+<form action="<?php echo url_for('profile/edit?type=preset') ?>" method="post">
+<?php else : ?>
+<form action="<?php echo url_for('profile/edit?type=preset&id=' . $profile->getId()) ?>" method="post">
+<?php endif; ?>
+<table>
+<?php echo $presetForm ?>
+</table>
+<input type="submit" value="<?php echo $form->isNew() ? __('Add') : __('Modify') ?>" />
+</form>
+</div>
+
+
+<div id="original" style="display: none;">
 <?php if ($form->hasGlobalErrors()) : ?>
 <ul>
 <?php echo $form->renderGlobalErrors() ?>
@@ -76,6 +98,7 @@
 <?php echo $form->renderHiddenFields() ?>
 <input type="submit" value="<?php echo $form->isNew() ? __('Add') : __('Modify') ?>" />
 </form>
+</div>
 
 <?php echo javascript_tag('
 function changeAdvancedFormByFormType()
@@ -96,11 +119,21 @@ function changeAdvancedFormByFormType()
   }
 }
 
+function changeOriginalAndPreset()
+{
+  Element.toggle("preset");
+  Element.toggle("original");
+}
+
 Event.observe(window, "load", function(e){
   changeAdvancedFormByFormType();
 });
 
 Event.observe("profile_form_type", "change", function(e){
   changeAdvancedFormByFormType();
+});
+
+Event.observe("original_preset", "change", function(e){
+  changeOriginalAndPreset();
 });
 ') ?>

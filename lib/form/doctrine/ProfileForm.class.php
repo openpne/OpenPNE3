@@ -55,6 +55,7 @@ class ProfileForm extends BaseProfileForm
     );
 
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'advancedValidator'))));
+    $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateName'))));
     $this->setValidator('default_public_flag', new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('Profile')->getPublicFlags()))));
     $this->setValidator('value_min', new sfValidatorPass());
     $this->setValidator('value_max', new sfValidatorPass());
@@ -101,6 +102,16 @@ class ProfileForm extends BaseProfileForm
       $validator->clean($values['value_max']);
     }
     elseif ($values['value_min'] || $values['value_max'])
+    {
+      throw new sfValidatorError($validator, 'invalid');
+    }
+
+    return $values;
+  }
+
+  static public function validateName($validator, $values)
+  {
+    if (0 === strpos($values['name'], 'op_preset_'))
     {
       throw new sfValidatorError($validator, 'invalid');
     }
