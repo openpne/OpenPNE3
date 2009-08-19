@@ -35,15 +35,6 @@ class opPresetProfileForm extends ProfileForm
     }
   }
 
-  protected function getPresetList()
-  {
-    $configPath = 'config/preset_profile.yml';
-    sfContext::getInstance()->getConfigCache()->registerConfigHandler($configPath, 'sfSimpleYamlConfigHandler', array());
-    $list = include(sfContext::getInstance()->getConfigCache()->checkConfig($configPath));
-
-    return $list;
-  }
-
   protected function getPresetDefault()
   {
     return array(
@@ -62,7 +53,7 @@ class opPresetProfileForm extends ProfileForm
 
   protected function getPresetChoiceList()
   {
-    $list = $this->getPresetList();
+    $list = opToolkit::getPresetProfileList();
 
     $result = array();
 
@@ -98,7 +89,7 @@ class opPresetProfileForm extends ProfileForm
   public function save($con = null)
   {
     $values = $this->getValues();
-    $presetList = $this->getPresetList();
+    $presetList = opToolkit::getPresetProfileList();
     $presetName = $values['preset'];
     $preset = $presetList[$presetName];
 

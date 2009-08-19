@@ -33,4 +33,19 @@ class Profile extends BaseProfile
   {
     return (bool)('radio' === $this->getFormType() || 'select' === $this->getFormType());
   }
+
+  public function isPreset()
+  {
+    return (0 === strpos($this->getName(), 'op_preset_'));
+  }
+
+  public function getRawPresetName()
+  {
+    if (!$this->isPreset())
+    {
+      return false;
+    }
+
+    return substr($this->getName(), strlen('op_preset_'));
+  }
 }

@@ -106,7 +106,7 @@ class MemberProfile extends BaseMemberProfile
 
   public function setValue($value)
   {
-    if ($this->getProfile()->isSingleSelect())
+    if ($this->getProfile()->isSingleSelect() && !$this->getProfile()->isPreset())
     {
       $this->setProfileOptionId($value);
     }

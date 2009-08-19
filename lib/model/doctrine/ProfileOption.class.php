@@ -12,3 +12,16 @@ class ProfileOption extends BaseProfileOption
 {
 
 }
+
+class opProfileOptionEmulator extends ProfileOption
+{
+  public function setTableDefinition()
+  {
+    parent::setTableDefinition();
+
+    foreach ($this->getTable()->getColumns() as $name => $column)
+    {
+      $this->mapValue($name);
+    }
+  }
+}

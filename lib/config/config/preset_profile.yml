@@ -66,110 +66,94 @@ region_japan:
   Name: "region"
   Caption: "Region in Japan"
   FormType: "region_select"
-  ValueType: "string"
+  ValueType: "JP"
   IsRegist: true
   IsConfig: true
   IsSearch: true
   IsRequired: false
   IsEditPublicflag: true
   DefaultPublicflag: 0
-  Params:
-    "scope" : "JP"
 
 region_usa:
   Name: "region"
   Caption: "Region in USA"
   FormType: "region_select"
-  ValueType: "string"
+  ValueType: "US"
   IsRegist: true
   IsConfig: true
   IsSearch: true
   IsRequired: false
   IsEditPublicflag: true
   DefaultPublicflag: 0
-  Params:
-    "scope" : "US"
 
 region_uk:
   Name: "region"
   Caption: "Region in UK"
   FormType: "region_select"
-  ValueType: "string"
+  ValueType: "GB"
   IsRegist: true
   IsConfig: true
   IsSearch: true
   IsRequired: false
   IsEditPublicflag: true
   DefaultPublicflag: 0
-  Params:
-    "scope" : "GB"
 
 region_canada:
   Name: "region"
   Caption: "Region in Canada"
   FormType: "region_select"
-  ValueType: "string"
+  ValueType: "CA"
   IsRegist: true
   IsConfig: true
   IsSearch: true
   IsRequired: false
   IsEditPublicflag: true
   DefaultPublicflag: 0
-  Params:
-    "scope" : "CA"
 
 region_germany:
   Name: "region"
   Caption: "Region in Germany"
   FormType: "region_select"
-  ValueType: "string"
+  ValueType: "DE"
   IsRegist: true
   IsConfig: true
   IsSearch: true
   IsRequired: false
   IsEditPublicflag: true
   DefaultPublicflag: 0
-  Params:
-    "scope" : "DE"
 
 region_france:
   Name: "region"
   Caption: "Region in France"
   FormType: "region_select"
-  ValueType: "string"
+  ValueType: "FR"
   IsRegist: true
   IsConfig: true
   IsSearch: true
   IsRequired: false
   IsEditPublicflag: true
   DefaultPublicflag: 0
-  Params:
-    "scope" : "FR"
 
 region_italy:
   Name: "region"
   Caption: "Region in Italy"
   FormType: "region_select"
-  ValueType: "string"
+  ValueType: "IT"
   IsRegist: true
   IsConfig: true
   IsSearch: true
   IsRequired: false
   IsEditPublicflag: true
   DefaultPublicflag: 0
-  Params:
-    "scope" : "IT"
 
 region_china:
   Name: "region"
   Caption: "Region in China"
   FormType: "region_select"
-  ValueType: "string"
+  ValueType: "CN"
   IsRegist: true
   IsConfig: true
   IsSearch: true
   IsRequired: false
   IsEditPublicflag: true
   DefaultPublicflag: 0
-  Params:
-    "scope" : "CN"

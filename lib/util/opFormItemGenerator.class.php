@@ -130,6 +130,27 @@ class opFormItemGenerator
         $info = sfCultureInfo::getInstance(sfContext::getInstance()->getUser()->getCulture());
         $obj = new sfWidgetFormChoice(array('choices' => $info->getCountries()));
         break;
+      case 'region_select':
+        $list = sfYaml::load(sfConfig::get('sf_lib_dir').'/config/config/regions.yml');
+        $type = $field['ValueType'];
+        if ('string' !== $type && isset($list[$type]))
+        {
+          $list = $list[$type];
+          $list = array_combine($list, $list);
+        }
+        else
+        {
+          foreach ($list as $k => $v)
+          {
+            if ($v)
+            {
+              $list[$k] = array_combine($v, $v);
+            }
+          }
+        }
+        $list = opToolkit::arrayMapRecursive(array(sfContext::getInstance()->getI18N(), '__'), $list);
+        $obj = new sfWidgetFormChoice(array('choices' => $list));
+        break;
       default:
         $obj = new sfWidgetFormInput($params);
     }
@@ -241,6 +262,7 @@ class opFormItemGenerator
       case 'increased_input':
       case 'language_select':
       case 'country_select':
+      case 'region_select':
       case 'password':
         $obj = null;
         break;
@@ -286,6 +308,7 @@ class opFormItemGenerator
       case 'increased_input':
       case 'language_select':
       case 'country_select':
+      case 'region_select':
       case 'password':
         // pass
         break;

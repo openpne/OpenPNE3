@@ -299,4 +299,25 @@ class opToolkit
 
     return $choices;
   }
+
+  static public function getPresetProfileList()
+  {
+    $configPath = 'config/preset_profile.yml';
+    sfContext::getInstance()->getConfigCache()->registerConfigHandler($configPath, 'sfSimpleYamlConfigHandler', array());
+    $list = include(sfContext::getInstance()->getConfigCache()->checkConfig($configPath));
+
+    return $list;
+  }
+
+  public static function arrayMapRecursive($callback, $array)
+  {
+    $result = array();
+
+    foreach ($array as $key => $value)
+    {
+      $result[$key] = is_array($value) ? call_user_func(array('opToolkit', 'arrayMapRecursive'), $callback, $value) : call_user_func($callback, $value);
+    }
+
+    return $result;
+  }
 }
