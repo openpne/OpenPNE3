@@ -219,6 +219,11 @@ class opToolkit
  */
   public static function extractTargetDay($targetDay)
   {
+    If (!$targetDay)
+    {
+      return -1;
+    }
+
     list(, $m, $d) = explode('-', $targetDay);
 
     $m = (int)$m;

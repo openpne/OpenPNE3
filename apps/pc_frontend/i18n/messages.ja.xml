@@ -606,6 +606,10 @@
         <source>%0% is required field.</source>
         <target>%0%は必須項目です。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Please Select</source>
+        <target>選択してください</target>
+      </trans-unit>
 
       <trans-unit id="">
         <source>Invalid.</source>

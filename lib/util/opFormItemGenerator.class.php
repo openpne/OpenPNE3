@@ -17,6 +17,7 @@
  */
 class opFormItemGenerator
 {
+  protected static $choicesType = array('checkbox', 'select', 'radio');
  /**
   * This method exists only for BC
   */
@@ -34,23 +35,19 @@ class opFormItemGenerator
   public static function generateWidgetParams($field, $choices = array())
   {
     $params = array();
-    $field = self::arrayKeyCamelize($field);
 
     if ($field['Caption'])
     {
       $params['label'] = $field['Caption'];
     }
 
-    switch ($field['FormType'])
+    if (in_array($field['FormType'], self::$choicesType))
     {
-      case 'checkbox' :
-      case 'select' :
-      case 'radio' :
-        $params['choices'] = array_map(array(sfContext::getInstance()->getI18N(), '__'), $choices);
-        if (!empty($field['Choices']) && is_array($field['Choices']))
-        {
-          $params['choices'] = array_map(array(sfContext::getInstance()->getI18N(), '__'), $field['Choices']);
-        }
+      $params['choices'] = array_map(array(sfContext::getInstance()->getI18N(), '__'), $choices);
+      if (!empty($field['Choices']) && is_array($field['Choices']))
+      {
+        $params['choices'] = array_map(array(sfContext::getInstance()->getI18N(), '__'), $field['Choices']);
+      }
     }
 
     if (!empty($field['Default']))
@@ -63,19 +60,35 @@ class opFormItemGenerator
 
   public static function generateWidget($field, $choices = array())
   {
-    $params = self::generateWidgetParams($field, $choices);
     $field = self::arrayKeyCamelize($field);
+    $params = self::generateWidgetParams($field, $choices);
+
+    if (in_array($field['FormType'], self::$choicesType))
+    {
+      if ($field['FormType'] === 'select')
+      {
+        if (!$field['IsRequired'])
+        {
+          $params['choices'] = array('' => sfContext::getInstance()->getI18N()->__('Please Select')) + $params['choices'];
+        }
+      }
+      else
+      {
+        $params['expanded'] = true;
+      }
+    }
+
 
     switch ($field['FormType'])
     {
       case 'checkbox':
-        $obj = new sfWidgetFormSelectCheckbox($params);
+        $obj = new sfWidgetFormChoiceMany($params);
         break;
       case 'select':
-        $obj = new sfWidgetFormSelect($params);
+        $obj = new sfWidgetFormChoice($params);
         break;
       case 'radio':
-        $obj = new sfWidgetFormSelectRadio($params);
+        $obj = new sfWidgetFormChoice($params);
         break;
       case 'textarea':
         $obj = new sfWidgetFormTextarea($params);
@@ -94,6 +107,10 @@ class opFormItemGenerator
         unset($params['choices']);
         $params['culture'] = sfContext::getInstance()->getUser()->getCulture();
         $params['month_format'] = 'number';
+        if (!$field['IsRequired'])
+        {
+          $params['can_be_empty'] = true;
+        }
         $obj = new opWidgetFormDate($params);
         break;
       case 'increased_input':
@@ -115,6 +132,7 @@ class opFormItemGenerator
   {
     $field = self::arrayKeyCamelize($field);
     $option = array('required' => $field['IsRequired'], 'trim' => $field['IsRequired']);
+
     if (!$choices && !empty($field['Choices']))
     {
       $choices = array_keys($field['Choices']);
@@ -128,7 +146,9 @@ class opFormItemGenerator
     }
     if ($field['FormType'] === 'select' || $field['FormType'] === 'radio')
     {
-      $obj = new sfValidatorChoice(array('choices' => $choices));
+      $option = array('choices' => $choices);
+      $option['required'] = $field['IsRequired'];
+      $obj = new sfValidatorChoice($option);
       return $obj;
     }
 
@@ -197,8 +217,8 @@ class opFormItemGenerator
 
   public static function generateSearchWidget($field, $choices = array())
   {
-    $params = self::generateWidgetParams($field, $choices);
     $field = self::arrayKeyCamelize($field);
+    $params = self::generateWidgetParams($field, $choices);
 
     switch ($field['FormType'])
     {
@@ -206,7 +226,7 @@ class opFormItemGenerator
       case 'checkbox':
       case 'select':
       case 'radio':
-        $obj = new sfWidgetFormSelect($params);
+        $obj = new sfWidgetFormChoice($params);
         break;
       // doesn't allow searching
       case 'increased_input':

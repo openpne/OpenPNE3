@@ -52,8 +52,6 @@ class opWidgetFormDate extends sfWidgetFormI18nDate
       throw new sfException('Invaid date format.');
     }
 
-    $emptyValues = $this->getOption('empty_values');
-
     $days = $this->getOption('days');
     $months = $this->getOption('months');
     
@@ -63,12 +61,15 @@ class opWidgetFormDate extends sfWidgetFormI18nDate
     
     if ($this->getOption('can_be_empty'))
     {
+      $emptyValues = $this->getOption('empty_values');
       $days = array('' => $emptyValues['day']) + $days;
       $months = array('' => $emptyValues['month']) + $months;
-
-      $dayDefault = $emptyValues['day'];
-      $monthDefault = $emptyValues['month'];
-      $year = $emptyValues['year'];
+      if (!$dateTimeValue)
+      {
+        $dayDefault = $emptyValues['day'];
+        $monthDefault = $emptyValues['month'];
+        $year = $emptyValues['year'];
+      }
     }
 
     if (is_array($value) && !checkdate((int)$value['month'], (int)$value['day'], (int)$value['year']))
