@@ -936,6 +936,14 @@
         <target>都道府県</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Postal Code</source>
+        <target>郵便番号</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Telephone Number</source>
+        <target>電話番号</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Self Introduction</source>
         <target>自己紹介</target>
       </trans-unit>

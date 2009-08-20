@@ -33,7 +33,7 @@
 <td><?php echo ($value->getIsUnique() ? '×' :'○') ?></td>
 <td><?php echo $value->getFormType() ?></td>
 <td>
-<?php if ($value->getFormType() == 'radio' || $value->getFormType() == 'checkbox' || $value->getFormType() == 'select') : ?>
+<?php if (!$value->isPreset() && ($value->getFormType() == 'radio' || $value->getFormType() == 'checkbox' || $value->getFormType() == 'select')) : ?>
 <?php echo link_to('一覧', 'profile/list', array('anchor' => $value->getName())) ?>
 <?php else: ?>
 -
@@ -53,7 +53,7 @@
 
 <h3>プロフィール選択肢一覧</h3>
 <?php foreach ($profiles as $value): ?>
-<?php if ($value->getFormType() == 'radio' || $value->getFormType() == 'checkbox' || $value->getFormType() == 'select') : ?>
+<?php if (!$value->isPreset() && ($value->getFormType() == 'radio' || $value->getFormType() == 'checkbox' || $value->getFormType() == 'select')) : ?>
 
 <h4><a name="<?php echo $value->getName() ?>"><?php echo $value->getCaption() ?></a></h4>
 <table id="profile_options_<?php echo $value->getId() ?>">

@@ -158,6 +158,31 @@ region_CN:
   IsEditPublicflag: true
   DefaultPublicflag: 0
 
+postal_code:
+  Name: "postal_code"
+  Caption: "Postal Code"
+  FormType: "text"
+  ValueType: "string"
+  IsRegist: true
+  IsConfig: true
+  IsSearch: true
+  IsRequired: false
+  IsEditPublicFlag: true
+  DefaultPublicFlag: 0
+
+telephone_number:
+  Name: "telephone_number"
+  Caption: "Telephone Number"
+  FormType: "text"
+  ValueType: "regexp"
+  ValueRegexp: "/^[0-9\(\)\- ]+$/"
+  IsRegist: true
+  IsConfig: true
+  IsSearch: true
+  IsRequired: false
+  IsEditPublicFlag: true
+  DefaultPublicFlag: 0
+
 self_introduction:
   Name: "self_introduction"
   Caption: "Self Introduction"
