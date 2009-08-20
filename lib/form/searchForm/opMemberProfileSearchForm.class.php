@@ -40,13 +40,26 @@ class opMemberProfileSearchForm extends sfForm
     $widgets += array('name' => new sfWidgetFormInput());
     $validators += array('name' => new opValidatorSearchQueryString(array('required' => false)));
 
+    $culture = sfContext::getInstance()->getUser()->getCulture();
+
     foreach ($this->getProfiles() as $profile)
     {
-      $profileI18n = $profile->Translation[sfContext::getInstance()->getUser()->getCulture()]->toArray();
+      $profileI18n = $profile->Translation[$culture]->toArray();
+
+      if ($profile->isPreset())
+      {
+        $config = $profile->getPresetConfig();
+        $profileI18n['caption'] = sfContext::getInstance()->getI18n()->__($config['Caption']);
+      }
+
       $profileWithI18n = $profile->toArray() + $profileI18n;
 
-      $widgets[self::$profileFieldPrefix.$profile->getName()] = opFormItemGenerator::generateSearchWidget($profileWithI18n, array('' => '') + $profile->getOptionsArray());
-      $validators[self::$profileFieldPrefix.$profile->getName()] = new sfValidatorPass();
+      $widget = opFormItemGenerator::generateSearchWidget($profileWithI18n, array('' => '') + $profile->getOptionsArray());
+      if ($widget)
+      {
+        $widgets[self::$profileFieldPrefix.$profile->getName()] = $widget;
+        $validators[self::$profileFieldPrefix.$profile->getName()] = new sfValidatorPass();
+      }
     }
 
     $this->setWidgets($widgets);

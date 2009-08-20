@@ -157,3 +157,15 @@ region_CN:
   IsRequired: false
   IsEditPublicflag: true
   DefaultPublicflag: 0
+
+self_introduction:
+  Name: "self_introduction"
+  Caption: "Self Introduction"
+  FormType: "textarea"
+  ValueType: "string"
+  IsRegist: true
+  IsConfig: true
+  IsSearch: true
+  IsRequired: false
+  IsEditPublicFlag: true
+  DefaultPublicFlag: 0

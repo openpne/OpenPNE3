@@ -12,6 +12,11 @@ class Profile extends BaseProfile
 {
   public function getOptionsArray()
   {
+    if ($this->isPreset())
+    {
+      return $this->getPresetOptionsArray();
+    }
+
     $result = array();
 
     $options = $this->getProfileOption();
@@ -19,6 +24,19 @@ class Profile extends BaseProfile
     foreach ($options as $option)
     {
       $result[$option->getId()] = $option->getValue();
+    }
+
+    return $result;
+  }
+
+  public function getPresetOptionsArray()
+  {
+    $result = array();
+    $config = $this->getPresetConfig();
+
+    if (!empty($config['Choices']))
+    {
+      $result = array_combine($config['Choices'], $config['Choices']);
     }
 
     return $result;

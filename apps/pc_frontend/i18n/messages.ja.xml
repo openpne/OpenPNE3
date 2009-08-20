@@ -935,6 +935,10 @@
         <source>Region in Japan</source>
         <target>都道府県</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Self Introduction</source>
+        <target>自己紹介</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -75,7 +75,24 @@ class MemberProfileTable extends Doctrine_Table
       $item = Doctrine::getTable('Profile')->retrieveByName($key);
       $_result = array();
       $column = 'value';
-      if ($item->getFormType() === 'date')
+
+      if ($item->isPreset())
+      {
+        if ($item->getFormType() === 'date')
+        {
+          $dateValue = $value;
+          foreach ($dateValue as $k => $v)
+          {
+            if (!$v)
+            {
+              $dateValue[$k] = '%';
+            }
+          }
+
+          $value = implode('-', $dateValue);
+        }
+      }
+      elseif ($item->getFormType() === 'date')
       {
         $options = $item->getProfileOption();
         $i = 0;
