@@ -124,6 +124,7 @@ class ProfileForm extends BaseProfileForm
     $profile  = parent::save($con);
 
     $values = $this->getValues();
+
     if (!$values['is_edit_public_flag'])
     {
       Doctrine_Query::create()
@@ -132,6 +133,21 @@ class ProfileForm extends BaseProfileForm
         ->where('lft = 1')
         ->andWhere('profile_id = ?', $profile->getId())
         ->execute();
+    }
+
+    if ($values['form_type'] === 'date')
+    {
+      if (!$profile->getProfileOption()->count())
+      {
+        $dateField = array('year', 'month', 'day');
+        foreach ($dateField as $k => $field)
+        {
+          $profileOption = new ProfileOption();
+          $profileOption->setSortOrder($k);
+          $profileOption->setProfile($profile);
+          $profileOption->save();
+        }
+      }
     }
   }
 }
