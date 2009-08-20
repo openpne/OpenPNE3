@@ -1,5 +1,7 @@
 <?php
 
+$culture = sfCultureInfo::getInstance($sf_user->getCulture());
+
 $list = array();
 foreach ($member->getProfiles(true) as $profile)
 {
@@ -15,6 +17,17 @@ foreach ($member->getProfiles(true) as $profile)
   {
     $profileValue = op_auto_link_text(nl2br($profileValue));
   }
+
+  if ($profile->getProfile()->isPreset())
+  {
+    if ($profile->getFormType() === 'country_select')
+    {
+      $profileValue = $culture->getCountry($profileValue);
+    }
+
+    $profileValue = __($profileValue);
+  }
+
   if ($member->getId() == $sf_user->getMemberId() && $profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_FRIEND)
   {
     $profileValue .= ' ('.__('Only Open to My Friends').')';

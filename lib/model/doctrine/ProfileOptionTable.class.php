@@ -50,10 +50,10 @@ class ProfileOptionTable extends Doctrine_Table
     $list = opToolkit::getPresetProfileList();
     if (!empty($list[$profile->getRawPresetName()]['Choices']))
     {
-      foreach ($list[$profile->getRawPresetName()]['Choices'] as $k => $v)
+      foreach ($list[$profile->getRawPresetName()]['Choices'] as $v)
       {
         $option = new opProfileOptionEmulator();
-        $option->id = $k;
+        $option->id = $v;
         $option->value = $v;
         $result[] = $option;
       }
