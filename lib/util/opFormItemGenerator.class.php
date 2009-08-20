@@ -18,6 +18,7 @@
 class opFormItemGenerator
 {
   protected static $choicesType = array('checkbox', 'select', 'radio');
+
  /**
   * This method exists only for BC
   */
@@ -282,7 +283,7 @@ class opFormItemGenerator
     return $obj;
   }
 
-  public static function filterSearchQuery($q, $column, $value, $field, $choices = array())
+  public static function filterSearchQuery($q, $column, $value, $field)
   {
     $field = self::arrayKeyCamelize($field);
 
@@ -303,6 +304,9 @@ class opFormItemGenerator
       case 'select':
       case 'radio':
         $q->andWhere($column.' = ?', $value);
+        break;
+      case 'date':
+        $q->andWhere($column.' LIKE ?', $value);
         break;
       // doesn't allow searching
       case 'increased_input':

@@ -54,11 +54,11 @@ class opWidgetFormDate extends sfWidgetFormI18nDate
 
     $days = $this->getOption('days');
     $months = $this->getOption('months');
-    
+
     $dayDefault = $dateTime->format('j');
     $monthDefault = $dateTime->format('n');
     $year = $dateTime->format('Y');
-    
+
     if ($this->getOption('can_be_empty'))
     {
       $emptyValues = $this->getOption('empty_values');

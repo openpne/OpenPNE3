@@ -87,6 +87,11 @@ class MemberProfileTable extends Doctrine_Table
             {
               $dateValue[$k] = '%';
             }
+
+            if ($dateValue !== 'year')
+            {
+              $dateValue[$k] = sprintf('%02%', $dateValue[$k]);
+            }
           }
 
           $value = implode('-', $dateValue);
@@ -101,7 +106,7 @@ class MemberProfileTable extends Doctrine_Table
           $option = $options[$i++];
           if ($v)
           {
-            $ids = $this->filterMemberIdByProfileOption($ids, $column, $v, $option, array());
+            $ids = $this->filterMemberIdByProfileOption($ids, $column, $v, $option);
           }
         }
         continue;
@@ -109,23 +114,38 @@ class MemberProfileTable extends Doctrine_Table
       elseif ($item->isMultipleSelect() || $item->isSingleSelect())
       {
         $column = 'profile_option_id';
+
       }
 
-      $ids = $this->filterMemberIdByProfile($ids, $column, $value, $item, array());
+      $ids = $this->filterMemberIdByProfile($ids, $column, $value, $item);
     }
 
     return $ids;
   }
 
-  public function filterMemberIdByProfile($ids, $column, $value, Profile $item, $choices)
+  public function filterMemberIdByProfile($ids, $column, $value, Profile $item, $publicFlag = 1)
   {
     $_result = array();
-    $q = Doctrine::getTable('MemberProfile')->createQuery();
-    $list = opFormItemGenerator::filterSearchQuery($q, $column, $value, $item->toArray(), array())
-      ->select('member_id')
-      ->andWhere('profile_id = ?', $item->getId())
-      ->andWhere('public_flag = ?', 1)
-      ->execute();
+    $q = Doctrine::getTable('MemberProfile')->createQuery('m');
+    $q = opFormItemGenerator::filterSearchQuery($q, 'm.'.$column, $value, $item->toArray())
+      ->select('m.member_id')
+      ->andWhere('m.profile_id = ?', $item->getId());
+
+    if (is_integer($publicFlag))
+    {
+      if ($item->isMultipleSelect() && $item->getFormType() !== 'date')
+      {
+        $q->addFrom('MemberProfile pm')
+          ->andWhere('m.tree_key = pm.id')
+          ->andWhere('pm.public_flag <= ?', $publicFlag);
+      }
+      else
+      {
+        $q->andWhere('m.public_flag <= ?', $publicFlag);
+      }
+    }
+
+    $list = $q->execute();
 
     foreach ($list as $value)
     {
@@ -144,16 +164,23 @@ class MemberProfileTable extends Doctrine_Table
     return $ids;
   }
 
-  public function filterMemberIdByProfileOption($ids, $column, $value, ProfileOption $item, $choices)
+  public function filterMemberIdByProfileOption($ids, $column, $value, ProfileOption $item, $publicFlag = 1)
   {
     $_result = array();
 
-    $list = Doctrine::getTable('MemberProfile')->createQuery()
-      ->select('member_id')
-      ->where($column.'= ?', $value)
-      ->andWhere('profile_option_id = ?', $item->getId())
-      ->andWhere('public_flag = ?', 1)
-      ->execute();
+    $q = Doctrine::getTable('MemberProfile')->createQuery('m')
+      ->select('m.member_id')
+      ->where('m.'.$column.'= ?', $value)
+      ->andWhere('m.profile_option_id = ?', $item->getId());
+
+    if (is_integer($publicFlag))
+    {
+      $q->addFrom('MemberProfile pm')
+        ->andWhere('m.tree_key = pm.id')
+        ->andWhere('pm.public_flag <= ?', $publicFlag);
+    }
+
+    $list = $q->execute();
 
     foreach ($list as $value)
     {
