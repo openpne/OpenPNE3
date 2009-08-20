@@ -111,6 +111,7 @@ class ProfileForm extends BaseProfileForm
     $profile  = parent::save($con);
 
     $values = $this->getValues();
+
     if (!$values['is_edit_public_flag'])
     {
       $con = Propel::getConnection(MemberProfilePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
@@ -123,6 +124,21 @@ class ProfileForm extends BaseProfileForm
       $uc->add(MemberProfilePeer::PUBLIC_FLAG, $values['default_public_flag']);
 
       BasePeer::doUpdate($sc, $uc, $con);
-    } 
+    }
+
+    if ($values['form_type'] === 'date')
+    {
+      if(!count($profile->getProfileOptions()))
+      {
+        $dateField = array('year', 'month', 'day');
+        foreach ($dateField as $k => $field)
+        {
+          $profileOption = new ProfileOption();
+          $profileOption->setSortOrder($k);
+          $profileOption->setProfile($profile);
+          $profileOption->save();
+        }
+      }
+    }
   }
 }

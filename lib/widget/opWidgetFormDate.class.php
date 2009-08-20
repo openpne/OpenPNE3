@@ -72,6 +72,13 @@ class opWidgetFormDate extends sfWidgetFormI18nDate
       }
     }
 
+    if (is_array($value) && !checkdate((int)$value['month'], (int)$value['day'], (int)$value['year']))
+    {
+      $dayDefault = $value['day'];
+      $monthDefault = $value['month'];
+      $year = $value['year'];
+    }
+
     // days
     $widget = new sfWidgetFormSelect(array('choices' => $days), array_merge($this->attributes, $attributes));
     $date['%day%'] = $widget->render($name.'[day]', $dayDefault);
