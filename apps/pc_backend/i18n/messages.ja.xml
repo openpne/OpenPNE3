@@ -36,6 +36,14 @@
         <source>Private</source>
         <target>公開しない</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Text Mode</source>
+        <target>テキストモード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Preview Mode</source>
+        <target>プレビューモード</target>
+      </trans-unit>
 
       <trans-unit id="">
         <source>You can't access this page.</source>

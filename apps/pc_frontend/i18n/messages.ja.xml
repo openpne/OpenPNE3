@@ -610,6 +610,14 @@
         <source>Please Select</source>
         <target>選択してください</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Text Mode</source>
+        <target>テキストモード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Preview Mode</source>
+        <target>プレビューモード</target>
+      </trans-unit>
 
       <trans-unit id="">
         <source>Invalid.</source>
