@@ -61,6 +61,7 @@ class opWidgetFormRichTextarea extends sfWidgetFormTextarea
     $onId  = $id.'_changer_2';
     if (self::$firstRender)
     {
+      sfContext::getInstance()->getResponse()->addJavascript('tiny_mce/tiny_mce');
       $js .= <<<EOF
   function op_toggle_mce_editor(id)
   {

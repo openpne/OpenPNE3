@@ -100,9 +100,7 @@ class opFormItemGenerator
         $obj = new sfWidgetFormTextarea($params);
         break;
       case 'rich_textarea':
-        $jsPath = 'tiny_mce/tiny_mce';
-        sfContext::getInstance()->getResponse()->addJavascript($jsPath);
-        $obj = new opWidgetFormRichTextarea($params, array('style' => 'width:300px'));
+        $obj = new opWidgetFormRichTextarea($params);
         break;
       case 'password':
         $obj = new sfWidgetFormInputPassword($params);
