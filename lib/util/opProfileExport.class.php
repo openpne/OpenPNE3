@@ -44,6 +44,13 @@ class opProfileExport
     return 'get'.sfInflector::camelize($key);
   }
 
+  protected function getMemberImageURI($options = array())
+  {
+    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url', 'opUtil', 'sfImage', 'Asset', 'Tag'));
+
+    return sf_image_path($this->member->getImageFileName(), $options, true);
+  }
+
   public function __call($name, $arguments)
   {
     if (0 === strpos($name, 'get'))
@@ -64,7 +71,7 @@ class opProfileExport
       }
       elseif (in_array($key, $this->images))
       {
-        return $this->member->getImageFileName();
+        return $this->getMemberImageURI();
       }
       elseif (in_array($key, $this->configs))
       {

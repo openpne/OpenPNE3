@@ -125,6 +125,21 @@ class opOpenIDAxProfileExport extends opProfileExport
     return $tmp[2];
   }
 
+  public function getMediaImageAspect11()
+  {
+    return $this->getMemberImageURI(array('size' => '180x180'));
+  }
+
+  public function getMediaImageAspect43()
+  {
+    return $this->getMemberImageURI(array('size' => '640x480'));
+  }
+
+  public function getMediaImageAspect34()
+  {
+    return $this->getMemberImageURI(array('size' => '480x640'));
+  }
+
   protected function getGetterMethodName($key)
   {
     $path = str_replace('/', '_', substr(parse_url($key, PHP_URL_PATH), 1));

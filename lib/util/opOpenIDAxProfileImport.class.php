@@ -116,4 +116,64 @@ class opOpenIDAxProfileImport extends opProfileImport
       $this->member->setConfig('language', $language);
     }
   }
+
+  public function setImage($data)
+  {
+    $form = new MemberImageForm(array(), array('member' => $this->member));
+    $imageUri = '';
+
+    $pathList = array(
+      'media/image/default', 'media/image/aspect11',
+      'media/image/aspect43', 'media/image/aspect34',
+    );
+
+    foreach ($pathList as $v)
+    {
+      $img = $this->getValue($data, $v);
+      if ($img)
+      {
+        $imageUri = $img;
+        break;
+      }
+    }
+
+    if ($imageUri)
+    {
+      $client = new Zend_Http_Client(array_shift($imageUri));
+      $response = $client->request();
+      if (!$response->isError())
+      {
+        $type = $response->getHeader('Content-type');
+        if (is_array($type))
+        {
+          $type = array_shift($type);
+        }
+
+        $tmppath = tempnam(sys_get_temp_dir(), 'IMG');
+
+        $fh = fopen($tmppath, 'w');
+        fwrite($fh, $response->getBody());
+        fclose($fh);
+
+        $image = array(
+          'tmp_name' => $tmppath,
+          'type'     => $type,
+        );
+
+        $validator = new opValidatorImageFile();
+        $validFile = $validator->clean($image);
+
+        $file = new File();
+        $file->setFromValidatedFile($validFile);
+        $file->setName('m_'.$this->member->getId().'_'.$file->getName());
+
+        $memberImage = new MemberImage();
+        $memberImage->setMember($this->member);
+        $memberImage->setFile($file);
+        $memberImage->setIsPrimary(true);
+
+        $memberImage->save();
+      }
+    }
+  }
 }
