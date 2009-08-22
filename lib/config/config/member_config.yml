@@ -86,16 +86,6 @@ language:
     caption: "Language and Time Zone Configuration"
     enable_pc:     true
     enable_mobile: false
-  country:
-    Name:       "country"
-    Caption:    "Country"
-    FormType:   "country_select"
-    ValueType:  "string"
-    IsRegist:   false
-    IsConfig:   true
-    IsUnique:   false
-    IsRequired: false
-    IsConfirm:  false
   language:
     Name:       "language"
     Caption:    "Language"

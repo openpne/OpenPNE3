@@ -63,6 +63,7 @@ class OpenIDActions extends sfActions
           }
 
           $this->info = $openIDRequest;
+
           return 'Trust';
         }
       }
@@ -143,10 +144,8 @@ class OpenIDActions extends sfActions
     $sregRequest = Auth_OpenID_SRegRequest::fromOpenIDRequest($info);
     if ($sregRequest)
     {
-      $userData = array(
-        'nickname' => $this->getUser()->getMember()->name,
-      );
-      $sregResp = Auth_OpenID_SRegResponse::extractResponse($sregRequest, $userData);
+      $sregExchange = new opOpenIDProfileExchange('sreg', $this->getUser()->getMember());
+      $sregResp = Auth_OpenID_SRegResponse::extractResponse($sregRequest, $sregExchange->getData());
       $response->addExtension($sregResp);
     }
 
@@ -155,11 +154,14 @@ class OpenIDActions extends sfActions
 
     if ($axRequest && !($axRequest instanceof Auth_OpenID_AX_Error))
     {
+      $axExchange = new opOpenIDProfileExchange('ax', $this->getUser()->getMember());
+      $userData = $axExchange->getData();
+
       foreach ($axRequest->requested_attributes as $k => $v)
       {
-        if (strpos($k, 'namePerson/friendly'))
+        if (!empty($userData[$k]))
         {
-          $axResp->addValue($k, $this->getUser()->getMember()->name);
+          $axResp->addValue($k, $userData[$k]);
         }
       }
 
@@ -232,7 +234,15 @@ EOF;
     }
     header('Connection: close');
 
-    echo $response->body;
+    $body = $response->body;
+    if (AUTH_OPENID_HTTP_OK === $response->code)
+    {
+      $body = '<html><head><title>OpenID Transfer</title></head>'
+            .'<body onload="document.getElementById(\'trans\').submit()">'
+            .str_replace('<form ', '<form id="trans" ', $body).'</body>';
+    }
+
+    echo $body;
     exit;
   }
 }
