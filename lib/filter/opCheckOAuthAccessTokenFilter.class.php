@@ -40,6 +40,13 @@ class opCheckOAuthAccessTokenFilter extends sfFilter
       {
         sfContext::getInstance()->getUser()->addCredentials($information->getUsingApis());
       }
+
+      $tokenType = $this->context->getRequest()->getParameter('token_type', 'member');
+      if ('member' === $tokenType)
+      {
+        $accessToken = Doctrine::getTable('OAuthMemberToken')->findByKeyString($token->key, 'access');
+        sfContext::getInstance()->getUser()->setAttribute('member_id', $accessToken->getMember()->id);
+      }
     }
 
     $route = $this->context->getRequest()->getAttribute('sf_route');
