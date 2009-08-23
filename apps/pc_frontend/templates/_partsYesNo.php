@@ -18,13 +18,13 @@ $options->setDefault('no_method', 'post');
 <ul class="moreInfo button">
 <li>
 <form action="<?php echo $options['yes_url'] ?>" method="<?php echo $options['yes_method'] ?>">
-<?php $yesFomrs = ($options['yes_form'] instanceof sfForm) ? array($options['yes_form']) : $options['yes_form'] ?>
-<?php if(is_array($yesFomrs)): ?>
-<?php foreach($yesFomrs as $yesForm): ?>
+<?php $yesForms = ($options['yes_form'] instanceof sfForm) ? array($options['yes_form']) : $options['yes_form'] ?>
+<?php if (is_array($yesForms)): ?>
+<?php foreach($yesForms as $yesForm): ?>
 <?php echo $yesForm->renderHiddenFields() ?>
 <?php endforeach ?>
 <?php else: ?>
-<?php echo $rawOptions['yes_form'] ?>
+<?php echo $options->getRaw('yes_form'); ?>
 <?php endif ?>
 <input type="submit" class="input_submit" value="<?php echo $options['yes_button'] ?>" />
 </form>
@@ -37,7 +37,7 @@ $options->setDefault('no_method', 'post');
 <?php echo $noForm->renderHiddenFields() ?>
 <?php endforeach ?>
 <?php else: ?>
-<?php echo $rawOptions['no_form'] ?>
+<?php echo $options->getRaw('no_form'); ?>
 <?php endif ?>
 <input type="submit" class ="input_submit" value="<?php echo $options['no_button'] ?>" />
 </form>

@@ -955,6 +955,22 @@
         <source>Self Introduction</source>
         <target>自己紹介</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Login to %1% using your %2% ID</source>
+        <target>%2% の ID で %1% にログインする</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You are login to %1% as:</source>
+        <target>あなたは次のアカウントで %1% にログインしています:</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you wish to login to the following site using your %1% ID?</source>
+        <target>あなたの %1% の ID を使って以下のサイトにログインしますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Automatically login to %1% from now on</source>
+        <target>今後、 %1% へのログインは自動的におこなう</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
