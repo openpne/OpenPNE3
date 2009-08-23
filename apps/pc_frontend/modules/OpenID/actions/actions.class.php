@@ -96,7 +96,7 @@ class OpenIDActions extends sfActions
     }
 
     $response = $server->encodeResponse($response);
-    $this->writeResponse($response);
+    return $this->writeResponse($response);
   }
 
   public function executeTrust(sfWebRequest $request)
@@ -170,7 +170,7 @@ class OpenIDActions extends sfActions
 
     $response = $server->encodeResponse($response);
 
-    $this->writeResponse($response);
+    return $this->writeResponse($response);
   }
 
   public function executeMember(sfWebRequest $request)
@@ -232,17 +232,21 @@ EOF;
         header("$k: $v");
       }
     }
+
     header('Connection: close');
 
     $body = $response->body;
     if (AUTH_OPENID_HTTP_OK === $response->code)
     {
-      $body = '<html><head><title>OpenID Transfer</title></head>'
-            .'<body onload="document.getElementById(\'trans\').submit()">'
-            .str_replace('<form ', '<form id="trans" ', $body).'</body>';
-    }
+      $this->form = str_replace('<form ', '<form id="trans" ', $body);
+      $this->setTemplate('transfer');
 
-    echo $body;
-    exit;
+      return sfView::SUCCESS;
+    }
+    else
+    {
+      echo $body;
+      exit;
+    }
   }
 }

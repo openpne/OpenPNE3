@@ -971,6 +971,18 @@
         <source>Automatically login to %1% from now on</source>
         <target>今後、 %1% へのログインは自動的におこなう</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>This page will automatically redirect soon.</source>
+        <target>リダイレクト中です。しばらくお待ちください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If this does not work for any reason use the button below:</source>
+        <target>何らかの理由でリダイレクトされない場合、以下のボタンをクリックしてください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Click this button to continue</source>
+        <target>ボタンをクリックして続行してください。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

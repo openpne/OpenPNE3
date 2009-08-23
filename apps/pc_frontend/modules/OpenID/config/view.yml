@@ -4,3 +4,7 @@ all:
 indexTrust:
   has_layout: true
   layout: layoutC
+
+transferSuccess:
+  has_layout: true
+  layout: layoutC
