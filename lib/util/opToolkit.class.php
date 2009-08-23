@@ -249,13 +249,14 @@ class opToolkit
     return ($theday_next - $today) / 86400;
   }
 
- public static function retrieveAPIList()
+ public static function retrieveAPIList($isWithI18n = true)
  {
     $result = array();
 
     $context = sfContext::getInstance();
     $config = new sfRoutingConfigHandler();
     $currentApp = sfConfig::get('sf_app');
+    $i18n = $context->getI18n();
 
     sfConfig::set('sf_app', 'api');
     $routing = new sfPatternRouting($context->getEventDispatcher());
@@ -269,7 +270,14 @@ class opToolkit
     {
       if ($route instanceof opAPIRouteInterface)
       {
-        $result[$route->getAPIName()] = $route->getAPICaption();
+        $caption = $route->getAPICaption();
+
+        if ($isWithI18n)
+        {
+          $caption = $i18n->__($caption, null, 'api');
+        }
+
+        $result[$route->getAPIName()] = $caption;
       }
     }
 

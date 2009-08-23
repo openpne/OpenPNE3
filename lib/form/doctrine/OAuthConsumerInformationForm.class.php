@@ -28,6 +28,8 @@ class OAuthConsumerInformationForm extends BaseOAuthConsumerInformationForm
     $this->setWidget('using_apis', new sfWidgetFormSelectMany(array('choices' => $apis), array('size' => 10)));
     $this->setValidator('using_apis', new sfValidatorChoiceMany(array('choices' => array_keys($apis))));
     $this->getWidgetSchema()->setHelp('using_apis', 'Select apis that your application needs.');
+
+    $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('api');
   }
 
   public function updateObject($values = null)

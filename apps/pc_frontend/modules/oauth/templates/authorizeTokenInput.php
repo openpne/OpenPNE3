@@ -1,5 +1,5 @@
 <?php slot('_body'); ?>
-<p><?php echo __('アプリケーション「%1%」がリソースへのアクセスを希望しています。', array('%1%' => $information->getConsumer()->getName())); ?></p>
+<p><?php echo __('外部アプリケーション「%1%」があなたのデータ（情報）へのアクセスを要求しています。', array('%1%' => $information->getConsumer()->getName())); ?></p>
 <p><?php echo __('このアプリケーションは、あなたの権限を借りて以下に示すことをおこなう可能性があります。') ?></p>
 
 <textarea rows="5" cols="60" readonly="readonly">
@@ -8,7 +8,9 @@
 <?php endforeach; ?>
 </textarea>
 
-<p><?php echo __('許可しますか？') ?></p>
+<p><?php echo __('このアプリケーションが信頼できない場合、許可をおこなわないでください。') ?></p>
+<p><?php echo __('データ提供を中止したい場合は、設定変更画面にて、このアプリケーションを無効にしてください。') ?></p>
+<p><?php echo __('「%1%」のアクセスを許可しますか？', array('%1%' => $information->getConsumer()->getName())) ?></p>
 <?php end_slot(); ?>
 
 <?php slot('_yes_form'); ?>
