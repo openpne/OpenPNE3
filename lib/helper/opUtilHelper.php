@@ -595,4 +595,15 @@ function op_banner($name)
   return $imgHtml;
 }
 
+  function op_have_privilege($privilege, $member_id = null)
+  {
+    if (!$member_id)
+    {
+      $member_id = sfContext::getInstance()->getUser()->getMemberId();
+    }
+
+    $route = sfContext::getInstance()->getRequest()->getAttribute('sf_route');
+
+    return $route->getAcl()->isAllowed($member_id, null, $privilege);
+  }
 ?>

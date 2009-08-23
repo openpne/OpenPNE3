@@ -22,7 +22,7 @@ class opDynamicAclRoute extends sfDoctrineRoute
 
   public function getAcl()
   {
-    return $acl;
+    return $this->acl;
   }
 
   public function getObject()

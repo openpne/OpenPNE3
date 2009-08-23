@@ -1,5 +1,5 @@
 <?php slot('_body'); ?>
-<p><?php echo __('外部アプリケーション「%1%」があなたのデータ（情報）へのアクセスを要求しています。', array('%1%' => $information->getConsumer()->getName())); ?></p>
+<p><?php echo __('外部アプリケーション「%1%」があなたのデータ（情報）へのアクセスを要求しています。', array('%1%' => link_to($information->getConsumer()->getName(), 'connection_show', $information->getConsumer()))); ?></p>
 <p><?php echo __('このアプリケーションは、あなたの権限を借りて以下に示すことをおこなう可能性があります。') ?></p>
 
 <textarea rows="5" cols="60" readonly="readonly">
@@ -22,10 +22,13 @@
 <?php end_slot(); ?>
 
 <?php
-op_include_parts('yesNo', 'deleteConfirmForm', array(
-  'title'    => __('アプリケーション許可設定'),
-  'body'     => get_slot('_body'),
-  'yes_form' => get_slot('_yes_form'),
-  'no_form' => get_slot('_no_form'),
+op_include_parts('consentForm', 'oauthAuthorizeTokenForm', array(
+  'title'                => __('アプリケーション許可設定'),
+  'body'                 => get_slot('_body'),
+  'yes_form'             => get_slot('_yes_form'),
+  'no_form'              => get_slot('_no_form'),
+  'consent_from'         => $op_config['sns_name'],
+  'consent_to'           => $information->getConsumer()->getName(),
+  'allow_image_filename' => 'consent_allow2.gif',
 ))
 ?>

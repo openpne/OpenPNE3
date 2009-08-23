@@ -83,7 +83,7 @@ class opStandardRouteCollection extends sfDoctrineRouteCollection
       sprintf('%s/:%s', $this->options['prefix_path'], $this->options['column']),
       array('module' => $this->options['module'], 'action' => $this->getActionMethod('show'), 'sf_format' => 'html'),
       array_merge($this->options['requirements'], array('sf_method' => 'get')),
-      array('model' => $this->options['model'], 'type' => 'object', 'method' => $this->options['model_methods']['object'], 'privilege' => $this->getPrivilege('delete'))
+      array('model' => $this->options['model'], 'type' => 'object', 'method' => $this->options['model_methods']['object'], 'privilege' => $this->getPrivilege('show'))
     );
   }
 

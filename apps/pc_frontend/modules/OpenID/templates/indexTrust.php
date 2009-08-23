@@ -12,7 +12,7 @@
 <?php end_slot(); ?>
 
 <?php
-op_include_parts('consentForm', 'tirustConfirm', array(
+op_include_parts('consentForm', 'trustConfirm', array(
   'title'        => __('Login to %1% using your %2% ID', array(
     '%1%' => parse_url($info->trust_root, PHP_URL_HOST),
     '%2%' => $op_config['sns_name'],
