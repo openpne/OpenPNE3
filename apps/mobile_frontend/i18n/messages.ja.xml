@@ -659,6 +659,10 @@
         <source>It is member's birthday soon.</source>
         <target>もうすぐ誕生日です</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Please login</source>
+        <target>ﾛｸﾞｲﾝしてください</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

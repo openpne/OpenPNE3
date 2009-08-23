@@ -25,6 +25,10 @@ member_index:
   url:   /member
   param: { module: member, action: home }
 
+login:
+  url: /member/login/*
+  param: { module: member, action: login }
+
 error:
   url: /default/error
   param: { module: default, action: error }
@@ -50,6 +54,20 @@ connection:
 connection_list:
   url:     /connection
   param:   { module: connection, action: list }
+
+connection_revoke_token_confirm:
+  url:     /connection/revoke/:id
+  class:   opDynamicAclRoute
+  options: { model: OAuthConsumerInformation, type: object, privilege: use }
+  param:   { module: connection, action: revokeTokenConfirm }
+  requirements: { id: \d+, sf_method: get }
+
+connection_revoke_token:
+  url:     /connection/revoke/:id
+  class:   opDynamicAclRoute
+  options: { model: OAuthConsumerInformation, type: object, privilege: use }
+  param:   { module: connection, action: revokeToken }
+  requirements: { id: \d+, sf_method: post }
 
 # for BC
 member_profile:

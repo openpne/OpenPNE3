@@ -29,4 +29,22 @@ class connectionActions extends opOAuthConsumerAction
 
     parent::executeCreate($request);
   }
+
+  public function executeRevokeTokenConfirm(sfWebRequest $request)
+  {
+    $this->information = $this->getRoute()->getObject();
+
+    $this->form = new sfForm();
+  }
+
+  public function executeRevokeToken(sfWebRequest $request)
+  {
+    $request->checkCSRFProtection();
+
+    $this->getRoute()->getObject()->getOAuthMemberAccessToken($this->getUser()->getMemberId())->delete();
+
+    $this->getUser()->setFlash('notice', 'The access authority was revoked successfully.');
+
+    $this->redirect('@connection_list');
+  }
 }

@@ -26,6 +26,9 @@ class opOAuthConsumerInformationAclBuilder extends opAclBuilder
     $acl->addRole(new Zend_Acl_Role('everyone'));
     $acl->addRole(new Zend_Acl_Role('creator'), 'everyone');
 
+    $acl->addRole(new Zend_Acl_Role('user'), 'everyone');
+    $acl->addRole(new Zend_Acl_Role('creator_user'), 'creator');
+
     return $acl;
   }
 
@@ -43,11 +46,23 @@ class opOAuthConsumerInformationAclBuilder extends opAclBuilder
       $role = new Zend_Acl_Role($member->getId());
       if ($resource->getMemberId() === $member->getId())
       {
-        $acl->addRole($role, 'creator');
+        $name = 'creator';
+        if ($resource->getOAuthMemberAccessToken($member->getId()))
+        {
+          $name .= '_user';
+        }
+        $acl->addRole($role, $name);
       }
       else
       {
-        $acl->addRole($role, 'everyone');
+        if ($resource->getOAuthMemberAccessToken($member->getId()))
+        {
+          $acl->addRole($role, 'user');
+        }
+        else
+        {
+          $acl->addRole($role, 'everyone');
+        }
       }
     }
 
@@ -55,6 +70,9 @@ class opOAuthConsumerInformationAclBuilder extends opAclBuilder
     $acl->allow('everyone', null, 'create');
     $acl->allow('creator', null, 'edit');
     $acl->allow('creator', null, 'delete');
+
+    $acl->allow('user', null, 'use');
+    $acl->allow('creator_user', null, 'use');
 
     self::$resource[$resource->getId()] = $acl;
 

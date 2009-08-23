@@ -595,15 +595,47 @@ function op_banner($name)
   return $imgHtml;
 }
 
-  function op_have_privilege($privilege, $member_id = null)
+  function op_have_privilege($privilege, $member_id = null, $route = null)
   {
     if (!$member_id)
     {
       $member_id = sfContext::getInstance()->getUser()->getMemberId();
     }
 
-    $route = sfContext::getInstance()->getRequest()->getAttribute('sf_route');
+    if (!$route)
+    {
+      $route = sfContext::getInstance()->getRequest()->getAttribute('sf_route');
+    }
 
     return $route->getAcl()->isAllowed($member_id, null, $privilege);
+  }
+
+  function op_have_privilege_by_uri($uri, $params = array(), $member_id = null)
+  {
+    $routing = sfContext::getInstance()->getRouting();
+    $routes = $routing->getRoutes();
+
+    if (empty($routes[$uri]))
+    {
+      return true;
+    }
+
+    $route = $routes[$uri];
+    if ($route instanceof opDynamicAclRoute)
+    {
+      $route->bind(sfContext::getInstance(), $params);
+      try
+      {
+        $route->getObject();
+      }
+      catch (sfError404Exception $e)
+      {
+        // do nothing
+      }
+      $options = $route->getOptions();
+      return op_have_privilege($options['privilege'], $member_id, $route);
+    }
+
+    return true;
   }
 ?>

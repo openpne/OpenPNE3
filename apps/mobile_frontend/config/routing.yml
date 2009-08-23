@@ -8,6 +8,10 @@ friend_show_image:
   param: { module: friend, action: showImage }
   requirements: { id: \d+ }
 
+login:
+  url: /member/login/*
+  param: { module: member, action: login }
+
 error:
   url: /default/error
   param: { module: default, action: error }

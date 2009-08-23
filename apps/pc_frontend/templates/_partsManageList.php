@@ -25,13 +25,17 @@ $getImageFilename = $options->image_filename_method;
 
 <?php include_customizes('id_friend', 'before', $customizeOption) ?>
 <?php foreach ($options->getRaw('menus') as $menu) : ?>
-<td<?php echo !empty($menu['class']) ? ' class="'.$menu['class'].'"' : ''; ?>>
 <?php if (!empty($menu['url'])): ?>
+<?php if (op_have_privilege_by_uri($menu['url'], $item)): ?>
+<td<?php echo !empty($menu['class']) ? ' class="'.$menu['class'].'"' : ''; ?>>
 <?php echo link_to($menu['text'], $menu['url'], $item) ?>
-<?php else: ?>
-<?php echo $menu['text']; ?>
-<?php endif; ?>
 </td>
+<?php endif; ?>
+<?php else: ?>
+<td<?php echo !empty($menu['class']) ? ' class="'.$menu['class'].'"' : ''; ?>>
+<?php echo $menu['text']; ?>
+</td>
+<?php endif; ?>
 <?php endforeach; ?>
 <?php include_customizes('id_friend', 'after', $customizeOption) ?>
 </tr>

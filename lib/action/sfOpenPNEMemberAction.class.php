@@ -51,6 +51,14 @@ abstract class sfOpenPNEMemberAction extends sfActions
       return sfView::ERROR;
     }
 
+    $routing = sfContext::getInstance()->getRouting();
+    if ('homepage' !== $routing->getCurrentRouteName()
+      && 'login' !== $routing->getCurrentRouteName()
+    )
+    {
+      $this->getUser()->setFlash('notice', 'Please login');
+    }
+
     return sfView::SUCCESS;
   }
 

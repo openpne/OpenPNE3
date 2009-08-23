@@ -16,7 +16,14 @@ class OAuthConsumerInformationTable extends Doctrine_Table
 
     if ($memberId)
     {
-      $q = $this->createQuery()->andWhere('member_id = ?', $memberId);
+      $subquery = Doctrine::getTable('OAuthMemberToken')->createQuery('t')
+        ->select('t.oauth_consumer_id')
+        ->where('t.member_id = ?')
+        ->andWhere('t.type = ?');
+
+      $q = $this->createQuery()->andWhere('member_id = ?', $memberId)
+        ->orWhere('id IN ('.$subquery->getDql().')', array($memberId, 'access'));
+
       $pager->setQuery($q);
     }
 

@@ -983,6 +983,30 @@
         <source>Click this button to continue</source>
         <target>ボタンをクリックして続行してください。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Please login</source>
+        <target>ログインしてください</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Add new application</source>
+        <target>アプリケーションの追加</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you revoke the access authority from this application?</source>
+        <target>このアプリケーションのアクセス権限を破棄しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Revoke</source>
+        <target>破棄</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Revoke Access</source>
+        <target>アクセス権限を破棄</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The access authority was revoked successfully.</source>
+        <target>正常にアクセス権限の破棄がおこなわれました。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
