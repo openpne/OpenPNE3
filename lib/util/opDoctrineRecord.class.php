@@ -17,6 +17,8 @@
  */
 abstract class opDoctrineRecord extends sfDoctrineRecord
 {
+  protected $roleList = array();
+
   public function save(Doctrine_Connection $conn = null)
   {
     if (is_null($conn))
@@ -36,5 +38,46 @@ abstract class opDoctrineRecord extends sfDoctrineRecord
     }
 
     return parent::hasColumn($name, $type, $length, $options);
+  }
+
+  public function getRoleId(Member $member)
+  {
+    $this->checkReadyForAcl();
+
+    if (empty($this->roleList[$member->id]))
+    {
+      $this->roleList[$member->id] = $this->generateRoleId($member);
+    }
+
+    return $this->roleList[$member->id];
+  }
+
+  public function clearRoleList()
+  {
+    $this->checkReadyForAcl();
+
+    $this->roleList = array();
+  }
+
+  public function isAllowed(Member $member, $privilege)
+  {
+    $this->checkReadyForAcl();
+
+    $acl = $this->getTable()->getAcl();
+
+    return $acl->isAllowed($this->getRoleId($member), null, $privilege);
+  }
+
+  public function checkReadyForAcl()
+  {
+    if (!($this instanceof opAccessControlRecordInterface))
+    {
+      throw new LogicException(sprintf('%s must implement the opAccessControlRecordInterface for access controll.', get_class($this)));
+    }
+
+    if (!($this->getTable() instanceof opAccessControlDoctrineTable))
+    {
+      throw new LogicException(sprintf('%s must be subclass of the opAccessControlDoctrineTable for access controll.', get_class($this->getTable())));
+    }
   }
 }

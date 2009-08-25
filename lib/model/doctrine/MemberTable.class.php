@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class MemberTable extends Doctrine_Table
+class MemberTable extends opAccessControlDoctrineTable
 {
   public function createPre()
   {
@@ -59,5 +59,21 @@ class MemberTable extends Doctrine_Table
 //    opActivateBehavior::enable();
 
     return $members;
+  }
+
+  public function appendRoles(Zend_Acl $acl)
+  {
+    return $acl
+      ->addRole(new Zend_Acl_Role('everyone'))
+      ->addRole(new Zend_Acl_Role('self'), 'everyone')
+      ->addRole(new Zend_Acl_Role('blocked'));
+  }
+
+  public function appendRules(Zend_Acl $acl)
+  {
+    return $acl
+      ->allow('everyone', null, 'view')
+      ->allow('self', null, 'edit')
+      ->deny('blocked', null, 'edit');
   }
 }
