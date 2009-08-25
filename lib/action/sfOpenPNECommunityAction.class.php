@@ -289,12 +289,18 @@ abstract class sfOpenPNECommunityAction extends sfActions
     $this->forward404Unless($member);
 
     $isCommunityMember = CommunityMemberPeer::isMember($member->getId(), $this->id);
-    $this->redirectUnless($this->isAdmin, '@error');
+    $this->redirectUnless($isCommunityMember, '@error');
     $isAdmin = CommunityMemberPeer::isAdmin($member->getId(), $this->id);
     $this->redirectIf($isAdmin, '@error');
 
-    CommunityMemberPeer::quit($member->getId(), $this->id);
-    $this->redirect('community/memberManage?id='.$this->id);
-  }
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      CommunityMemberPeer::quit($member->getId(), $this->id);
+      $this->redirect('community/memberManage?id='.$this->id);
+    }
 
+    $this->member    = $member;
+    $this->community = CommunityPeer::retrieveByPk($this->id);
+    return sfView::INPUT;
+  }
 }
