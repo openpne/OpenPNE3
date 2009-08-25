@@ -206,6 +206,10 @@
         <source>Community member does not exist.</source>
         <target>ｺﾐｭﾆﾃｨﾒﾝﾊﾞｰがいません。</target>
       </trans-unit>
+      <trans-unit>
+        <source>Do you drop %0% from this community?</source>
+        <target>%0%さんをこのｺﾐｭﾆﾃｨから本当に退会させますか?</target>
+      </trans-unit>
       <trans-unit id="">
         <source>Mobile UID is already setting.</source>
         <target>個体識別番号が登録されています。</target>

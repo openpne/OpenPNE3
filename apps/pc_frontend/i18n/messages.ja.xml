@@ -594,6 +594,10 @@
         <source>Do you delete this community?</source>
         <target>削除してよろしいですか？</target>
       </trans-unit>
+      <trans-unit>
+        <source>Do you drop %0% from this community?</source>
+        <target>%0%さんをこのコミュニティから本当に退会させますか？</target>
+      </trans-unit>
       <trans-unit id="">
         <source>Yes</source>
         <target>はい</target>

@@ -302,12 +302,18 @@ abstract class sfOpenPNECommunityAction extends sfActions
     $this->forward404Unless($member);
 
     $isCommunityMember = Doctrine::getTable('CommunityMember')->isMember($member->getId(), $this->id);
-    $this->redirectUnless($this->isAdmin, '@error');
+    $this->redirectUnless($isCommunityMember, '@error');
     $isAdmin = Doctrine::getTable('CommunityMember')->isAdmin($member->getId(), $this->id);
     $this->redirectIf($isAdmin, '@error');
 
-    Doctrine::getTable('CommunityMember')->quit($member->getId(), $this->id);
-    $this->redirect('community/memberManage?id='.$this->id);
-  }
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      Doctrine::getTable('CommunityMember')->quit($member->getId(), $this->id);
+      $this->redirect('community/memberManage?id='.$this->id);
+    }
 
+    $this->member    = $member;
+    $this->community = Doctrine::getTable('Community')->find($this->id);
+    return sfView::INPUT;
+  }
 }
