@@ -15,7 +15,7 @@
  * @subpackage util
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-abstract class opDoctrineRecord extends sfDoctrineRecord
+abstract class opDoctrineRecord extends sfDoctrineRecord implements Zend_Acl_Resource_Interface
 {
   protected $roleList = array();
 
@@ -38,6 +38,15 @@ abstract class opDoctrineRecord extends sfDoctrineRecord
     }
 
     return parent::hasColumn($name, $type, $length, $options);
+  }
+
+  public function getResourceId()
+  {
+    $tableName = $this->getTable()->getTableName();
+    $identifier = array_values($this->identifier());
+    $identifier = array_shift($identifier);
+
+    return $tableName.'.'.$identifier;
   }
 
   public function getRoleId(Member $member)
@@ -63,9 +72,9 @@ abstract class opDoctrineRecord extends sfDoctrineRecord
   {
     $this->checkReadyForAcl();
 
-    $acl = $this->getTable()->getAcl();
+    $acl = $this->getTable()->getAcl($this);
 
-    return $acl->isAllowed($this->getRoleId($member), null, $privilege);
+    return $acl->isAllowed($this->getRoleId($member), $this, $privilege);
   }
 
   public function checkReadyForAcl()

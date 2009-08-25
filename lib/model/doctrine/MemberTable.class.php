@@ -69,11 +69,11 @@ class MemberTable extends opAccessControlDoctrineTable
       ->addRole(new Zend_Acl_Role('blocked'));
   }
 
-  public function appendRules(Zend_Acl $acl)
+  public function appendRules(Zend_Acl $acl, $resource = null)
   {
     return $acl
-      ->allow('everyone', null, 'view')
-      ->allow('self', null, 'edit')
-      ->deny('blocked', null, 'edit');
+      ->allow('everyone', $resource, 'view')
+      ->allow('self', $resource, 'edit')
+      ->deny('blocked');
   }
 }

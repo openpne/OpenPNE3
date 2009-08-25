@@ -19,13 +19,18 @@ abstract class opAccessControlDoctrineTable extends Doctrine_Table
 {
   protected $acl = null;
 
-  public function getAcl()
+  public function getAcl($resource)
   {
     if (!$this->acl)
     {
       $this->acl = new Zend_Acl();
       $this->acl = $this->appendRoles($this->acl);
-      $this->acl = $this->appendRules($this->acl);
+    }
+
+    if ($resource && !$this->acl->has($resource))
+    {
+      $this->acl->add($resource);
+      $this->acl = $this->appendRules($this->acl, $resource);
     }
 
     return $this->acl;
@@ -33,5 +38,5 @@ abstract class opAccessControlDoctrineTable extends Doctrine_Table
 
   abstract public function appendRoles(Zend_Acl $acl);
 
-  abstract public function appendRules(Zend_Acl $acl);
+  abstract public function appendRules(Zend_Acl $acl, $resource = null);
 }

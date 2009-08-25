@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class MemberProfile extends BaseMemberProfile
+class MemberProfile extends BaseMemberProfile implements opAccessControlRecordInterface
 {
   public function __toString()
   {
@@ -170,5 +170,21 @@ class MemberProfile extends BaseMemberProfile
       $children = $this->getNode()->getChildren();
       $children->delete();
     }
+  }
+
+  public function generateRoleId(Member $member)
+  {
+    $relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($this->Member->id, $member->id);
+
+    if ($this->Member->id === $member->id)
+    {
+      return 'self';
+    }
+    elseif ($relation && $relation->getIsAccessBlock())
+    {
+      return 'blocked';
+    }
+
+    return 'everyone';
   }
 }
