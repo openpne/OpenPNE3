@@ -51,7 +51,7 @@
 <p><?php echo __('If you edit this page, please visit %1%.', array('%1%' => link_to(__('Edit profile'), 'member/editProfile'))) ?></p>
 <?php $content = ob_get_clean() ?>
 <?php op_include_parts('descriptionBox', 'informationAboutThisIsYourProfilePage', array('body' => $content)) ?>
-<?php elseif (!$relation->isFriend()): ?>
+<?php elseif (!$relation->isFriend() && opConfig::get('enable_friend_link')): ?>
 <?php include_partial('member/birthdayBox', array('targetDay' => $targetDay)); ?>
 <?php ob_start() ?>
 <p><?php echo __('If %1% is your friend, let us add to friends it!', array('%1%' => $member->getName())) ?><br />

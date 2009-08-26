@@ -48,7 +48,7 @@
 
 <tr><td colspan="2">
 
-<?php if (!$relation->isFriend() && !$relation->isSelf()) : ?>
+<?php if (opConfig::get('enable_friend_link') && !$relation->isFriend() && !$relation->isSelf()) : ?>
 <?php echo link_to(__('Makes friends'), 'friend/link?id='.$member->getId()) ?><br>
 <?php endif; ?>
 

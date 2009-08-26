@@ -46,6 +46,17 @@ general:
       - "使用しない"
       - "使用する"
 
+  enable_friend_link:
+    Name:       "enable_friend_link"
+    Caption:    "フレンドリンク使用設定"
+    FormType:   "radio"
+    ValueType:  "text"
+    IsRequired: true
+    Default:    1
+    Choices:
+      - "使用しない"
+      - "使用する"
+
   image_max_filesize:
     Name:        "image_max_filesize"
     Caption:     "アップロード画像のファイルサイズ制限(bytes)"

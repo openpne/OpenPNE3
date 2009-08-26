@@ -60,6 +60,7 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeLink($request)
   {
+    $this->redirectUnless(opConfig::get('enable_friend_link'), '@error');
     $this->redirectIf($this->relation->isAccessBlocked(), '@error');
 
     if ($this->relation->isFriend())
@@ -184,5 +185,4 @@ abstract class sfOpenPNEFriendAction extends sfActions
 
     return sfView::SUCCESS;
   }
-
 }
