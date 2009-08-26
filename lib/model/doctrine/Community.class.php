@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class Community extends BaseCommunity
+class Community extends BaseCommunity implements opAccessControlRecordInterface
 {
   public function getImageFileName()
   {
@@ -144,5 +144,19 @@ class Community extends BaseCommunity
     {
       return 'Community\'s admin authorization needed';
     }
+  }
+
+  public function generateRoleId(Member $member)
+  {
+    if (Doctrine::getTable('CommunityMember')->isAdmin($member->id, $this->id))
+    {
+      return 'admin';
+    }
+    elseif (Doctrine::getTable('CommunityMember')->isMember($member->id, $this->id))
+    {
+      return 'member';
+    }
+
+    return 'everyone';
   }
 }

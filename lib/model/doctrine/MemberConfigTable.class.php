@@ -81,8 +81,6 @@ class MemberConfigTable extends opAccessControlDoctrineTable
 
   public function appendRules(Zend_Acl $acl, $resource = null)
   {
-    $assertion = new opMemberProfilePublicFlagAssertion();
-
     return $acl
       ->allow('self', $resource, 'view')
       ->allow('self', $resource, 'edit')

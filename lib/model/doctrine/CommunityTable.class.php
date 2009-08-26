@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class CommunityTable extends Doctrine_Table
+class CommunityTable extends opAccessControlDoctrineTable
 {
   public function retrievesByMemberId($memberId, $limit = 5, $isRandom = false)
   {
@@ -87,5 +87,20 @@ class CommunityTable extends Doctrine_Table
       ->andWhere('cc.value = ?', true)
       ->leftJoin('Community.CommunityConfig cc')
       ->execute();
+  }
+
+  public function appendRoles(Zend_Acl $acl)
+  {
+    return $acl
+      ->addRole(new Zend_Acl_Role('everyone'))
+      ->addRole(new Zend_Acl_Role('member'), 'everyone')
+      ->addRole(new Zend_Acl_Role('admin'), 'member');
+  }
+
+  public function appendRules(Zend_Acl $acl, $resource = null)
+  {
+    return $acl
+      ->allow('everyone', $resource, 'view')
+      ->allow('admin', $resource, 'edit');
   }
 }
