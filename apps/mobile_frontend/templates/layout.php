@@ -45,6 +45,7 @@
 <?php include_slot('op_mobile_footer_menu'); ?>
 <?php endif; ?>
 
+<?php echo op_within_page_link(''); ?>
 <a name="bottom"></a>
 
 <?php include_component('default', 'nav', array('type' => 'mobile_global', 'line' => false)) ?>
