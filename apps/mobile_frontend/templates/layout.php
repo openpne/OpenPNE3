@@ -36,6 +36,7 @@
 
 <?php echo $sf_content ?>
 
+<?php op_within_page_link('') ?>
 <a name="bottom"></a>
 
 <?php include_component('default', 'nav', array('type' => 'mobile_global')) ?>

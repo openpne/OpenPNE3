@@ -572,5 +572,3 @@ function op_banner($name)
 
   return $imgHtml;
 }
-
-?>
