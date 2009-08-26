@@ -8,7 +8,10 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class CommunityMember extends BaseCommunityMember
+class CommunityMember extends BaseCommunityMember implements opAccessControlRecordInterface
 {
-
+  public function generateRoleId(Member $member)
+  {
+    return $this->Community->generateRoleId($member);
+  }
 }
