@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class MemberConfig extends BaseMemberConfig
+class MemberConfig extends BaseMemberConfig implements opAccessControlRecordInterface
 {
   public function savePre()
   {
@@ -77,5 +77,15 @@ class MemberConfig extends BaseMemberConfig
     }
 
     return $config[$this->getName()];
+  }
+
+  public function generateRoleId(Member $member)
+  {
+    if ($this->Member->id === $member->id)
+    {
+      return 'self';
+    }
+
+    return 'everyone';
   }
 }

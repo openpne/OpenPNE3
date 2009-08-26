@@ -180,9 +180,16 @@ class MemberProfile extends BaseMemberProfile implements opAccessControlRecordIn
     {
       return 'self';
     }
-    elseif ($relation && $relation->getIsAccessBlock())
+    elseif ($relation)
     {
-      return 'blocked';
+      if ($relation->getIsAccessBlock())
+      {
+        return 'blocked';
+      }
+      elseif ($relation->getIsFriend())
+      {
+        return 'friend';
+      }
     }
 
     return 'everyone';

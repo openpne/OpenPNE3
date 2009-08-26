@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class MemberConfigTable extends Doctrine_Table
+class MemberConfigTable extends opAccessControlDoctrineTable
 {
   public $results;
 
@@ -72,4 +72,20 @@ class MemberConfigTable extends Doctrine_Table
     return $this->results[$memberId];
   }
 
+  public function appendRoles(Zend_Acl $acl)
+  {
+    return $acl
+      ->addRole(new Zend_Acl_Role('everyone'))
+      ->addRole(new Zend_Acl_Role('self'), 'everyone');
+  }
+
+  public function appendRules(Zend_Acl $acl, $resource = null)
+  {
+    $assertion = new opMemberProfilePublicFlagAssertion();
+
+    return $acl
+      ->allow('self', $resource, 'view')
+      ->allow('self', $resource, 'edit')
+      ->deny('everyone');
+  }
 }
