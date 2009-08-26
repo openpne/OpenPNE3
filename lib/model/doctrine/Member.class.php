@@ -84,6 +84,10 @@ class Member extends BaseMember implements opAccessControlRecordInterface
 
   public function getNameAndCount($format = '%s (%d)')
   {
+    if (!opConfig::get('enable_friend_link'))
+    {
+      return $this->getName();
+    }
     return sprintf($format, $this->getName(), $this->countFriends());
   }
   
