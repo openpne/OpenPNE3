@@ -191,11 +191,19 @@
         <target>ﾌﾚﾝﾄﾞがいません。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>You are already joined in this community.</source>
+        <source>You are already joined to this community.</source>
         <target>既にｺﾐｭﾆﾃｨに参加済みです。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>You don\'t join this community yet.</source>
+        <source>You have already sent the participation request to this community.</source>
+        <target>既にｺﾐｭﾆﾃｨに参加申請済みです。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The administrator doesn't leave the community.</source>
+        <target>ｺﾐｭﾆﾃｨ管理者は退会することができません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You don't join this community yet.</source>
         <target>ｺﾐｭﾆﾃｨに参加していません。</target>
       </trans-unit>
       <trans-unit id="">
