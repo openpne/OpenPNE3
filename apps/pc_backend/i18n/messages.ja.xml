@@ -3,6 +3,19 @@
   <file orginal="global" source-language="en" datatype="plaintext">
     <body>
       <trans-unit id="">
+        <source>Password</source>
+        <target>パスワード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Password (Confirm)</source>
+        <target>パスワード(確認)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Password must be 6-12 characters.</source>
+        <target>パスワードは6～12文字の半角英数で入力してください。</target>
+      </trans-unit>
+
+      <trans-unit id="">
         <source>Everyone can join</source>
         <target>誰でも参加可能</target>
       </trans-unit>
