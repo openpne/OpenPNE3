@@ -67,6 +67,10 @@
         <target>既にコミュニティに参加済みです。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>You have already sent the participation request to this community.</source>
+        <target>既にコミュニティに参加申請済みです。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Errors</source>
         <target>エラー</target>
       </trans-unit>

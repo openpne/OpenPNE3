@@ -191,15 +191,16 @@ abstract class sfOpenPNECommunityAction extends sfActions
   */
   public function executeJoin($request)
   {
-    if ($this->isCommunityMember || $this->isCommunityPreMember) {
-      return sfView::ERROR;
-    }
-
     $community = CommunityPeer::retrieveByPk($this->id);
     $this->forward404Unless($community);
 
+    if ($this->isCommunityMember || $this->isCommunityPreMember)
+    {
+      return sfView::ERROR;
+    }
+
     CommunityMemberPeer::join($this->getUser()->getMemberId(), $this->id, $community->getConfig('register_poricy'));
-    $this->redirect('community/home?id=' . $this->id);
+    $this->redirect('community/home?id='.$this->id);
   }
 
   /**
