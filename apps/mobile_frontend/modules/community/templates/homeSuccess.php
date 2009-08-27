@@ -20,7 +20,7 @@
 <font color="#999966"><?php echo __('Community Category', array(), 'form_community') ?>:</font><br>
 <?php echo $community->getCommunityCategory() ?><br>
 <font color="#999966"><?php echo __('Register poricy', array(), 'form_community') ?>:</font><br>
-<?php echo __($community->getRegisterPoricy()) ?><br>
+<?php echo __($community->getRawValue()->getRegisterPoricy()) ?><br>
 </td>
 </tr>
 
@@ -43,7 +43,9 @@
 <?php if ($isCommunityMember) : ?>
 <?php echo link_to(__('Quit community'), 'community/quit?id=' . $community->getId()) ?><br>
 <?php else : ?>
+<?php if (!$isCommunityPreMember) : ?>
 <?php echo link_to(__('Join community'), 'community/join?id=' . $community->getId()) ?><br>
+<?php endif; ?>
 <?php endif; ?>
 <?php endif; ?>
 <?php include_component('default', 'nav', array('type' => 'mobile_community', 'id' => $community->getId())) ?>
