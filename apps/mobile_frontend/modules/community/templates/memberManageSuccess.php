@@ -11,7 +11,7 @@ foreach ($pager->getResults() as $member) {
   $list_str = link_to($member->getName(), 'member/profile?id='.$member->getId());
   if ('admin' !== $communityMembers[0]->getPosition())
   {
-    $list_str .= '&nbsp' . link_to(__('Drop this member'), 'community/dropMember?id='.$community->getId().'&member_id='.$member->getId());
+    $list_str .= '&nbsp;' . link_to(__('Drop this member'), 'community/dropMember?id='.$community->getId().'&member_id='.$member->getId());
   }
   $list[] = $list_str;
 }
