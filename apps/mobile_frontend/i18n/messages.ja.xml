@@ -171,6 +171,10 @@
         <target>既にｺﾐｭﾆﾃｨに参加申請済みです。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>You are waiting for the participation approval by community's administrator.</source>
+        <target>ｺﾐｭﾆﾃｨ管理者による参加承認待ちです。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>The administrator doesn't leave the community.</source>
         <target>ｺﾐｭﾆﾃｨ管理者は退会することができません。</target>
       </trans-unit>

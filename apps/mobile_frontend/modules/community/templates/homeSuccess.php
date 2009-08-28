@@ -43,7 +43,9 @@
 <?php if ($isCommunityMember) : ?>
 <?php echo link_to(__('Quit community'), 'community/quit?id=' . $community->getId()) ?><br>
 <?php else : ?>
-<?php if (!$isCommunityPreMember) : ?>
+<?php if ($isCommunityPreMember) : ?>
+<?php echo __('You are waiting for the participation approval by community\'s administrator.') ?>
+<?php else: ?>
 <?php echo link_to(__('Join community'), 'community/join?id=' . $community->getId()) ?><br>
 <?php endif; ?>
 <?php endif; ?>
