@@ -620,7 +620,7 @@ function op_have_privilege_by_uri($uri, $params = array(), $member_id = null)
     return true;
   }
 
-  $route = $routes[$uri];
+  $route = clone $routes[$uri];
   if ($route instanceof opDynamicAclRoute)
   {
     $route->bind(sfContext::getInstance(), $params);
