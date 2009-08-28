@@ -10,8 +10,8 @@
 
 <div style="margin-bottom: 1em;">
 <select id="original_preset">
-  <option>プリセットから選ぶ</option>
-  <option>自分で入力する</option>
+  <option name="presetting"<?php if ($profile->isPreset()) : ?> selected="selected"<?php endif; ?>>プリセットから選ぶ</option>
+  <option name="original"<?php if (!$profile->isPreset()) : ?> selected="selected"<?php endif; ?>>自分で入力する</option>
 </select>
 </div>
 
@@ -19,7 +19,7 @@
 <?php if ($presetForm->isNew()): ?>
 <form action="<?php echo url_for('profile/edit?type=preset') ?>" method="post">
 <?php else : ?>
-<form action="<?php echo url_for('profile/edit?type=preset&id=' . $profile->getId()) ?>" method="post">
+<form action="<?php echo url_for('profile/edit?type=preset&id='.$profile->getId()) ?>" method="post">
 <?php endif; ?>
 <table>
 <?php echo $presetForm ?>
@@ -121,12 +121,26 @@ function changeAdvancedFormByFormType()
 
 function changeOriginalAndPreset()
 {
-  Element.toggle("preset");
-  Element.toggle("original");
+  var originalPreset = document.getElementById("original_preset");
+  var selectedOption = originalPreset.options[originalPreset.selectedIndex];
+
+  var selectedName = selectedOption.getAttribute("name");
+
+  if (selectedName == "presetting")
+  {
+    Element.show(document.getElementById("preset"));
+    Element.hide(document.getElementById("original"));
+  }
+  else if (selectedName == "original")
+  {
+    Element.show(document.getElementById("original"));
+    Element.hide(document.getElementById("preset"));
+  }
 }
 
 Event.observe(window, "load", function(e){
   changeAdvancedFormByFormType();
+  changeOriginalAndPreset();
 });
 
 Event.observe("profile_form_type", "change", function(e){
