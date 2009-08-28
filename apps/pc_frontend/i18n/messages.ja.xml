@@ -71,8 +71,8 @@
         <target>既にコミュニティに参加申請済みです。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>You are applying for participation in this community.</source>
-        <target>参加を申請しています。</target>
+        <source>You are waiting for the participation approval by community's administrator.</source>
+        <target>コミュニティ管理者による参加承認待ちです。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Errors</source>

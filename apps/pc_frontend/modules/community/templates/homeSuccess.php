@@ -24,7 +24,7 @@ op_include_parts('nineTable', 'frendList', $options);
 
 <?php slot('op_top') ?>
 <?php if ($isCommunityPreMember) : ?>
-<?php op_include_parts('descriptionBox', 'informationAboutCommunity',  array('body' => __('You are applying for participation in this community.'))) ?>
+<?php op_include_parts('descriptionBox', 'informationAboutCommunity',  array('body' => __('You are waiting for the participation approval by community\'s administrator.'))) ?>
 <?php endif; ?>
 <?php end_slot(); ?>
 
