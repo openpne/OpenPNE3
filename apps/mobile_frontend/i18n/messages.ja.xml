@@ -199,6 +199,10 @@
         <target>既にｺﾐｭﾆﾃｨに参加申請済みです。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>You are applying for participation in this community.</source>
+        <target>参加を申請しています。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>The administrator doesn't leave the community.</source>
         <target>ｺﾐｭﾆﾃｨ管理者は退会することができません。</target>
       </trans-unit>

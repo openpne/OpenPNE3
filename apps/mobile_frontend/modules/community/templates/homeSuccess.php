@@ -50,7 +50,9 @@
 <?php if ($isCommunityMember) : ?>
 <?php echo link_to(__('Quit community'), 'community/quit?id=' . $community->getId()) ?><br>
 <?php else : ?>
-<?php if (!$isCommunityPreMember) : ?>
+<?php if ($isCommunityPreMember) : ?>
+<?php echo __('You are applying for participation in this community.') ?>
+<?php else: ?>
 <?php echo link_to(__('Join community'), 'community/join?id=' . $community->getId()) ?><br>
 <?php endif; ?>
 <?php endif; ?>
