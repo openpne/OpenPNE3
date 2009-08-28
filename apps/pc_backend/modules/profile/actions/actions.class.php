@@ -48,7 +48,7 @@ class profileActions extends sfActions
   {
     $this->profile = Doctrine::getTable('Profile')->find($request->getParameter('id'));
     $this->form = new ProfileForm($this->profile);
-    $this->presetForm = new opPresetProfileForm();
+    $this->presetForm = new opPresetProfileForm($this->profile);
 
     if ($request->isMethod('post'))
     {

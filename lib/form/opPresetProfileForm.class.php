@@ -33,6 +33,11 @@ class opPresetProfileForm extends ProfileForm
     {
       unset($this[$embed]);
     }
+
+    if ($this->getObject())
+    {
+      $this->setDefault('preset', $this->getObject()->getRawPresetName());
+    }
   }
 
   protected function getPresetDefault()
