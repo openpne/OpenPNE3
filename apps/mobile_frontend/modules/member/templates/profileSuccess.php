@@ -1,4 +1,5 @@
 <?php op_mobile_page_title($member->getName()) ?>
+<?php $culture = sfCultureInfo::getInstance($sf_user->getCulture()); ?>
 
 <?php if ($member == $sf_user->getMember()) : ?>
 <font color="<?php echo $op_color["core_color_22"] ?>">
@@ -33,8 +34,18 @@
 </td>
 <td valign="top">
 <?php foreach ($member->getProfiles(true) as $profile) : ?>
+<?php if ($profile->getProfile()->isPreset()) : ?>
+<?php $presetConfig = $profile->getProfile()->getPresetConfig(); ?>
+<font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __($presetConfig['Caption']) ?>:</font><br>
+<?php if ($profile->getFormType() === 'country_select'): ?>
+<?php echo __($culture->getCountry((string)$profile)) ?><br>
+<?php else: ?>
+<?php echo __((string)$profile) ?><br>
+<?php endif; ?>
+<?php else: ?>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo $profile->getCaption() ?>:</font><br>
 <?php echo $profile ?><br>
+<?php endif; ?>
 <?php if ($member->getId() == $sf_user->getMemberId() && $profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_FRIEND): ?>
 <font color="<?php echo $op_color["core_color_22"] ?>">(<?php echo __('Only Open to My Friends') ?>)</font><br>
 <?php endif; ?>
