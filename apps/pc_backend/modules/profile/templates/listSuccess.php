@@ -25,7 +25,12 @@
 <td><?php echo link_to('変更', 'profile/edit?id=' . $value->getId()) ?></td>
 <td><?php echo link_to('削除', 'profile/delete?id=' . $value->getId()) ?></td>
 <td><?php echo $value->getId() ?></td>
+<?php if ($value->isPreset()) : ?>
+<?php $presetConfig = $value->getPresetConfig(); ?>
+<td><?php echo __($presetConfig['Caption']) ?></td>
+<?php else: ?>
 <td><?php echo $value->getCaption() ?></td>
+<?php endif; ?>
 <td><?php echo $value->getName() ?></td>
 <td><?php echo ($value->getIsRequired() ? '○' : '×') ?></td>
 <td><?php echo ($value->getIsEditPublicFlag() ? '○' :'×') ?></td>
