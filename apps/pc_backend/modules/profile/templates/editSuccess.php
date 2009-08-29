@@ -10,8 +10,8 @@
 
 <div style="margin-bottom: 1em;">
 <select id="original_preset">
-  <option name="presetting"<?php if ($profile->isPreset()) : ?> selected="selected"<?php endif; ?>>プリセットから選ぶ</option>
-  <option name="original"<?php if (!$profile->isPreset()) : ?> selected="selected"<?php endif; ?>>自分で入力する</option>
+  <option name="presetting"<?php if (!$form->isNew() && $profile->isPreset()) : ?> selected="selected"<?php endif; ?>>プリセットから選ぶ</option>
+  <option name="original"<?php if (!$form->isNew() && !$profile->isPreset()) : ?> selected="selected"<?php endif; ?>>自分で入力する</option>
 </select>
 </div>
 
