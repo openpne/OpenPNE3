@@ -8,3 +8,11 @@ indexTrust:
 transferSuccess:
   has_layout: true
   layout: layoutC
+
+listSuccess:
+  has_layout: true
+  layout: layoutC
+
+unsetPermissionSuccess:
+  has_layout: true
+  layout: layoutC

@@ -1027,6 +1027,50 @@
         <source>Do you really delete this application?</source>
         <target>このアプリケーションを削除しますか？</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>External Service</source>
+        <target>外部サービス</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Policy of Permission</source>
+        <target>許可方法</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Always Permit</source>
+        <target>常に許可</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Unset Permission</source>
+        <target>許可の取り消し</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Ask Each Time</source>
+        <target>毎回確認する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>List of Service that You Use</source>
+        <target>使用中のサービス一覧</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your OpenID</source>
+        <target>あなたの OpenID</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Connecting with External Application</source>
+        <target>外部サービスとの接続設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>OpenID Configuration</source>
+        <target>OpenID の設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you unset the permission of this service?</source>
+        <target>このサービスへの許可を解除しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Unset</source>
+        <target>解除</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

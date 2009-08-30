@@ -55,8 +55,8 @@ class OpenIDActions extends sfActions
           $_SERVER['QUERY_STRING'] = http_build_query($openIDRequest->message->toPostArgs());
           $this->forwardUnless($this->getUser()->isAuthenticated() && $this->getUser()->getMember(), 'member', 'login');
 
-          $trusted = unserialize($this->getUser()->getMember()->getConfig('trusted_openid_rp'));
-          if ($trusted && in_array($openIDRequest->trust_root, $trusted))
+          $log = Doctrine::getTable('OpenIDTrustLog')->findByOpenID($openIDRequest->trust_root, $this->getUser()->getMemberId());
+          if ($log && $log->is_permanent)
           {
             $request->setParameter('trust', '1');
             $this->forward('OpenID', 'trust');
@@ -79,8 +79,8 @@ class OpenIDActions extends sfActions
       {
         $this->forwardUnless($this->getUser()->isAuthenticated() && $this->getUser()->getMember(), 'member', 'login');
 
-        $trusted = unserialize($this->getUser()->getMember()->getConfig('trusted_openid_rp'));
-        if ($trusted && in_array($openIDRequest->trust_root, $trusted))
+        $log = Doctrine::getTable('OpenIDTrustLog')->findByOpenID($openIDRequest->trust_root, $this->getUser()->getMemberId());
+        if ($log && $log->is_permanent)
         {
           $request->setParameter('trust', '1');
           $this->forward('OpenID', 'trust');
@@ -124,17 +124,12 @@ class OpenIDActions extends sfActions
       $this->forward404Unless($reqUrl === $info->identity, 'request:'.$reqUrl.'/identity:'.$info->identity);
     }
 
+    $log = Doctrine::getTable('OpenIDTrustLog')->log($info->trust_root, $this->getUser()->getMemberId());
+
     if ($request->hasParameter('permanent'))
     {
-      $trusted = unserialize($this->getUser()->getMember()->getConfig('trusted_openid_rp'));
-      if (!$trusted)
-      {
-        $trusted = array();
-      }
-
-      $trusted[] = $info->trust_root;
-
-      $this->getUser()->getMember()->setConfig('trusted_openid_rp', serialize($trusted));
+      $log->is_permanent = true;
+      $log->save();
     }
 
     unset($_SESSION['request']);
@@ -175,6 +170,31 @@ class OpenIDActions extends sfActions
 
   public function executeMember(sfWebRequest $request)
   {
+  }
+
+  public function executeList(sfWebRequest $request)
+  {
+    $this->pager = Doctrine::getTable('OpenIDTrustLog')
+      ->getListPager($this->getUser()->getMemberId());
+  }
+
+  public function executeUnsetPermission(sfWebRequest $request)
+  {
+    $this->log = Doctrine::getTable('OpenIDTrustLog')
+      ->findOneByIdAndMemberId($request->getParameter('id'), $this->getUser()->getMemberId());
+    $this->forward404Unless($this->log);
+
+    $this->form = new sfForm();
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $request->checkCSRFProtection();
+
+      $this->log->is_permanent = false;
+      $this->log->save();
+
+      $this->redirect('OpenID/list');
+    }
   }
 
   public function executeIdpXrds(sfWebRequest $request)

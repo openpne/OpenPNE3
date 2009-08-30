@@ -2,7 +2,9 @@
 $options->addRequiredOption('pager');
 $options->addRequiredOption('pager_url');
 $options->addRequiredOption('item_url');
-$options->addRequiredOption('image_filename_method');
+
+$options->setDefault('image_filename_method', 'getImageFilename');
+$options->setDefault('show_images', true);
 ?>
 
 <?php op_include_pager_navigation($options->getRaw('pager'), $options->getRaw('pager_url')); ?>
@@ -16,12 +18,14 @@ $getImageFilename = $options->image_filename_method;
 ?>
 
 <tr>
+<?php if ($options->show_images) : ?>
 <?php include_customizes('id_photo', 'before', $customizeOption) ?>
 <td class="photo">
 <?php echo link_to(image_tag_sf_image($item->$getImageFilename(), array('size' => '76x76')), $options->item_url, $item); ?><br />
 <?php echo link_to((string)$item, $options->item_url, $item) ?>
 </td>
 <?php include_customizes('id_photo', 'after', $customizeOption) ?>
+<?php endif; ?>
 
 <?php include_customizes('id_friend', 'before', $customizeOption) ?>
 <?php foreach ($options->getRaw('menus') as $menu) : ?>

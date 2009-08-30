@@ -25,8 +25,7 @@ class openpneMigrateTask extends sfDoctrineBaseTask
       new sfCommandOption('to-revision', 'r', sfCommandOption::PARAMETER_OPTIONAL, 'A revision'),
       new sfCommandOption('no-update-plugin', null, sfCommandOption::PARAMETER_NONE, 'Do not update plugins'),
       new sfCommandOption('no-build-model', null, sfCommandOption::PARAMETER_NONE, 'Do not build model classes'),
-      new sfCommandOption('no-execute-generate', null, sfCommandOption::PARAMETER_NONE, 'Do not execute generated script'),
-      new sfCommandOption('only-execute-generate', null, sfCommandOption::PARAMETER_NONE, 'Execute only generated script'),
+      new sfCommandOption('execute-generate', null, sfCommandOption::PARAMETER_NONE, 'Do not execute generated script'),
     ));
 
     $this->briefDescription = 'migrate OpenPNE and/or the plugins to newer/older version one';
@@ -77,13 +76,10 @@ EOF;
         'revision' => $options['to-revision'],
       );
 
-      if (!$options['only-execute-generate'])
-      {
-        $this->migrateFromScript($target, $databaseManager, $params);
-      }
+      $this->migrateFromScript($target, $databaseManager, $params);
     }
 
-    if (!$options['no-execute-generate'])
+    if ($options['execute-generate'])
     {
       $this->migrateFromDiff();
     }

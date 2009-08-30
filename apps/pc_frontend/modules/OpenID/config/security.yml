@@ -1,2 +1,6 @@
 all:
   is_secure: off
+
+list:
+  is_secure: on
+  credentials: SNSMember

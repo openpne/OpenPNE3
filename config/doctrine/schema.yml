@@ -473,3 +473,22 @@ Session:
     collate: utf8_unicode_ci
     charset: utf8
     comment: "Saves session data"
+
+OpenIDTrustLog:
+  tableName: openid_trust_log
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    member_id: { type: integer(4), notnull: false, comment: "Member id" }
+    uri: { type: string, comment: "URI for RP" }
+    uri_key: { type: string(32), comment: "Hashed URI for RP" }
+    is_permanent: { type: boolean, comment: "A permanent flag" }
+  relations:
+    Member: { local: member_id, foreign: id, onDelete: cascade }
+  indexes:
+    uri_key_INDEX:
+      fields: [uri_key]
+  options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
+    comment: "Saves logs of trusted OpenID RP"
