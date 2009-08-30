@@ -30,6 +30,8 @@ $getImageFilename = $options->image_filename_method;
 <td<?php echo !empty($menu['class']) ? ' class="'.$menu['class'].'"' : ''; ?>>
 <?php echo link_to($menu['text'], $menu['url'], $item) ?>
 </td>
+<?php else: ?>
+<td>&nbsp;</td>
 <?php endif; ?>
 <?php else: ?>
 <td<?php echo !empty($menu['class']) ? ' class="'.$menu['class'].'"' : ''; ?>>

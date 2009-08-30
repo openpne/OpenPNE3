@@ -255,6 +255,42 @@
         <source>Self Introduction</source>
         <target>自己紹介</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Edit</source>
+        <target>編集</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Remove Admin Token</source>
+        <target>アクセス権限の剥奪</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Image</source>
+        <target>画像</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Application Name</source>
+        <target>アプリケーション名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>List of Connecting Application</source>
+        <target>連携済みアプリケーション一覧</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Operation</source>
+        <target>操作</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The application was deleted successfully.</source>
+        <target>アプリケーションは正常に削除されました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you really delete this application?</source>
+        <target>このアプリケーションを削除しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete This Application</source>
+        <target>アプリケーションの削除</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

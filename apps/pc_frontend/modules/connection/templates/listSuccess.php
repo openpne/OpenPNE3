@@ -9,6 +9,7 @@
   'title' => __('連携済みアプリケーション一覧'),
   'menus' => array(
     array('text' => __('Edit'), 'url' => 'connection_edit'),
+    array('text' => __('Delete'), 'url' => 'connection_deleteConfirm'),
     array('text' => __('Revoke Access'), 'url' => 'connection_revoke_token_confirm'),
   ),
 )); ?>

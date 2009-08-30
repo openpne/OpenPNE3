@@ -14,7 +14,7 @@ oauth_access_token:
 # connection rules
 connection:
   class: opStandardRouteCollection
-  options: { model: OAuthConsumerInformation, actions: [show, new, create, edit, update] }
+  options: { model: OAuthConsumerInformation, actions: [show, new, create, edit, update, deleteConfirm, delete] }
 
 connection_list:
   url:     /connection

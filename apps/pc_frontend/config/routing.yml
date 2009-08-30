@@ -49,7 +49,7 @@ oauth_access_token:
 # connection rules
 connection:
   class: opStandardRouteCollection
-  options: { model: OAuthConsumerInformation, actions: [show, new, create, edit, update], is_acl: true }
+  options: { model: OAuthConsumerInformation, actions: [show, new, create, edit, update, deleteConfirm, delete], is_acl: true }
 
 connection_list:
   url:     /connection

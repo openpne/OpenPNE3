@@ -1019,6 +1019,14 @@
         <source>The access authority was revoked successfully.</source>
         <target>正常にアクセス権限の破棄がおこなわれました。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>The application was deleted successfully.</source>
+        <target>アプリケーションは正常に削除されました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you really delete this application?</source>
+        <target>このアプリケーションを削除しますか？</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

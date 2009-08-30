@@ -110,9 +110,19 @@ class opStandardRouteCollection extends sfDoctrineRouteCollection
   protected function getRouteForDelete()
   {
     return new $this->routeClass(
-      sprintf('%s/:%s', $this->options['prefix_path'], $this->options['column']),
+      sprintf('%s/:%s/delete', $this->options['prefix_path'], $this->options['column']),
       array('module' => $this->options['module'], 'action' => $this->getActionMethod('delete'), 'sf_format' => 'html'),
-      array('sf_method' => array('delete', 'post')),
+      array('sf_method' => array('post', 'delete')),
+      array('model' => $this->options['model'], 'type' => 'object', 'method' => $this->options['model_methods']['object'], 'privilege' => $this->getPrivilege('delete'))
+    );
+  }
+
+  protected function getRouteForDeleteConfirm()
+  {
+    return new $this->routeClass(
+      sprintf('%s/:%s/%s', $this->options['prefix_path'], $this->options['column'], 'delete'),
+      array('module' => $this->options['module'], 'action' => $this->getActionMethod('deleteConfirm'), 'sf_format' => 'html'),
+      array('sf_method' => array('get')),
       array('model' => $this->options['model'], 'type' => 'object', 'method' => $this->options['model_methods']['object'], 'privilege' => $this->getPrivilege('delete'))
     );
   }

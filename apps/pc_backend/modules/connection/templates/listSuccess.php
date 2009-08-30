@@ -2,13 +2,13 @@
 <?php include_partial('submenu'); ?>
 <?php end_slot() ?>
 
-<h2><?php echo __('連携済みアプリケーション一覧') ?></h2>
+<h2><?php echo __('List of Connecting Application') ?></h2>
 
 <table>
 <tr>
-<th><?php echo __('画像') ?></th>
-<th><?php echo __('アプリケーション名') ?></th>
-<th><?php echo __('操作') ?></th>
+<th><?php echo __('Image') ?></th>
+<th><?php echo __('Application Name') ?></th>
+<th><?php echo __('Operation') ?></th>
 </tr>
 <?php foreach ($consumers as $consumer): ?>
 <tr>
@@ -20,6 +20,7 @@
 <li><?php echo link_to(__('Remove Admin Token'), 'connection/removeToken?id='.$consumer->id); ?></li>
 <?php endif; ?>
 <li><?php echo link_to(__('Edit'), 'connection/edit?id='.$consumer->id); ?></li>
+<li><?php echo link_to(__('Delete'), 'connection/deleteConfirm?id='.$consumer->id); ?></li>
 </ul>
 </td>
 </tr>

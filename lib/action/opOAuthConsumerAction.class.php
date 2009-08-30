@@ -101,4 +101,22 @@ abstract class opOAuthConsumerAction extends sfActions
   {
     $this->consumer = $this->getRoute()->getObject();
   }
+
+  public function executeDeleteConfirm(sfWebRequest $request)
+  {
+    $this->consumer = $this->getRoute()->getObject();
+    $this->form = new sfForm();
+  }
+
+  public function executeDelete(sfWebRequest $request)
+  {
+    $this->consumer = $this->getRoute()->getObject();
+
+    $request->checkCSRFProtection();
+
+    $this->getUser()->setFlash('notice', 'The application was deleted successfully.');
+
+    $this->consumer->delete();
+    $this->redirect('connection/list');
+  }
 }
