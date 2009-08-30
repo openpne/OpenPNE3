@@ -1071,6 +1071,22 @@
         <source>Unset</source>
         <target>解除</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>And, this site wants to use your following informations.</source>
+        <target>また、このサイトは、あなたの次の情報を利用しようとしています。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The shared information may save in this site permanently.</source>
+        <target>共有された情報はこのサイトで保持され続ける可能性があります。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please uncheck these informations that you don't want to share with the site.</source>
+        <target>提供をおこないたくない情報のチェックを外してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>&lt;strong&gt;An emphatic item&lt;/strong&gt; is an information that you need to use the site. If you uncheck that item, that action is recognized as clicking "No".</source>
+        <target>&lt;strong&gt;強調されている項目&lt;/strong&gt;は、サイトを利用するために最低限必要な情報です。この項目のチェックを外した場合、「いいえ」を選択したものとみなされます。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

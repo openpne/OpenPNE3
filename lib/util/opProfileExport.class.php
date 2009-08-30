@@ -26,12 +26,17 @@ class opProfileExport
     $images = array(),
     $configs = array();
 
-  public function getData()
+  public function getData($allowed = array())
   {
     $result = array();
 
     foreach ($this->tableToOpenPNE as $k => $v)
     {
+      if (!in_array($v, $allowed))
+      {
+        continue;
+      }
+
       $methodName = $this->getGetterMethodName($k);
       $result[$k] = $this->$methodName($k);
     }

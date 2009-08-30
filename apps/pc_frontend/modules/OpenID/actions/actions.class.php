@@ -40,6 +40,10 @@ class OpenIDActions extends sfActions
       return sfView::SUCCESS;
     }
 
+    $sregRequest = Auth_OpenID_SRegRequest::fromOpenIDRequest($openIDRequest);
+    $axRequest = Auth_OpenID_AX_FetchRequest::fromOpenIDRequest($openIDRequest);
+    $this->requestedProfiles = $this->createListOfRequestedProfiles($sregRequest, $axRequest);
+
     $_SESSION['request'] = serialize($openIDRequest);
     if (!empty($openIDRequest->mode) && in_array($openIDRequest->mode, array('checkid_immediate', 'checkid_setup')))
     {
@@ -124,33 +128,34 @@ class OpenIDActions extends sfActions
       $this->forward404Unless($reqUrl === $info->identity, 'request:'.$reqUrl.'/identity:'.$info->identity);
     }
 
-    $log = Doctrine::getTable('OpenIDTrustLog')->log($info->trust_root, $this->getUser()->getMemberId());
-
-    if ($request->hasParameter('permanent'))
-    {
-      $log->is_permanent = true;
-      $log->save();
-    }
-
     unset($_SESSION['request']);
     $server = new Auth_OpenID_Server(new Auth_OpenID_FileStore(sfConfig::get('sf_cache_dir')), $info->identity);
     $response = $info->answer(true, null, $reqUrl);
-
     $sregRequest = Auth_OpenID_SRegRequest::fromOpenIDRequest($info);
+    $axRequest = Auth_OpenID_AX_FetchRequest::fromOpenIDRequest($info);
+
+    $allowedProfiles = $request->getParameter('profiles', array());
+    $requiredProfiles = $this->createListOfRequestedProfiles($sregRequest, $axRequest);
+
+    $rejectedProfiles = array_diff_key($requiredProfiles, array_flip($allowedProfiles));
+    if (in_array(true, $rejectedProfiles))
+    {
+      $url = $info->getCancelURL();
+      $this->redirect($url);
+    }
+
     if ($sregRequest)
     {
       $sregExchange = new opOpenIDProfileExchange('sreg', $this->getUser()->getMember());
-      $sregResp = Auth_OpenID_SRegResponse::extractResponse($sregRequest, $sregExchange->getData());
+      $sregResp = Auth_OpenID_SRegResponse::extractResponse($sregRequest, $sregExchange->getData($allowedProfiles));
       $response->addExtension($sregResp);
     }
 
-    $axRequest = Auth_OpenID_AX_FetchRequest::fromOpenIDRequest($info);
-    $axResp = new Auth_OpenID_AX_FetchResponse();
-
     if ($axRequest && !($axRequest instanceof Auth_OpenID_AX_Error))
     {
+      $axResp = new Auth_OpenID_AX_FetchResponse();
       $axExchange = new opOpenIDProfileExchange('ax', $this->getUser()->getMember());
-      $userData = $axExchange->getData();
+      $userData = $axExchange->getData($allowedProfiles);
 
       foreach ($axRequest->requested_attributes as $k => $v)
       {
@@ -161,6 +166,14 @@ class OpenIDActions extends sfActions
       }
 
       $response->addExtension($axResp);
+    }
+
+    $log = Doctrine::getTable('OpenIDTrustLog')->log($info->trust_root, $this->getUser()->getMemberId());
+
+    if ($request->hasParameter('permanent'))
+    {
+      $log->is_permanent = true;
+      $log->save();
     }
 
     $response = $server->encodeResponse($response);
@@ -268,5 +281,63 @@ EOF;
       echo $body;
       exit;
     }
+  }
+
+  protected function createListOfRequestedProfiles($sreg, $ax)
+  {
+    $axOptional = $axRequired = $sregOptional = $sregRequired = array();
+
+    $result = array();
+
+    $sregExport = new opOpenIDSregProfileExport();
+    $axExport = new opOpenIDAxProfileExport();
+
+    if ($sreg)
+    {
+      foreach ($sregExport->tableToOpenPNE as $k => $v)
+      {
+        if (isset($sreg->required[$k]))
+        {
+          $sregRequired[] = $v;
+        }
+        elseif (isset($sreg->optional[$k]))
+        {
+          $sregOptional[] = $v;
+        }
+      }
+    }
+
+    if ($ax && !($ax instanceof Auth_OpenID_AX_Error))
+    {
+      foreach ($ax->requested_attributes as $k => $v)
+      {
+        $table = $axExport->tableToOpenPNE;
+        if (empty($table[$k]))
+        {
+          break;
+        }
+
+        $profileName = $table[$k];
+        if ($v->required)
+        {
+          $axRequired[] = $profileName;
+        }
+        else
+        {
+          $axOptional[] = $profileName;
+        }
+      }
+    }
+
+    foreach (array_merge($sregOptional, $axOptional) as $v)
+    {
+      $result[$v] = false;
+    }
+    foreach (array_merge($sregRequired, $axRequired) as $v)
+    {
+      $result[$v] = true;
+    }
+
+    return $result;
   }
 }
