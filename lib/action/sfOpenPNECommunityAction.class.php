@@ -310,8 +310,13 @@ abstract class sfOpenPNECommunityAction extends sfActions
 
     if ($request->isMethod(sfWebRequest::POST))
     {
-      Doctrine::getTable('CommunityMember')->quit($member->getId(), $this->id);
-      $this->redirect('community/memberManage?id='.$this->id);
+      $form = new sfForm();
+      $form->bind(array('_csrf_token' => $request->getParameter('_csrf_token')));
+      if ($form->isValid())
+      {
+        Doctrine::getTable('CommunityMember')->quit($member->getId(), $this->id);
+        $this->redirect('community/memberManage?id='.$this->id);
+      }
     }
 
     $this->member    = $member;
