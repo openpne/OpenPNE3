@@ -84,15 +84,3 @@ community_home:
   url:   /community/:id
   param: { module: community, action: home }
   requirements: { id: \d+ }
-
-# default rules
-default_symfony:
-  url:   /symfony/:action/*
-  param: { module: default }
-
-default_index:
-  url:   /:module
-  param: { action: index }
-
-default:
-  url:   /:module/:action/*
