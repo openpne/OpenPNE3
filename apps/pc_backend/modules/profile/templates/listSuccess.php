@@ -57,9 +57,10 @@
 )) ?>
 
 <h3>プロフィール選択肢一覧</h3>
+<?php $selectionCount = 0; ?>
 <?php foreach ($profiles as $value): ?>
 <?php if (!$value->isPreset() && ($value->getFormType() == 'radio' || $value->getFormType() == 'checkbox' || $value->getFormType() == 'select')) : ?>
-
+<?php $selectionCount++; ?>
 <h4><a name="<?php echo $value->getName() ?>"><?php echo $value->getCaption() ?></a></h4>
 <table id="profile_options_<?php echo $value->getId() ?>">
 <thead><tr>
@@ -110,3 +111,6 @@
 )) ?>
 <?php endif; ?>
 <?php endforeach; ?>
+<?php if (!$selectionCount): ?>
+<p>選択肢を設定可能なプロフィール項目がありません。</p>
+<?php endif; ?>

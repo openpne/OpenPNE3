@@ -1,46 +1,43 @@
 Profile:
   profile_sex:
-    id: ~
+    name: "op_preset_sex"
     is_required: 1
-    name: "sex"
     form_type: "select"
-    value_type: "integer"
+    value_type: "string"
     is_disp_regist: 1
     is_disp_config: 1
     is_disp_search: 1
     is_edit_public_flag: 0
     default_public_flag: 1
     sort_order: 110
-    Translation:
-      ja_JP:
-        caption: "性別"
-      en:
-        caption: "Sex"
 
   profile_birthday:
-    id: ~
-    is_required: 1
-    name: "birthday"
+    name: "op_preset_birthday"
+    is_required: 0
     form_type: "date"
     value_type: "string"
     is_disp_regist: 1
     is_disp_config: 1
     is_disp_search: 1
-    value_min: "-100years"
-    value_max: "now"
     is_edit_public_flag: 0
     default_public_flag: 1
     sort_order: 120
-    Translation:
-      ja_JP:
-        caption: "誕生日"
-      en:
-        caption: "Birthday"
+
+  profile_region:
+    name: "op_preset_region"
+    is_required: 0
+    form_type: "region_select"
+    value_type: "JP"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    is_edit_public_flag: 0
+    default_public_flag: 1
+    sort_order: 125
 
   profile_self_intro:
-    id: ~
-    is_required: 1
-    name: "self_intro"
+    name: "op_preset_self_introduction"
+    is_required: 0
     form_type: "textarea"
     value_type: "string"
     is_disp_regist: 1
@@ -49,44 +46,3 @@ Profile:
     is_edit_public_flag: 0
     default_public_flag: 1
     sort_order: 130
-    Translation:
-      ja_JP:
-        caption: "自己紹介"
-      en:
-        caption: "Self Introduction"
-
-ProfileOption:
-  profile_option_sex_man:
-    id: ~
-    sort_order: 0
-    Profile: profile_sex
-    Translation:
-      ja_JP:
-        value: "男性"
-      en:
-        value: "Male"
-
-  profile_option_sex_woman:
-    id: ~
-    sort_order: 1
-    Profile: profile_sex
-    Translation:
-      ja_JP:
-        value: "女性"
-      en:
-        value: "Female"
-
-  profile_option_birthday_year:
-    id: ~
-    sort_order: 0
-    Profile: profile_birthday
-
-  profile_option_birthday_month:
-    id: ~
-    sort_order: 1
-    Profile: profile_birthday
-
-  profile_option_birthday_day:
-    id: ~
-    sort_order: 2
-    Profile: profile_birthday

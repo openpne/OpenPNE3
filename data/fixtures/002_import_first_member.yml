@@ -1,44 +1,32 @@
 Member:
   first_member:
-    id: ~
     name: "OpenPNE君"
     is_active: 1
 
 MemberProfile:
   first_member_profile_sex:
+    value: "Man"
     public_flag: 1
     Member: first_member
     Profile: profile_sex
-    ProfileOption: profile_option_sex_man
-    children: []
 
   first_member_profile_birthday:
+    value: "1988-04-23"
     public_flag: 1
     Member: first_member
     Profile: profile_birthday
-    children:
-      first_member_profile_birthday_day:
-        value: "23"
-        Member: first_member
-        Profile: profile_birthday
-        ProfileOption: profile_option_birthday_day
-      first_member_profile_birthday_month:
-        value: "4"
-        Member: first_member
-        Profile: profile_birthday
-        ProfileOption: profile_option_birthday_month
-      first_member_profile_birthday_year:
-        value: "1988"
-        Member: first_member
-        Profile: profile_birthday
-        ProfileOption: profile_option_birthday_year
+
+  first_member_profile_region:
+    value: "Tokyo"
+    public_flag: 1
+    Member: first_member
+    Profile: profile_region
 
   first_member_profile_self_intro:
     value: "よろしくお願いします。"
     public_flag: 1
     Member: first_member
     Profile: profile_self_intro
-    children: []
 
 MemberConfig:
   first_member_pc_address:
