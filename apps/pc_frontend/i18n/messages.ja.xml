@@ -99,18 +99,6 @@
         <target>まだコミュニティに参加していません。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Community Notification</source>
-        <target>コミュニティ書き込み通知設定</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Need posting Notification</source>
-        <target>通知設定を使用する</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Not Need posting Notification</source>
-        <target>通知設定を使用しない</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Search Communities</source>
         <target>コミュニティ検索</target>
       </trans-unit>

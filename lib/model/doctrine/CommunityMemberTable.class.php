@@ -136,23 +136,6 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
       ->execute();
   }
 
-  public function getCommunityMemberIdsByNotification($communityId)
-  {
-    $notificationPcMembers = $this->createQuery()
-      ->select('member_id')
-      ->where('community_id = ?', $communityId)
-      ->addWhere('is_receive_mail_pc = true')
-      ->fetchArray();
-
-    $notificationMobileMembers = $this->createQuery()
-      ->select('member_id')
-      ->where('community_id = ?', $communityId)
-      ->addWhere('is_receive_mail_mobile = true')
-      ->fetchArray();
-
-    return array($notificationPcMembers, $notificationMobileMembers);
-  }
-
   public function appendRoles(Zend_Acl $acl)
   {
     return $acl
