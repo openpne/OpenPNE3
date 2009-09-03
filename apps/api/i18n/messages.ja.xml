@@ -1,0 +1,235 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Man</source>
+        <target>男性</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Female</source>
+        <target>女性</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Hokkaido</source>
+        <target>北海道</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Aomori</source>
+        <target>青森県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Iwate</source>
+        <target>岩手県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Miyagi</source>
+        <target>宮城県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Akita</source>
+        <target>秋田県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Yamagata</source>
+        <target>山形県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Fukushima</source>
+        <target>福島県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Ibaraki</source>
+        <target>茨城県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Tochigi</source>
+        <target>栃木県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Gunma</source>
+        <target>群馬県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Saitama</source>
+        <target>埼玉県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Chiba</source>
+        <target>千葉県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Tokyo</source>
+        <target>東京都</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Kanagawa</source>
+        <target>神奈川県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Niigata</source>
+        <target>新潟県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Toyama</source>
+        <target>富山県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Ishikawa</source>
+        <target>石川県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Fukui</source>
+        <target>福井県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Yamanashi</source>
+        <target>山梨県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Nagano</source>
+        <target>長野県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Gifu</source>
+        <target>岐阜県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Shizuoka</source>
+        <target>静岡県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Aichi</source>
+        <target>愛知県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Mie</source>
+        <target>三重県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Shiga</source>
+        <target>滋賀県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Kyoto</source>
+        <target>京都府</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Osaka</source>
+        <target>大阪府</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Hyogo</source>
+        <target>兵庫県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Nara</source>
+        <target>奈良県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Wakayama</source>
+        <target>和歌山県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Tottori</source>
+        <target>鳥取県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Shimane</source>
+        <target>島根県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Okayama</source>
+        <target>岡山県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Hiroshima</source>
+        <target>広島県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Yamaguchi</source>
+        <target>山口県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Tokushima</source>
+        <target>徳島県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Kagawa</source>
+        <target>香川県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Ehime</source>
+        <target>愛媛県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Kochi</source>
+        <target>高知県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Fukuoka</source>
+        <target>福岡県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Saga</source>
+        <target>佐賀県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Nagasaki</source>
+        <target>長崎県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Kumamoto</source>
+        <target>熊本県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Oita</source>
+        <target>大分県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Miyazaki</source>
+        <target>宮崎県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Kagoshima</source>
+        <target>鹿児島県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Okinawa</source>
+        <target>沖縄県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Sex</source>
+        <target>性別</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Birthday</source>
+        <target>誕生日</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Country</source>
+        <target>国または地域</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Region</source>
+        <target>都市（都道府県や州など）</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Region in Japan</source>
+        <target>都道府県</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Postal Code</source>
+        <target>郵便番号</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Telephone Number</source>
+        <target>電話番号</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Self Introduction</source>
+        <target>自己紹介</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
