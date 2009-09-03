@@ -40,7 +40,12 @@
 <th><?php echo __('招待者') ?></th>
 <th><?php echo __('最終ログイン') ?></th>
 <?php foreach ($profiles as $profile) : ?>
+<?php if ($profile->isPreset()): ?>
+<?php $config = $profile->getPresetConfig(); ?>
+<th><?php echo __($config['Caption']) ?></th>
+<?php else: ?>
 <th><?php echo $profile->getCaption() ?></th>
+<?php endif; ?>
 <?php endforeach; ?>
 <th><?php echo __('PCメールアドレス') ?></th>
 <th><?php echo __('携帯メールアドレス') ?></th>
@@ -65,7 +70,11 @@
 <td><?php if ($member->getInviteMember()) : ?><?php echo $member->getInviteMember()->getName() ?><?php endif; ?></td>
 <td><?php if ($member->getLastLoginTime()) : ?><?php echo date('y-m-d<b\r />H:i:s', $member->getLastLoginTime()) ?><?php endif; ?></td>
 <?php foreach ($profiles as $profile) : ?>
+<?php if ($profile->isPreset()): ?>
+<td><?php echo __((string)$member->getProfile($profile->getName())); ?></td>
+<?php else: ?>
 <td><?php echo $member->getProfile($profile->getName()); ?></td>
+<?php endif; ?>
 <?php endforeach; ?>
 <td><?php echo $member->getConfig('pc_address') ?></td>
 <td><?php echo $member->getConfig('mobile_address') ?></td>
