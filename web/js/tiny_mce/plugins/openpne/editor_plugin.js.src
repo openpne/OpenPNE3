@@ -60,7 +60,7 @@
                     n = DOM.add(tr, 'td');
 
                     n = DOM.add(n, 'img', {
-                        src : "./skin/default/img/emoji/" + s.carrier + "/" + s.carrier + i + ".gif",
+                        src : op_get_relative_uri_root() + "/images/emoji/" + s.carrier + "/" + s.carrier + i + ".gif",
                         alt : "[" + s.carrier + ":" + i + "]"
                     });
 
@@ -135,7 +135,7 @@
 
     tinymce.PluginManager.requireLangPack('openpne');
 
-    var config = pne_mce_editor_get_config();
+    var config = op_mce_editor_get_config();
 
     tinymce.create('tinymce.plugins.OpenPNEPlugin', {
         init : function(ed, url) {
@@ -192,21 +192,21 @@
                 }
             });
             ed.onNodeChange.add(function(ed, cm, n) {
-                cm.setActive('mce_editor_textarea_op_b', false);
-                cm.setActive('mce_editor_textarea_op_u', false);
-                cm.setActive('mce_editor_textarea_op_s', false);
-                cm.setActive('mce_editor_textarea_op_i', false);
-                cm.setActive('mce_editor_textarea_op_large', false);
-                cm.setActive('mce_editor_textarea_op_small', false);
+                cm.setActive(this.id + '_op_b', false);
+                cm.setActive(this.id + '_op_u', false);
+                cm.setActive(this.id + '_op_s', false);
+                cm.setActive(this.id + '_op_i', false);
+                cm.setActive(this.id + '_op_large', false);
+                cm.setActive(this.id + '_op_small', false);
 
                 var elm = n;
                 while (elm.parentNode) {
                     var tagname = t._getTagName(elm);
-                    if ((tagname == "large" || tagname == "small") && (cm.get('mce_editor_textarea_op_large').isActive() || cm.get('mce_editor_textarea_op_small').isActive())) {
+                    if ((tagname == "large" || tagname == "small") && (cm.get(this.id + '_op_large').isActive() || cm.get(this.id + '_op_small').isActive())) {
                         elm = elm.parentNode;
                         continue;
                     }
-                    cm.setActive('mce_editor_textarea_op_' + tagname,  true);
+                    cm.setActive(this.id + '_op_' + tagname,  true);
                     elm = elm.parentNode;
                 }
             });
@@ -218,7 +218,9 @@
                 c = this._createOpenPNEColorButton("op_color", { title : "{#openpne.op_color}", image: config["op_color"].imageURL, cmd : "ForeColor"}, cm);
             }
 
-            if (n == "op_emoji_docomo" || n == "op_emoji_au" && config["op_emoji_au"].isEnabled || n == "op_emoji_softbank" && config["op_emoji_softbank"].isEnabled) {
+            if (n == "op_emoji_docomo" || 
+                n == "op_emoji_au"  && config["op_emoji_au"] && config["op_emoji_au"].isEnabled ||
+                n == "op_emoji_softbank" && config["op_emoji_softbank"] && config["op_emoji_softbank"].isEnabled) {
                 var emoji_config = {
                     op_emoji_docomo : {
                         carrier : "i",
@@ -242,7 +244,7 @@
                 c = this._createOpenPNEEmojiButton(n, emoji_config[n], cm);
             }
 
-            if (n == "op_cmd" && config["op_cmd"].isEnabled) {
+            if (n == "op_cmd" && config["op_cmd"] && config["op_cmd"].isEnabled) {
                 c = this._createOpenPNECmdButton(n, {title: "{#openpne.op_cmd}", image: config["op_cmd"].imageURL, cmd: "mceOpenPNE_op_cmd"}, cm);
             }
 

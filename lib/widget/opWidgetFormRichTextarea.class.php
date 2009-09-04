@@ -19,7 +19,7 @@ class opWidgetFormRichTextarea extends sfWidgetFormTextarea
 {
   static protected $firstRender = true;
 
-  static protected $defaultTinyMCEConfigs = array(
+  protected $defaultTinyMCEConfigs = array(
     'mode'  => 'textareas',
     'theme' => 'advanced',
     'editor_selector' => 'mceEditor_dummy_selector',
@@ -30,65 +30,88 @@ class opWidgetFormRichTextarea extends sfWidgetFormTextarea
     'theme_advanced_buttons3' => '',
   );
 
+  public function __construct($options = array(), $attributes = array())
+  {
+    parent::__construct($options, $attributes);
+
+    $this->setOption('config', array_merge($this->defaultTinyMCEConfigs, $this->getOption('config')));
+  }
+
   protected function configure($options = array(), $attributes = array())
   {
     $this->addOption('config', array());
     $this->addOption('is_toggle', true);
     $this->addOption('is_textmode', true);
+    $this->addOption('textarea_template', '%s');
 
     parent::configure($options, $attributes);
   }
 
+  protected function getId($name, $attributes)
+  {
+    if (isset($attributes['id']))
+    {
+      return $attributes['id'];
+    }
+    $tmpAttributes = $this->fixFormId(array_merge(array('name' => $name, $attributes)));
+    return $tmpAttributes['id'];
+  }
+
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
-    $this->setOption('config', array_merge(self::$defaultTinyMCEConfigs, $this->getOption('config')));
-
     $toggle = '';
     $js = '';
 
-    if (isset($attributes['id']))
-    {
-      $id = $attributes['id'];
-    }
-    else
-    {
-      $tmpAttributes = $this->fixFormId(array_merge(array('name' => $name, $attributes)));
-      $id = $tmpAttributes['id'];
-    }
+    $id = $this->getId($name, $attributes);
 
     $changerName = $id.'_changer';
     $offId = $id.'_changer_1';
     $onId  = $id.'_changer_2';
     if (self::$firstRender)
     {
+      sfContext::getInstance()->getResponse()->addJavascript('/sfProtoculousPlugin/js/prototype');
       sfContext::getInstance()->getResponse()->addJavascript('tiny_mce/tiny_mce');
       $js .= <<<EOF
   function op_toggle_mce_editor(id)
   {
-    var textmode_checked = document.getElementById(id + "_changer_1").checked;
-    var previewmode_checked = document.getElementById(id + "_changer_2").checked;
+    var textmode_checked    = $(id + "_changer_1").checked;
+    var previewmode_checked = $(id + "_changer_2").checked;
+    var relational_objects  = $$("." + id);
     var editor = tinyMCE.get(id);
     if (!editor) {
-      if (previewmode_checked) 
-        tinyMCE.execCommand('mceAddControl', 0, id);
+      if (previewmode_checked) {
+        tinyMCE.execCommand('mceAddControl', false, id);
+        relational_objects.each(function(object){ object.style.display = "none"; });
+      }
       return true;
     }
-    if (editor.isHidden() && previewmode_checked)
+    if (editor.isHidden() && previewmode_checked) {
       editor.show();
-    else if (!editor.isHidden() && textmode_checked)
+      relational_objects.each(function(object){ object.style.display = "none"; });
+    } else if (!editor.isHidden() && textmode_checked) {
       editor.hide();
+      relational_objects.each(function(object){ object.style.display = "block"; });
+    }
   }
 
 EOF;
+      $js .= sprintf("  tinyMCE.init(%s);\n", json_encode($this->getOption('config')));
       self::$firstRender = false;
     }
 
-    $js .= sprintf("  tinyMCE.init(%s);\n", json_encode($this->getOption('config')));
     if (!$this->getOption('is_textmode'))
     {
       $js .= sprintf("  tinyMCE.execCommand('mceAddControl', false, '%s');\n", $id);
     }
-    $js = '<script type="text/javascript">'."\n".$js.'</script>';
+
+    $js .= sprintf("  op_toggle_mce_editor('%s')\n", $id);
+
+    if ($js)
+    {
+      sfProjectConfiguration::getActive()->loadHelpers('Javascript');
+      $js = javascript_tag($js);
+    }
+
     if ($this->getOption('is_toggle'))
     {
       $toggle = sprintf(<<<EOF
@@ -110,7 +133,7 @@ EOF
         sfContext::getInstance()->getI18N()->__('Preview Mode')
       );
     }
-    return $toggle.parent::render($name, $value, $attributes, $errors).$js;
+    return $toggle.sprintf($this->getOption('textarea_template'), parent::render($name, $value, $attributes, $errors)).$js;
   }
 }
 
