@@ -45,22 +45,6 @@ abstract class sfOpenPNECommunityAction extends sfActions
       $this->membersSize = 9;
     }
     $this->members = $this->community->getMembers($this->membersSize, true);
-
-    $this->community_member = Doctrine::getTable('CommunityMember')
-      ->retrieveByMemberIdAndCommunityId(
-        $this->getUser()->getMemberId(),
-        $this->id
-      );
-    $this->form = new CommunityMemberForm($this->community_member);
-    if ($request->isMethod(sfWebRequest::PUT))
-    {
-      $params = $request->getParameter('community_member');
-      $this->form->bind($params);
-      if ($this->form->isValid())
-      {
-        $this->form->save();
-      }
-    }
   }
 
  /**
