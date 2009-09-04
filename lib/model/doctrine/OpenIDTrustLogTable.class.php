@@ -21,8 +21,11 @@ class OpenIDTrustLogTable extends Doctrine_Table
       $log->uri_key = md5($openid);
       $log->member_id = $memberId;
     }
+    else
+    {
+      $log->state(Doctrine_Record::STATE_DIRTY);
+    }
 
-    $log->state(Doctrine_Record::STATE_DIRTY);
     $log->save();
 
     return $log;
