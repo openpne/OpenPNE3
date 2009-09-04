@@ -1,0 +1,21 @@
+general:
+  is_receive_mail_pc:
+    Name:       "is_receive_mail_pc"
+    Caption:    "Notification of posting in community by computer E-mail."
+    FormType:   "radio"
+    Default:    "off"
+    Choices:
+      on:       "Need posting Notification"
+      off:      "Not Need posting Notification"
+    IsUnique:   false
+    IsRequired: true
+  is_receive_mail_mobile:
+    Name:       "is_receive_mail_mobile"
+    Caption:    "Notification of posting in community by mobile E-mail."
+    FormType:   "radio"
+    Default:    "off"
+    Choices:
+      on:       "Need posting Notification"
+      off:      "Not Need posting Notification"
+    IsUnique:   false
+    IsRequired: true
