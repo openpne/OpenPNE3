@@ -18,7 +18,10 @@ if (!isset($app))
   $app = array_pop($dirPieces);
 }
 
-require_once(dirname(__FILE__).'/../../../../config/ProjectConfiguration.class.php');
+// chdir to the symfony(OpenPNE) project directory
+chdir(dirname(__FILE__).'/../../../..');
+
+require_once 'config/ProjectConfiguration.class.php';
 $configuration = ProjectConfiguration::getApplicationConfiguration($app, 'test', isset($debug) ? $debug : true);
 sfContext::createInstance($configuration);
 
