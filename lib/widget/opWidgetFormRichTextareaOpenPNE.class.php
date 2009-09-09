@@ -67,6 +67,11 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
 
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
+    if (sfConfig::get('sf_app') == 'mobile_frontend')
+    {
+      return parent::render($name, $value, $attributes, $errors);
+    }
+
     $js = '';
 
     foreach ($this->getOption('enable_button') as $buttonName)

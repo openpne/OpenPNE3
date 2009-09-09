@@ -59,6 +59,11 @@ class opWidgetFormRichTextarea extends sfWidgetFormTextarea
 
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
+    if (sfConfig::get('sf_app') == 'mobile_frontend')
+    {
+      return parent::render($name, $value, $attributes, $errors);
+    }
+
     $toggle = '';
     $js = '';
 
