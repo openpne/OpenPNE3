@@ -1238,3 +1238,62 @@ div.operation ul.moreInfo li {
   border: 1px solid #888888;
   background-color: #f8f8f8;
 }
+
+/*==============================================================================
+ * Decoration by opWidgetFormRichTextareaOpenPNE
+ *----------------------------------------------------------------------------*/
+span.op_b {
+	text-decoration: inherit;
+	font-style: inherit;
+	font-weight: bold;
+	color: inherit;
+	font-size: inherit;
+}
+
+span.op_u {
+	text-decoration: underline;
+	font-style: inherit;
+	font-weight: inherit;
+	color: inherit;
+	font-size: inherit;
+}
+
+span.op_s {
+	text-decoration: line-through;
+	font-style: inherit;
+	font-weight: inherit;
+	color: inherit;
+	font-size: inherit;
+}
+
+span.op_i {
+	text-decoration: inherit;
+	font-style: italic;
+	font-weight: inherit;
+	color: inherit;
+	font-size: inherit;
+}
+
+span.op_large {
+	text-decoration: inherit;
+	font-style: inherit;
+	font-weight: inherit;
+	color: inherit;
+	font-size: 20px;
+}
+
+span.op_small {
+	text-decoration: inherit;
+	font-style: inherit;
+	font-weight: inherit;
+	color: inherit;
+	font-size: 8px;
+}
+
+span.op_color {
+	text-decoration: inherit;
+	font-style: inherit;
+	font-weight: inherit;
+	color: inherit;
+	font-size: inherit;
+}

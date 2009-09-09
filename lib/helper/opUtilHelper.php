@@ -638,3 +638,17 @@ function op_have_privilege_by_uri($uri, $params = array(), $member_id = null)
 
   return true;
 }
+
+function op_decoration($string, $is_strip = false, $is_use_stylesheet = null)
+{
+  if (is_null($is_use_stylesheet))
+  {
+    $is_use_stylesheet = true;
+    if (sfConfig::get('sf_app') == 'mobile_frontend')
+    {
+      $is_use_stylesheet = false;
+    }
+  }
+
+  return opWidgetFormRichTextareaOpenPNE::toHtml($string, $is_strip, $is_use_stylesheet);
+}

@@ -47,6 +47,16 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
 
   static protected $defaultButtonOnclickActions = array('op_emoji_docomo' => "");
 
+  static protected $htmlConvertList = array(
+    'op:b' => array('b'),
+    'op:u' => array('u'),
+    'op:i' => array('i'),
+    'op:s' => array('s'),
+    'op:large' => array('font', array('size' => 5)),
+    'op:small' => array('font', array('size' => 1)),
+    'op:color' => array('font'),
+  );
+
   public function configure($options = array(), $attributes = array())
   {
     $this->addOption('enable_button', self::$defaultEnableButtons);
@@ -97,6 +107,86 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
       '</div>'.$this->getOption('textarea_template'));
 
     return $js.parent::render($name, $value, $attributes, $errors);
+  }
+
+ /**
+  * original tag to html
+  *
+  * @param string  $string
+  * @param boolean $isStrip          true if original tag is stripped from the string, false original tag convert html tag. 
+  * @param boolean $isUseStylesheet
+  */
+  static public function toHtml($string, $isStrip, $isUseStylesheet)
+  {
+    $regexp = '/(&lt;|<)(\/?)(op:.+?)(?:\s+code=(&quot;|")(#[0-9a-f]{3,6})\4)?\s*(&gt;|>)/i';
+
+    if ($isStrip)
+    {
+      $converted = preg_replace($regexp, '', $string);
+    }
+    else
+    {
+      if ($isUseStylesheet)
+      {
+        $converted = preg_replace_callback($regexp, 'opWidgetFormRichTextareaOpenPNE::toHtmlUseStylesheet', $string);
+      }
+      else
+      {
+        $converted = preg_replace_callback($regexp, 'opWidgetFormRichTextareaOpenPNE::toHtmlNoStylesheet', $string);
+      }
+    }
+
+    return $converted;
+  }
+
+  static public function toHtmlUseStylesheet($matches)
+  {
+    $isEndtag = $matches[2];
+    if ($isEndtag) {
+        return '</span>';
+    }
+
+    $options = array();
+    $tagname = strtolower($matches[3]);
+    $colorcode = strtolower($matches[5]);
+    $options['class'] = strtr($tagname, ':', '_');
+
+    if ($tagname == 'op:color' && $colorcode) {
+      $options['style'] = 'color:'.$colorcode;
+    }
+
+    return tag('span', $options, true);
+  }
+
+  static public function toHtmlNoStylesheet($matches)
+  {
+    $options = array();
+    $isEndtag = $matches[2];
+    $tagname = strtolower($matches[3]);
+    $colorcode = strtolower($matches[5]);
+    $classname = strtr($tagname, ':', '_');
+
+    if (!array_key_exists($tagname, self::$htmlConvertList)) {
+      return $value;
+    }
+
+    $htmlTagInfo = self::$htmlConvertList[$tagname];
+    $htmlTagName = $htmlTagInfo[0];
+
+    if ($isEndtag) {
+      return '</' . $htmlTagName . '>';
+    }
+
+    if ($tagname == 'op:color' && $colorcode) {
+      $options['color'] = $colorcode;
+    }
+
+    if (isset($htmlTagInfo[1]) && is_array($htmlTagInfo[1]))
+    {
+      $options = array_merge($options, $htmlTagInfo[1]);
+    }
+
+    return tag($htmlTagName, $options, true);
   }
 }
 
