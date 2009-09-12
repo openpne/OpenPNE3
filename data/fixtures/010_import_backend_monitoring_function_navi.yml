@@ -14,3 +14,11 @@ Navigation:
     Translation:
       ja_JP:
         caption: "画像アップロード・削除"
+
+  backend_monitoring_function_navi_file_list:
+    type: "monitoring_function_submenu"
+    uri:  "monitoringFunction/fileList"
+    sort_order: 30
+    Translation:
+      ja_JP:
+        caption: "ファイルアップロードリスト"

@@ -17,15 +17,17 @@ class FileTable extends Doctrine_Table
       ->fetchOne();
   }
 
-  public function getImageFiles($page = 1, $size = 20)
+  public function getFilePager($page = 1, $size = 20)
   {
-    $q = $this->getImageOrderdQuery();
+    $q = $this->getImageOrderdQuery()
+      ->where('type NOT LIKE ?', 'image%');
     return $this->getPager($q, $page, $size);
   }
 
   public function getImageFilePager($page = 1, $size = 20)
   {
-    $q = $this->getImageOrderdQuery();
+    $q = $this->getImageOrderdQuery()
+      ->where('type LIKE ?', 'image%');
     return $this->getPager($q, $page, $size);
   }
 
@@ -41,6 +43,6 @@ class FileTable extends Doctrine_Table
 
   protected function getImageOrderdQuery()
   {
-    return $this->createQuery()->where('type LIKE ?', 'image%')->orderBy('id DESC');
+    return $this->createQuery()->orderBy('id DESC');
   }
 }
