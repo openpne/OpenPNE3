@@ -29,33 +29,6 @@ EOF;
     
     sfToolkit::addIncludePath(array(sfConfig::get('sf_lib_dir').'/vendor/'));
 
-    $config = array(
-      'adapter'  => 'Zend_Http_Client_Adapter_Proxy'
-    );
-
-    if ($proxy = parse_url(sfConfig::get('op_http_proxy')))
-    {
-      if (isset($proxy['host']))
-      {
-        $config['proxy_host'] = $proxy['host'];
-      }
-
-      if (isset($proxy['port']))
-      {
-        $config['proxy_port'] = $proxy['port'];
-      }
-
-      if (isset($proxy['user']))
-      {
-        $config['proxy_user'] = $proxy['user'];
-      }
-
-      if (isset($proxy['pass']))
-      {
-        $config['proxy_pass'] = $proxy['pass'];
-      }
-    }
-
     $pluginList = $this->getPluginList();
     foreach ($pluginList as $name => $info)
     {
@@ -94,6 +67,33 @@ EOF;
   protected function getPluginList()
   {
     $list = array();
+
+    $config = null;
+
+    if ($proxy = parse_url(sfConfig::get('op_http_proxy')))
+    {
+      $config = array('adapter' => 'Zend_Http_Client_Adapter_Proxy');
+
+      if (isset($proxy['host']))
+      {
+        $config['proxy_host'] = $proxy['host'];
+      }
+
+      if (isset($proxy['port']))
+      {
+        $config['proxy_port'] = $proxy['port'];
+      }
+
+      if (isset($proxy['user']))
+      {
+        $config['proxy_user'] = $proxy['user'];
+      }
+
+      if (isset($proxy['pass']))
+      {
+        $config['proxy_pass'] = $proxy['pass'];
+      }
+    }
 
     try
     {
