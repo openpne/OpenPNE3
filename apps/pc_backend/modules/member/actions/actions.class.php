@@ -185,4 +185,38 @@ class memberActions extends sfActions
     }
     return sfView::SUCCESS;
   }
+
+ /**
+  * Executes rejected action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeRejected(sfWebRequest $request)
+  {
+    $id = $request->getParameter('id');
+    $this->member = Doctrine::getTable('Member')->find($id);
+    $this->forward404Unless($this->member);
+
+    if (!$this->member->getIsLoginRejected()) {
+      $this->member->setIsLoginRejected(true);
+      $noticeMessage = sfContext::getInstance()->getI18N()
+        ->__('(ID%s)%sをログイン停止状態にしました');
+    } else {
+      $this->member->setIsLoginRejected(false);
+      $noticeMessage = sfContext::getInstance()->getI18N()
+        ->__('(ID%s)%sのログイン停止を解除しました');
+    }
+    $this->getUser()->setFlash
+    (
+      'notice',
+      sprintf
+      (
+        $noticeMessage,
+        $this->member->getId(),
+        $this->member->getName()
+      )
+    );
+    $this->member->save();
+    $this->redirect('member/list');
+  }
 }
