@@ -8,6 +8,7 @@ Member:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
     name: { type: string(64), default: "", notnull: true, comment: "Nickname" }
     invite_member_id: { type: integer(4), comment: "Member id of the person who invited this member" }
+    is_login_rejected: { type: boolean, notnull: true, default: false, comment: "Rejected member" }
   relations:
     Member: { local: invite_member_id, foreign: id, onDelete: set null }
   options:
