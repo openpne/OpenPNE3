@@ -30,13 +30,13 @@ class openpneMigrateTask extends sfDoctrineBaseTask
 
     $this->briefDescription = 'migrate OpenPNE and/or the plugins to newer/older version one';
     $this->detailedDescription = <<<EOF
-The [openpne:migrade|INFO] task lets OpenPNE migrate and/or the plugins newer/older version.
+The [openpne:migrate|INFO] task lets OpenPNE migrate and/or the plugins newer/older version.
 
 Call it with:
-  1.  [./symfony openpne:migrade|INFO]
-  2.  [./symfony openpne:migrade --target=opSamplePlugin|INFO]
-  3.  [./symfony openpne:migrade -r 10 --target=OpenPNE|INFO]
-  4.  [./symfony openpne:migrade -v 3.0.2 --target=OpenPNE|INFO]
+  1.  [./symfony openpne:migrate|INFO]
+  2.  [./symfony openpne:migrate --target=opSamplePlugin|INFO]
+  3.  [./symfony openpne:migrate -r 10 --target=OpenPNE|INFO]
+  4.  [./symfony openpne:migrate -v 3.0.2 --target=OpenPNE|INFO]
 
     1. In the first form, any targets, versions and revisions aren't specified.
        This task executes the migration scripts for OpenPNE and all the plugins to newer version.
