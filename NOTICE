@@ -18,7 +18,10 @@ This product includes also software developed by :
     - New BSD License
   - JanRain, Inc. (http://www.janrain.com/)
     - Apache License 2.0
+  - The Doctrine project (http://www.doctrine-project.org/)
+    - LGPL License
 
 This product needs the third-party softwares listed blow to run.
   - PHP: Hypertext Preprocessor (5.2.x)
   - symfony (1.2.x)
+  - Doctrine (1.2.x)
