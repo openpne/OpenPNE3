@@ -6,7 +6,7 @@
 <dd class="fileName"><?php echo $image->getOriginalFilename() ?></dd>
 <?php if ($deleteBtn): ?>
 <dd class="delete"> 
-[ <?php echo link_to(__('削除する'), 'monitoringFunction/delete?id='.$image->getId()) ?> ]
+[ <?php echo link_to(__('削除する'), 'monitoringFunction/deleteImage?id='.$image->getId()) ?> ]
 </dd>
 <?php endif; ?>
 </dl>

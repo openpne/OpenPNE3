@@ -24,42 +24,40 @@ class monitoringFunctionActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->forward('monitoringFunction', 'list');
+    $this->forward('monitoringFunction', 'imageList');
   }
 
  /**
-  * Executes list action
+  * Executes imageList action
   *
   * @param sfRequest $request A request object
   */
-  public function executeList(sfWebRequest $request)
+  public function executeImageList(sfWebRequest $request)
   {
-    $params = $request->getParameter('page', 1);
     $this->pager = Doctrine::getTable('File')
-      ->getImageFilePager($params);
+      ->getImageFilePager($request->getParameter('page', 1), $request->getParameter('size', 20));
   }
 
 
  /**
-  * Executes fileDelete action
+  * Executes deleteImage action
   *
   * @param sfRequest $request A request object
   */
-  public function executeDelete(sfWebRequest $request)
+  public function executeDeleteImage(sfWebRequest $request)
   {
     $this->image = Doctrine::getTable('File')
       ->find($request->getParameter('id'));
-    $this->forward404Unless($this->image);
+
+    $this->form = new sfForm();
 
     if ($request->isMethod(sfWebRequest::POST)) {
+      $request->checkCSRFProtection();
+
       $this->image->delete();
-      $this->getUser()->setFlash
-      (
-        'notice',
-        sfContext::getInstance()->getI18N()
-          ->__('画像の削除が完了しました')
-      );
-      $this->redirect('monitoringFunction/list');
+      $this->getUser()->setFlash('notice', '画像の削除が完了しました');
+
+      $this->redirect('monitoringFunction/imageList');
     }
   }
 
@@ -79,13 +77,8 @@ class monitoringFunctionActions extends sfActions
           $request->getParameter('image'),
           $request->getFiles('image')
         );
-        $this->getUser()->setFlash
-        (
-          'notice',
-          sfContext::getInstance()->getI18N()
-            ->__('画像の追加が完了しました')
-        );
-        $this->redirect('monitoringFunction/list');
+        $this->getUser()->setFlash('notice', '画像の追加が完了しました');
+        $this->redirect('monitoringFunction/imageList');
     }
   }
 
@@ -96,9 +89,8 @@ class monitoringFunctionActions extends sfActions
   */
   public function executeFileList(sfWebRequest $request)
   {
-    $params = $request->getParameter('page', 1);
     $this->pager = Doctrine::getTable('File')
-      ->getFilePager($params);
+      ->getFilePager($request->getParameter('page', 1), $request->getParameter('size', 20));
   }
 
  /**
@@ -111,14 +103,13 @@ class monitoringFunctionActions extends sfActions
     $this->file = Doctrine::getTable('File')
       ->find($request->getParameter('id'));
 
+    $this->form = new sfForm();
+
     if ($request->isMethod(sfWebRequest::POST)) {
+      $request->checkCSRFProtection();
+
       $this->file->delete();
-      $this->getUser()->setFlash
-      (
-        'notice',
-        sfContext::getInstance()->getI18N()
-          ->__('ファイルの削除が完了しました')
-      );
+      $this->getUser()->setFlash('notice', 'ファイルの削除が完了しました');
       $this->redirect('monitoringFunction/fileList');
     }
   }
@@ -128,22 +119,12 @@ class monitoringFunctionActions extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeDownloadFile(sfWebRequest $request)
+  public function executeFileDownload(sfWebRequest $request)
   {
-    $this->file = Doctrine::getTable('File')
-      ->find($request->getParameter('id'));
-    $this->fileBin = Doctrine::getTable('FileBin')
-      ->find($request->getParameter('id'));
-    $original_filename = $this->file->getOriginalFilename();
-    if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false) {
-      $original_filename = mb_convert_encoding($original_filename, 'SJIS', 'UTF-8');
-    }
-    $original_filename = str_replace(array("\r", "\n"), '', $original_filename);
-
-    header('Content-Disposition: attachment; filename="' . $original_filename . '"');
-    header('Content-Length: '. strlen($this->fileBin->getBin()));
-    header('Content-Type: application/octet-stream');
-    echo $this->fileBin->getBin();
-    exit;
+    $file = Doctrine::getTable('File')->find($request->getParameter('id'));
+    opToolkit::fileDownload(
+      $file->getOriginalFilename(),
+      $file->getFileBin()->getBin()
+    );
   }
 }

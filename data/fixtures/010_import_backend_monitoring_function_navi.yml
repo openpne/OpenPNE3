@@ -1,7 +1,7 @@
 Navigation:
   backend_monitoring_function_navi_image_list:
     type: "monitoring_function_submenu"
-    uri:  "monitoringFunction/index"
+    uri:  "monitoringFunction/imageList"
     sort_order: 10
     Translation:
       ja_JP:
@@ -13,7 +13,7 @@ Navigation:
     sort_order: 20
     Translation:
       ja_JP:
-        caption: "画像アップロード・削除"
+        caption: "画像アップロード"
 
   backend_monitoring_function_navi_file_list:
     type: "monitoring_function_submenu"

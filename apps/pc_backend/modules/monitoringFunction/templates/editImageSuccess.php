@@ -1,5 +1,5 @@
 <?php slot('submenu') ?>
-<?php include_component('monitoringFunction', 'subMenu', array('nowUri' => 'monitoringFunction/editImage')) ?>
+<?php include_component('monitoringFunction', 'subMenu') ?>
 <?php end_slot() ?>
 
 <?php slot('title', '画像アップロード・削除') ?>

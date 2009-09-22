@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Shinichi Urabe <urabe@tejimaya.net>
  */
-class ImageForm extends sfForm
+class ImageForm extends BaseFileForm
 {
   public function configure()
   {

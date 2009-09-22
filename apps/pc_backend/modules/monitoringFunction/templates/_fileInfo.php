@@ -14,7 +14,7 @@
 <?php foreach($files as $file): ?>
 <tr>
 <td class="type1"><?php echo $file->getId() ?></td>
-<td><a href="<?php echo url_for('monitoringFunction/downloadFile?id='.$file->getId()).'?'.strtotime('now') ?>"><?php echo $file->getName() ?></a></td>
+<td><a href="<?php echo url_for('monitoringFunction/fileDownload?id='.$file->getId()).'?'.strtotime('now') ?>"><?php echo $file->getName() ?></a></td>
 <td><?php echo $file->getOriginalFilename() ?></td>
 <td><?php echo $file->getCreatedAt() ?></td>
 <?php if ($deleteBtn): ?>
