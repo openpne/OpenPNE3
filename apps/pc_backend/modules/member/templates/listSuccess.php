@@ -65,9 +65,9 @@
 </td>
 <td>
 <?php if (!$member->getIsLoginRejected()) : ?>
-<?php echo link_to(image_tag('backend/icn_rejected.gif', array('alt' => __('ログイン停止'))), 'member/rejected?id='.$member->getId()) ?>
+<?php echo link_to(image_tag('backend/icn_rejected.gif', array('alt' => __('ログイン停止'))), 'member/reject?id='.$member->getId()) ?>
 <?php else: ?>
-<?php echo link_to(image_tag('backend/icn_permit.gif', array('alt' => __('ログイン停止解除'))), 'member/rejected?id='.$member->getId()) ?>
+<?php echo link_to(image_tag('backend/icn_permit.gif', array('alt' => __('ログイン停止解除'))), 'member/reject?id='.$member->getId()) ?>
 <?php endif; ?>
 </td>
 <td>

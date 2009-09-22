@@ -258,8 +258,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
       opActivateBehavior::enable();
       return false;
     }
-    if ($this->getMember()->getIsLoginRejected())
-    {
+    if ($this->getMember()->getIsLoginRejected()) {
       opActivateBehavior::enable();
       $this->logout();
 

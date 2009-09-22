@@ -183,40 +183,38 @@ class memberActions extends sfActions
         $this->form->save();
       }
     }
+
     return sfView::SUCCESS;
   }
 
  /**
-  * Executes rejected action
+  * Executes reject action
   *
   * @param sfRequest $request A request object
   */
-  public function executeRejected(sfWebRequest $request)
+  public function executeReject(sfWebRequest $request)
   {
     $id = $request->getParameter('id');
     $this->member = Doctrine::getTable('Member')->find($id);
     $this->forward404Unless($this->member);
 
-    if (!$this->member->getIsLoginRejected()) {
-      $this->member->setIsLoginRejected(true);
-      $noticeMessage = sfContext::getInstance()->getI18N()
-        ->__('(ID%s)%sをログイン停止状態にしました');
-    } else {
-      $this->member->setIsLoginRejected(false);
-      $noticeMessage = sfContext::getInstance()->getI18N()
-        ->__('(ID%s)%sのログイン停止を解除しました');
+    $this->form = new RejectMemberForm($this->member);
+    if ($request->isMethod(sfWebRequest::POST)) {
+      $this->form->bind($request->getParameter('is_login_rejected'));
+      if ($this->form->isValid())
+      {
+        $this->form->save();
+        if ($this->member->getIsLoginRejected()) {
+          $message = 'ログイン停止を有効にしました';
+        } else {
+          $message = 'ログイン停止を解除しました';
+        }
+        $this->getUser()->setFlash('notice', $message);
+
+        $this->redirect('member/list');
+      }
     }
-    $this->getUser()->setFlash
-    (
-      'notice',
-      sprintf
-      (
-        $noticeMessage,
-        $this->member->getId(),
-        $this->member->getName()
-      )
-    );
-    $this->member->save();
-    $this->redirect('member/list');
+
+    return sfView::SUCCESS;
   }
 }
