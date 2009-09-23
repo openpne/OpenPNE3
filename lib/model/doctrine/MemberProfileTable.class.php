@@ -51,6 +51,16 @@ class MemberProfileTable extends opAccessControlDoctrineTable
     return $profiles;
   }
 
+  public function getViewableProfileByMemberIdAndProfileName($memberId, $profileName, $myMemberId = null)
+  {
+    if (is_null($myMemberId)) {
+      $myMemberId = sfContext::getInstance()->getUser()->getMemberId();
+    }
+
+    $profile = $this->retrieveByMemberIdAndProfileName($memberId, $profileName);
+    return $profile->isViewable($myMemberId) ? $profile : false;
+  }
+
   public function retrieveByMemberIdAndProfileId($memberId, $profileId)
   {
     return $this->createQuery()
