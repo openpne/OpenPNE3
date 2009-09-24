@@ -1,7 +1,7 @@
 <?php
 /**
  */
-class OAuthConsumerInformationTable extends Doctrine_Table
+class OAuthConsumerInformationTable extends opDoctrineTable
 {
   public function findByKeyString($key)
   {

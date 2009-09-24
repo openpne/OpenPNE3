@@ -16,7 +16,8 @@ class ProjectConfiguration extends sfProjectConfiguration
 
     sfConfig::set('sfDoctrinePlugin_doctrine_lib_path', sfConfig::get('sf_lib_dir').'/vendor/doctrine/Doctrine.php');
     sfConfig::set('doctrine_model_builder_options', array(
-      'baseClassName' => 'opDoctrineRecord',
+      'baseClassName'      => 'opDoctrineRecord',
+      'baseTableClassName' => 'opDoctrineTable',
     ));
 
     $this->dispatcher->connect('command.pre_command', array('opActivateBehavior', 'disable'));
@@ -65,6 +66,10 @@ class ProjectConfiguration extends sfProjectConfiguration
     $manager->setAttribute(Doctrine::ATTR_AUTOLOAD_TABLE_CLASSES, true);
     $manager->setAttribute(Doctrine::ATTR_RECURSIVE_MERGE_FIXTURES, true);
     $manager->setAttribute(Doctrine::ATTR_QUERY_CLASS, 'opDoctrineQuery');
+
+    // In default, OpenPNE uses foreign key.
+    // If you want not to use foreign key, comment out the following configuration:
+    // $manager->setAttribute(Doctrine::ATTR_EXPORT, Doctrine::EXPORT_ALL ^ Doctrine::EXPORT_CONSTRAINTS);
 
     if (extension_loaded('apc'))
     {

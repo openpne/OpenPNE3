@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class MemberRelationshipTable extends Doctrine_Table
+class MemberRelationshipTable extends opDoctrineTable
 {
   public function retrieveByFromAndTo($memberIdFrom, $memberIdTo)
   {

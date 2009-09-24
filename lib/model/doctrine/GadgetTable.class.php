@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class GadgetTable extends Doctrine_Table
+class GadgetTable extends opDoctrineTable
 {
   protected $results;
 

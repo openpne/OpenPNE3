@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class FileBinTable extends Doctrine_Table
+class FileBinTable extends opDoctrineTable
 {
 
 }

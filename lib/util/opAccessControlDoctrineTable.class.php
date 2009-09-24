@@ -15,7 +15,7 @@
  * @subpackage util
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-abstract class opAccessControlDoctrineTable extends Doctrine_Table
+abstract class opAccessControlDoctrineTable extends opDoctrineTable
 {
   protected $acl = null;
 

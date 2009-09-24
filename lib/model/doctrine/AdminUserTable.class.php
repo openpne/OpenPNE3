@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class AdminUserTable extends Doctrine_Table
+class AdminUserTable extends opDoctrineTable
 {
   public function retrieveByUsername($username)
   {

@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file and the NOTICE file that were distributed with this source code.
  */
-class BannerTable extends Doctrine_Table
+class BannerTable extends opDoctrineTable
 {
   public function findByName($name)
   {

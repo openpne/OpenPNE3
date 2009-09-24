@@ -1,7 +1,7 @@
 <?php
 /**
  */
-class OpenIDTrustLogTable extends Doctrine_Table
+class OpenIDTrustLogTable extends opDoctrineTable
 {
   public function findByOpenID($openid, $memberId)
   {

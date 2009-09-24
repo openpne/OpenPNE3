@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class SnsConfigTable extends Doctrine_Table
+class SnsConfigTable extends opDoctrineTable
 {
   protected $configs;
 

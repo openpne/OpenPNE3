@@ -1,7 +1,7 @@
 <?php
 /**
  */
-class SessionTable extends Doctrine_Table
+class SessionTable extends opDoctrineTable
 {
 
 }

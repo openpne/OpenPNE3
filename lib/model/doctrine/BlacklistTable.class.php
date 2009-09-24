@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class BlacklistTable extends Doctrine_Table
+class BlacklistTable extends opDoctrineTable
 {
   public function retrieveByUid($mobileUid)
   {

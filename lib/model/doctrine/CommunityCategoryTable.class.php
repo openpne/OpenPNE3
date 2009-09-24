@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class CommunityCategoryTable extends Doctrine_Table
+class CommunityCategoryTable extends opDoctrineTable
 {
   public function retrieveAll()
   {
