@@ -89,4 +89,14 @@ abstract class opDoctrineRecord extends sfDoctrineRecord implements Zend_Acl_Res
       throw new LogicException(sprintf('%s must be subclass of the opAccessControlDoctrineTable for access controll.', get_class($this->getTable())));
     }
   }
+
+  public function setUp()
+  {
+    parent::setUp();
+
+    if (!($this->getTable()->getConnection()->getAttribute(Doctrine::ATTR_EXPORT) & Doctrine::EXPORT_CONSTRAINTS))
+    {
+      $this->addListener(new opApplicationLevelCascadingListener());
+    }
+  }
 }

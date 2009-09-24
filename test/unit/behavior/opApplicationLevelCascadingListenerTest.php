@@ -24,15 +24,12 @@ class TestParent extends opDoctrineRecord
 
   public function setUp()
   {
+    parent::setUp();
+
     $this->hasMany('TestChildA as TestChildrenA', array('local' => 'id', 'foreign' => 'test_parent_id'));
     $this->hasMany('TestChildB as TestChildrenB', array('local' => 'id', 'foreign' => 'test_parent_id'));
     $this->hasOne('TestChildC as TestChildC', array('local' => 'id', 'foreign' => 'test_parent_id'));
     $this->hasOne('TestChildD as TestChildD', array('local' => 'id', 'foreign' => 'test_parent_id'));
-
-    if (!($this->_table->getConnection()->getAttribute(Doctrine::ATTR_EXPORT) & Doctrine::EXPORT_CONSTRAINTS))
-    {
-      $this->addListener(new opApplicationLevelCascadingListener());
-    }
   }
 }
 
@@ -46,12 +43,7 @@ class TestChildA extends opDoctrineRecord
 
   public function setUp()
   {
-    $this->addListener(new opApplicationLevelCascadingListener());
-
-    if (!($this->_table->getConnection()->getAttribute(Doctrine::ATTR_EXPORT) & Doctrine::EXPORT_CONSTRAINTS))
-    {
-      $this->addListener(new opApplicationLevelCascadingListener());
-    }
+    parent::setUp();
 
     $this->hasOne('TestParent', array('local' => 'test_parent_id', 'foreign' => 'id', 'onDelete' => 'cascade'));
   }
@@ -67,12 +59,7 @@ class TestChildB extends opDoctrineRecord
 
   public function setUp()
   {
-    $this->addListener(new opApplicationLevelCascadingListener());
-
-    if (!($this->_table->getConnection()->getAttribute(Doctrine::ATTR_EXPORT) & Doctrine::EXPORT_CONSTRAINTS))
-    {
-      $this->addListener(new opApplicationLevelCascadingListener());
-    }
+    parent::setUp();
 
     $this->hasOne('TestParent', array('local' => 'test_parent_id', 'foreign' => 'id', 'onDelete' => 'set null'));
   }
@@ -88,12 +75,7 @@ class TestChildC extends opDoctrineRecord
 
   public function setUp()
   {
-    $this->addListener(new opApplicationLevelCascadingListener());
-
-    if (!($this->_table->getConnection()->getAttribute(Doctrine::ATTR_EXPORT) & Doctrine::EXPORT_CONSTRAINTS))
-    {
-      $this->addListener(new opApplicationLevelCascadingListener());
-    }
+    parent::setUp();
 
     $this->hasOne('TestParent', array('local' => 'test_parent_id', 'foreign' => 'id', 'onDelete' => 'cascade'));
   }
@@ -108,12 +90,7 @@ class TestChildD extends opDoctrineRecord
 
   public function setUp()
   {
-    $this->addListener(new opApplicationLevelCascadingListener());
-
-    if (!($this->_table->getConnection()->getAttribute(Doctrine::ATTR_EXPORT) & Doctrine::EXPORT_CONSTRAINTS))
-    {
-      $this->addListener(new opApplicationLevelCascadingListener());
-    }
+    parent::setUp();
 
     $this->hasOne('TestParent', array('local' => 'test_parent_id', 'foreign' => 'id', 'onDelete' => 'set null'));
   }

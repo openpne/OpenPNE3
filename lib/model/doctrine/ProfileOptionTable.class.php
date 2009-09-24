@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class ProfileOptionTable extends opDoctrineTable
+class ProfileOptionTable extends Doctrine_Table
 {
   public function retrieveByProfileId($profileId)
   {

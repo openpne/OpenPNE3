@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class NavigationTable extends opDoctrineTable
+class NavigationTable extends Doctrine_Table
 {
   public function retrieveByType($type)
   {

@@ -16,8 +16,7 @@ class ProjectConfiguration extends sfProjectConfiguration
 
     sfConfig::set('sfDoctrinePlugin_doctrine_lib_path', sfConfig::get('sf_lib_dir').'/vendor/doctrine/Doctrine.php');
     sfConfig::set('doctrine_model_builder_options', array(
-      'baseClassName'      => 'opDoctrineRecord',
-      'baseTableClassName' => 'opDoctrineTable',
+      'baseClassName' => 'opDoctrineRecord',
     ));
 
     $this->dispatcher->connect('command.pre_command', array('opActivateBehavior', 'disable'));

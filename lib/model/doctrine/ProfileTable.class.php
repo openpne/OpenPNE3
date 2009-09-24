@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class ProfileTable extends opDoctrineTable
+class ProfileTable extends Doctrine_Table
 {
   const PUBLIC_FLAG_SNS = 1;
   const PUBLIC_FLAG_FRIEND = 2;

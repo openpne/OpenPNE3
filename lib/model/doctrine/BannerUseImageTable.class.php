@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file and the NOTICE file that were distributed with this source code.
  */
-class BannerUseImageTable extends opDoctrineTable
+class BannerUseImageTable extends Doctrine_Table
 {
   public function retrieveByBannerAndImageId($bannerId, $bannerImageId)
   {

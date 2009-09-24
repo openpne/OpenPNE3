@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class FileTable extends opDoctrineTable
+class FileTable extends Doctrine_Table
 {
   public function retrieveByFilename($filename)
   {

@@ -1,7 +1,7 @@
 <?php
 /**
  */
-class OAuthAbstractTokenTable extends opDoctrineTable
+class OAuthAbstractTokenTable extends Doctrine_Table
 {
   public function findByKeyString($key, $type = 'request', $q = null)
   {

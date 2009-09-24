@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class CommunityConfigTable extends opDoctrineTable
+class CommunityConfigTable extends Doctrine_Table
 {
   public function retrievesByCommunityId($communityId)
   {
