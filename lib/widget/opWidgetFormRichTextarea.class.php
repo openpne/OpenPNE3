@@ -17,9 +17,9 @@
  */
 class opWidgetFormRichTextarea extends sfWidgetFormTextarea
 {
-  static protected $firstRender = true;
+  static protected $isFirstRender = true;
 
-  protected $defaultTinyMCEConfigs = array(
+  protected $tinyMCEConfigs = array(
     'mode'  => 'textareas',
     'theme' => 'advanced',
     'editor_selector' => 'mceEditor_dummy_selector',
@@ -34,7 +34,7 @@ class opWidgetFormRichTextarea extends sfWidgetFormTextarea
   {
     parent::__construct($options, $attributes);
 
-    $this->setOption('config', array_merge($this->defaultTinyMCEConfigs, $this->getOption('config')));
+    $this->tinyMCEConfigs = array_merge($this->tinyMCEConfigs, $this->getOption('config'));
   }
 
   protected function configure($options = array(), $attributes = array())
@@ -72,7 +72,7 @@ class opWidgetFormRichTextarea extends sfWidgetFormTextarea
     $changerName = $id.'_changer';
     $offId = $id.'_changer_1';
     $onId  = $id.'_changer_2';
-    if (self::$firstRender)
+    if (self::$isFirstRender)
     {
       sfContext::getInstance()->getResponse()->addJavascript('/sfProtoculousPlugin/js/prototype');
       sfContext::getInstance()->getResponse()->addJavascript('tiny_mce/tiny_mce');
@@ -100,8 +100,10 @@ class opWidgetFormRichTextarea extends sfWidgetFormTextarea
   }
 
 EOF;
-      $js .= sprintf("  tinyMCE.init(%s);\n", json_encode($this->getOption('config')));
-      self::$firstRender = false;
+
+      $js .= sprintf("  tinyMCE.init(%s);\n", json_encode($this->tinyMCEConfigs));
+
+      self::$isFirstRender = false;
     }
 
     if (!$this->getOption('is_textmode'))

@@ -17,16 +17,34 @@
  */
 class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
 {
-  static protected $firstRenderOpenPNE = true;
+  static protected $isFirstRenderOpenPNE  = true;
+  static protected $isConfiguredTinyMCE   = false;
 
-  protected $defaultTinyMCEConfigs = array(
+  static protected $plugins = array('openpne');
+
+  static protected $defaultButtons = array('op_b', 'op_u', 'op_s', 'op_i', 'op_large', 'op_small', 'op_color', 'op_emoji_docomo');
+  static protected $defaultButtonOnclickActions = array('op_emoji_docomo' => "");
+
+  static protected $htmlConvertList = array(
+    'op:b' => array('b'),
+    'op:u' => array('u'),
+    'op:i' => array('i'),
+    'op:s' => array('s'),
+    'op:large' => array('font', array('size' => 5)),
+    'op:small' => array('font', array('size' => 1)),
+    'op:color' => array('font'),
+  );
+
+  static protected $extensions = array();
+
+  protected $tinyMCEConfigs = array(
     'mode'                            => 'textareas',
     'theme'                           => 'advanced',
     'editor_selector'                 => 'mceEditor_dummy_selector',
-    'plugins'                         => 'openpne',
+    'plugins'                         => '',
     'theme_advanced_toolbar_location' => 'top',
     'theme_advanced_toolbar_align'    => 'left',
-    'theme_advanced_buttons1'         => 'op_b,op_u,op_s,op_i,op_large,op_small,op_color,op_image,op_emoji_docomo,op_emoji_au,op_emoji_softbank,op_cmd',
+    'theme_advanced_buttons1'         => '',
     'theme_advanced_buttons2'         => '',
     'theme_advanced_buttons3'         => '',
     'valid_elements'                  => 'b/strong,u,s/strike,i,font[color|size],br',
@@ -41,28 +59,68 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
     'custom_undo_redo'                => false,
   );
 
-  static protected $defaultEnableButtons = array('op_b' , 'op_u', 'op_s', 'op_i', 'op_large', 'op_small', 'op_color', 'op_emoji_docomo');
+  protected $loadPluginList = array();
 
-  static protected $defaultButtonConfigs = array();
-
-  static protected $defaultButtonOnclickActions = array('op_emoji_docomo' => "");
-
-  static protected $htmlConvertList = array(
-    'op:b' => array('b'),
-    'op:u' => array('u'),
-    'op:i' => array('i'),
-    'op:s' => array('s'),
-    'op:large' => array('font', array('size' => 5)),
-    'op:small' => array('font', array('size' => 1)),
-    'op:color' => array('font'),
-  );
-
-  public function configure($options = array(), $attributes = array())
+  static public function addExtension($extension)
   {
-    $this->addOption('enable_button', self::$defaultEnableButtons);
-    $this->addOption('button_config', self::$defaultButtonConfigs);
+    self::$extensions[] = $extension;
+  }
 
-    parent::configure($options, $attributes);
+  public function __construct($options = array(), $attributes = array())
+  {
+    parent::__construct($options, $attributes);
+
+    sfProjectConfiguration::getActive()->loadHelpers('Asset');
+
+    foreach (self::$extensions as $extension)
+    {
+      if (!self::$isConfiguredTinyMCE)
+      {
+        self::$plugins = array_merge(self::$plugins, call_user_func(array($extension, 'getPlugins')));
+        self::$defaultButtons = array_merge_recursive(self::$defaultButtons, call_user_func(array($extension, 'getButtons')));
+        self::$defaultButtonOnclickActions = array_merge(self::$defaultButtonOnclickActions, call_user_func(array($extension, 'getButtonOnClickActions')));
+      }
+      call_user_func(array($extension, 'configure'), &$this->tinyMCEConfigs);
+    }
+
+    if (!empty($this->tinyMCEConfigs['plugins']))
+    {
+      $this->tinyMCEConfigs['plugins'] .= ',';
+    }
+    $plugins = array();  
+    foreach (self::$plugins as $name => $path)
+    {
+      if (is_numeric($name))
+      {
+        $plugins[] = $path;
+      }
+      else
+      {
+        $plugins[] = '-'.$name;
+        $this->loadPluginList[$name] = $path;
+      }
+    }
+    $this->tinyMCEConfigs['plugins'] .= implode(',', $plugins);
+
+    if (!empty($this->tinyMCEConfigs['theme_advanced_buttons1']))
+    {
+      $this->tinyMCEConfigs['theme_advanced_buttons1'] .= ',';
+    }
+    $buttons = array();  
+    foreach (self::$defaultButtons as $key => $button)
+    {
+      if (is_numeric($key))
+      {
+        $buttons[] = $button;
+      }
+      else
+      {
+        $buttons[] = $key;
+      }
+    }
+    $this->tinyMCEConfigs['theme_advanced_buttons1'] .= implode(',', $buttons);
+
+    self::$isConfiguredTinyMCE = true;
   }
 
   public function render($name, $value = null, $attributes = array(), $errors = array())
@@ -74,15 +132,23 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
 
     $js = '';
 
-    foreach ($this->getOption('enable_button') as $buttonName)
+    foreach (self::$defaultButtons as $key => $button)
     {
-      $config[$buttonName] = array('isEnabled' => 1, 'imageURL' => image_path('deco_'.$buttonName.'.gif'));
+      if (is_numeric($key))
+      {
+        $buttonName = $button;
+        $buttonConfig = array('isEnabled' => 1, 'imageURL' => image_path('deco_'.$buttonName.'.gif'));
+      }
+      else
+      {
+        $buttonName = $key;
+        $buttonConfig = $button;
+      }
+      $config[$buttonName] = $buttonConfig;
     }
-    $config = array_merge_recursive($config, $this->getOption('button_config'));
 
-    if (self::$firstRenderOpenPNE)
+    if (self::$isFirstRenderOpenPNE)
     {
-      sfProjectConfiguration::getActive()->loadHelpers('Asset');
       sfProjectConfiguration::getActive()->loadHelpers('Partial');
       sfContext::getInstance()->getResponse()->addJavascript('/sfProtoculousPlugin/js/prototype');
       sfContext::getInstance()->getResponse()->addJavascript('op_emoji');
@@ -90,10 +156,16 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
       sfContext::getInstance()->getResponse()->addJavascript('decoration');
 
       $relativeUrlRoot = sfContext::getInstance()->getRequest()->getRelativeUrlRoot();
+
+      foreach ($this->loadPluginList as $key => $path)
+      {
+        $js .= sprintf('tinymce.PluginManager.load("%s", "%s");'."\n", $key, $path);
+      }
+
       $js .= sprintf("function op_mce_editor_get_config() { return %s; }\n", json_encode($config));
       $js .= sprintf('function op_get_relative_uri_root() { return "%s"; }', $relativeUrlRoot);
 
-      self::$firstRenderOpenPNE = false;
+      self::$isFirstRenderOpenPNE = false;
     }
 
     if ($js)

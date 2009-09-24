@@ -1,7 +1,11 @@
 <?php use_helper('Javascript') ?>
 <?php foreach ($configs as $key => $config): ?>
-<a id="<?php echo $id ?>_button_<?php echo $key ?>" href="#" onclick="<?php echo isset($onclick_actions[$key]) ? $onclick_actions[$key] : "op_mce_insert_tagname('".$id."', '".str_replace("_", ":", $key)."');" ?> return false;">
-<?php echo image_tag('deco_'.$key.'.gif', array('alt' => '')) ?></a>
+<a id="<?php echo $id ?>_button_<?php echo $key ?>" href="#" onclick="<?php
+  echo isset($onclick_actions[$key]) ? 
+  preg_replace('/%id%/', $id, $onclick_actions[$key]) :
+  "op_mce_insert_tagname('".$id."', '".str_replace("_", ":", $key)."');"
+?> return false;">
+<?php echo image_tag($config['imageURL'], array('alt' => '')) ?></a>
 <?php endforeach; ?>
 <?php $instanceName = $id.'_image_palet'; ?>
 <?php javascript_tag() ?>
