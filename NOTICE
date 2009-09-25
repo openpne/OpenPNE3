@@ -24,6 +24,8 @@ These products include also software developed by :
     - MIT License
   - Fabien Potencier (http://fabien.potencier.org/)
     - MIT License
+  - Kousuke Ebihara (http://co3k.org/)
+    - Apache License 2.0
 
 These products need the third-party softwares listed blow to run.
   - PHP: Hypertext Preprocessor (5.2.3 +)
@@ -35,3 +37,4 @@ These products include dependent libraries listed blow:
   - Auth OpenID 2.1.2
   - PHP OAuth library
   - sfFormExtraPlugin 1.0.12
+  - sfImageHandlerPlugin 1.0.0
