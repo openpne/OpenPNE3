@@ -21,4 +21,4 @@ $option = array(
 op_include_list('memberList', $list, $option);
 ?>
 
-<?php op_include_pager_navigation($pager, 'community/memberList?page=%d&id='.$id, array('is_total' => false)); ?>
+<?php op_include_pager_navigation($pager, 'community/memberManage?page=%d&id='.$id, array('is_total' => false)); ?>
