@@ -22,6 +22,8 @@ These products include also software developed by :
     - LGPL License
   - Andy Smith (http://term.ie/)
     - MIT License
+  - Fabien Potencier (http://fabien.potencier.org/)
+    - MIT License
 
 These products need the third-party softwares listed blow to run.
   - PHP: Hypertext Preprocessor (5.2.3 +)
@@ -32,3 +34,4 @@ These products include dependent libraries listed blow:
   - Zend Framework 1.7.3PL1 (partly)
   - Auth OpenID 2.1.2
   - PHP OAuth library
+  - sfFormExtraPlugin 1.0.12

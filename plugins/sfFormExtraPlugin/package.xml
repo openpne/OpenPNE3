@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.4.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>sfFormExtraPlugin</name>
+ <channel>plugins.symfony-project.org</channel>
+ <summary>Validators, Widgets, and Forms.</summary>
+ <description>Validators, Widgets, and Forms.</description>
+ <lead>
+  <name>Fabien POTENCIER</name>
+  <user>fabpot</user>
+  <email>fabien.potencier@symfony-project.com</email>
+  <active>yes</active>
+ </lead>
+ <developer>
+  <name>Nicolas Perriault</name>
+  <user>nicolas</user>
+  <email>nicolas.perriault@symfony-project.com</email>
+  <active>yes</active>
+ </developer>
+ <developer>
+  <name>Kris Wallsmith</name>
+  <user>Kris.Wallsmith</user>
+  <email>kris.wallsmith@symfony-project.com</email>
+  <active>yes</active>
+ </developer>
+ <developer>
+  <name>Hugo Hamon</name>
+  <user>hugo.hamon</user>
+  <email>hugo.hamon@sensio.com</email>
+  <active>yes</active>
+ </developer>
+ <date>2009-04-10</date>
+ <version>
+   <release>1.0.11</release>
+   <api>1.0.0</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.symfony-project.com/license">MIT license</license>
+ <notes>-</notes>
+ <contents>
+   <dir name="/">
+     <file role="data" name="README" />
+     <file role="data" name="LICENSE" />
+
+     <dir name="bin">
+       <file role="data" name="prove.php" />
+     </dir>
+
+     <dir name="lib">
+       <dir name="form">
+         <file role="data" name="sfFormLanguage.class.php" />
+       </dir>
+       <dir name="validator">
+         <dir name="doctrine">
+           <file role="data" name="sfValidatorDoctrineNestedSetLevel.class.php" />
+         </dir>
+         <file role="data" name="sfValidatorBlacklist.class.php" />
+         <file role="data" name="sfValidatorReCaptcha.class.php" />
+         <file role="data" name="sfValidatorSchemaTimeInterval.class.php" />
+       </dir>
+       <dir name="widget">
+         <file role="data" name="sfWidgetFormDoctrineChoiceGrouped.class.php" />
+         <file role="data" name="sfWidgetFormJQueryAutocompleter.class.php" />
+         <file role="data" name="sfWidgetFormJQueryDate.class.php" />
+         <file role="data" name="sfWidgetFormPropelChoiceGrouped.class.php" />
+         <file role="data" name="sfWidgetFormPropelJQueryAutocompleter.class.php" />
+         <file role="data" name="sfWidgetFormReCaptcha.class.php" />
+         <file role="data" name="sfWidgetFormSelectDoubleList.class.php" />
+         <file role="data" name="sfWidgetFormSelectUSState.class.php" />
+         <file role="data" name="sfWidgetFormTextareaTinyMCE.class.php" />
+       </dir>
+     </dir>
+
+     <dir name="test">
+       <file role="data" name="bootstrap.php" />
+       <dir name="form">
+         <file role="data" name="sfFormLanguageTest.php" />
+       </dir>
+       <dir name="validator">
+         <file role="data" name="sfValidatorReCaptchaTest.php" />
+         <file role="data" name="sfValidatorBlacklistTest.php" />
+         <file role="data" name="sfValidatorSchemaTimeIntervalTest.php" />
+       </dir>
+       <dir name="widget">
+         <file role="data" name="sfWidgetFormReCaptchaTest.php" />
+       </dir>
+     </dir>
+
+     <dir name="web">
+       <dir name="css">
+         <file role="data" name="jquery.autocompleter.css" />
+       </dir>
+       <dir name="js">
+         <file role="data" name="double_list.js" />
+         <file role="data" name="jquery.autocompleter.js" />
+       </dir>
+       <dir name="images">
+         <file role="data" name="indicator.gif" />
+         <file role="data" name="next.png" />
+         <file role="data" name="previous.png" />
+       </dir>
+     </dir>
+   </dir>
+ </contents>
+
+ <dependencies>
+  <required>
+   <php>
+    <min>5.1.3</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.1</min>
+   </pearinstaller>
+   <package>
+    <name>symfony</name>
+    <channel>pear.symfony-project.com</channel>
+    <min>1.1.0</min>
+    <max>1.3.0</max>
+    <exclude>1.3.0</exclude>
+   </package>
+  </required>
+ </dependencies>
+
+ <phprelease>
+ </phprelease>
+
+ <changelog>
+   <release>
+     <version>
+       <release>1.0.12</release>
+       <api>1.0.0</api>
+     </version>
+     <stability>
+       <release>stable</release>
+       <api>stable</api>
+     </stability>
+     <license uri="http://www.symfony-project.com/license">MIT license</license>
+     <date>2009-05-07</date>
+     <license>MIT</license>
+     <notes>
+       * hugo.hamon: fixed typo in sfValidatorDoctrineNestedSetLevel validator (r18044)
+       * hugo.hamon: added new sfValidatorDoctrineNestedSetLevel validator to restrict the max level of a nested set objects tree (r18043)
+     </notes>
+   </release>
+   <release>
+     <version>
+       <release>1.0.11</release>
+       <api>1.0.0</api>
+     </version>
+     <stability>
+       <release>stable</release>
+       <api>stable</api>
+     </stability>
+     <license uri="http://www.symfony-project.com/license">MIT license</license>
+     <date>2009-04-10</date>
+     <license>MIT</license>
+     <notes>
+       * fabien: removed the need to pass a class for sfWidgetFormTextareaTinyMCE (#4918, #5546, #4952)
+       * Kris.Wallsmith: added sfWidgetFormSelectUSState
+       * Kris.Wallsmith: added sfWidgetFormPropelChoiceGrouped
+       * Kris.Wallsmith: added sfWidgetFormDoctrineChoiceGrouped
+     </notes>
+   </release>
+   <release>
+     <version>
+       <release>1.0.10</release>
+       <api>1.0.0</api>
+     </version>
+     <stability>
+       <release>stable</release>
+       <api>stable</api>
+     </stability>
+     <license uri="http://www.symfony-project.com/license">MIT license</license>
+     <date>2009-03-12</date>
+     <license>MIT</license>
+     <notes>
+       * fabien: fixed typo
+     </notes>
+   </release>
+   <release>
+     <version>
+       <release>1.0.9</release>
+       <api>1.0.0</api>
+     </version>
+     <stability>
+       <release>stable</release>
+       <api>stable</api>
+     </stability>
+     <license uri="http://www.symfony-project.com/license">MIT license</license>
+     <date>2009-02-27</date>
+     <license>MIT</license>
+     <notes>
+       * fabien: fixed typo
+     </notes>
+   </release>
+   <release>
+     <version>
+       <release>1.0.8</release>
+       <api>1.0.0</api>
+     </version>
+     <stability>
+       <release>stable</release>
+       <api>stable</api>
+     </stability>
+     <license uri="http://www.symfony-project.com/license">MIT license</license>
+     <date>2009-02-27</date>
+     <license>MIT</license>
+     <notes>
+       * fabien: forced date format returned by the date picker (based on a patch from xdade - #5619)
+       * fabien: added JS date selection validity check (based on a patch from h0nIg - #4693)
+       * fabien: fixed date picker on IE7 (#4751)
+       * fabian: fixed javascript function names (#5261)
+       * fabien: replaced $() with jQuery() (#4999)
+     </notes>
+   </release>
+   <release>
+     <version>
+       <release>1.0.7</release>
+       <api>1.0.0</api>
+     </version>
+     <stability>
+       <release>stable</release>
+       <api>stable</api>
+     </stability>
+     <license uri="http://www.symfony-project.com/license">MIT license</license>
+     <date>2009-01-11</date>
+     <license>MIT</license>
+     <notes>
+       * fixed sfFormExtraPlugin Autocomplete getStyleSheets returns incorrect files
+     </notes>
+   </release>
+   <release>
+     <version>
+       <release>1.0.5</release>
+       <api>1.0.0</api>
+     </version>
+     <stability>
+       <release>stable</release>
+       <api>stable</api>
+     </stability>
+     <license uri="http://www.symfony-project.com/license">MIT license</license>
+     <date>2008-11-01</date>
+     <license>MIT</license>
+     <notes>
+       * added getJavascripts() and getStylesheets() method to the widgets that need
+         some javascripts or stylesheets to work
+       * removed the need to add an "onsubmit" attribute to the form tag for the DoubleList widget
+     </notes>
+   </release>
+   <release>
+     <version>
+       <release>1.0.4</release>
+       <api>1.0.0</api>
+     </version>
+     <stability>
+       <release>stable</release>
+       <api>stable</api>
+     </stability>
+     <license uri="http://www.symfony-project.com/license">MIT license</license>
+     <date>2008-08-25</date>
+     <license>MIT</license>
+     <notes>
+       * Added sfWidgetFormJQueryDate widget
+       * Added sfWidgetFormPropelJQueryAutocompleter widget
+       * Added sfWidgetFormJQueryAutocompleter widget
+       * Added sfWidgetFormSelectDoubleList widget
+     </notes>
+   </release>
+   <release>
+     <version>
+       <release>1.0.2</release>
+       <api>1.0.0</api>
+     </version>
+     <stability>
+       <release>stable</release>
+       <api>stable</api>
+     </stability>
+     <license uri="http://www.symfony-project.com/license">MIT license</license>
+     <date>2008-08-25</date>
+     <license>MIT</license>
+     <notes>
+       * Added sfValidatorSchemaTimeInterval validator
+       * Added sfValidatorBlacklist validator
+     </notes>
+   </release>
+ </changelog>
+</package>
