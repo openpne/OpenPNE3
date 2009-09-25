@@ -31,7 +31,7 @@ class opMemberProfileSearchForm extends sfForm
     $widgets = array();
     $validators = array();
 
-    if ($this->getOption('use_id'))
+    if ($this->getOption('is_use_id'))
     {
       $widgets += array('id' => new sfWidgetFormInput());
       $validators += array('id' => new sfValidatorPass());
@@ -105,7 +105,7 @@ class opMemberProfileSearchForm extends sfForm
     $ids = null;
     $q = Doctrine::getTable('Member')->createQuery();
 
-    if ($this->getOption('use_id'))
+    if ($this->getOption('is_use_id'))
     {
       $this->addIdColumnQuery($q, $this->getValue('id'));
     }
@@ -140,7 +140,7 @@ class opMemberProfileSearchForm extends sfForm
       }
     }
 
-    $ids = Doctrine::getTable('MemberProfile')->searchMemberIds($profileValues, $ids);
+    $ids = Doctrine::getTable('MemberProfile')->searchMemberIds($profileValues, $ids, $this->getOption('is_check_public_flag', true));
 
     if ($isWhere)
     {

@@ -78,7 +78,7 @@ class MemberProfileTable extends opAccessControlDoctrineTable
       ->fetchOne();
   }
 
-  public function searchMemberIds($profile = array(), $ids = null)
+  public function searchMemberIds($profile = array(), $ids = null, $isCheckPublicFlag = true)
   {
     foreach ($profile as $key => $value)
     {
@@ -127,7 +127,8 @@ class MemberProfileTable extends opAccessControlDoctrineTable
 
       }
 
-      $ids = $this->filterMemberIdByProfile($ids, $column, $value, $item);
+      $publicFlag = ($isCheckPublicFlag) ? 1 : null;
+      $ids = $this->filterMemberIdByProfile($ids, $column, $value, $item, $publicFlag);
     }
 
     return $ids;
