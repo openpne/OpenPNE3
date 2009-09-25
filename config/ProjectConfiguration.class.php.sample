@@ -1,6 +1,6 @@
 <?php
 
-require_once '##SYMFONY_LIB_DIR##/autoload/sfCoreAutoload.class.php';
+require_once dirname(__FILE__).'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php';
 sfCoreAutoload::register();
 
 define('OPENPNE_CONFIGURAIOTN_SAMPLE_HASH', '7b73a69b5efd2d390bead8135e8a6335');
