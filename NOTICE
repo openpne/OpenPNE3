@@ -11,7 +11,7 @@ OpenPNE Project (http://www.openpne.jp/).
   - Apache License 2.0
   - PHP License 3.01 (OpenPNE2)
 
-This product includes also software developed by :
+These products include also software developed by :
   - the symfony project (http://www.symfony-project.org/)
     - MIT License
   - Zend Technologies USA Inc. (http://www.zend.com/)
@@ -20,8 +20,15 @@ This product includes also software developed by :
     - Apache License 2.0
   - The Doctrine project (http://www.doctrine-project.org/)
     - LGPL License
+  - Andy Smith (http://term.ie/)
+    - MIT License
 
-This product needs the third-party softwares listed blow to run.
-  - PHP: Hypertext Preprocessor (5.2.x)
-  - symfony (1.2.x)
-  - Doctrine (1.2.x)
+These products need the third-party softwares listed blow to run.
+  - PHP: Hypertext Preprocessor (5.2.3 +)
+
+These products include dependent libraries listed blow:
+  - symfony 1.2.8
+  - Doctrine 1.2.0-ALPHA1
+  - Zend Framework 1.7.3PL1 (partly)
+  - Auth OpenID 2.1.2
+  - PHP OAuth library
