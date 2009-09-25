@@ -9,7 +9,7 @@ autoload:
     name:           project vendor
     path:           %SF_LIB_DIR%/vendor
     recursive:      on
-    exclude:        [PEAR]
+    exclude:        [PEAR, symfony]
 
   plugins_application_lib:
     name:           plugins application lib
