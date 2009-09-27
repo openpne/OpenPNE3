@@ -130,4 +130,20 @@ policy:
     IsRequired: true
     Default:    "プライバシーポリシーはただいま準備中です。\nThe Privacy Policy is under construction."
 
+footer:
+  footer_before:
+    Name:       "footer_before"
+    Caption:    "ログイン前フッター"
+    FormType:   "textarea"
+    ValueType:  "string"
+    IsRequired: false
+    Default:    "Powered by <a href=\"http://www.openpne.jp/\" target=\"_blank\">OpenPNE</a>"
+  footer_after:
+    Name:       "footer_after"
+    Caption:    "ログイン後フッター"
+    FormType:   "textarea"
+    ValueType:  "string"
+    IsRequired: false
+    Default:    "Powered by <a href=\"http://www.openpne.jp/\" target=\"_blank\">OpenPNE</a>"
+
 permit_member_config:
