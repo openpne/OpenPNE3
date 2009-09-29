@@ -47,4 +47,49 @@ class snsActions extends sfActions
       }
     }
   }
+
+ /**
+  * Executes term action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeTerm(sfWebRequest $request)
+  {
+    $this->form = new opSnsTermForm();
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $this->form->bind($request->getParameter('term'));
+      if ($this->form->isValid())
+      {
+        $this->form->save();
+        $this->getUser()->setFlash('notice', 'Saved.');
+        $this->redirect('sns/term');
+      }
+    }
+  }
+
+ /**
+  * Executes list action
+  *
+  * @param sfWebRequest $request A request object
+  */
+  public function executeList(sfWebRequest $request)
+  {
+    $this->list = array();
+
+    $types = Doctrine::getTable('Navigation')->getTypesByAppName($request->getParameter('app', 'pc'));
+
+    foreach ($types as $type)
+    {
+      $navs = Doctrine::getTable('Navigation')->retrieveByType($type);
+      foreach ($navs as $nav)
+      {
+        $this->list[$type][] = new NavigationForm($nav);
+      }
+      $nav = new Navigation();
+      $nav->setType($type);
+      $this->list[$type][] = new NavigationForm($nav);
+    }
+  }
 }

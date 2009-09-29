@@ -520,6 +520,14 @@
         <source>Self Introduction</source>
         <target>自己紹介</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Term Configuration in this SNS</source>
+        <target>SNS内名称設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Saved.</source>
+        <target>保存しました。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
