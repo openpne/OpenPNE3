@@ -3,20 +3,20 @@
   <file orginal="global" source-language="ja_JP" datatype="plaintext">
     <body>
       <trans-unit id="1">
-        <source>Name</source>
-        <target>ｺﾐｭﾆﾃｨ名</target>
+        <source>%community% Name</source>
+        <target>%community% 名</target>
       </trans-unit>
       <trans-unit id="2">
-        <source>Community Category</source>
-        <target>ｺﾐｭﾆﾃｨｶﾃｺﾞﾘ</target>
+        <source>%community% Category</source>
+        <target>%community%ｶﾃｺﾞﾘ</target>
       </trans-unit>
       <trans-unit id="3">
         <source>Register poricy</source>
         <target>参加条件</target>
       </trans-unit>
       <trans-unit id="4">
-        <source>Description</source>
-        <target>ｺﾐｭﾆﾃｨ説明文</target>
+        <source>%community% Description</source>
+        <target>%community%説明文</target>
       </trans-unit>
       <trans-unit id="5">
         <source>Invalid.</source>
@@ -31,8 +31,8 @@
         <target>すべてのｶﾃｺﾞﾘ</target>
       </trans-unit>
       <trans-unit id="">
-        <source>An object with the same "name" already exist.</source>
-        <target>そのｺﾐｭﾆﾃｨ名は既に使われています。</target>
+        <source>An object with the same "name" already exist in other %community%.</source>
+        <target>その%community%名は既に使われています。</target>
       </trans-unit>
     </body>
   </file>

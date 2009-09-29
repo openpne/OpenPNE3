@@ -31,7 +31,7 @@ $options = array(
 );
 if (!$isResult)
 {
-  $options['moreInfo'] = array(link_to(__('Create a new community'), 'community/edit'));
+  $options['moreInfo'] = array(link_to(__('Create a new %community%'), 'community/edit'));
 }
 
 op_include_form('searchCommunity', $filters, $options);

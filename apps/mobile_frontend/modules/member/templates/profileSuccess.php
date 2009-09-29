@@ -47,7 +47,7 @@
 <?php echo $profile ?><br>
 <?php endif; ?>
 <?php if ($member->getId() == $sf_user->getMemberId() && $profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_FRIEND): ?>
-<font color="<?php echo $op_color["core_color_22"] ?>">(<?php echo __('Only Open to My Friends') ?>)</font><br>
+<font color="<?php echo $op_color["core_color_22"] ?>">(<?php echo __('Only Open to %my_friend%') ?>)</font><br>
 <?php endif; ?>
 <?php endforeach; ?>
 </td>
@@ -60,7 +60,7 @@
 <tr><td colspan="2">
 
 <?php if (opConfig::get('enable_friend_link') && !$relation->isFriend() && !$relation->isSelf()) : ?>
-<?php echo link_to(__('Makes friends'), 'friend/link?id='.$member->getId()) ?><br>
+<?php echo link_to(__('Makes %friend%', array('%friend%' => $op_term['friend']->pluralize())), 'friend/link?id='.$member->getId()) ?><br>
 <?php endif; ?>
 
 <?php include_customizes('menu', 'friendTop') ?>

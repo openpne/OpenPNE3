@@ -1,4 +1,4 @@
-<?php op_mobile_page_title($community->getName(), __('Detail of community')) ?>
+<?php op_mobile_page_title($community->getName(), __('Detail of %community%')) ?>
 
 <table width="100%" bgcolor="<?php echo $op_color["core_color_4"] ?>">
 <tr><td colspan="2" align="center">
@@ -8,7 +8,7 @@
 
 <?php
 $list = array(
-  __('Community Name')     => $community->getName(),
+  __('%community% Name')     => $community->getName(),
   __('Community Category', array(), 'form_community') => $community->getCommunityCategory(),
   __('Date Created')       => op_format_date($community->getCreatedAt(), 'D'),
   __('Administrator')      => link_to($community_admin->getName(), 'member/profile?id='.$community_admin->getId()),

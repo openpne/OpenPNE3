@@ -44,16 +44,16 @@
 
 <tr><td colspan="2">
 <?php if ($isEditCommunity) : ?>
-<?php echo link_to(__('Edit community'), 'community/edit?id=' . $community->getId()) ?><br>
+<?php echo link_to(__('Edit %community%'), 'community/edit?id=' . $community->getId()) ?><br>
 <?php endif; ?>
 <?php if (!$isAdmin) : ?>
 <?php if ($isCommunityMember) : ?>
-<?php echo link_to(__('Quit community'), 'community/quit?id=' . $community->getId()) ?><br>
+<?php echo link_to(__('Quit %community%'), 'community/quit?id=' . $community->getId()) ?><br>
 <?php else : ?>
 <?php if ($isCommunityPreMember) : ?>
 <?php echo __('You are waiting for the participation approval by community\'s administrator.') ?>
 <?php else: ?>
-<?php echo link_to(__('Join community'), 'community/join?id=' . $community->getId()) ?><br>
+<?php echo link_to(__('Join %community%'), 'community/join?id=' . $community->getId()) ?><br>
 <?php endif; ?>
 <?php endif; ?>
 <?php endif; ?>
@@ -76,7 +76,7 @@ foreach ($members as $member) {
   $list[] = link_to($member->getName(), 'member/profile?id='.$member->getId());
 }
 $option = array(
-  'title' => __('Community Members'),
+  'title' => __('%Community% Members'),
   'border' => true,
   'moreInfo' => array(
     link_to(__('More'), 'community/memberList?id='.$community->getId()),
