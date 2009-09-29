@@ -27,6 +27,7 @@ class MemberForm extends BaseMemberForm
       'name' => new sfValidatorString(array('max_length' => 64, 'trim' => true)),
     ));
 
+    $this->widgetSchema->setLabel('name', '%nickname%');
     $this->widgetSchema->setNameFormat('member[%s]');
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_member');
   }

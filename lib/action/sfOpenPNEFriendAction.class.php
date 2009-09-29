@@ -65,12 +65,13 @@ abstract class sfOpenPNEFriendAction extends sfActions
 
     if ($this->relation->isFriend())
     {
-      $this->getUser()->setFlash('error', 'This member already belongs to my friends.');
+      $this->getUser()->setFlash('error', 'This member already belongs to %my_friend%.');
+      $this->getUser()->setFlash('error_params', array('%my_friend%' => Doctrine::getTable('SnsTerm')->get('my_friend')->pluralize()));
       $this->redirect('member/profile?id='.$this->id);
     }
     if ($this->relation->isFriendPreFrom())
     {
-      $this->getUser()->setFlash('error', 'My friends request is already sent.');
+      $this->getUser()->setFlash('error', '%Friend% request is already sent.');
       $this->redirect('member/profile?id='.$this->id);
     }
 
@@ -81,7 +82,7 @@ abstract class sfOpenPNEFriendAction extends sfActions
       $this->form->bind($request->getParameter('friend_link'));
       if ($this->form->isValid())
       {
-        $this->getUser()->setFlash('notice', 'You have requested friend link.');
+        $this->getUser()->setFlash('notice', 'You have requested %friend% link.');
         $this->redirectToHomeIfIdIsNotValid();
         $this->relation->setFriendPre();
         $this->dispatcher->notify(new sfEvent($this, 'op_action.post_execute_'.$this->moduleName.'_'.$this->actionName, array(
@@ -140,7 +141,7 @@ abstract class sfOpenPNEFriendAction extends sfActions
   {
     if (!$this->relation->isFriend())
     {
-      $this->getUser()->setFlash('error', 'This member is not your friend.');
+      $this->getUser()->setFlash('error', 'This member is not your %friend%.');
       $this->redirect('friend/manage');
     }
     $this->redirectToHomeIfIdIsNotValid();
