@@ -80,6 +80,8 @@ class MemberProfileTable extends opAccessControlDoctrineTable
 
   public function searchMemberIds($profile = array(), $ids = null, $isCheckPublicFlag = true)
   {
+    $publicFlag = ($isCheckPublicFlag) ? 1 : null;
+
     foreach ($profile as $key => $value)
     {
       $item = Doctrine::getTable('Profile')->retrieveByName($key);
@@ -116,7 +118,7 @@ class MemberProfileTable extends opAccessControlDoctrineTable
           $option = $options[$i++];
           if ($v)
           {
-            $ids = $this->filterMemberIdByProfileOption($ids, $column, $v, $option);
+            $ids = $this->filterMemberIdByProfileOption($ids, $column, $v, $option, $publicFlag);
           }
         }
         continue;
@@ -124,10 +126,8 @@ class MemberProfileTable extends opAccessControlDoctrineTable
       elseif ($item->isMultipleSelect() || $item->isSingleSelect())
       {
         $column = 'profile_option_id';
-
       }
 
-      $publicFlag = ($isCheckPublicFlag) ? 1 : null;
       $ids = $this->filterMemberIdByProfile($ids, $column, $value, $item, $publicFlag);
     }
 
