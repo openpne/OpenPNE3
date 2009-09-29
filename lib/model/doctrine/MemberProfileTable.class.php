@@ -12,24 +12,22 @@ class MemberProfileTable extends opAccessControlDoctrineTable
 {
   public function getProfileListByMemberId($memberId)
   {
-    $memberProfiles = $this->createQuery()
-      ->where('member_id = ?', $memberId)
-      ->andWhere('lft = 1')
-      ->orderBy('p.sort_order')
-      ->leftJoin('MemberProfile.Profile p')
+    $profiles = Doctrine::getTable('Profile')->createQuery()
+      ->select('id')
+      ->orderBy('sort_order')
       ->execute();
 
-    return $memberProfiles;
-
-    $stmt = self::doSelectStmt($c);
-    while ($row = $stmt->fetch(PDO::FETCH_NUM))
+    $memberProfiles = array();
+    foreach ($profiles as $profile)
     {
-      $obj = new MemberProfile();
-      $obj->hydrateProfiles($row);
-      $profiles[] = $obj;
+      $memberProfiles[] = $this->createQuery()
+        ->where('member_id = ?', $memberId)
+        ->andWhere('profile_id = ?', $profile->getId())
+        ->fetchOne();
     }
 
-    return $profiles;
+    // NOTICE: this returns Array not Doctrine::Collection
+    return $memberProfiles;
   }
 
   public function getViewableProfileListByMemberId($memberId, $myMemberId = null)
@@ -71,10 +69,13 @@ class MemberProfileTable extends opAccessControlDoctrineTable
 
   public function retrieveByMemberIdAndProfileName($memberId, $profileName)
   {
+    $profile = Doctrine::getTable('Profile')->createQuery()
+      ->where('name = ?', $profileName)
+      ->fetchOne();
+
     return $this->createQuery()
       ->where('member_id = ?', $memberId)
-      ->andWhere('p.name = ?', $profileName)
-      ->leftJoin('MemberProfile.Profile p')
+      ->andWhere('profile_id = ?', $profile->getId())
       ->fetchOne();
   }
 
