@@ -72,4 +72,4 @@ $t->is($community1->getNameAndCount(), '最初のコミュニティ (2)', 'getNa
 $t->is($community1->getNameAndCount('[%s] - %d'), '[最初のコミュニティ] - 2', 'getNameAndCount() returns a string formated "[%s] - %d"');
 $t->diag('Community::getRegisterPoricy()');
 $t->is($community1->getRegisterPoricy(), 'Everyone can join', 'getRegisterPoricy() returns "Everyone can join" for opened community');
-$t->is($community2->getRegisterPoricy(), 'Community\'s admin authorization needed', 'getRegisterPoricy() returns "Community\'s admin authorization needed" for closed community');
+$t->is($community2->getRegisterPoricy(), '%Community%\'s admin authorization needed', 'getRegisterPoricy() returns "Community\'s admin authorization needed" for closed community');
