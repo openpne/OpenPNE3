@@ -1,0 +1,72 @@
+SnsTerm:
+  term_friend_pc_frontend:
+    name: "friend"
+    application: "pc_frontend"
+    Translation:
+      ja_JP:
+        value: "フレンド"
+      en:
+        value: "friend"
+
+  term_friend_mobile_frontend:
+    name: "friend"
+    application: "mobile_frontend"
+    Translation:
+      ja_JP:
+        value: "ﾌﾚﾝﾄﾞ"
+      en:
+        value: "friend"
+
+  term_my_friend_pc_frontend:
+    name: "my_friend"
+    application: "pc_frontend"
+    Translation:
+      ja_JP:
+        value: "マイフレンド"
+      en:
+        value: "my friend"
+
+  term_my_friend_mobile_frontend:
+    name: "my_friend"
+    application: "mobile_frontend"
+    Translation:
+      ja_JP:
+        value: "ﾏｲﾌﾚﾝﾄﾞ"
+      en:
+        value: "my friend"
+
+  term_community_pc_frontend:
+    name: "community"
+    application: "pc_frontend"
+    Translation:
+      ja_JP:
+        value: "コミュニティ"
+      en:
+        value: "community"
+
+  term_community_mobile_frontend:
+    name: "community"
+    application: "mobile_frontend"
+    Translation:
+      ja_JP:
+        value: "ｺﾐｭﾆﾃｨ"
+      en:
+        value: "community"
+
+  term_nickname_pc_frontend:
+    name: "nickname"
+    application: "pc_frontend"
+    Translation:
+      ja_JP:
+        value: "ニックネーム"
+      en:
+        value: "nickname"
+
+  term_nickname_mobile_frontend:
+    name: "nickname"
+    application: "mobile_frontend"
+    Translation:
+      ja_JP:
+        value: "ﾆｯｸﾈｰﾑ"
+      en:
+        value: "nickname"
