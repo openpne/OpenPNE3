@@ -24,6 +24,18 @@ $t->cmp_ok($memberProfile->getValue(), '===', '1988-04-23', 'getValue() returns 
 
 //------------------------------------------------------------
 
+$t->diag('MemberProfileTable::getProfileListByMemberId()');
+$memberProfile = Doctrine::getTable('MemberProfile')->getProfileListByMemberId(1);
+$t->is(count($memberProfile), 3, 'getProfileListByMemberId() returns 3 profiles for member ID:1');
+
+//------------------------------------------------------------
+
+$t->diag('MemberProfileTable::retrieveByMemberIdAndProfileName()');
+$memberProfile = Doctrine::getTable('MemberProfile')->retrieveByMemberIdAndProfileName(1, 'birthday');
+$t->is($memberProfile->getValue(), '1988-04-23', 'retrieveByMemberIdAndProfileName() returns profile of member(ID:1)\'s birthday');
+
+//------------------------------------------------------------
+
 $t->diag('Member::hydrateProfiles()');
 
 //------------------------------------------------------------
