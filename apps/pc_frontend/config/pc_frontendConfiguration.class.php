@@ -15,4 +15,11 @@ class pc_frontendConfiguration extends sfOpenPNEApplicationConfiguration
   public function configure()
   {
   }
+
+  public function initialize()
+  {
+    parent::initialize();
+
+    sfWidgetFormSchema::setDefaultFormFormatterName('pc');
+  }
 }

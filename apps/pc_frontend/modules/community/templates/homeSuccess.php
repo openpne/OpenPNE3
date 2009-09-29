@@ -8,7 +8,7 @@ op_include_parts('memberImageBox', 'communityImageBox', $options);
 
 <?php
 $options = array(
-  'title' => __('Community Members'),
+  'title' => __('%community% Members', array('%community%' => $op_term['community']->titleize())),
   'list' => $members,
   'crownIds' => array($community_admin->getId()),
   'link_to' => 'member/profile?id=',
@@ -24,27 +24,33 @@ op_include_parts('nineTable', 'frendList', $options);
 
 <?php slot('op_top') ?>
 <?php if ($isCommunityPreMember) : ?>
-<?php op_include_parts('descriptionBox', 'informationAboutCommunity',  array('body' => __('You are waiting for the participation approval by community\'s administrator.'))) ?>
+<?php op_include_parts('descriptionBox', 'informationAboutCommunity',  array('body' => __('You are waiting for the participation approval by %community%\'s administrator.'))) ?>
 <?php endif; ?>
 <?php end_slot(); ?>
 
 <?php
 $list = array(
-  __('Community Name')     => $community->getName(),
-  __('Community Category') => $community->getCommunityCategory(),
+  __('%community% Name', array('%community%' => $op_term['community']->titleize()))     => $community->getName(),
+  __('%community% Category', array('%community%' => $op_term['community']->titleize())) => $community->getCommunityCategory(),
   __('Date Created')       => op_format_date($community->getCreatedAt(), 'D'),
   __('Administrator')      => $community_admin->getName(),
   __('Count of Members')   => $community->countCommunityMembers()
 );
 foreach ($community->getConfigs() as $key => $config)
 {
-  $list[__($key, array(), 'form_community')] = $config;
+  if ('Description' === $key)
+  {
+    $list[__('%community% Description', array('%community%' => $op_term['community']->titleize()), 'form_community')] = op_auto_link_text(nl2br($community->getConfig('description')));
+  }
+  else
+  {
+    $list[__($key, array(), 'form_community')] = $config;
+  }
 }
 $list[__('Register poricy', array(), 'form_community')] = __($community->getRawValue()->getRegisterPoricy());
-$list[__('Description', array(), 'form_community')] = op_auto_link_text(nl2br($community->getConfig('description')));
 
 $options = array(
-  'title' => __('Community'),
+  'title' => __('%community%', array('%community%' => $op_term['community']->titleize())),
   'list' => $list,
 );
 op_include_parts('listBox', 'communityHome', $options);
@@ -55,7 +61,7 @@ op_include_parts('listBox', 'communityHome', $options);
 <?php echo $form->renderFormTag(url_for('community/home?id=' . $community->getId())) ?>
 <div class="parts">
 <div class="partsHeading">
-<h3><?php echo __('Community Notification') ?></h3>
+<h3><?php echo __('%community% Notification', array('%community%' => $op_term['community']->titleize())) ?></h3>
 </div>
 <table>
 <?php echo $form ?>
@@ -72,14 +78,14 @@ op_include_parts('listBox', 'communityHome', $options);
 
 <ul>
 <?php if ($isEditCommunity): ?>
-<li><?php echo link_to(__('Edit this community'), 'community/edit?id=' . $community->getId()) ?></li>
+<li><?php echo link_to(__('Edit this %community%'), 'community/edit?id=' . $community->getId()) ?></li>
 <?php endif; ?>
 
 <?php if (!$isAdmin): ?>
 <?php if ($isCommunityMember): ?>
-<li><?php echo link_to(__('Leave this community'), 'community/quit?id=' . $community->getId()) ?></li>
+<li><?php echo link_to(__('Leave this %community%'), 'community/quit?id=' . $community->getId()) ?></li>
 <?php else : ?>
-<li><?php echo link_to(__('Join this community'), 'community/join?id=' . $community->getId()) ?></li>
+<li><?php echo link_to(__('Join this %community%'), 'community/join?id=' . $community->getId()) ?></li>
 <?php endif; ?>
 <?php endif; ?>
 </ul>

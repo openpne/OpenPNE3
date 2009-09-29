@@ -2,7 +2,9 @@
 <p class="caution">
 <?php
 $member = $value->getMemberRelatedByMemberIdFrom();
-echo __('%1% sent my friends request to you!', array('%1%' => link_to($member->getName(), 'member/profile?id='.$member->getId()))) ?>
+echo __('%1% sent %friend% request to you!', array(
+  '%1%' => link_to($member->getName(), 'member/profile?id='.$member->getId()),
+)) ?>
 &nbsp;
 <?php echo link_to(__('Permits'), 'friend/linkAccept?id='.$member->getId()) ?>
 &nbsp;

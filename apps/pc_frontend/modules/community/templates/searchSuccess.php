@@ -1,9 +1,9 @@
 <?php
 $options = array(
-  'title'    => __('Search Communities'),
+  'title'    => __('Search %community%', array('%community%' => $op_term['community']->titleize()->pluralize())),
   'url'      => url_for('community/search'),
   'button'   => __('Search'),
-  'moreInfo' => array(link_to(__('Create a new community'), 'community/edit')),
+  'moreInfo' => array(link_to(__('Create a new %community%'), 'community/edit')),
   'method'   => 'get'
 );
 
@@ -17,7 +17,7 @@ $list = array();
 foreach ($pager->getResults() as $key => $community)
 {
   $list[$key] = array();
-  $list[$key][__('Community Name')] = $community->getName();
+  $list[$key][__('%community% Name', array('%community%' => $op_term['community']->titleize()))] = $community->getName();
   $list[$key][__('Count of Members')] = $community->countCommunityMembers();
   $list[$key][__('Description')] = $community->getConfig('description');
 }
@@ -33,5 +33,5 @@ $options = array(
 op_include_parts('searchResultList', 'searchCommunityResult', $options);
 ?>
 <?php else: ?>
-<?php op_include_box('searchCommunityResult', __('Your search queries did not match any communities.'), array('title' => __('Search Results'))) ?>
+<?php op_include_box('searchCommunityResult', __('Your search queries did not match any %community%.', array('%community%' => $op_term['community']->pluralize())), array('title' => __('Search Results'))) ?>
 <?php endif; ?>

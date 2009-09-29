@@ -3,32 +3,32 @@
   <file orginal="global" source-language="en" datatype="plaintext">
     <body>
       <trans-unit id="">
-        <source>Communities List</source>
-        <target>コミュニティリスト</target>
+        <source>%community% List</source>
+        <target>%community%リスト</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Community Members</source>
-        <target>コミュニティメンバー</target>
+        <source>%community% Members</source>
+        <target>%community%メンバー</target>
       </trans-unit>
       <trans-unit id="">
         <source>Show all</source>
         <target>全てを見る</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Create a new community</source>
-        <target>コミュニティ作成</target>
+        <source>Create a new %community%</source>
+        <target>%community%作成</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Edit the community</source>
-        <target>コミュニティ編集</target>
+        <source>Edit the %community%</source>
+        <target>%community%編集</target>
       </trans-unit>
       <trans-unit id="">
         <source>Management member</source>
         <target>メンバー管理</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Community Name</source>
-        <target>コミュニティ名</target>
+        <source>%community% Name</source>
+        <target>%community%名</target>
       </trans-unit>
       <trans-unit id="">
         <source>Date Created</source>
@@ -47,60 +47,60 @@
         <target>説明文</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Community</source>
-        <target>コミュニティ</target>
+        <source>%community%</source>
+        <target>%community%</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Edit this community</source>
-        <target>このコミュニティを編集する</target>
+        <source>Edit this %community%</source>
+        <target>この%community%を編集する</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Leave this community</source>
-        <target>このコミュニティを退会する</target>
+        <source>Leave this %community%</source>
+        <target>この%community%を退会する</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Join this community</source>
-        <target>このコミュニティに参加する</target>
+        <source>Join this %community%</source>
+        <target>この%community%に参加する</target>
       </trans-unit>
       <trans-unit id="">
-        <source>You are already joined to this community.</source>
-        <target>既にコミュニティに参加済みです。</target>
+        <source>You are already joined to this %community%.</source>
+        <target>既に%community%に参加済みです。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>You have already sent the participation request to this community.</source>
-        <target>既にコミュニティに参加申請済みです。</target>
+        <source>You have already sent the participation request to this %community%.</source>
+        <target>既に%community%に参加申請済みです。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>You are waiting for the participation approval by community's administrator.</source>
-        <target>コミュニティ管理者による参加承認待ちです。</target>
+        <source>You are waiting for the participation approval by %community%'s administrator.</source>
+        <target>%community%管理者による参加承認待ちです。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Errors</source>
         <target>エラー</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Joined Communities</source>
-        <target>参加コミュニティ</target>
+        <source>Joined %community%</source>
+        <target>参加%community%</target>
       </trans-unit>
       <trans-unit id="">
-        <source>You don't have any joined communities.</source>
-        <target>参加しているコミュニティはありません。</target>
+        <source>You don't have any joined %community%.</source>
+        <target>参加している%community%はありません。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Drop this member</source>
         <target>退会させる</target>
       </trans-unit>
       <trans-unit id="">
-        <source>The administrator doesn't leave the community.</source>
+        <source>The administrator doesn't leave the %community%.</source>
         <target>管理者は退会できません。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>You haven't joined this community yet.</source>
-        <target>まだコミュニティに参加していません。</target>
+        <source>You haven't joined this %community% yet.</source>
+        <target>まだ%community%に参加していません。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Community Notification</source>
-        <target>コミュニティ書き込み通知設定</target>
+        <source>%community% Notification</source>
+        <target>%community%書き込み通知設定</target>
       </trans-unit>
       <trans-unit id="">
         <source>Need posting Notification</source>
@@ -111,8 +111,8 @@
         <target>通知設定を使用しない</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Search Communities</source>
-        <target>コミュニティ検索</target>
+        <source>Search %community%</source>
+        <target>%community%検索</target>
       </trans-unit>
       <trans-unit id="">
         <source>Search</source>
@@ -127,8 +127,8 @@
         <target>ここで入力したメールアドレスは他のメンバーには公開されません。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Your search queries did not match any communities.</source>
-        <target>該当するコミュニティはありませんでした。</target>
+        <source>Your search queries did not match any %community%.</source>
+        <target>該当する%community%はありませんでした。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Member</source>
@@ -139,8 +139,8 @@
         <target>このページにはアクセスできません。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>%1% sent my friends request to you!</source>
-        <target>%1%さんからフレンド申請がきています！</target>
+        <source>%1% sent %friend% request to you!</source>
+        <target>%1%さんから%friend%申請がきています！</target>
       </trans-unit>
       <trans-unit id="">
         <source>%1% send request for participation to %2%.</source>
@@ -155,36 +155,36 @@
         <target>拒否する</target>
       </trans-unit>
       <trans-unit id="">
-        <source>My Friends Setting</source>
-        <target>フレンド管理</target>
+        <source>%my_friend% Setting</source>
+        <target>%my_friend%管理</target>
       </trans-unit>
       <trans-unit id="">
-        <source>This member already belongs to my friends.</source>
-        <target>既にフレンドです。</target>
+        <source>This member already belongs to %my_friend%.</source>
+        <target>既に%my_friend%です。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>My friends request is already sent.</source>
-        <target>現在フレンド申請中です。</target>
+        <source>%Friend% request is already sent.</source>
+        <target>現在%Friend%申請中です。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>You have requested friend link.</source>
-        <target>フレンド申請が完了しました。</target>
+        <source>You have requested %friend% link.</source>
+        <target>%friend%申請が完了しました。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>You don't have any friends.</source>
-        <target>フレンドがいません。</target>
+        <source>You don't have any %friend%.</source>
+        <target>%friend%がいません。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Delete from my friends.</source>
-        <target>フレンドから外す</target>
+        <source>Delete from %my_friend%.</source>
+        <target>%my_friend%から外す</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Add friends</source>
-        <target>マイフレンドに追加</target>
+        <source>Add %my_friend%</source>
+        <target>%my_friend%に追加</target>
       </trans-unit>
       <trans-unit id="">
-        <source>This member is not your friend.</source>
-        <target>フレンドではありません。</target>
+        <source>This member is not your %friend%.</source>
+        <target>%friend%ではありません。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Register Mobile phone</source>
@@ -243,12 +243,12 @@
         <target>全員に公開</target>
       </trans-unit>
       <trans-unit id="">
-        <source>My Friends</source>
-        <target>マイフレンドまで公開</target>
+        <source>%my_friend%</source>
+        <target>%my_friend%まで公開</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Only Open to My Friends</source>
-        <target>マイフレンドまで公開</target>
+        <source>Only Open to %my_friend%</source>
+        <target>%my_friend%まで公開</target>
       </trans-unit>
       <trans-unit id="">
         <source>Private</source>
@@ -275,8 +275,8 @@
         <target>最終ログイン</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Friends List</source>
-        <target>フレンドリスト</target>
+        <source>%friend% List</source>
+        <target>%friend%リスト</target>
       </trans-unit>
       <trans-unit id="">
         <source>Other members look your page like this.</source>
@@ -307,8 +307,8 @@
         <target>ドメイン指定受信機能などをお使いの方は、携帯電話で「%1%」からのメールを受信できるように設定してください。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Nickname</source>
-        <target>ニックネーム</target>
+        <source>%nickname%</source>
+        <target>%nickname%</target>
       </trans-unit>
       <trans-unit id="">
         <source>Your search queries did not match any members.</source>
@@ -507,8 +507,8 @@
         <target>%years%年以上</target>
       </trans-unit>
       <trans-unit id="">
-        <source>If %1% is your friend, let us add to friends it!</source>
-        <target>%1%さんと直接の知り合いの場合、マイフレンドに追加しましょう！</target>
+        <source>If %1% is your friend, let us add to %my_friend% it!</source>
+        <target>%1%さんと直接の知り合いの場合、%my_friend%に追加しましょう！</target>
       </trans-unit>
       <trans-unit id="">
         <source>Mail address</source>
@@ -575,36 +575,36 @@
         <target>誰でも参加可能</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Community's admin authorization needed</source>
-        <target>コミュニティ管理者の承認が必要</target>
+        <source>%Community%'s admin authorization needed</source>
+        <target>%Community%管理者の承認が必要</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Community Category</source>
-        <target>コミュニティカテゴリ</target>
+        <source>%community% Category</source>
+        <target>%community%カテゴリ</target>
       </trans-unit>
       <trans-unit id="">
         <source>All categories</source>
         <target>すべてのカテゴリ</target>
       </trans-unit>
       <trans-unit id="">
-        <source>delete this community.if you delete this community please to report in advance for all this community members.</source>
-        <target>このコミュニティを削除します。このコミュニティを削除する場合は、事前にこのコミュニティのメンバーに報告してください。</target>
+        <source>delete this %community%.if you delete this %community% please to report in advance for all this %community% members.</source>
+        <target>この%community%を削除します。この%community%を削除する場合は、事前にこの%community%のメンバーに報告してください。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Delete</source>
         <target>削除</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Delete this community</source>
-        <target>コミュニティを削除する</target>
+        <source>Delete this %community%</source>
+        <target>%community%を削除する</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Do you delete this community?</source>
+        <source>Do you delete this %community%?</source>
         <target>削除してよろしいですか？</target>
       </trans-unit>
       <trans-unit>
-        <source>Do you drop %0% from this community?</source>
-        <target>%0%さんをこのコミュニティから本当に退会させますか？</target>
+        <source>Do you drop %0% from this %community%?</source>
+        <target>%0%さんをこの%community%から本当に退会させますか？</target>
       </trans-unit>
       <trans-unit id="">
         <source>Yes</source>

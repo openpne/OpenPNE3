@@ -3,20 +3,20 @@
   <file orginal="global" source-language="en" datatype="plaintext">
     <body>
       <trans-unit id="1">
-        <source>Name</source>
-        <target>コミュニティ名</target>
+        <source>%community% Name</source>
+        <target>%community%名</target>
       </trans-unit>
       <trans-unit id="2">
-        <source>Community Category</source>
-        <target>コミュニティカテゴリ</target>
+        <source>%community% Category</source>
+        <target>%community%カテゴリ</target>
       </trans-unit>
       <trans-unit id="3">
         <source>Register poricy</source>
         <target>参加条件</target>
       </trans-unit>
       <trans-unit id="4">
-        <source>Description</source>
-        <target>コミュニティ説明文</target>
+        <source>%community% Description</source>
+        <target>%community%説明文</target>
       </trans-unit>
       <trans-unit id="5">
         <source>Invalid.</source>
@@ -31,15 +31,15 @@
         <target>すべてのカテゴリ</target>
       </trans-unit>
       <trans-unit id="8">
-        <source>An object with the same "name" already exist.</source>
-        <target>そのコミュニティ名は既に使われています。</target>
+        <source>An object with the same "name" already exist in other %community%.</source>
+        <target>その%community%名は既に使われています。</target>
       </trans-unit>
       <trans-unit id="9">
-        <source>Notification of posting in community by computer E-mail.</source>
-        <target>コミュニティ書き込みＰＣメール通知設定</target>
+        <source>Notification of posting in %community% by computer E-mail.</source>
+        <target>コミュニティ書き込みPCメール通知設定</target>
       </trans-unit>
       <trans-unit id="10">
-        <source>Notification of posting in community by mobile E-mail.</source>
+        <source>Notification of posting in %community% by mobile E-mail.</source>
         <target>コミュニティ書き込み携帯メール通知設定</target>
       </trans-unit>
     </body>

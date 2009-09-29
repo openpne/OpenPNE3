@@ -30,7 +30,9 @@ foreach ($member->getProfiles(true) as $profile)
 
   if ($member->getId() == $sf_user->getMemberId() && $profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_FRIEND)
   {
-    $profileValue .= ' ('.__('Only Open to My Friends').')';
+    $profileValue .= ' ('.__('Only Open to %my_friend%', array(
+      '%my_friend%' => $op_term['my_friend']->titleize()->pluralize(),
+    )).')';
   }
   $list[$caption] = $profileValue;
 }

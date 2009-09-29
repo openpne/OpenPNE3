@@ -1,6 +1,6 @@
 <?php
 $options = array(
-  'title' => __('Communities List'),
+  'title' => __('%community% List', array('%community%' => $op_term['community']->titleize())),
   'list' => $pager->getResults(),
   'crownIds' => $sf_data->getRaw('crownIds'),
   'link_to' => 'community/home?id=',
