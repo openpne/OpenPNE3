@@ -15,9 +15,13 @@
  * @subpackage widget
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class sfWidgetFormSchemaFormatterMobile extends sfWidgetFormSchemaFormatter
+class sfWidgetFormSchemaFormatterMobile extends opWidgetFormSchemaFormatter
 {
   protected
+    $rowFormat                 = '',
+    $errorRowFormat            = '',
+    $helpFormat                = '%help%',
+    $decoratorFormat           = '',
     $errorRowFormatInARow      = "<br>%error%\n",
     $namedErrorRowFormatInARow = "<br>%name%: %error%\n"; 
 
