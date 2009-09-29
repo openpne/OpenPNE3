@@ -1,6 +1,6 @@
 <?php
 $options = array(
-  'title' => __('Friends List'),
+  'title' => __('%friend% List', array('%friend%' => $op_term['friend']->titleize())),
   'list' => $pager->getResults(),
   'link_to' => 'member/profile?id=',
   'pager' => $pager,

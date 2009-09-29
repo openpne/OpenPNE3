@@ -1,4 +1,4 @@
-<?php op_mobile_page_title(__('Manage friend')) ?>
+<?php op_mobile_page_title(__('Manage %friend%')) ?>
 
 <center>
 <?php op_include_pager_total($pager); ?>
@@ -13,7 +13,7 @@ foreach ($pager->getResults() as $member)
           . link_to(sprintf('%s(%d)', $member->getName(), $member->countFriends()), 'member/profile?id='.$member->getId()).'<br>'
           . get_customizes('id_name', 'after', $vars)
           . get_customizes('id_friend', 'before', $vars)
-          . ' ['.link_to(__('Removes this friend'), 'friend/unlink?id='.$member->getId()).']'
+          . ' ['.link_to(__('Removes this %friend%'), 'friend/unlink?id='.$member->getId()).']'
           . get_customizes('id_friend', 'after', $vars);
 }
 

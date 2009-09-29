@@ -6,12 +6,12 @@ general:
     Default:    "open"
     Choices:
       open:     "Everyone can join"
-      close:    "Community's admin authorization needed"
+      close:    "%Community%'s admin authorization needed"
     IsUnique:   false
     IsRequired: true
   description:
     Name:       "description"
-    Caption:    "Description"
+    Caption:    "%community% Description"
     FormType:   "textarea"
     ValueType:  "string"
     IsUnique:   false

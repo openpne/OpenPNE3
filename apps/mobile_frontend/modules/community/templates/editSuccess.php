@@ -3,11 +3,11 @@ $subtitle = null;
 $url = 'community/edit';
 if($communityForm->isNew())
 {
-  $title = __('Create community');
+  $title = __('Create %community%');
 }
 else
 {
-  $title = __('Edit community');
+  $title = __('Edit %community%');
   $subtitle = $community->getName();
   $url .= '?id='.$community->getId();
 }
@@ -24,8 +24,8 @@ else
 <?php if (!$communityForm->isNew()): ?>
 <?php
   op_include_parts('buttonBox', 'deleteForm', array(
-    'title' => __('Delete this community'),
-    'body' => __('delete this community.if you delete this community please to report in advance for all this community members.'),
+    'title' => __('Delete this %community%'),
+    'body' => __('delete this %community%.if you delete this %community% please to report in advance for all this %community% members.'),
     'button' => __('Delete'),
     'method' => 'get',
     'url' => url_for('community/delete?id=' . $community->getId()),

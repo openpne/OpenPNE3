@@ -1,4 +1,4 @@
-<?php op_mobile_page_title(__('Friend list')) ?>
+<?php op_mobile_page_title(__('%Friend% list')) ?>
 
 <center>
 <?php op_include_pager_total($pager); ?>
@@ -19,6 +19,6 @@ op_include_list('friendList', $list, $option);
 
 <?php if ($relation->isSelf()): ?>
 <?php slot('op_mobile_footer_menu') ?>
-<?php echo link_to(__('Manage friend'), 'friend/manage') ?>
+<?php echo link_to(__('Manage %friend%'), 'friend/manage') ?>
 <?php end_slot(); ?>
 <?php endif; ?>

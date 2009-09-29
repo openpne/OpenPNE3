@@ -493,3 +493,22 @@ OpenIDTrustLog:
     collate: utf8_unicode_ci
     charset: utf8
     comment: "Saves logs of trusted OpenID RP"
+
+SnsTerm:
+  actAs:
+    I18n:
+      fields: [value]
+      length: 5
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    name: { type: string(64), default: "", notnull: true, comment: "Term name" }
+    application: { type: string(32), default: "pc_frontend", notnull: true, comment: "Application name" }
+    value: { type: string, comment: "Term value" }
+  indexes:
+    application_INDEX:
+      fields: [application]
+  options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
+    comment: "Saves terms of this SNS"

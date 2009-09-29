@@ -85,21 +85,21 @@ all:
 #      lifetime:                  86400
 #      prefix:                    %SF_APP_DIR%
 #
-#  i18n:
-#    class: sfI18N
-#    param:
-#      source:               XLIFF
-#      debug:                off
-#      untranslated_prefix:  "[T]"
-#      untranslated_suffix:  "[/T]"
-#      cache:
-#        class: sfFileCache
-#        param:
-#          automatic_cleaning_factor: 0
-#          cache_dir:                 %SF_I18N_CACHE_DIR%
-#          lifetime:                  86400
-#          prefix:                    %SF_APP_DIR%
-#
+  i18n:
+    class: opI18N
+    param:
+      source:               XLIFF
+      debug:                off
+      untranslated_prefix:  "[T]"
+      untranslated_suffix:  "[/T]"
+      cache:
+        class: sfFileCache
+        param:
+          automatic_cleaning_factor: 0
+          cache_dir:                 %SF_I18N_CACHE_DIR%
+          lifetime:                  86400
+          prefix:                    %SF_APP_DIR%
+
   routing:
     class: sfPatternRouting
     param:

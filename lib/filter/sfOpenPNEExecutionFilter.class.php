@@ -34,6 +34,8 @@ class sfOpenPNEExecutionFilter extends sfExecutionFilter
       'actionInstance' => $actionInstance,
     )));
 
+    Doctrine::getTable('SnsTerm')->configure(sfContext::getInstance()->getUser()->getCulture(), sfConfig::get('sf_app'));
+
     try
     {
       $result = parent::handleAction($filterChain, $actionInstance);

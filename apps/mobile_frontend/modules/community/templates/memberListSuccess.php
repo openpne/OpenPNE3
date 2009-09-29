@@ -1,4 +1,4 @@
-<?php op_mobile_page_title($community->getName(), __('Community Members')) ?>
+<?php op_mobile_page_title($community->getName(), __('%Community% Members')) ?>
 
 <center>
 <?php op_include_pager_total($pager); ?>

@@ -142,7 +142,7 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
     }
     else if ('close' === $register_policy)
     {
-      return 'Community\'s admin authorization needed';
+      return '%Community%\'s admin authorization needed';
     }
   }
 

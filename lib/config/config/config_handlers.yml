@@ -17,3 +17,7 @@ config/mobile_mail_domain.yml:
 
 config/mobile_ip_address.yml:
   class: sfSimpleYamlConfigHandler
+
+config/sns_term.yml:
+  class: sfSimpleYamlConfigHandler
+

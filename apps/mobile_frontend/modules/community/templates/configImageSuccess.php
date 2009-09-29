@@ -1,4 +1,4 @@
-<?php op_mobile_page_title($community->getName(), __('Edit Community Photo')) ?>
+<?php op_mobile_page_title($community->getName(), __('Edit %community% Photo')) ?>
 <center>
 <?php if ($community->getImageFileName()): ?>
 <?php echo image_tag_sf_image($community->getFile(), array('size' => '120x120', 'format' => 'jpg')) ?><br>
@@ -16,6 +16,6 @@
 <?php echo __('Send E-mail that has a photo to use as community\'s image.') ?><br>
 <?php echo op_mail_to('community_add_image', array('id' => $community->id), __('Send E-mail')) ?>
 <?php else: ?>
-<?php echo __('This community already has a photo. If you want to register a new one, you must delete this photo.') ?><br>
+<?php echo __('This %community% already has a photo. If you want to register a new one, you must delete this photo.') ?><br>
 <?php endif; ?>
 

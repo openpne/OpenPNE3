@@ -65,7 +65,7 @@ class opMemberProfileSearchForm extends sfForm
     $this->setWidgets($widgets);
     $this->setValidators($validators);
 
-    $this->widgetSchema->setLabel('name', 'Nickname');
+    $this->widgetSchema->setLabel('name', '%nickname%');
 
     $this->widgetSchema->setNameFormat('member[%s]');
   }

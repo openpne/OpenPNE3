@@ -24,6 +24,7 @@ class CommunityForm extends BaseCommunityForm
     unset($this['created_at'], $this['updated_at'], $this['file_id']);
     unset($this->widgetSchema['id']);
 
+    $this->widgetSchema->setLabel('name', '%community% Name');
     $this->setValidator('name', new sfValidatorString(array('max_length' => 64, 'trim' => true)));
 
     $q = Doctrine::getTable('CommunityCategory')->createQuery()->where('lft > 1');
@@ -36,11 +37,11 @@ class CommunityForm extends BaseCommunityForm
       'add_empty'   => false,
       'query'    => $q,
     )));
-    $this->widgetSchema->setLabel('community_category_id', 'Community Category');
+    $this->widgetSchema->setLabel('community_category_id', '%community% Category');
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
 
     $uniqueValidator = new sfValidatorDoctrineUnique(array('model' => 'Community', 'column' => array('name')));
-    $uniqueValidator->setMessage('invalid', 'An object with the same "name" already exist.');
+    $uniqueValidator->setMessage('invalid', 'An object with the same "name" already exist in other %community%.');
     $this->validatorSchema->setPostValidator($uniqueValidator);
 
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array($this, 'checkCreatable'))));

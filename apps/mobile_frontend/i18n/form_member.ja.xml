@@ -3,8 +3,8 @@
   <file orginal="global" source-language="ja_JP" datatype="plaintext">
     <body>
       <trans-unit id="1">
-        <source>Name</source>
-        <target>ﾆｯｸﾈｰﾑ</target>
+        <source>%nickname%</source>
+        <target>%nickname%</target>
       </trans-unit>
       <trans-unit id="2">
         <source>Required.</source>
