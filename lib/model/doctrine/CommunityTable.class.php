@@ -12,10 +12,17 @@ class CommunityTable extends opAccessControlDoctrineTable
 {
   public function retrievesByMemberId($memberId, $limit = 5, $isRandom = false)
   {
-    $q = $this->createQuery('c')
-        ->leftJoin('c.CommunityMember cm')
-        ->where('cm.position <> ?', 'pre')
-        ->andWhere('cm.member_id = ?', $memberId);
+    $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
+      ->where('position <> ?', 'pre')
+      ->andWhere('member_id = ?', $memberId)
+      ->execute();
+
+    if (0 === $communityMembers->count())
+    {
+      return;
+    }
+
+    $q = $this->createQuery()->whereIn('id', array_values($communityMembers->toKeyValueArray('id', 'community_id')));
 
     if (!is_null($limit))
     {
@@ -33,12 +40,21 @@ class CommunityTable extends opAccessControlDoctrineTable
 
   public function getJoinCommunityListPager($memberId, $page = 1, $size = 20)
   {
-    $q = $this->createQuery('c')
-      ->leftJoin('c.CommunityMember cm')
-      ->where('cm.position <> ?', 'pre')
-      ->andWhere('cm.member_id = ?', $memberId);
+    $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
+      ->where('member_id = ?', $memberId)
+      ->andWhere('position <> ?', 'pre')
+      ->execute();
 
     $pager = new sfDoctrinePager('Community', $size);
+
+    if (0 === $communityMembers->count())
+    {
+      return $pager;
+    }
+
+    $q = $this->createQuery()
+      ->whereIn('id', array_values($communityMembers->toKeyValueArray('id', 'community_id')));
+ 
     $pager->setQuery($q);
     $pager->setPage($page);
     $pager->init();
