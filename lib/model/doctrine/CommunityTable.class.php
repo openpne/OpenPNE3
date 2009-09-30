@@ -64,12 +64,21 @@ class CommunityTable extends opAccessControlDoctrineTable
 
   public function getCommunityMemberListPager($communityId, $page = 1, $size = 20)
   {
-    $q = Doctrine::getTable('Member')->createQuery()
-      ->leftJoin('Member.CommunityMember cm')
-      ->where('cm.position <> ?', 'pre')
-      ->andWhere('cm.community_id = ?', $communityId);
+    $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
+      ->where('community_id = ?', $communityId)
+      ->andWhere('position <> ?', 'pre')
+      ->execute();
 
     $pager = new sfDoctrinePager('Member', $size);
+
+    if (0 === $communityMembers->count())
+    {
+      return $pager;
+    }
+
+    $q = Doctrine::getTable('Member')->createQuery()
+      ->whereIn('id', array_values($communityMembers->toKeyValueArray('id', 'member_id')));
+
     $pager->setQuery($q);
     $pager->setPage($page);
     $pager->init();
@@ -81,16 +90,15 @@ class CommunityTable extends opAccessControlDoctrineTable
   {
     $result = array();
 
-    $resultSet = $this->createQuery()
-      ->select('id')
-      ->leftJoin('Community.CommunityMember cm')
-      ->where('cm.member_id = ?', $memberId)
-      ->andWhere('cm.position <> ?', 'pre')
+    $resultSet = Doctrine::getTable('CommunityMember')->createQuery()
+      ->select('community_id')
+      ->where('member_id = ?', $memberId)
+      ->andWhere('position <> ?', 'pre')
       ->execute();
 
     foreach ($resultSet as $value)
     {
-      $result[] = $value->getId();
+      $result[] = $value->getCommunityId();
     }
 
     return $result;
@@ -98,11 +106,13 @@ class CommunityTable extends opAccessControlDoctrineTable
 
   public function getDefaultCommunities()
   {
-    return Doctrine::getTable('Community')->createQuery()
-      ->where('cc.name = ?', 'is_default')
-      ->andWhere('cc.value = ?', true)
-      ->leftJoin('Community.CommunityConfig cc')
+    $communityConfigs = Doctrine::getTable('CommunityConfig')->createQuery()
+      ->where('name = ?', 'is_default')
+      ->andWhere('value = ?', true)
       ->execute();
+
+    return $this->createQuery()
+      ->whereIn('id', array_values($communityConfigs->toKeyValueArray('id', 'community_id')));
   }
 
   public function appendRoles(Zend_Acl $acl)
