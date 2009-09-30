@@ -22,8 +22,12 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
 
   static protected $plugins = array('openpne');
 
-  static protected $defaultButtons = array('op_b', 'op_u', 'op_s', 'op_i', 'op_large', 'op_small', 'op_color', 'op_emoji_docomo');
-  static protected $defaultButtonOnclickActions = array('op_emoji_docomo' => "");
+  static protected $buttons = array('op_b', 'op_u', 'op_s', 'op_i', 'op_large', 'op_small', 'op_color', 'op_emoji_docomo');
+  static protected $buttonOnclickActions = array('op_emoji_docomo' => "");
+
+  static protected $convertCallbackList = array(
+    'op:color' => array(__CLASS__, 'opColorToHtml')
+  );
 
   static protected $htmlConvertList = array(
     'op:b' => array('b'),
@@ -32,7 +36,6 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
     'op:s' => array('s'),
     'op:large' => array('font', array('size' => 5)),
     'op:small' => array('font', array('size' => 1)),
-    'op:color' => array('font'),
   );
 
   static protected $extensions = array();
@@ -76,9 +79,11 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
     {
       if (!self::$isConfiguredTinyMCE)
       {
-        self::$plugins = array_merge(self::$plugins, call_user_func(array($extension, 'getPlugins')));
-        self::$defaultButtons = array_merge_recursive(self::$defaultButtons, call_user_func(array($extension, 'getButtons')));
-        self::$defaultButtonOnclickActions = array_merge(self::$defaultButtonOnclickActions, call_user_func(array($extension, 'getButtonOnClickActions')));
+        self::$plugins              = array_merge(self::$plugins, call_user_func(array($extension, 'getPlugins')));
+        self::$buttons              = array_merge_recursive(self::$buttons, call_user_func(array($extension, 'getButtons')));
+        self::$buttonOnclickActions = array_merge(self::$buttonOnclickActions, call_user_func(array($extension, 'getButtonOnClickActions')));
+        self::$convertCallbackList  = array_merge(self::$convertCallbackList, call_user_func(array($extension, 'getConvertCallbacks')));
+        self::$htmlConvertList      = array_merge(self::$htmlConvertList, call_user_func(array($extension, 'getHtmlConverts')));
       }
       call_user_func(array($extension, 'configure'), &$this->tinyMCEConfigs);
     }
@@ -107,7 +112,7 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
       $this->tinyMCEConfigs['theme_advanced_buttons1'] .= ',';
     }
     $buttons = array();  
-    foreach (self::$defaultButtons as $key => $button)
+    foreach (self::$buttons as $key => $button)
     {
       if (is_numeric($key))
       {
@@ -132,7 +137,7 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
 
     $js = '';
 
-    foreach (self::$defaultButtons as $key => $button)
+    foreach (self::$buttons as $key => $button)
     {
       if (is_numeric($key))
       {
@@ -179,7 +184,7 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
       .get_partial('global/richTextareaOpenPNEButton', array(
         'id' => $id,
         'configs' => $config,
-        'onclick_actions' => self::$defaultButtonOnclickActions
+        'onclick_actions' => self::$buttonOnclickActions
       )).
       '</div>'.$this->getOption('textarea_template'));
 
@@ -195,7 +200,8 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
   */
   static public function toHtml($string, $isStrip, $isUseStylesheet)
   {
-    $regexp = '/(&lt;|<)(\/?)(op:.+?)(?:\s+code=(&quot;|")(#[0-9a-f]{3,6})\4)?\s*(&gt;|>)/i';
+    new self();
+    $regexp = '/(?:&lt;|<)(\/?)(op:.+?)(?:\s+(.*?))?(?:&gt;|>)/i';
 
     if ($isStrip)
     {
@@ -216,20 +222,35 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
     return $converted;
   }
 
+  static protected function getHtmlAttribute($matches)
+  {
+    $result = array();
+    if (count($matches) <= 3)
+    {
+      return $result;
+    }
+    preg_match_all('/([^\s]*?)=(?:&quot;|")(.*?)(?:&quot;|")/', $matches[3], $matchAttributes);
+    for ($i = 0; count($matchAttributes[0]) > $i; $i++)
+    {
+      $result[$matchAttributes[1][$i]] = $matchAttributes[2][$i];
+    }
+    return $result;
+  }
+
   static public function toHtmlUseStylesheet($matches)
   {
-    $isEndtag = $matches[2];
-    if ($isEndtag) {
-        return '</span>';
+    $isEndtag = $matches[1];
+    $tagname = strtolower($matches[2]);
+    $attributes = self::getHtmlAttribute($matches);
+    if (isset(self::$convertCallbackList[$tagname]))
+    {
+      return call_user_func(self::$convertCallbackList[$tagname], $isEndtag, $tagname, $attributes, true);
     }
 
     $options = array();
-    $tagname = strtolower($matches[3]);
-    $colorcode = strtolower($matches[5]);
     $options['class'] = strtr($tagname, ':', '_');
-
-    if ($tagname == 'op:color' && $colorcode) {
-      $options['style'] = 'color:'.$colorcode;
+    if ($isEndtag) {
+      return '</span>';
     }
 
     return tag('span', $options, true);
@@ -237,14 +258,17 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
 
   static public function toHtmlNoStylesheet($matches)
   {
-    $options = array();
-    $isEndtag = $matches[2];
-    $tagname = strtolower($matches[3]);
-    $colorcode = strtolower($matches[5]);
-    $classname = strtr($tagname, ':', '_');
+    $isEndtag = $matches[1];
+    $tagname = strtolower($matches[2]);
+    $attributes = self::getHtmlAttribute($matches);
+    if (isset(self::$convertCallbackList[$tagname]))
+    {
+      return call_user_func(self::$convertCallbackList[$tagname], $isEndtag, $tagname, $attributes, false);
+    }
 
+    $options = array();
     if (!array_key_exists($tagname, self::$htmlConvertList)) {
-      return $value;
+      return '';
     }
 
     $htmlTagInfo = self::$htmlConvertList[$tagname];
@@ -254,10 +278,6 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
       return '</' . $htmlTagName . '>';
     }
 
-    if ($tagname == 'op:color' && $colorcode) {
-      $options['color'] = $colorcode;
-    }
-
     if (isset($htmlTagInfo[1]) && is_array($htmlTagInfo[1]))
     {
       $options = array_merge($options, $htmlTagInfo[1]);
@@ -265,5 +285,33 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
 
     return tag($htmlTagName, $options, true);
   }
-}
 
+  static public function opColorToHtml($isEndtag, $tagname, $attributes, $isUseStylesheet)
+  {
+    $options = array();
+    if ($isUseStylesheet)
+    {
+      if ($isEndtag) {
+        return '</span>';
+      }
+      $options['class'] = strtr($tagname, ':', '_');
+      if (isset($attributes['code'])) {
+        $options['style'] = 'color:'.$attributes['code'];
+      }
+
+      return tag('span', $options, true);
+    }
+    else
+    {
+      if ($isEndtag)
+      {
+        return '</font>';
+      }
+      if (isset($attributes['code'])) {
+        $options['color'] = $attributes['code'];
+      }
+
+      return tag('font', $options, true);
+    }
+  }
+}

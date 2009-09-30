@@ -32,6 +32,16 @@ abstract class opWidgetFormRichTextareaOpenPNEExtension
     return array();
   }
 
+  static public function getConvertCallbacks()
+  {
+    return array();
+  }
+
+  static public function getHtmlConverts()
+  {
+    return array();
+  }
+
   static public function configure(&$configs)
   {
   }
