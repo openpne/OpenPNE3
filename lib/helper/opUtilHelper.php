@@ -333,13 +333,6 @@ function op_format_date($date, $format = 'd', $culture = null, $charset = null)
   return format_date($date, $format, $culture, $charset);
 }
 
-function op_url_cmd($text)
-{
-  $url_pattern = '/https?:\/\/([a-zA-Z0-9\-.]+)\/?(?:[a-zA-Z0-9_\-\/.,:;~?@=+$%#!()]|&amp;)*/';
-
-  return preg_replace_callback($url_pattern, '_op_url_cmd', $text);
-}
-
 if (!defined('SF_AUTO_LINK_RE'))
 {
   define('SF_AUTO_LINK_RE', '~
@@ -363,16 +356,33 @@ if (!defined('SF_AUTO_LINK_RE'))
    ~x');
 }
 
+function op_url_cmd($text)
+{
+  return preg_replace_callback(SF_AUTO_LINK_RE, '_op_url_cmd', $text);
+}
+
 function _op_url_cmd($matches)
 {
-  $url = $matches[0];
-  $cmd = $matches[1];
+  $url = $matches[2].$matches[3];
+  $cmd = '';
+
+  if ($matches[2] == 'www.')
+  {
+    $cmd .= 'www.';
+    $url = 'http://www.'.$url;
+  }
+
+  if (preg_match('/([a-zA-Z0-9\-.]+)\/?(?:[a-zA-Z0-9_\-\/.,:;\~\?@&=+$%#!()])*/', $matches[3], $pmatch))
+  {
+    $cmd .= $pmatch[1];
+  }
 
   $file = $cmd . '.js';
   $path = './cmd/' . $file;
 
-  if (!is_readable($path)) {
-    return str_replace('&', '&amp;', op_auto_link_text(str_replace('&amp;', '&', $url)));
+  if (preg_match('/<a/', $matches[1]) || !is_readable($path))
+  {
+    return op_auto_link_text($matches[0]);
   }
 
   sfContext::getInstance()->getResponse()->addJavascript('util');
@@ -386,7 +396,7 @@ url2cmd('{$url}');
 //-->
 </script>
 EOD;
-  return $result;
+  return $result.$matches[4];
 }
 
 /**
