@@ -51,7 +51,8 @@ class MemberProfileTable extends opAccessControlDoctrineTable
 
   public function getViewableProfileByMemberIdAndProfileName($memberId, $profileName, $myMemberId = null)
   {
-    if (is_null($myMemberId)) {
+    if (is_null($myMemberId))
+    {
       $myMemberId = sfContext::getInstance()->getUser()->getMemberId();
     }
 
