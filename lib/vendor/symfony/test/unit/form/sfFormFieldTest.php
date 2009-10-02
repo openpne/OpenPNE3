@@ -10,7 +10,7 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(28, new lime_output_color());
+$t = new lime_test(29, new lime_output_color());
 
 // widgets
 $authorSchema = new sfWidgetFormSchema(array(
@@ -220,3 +220,8 @@ $output = <<<EOF
 
 EOF;
 $t->is($child->renderError(), $output, '->renderError() renders global errors as expected (global errors, hidden field errors, non existent field errors)');
+
+// id format
+$schema->setIdFormat('%s_id_format_test');
+$parent = new sfFormFieldSchema($schema, null, 'article', array('title' => 'symfony', 'author' => array('name' => 'Fabien')), $articleErrorSchema);
+$t->like($parent['author']->render(), '/_id_format_test/', '->render() uses the parent id format');

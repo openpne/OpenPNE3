@@ -10,7 +10,7 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(144, new lime_output_color());
+$t = new lime_test(145, new lime_output_color());
 
 class FormTest extends sfForm
 {
@@ -122,6 +122,10 @@ sfForm::enableCSRFProtection('*mygreatsecret*');
 $f = new FormTest();
 $f->setDefaults(array('first_name' => 'Fabien'));
 $t->is($f->getDefault('_csrf_token'), $f->getCSRFToken('*mygreatsecret*'), '->getDefaults() keeps the CSRF token default value');
+
+$f = new FormTest(array(), array(), false);
+$f->setDefaults(array('first_name' => 'Fabien'));
+$t->is(array_key_exists('_csrf_token', $f->getDefaults()), false, '->setDefaults() does not set the CSRF token if CSRF is disabled');
 sfForm::disableCSRFProtection();
 
 // ->getName()

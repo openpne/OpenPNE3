@@ -31,7 +31,7 @@ $mysql_config = array(
 if (!isset($mysql_config))
 {
   $t->skip('Mysql credentials needed to run these tests', $plan);
-  exit(0);
+  return;
 }
 
 try
@@ -44,7 +44,7 @@ catch (sfDatabaseException $e)
 {
   $t->diag($e->getMessage());
   $t->skip('Unable to connect to MySQL database, skipping', $plan);
-  exit(0);
+  return;
 }
 
 // Creates test database
