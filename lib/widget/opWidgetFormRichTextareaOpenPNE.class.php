@@ -211,11 +211,11 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
     {
       if ($isUseStylesheet)
       {
-        $converted = preg_replace_callback($regexp, 'opWidgetFormRichTextareaOpenPNE::toHtmlUseStylesheet', $string);
+        $converted = preg_replace_callback($regexp, array(__CLASS__, 'toHtmlUseStylesheet'), $string);
       }
       else
       {
-        $converted = preg_replace_callback($regexp, 'opWidgetFormRichTextareaOpenPNE::toHtmlNoStylesheet', $string);
+        $converted = preg_replace_callback($regexp, array(__CLASS__, 'toHtmlNoStylesheet'), $string);
       }
     }
 
