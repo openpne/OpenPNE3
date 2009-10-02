@@ -1,7 +1,59 @@
 See the UPGRADE_TO_1_1 for upgrading 1.0 projects first to 1.1.
 See the UPGRADE_TO_1_2 file for more information about upgrading your projects from 1.1 to 1.2.
 
-All the new features are documented in the What's new? tutorial (http://www.symfony-project.org/tutorial/1_2/whats-new)
+All the new features are documented in the What's new? tutorial (http://www.symfony-project.org/tutorial/1_2/en/whats-new)
+
+Version 1.2.9
+-------------
+
+ * [22503]: Updating Doctrine to 1.0.12
+ * [22496]: removed different formatting for currency symbol because it is not supported. (fixes #1165)
+ * [22493]: fixed broken currency format for indian rupees in english locale (closes #1165)
+ * [22490]: fixed catalonian admin gen translation (closes #7213)
+ * [22401]: fixed form field render method so widget schema id format is applied
+ * [22278]: fixed propel:build-schema when several connections are defined (closes #5305)
+ * [22180]: fixed possible notices when cache or cache parameters are not set (for example for sfNoCache). (closes #7172)
+ * [22025]: fixed missing div in admin generator used in css styles. (fixes #6024)
+ * [22019]: disabled the routing cache in the default factories.yml as this is the best option for most projects
+ * [22018]: fixed number validators default min/max error messages (closes #7035, #6485)
+ * [22003]: fixed typo in exception. (closes #7115)
+ * [21991]: fixed the sfWidgetFormChoice not passing id_format to the renderer. (fixes #6639)
+ * [21979]: fixed incorrect access to response in sfViewCacheManager. (closes #7090)
+ * [21978]: upgraded lime for symfony 1.2.x
+ * [21904]: corrected deprecation message for component function debugMessage
+ * [21901]: fixed passing sorting options correctly in the admin generator tabular header. (closes #6841)
+ * [21898]: fixed missing variable in route serialization (closes #6786)
+ * [21897]: fixed generate:project error message (closes #6807)
+ * [21896]: updated ru translations for the admin generator (closes #6965)
+ * [21895]: fixed phpdoc (closes #7110)
+ * [21894]: fixed propel:data-dump fails to dump columns with capital letters in the column name (closes #7126)
+ * [21875]: fixed PHPDoc (closes #6279)
+ * [21864]: fieldset title displayed even if no field to display (closes #5522)
+ * [21862]: fixed double translation of help texts in the admin generator (closes #7102, patch from loops)
+ * [21822]: fixed exception thrown when sorting column is wrong (closes #7129 - patch from hugo.hamon)
+ * [21430]: fixed sfWidgetFormSchema is buggy when using a combination of numeric and string field names (closes #7033, patch from bschussek)
+ * [21388]: fixed inclusion of duplicate javascript files if the same widget is included more than once in a form
+ * [21387]: added more phpdoc to *_for_form() helpers (closes #6183)
+ * [21252]: fixed possible problems when dumping routes that accept complex objects (fixes #7030)
+ * [21145]: fixed doctrine form filter when the table method returns a query with a different root alias
+ * [20870]: fixed invalid confirm attribute in html showing up by not unsetting the confirm attribute passed into javascript functions. (fixes #4152)
+ * [20802]: fixed symfony exception Content Encoding Error (closes #5108)
+ * [20681]: fixed widget class selection to work with latest doctrine development which added the possibility of a string column with a length of null (closes #6873, thanks co3k)
+ * [20606]: fixed a Strict Standards warning under PHP 5.3 (closes #6933)
+ * [20550]: fixed mkdir() usage in sfValidatorFile (closes #6830)
+ * [20545]: fixed linked data when using multiple dirs in propel:data-load task (closes #6877)
+ * [20479]: fixed sfAppRoutesTask ignores options from factories.yml (closes #6434)
+ * [20472]: Fixed case-insensitive check of `sf_method` routing requirement.
+ * [20469]: Moved application of default `sf_method` requirements to constructor so `app:routes` shows accurate methods. (refs #6511)
+ * [20468]: fixed matchesParameters logic in sfRequestRoute when multiple method requirements have been specified
+ * [20457]: fixed phpdoc (closes #6878)
+ * [20304]: added password to the last example of configure:database usage (closes #6833)
+ * [20301]: added exception phpdocs to all widget classes and change function signature (closes #6840 - patch from gimler)
+ * [20300]: fixed sfDatabaseSessionStorage ignores session storage configuration in factories.yml (closes #6861)
+ * [20298]: fixed sfForm::setDefaults() ignores individual CSRF protection (closes #6864)
+ * [20296]: fixed finfo() usage for PHP 5.3 (closes #)
+ * [20295]: removed zend.ze1_compatibility_mode check as it has been removed in PHP 5.3 (closes #6863)
+
 
 Version 1.2.8
 -------------
@@ -26,7 +78,7 @@ if you forget to display a field, each time you save the form, its value will be
 aware of the problem because the data in the database will be corrupted. Second, the attacker need to know the exact field
 name, which is not easy as no information is contained in the HTML."
 
-  * [20144]: fixed phpdoc for sfTesterForm (closes #6813)
+ * [20144]: fixed phpdoc for sfTesterForm (closes #6813)
  * [20142]: fixed simple_format_text having problems with certain linebreaks. patch by Maxim Oleinik (closes#6824)
  * [20053]: fixed autoload order, enhanced performances of tasks autoloading
  * [20049]: fixed tasks autoloading order, added tests for proof
