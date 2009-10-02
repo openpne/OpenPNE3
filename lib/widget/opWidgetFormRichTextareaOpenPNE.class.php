@@ -20,7 +20,7 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
   static protected $isFirstRenderOpenPNE  = true;
   static protected $isConfiguredTinyMCE   = false;
 
-  static protected $plugins = array('openpne');
+  static protected $plugins = array('inlinepopups', 'openpne');
 
   static protected $buttons = array('op_b', 'op_u', 'op_s', 'op_i', 'op_large', 'op_small', 'op_color', 'op_emoji_docomo');
   static protected $buttonOnclickActions = array('op_emoji_docomo' => "");
