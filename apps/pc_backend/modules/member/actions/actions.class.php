@@ -200,14 +200,18 @@ class memberActions extends sfActions
     $this->forward404Unless($this->member);
 
     $this->form = new RejectMemberForm($this->member);
-    if ($request->isMethod(sfWebRequest::POST)) {
+    if ($request->isMethod(sfWebRequest::POST))
+    {
       $this->form->bind($request->getParameter('is_login_rejected'));
       if ($this->form->isValid())
       {
         $this->form->save();
-        if ($this->member->getIsLoginRejected()) {
+        if ($this->member->getIsLoginRejected())
+        {
           $message = 'ログイン停止を有効にしました';
-        } else {
+        }
+        else
+        {
           $message = 'ログイン停止を解除しました';
         }
         $this->getUser()->setFlash('notice', $message);

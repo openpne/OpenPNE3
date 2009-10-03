@@ -19,7 +19,7 @@ class RejectMemberForm extends BaseMemberForm
 {
   protected
     $member;
-  public function __construct($defaults = array())
+  public function __construct(Member $defaults)
   {
     $this->member = $defaults;
 
