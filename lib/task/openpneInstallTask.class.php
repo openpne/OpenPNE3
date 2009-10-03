@@ -186,7 +186,7 @@ EOF;
     $this->getFilesystem()->remove(sfFinder::type('file')->in(array($tmpdir)));
 
     $pluginDirs = sfFinder::type('dir')->name('data')->in(sfFinder::type('dir')->name('op*Plugin')->maxdepth(1)->in(sfConfig::get('sf_plugins_dir')));
-    $fixturesDirs = sfFinder::type('dir')->name('fixtures')->in(array_merge(array(sfConfig::get('sf_data_dir')), $this->configuration->getPluginSubPaths('/data'), $pluginDirs));
+    $fixturesDirs = sfFinder::type('dir')->name('fixtures')->prune('migrations')->in(array_merge(array(sfConfig::get('sf_data_dir')), $this->configuration->getPluginSubPaths('/data'), $pluginDirs));
     $i = 0;
     foreach ($fixturesDirs as $fixturesDir)
     {
