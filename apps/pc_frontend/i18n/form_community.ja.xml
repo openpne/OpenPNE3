@@ -34,14 +34,6 @@
         <source>An object with the same "name" already exist in other %community%.</source>
         <target>その%community%名は既に使われています。</target>
       </trans-unit>
-      <trans-unit id="9">
-        <source>Notification of posting in %community% by computer E-mail.</source>
-        <target>コミュニティ書き込みPCメール通知設定</target>
-      </trans-unit>
-      <trans-unit id="10">
-        <source>Notification of posting in %community% by mobile E-mail.</source>
-        <target>コミュニティ書き込み携帯メール通知設定</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

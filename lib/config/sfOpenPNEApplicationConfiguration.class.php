@@ -337,9 +337,6 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
     $this->getConfigCache()->registerConfigHandler('config/community_config.yml', 'opConfigConfigHandler', array('prefix' => 'openpne_community_'));
     include($this->getConfigCache()->checkConfig('config/community_config.yml'));
-
-    $this->getConfigCache()->registerConfigHandler('config/community_notification.yml', 'opConfigConfigHandler', array('prefix' => 'openpne_community_notification_'));
-    include($this->getConfigCache()->checkConfig('config/community_notification.yml'));
   }
 
   static public function registerZend()
