@@ -99,7 +99,6 @@
         <target>まだ%community%に参加していません。</target>
       </trans-unit>
       <trans-unit id="">
-      <trans-unit id="">
         <source>Search %community%</source>
         <target>%community%検索</target>
       </trans-unit>
