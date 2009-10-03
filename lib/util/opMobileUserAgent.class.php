@@ -43,6 +43,13 @@ class opMobileUserAgent
     return self::$instance;
   }
 
+  public static function resetInstance()
+  {
+    self::$mobile = null;
+
+    return self::getInstance();
+  }
+
   public function getMobile()
   {
     return self::$mobile;
