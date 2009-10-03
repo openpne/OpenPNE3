@@ -18,3 +18,4 @@ lib/model/doctrine/op*Plugin
 web/*Plugin
 web/sf
 data/config/*
+web/cache/*
