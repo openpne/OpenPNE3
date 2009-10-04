@@ -67,6 +67,11 @@ EOF;
       $this->buildModel();
     }
 
+    foreach ($installedPlugins as $v)
+    {
+      Doctrine::createTablesFromModels(sfConfig::get('sf_lib_dir').'/model/doctrine/'.$v);
+    }
+
     $targets = array_merge(array('OpenPNE'), $this->getEnabledOpenPNEPlugin());
     $databaseManager = new sfDatabaseManager($this->configuration);
     foreach ($targets as $target)
