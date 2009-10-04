@@ -328,4 +328,58 @@ class opToolkit
 
     return $result;
   }
+
+/**
+ * This method file download.
+ *
+ * @param string $original_filename
+ * @param bin $bin
+ * @return none binaryFile
+ */
+  static public function fileDownload($original_filename, $bin)
+  {
+    if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false) {
+      $original_filename = mb_convert_encoding($original_filename, 'SJIS', 'UTF-8');
+    }
+    $original_filename = str_replace(array("\r", "\n"), '', $original_filename);
+
+    header('Content-Disposition: attachment; filename="'.$original_filename.'"');
+    header('Content-Length: '.strlen($bin));
+    header('Content-Type: application/octet-stream');
+
+    echo $bin;
+    exit;
+  }
+
+  public static function isSecurePage()
+  {
+    $context = sfContext::getInstance();
+    $action = $context->getActionStack()->getLastEntry()->getActionInstance();
+    $credential = $action->getCredential();
+
+    if (sfConfig::get('sf_login_module') === $context->getModuleName()
+      && sfConfig::get('sf_login_action') === $context->getActionName())
+    {
+      return false;
+    }
+
+    if (sfConfig::get('sf_secure_module') == $context->getModuleName()
+      && sfConfig::get('sf_secure_action') == $context->getActionName())
+    {
+      return false;
+    }
+
+    if (!$action->isSecure())
+    {
+      return false;
+    }
+
+    if ((is_array($credential) && !in_array('SNSMember', $credential))
+      || (is_string($credential) && 'SNSMember' !== $credential))
+    {
+      return false;
+    }
+
+    return true;
+  }
 }
