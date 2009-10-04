@@ -13,7 +13,7 @@ class defaultComponents extends sfComponents
   public function executeGlobalNav()
   {
     $type = 'insecure_global';
-    if ($this->isSecurePage()) {
+    if (opToolkit::isSecurePage()) {
       $type = 'secure_global';
     }
     $this->navs = Doctrine::getTable('Navigation')->retrieveByType($type);
@@ -21,7 +21,7 @@ class defaultComponents extends sfComponents
 
   public function executeLocalNav()
   {
-    if (!$this->isSecurePage()) {
+    if (!opToolkit::isSecurePage()) {
       return sfView::NONE;
     }
 
@@ -83,31 +83,6 @@ class defaultComponents extends sfComponents
   public function executeLoginFormBox()
   {
     $this->forms = $this->getUser()->getAuthForms();
-  }
-
-  private function isSecurePage()
-  {
-    $context = sfContext::getInstance();
-    $action = $context->getActionStack()->getLastEntry()->getActionInstance();
-    $credential = $action->getCredential();
-
-    if (sfConfig::get('sf_login_module') === $context->getModuleName() && sfConfig::get('sf_login_action') === $context->getActionName()) {
-      return false;
-    }
-
-    if (sfConfig::get('sf_secure_module') == $context->getModuleName() && sfConfig::get('sf_secure_action') == $context->getActionName()) {
-      return false;
-    }
-
-    if (!$action->isSecure()) {
-      return false;
-    }
-
-    if ((is_array($credential) && !in_array('SNSMember', $credential)) || (is_string($credential) && 'SNSMember' !== $credential)) {
-      return false;
-    }
-
-    return true;
   }
 
   public function executeSideBanner()
