@@ -54,6 +54,8 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
+    @$this->createCacheDirectory();
+
     $oldPluginList = sfFinder::type('dir')->in(sfConfig::get('sf_plugins_dir'));
     if (!$options['no-update-plugin'])
     {
@@ -214,5 +216,10 @@ EOF;
     }
 
     return $result;
+  }
+
+  protected function createCacheDirectory()
+  {
+    $this->getFilesystem()->mkdirs(sfConfig::get('sf_cache_dir'), 0777);
   }
 }
