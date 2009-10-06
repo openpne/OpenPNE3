@@ -7,12 +7,12 @@
  */
 
 /**
- * The library for opWidgetFormRichTextareaOpenPNE
+ * decoration.js
  * 
  * @author Shogo Kawahara <kawahara@tejimaya.net>
  */
 
-function op_mce_insert_tagname(id, tagname, opt)
+function op_mce_insert_tagname(id, tagname, opt, start, end)
 {
   opt = opt || "";
 
@@ -27,10 +27,13 @@ function op_mce_insert_tagname(id, tagname, opt)
   var pos = selection.create();
   elm.focus();
 
-  var replace = "<" + tagname + opt + ">" + elm.value.substring(pos.start, pos.end) + "</" + tagname + ">";
+  start = (start == null || start == undefined) ? pos.start : start;
+  end   = (end == null || end == undefined)     ? pos.end   : end;
 
-  var head = elm.value.substring(0, pos.start);
-  var tail = elm.value.substring(pos.end, elm.value.length);
+  var replace = "<" + tagname + opt + ">" + elm.value.substring(start, end) + "</" + tagname + ">";
+
+  var head = elm.value.substring(0, start);
+  var tail = elm.value.substring(end, elm.value.length);
   elm.value =  head + replace + tail;
 }
 
@@ -130,11 +133,14 @@ function op_mce_show_color_table(id, tagname)
   table.style.top  = buttonPosition[1] + button.offsetHeight + "px";
 }
 
-function op_insert_str_to_selection(elm, str)
+function op_insert_str_to_selection(elm, str, start, end)
 {
   var selection = new Selection(elm);
   var pos = selection.create();
   elm.focus();
+  
+  start = (start == null || start == undefined) ? pos.start : start;
+  end   = (end == null || end == undefined)     ? pos.end   : end;
 
   var head = elm.value.substring(0, pos.start);
   var tail = elm.value.substring(pos.end, elm.value.length);
