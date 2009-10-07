@@ -20,10 +20,15 @@ class MemberProfileTable extends opAccessControlDoctrineTable
     $memberProfiles = array();
     foreach ($profiles as $profile)
     {
-      $memberProfiles[] = $this->createQuery()
+      $memberProfile = $this->createQuery()
         ->where('member_id = ?', $memberId)
         ->andWhere('profile_id = ?', $profile->getId())
         ->fetchOne();
+
+      if ($MemberProfile)
+      {
+        $memberProfiles[] = $memberProfile;
+      }
     }
 
     // NOTICE: this returns Array not Doctrine::Collection
@@ -74,10 +79,15 @@ class MemberProfileTable extends opAccessControlDoctrineTable
       ->where('name = ?', $profileName)
       ->fetchOne();
 
-    return $this->createQuery()
-      ->where('member_id = ?', $memberId)
-      ->andWhere('profile_id = ?', $profile->getId())
-      ->fetchOne();
+    if ($profile)
+    {
+      return $this->createQuery()
+        ->where('member_id = ?', $memberId)
+        ->andWhere('profile_id = ?', $profile->getId())
+        ->fetchOne();
+    }
+
+    return null;
   }
 
   public function searchMemberIds($profile = array(), $ids = null, $isCheckPublicFlag = true)
