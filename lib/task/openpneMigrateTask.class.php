@@ -71,7 +71,13 @@ EOF;
 
     foreach ($installedPlugins as $v)
     {
-      Doctrine::createTablesFromModels(sfConfig::get('sf_lib_dir').'/model/doctrine/'.$v);
+      $modelDir = sfConfig::get('sf_lib_dir').'/model/doctrine/'.$v;
+      if (!is_dir($modelDir))
+      {
+        continue;
+      }
+
+      Doctrine::createTablesFromModels($modelDir);
     }
 
     $targets = array_merge(array('OpenPNE'), $this->getEnabledOpenPNEPlugin());
