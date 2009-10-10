@@ -25,7 +25,7 @@ class MemberProfileTable extends opAccessControlDoctrineTable
         ->andWhere('profile_id = ?', $profile->getId())
         ->fetchOne();
 
-      if ($MemberProfile)
+      if ($memberProfile)
       {
         $memberProfiles[] = $memberProfile;
       }
