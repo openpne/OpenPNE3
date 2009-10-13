@@ -1,0 +1,15 @@
+Navigation:
+  secure_global_navi_blog:
+    type: "secure_global"
+    uri: "blog/index"
+    sort_order: 26
+
+NavigationI18n:
+  secure_global_navi_blog_i18n_en:
+    id: secure_global_navi_blog
+    caption: "Newest Blog"
+    culture: "en"
+  secure_global_navi_diary_i18n_ja:
+    id: secure_global_navi_blog
+    caption: "最新Blog"
+    culture: "ja_JP"

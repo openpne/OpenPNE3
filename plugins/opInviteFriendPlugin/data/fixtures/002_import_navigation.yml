@@ -1,0 +1,15 @@
+Navigation:
+  invitefriend_navigation_index:
+    type: "friend"
+    uri: "invitefriend/index"
+    sort_order: 18;
+
+NavigationI18n:
+  invitefriend_navigation_index_i18n_eng:
+    id: invitefriend_navigation_index
+    caption: "Introduce to friends"
+    culture: "eng"
+  invitefriend_navigation_index_i18n_ja:
+    id: invitefriend_navigation_index
+    caption: "フレンドに紹介"
+    culture: "ja_JP"

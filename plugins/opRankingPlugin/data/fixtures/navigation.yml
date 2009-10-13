@@ -1,0 +1,27 @@
+Navigation:
+  secure_global_navigation_ranking:
+    type: "secure_global"
+    uri: "ranking/access"
+    sort_order: 23
+  mobile_home_side_navigation_ranking_access:
+    type: "mobile_home_side"
+    uri: "ranking/access"
+    sort_order: 23
+
+NavigationI18n:
+  secure_global_navigation_ranking_i18n_en:
+    id: secure_global_navigation_ranking
+    caption: "Ranking"
+    culture: "en"
+  mobile_home_side_navigation_ranking_access_i18n_en:
+    id: mobile_home_side_navigation_ranking_access
+    caption: "Rankingﾞ"
+    culture: "en"
+  secure_global_navigation_ranking_i18n:
+    id: secure_global_navigation_ranking
+    caption: "ランキング"
+    culture: "ja_JP"
+  mobile_home_side_navigation_ranking_access_i18n:
+    id: mobile_home_side_navigation_ranking_access
+    caption: "ﾗﾝｷﾝｸﾞ"
+    culture: "ja_JP"

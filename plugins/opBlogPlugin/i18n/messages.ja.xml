@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+        <source>URL is invalid.</source>
+        <target>URLが無効です。</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Blog URL Configuration</source>
+        <target>BlogのURL設定</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>Blog URL</source>
+        <target>BlogのURL</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
+

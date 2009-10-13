@@ -1,0 +1,96 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+      <source>Favorite</source>
+      <target>お気に入り</target>
+      </trans-unit>
+
+      <trans-unit id="2">
+      <source>Favorite list</source>
+      <target>お気に入りリスト</target>
+      </trans-unit>
+
+      <trans-unit id="3">
+      <source>Show all</source>
+      <target>全てを見る</target>
+      </trans-unit>
+
+      <trans-unit id="4">
+      <source>The favorite newest information</source>
+      <target>お気に入りの最新情報</target>
+      </trans-unit>
+
+      <trans-unit id="5">
+      <source>Do you add member to the favorite?</source>
+      <target>お気に入りに以下のメンバーを追加しますか？</target>
+      </trans-unit>
+
+      <trans-unit id="6">
+      <source>Show detail</source>
+      <target>詳細を見る</target>
+      </trans-unit>
+
+      <trans-unit id="7">
+      <source>Delete</source>
+      <target>削除する</target>
+      </trans-unit>
+
+      <trans-unit id="8">
+      <source>Nickname</source>
+      <target>ニックネーム</target>
+      </trans-unit>
+
+      <trans-unit id="9">
+      <source>The last login</source>
+      <target>最終ログイン</target>
+      </trans-unit>
+
+      <trans-unit id="10">
+      <source>yes</source>
+      <target>はい</target>
+      </trans-unit>
+
+      <trans-unit id="11">
+      <source>No</source>
+      <target>いいえ</target>
+      </trans-unit>
+
+      <trans-unit id="12">
+      <source>There is not registration of the favorite yet.</source>
+      <target>お気に入り登録はまだありません</target>
+      </trans-unit>
+
+      <trans-unit id="13">
+      <source>The favorite newest diary</source>
+      <target>お気に入り最新日記</target>
+      </trans-unit>
+
+      <trans-unit id="14">
+      <source>The favorite newest blog</source>
+      <target>お気に入り最新Blog</target>
+      </trans-unit>
+
+      <trans-unit id="15">
+      <source>The diary is none</source>
+      <target>日記がありません</target>
+      </trans-unit>
+
+      <trans-unit id="16">
+      <source>The blog is none</source>
+      <target>Blogがありません</target>
+      </trans-unit>
+
+      <trans-unit id="17">
+      <source>Add to favorite</source>
+      <target>お気に入りに追加</target>
+      </trans-unit>
+
+      <trans-unit id="18">
+      <source>%s is already registered to a favorite.</source>
+      <target>%sさんはすでにお気に入りに登録済みです。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

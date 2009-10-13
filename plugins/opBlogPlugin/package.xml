@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.7.2" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
+ <name>opBlogPlugin</name>
+ <channel>plugins.openpne.jp</channel>
+ <summary> </summary>
+ <description> </description>
+ <lead>
+  <name />
+  <user />
+  <email>maintainer@example.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2009-01-27</date>
+ <time>08:19:43</time>
+ <version>
+  <release>0.8.0</release>
+  <api>0.8.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license>Apache 2.0</license>
+ <notes>First release</notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" md5sum="c3bb4c1803a627ddcb3fa349151d1714" name="apps/pc_frontend/i18n/messages.ja.xml" role="data" />
+   <file baseinstalldir="/" md5sum="211cc42df3d16f6ad6eccdf5f0e3fd2c" name="apps/pc_frontend/modules/blog/actions/actions.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="06405bdd78be25d23bc93b1101b5dfcd" name="apps/pc_frontend/modules/blog/actions/components.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="9cbbf2a71ebac31c5e9df7c44c2e0dec" name="apps/pc_frontend/modules/blog/config/security.yml" role="data" />
+   <file baseinstalldir="/" md5sum="34fd09099c56fb5ea34b35f4520f48b2" name="apps/pc_frontend/modules/blog/templates/friendAlert.php" role="php" />
+   <file baseinstalldir="/" md5sum="d9003ed4a848b020e405430ff6917c95" name="apps/pc_frontend/modules/blog/templates/friendSuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="34fd09099c56fb5ea34b35f4520f48b2" name="apps/pc_frontend/modules/blog/templates/indexAlert.php" role="php" />
+   <file baseinstalldir="/" md5sum="d7a39607c0d8a9e3b6ab5e7061b5c334" name="apps/pc_frontend/modules/blog/templates/indexSuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="e93c811c4e49e0b246a8eb082a744290" name="apps/pc_frontend/modules/blog/templates/profileAlert.php" role="php" />
+   <file baseinstalldir="/" md5sum="1548651037438b8bf2e70d088e5810a8" name="apps/pc_frontend/modules/blog/templates/profileError.php" role="php" />
+   <file baseinstalldir="/" md5sum="940772ddc0fe52363931ef0ac5f6f40e" name="apps/pc_frontend/modules/blog/templates/profileSuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="e93c811c4e49e0b246a8eb082a744290" name="apps/pc_frontend/modules/blog/templates/userAlert.php" role="php" />
+   <file baseinstalldir="/" md5sum="cadce3884f456535ecd574ab947fc17f" name="apps/pc_frontend/modules/blog/templates/userSuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="3bc74999072304f54a63ac840ad05cde" name="apps/pc_frontend/modules/blog/templates/_blogHomeFriend.php" role="php" />
+   <file baseinstalldir="/" md5sum="9a1637b5fb7ff523259647174ea4a8f8" name="apps/pc_frontend/modules/blog/templates/_blogHomeUser.php" role="php" />
+   <file baseinstalldir="/" md5sum="fedce848cebf8f6022acb1bdb7e9225b" name="apps/pc_frontend/modules/blog/templates/_blogProfile.php" role="php" />
+   <file baseinstalldir="/" md5sum="3708eb10797f770058e787051189821e" name="apps/pc_frontend/modules/member/config/view.yml" role="data" />
+   <file baseinstalldir="/" md5sum="072c0d38a44cb590357e4684ed2e9f7e" name="apps/pc_frontend/templates/_partsBlogListBox.php" role="php" />
+   <file baseinstalldir="/" md5sum="533c5a54d94bf2204f0a45cd26a0f7a1" name="apps/pc_frontend/templates/_partsBlogListPage.php" role="php" />
+   <file baseinstalldir="/" md5sum="70909511e6d3101a78f67d82bad78a37" name="config/gadget.yml" role="data" />
+   <file baseinstalldir="/" md5sum="f9147509f06485d6843071c413ae6edb" name="config/member_config.yml" role="data" />
+   <file baseinstalldir="/" md5sum="4a6b14417cf63f3eab9bb04de0077f35" name="data/fixtures/010_navigation.yml" role="data" />
+   <file baseinstalldir="/" md5sum="e46e9c206d27868c75084610394e78a5" name="data/fixtures/020_gadget.yml" role="data" />
+   <file baseinstalldir="/" md5sum="7e379689d728cd3255fab7719373954a" name="i18n/messages.ja.xml" role="data" />
+   <file baseinstalldir="/" md5sum="e304543976c5e316225d550d2f0fb7fa" name="lib/form/MemberConfigForm/MemberConfigBlogUrlForm.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="445a6bd55bdc761f0b87b3d0427881f4" name="lib/model/BlogPeer.php" role="php" />
+   <file baseinstalldir="/" md5sum="1ff9bb93ab9606cb84532b6279d8c4ec" name="web/css/blog.css" role="data" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+   <package>
+    <name>symfony</name>
+    <channel>pear.symfony-project.com</channel>
+    <min>1.2.0</min>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>0.8.0</release>
+    <api>0.8.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2009-01-27</date>
+   <license>Apache 2.0</license>
+   <notes>First release</notes>
+  </release>
+ </changelog>
+</package>

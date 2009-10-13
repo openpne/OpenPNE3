@@ -1,0 +1,17 @@
+MessageType:
+  message_type_invite_friend:
+    type_name: "invite_friend"
+
+MessageTypeI18n:
+  message_type_i18n_invite_friend_eng:
+    id: message_type_invite_friend
+    body: ""
+    subject: "The member introduce message"
+    caption: "The member introduce message"
+    culture: "en"
+  message_type_i18n_invite_friend_ja:
+    id: message_type_invite_friend
+    body: ""
+    subject: "メンバー紹介メッセージ"
+    caption: "メンバー紹介メッセージ"
+    culture: "ja_JP"

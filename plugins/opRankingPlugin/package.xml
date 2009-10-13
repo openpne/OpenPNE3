@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.7.2" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
+ <name>opRankingPlugin</name>
+ <channel>plugins.openpne.jp</channel>
+ <summary> </summary>
+ <description> </description>
+ <lead>
+  <name />
+  <user />
+  <email>maintainer@example.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2009-01-27</date>
+ <time>08:19:07</time>
+ <version>
+  <release>0.8.0</release>
+  <api>0.8.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license>Apache 2.0</license>
+ <notes>First release</notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" md5sum="dc7e927bdfc4f5867d9b2be18b7a3ff1" name="apps/mobile_frontend/modules/ranking/actions/actions.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="9cbbf2a71ebac31c5e9df7c44c2e0dec" name="apps/mobile_frontend/modules/ranking/config/security.yml" role="data" />
+   <file baseinstalldir="/" md5sum="6c610a2449739585921d02b7a642f7b9" name="apps/mobile_frontend/modules/ranking/config/view.yml" role="data" />
+   <file baseinstalldir="/" md5sum="336fe255a28159a0bcbc27e4f20a5328" name="apps/mobile_frontend/modules/ranking/templates/accessError.php" role="php" />
+   <file baseinstalldir="/" md5sum="21ff4279ce906788d25ae5ce4fe01fce" name="apps/mobile_frontend/modules/ranking/templates/accessSuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="0b6dff34f632044ac5ac916ef1d90c33" name="apps/mobile_frontend/modules/ranking/templates/communityError.php" role="php" />
+   <file baseinstalldir="/" md5sum="4d616933aa23fb35297bef2d413f468f" name="apps/mobile_frontend/modules/ranking/templates/communitySuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="25907b139d2b6c0f8d6f28d108ede290" name="apps/mobile_frontend/modules/ranking/templates/friendError.php" role="php" />
+   <file baseinstalldir="/" md5sum="0f821ffb6694d0dd5bc97543fc3a7347" name="apps/mobile_frontend/modules/ranking/templates/friendSuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="5686308173281d0c229db9d047c85d14" name="apps/mobile_frontend/modules/ranking/templates/topicError.php" role="php" />
+   <file baseinstalldir="/" md5sum="d3c3079c6b5d36af4475fdeb6b95ee66" name="apps/mobile_frontend/modules/ranking/templates/topicSuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="e7ed7d8636bb4035cabc5521fb68e835" name="apps/mobile_frontend/templates/_partsRankingLink.php" role="php" />
+   <file baseinstalldir="/" md5sum="f7bcf9ad7ecc9b7827e80988e7e028c1" name="apps/pc_frontend/i18n/messages.ja.xml" role="data" />
+   <file baseinstalldir="/" md5sum="dc7e927bdfc4f5867d9b2be18b7a3ff1" name="apps/pc_frontend/modules/ranking/actions/actions.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="9cbbf2a71ebac31c5e9df7c44c2e0dec" name="apps/pc_frontend/modules/ranking/config/security.yml" role="data" />
+   <file baseinstalldir="/" md5sum="306ac7293d1483f2a63fa7932d25c7a1" name="apps/pc_frontend/modules/ranking/config/view.yml" role="data" />
+   <file baseinstalldir="/" md5sum="de722cca1fd3e8f34952eab03d657b37" name="apps/pc_frontend/modules/ranking/templates/accessError.php" role="php" />
+   <file baseinstalldir="/" md5sum="b3e8e1385bf046fdc70d231e4d0f8467" name="apps/pc_frontend/modules/ranking/templates/accessSuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="63aaa15a07b20f532db946d5ec6f5391" name="apps/pc_frontend/modules/ranking/templates/communityError.php" role="php" />
+   <file baseinstalldir="/" md5sum="d326cdc1eeb12d50c8c17669703c33ec" name="apps/pc_frontend/modules/ranking/templates/communitySuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="e28f13955700b3e2782dcf2f757f24ea" name="apps/pc_frontend/modules/ranking/templates/friendError.php" role="php" />
+   <file baseinstalldir="/" md5sum="e0f0bf929c31a17304946c204be08ab0" name="apps/pc_frontend/modules/ranking/templates/friendSuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="311d91a190d411f45b8b1a3ec4bf59b7" name="apps/pc_frontend/modules/ranking/templates/topicError.php" role="php" />
+   <file baseinstalldir="/" md5sum="37a61ba7f6b4cc3d5175eaab1536233e" name="apps/pc_frontend/modules/ranking/templates/topicSuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="91b85dacbceb7eba14f2a25c968a3ca3" name="apps/pc_frontend/templates/_partsRankingLink.php" role="php" />
+   <file baseinstalldir="/" md5sum="f065fe5cfbb767440a2ef9a56c394d2d" name="apps/pc_frontend/templates/_partsRankingResultList.php" role="php" />
+   <file baseinstalldir="/" md5sum="36c4b89065c638f412217d0661de1a36" name="data/fixtures/navigation.yml" role="data" />
+   <file baseinstalldir="/" md5sum="900321f93c8ac55971d0cebd63a88e68" name="i18n/messages.ja.xml" role="data" />
+   <file baseinstalldir="/" md5sum="f57bd232ab47080c45d4aaf8715b9c46" name="lib/action/opRankingPluginRankingActions.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="45bbdd4cd9b60d9fd5b884559af1848f" name="lib/model/RankingPeer.php" role="php" />
+   <file baseinstalldir="/" md5sum="da109cc999e5948bdb3a40c0bd5378f5" name="web/css/ranking.css" role="data" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+   <package>
+    <name>symfony</name>
+    <channel>pear.symfony-project.com</channel>
+    <min>1.2.0</min>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>0.8.0</release>
+    <api>0.8.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2009-01-27</date>
+   <license>Apache 2.0</license>
+   <notes>First release</notes>
+  </release>
+ </changelog>
+</package>

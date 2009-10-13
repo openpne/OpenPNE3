@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.7.2" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
+ <name>opFavoritePlugin</name>
+ <channel>plugins.openpne.jp</channel>
+ <summary> </summary>
+ <description> </description>
+ <lead>
+  <name />
+  <user />
+  <email>maintainer@example.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2009-01-27</date>
+ <time>08:19:17</time>
+ <version>
+  <release>0.8.0</release>
+  <api>0.8.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license>Apache 2.0</license>
+ <notes>First release</notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" md5sum="52535e4b2e16dc7a29cecfb32706e13c" name="apps/mobile_frontend/i18n/messages.ja.xml" role="data" />
+   <file baseinstalldir="/" md5sum="020a43a7462be5c0c836f9fc6bd52810" name="apps/mobile_frontend/modules/favorite/actions/actions.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="303ef3fffadc57ed83a69a115f655023" name="apps/mobile_frontend/modules/favorite/templates/listError.php" role="php" />
+   <file baseinstalldir="/" md5sum="4ede3fc220f429a133124b452f0da548" name="apps/mobile_frontend/modules/favorite/templates/listSuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="d8970fb4da58b7f0c3a81b1b188a3cd3" name="apps/mobile_frontend/modules/favorite/templates/_addFavoriteLink.php" role="php" />
+   <file baseinstalldir="/" md5sum="9fc45e4c40c77f19ffe915ae0b507fc0" name="apps/mobile_frontend/modules/member/config/view.yml" role="data" />
+   <file baseinstalldir="/" md5sum="7c64fc237387db11199890374050ed1b" name="apps/pc_frontend/modules/favorite/actions/actions.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="9d76d01a557a76ba7f31963d35a6edf2" name="apps/pc_frontend/modules/favorite/actions/components.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="9cbbf2a71ebac31c5e9df7c44c2e0dec" name="apps/pc_frontend/modules/favorite/config/security.yml" role="data" />
+   <file baseinstalldir="/" md5sum="100df4fc5c39405356839d45ab93c913" name="apps/pc_frontend/modules/favorite/templates/addSuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="0379e98c2af99af16581eb819ea564b5" name="apps/pc_frontend/modules/favorite/templates/blogAlert.php" role="php" />
+   <file baseinstalldir="/" md5sum="922dedd07820c082366794ec7265dd59" name="apps/pc_frontend/modules/favorite/templates/blogSuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="517502488d12f37dab1d6116cb857423" name="apps/pc_frontend/modules/favorite/templates/diaryAlert.php" role="php" />
+   <file baseinstalldir="/" md5sum="a58a62364f73e494a2c465300655a4ff" name="apps/pc_frontend/modules/favorite/templates/diarySuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="59696aebdc7945c9b13185d90c8d9ded" name="apps/pc_frontend/modules/favorite/templates/listError.php" role="php" />
+   <file baseinstalldir="/" md5sum="4552b1e1fe028cf2c4667147dacd2979" name="apps/pc_frontend/modules/favorite/templates/listSuccess.php" role="php" />
+   <file baseinstalldir="/" md5sum="bf7cface14abcdc9bf2191c588dda2ea" name="apps/pc_frontend/modules/favorite/templates/_favoriteListBox.php" role="php" />
+   <file baseinstalldir="/" md5sum="95b004162f91db6844a2f33ad003b2bf" name="apps/pc_frontend/modules/favorite/templates/_favoriteNews.php" role="php" />
+   <file baseinstalldir="/" md5sum="175f2635f8a74aff45d199fb16369b3e" name="apps/pc_frontend/templates/_partsDiaryListBox.php" role="php" />
+   <file baseinstalldir="/" md5sum="ff07bd98e195e8def88a798a89d6382d" name="config/gadget.yml" role="data" />
+   <file baseinstalldir="/" md5sum="adb574f481b3bf2465017c6fcb67c56b" name="config/schema.yml" role="data" />
+   <file baseinstalldir="/" md5sum="7838d25189db9fa6ff35aeb699e2e5e4" name="data/fixtures/010_navigation.yml" role="data" />
+   <file baseinstalldir="/" md5sum="34ecb0528bcc8089d5559c5a1f601b44" name="data/fixtures/020_gadget.yml" role="data" />
+   <file baseinstalldir="/" md5sum="ea5ed2e1e35bf2057b75a5b9aa1b2b06" name="i18n/messages.ja.xml" role="data" />
+   <file baseinstalldir="/" md5sum="5629d869b6bb4f38ddba3c1f62514571" name="lib/action/opFavoritePluginFavoriteActions.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="f1b6ec3d597cdc520e307e20162e2611" name="lib/filter/FavoriteFormFilter.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="374c614b331a187163c187fbe82a1b7f" name="lib/filter/base/BaseFavoriteFormFilter.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="e1050f796c2a6095d6424914807b1c0c" name="lib/form/FavoriteForm.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="4e101d5d0e6b4b5ed48aa3c03eb653b6" name="lib/form/base/BaseFavoriteForm.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="873b9f25ea47fc6ac8bcde95b6199837" name="lib/model/Favorite.php" role="php" />
+   <file baseinstalldir="/" md5sum="f2fbb435fd3637085f198736bf96676f" name="lib/model/FavoritePeer.php" role="php" />
+   <file baseinstalldir="/" md5sum="c0c1fd3495b431519cea580d902fa1ba" name="lib/model/map/FavoriteMapBuilder.php" role="php" />
+   <file baseinstalldir="/" md5sum="b2682d004773cbb0201c1893c5e56463" name="lib/model/om/BaseFavorite.php" role="php" />
+   <file baseinstalldir="/" md5sum="0d2ba28494af13fbe7b68145de33e4a2" name="lib/model/om/BaseFavoritePeer.php" role="php" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+   <package>
+    <name>symfony</name>
+    <channel>pear.symfony-project.com</channel>
+    <min>1.2.0</min>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>0.8.0</release>
+    <api>0.8.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2009-01-27</date>
+   <license>Apache 2.0</license>
+   <notes>First release</notes>
+  </release>
+ </changelog>
+</package>

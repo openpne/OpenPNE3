@@ -1,0 +1,8 @@
+profileSuccess:
+  stylesheets: [/opBlogPlugin/css/blog]
+  customize:
+    blogProfile:
+      template: [blog, blogProfile]
+      parts: [profile]
+      is_component: true
+      target: [lastRow]

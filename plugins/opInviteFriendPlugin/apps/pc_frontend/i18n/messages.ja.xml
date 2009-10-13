@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+        <source>Introduce to your friends this member</source>
+        <target>フレンドにこの人を紹介します</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Please choose the friend who wants to introduce this man from a list, and write the message to introduce.</source>
+        <target>この人を紹介したいフレンドを一覧から選び、紹介するメッセージを書いてください。</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>Introduce %s.</source>
+        <target>%sさんを紹介します。</target>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>Photo</source>
+        <target>写真</target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>Introduce to</source>
+        <target>紹介先</target>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>Message</source>
+        <target>メッセージ</target>
+      </trans-unit>
+      <trans-unit id="7">
+      <source>The member introduce message</source>
+      <target>メンバー紹介メッセージ</target>
+      </trans-unit>
+      <trans-unit id="8">
+      <source>The member introduce message had received.</source>
+      <target>メンバー紹介メッセージが届いています。</target>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>Message:</source>
+        <target>メッセージ:</target>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>This member's URL:</source>
+        <target>この人のURL:</target>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>Please select introduction place members</source>
+        <target>紹介先メンバーを選択してください</target>
+      </trans-unit>
+      <trans-unit id="12">
+        <source>Please input a message</source>
+        <target>メッセージを入力してください</target>
+      </trans-unit>
+      <trans-unit id="13">
+        <source>There are no friends who can introduce.</source>
+        <target>紹介できるフレンドがいません。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,17 @@
+/*==============================================================================
+ * form
+ *----------------------------------------------------------------------------*/
+.form div.checkList li {
+	overflow: hidden;
+	float: left;
+	width: 33%;
+	line-height: 1.6;
+}
+.form div.checkList li div.item {
+	padding-left: 18px;
+	text-indent: -18px;
+}
+.form div.operation {
+	padding: 10px 0;
+}
+

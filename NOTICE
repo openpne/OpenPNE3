@@ -22,3 +22,14 @@ This product includes also software developed by :
 This product needs the third-party softwares listed blow to run.
   - PHP: Hypertext Preprocessor (5.2.x)
   - symfony (1.2.x)
+
+These products include dependent libraries listed blow:
+  - Zend Framework 1.7.3PL1 (partly)
+  - Auth OpenID 2.1.2
+  - opRankingPlugin (https://trac.openpne.jp/svn/OpenPNE3/plugins/opRankingPlugin/trunk@11060)
+  - opFavoritePlugin (https://trac.openpne.jp/svn/OpenPNE3/plugins/opFavoritePlugin/trunk@10638)
+  - opBlogPlugin (https://trac.openpne.jp/svn/OpenPNE3/plugins/opBlogPlugin/trunk@11242)
+  - opInviteFriendPlugin (https://trac.openpne.jp/svn/OpenPNE3/plugins/opInviteFriendPlugin/trunk@10552)
+  - sfWebBrowserPlugin (http://svn.symfony-project.com/plugins/sfWebBrowserPlugin/trunk@13162)
+  - sfFormExtraPlugin (http://svn.symfony-project.com/plugins/sfFormExtraPlugin@12875)
+  - sfImageHandlerPlugin 1.0.0

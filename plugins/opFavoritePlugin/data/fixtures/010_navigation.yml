@@ -1,0 +1,41 @@
+Navigation:
+  favorite_navigation_list:
+    type: "default"
+    uri: "favorite/list"
+    sort_order: 19;
+  favorite_navigation_add:
+    type: "friend"
+    uri: "favorite/add"
+    sort_order: 21;
+  mobile_home_side_navigation_favorite_list:
+    type: "mobile_home_side"
+    uri: "favorite/list"
+    sort_order: 25;
+
+NavigationI18n:
+  favorite_navigation_list_i18n:
+    id: favorite_navigation_list
+    caption: "お気に入り"
+    culture: "ja_JP"
+  favorite_navigation_add_i18n:
+    id: favorite_navigation_add
+    caption: "お気に入りに追加"
+    culture: "ja_JP"
+  mobile_home_side_navigation_favorite_list_i18n:
+    id: mobile_home_side_navigation_favorite_list
+    caption: "お気に入り"
+    culture: "ja_JP"
+
+  favorite_navigation_list_i18n_en:
+    id: favorite_navigation_list
+    caption: "Favorite"
+    culture: "en_US"
+  favorite_navigation_add_i18n_en:
+    id: favorite_navigation_add
+    caption: "Add to favorite"
+    culture: "en_US"
+  mobile_home_side_navigation_favorite_list_i18n_en:
+    id: mobile_home_side_navigation_favorite_list
+    caption: "Favorite"
+    culture: "en_US"
+

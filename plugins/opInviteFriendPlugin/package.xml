@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.7.2" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
+ <name>opInviteFriendPlugin</name>
+ <channel>plugins.openpne.jp</channel>
+ <summary> </summary>
+ <description> </description>
+ <lead>
+  <name />
+  <user />
+  <email>maintainer@example.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2009-01-27</date>
+ <time>08:19:53</time>
+ <version>
+  <release>0.8.0</release>
+  <api>0.8.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license>Apache 2.0</license>
+ <notes>First release</notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" md5sum="8f3c6c03310fb28509a7652796aaf0d0" name="apps/pc_frontend/i18n/messages.ja.xml" role="data" />
+   <file baseinstalldir="/" md5sum="ad029f4248c616a75e8094e19efe38a1" name="apps/pc_frontend/modules/invitefriend/actions/actions.class.php" role="php" />
+   <file baseinstalldir="/" md5sum="9cbbf2a71ebac31c5e9df7c44c2e0dec" name="apps/pc_frontend/modules/invitefriend/config/security.yml" role="data" />
+   <file baseinstalldir="/" md5sum="36b7326f5c80bd5314e77a9af378a6c6" name="apps/pc_frontend/modules/invitefriend/config/view.yml" role="data" />
+   <file baseinstalldir="/" md5sum="b29bbb4f99adbebcb7158750d818ca77" name="apps/pc_frontend/modules/invitefriend/templates/indexAlert.php" role="php" />
+   <file baseinstalldir="/" md5sum="66396a899264dafc04cc4e7e27b5fa5b" name="apps/pc_frontend/modules/invitefriend/templates/indexError.php" role="php" />
+   <file baseinstalldir="/" md5sum="9cdb0870eb20925b8e8ddcc23eb4ac6d" name="apps/pc_frontend/modules/invitefriend/templates/indexInput.php" role="php" />
+   <file baseinstalldir="/" md5sum="1e9cff5c5fbe52b7007e8ed5b5dbaeb1" name="data/fixtures/001_import_message_type.yml" role="data" />
+   <file baseinstalldir="/" md5sum="61ca957256c99bf2b678b41ce6ce8dfb" name="data/fixtures/002_import_navigation.yml" role="data" />
+   <file baseinstalldir="/" md5sum="05e0042bd7bbb4a4ab1ede45852959e4" name="lib/model/InviteFriendPeer.php" role="php" />
+   <file baseinstalldir="/" md5sum="9d342d35f19e67dae097b0de712f96b2" name="web/css/inviteFriend.css" role="data" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+   <package>
+    <name>symfony</name>
+    <channel>pear.symfony-project.com</channel>
+    <min>1.2.0</min>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>0.8.0</release>
+    <api>0.8.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2009-01-27</date>
+   <license>Apache 2.0</license>
+   <notes>First release</notes>
+  </release>
+ </changelog>
+</package>

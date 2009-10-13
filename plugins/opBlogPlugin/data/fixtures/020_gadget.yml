@@ -1,0 +1,9 @@
+Gadget:
+  blog_home_friend:
+    type: "contents"
+    name: "blogHomeFriend"
+    sort_order: 101
+  blog_home_user:
+    type: "contents"
+    name: "blogHomeUser"
+    sort_order: 102

@@ -1,0 +1,107 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+      <source>Show detail</source>
+      <target>詳細を見る</target>
+      </trans-unit>
+
+      <trans-unit id="2">
+      <source>Access number No1 member</source>
+      <target>アクセス数No1</target>
+      </trans-unit>
+      <trans-unit id="3">
+      <source>It is a ranking of the member with a lot of numbers of yesterday of accesses.</source>
+      <target>昨日のアクセスが多かったメンバーのランキングです。</target>
+      </trans-unit>
+      <trans-unit id="4">
+      <source>Member of number No1 of friends</source>
+      <target>マイフレンド数No1</target>
+      </trans-unit>
+      <trans-unit id="6">
+      <source>It is a ranking of the member with a lot of numbers of registered friends.</source>
+      <target>登録されているマイフレンドの数が多いメンバーのランキングです。</target>
+      </trans-unit>
+      <trans-unit id="7">
+      <source>Participation number No1 community</source>
+      <target>参加人数No1コミュニティ</target>
+      </trans-unit>
+      <trans-unit id="8">
+      <source>It is a ranking of a lot of communities of the participant that are.</source>
+      <target>参加者の多いコミュニティのランキングです。</target>
+      </trans-unit>
+      <trans-unit id="9">
+      <source>No1 community at each upsurge</source>
+      <target>盛り上がり度No1コミュニティ</target>
+      </trans-unit>
+      <trans-unit id="10">
+      <source>It is a ranking of the community with a lot of numbers of yesterday of bulletin board writing.</source>
+      <target>昨日の掲示板書き込み数が多かったコミュニティのランキングです。</target>
+      </trans-unit>
+
+      <trans-unit id="11">
+      <source>No%s</source>
+      <target>第%s位</target>
+      </trans-unit>
+      <trans-unit id="12">
+      <source>Category</source>
+      <target>カテゴリ</target>
+      </trans-unit>
+      <trans-unit id="13">
+      <source>Manager</source>
+      <target>管理者</target>
+      </trans-unit>
+      <trans-unit id="14">
+      <source>Description</source>
+      <target>紹介文</target>
+      </trans-unit>
+
+      <trans-unit id="15">
+      <source> :%saccess</source>
+      <target>さん :%sアクセス</target>
+      </trans-unit>
+
+      <trans-unit id="16">
+      <source> :%smember</source>
+      <target>さん :%s人</target>
+      </trans-unit>
+
+      <trans-unit id="17">
+      <source>:%smember</source>
+      <target>:%s人</target>
+      </trans-unit>
+
+      <trans-unit id="17">
+      <source>:%swriting</source>
+      <target>:書き込み%s件</target>
+      </trans-unit>
+
+      <trans-unit id="18">
+      <source>all member is 0 access</source>
+      <target>全てのメンバーは0アクセスです</target>
+      </trans-unit>
+
+      <trans-unit id="19">
+      <source>There is no member who has a MyFriend</source>
+      <target>マイフレンドがいるメンバーがいません</target>
+      </trans-unit>
+
+      <trans-unit id="20">
+      <source>No community</source>
+      <target>コミュニティがありません</target>
+      </trans-unit>
+
+      <trans-unit id="21">
+      <source>Not written</source>
+      <target>書き込まれていません</target>
+      </trans-unit>
+
+      <trans-unit id="22">
+      <source>Ranking</source>
+      <target>ランキング</target>
+      </trans-unit>
+
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,30 @@
+favoriteListBox:
+  caption:
+    ja_JP: "お気に入りメンバーリスト"
+  description:
+    ja_JP: "お気に入りのメンバーを表示します"
+  component: [favorite, favoriteListBox]
+  config:
+    col:
+      Name:        "col"
+      Caption:     "表示する行"
+      FormType:    "select"
+      ValueType:   "int"
+      IsRequired:  true
+      Default:     3
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
+    row:
+      Name:        "row"
+      Caption:     "表示する列"
+      FormType:    "select"
+      ValueType:   "int"
+      IsRequired:  true
+      Default:     3
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
+
+favoriteNews:
+  caption:
+    ja_JP: "お気に入り情報"
+  description:
+    ja_JP: "お気に入りの情報を表示します"
+  component: [favorite, favoriteNews]

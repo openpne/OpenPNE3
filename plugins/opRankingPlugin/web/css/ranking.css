@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+/*------------------------------------------------------------------------------
+ * rankingSideNav
+ *----------------------------------------------------------------------------*/
+.rankingSideNav {
+  width: 150px;
+  margin: 0 auto;
+  border: 8px solid #CCCCCC;
+}
+.rankingSideNav .partsHeading {
+  padding: 2px 4px;
+  border-bottom: 1px solid #CCCCCC;
+  background-image: none;
+  text-align: center;
+}
+.rankingSideNav p {
+  margin: 3px;
+}
+.rankingSideNav p.link {
+  padding: 3px;
+  border: 1px solid #CCCCCC;
+  text-align: right;
+}
+
+/*----------------------------------------------------------------------------
+ * rankingList
+ *--------------------------------------------------------------------------*/
+.rankingList .partsHeading p {
+  margin: 0;
+}
+#Body .rankingList th:first-child,
+#Body .rankingList th.first-child {
+  border-left-width: 1px;
+}
+.rankingList td.photo {
+  width: 120px;
+  text-align: center;
+}
+.rankingList th {
+  width: 75px;
+  padding: 5px;
+}
+.rankingList td {
+  padding: 5px;
+}
+.rankingList td.name {
+  background: #EEEEEE;
+}
+.rankingList td.name a {
+  font-weight: bold;
+}
+.rankingList .ditem {
+  margin: 8px 15px;
+  background: #EEEEEE;
+}
+.rankingList .item {
+  background: #FFFFFF;
+}
+.rankingList .item td.photo {
+  width: 90px;
+}
+

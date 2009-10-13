@@ -1,0 +1,3 @@
+all:
+  blog_action_size:     20
+  blog_component_size:  10
