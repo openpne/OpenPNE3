@@ -45,6 +45,45 @@ class sfOpenPNEMailSend
     return self::execute($this->subject, $to, $from, $this->body);
   }
 
+  public static function getMailTemplate($template, $target = 'pc', $params = array(), $isOptional = true)
+  {
+    $view = new opGlobalPartialView(sfContext::getInstance(), 'superGlobal', 'mail/'.$target.'/_'.$template, '');
+    $view->setPartialVars($params);
+
+    if ($isOptional && (!$view->getDirectory() || !is_readable($view->getDirectory().'/'.$view->getTemplate())))
+    {
+      return '';
+    }
+
+    return $view->render();
+  }
+
+  public static function sendTemplateMail($template, $to, $from, $params = array())
+  {
+    if (empty($params['target']))
+    {
+      $target = opToolkit::isMobileEmailAddress($to) ? 'mobile' : 'pc';
+    }
+    else
+    {
+      $target = $params['target'];
+    }
+
+    if (in_array($target.'_'.$template, Doctrine::getTable('NotificationMail')->getDisabledNotificationNames()))
+    {
+      return false;
+    }
+
+    $body = self::getMailTemplate($template, $target, $params, false);
+    $signature = self::getMailTemplate('signature', $target);
+    if ($signature)
+    {
+      $signature = "\n".$signature;
+    }
+
+    return self::execute($params['subject'], $to, $from, $body.$signature);
+  }
+
   public static function execute($subject, $to, $from, $body)
   {
     sfOpenPNEApplicationConfiguration::registerZend();

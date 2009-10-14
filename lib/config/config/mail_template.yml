@@ -1,0 +1,49 @@
+pc:
+  changeMailAddress:
+    caption: "Notification of Confirmation of Changing Your PC E-mail Address"
+    configurable: false
+  reissuedPassword:
+    caption: "Notification of Confirmation of Changing Password"
+    configurable: false
+  joinCommunity:
+    caption: "Notification of Someone's Joining Your Community"
+    configurable: true
+  friendLinkComplete:
+    caption: "Notification of Completion of Friend Link"
+    configurable: true
+  registerEnd:
+    caption: "Notification of Completion of Your Registration"
+    configurable: false
+  leave:
+    caption: "Notification of Completion of Leaving From the SNS"
+    configurable: false
+  signature:
+    caption: "Signature"
+    configurable: false
+
+mobile:
+  changeMailAddress:
+    caption: "Notification of Confirmation of Changing Your Mobile E-mail Address"
+    configurable: false
+  joinCommunity:
+    caption: "Notification of Someone's Joining Your Community"
+    configurable: true
+  friendLinkComplete:
+    caption: "Notification of Completion of Friend Link"
+    configurable: true
+  reissuedPassword:
+    caption: "Notification of Confirmation of Changing Password"
+    configurable: false
+  requestRegisterURL:
+    caption: "Notification of Registration URL"
+    configurable: false
+  registerEnd:
+    caption: "Notification of Completion of Your Registration"
+    configurable: false
+  leave:
+    caption: "Notification of Completion of Leaving From the SNS"
+    configurable: false
+  signature:
+    caption: "Signature"
+    configurable: false
+

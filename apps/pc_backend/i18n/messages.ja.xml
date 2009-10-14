@@ -528,6 +528,30 @@
         <source>Saved.</source>
         <target>保存しました。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Configuration of E-mail Notifications</source>
+        <target>メール通知送信設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notify</source>
+        <target>通知する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Don't Notify</source>
+        <target>通知しない</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>For PC E-mail Address</source>
+        <target>PC メールアドレス向け</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>For Mobile E-mail Address</source>
+        <target>携帯メールアドレス向け</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>For Administration E-mail Address</source>
+        <target>管理用メールアドレス向け</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

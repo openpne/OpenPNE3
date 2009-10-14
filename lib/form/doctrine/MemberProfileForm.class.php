@@ -25,6 +25,11 @@ class MemberProfileForm extends sfForm
 
     foreach ($profileMember as $profile)
     {
+      if (!$profile)
+      {
+        continue;
+      }
+
       $this->setDefault($profile->getName(), array(
         'value' => $profile->getValue(),
         'public_flag' => $profile->getPublicFlag()

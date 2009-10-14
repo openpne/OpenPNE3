@@ -394,10 +394,16 @@ abstract class sfOpenPNEMemberAction extends sfActions
     $param = array(
       'member'   => $member,
     );
+
+    // to admin
     $mail = new sfOpenPNEMailSend();
     $mail->setSubject(opConfig::get('sns_name') . '退会者情報');
     $mail->setGlobalTemplate('deleteAccountMail', $param);
     $mail->send(opConfig::get('admin_mail_address'), opConfig::get('admin_mail_address'));
+
+    // to member
+    $param['subject'] = sfContext::getInstance()->getI18N()->__('Leaving from this site is finished');
+    sfOpenPNEMailSend::sendTemplateMail('leave', $member->getEmailAddress(), opConfig::get('admin_mail_address'), $param);
   }
 
   protected function filterConfigCategory()

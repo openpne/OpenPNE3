@@ -37,9 +37,7 @@ class ReissuePasswordForm extends MemberConfigPasswordForm
 
   public function sendConfirmMail($to, $params = array())
   {
-    $mail = new sfOpenPNEMailSend();
-    $mail->setSubject(opConfig::get('sns_name').' '.sfContext::getInstance()->getI18N()->__('パスワード再発行のお知らせ'));
-    $mail->setTemplate('global/reissuedPasswordMail', $params);
-    $mail->send($to, opConfig::get('admin_mail_address'));
+    $params['subject'] = opConfig::get('sns_name').' '.sfContext::getInstance()->getI18N()->__('パスワード再発行のお知らせ');
+    sfOpenPNEMailSend::sendTemplateMail('reissuedPassword', $to, opConfig::get('admin_mail_address'), $params);
   }
 }

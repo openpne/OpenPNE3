@@ -23,6 +23,14 @@ Navigation:
       ja_JP:
         caption: "SNS設定"
 
+  backend_side_mail:
+    type: "backend_side"
+    uri:  "@mail_config"
+    sort_order: 35
+    Translation:
+      ja_JP:
+        caption: "メール設定"
+
   backend_side_design:
     type: "backend_side"
     uri:  "design/index"

@@ -171,6 +171,10 @@ body#design_banner ul.radio_list li {
   margin: 0 6px 0 6px;
 }
 
+body#mail_config ul.radio_list li {
+  display:inline;
+}
+
 * html {
   overflow-x: hidden;
 }
