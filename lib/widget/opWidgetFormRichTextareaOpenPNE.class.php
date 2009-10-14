@@ -25,11 +25,14 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
   static protected $buttons = array('op_b', 'op_u', 'op_s', 'op_i', 'op_large', 'op_small', 'op_color', 'op_emoji_docomo');
   static protected $buttonOnclickActions = array(
     'op_emoji_docomo' => 'opEmoji.getInstance("%id%").togglePallet("epDocomo");',
+    'op_large' => 'op_mce_insert_tagname("%id%", "op:font", \' size="5"\');',
+    'op_small' => 'op_mce_insert_tagname("%id%", "op:font", \' size="1"\');',
     'op_color' => 'op_mce_show_color_table("%id%", "op:font");'
   );
 
   static protected $convertCallbackList = array(
-    'op:color' => array(__CLASS__, 'opColorToHtml')
+    'op:color' => array(__CLASS__, 'opColorToHtml'),
+    'op:font'  => array(__CLASS__, 'opFontToHtml')
   );
 
   static protected $htmlConvertList = array(
@@ -53,7 +56,7 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
     'theme_advanced_buttons1'         => '',
     'theme_advanced_buttons2'         => '',
     'theme_advanced_buttons3'         => '',
-    'valid_elements'                  => 'b/strong,u,s/strike,i,font[color|size],br',
+    'valid_elements'                  => 'b/strong,u,s/strike,i,font[color|size],span[style],br',
     'forced_root_block'               => false,
     'force_p_newlines'                => false,
     'force_br_newlines'               => true,
@@ -63,6 +66,7 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
     'remove_linebreaks'               => false,
     'custom_undo_redo_levels'         => 0,
     'custom_undo_redo'                => false,
+    'convert_fonts_to_spans'          => true,
   );
 
   protected $loadPluginList = array();
@@ -312,6 +316,55 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
       }
       if (isset($attributes['code'])) {
         $options['color'] = $attributes['code'];
+      }
+
+      return tag('font', $options, true);
+    }
+  }
+
+  static public function opFontToHtml($isEndtag, $tagname, $attributes, $isUseStylesheet)
+  {
+    $options = array();
+    if ($isUseStylesheet)
+    {
+      if ($isEndtag) {
+        return '</span>';
+      }
+      $options['class'] = 'op_font';
+      $options['style'] = '';
+      if (isset($attributes['color'])) {
+        $options['style'] .= 'color:'.$attributes['color'].';';
+      }
+      $size = isset($attributes['size']) ? (int)$attributes['size'] : 0;
+      $fontSizeMap = array(
+        1 => 'xx-small',
+        2 => 'x-small',
+        3 => 'small',
+        4 => 'medium',
+        5 => 'large',
+        6 => 'x-large',
+        7 => 'xx-large'
+      );
+      if (isset($fontSizeMap[$size])) {
+
+        $options['style'] .= 'font-size:'.$fontSizeMap[$size];
+      }
+
+      return tag('span', $options, true);
+    }
+    else
+    {
+      if ($isEndtag)
+      {
+        return '</font>';
+      }
+      if (isset($attributes['color'])) {
+        $options['color'] = $attributes['color'];
+      }
+      $size = isset($attributes['size']) ? (int)$attributes['size'] : 0;
+      if ($size >= 1 && $size <= 7)
+      {
+        $options['size'] = $attributes['size'];
       }
 
       return tag('font', $options, true);

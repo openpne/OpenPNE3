@@ -18,11 +18,6 @@ function op_mce_insert_tagname(id, tagname, opt, start, end)
 
   var elm = document.getElementById(id);
 
-  if (tagname == "op:color" && !opt) {
-    op_mce_show_color_table(id, tagname);
-    return;
-  }
-
   var selection = new Selection(elm);
   var pos = selection.create();
   elm.focus();
@@ -102,7 +97,7 @@ function op_mce_show_color_table(id, tagname)
     a.style.backgroundColor = "#" + settings.colors[i];
     Element.addClassName(a, 'disabledHideColorTable');
     a.onmousedown = function() {
-      op_mce_insert_tagname(id, tagname, ' code="' + this.colorCode + '"');
+      op_mce_insert_tagname(id, tagname, ' color="' + this.colorCode + '"');
       close_color_table();
       return false;
     };
