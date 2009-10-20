@@ -23,7 +23,10 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
   static protected $plugins = array('inlinepopups', 'openpne');
 
   static protected $buttons = array('op_b', 'op_u', 'op_s', 'op_i', 'op_large', 'op_small', 'op_color', 'op_emoji_docomo');
-  static protected $buttonOnclickActions = array('op_emoji_docomo' => "");
+  static protected $buttonOnclickActions = array(
+    'op_emoji_docomo' => 'opEmoji.getInstance("%id%").togglePallet("epDocomo");',
+    'op_color' => 'op_mce_show_color_table("%id%", "op:font");'
+  );
 
   static protected $convertCallbackList = array(
     'op:color' => array(__CLASS__, 'opColorToHtml')
@@ -85,7 +88,7 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
         self::$convertCallbackList  = array_merge(self::$convertCallbackList, call_user_func(array($extension, 'getConvertCallbacks')));
         self::$htmlConvertList      = array_merge(self::$htmlConvertList, call_user_func(array($extension, 'getHtmlConverts')));
       }
-      call_user_func(array($extension, 'configure'), &$this->tinyMCEConfigs);
+      call_user_func_array(array($extension, 'configure'), array(&$this->tinyMCEConfigs));
     }
 
     if (!empty($this->tinyMCEConfigs['plugins']))
