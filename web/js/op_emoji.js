@@ -14,3 +14,5 @@ this.closeAllEmojiPallet();Element.show(id);}else{Element.hide(id);}},closeAllEm
 {if($(this.id+"_epDocomo")){Element.hide($(this.id+"_epDocomo"));}
 if($(this.id+"_epAu")){Element.hide($(this.id+"_epAu"));}
 if($(this.id+"epSb")){Element.hide($(this.id+"_epSb"));}},}
+Object.extend(opEmoji,{instances:{},getInstance:function(id){if(!this.instances[id]){this.instances[id]=new opEmoji(id);}
+return this.instances[id];}});

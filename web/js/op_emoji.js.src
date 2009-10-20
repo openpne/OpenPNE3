@@ -111,3 +111,13 @@ opEmoji.prototype = {
     }
   },
 }
+
+Object.extend(opEmoji, {
+    instances : {},
+    getInstance : function(id) {
+        if (!this.instances[id]) {
+            this.instances[id] = new opEmoji(id);
+        }
+        return this.instances[id];
+    }
+});

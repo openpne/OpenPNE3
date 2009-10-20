@@ -7,15 +7,4 @@
 ?> return false;">
 <?php echo image_tag($config['imageURL'], array('alt' => '')) ?></a>
 <?php endforeach; ?>
-<?php $instanceName = $id.'_image_palet'; ?>
-<?php javascript_tag() ?>
-var <?php echo $instanceName ?> = new opEmoji('<?php echo $id ?>');
-<?php echo $instanceName?>.createEmojiPallet();
-$('<?php echo $id ?>_button_op_emoji_docomo').onclick = function(){<?php echo $id ?>_image_palet.togglePallet('epDocomo');};
-if (<?php echo $instanceName ?>.useAu) {
-  $('<?php echo $id ?>_button_op_emoji_au').onclick = function(){<?php echo $id ?>_image_palet.togglePallet('epAu');};
-}
-if (<?php echo $instanceName ?>.useSb) {
-  $('<?php echo $id ?>_button_op_emoji_softbank').onclick = function(){<?php echo $id ?>_image_palet.togglePallet('epSb');};
-}
-<?php end_javascript_tag() ?>
+<?php echo javascript_tag('opEmoji.getInstance("'.$id.'").createEmojiPallet()'); ?>
