@@ -1240,6 +1240,13 @@ div.operation ul.moreInfo li {
 }
 
 /*==============================================================================
+ * toolbar of opWidgetFormRichTextareaOpenPNE
+ *----------------------------------------------------------------------------*/
+div.parts table.mceToolbar {
+  width: auto;
+}
+
+/*==============================================================================
  * Decoration by opWidgetFormRichTextareaOpenPNE
  *----------------------------------------------------------------------------*/
 span.op_b {
@@ -1279,7 +1286,7 @@ span.op_large {
 	font-style: inherit;
 	font-weight: inherit;
 	color: inherit;
-	font-size: 20px;
+	font-size: large;
 }
 
 span.op_small {
@@ -1287,7 +1294,7 @@ span.op_small {
 	font-style: inherit;
 	font-weight: inherit;
 	color: inherit;
-	font-size: 8px;
+	font-size: xx-small;
 }
 
 span.op_color {
