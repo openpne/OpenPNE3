@@ -55,6 +55,12 @@ class sfOpenPNEMailSend
     $view = new sfTemplatingComponentPartialView($context, 'superGlobal', 'notify_mail:'.$target.'_'.$template, '');
     $view->setPartialVars($params);
 
+    $dbTemplate = Doctrine::getTable('NotificationMail')->findOneByName($target.'_'.$template);
+    if ($dbTemplate)
+    {
+      return $dbTemplate->template;
+    }
+
     if ($isOptional && (!$view->getDirectory() || !is_readable($view->getDirectory().'/'.$view->getTemplate())))
     {
       return '';

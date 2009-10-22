@@ -524,7 +524,7 @@ NotificationMail:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
     name: { type: string(64), default: "", notnull: true, comment: "Notification Identifier Name" }
     title: { type: string(64), default: "", notnull: true, comment: "Notification Title" }
-    template: { type: string, comment: "Notification Template" }
+    template: { type: string, default: "", notnull: true, comment: "Notification Template" }
     renderer: { type: string(64), default: "twig", notnull: true, comment: "Notification Template Renderer" }
     is_enabled: { type: boolean, default: true, notnull: true, comment: "Notification Enabled" }
   indexes:

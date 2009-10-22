@@ -158,6 +158,10 @@
         <source>There is your %my_friend% that its birthday is coming soon</source>
         <target>誕生日の近い %my_friend% がいます！</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Friend Birthday</source>
+        <target>フレンドの誕生日お知らせメール</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

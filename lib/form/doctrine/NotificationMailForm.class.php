@@ -5,7 +5,7 @@
  *
  * @package    form
  * @subpackage NotificationMail
- * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 class NotificationMailForm extends BaseNotificationMailForm
 {

@@ -11,5 +11,9 @@ class NotificationMailTranslationForm extends BaseNotificationMailTranslationFor
 {
   public function configure()
   {
+    unset($this['lang'], $this['id']);
+
+    $this->setValidator('title', new sfValidatorString(array('required' => false)));
+    $this->setValidator('template', new sfValidatorString(array('required' => false)));
   }
 }

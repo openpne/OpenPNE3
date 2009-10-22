@@ -552,6 +552,10 @@
         <source>For Administration E-mail Address</source>
         <target>管理用メールアドレス向け</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Edit Templates of E-mail Notification</source>
+        <target>メール通知テンプレート設定</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
