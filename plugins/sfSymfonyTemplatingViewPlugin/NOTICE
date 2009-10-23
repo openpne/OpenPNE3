@@ -1,0 +1,14 @@
+=========================================================================
+==  NOTICE file for use with the Apache License, Version 2.0,          ==
+==  in this case for the sfSymfonyTemplatingViewPlugin distribution.   ==
+=========================================================================
+
+sfSymfonyTemplatingViewPlugin
+Copyright 2009 Kousuke Ebihara
+
+This product includes also software developed by :
+  - Fabien Potencier (http://fabien.potencier.org/)
+    - MIT License
+
+This product includes dependent libraries listed blow:
+  - Symfony Templating (http://components.symfony-project.org/templating)
