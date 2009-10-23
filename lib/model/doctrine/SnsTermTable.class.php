@@ -118,7 +118,7 @@ class SnsTermTable extends Doctrine_Table implements ArrayAccess
 
   public function offsetExists($offset)
   {
-    return is_null($this->get($offset));
+    return !is_null($this->get($offset));
   }
 
   public function offsetGet($offset)

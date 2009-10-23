@@ -15,18 +15,13 @@ class ReissuePasswordForm extends MemberConfigPasswordForm
   {
     parent::save();
 
-    $emailAddresses = $this->member->getEmailAddresses();
-
-    foreach ($emailAddresses as $emailAddress)
-    {
-      $params = array(
-        'mailAddress' => $emailAddress,
-        'newPassword' => $this->plainPassword,
-        'isMobile' => opToolkit::isMobileEmailAddress($emailAddress)
-      );
-
-      $this->sendConfirmMail($emailAddress, $params);
-    }
+    $emailAddress = $this->member->getEmailAddress();
+    $params = array(
+      'mailAddress' => $emailAddress,
+      'newPassword' => $this->plainPassword,
+      'isMobile' => opToolkit::isMobileEmailAddress($emailAddress)
+    );
+    $this->sendConfirmMail($emailAddress, $params);
   }
 
   public function setPlainPassword($validator, $value, $arguments = array())

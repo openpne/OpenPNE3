@@ -47,6 +47,7 @@ class mailActions extends sfActions
     $translation = $obj->Translation['ja_JP'];
 
     $this->form = new NotificationMailTranslationForm($translation);
+    $this->form->updateDefaultsByConfig($this->getMailConfiguration($this->config, $this->name));
     if ($this->request->isMethod(sfWebRequest::POST))
     {
       $this->form->bind($request->getParameter('notification_mail_translation'));
@@ -54,7 +55,10 @@ class mailActions extends sfActions
       {
         if (!$this->form->getObject()->exists())
         {
-          $this->form->getObject()->id->save();
+          if ($this->form->getObject()->id instanceof Doctrine_Record)
+          {
+            $this->form->getObject()->id->save();
+          }
         }
 
         $this->form->save();
@@ -63,6 +67,17 @@ class mailActions extends sfActions
       }
       $this->getUser()->setFlash('error', (string)$this->form->getErrorSchema());
     }
+  }
+
+  protected function getMailConfiguration($config, $name)
+  {
+    $parts = explode('_', $name, 2);
+    if (count($parts) != 2)
+    {
+      return array();
+    }
+
+    return $config[$parts[0]][$parts[1]];
   }
 
   protected function generateMailTemplateNames($config)

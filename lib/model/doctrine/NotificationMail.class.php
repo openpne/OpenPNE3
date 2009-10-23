@@ -9,5 +9,8 @@
  */
 class NotificationMail extends BaseNotificationMail
 {
-
+  public function __toString()
+  {
+    return $this->Translation[self::getDefaultCulture()]->template;
+  }
 }

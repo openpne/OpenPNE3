@@ -52,21 +52,30 @@ class sfOpenPNEMailSend
       $context = sfContext::getInstance();
     }
 
+    $params['sf_config'] = sfConfig::getAll();
+
     $view = new sfTemplatingComponentPartialView($context, 'superGlobal', 'notify_mail:'.$target.'_'.$template, '');
     $view->setPartialVars($params);
+    $view->setAttribute('renderer_config', array('twig' => 'opTemplateRendererTwig'));
+    $view->setAttribute('rule_config', array('notify_mail' => array(
+        array('loader' => 'sfTemplateSwitchableLoaderDoctrine', 'renderer' => 'twig', 'model' => 'NotificationMail'),
+        array('loader' => 'opNotificationMailTemplateLoaderFilesystem', 'renderer' => 'php'),
+    )));
+    $view->execute();
 
-    $dbTemplate = Doctrine::getTable('NotificationMail')->findOneByName($target.'_'.$template);
-    if ($dbTemplate)
+    try
     {
-      return $dbTemplate->template;
+      return $view->render();
     }
-
-    if ($isOptional && (!$view->getDirectory() || !is_readable($view->getDirectory().'/'.$view->getTemplate())))
+    catch (InvalidArgumentException $e)
     {
-      return '';
-    }
+      if ($isOptional)
+      {
+        return '';
+      }
 
-    return $view->render();
+      throw $e;
+    }
   }
 
   public static function sendTemplateMail($template, $to, $from, $params = array())

@@ -61,8 +61,8 @@
 <?php if (!$name): ?>
 <p>編集対象のテンプレートを選択してください。</p>
 <?php else: ?>
-
-<h3><?php echo __($config[$_currentTarget][$_currentKey]['caption']) ?></h3>
+<?php $rawConfig = $sf_data->getRaw('config'); ?>
+<h3><?php echo __($rawConfig[$_currentTarget][$_currentKey]['caption']) ?></h3>
 
 <?php echo $form->renderFormTag(url_for('@mail_template_specified?name='.$name), array('method' => 'post')); ?>
 <?php echo $form->renderHiddenFields(); ?>

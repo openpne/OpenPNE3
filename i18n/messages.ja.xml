@@ -132,7 +132,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>Notification of Registration URL</source>
-        <target>携帯版ログインURLお知らせメール</target>
+        <target>新規登録URLお知らせメール</target>
       </trans-unit>
       <trans-unit id="">
         <source>Signature</source>
@@ -161,6 +161,18 @@
       <trans-unit id="">
         <source>Notification of Friend Birthday</source>
         <target>フレンドの誕生日お知らせメール</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your password was reissued.</source>
+        <target>パスワードを再発行しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>MailAddress</source>
+        <target>メールアドレス</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>New Password</source>
+        <target>新しいパスワード</target>
       </trans-unit>
     </body>
   </file>

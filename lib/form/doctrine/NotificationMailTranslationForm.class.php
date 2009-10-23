@@ -16,4 +16,14 @@ class NotificationMailTranslationForm extends BaseNotificationMailTranslationFor
     $this->setValidator('title', new sfValidatorString(array('required' => false)));
     $this->setValidator('template', new sfValidatorString(array('required' => false)));
   }
+
+  public function updateDefaultsByConfig($config)
+  {
+    $culture = sfContext::getInstance()->getUser()->getCulture();
+
+    if (!$this->getDefault('template') && isset($config['sample'][$culture]))
+    {
+      $this->setDefault('template', $config['sample'][$culture]);
+    }
+  }
 }
