@@ -35,6 +35,12 @@ class opWidgetFormRichTextarea extends sfWidgetFormTextarea
     parent::__construct($options, $attributes);
 
     $this->tinyMCEConfigs = array_merge($this->tinyMCEConfigs, $this->getOption('config'));
+
+    if (!isset($this->tinyMCEConfigs['language']) && sfContext::hasInstance())
+    {
+      $lang = explode('_', sfContext::getInstance()->getUser()->getCulture());
+      $this->tinyMCEConfigs['language'] = $lang[0];
+    }
   }
 
   protected function configure($options = array(), $attributes = array())

@@ -61,7 +61,6 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
     'force_p_newlines'                => false,
     'force_br_newlines'               => true,
     'inline_styles'                   => false,
-    'language'                        => 'ja',
     'entity_encoding'                 => 'raw',
     'remove_linebreaks'               => false,
     'custom_undo_redo_levels'         => 0,
