@@ -44,6 +44,12 @@ class MemberProfile extends BaseMemberProfile implements opAccessControlRecordIn
 
   public function getValue()
   {
+    if ($this->_get('value_datetime'))
+    {
+      $obj = new DateTime($this->_get('value_datetime'));
+      return $obj->format('Y-m-d');
+    }
+
     if ($this->getProfile()->isPreset())
     {
       return $this->_get('value');
@@ -117,6 +123,19 @@ class MemberProfile extends BaseMemberProfile implements opAccessControlRecordIn
     else
     {
       $this->_set('value', $value);
+    }
+  }
+
+  public function preSave($event)
+  {
+    $modified = $this->getModified();
+    if (isset($modified['value_datetime']))
+    {
+      $this->_set('value', $this->_get('value_datetime'));
+    }
+    elseif ('date' === $this->getFormType() && isset($modified['value']))
+    {
+      $this->_set('value_datetime', $this->_get('value'));
     }
   }
 

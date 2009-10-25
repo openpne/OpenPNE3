@@ -39,7 +39,7 @@ class Member extends BaseMember implements opAccessControlRecordInterface
     return $config->getValue();
   }
 
-  public function setConfig($configName, $value)
+  public function setConfig($configName, $value, $isDateTime = false)
   {
     $config = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($configName, $this->getId());
     if (!$config)
@@ -47,6 +47,10 @@ class Member extends BaseMember implements opAccessControlRecordInterface
       $config = new MemberConfig();
       $config->setMember($this);
       $config->setName($configName);
+    }
+    if ($isDateTime)
+    {
+      $config->setValueDatetime($value);
     }
     $config->setValue($value);
     $config->save();
@@ -164,12 +168,12 @@ class Member extends BaseMember implements opAccessControlRecordInterface
 
   public function updateLastLoginTime()
   {
-    $this->setConfig('lastLogin', time());
+    $this->setConfig('lastLogin', date('Y-m-d H:i:s'), true);
   }
 
   public function getLastLoginTime()
   {
-    return $this->getConfig('lastLogin');
+    return strtotime($this->getConfig('lastLogin'));
   }
 
   public function isOnBlackList()

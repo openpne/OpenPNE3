@@ -30,6 +30,40 @@ class MemberConfig extends BaseMemberConfig implements opAccessControlRecordInte
     return $pre->save();
   }
 
+  public function getValue()
+  {
+    if ($this->_get('value_datetime'))
+    {
+      return $this->_get('value_datetime');
+    }
+
+    return $this->_get('value');
+  }
+
+  public function getFormType()
+  {
+    $setting = $this->getSetting();
+    if (isset($setting['FormType']))
+    {
+      return $setting['FormType'];
+    }
+
+    return 'input';
+  }
+
+  public function preSave($event)
+  {
+    $modified = $this->getModified();
+    if (isset($modified['value_datetime']))
+    {
+      $this->_set('value', $this->_get('value_datetime'));
+    }
+    elseif ('date' === $this->getFormType() && isset($modified['value']))
+    {
+      $this->_set('value_datetime', $this->_get('value'));
+    }
+  }
+
   public function saveToken()
   {
     $baseName = $this->getName();
@@ -65,6 +99,8 @@ class MemberConfig extends BaseMemberConfig implements opAccessControlRecordInte
 
   public function getSetting()
   {
+    $config = sfConfig::get('openpne_member_config');
+
     $name = $this->getName();
     if (!$name)
     {
