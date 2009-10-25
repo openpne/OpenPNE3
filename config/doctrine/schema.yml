@@ -148,7 +148,8 @@ MemberProfile:
     member_id: { type: integer(4), notnull: true, comment: "Member id" }
     profile_id: { type: integer(4), notnull: true, comment: "Profile id" }
     profile_option_id: { type: integer(4), comment: "Profile option id" }
-    value: { type: string, comment: "Text content for this profile item" }
+    value: { type: string, default: "", notnull: true, comment: "Text content for this profile item" }
+    value_datetime: { type: datetime, comment: "Profile datetime value" }
     public_flag: { type: integer(1), comment: "Public flag" }
   relations:
     Member: { local: member_id, foreign: id, onDelete: cascade }
@@ -235,7 +236,8 @@ MemberConfig:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
     member_id: { type: integer(4), notnull: true, comment: "Member id" }
     name: { type: string(64), default: "", notnull: true, comment: "Configuration name" }
-    value: { type: string, comment: "Configuration value" }
+    value: { type: string, default: "", notnull: true, comment: "Configuration value" }
+    value_datetime: { type: datetime, comment: "Configuration datetime value" }
   relations:
     Member: { local: member_id, foreign: id, onDelete: cascade }
   indexes:
