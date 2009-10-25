@@ -17,6 +17,9 @@ pc:
   leave:
     caption: "Notification of Completion of Leaving From the SNS"
     configurable: false
+  birthday:
+    caption: "Notification of Friend Birthday"
+    configurable: true
   signature:
     caption: "Signature"
     configurable: false
@@ -43,6 +46,9 @@ mobile:
   leave:
     caption: "Notification of Completion of Leaving From the SNS"
     configurable: false
+  birthday:
+    caption: "Notification of Friend Birthday"
+    configurable: true
   signature:
     caption: "Signature"
     configurable: false

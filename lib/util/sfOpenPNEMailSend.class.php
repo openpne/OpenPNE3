@@ -45,9 +45,14 @@ class sfOpenPNEMailSend
     return self::execute($this->subject, $to, $from, $this->body);
   }
 
-  public static function getMailTemplate($template, $target = 'pc', $params = array(), $isOptional = true)
+  public static function getMailTemplate($template, $target = 'pc', $params = array(), $isOptional = true, $context = null)
   {
-    $view = new opGlobalPartialView(sfContext::getInstance(), 'superGlobal', 'mail/'.$target.'/_'.$template, '');
+    if (!$context)
+    {
+      $context = sfContext::getInstance();
+    }
+
+    $view = new sfTemplatingComponentPartialView($context, 'superGlobal', 'notify_mail:'.$target.'_'.$template, '');
     $view->setPartialVars($params);
 
     if ($isOptional && (!$view->getDirectory() || !is_readable($view->getDirectory().'/'.$view->getTemplate())))

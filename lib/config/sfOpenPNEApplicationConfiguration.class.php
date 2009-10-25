@@ -254,6 +254,21 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   }
 
   /**
+   * Gets the i18n directories to use globally.
+   *
+   * @return array An array of i18n directories
+   */
+  public function getI18NGlobalDirs()
+  {
+    $dirs = array();
+
+    $dirs = array_merge($dirs, array(sfConfig::get('sf_root_dir').'/i18n'));
+    $dirs = array_merge($dirs, parent::getI18NGlobalDirs());
+
+    return $dirs;
+  }
+
+  /**
    * Gets the configuration file paths for a given relative configuration path.
    *
    * @param string $configPath The configuration path
