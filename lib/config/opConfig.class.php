@@ -67,7 +67,7 @@ class opConfig extends sfConfig implements ArrayAccess
   */
   public function offsetExists($offset)
   {
-    return(is_null(self::get($offset)));
+    return(!is_null(self::get($offset)));
   }
 
  /**
