@@ -117,7 +117,7 @@ EOF;
       $js .= sprintf("  tinyMCE.execCommand('mceAddControl', false, '%s');\n", $id);
     }
 
-    $js .= sprintf("  op_toggle_mce_editor('%s')\n", $id);
+    $js .= sprintf("  op_toggle_mce_editor('%s');\n", $id);
 
     if ($js)
     {

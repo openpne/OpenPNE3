@@ -109,7 +109,7 @@ opEmoji.prototype = {
     if ($(this.id + "epSb")) {
       Element.hide($(this.id + "_epSb"));
     }
-  },
+  }
 }
 
 Object.extend(opEmoji, {
