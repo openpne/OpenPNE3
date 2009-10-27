@@ -1,0 +1,179 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Click following URL, please. You finish register if you inputs your password at here.</source>
+        <target>以下のURLをクリックし、パスワードを入力して登録を完了してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If the mail address is registered, it is changed to a new mail address.</source>
+        <target>メールアドレスが登録されている場合、新しいメールアドレスに変更されます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Hello! This is information from %1%.</source>
+        <target>こんにちは！%1% からのお知らせです。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>We've just accepted your registration.</source>
+        <target>当サイトへの登録を受け付けました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>We hope that using %1% is useful for your future.</source>
+        <target>%1% が、あなたの今後に役立ちますように、是非、ご活用いただければと思います。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>-------- Don't you remember this registration? --------</source>
+        <target>◆登録した覚えがない方へ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If you think that any your friends shouldn't invite you and you haven't tried registration, please inform to the following e-mail address.</source>
+        <target>あなたが誰からの紹介も受けた覚えがなく、当サイトに登録した記憶もないという場合、下記までご連絡ください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your information in this site will be deleted.</source>
+        <target>お預かりしている情報は責任を持って削除させていただきます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1% is inviting in %2% you.</source>
+        <target>%1% があなたを%2% へ招待しています。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>---------- The message to you from &lt; %1% &gt; ----------</source>
+        <target>---------- &lt; %1% &gt; からあなたへのメッセージ ----------</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>---------------------------------------------------</source>
+        <target>---------------------------------------------------</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If you register(free) of member by the following URL,%br%you can participate in %1%.</source>
+        <target>下記のURLから、会員登録(無料)をおこなうと、%br%%1% に参加できます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>* Participate in %1%</source>
+        <target>■ %1% に参加する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please click following URL, input the password, and complete registration.</source>
+        <target>以下のURLをクリックし、パスワードを入力して登録を完了してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1% has just joined your %community%</source>
+        <target>%1% さんが %community% に参加しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1% registered your %community%, "%2%".</source>
+        <target>%1% さんが %2% %community% に参加しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>"%1%" %community% page:</source>
+        <target>◆%1% %community% のページ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>"%1%"'s profile page:</source>
+        <target>◇%1% さんのページ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1% accepted your %friend% link request</source>
+        <target>%1% さんがあなたの%friend%リンクリクエストを承諾しました</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1% accepted your %friend% link request.</source>
+        <target>%1% さんがあなたの%friend%リンクリクエストを承諾しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Leaving from this site is finished</source>
+        <target>退会手続きが完了しました</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1%, your leaving process was finished.</source>
+        <target>%1%さんの退会手続きが完了しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Thank you for your using.</source>
+        <target>ご利用いただきありがとうございます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Thank you for your using.</source>
+        <target>ご利用いただきありがとうございます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Confirmation of Changing Your PC E-mail Address</source>
+        <target>PCメールアドレス変更確認メール</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Confirmation of Changing Your Mobile E-mail Address</source>
+        <target>携帯メールアドレス変更確認メール</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Confirmation of Changing Password</source>
+        <target>パスワード再発行メール</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Someone's Joining Your Community</source>
+        <target>コミュニティ参加お知らせメール</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Completion of Friend Link</source>
+        <target>フレンドリンク承認完了メール</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Login URL</source>
+        <target>携帯版ログインURLお知らせメール</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Completion of Your Registration</source>
+        <target>登録完了メール</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Completion of Leaving From the SNS</source>
+        <target>退会完了メール</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Registration URL</source>
+        <target>新規登録URLお知らせメール</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Signature</source>
+        <target>署名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>There is %1%'s %my_friend% that its birthday is coming soon.</source>
+        <target>%1% さんの %my_friend% に誕生日の近い方がいます！</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>We suggest you to send birthday message to your friend.</source>
+        <target>日ごろの感謝をこめて、誕生日の日にお祝いのメッセージを送ってみてはいかがですか。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Birthday</source>
+        <target>誕生日</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Birthday</source>
+        <target>誕生日</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>There is your %my_friend% that its birthday is coming soon</source>
+        <target>誕生日の近い %my_friend% がいます！</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Friend Birthday</source>
+        <target>フレンドの誕生日お知らせメール</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your password was reissued.</source>
+        <target>パスワードを再発行しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>MailAddress</source>
+        <target>メールアドレス</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>New Password</source>
+        <target>新しいパスワード</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

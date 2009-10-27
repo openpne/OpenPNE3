@@ -303,10 +303,6 @@
         <target>該当するメンバーはいませんでした。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Please click following URL, input the password, and complete registration.</source>
-        <target>以下のURLをクリックし、パスワードを入力して登録を完了してください。</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>When the mail address is registered, it is changed to a new mail address.</source>
         <target>メールアドレスが登録されている場合、新しいメールアドレスに変更されます。</target>
       </trans-unit>
@@ -525,30 +521,6 @@
       <trans-unit id="">
         <source>Y/m/d</source>
         <target>Y年m月d日</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Hello! This is information from %1%.</source>
-        <target>こんにちは！%1% からのお知らせです。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>%1% is inviting in %2% you.</source>
-        <target>%1% があなたを%2% へ招待しています。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>---------- The message to you from &lt; %1% &gt; ----------</source>
-        <target>---------- &lt; %1% &gt; からあなたへのメッセージ ----------</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>---------------------------------------------------</source>
-        <target>---------------------------------------------------</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>If you register(free) of member by the following URL,%br%you can participate in %1%.</source>
-        <target>下記のURLから、会員登録(無料)をおこなうと、%br%%1% に参加できます。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>* Participate in %1%</source>
-        <target>■ %1% に参加する</target>
       </trans-unit>
       <trans-unit id="">
         <source>Information About the Withdrawal Member</source>
@@ -1074,6 +1046,10 @@
       <trans-unit id="">
         <source>&lt;strong&gt;An emphatic item&lt;/strong&gt; is an information that you need to use the site. If you uncheck that item, that action is recognized as clicking "No".</source>
         <target>&lt;strong&gt;強調されている項目&lt;/strong&gt;は、サイトを利用するために最低限必要な情報です。この項目のチェックを外した場合、「いいえ」を選択したものとみなされます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notify of Your Registering</source>
+        <target>登録完了のお知らせ</target>
       </trans-unit>
     </body>
   </file>

@@ -40,11 +40,11 @@ class MemberConfigMobileAddressForm extends MemberConfigForm
 
   protected function sendConfirmMail($token, $to, $params = array())
   {
-    $options = array_merge(array('token' => $token), $params);
+    $params = array_merge(array(
+      'token'   => $token,
+      'subject' => 'メールアドレス変更ページのお知らせ',
+    ), $params);
 
-    $mail = new sfOpenPNEMailSend();
-    $mail->setSubject('メールアドレス変更ページのお知らせ');
-    $mail->setTemplate('global/changeMobileAddressMail', $options);
-    $mail->send($to, opConfig::get('admin_mail_address'));
+    sfOpenPNEMailSend::sendTemplateMail('changeMailAddress', $to, opConfig::get('admin_mail_address'), $params);
   }
 }

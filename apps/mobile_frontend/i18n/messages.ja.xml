@@ -271,10 +271,6 @@
         <target>%1%から%2%への参加申請がきています</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Click following URL, please. You finish register if you inputs your password at here.</source>
-        <target>以下のURLをｸﾘｯｸし、ﾊﾟｽﾜｰﾄﾞを入力して登録を完了してください。</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>if you already registered mail address, mail address is overwrited to new data.</source>
         <target>ﾒｰﾙｱﾄﾞﾚｽが登録されている場合、新しいﾒｰﾙｱﾄﾞﾚｽに変更されます。</target>
       </trans-unit>
@@ -389,30 +385,6 @@
       <trans-unit id="">
         <source>Message(Arbitrary)</source>
         <target>ﾒｯｾｰｼﾞ(任意)</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Hello! This is information from %1%.</source>
-        <target>こんにちは！%1% からのお知らせです。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>%1% is inviting in %2% you.</source>
-        <target>%1% があなたを%2% へ招待しています。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>---------- The message to you from &lt; %1% &gt; ----------</source>
-        <target>---------- &lt; %1% &gt; からあなたへのメッセージ ----------</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>---------------------------------------------------</source>
-        <target>---------------------------------------------------</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>If you register(free) of member by the following URL,%br%you can participate in %1%.</source>
-        <target>下記のURLから、会員登録(無料)をおこなうと、%br%%1% に参加できます。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>* Participate in %1%</source>
-        <target>■ %1% に参加する</target>
       </trans-unit>
       <trans-unit id="">
         <source>Photo</source>
@@ -906,6 +878,10 @@
       <trans-unit id="">
         <source>Self Introduction</source>
         <target>自己紹介</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notify of Your Registering</source>
+        <target>登録完了のお知らせ</target>
       </trans-unit>
     </body>
   </file>

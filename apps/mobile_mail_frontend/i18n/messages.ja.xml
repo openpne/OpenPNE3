@@ -110,30 +110,6 @@
         <source>An object with the same "%column%" already exist.</source>
         <target>その %column% は既に使われています。</target>
       </trans-unit>
-      <trans-unit id="">
-        <source>Hello! This is information from %1%.</source>
-        <target>こんにちは！%1% からのお知らせです。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>%1% is inviting in %2% you.</source>
-        <target>%1% があなたを%2% へ招待しています。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>---------- The message to you from &lt; %1% &gt; ----------</source>
-        <target>---------- &lt; %1% &gt; からあなたへのメッセージ ----------</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>---------------------------------------------------</source>
-        <target>---------------------------------------------------</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>If you register(free) of member by the following URL,%br%you can participate in %1%.</source>
-        <target>下記のURLから、会員登録(無料)をおこなうと、%br%%1% に参加できます。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>* Participate in %1%</source>
-        <target>■ %1% に参加する</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

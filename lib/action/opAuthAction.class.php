@@ -35,6 +35,17 @@ class opAuthAction extends sfActions
     $this->getUser()->getAuthAdapter()->activate();
 
     $this->getUser()->setIsSNSMember(true);
+
+    if ($member->getEmailAddress())
+    {
+      $i18n = sfContext::getInstance()->getI18N();
+      $params = array(
+        'subject' => $i18n->__('Notify of Your Registering'),
+        'url'     => $this->getController()->genUrl(array('sf_route' => 'homepage'), true),
+      );
+      sfOpenPNEMailSend::sendTemplateMail('registerEnd', $member->getEmailAddress(), opConfig::get('admin_mail_address'), $params);
+    }
+
     $this->redirect('member/home');
   }
 }

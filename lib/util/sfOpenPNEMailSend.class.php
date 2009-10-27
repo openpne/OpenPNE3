@@ -45,6 +45,65 @@ class sfOpenPNEMailSend
     return self::execute($this->subject, $to, $from, $this->body);
   }
 
+  public static function getMailTemplate($template, $target = 'pc', $params = array(), $isOptional = true, $context = null)
+  {
+    if (!$context)
+    {
+      $context = sfContext::getInstance();
+    }
+
+    $params['sf_config'] = sfConfig::getAll();
+
+    $view = new sfTemplatingComponentPartialView($context, 'superGlobal', 'notify_mail:'.$target.'_'.$template, '');
+    $view->setPartialVars($params);
+    $view->setAttribute('renderer_config', array('twig' => 'opTemplateRendererTwig'));
+    $view->setAttribute('rule_config', array('notify_mail' => array(
+        array('loader' => 'sfTemplateSwitchableLoaderDoctrine', 'renderer' => 'twig', 'model' => 'NotificationMail'),
+        array('loader' => 'opNotificationMailTemplateLoaderFilesystem', 'renderer' => 'php'),
+    )));
+    $view->execute();
+
+    try
+    {
+      return $view->render();
+    }
+    catch (InvalidArgumentException $e)
+    {
+      if ($isOptional)
+      {
+        return '';
+      }
+
+      throw $e;
+    }
+  }
+
+  public static function sendTemplateMail($template, $to, $from, $params = array())
+  {
+    if (empty($params['target']))
+    {
+      $target = opToolkit::isMobileEmailAddress($to) ? 'mobile' : 'pc';
+    }
+    else
+    {
+      $target = $params['target'];
+    }
+
+    if (in_array($target.'_'.$template, Doctrine::getTable('NotificationMail')->getDisabledNotificationNames()))
+    {
+      return false;
+    }
+
+    $body = self::getMailTemplate($template, $target, $params, false);
+    $signature = self::getMailTemplate('signature', $target);
+    if ($signature)
+    {
+      $signature = "\n".$signature;
+    }
+
+    return self::execute($params['subject'], $to, $from, $body.$signature);
+  }
+
   public static function execute($subject, $to, $from, $body)
   {
     sfOpenPNEApplicationConfiguration::registerZend();

@@ -113,6 +113,13 @@ abstract class sfOpenPNEFriendAction extends sfActions
 
     $this->relation->setFriend();
 
+    $member = $this->relation->getMember();
+    $params = array(
+      'subject' => sfContext::getInstance()->getI18N()->__('%1% accepted your %friend% link request', array('%1%' => $member->getName())),
+      'member'  => $member,
+    );
+    sfOpenPNEMailSend::sendTemplateMail('friendLinkComplete', $member->getEmailAddress(), opConfig::get('admin_mail_address'), $params);
+
     $this->redirect('member/profile?id='.$this->id);
   }
 

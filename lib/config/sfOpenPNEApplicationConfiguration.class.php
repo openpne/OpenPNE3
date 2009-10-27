@@ -245,9 +245,25 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   {
     $dirs = array();
 
+    $dirs = array_merge($dirs, array(sfConfig::get('sf_root_dir').'/i18n'));
     $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/i18n'));
     $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/i18n'));
     $dirs = array_merge($dirs, parent::getI18NDirs($moduleName));
+
+    return $dirs;
+  }
+
+  /**
+   * Gets the i18n directories to use globally.
+   *
+   * @return array An array of i18n directories
+   */
+  public function getI18NGlobalDirs()
+  {
+    $dirs = array();
+
+    $dirs = array_merge($dirs, array(sfConfig::get('sf_root_dir').'/i18n'));
+    $dirs = array_merge($dirs, parent::getI18NGlobalDirs());
 
     return $dirs;
   }

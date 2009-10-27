@@ -197,6 +197,7 @@ abstract class sfOpenPNECommunityAction extends sfActions
     }
 
     Doctrine::getTable('CommunityMember')->join($this->getUser()->getMemberId(), $this->id, $community->getConfig('register_poricy'));
+    $this->sendJoinMail($this->getUser()->getMemberId(), $this->id);
 
     $this->redirect('community/home?id='.$this->id);
   }
@@ -218,6 +219,8 @@ abstract class sfOpenPNECommunityAction extends sfActions
       $communityMember->setPosition('');
       $communityMember->save();
     }
+
+    $this->sendJoinMail($communityMember->getMemberId(), $this->id);
     $this->redirect('community/home?id='.$this->id);
   }
 
@@ -303,5 +306,27 @@ abstract class sfOpenPNECommunityAction extends sfActions
     $this->member    = $member;
     $this->community = Doctrine::getTable('Community')->find($this->id);
     return sfView::INPUT;
+  }
+
+  protected function sendJoinMail($memberId, $communityId)
+  {
+    $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($memberId, $communityId);
+    if (!$communityMember)
+    {
+      return false;
+    }
+
+    if ($communityMember->getPosition() !== 'pre')
+    {
+      $community = Doctrine::getTable('community')->find($communityId);
+      $member = Doctrine::getTable('Member')->find($memberId);
+      $params = array(
+        'subject'    => sfContext::getInstance()->getI18N()->__('%1% has just joined your %community%', array('%1%' => $member->name)),
+        'admin'      => $community->getAdminMember(),
+        'community'  => $community,
+        'new_member' => $member,
+      );
+      sfOpenPNEMailSend::sendTemplateMail('joinCommunity', $community->getAdminMember()->getEmailAddress(), opConfig::get('admin_mail_address'), $params);
+    }
   }
 }

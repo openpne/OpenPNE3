@@ -120,18 +120,15 @@ class InviteForm extends MemberConfigPcAddressForm
       $authMode = sfContext::getInstance()->getUser()->getCurrentAuthMode();
     }
 
-    $param = array(
+    $params = array(
       'token'    => $token,
       'authMode' => $authMode,
       'isMobile' => opToolkit::isMobileEmailAddress($to),
       'name'     => $this->getOption('invited') ? sfContext::getInstance()->getUser()->getMember()->getName() : null,
-      'message'  => $this->getOption('invited') ? $this->getValue('message') : null
+      'message'  => $this->getOption('invited') ? $this->getValue('message') : null,
+      'subject' => opConfig::get('sns_name').'招待状',
     );
-
-    $mail = new sfOpenPNEMailSend();
-    $mail->setSubject(opConfig::get('sns_name') . '招待状');
-    $mail->setTemplate('global/requestRegisterURLMail', $param);
-    $mail->send($to, opConfig::get('admin_mail_address'));
+    sfOpenPNEMailSend::sendTemplateMail('requestRegisterURL', $to, opConfig::get('admin_mail_address'), $params);
   }
 
   public function save()

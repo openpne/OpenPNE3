@@ -1,3 +1,18 @@
+# mail rules
+mail_config:
+  url:  /mail
+  param: { module: mail, action: config }
+
+mail_template:
+  url:  /mail/edit
+  param: { module: mail, action: template }
+  requirements:
+    sf_method: [get]
+
+mail_template_specified:
+  url:  /mail/edit/:name
+  param: { module: mail, action: template }
+
 # oauth rules
 oauth_request_token:
   url:   /oauth/request_token

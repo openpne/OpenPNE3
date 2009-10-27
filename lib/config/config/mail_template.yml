@@ -1,0 +1,250 @@
+pc:
+  changeMailAddress:
+    caption: "Notification of Confirmation of Changing Your PC E-mail Address"
+    configurable: false
+    sample:
+      ja_JP: |
+        以下のURLをクリックし、パスワードを入力して登録を完了してください。
+        メールアドレスが登録されている場合、新しいメールアドレスに変更されます。
+        
+        {% app_url_for('pc_frontend', 'member/configComplete?token='~token~'&id='~id~'&type='~type, true) %}
+
+  requestRegisterURL:
+    caption: "Notification of Registration URL"
+    configurable: false
+    sample:
+      ja_JP: |
+        こんにちは！MySNS からのお知らせです。
+        {% if name %}
+        {{ name }} があなたをMySNS へ招待しています。
+        
+        {% if message %}
+        ---------- < {{ name }} > からあなたへのメッセージ ----------
+        ---------------------------------------------------
+        {{ message }}
+        ---------------------------------------------------
+        {% endif %}
+        {% endif %}
+        下記のURLから、会員登録(無料)をおこなうと、
+        {{ op_config.sns_name }} に参加できます。
+        
+        ■ {{ op_config.sns_name }} に参加する
+        {% app_url_for('pc_frontend', 'opAuthMailAddress/register?token='~token~'&authMode='~authMode, true) %}
+
+  reissuedPassword:
+    caption: "Notification of Confirmation of Changing Password"
+    configurable: false
+    sample:
+      ja_JP: |
+        パスワードを再発行しました。
+        
+        メールアドレス: {{ mailAddress }}
+        新しいパスワード: {{ newPassword }}
+
+  joinCommunity:
+    caption: "Notification of Someone's Joining Your Community"
+    configurable: true
+    sample:
+      ja_JP: |
+        こんにちは！{{ op_config.sns_name }} からのお知らせです。
+        
+        {{ new_member.name }} さんが {{ community.name }}{{ op_term.community }} に参加しました。
+        
+        ◆{{ communit.name }}{{ op_term.community }}のページ
+        {% app_url_for('pc_frontend', 'community/home?id='~community.id, true) %}
+        ◇{{ new_member.name }}さんのページ
+        {% app_url_for('pc_frontend', 'member/profile?id='~new_member.id, true) %}
+
+  friendLinkComplete:
+    caption: "Notification of Completion of Friend Link"
+    configurable: true
+    sample:
+      ja_JP: |
+        こんにちは！{{ op_config.sns_name }} からのお知らせです。
+        
+        {{ member.name }} さんがあなたの{{ op_term.sns_name }}リンクリクエストを承諾しました。
+
+  registerEnd:
+    caption: "Notification of Completion of Your Registration"
+    configurable: false
+    sample : 
+      ja_JP: |
+        こんにちは！{{ op_config.sns_name }} からのお知らせです。
+        当サイトへの登録を受け付けました。
+        
+        {{ op_config.sns_name }} が、あなたの今後に役立ちますように、是非、ご活用いただければと思います。
+        
+        {{ url }}
+        
+        ◆登録した覚えがない方へ
+        あなたが誰からの紹介も受けた覚えがなく、当サイトに登録した記憶もないという場合、下記までご連絡ください。
+        お預かりしている情報は責任を持って削除させていただきます。
+        
+        {{ op_config.admin_mail_address }}
+
+  leave:
+    caption: "Notification of Completion of Leaving From the SNS"
+    configurable: false
+    sample:
+      ja_JP: |
+        こんにちは！{{ op_config.sns_name }} からのお知らせです。
+        
+        {{ member.name }} さんの退会手続きが完了しました。
+        ご利用いただきありがとうございます。
+
+  birthday:
+    caption: "Notification of Friend Birthday"
+    configurable: true
+    sample:
+      ja_JP: |
+        {{ member.name }} さんの {{ op_term.my_friend }} に誕生日の近い方がいます！
+        日ごろの感謝をこめて、誕生日の日にお祝いのメッセージを送ってみてはいかがですか。
+        
+        誕生日 : {{ birthMember.getRawValue.getProfile("op_preset_birthday") }}
+        {{ op_term.nickname }} : {{ birthMember.name }}
+        URL : {{ sf_config.op_base_url }}{% app_url_for("pc_frontend", "member/profile?id="~birthMember.id) %}
+        
+        {{ op_config.sns_name }} が、あなたの今後に役立ちますように、是非、ご活用いただければと思います。
+
+  signature:
+    caption: "Signature"
+    configurable: false
+    sample:
+      ja_JP: |
+        ■□━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        
+        ご意見、ご感想などはお気軽にどうぞ！
+        
+        {{ op_config.sns_name }}
+        URL　　　　　： {{ sf_config.op_base_url }}
+        お問い合わせ ： {{ op_config.admin_mail_address }}
+        
+        このメールに書かれた内容の無断転載、無断複製を禁じます。
+        
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━□■
+
+mobile:
+  changeMailAddress:
+    caption: "Notification of Confirmation of Changing Your Mobile E-mail Address"
+    configurable: false
+    sample:
+      ja_JP: |
+        以下のURLをクリックし、パスワードを入力して登録を完了してください。
+        メールアドレスが登録されている場合、新しいメールアドレスに変更されます。
+        
+        {% app_url_for('mobile_frontend', 'member/configComplete?token='~token~'&id='~id~'&type='~type, true) %}
+
+  joinCommunity:
+    caption: "Notification of Someone's Joining Your Community"
+    configurable: true
+    sample:
+      ja_JP: |
+        こんにちは！{{ op_config.sns_name }} からのお知らせです。
+        
+        {{ new_member.name }} さんが {{ community.name }}{{ op_term.community }} に参加しました。
+        
+        ◆{{ communit.name }}{{ op_term.community }}のページ
+        {% app_url_for('mobile_frontend', 'community/home?id='~community.id, true) %}
+        ◇{{ new_member.name }}さんのページ
+        {% app_url_for('mobile_frontend', 'member/profile?id='~new_member.id, true) %}
+
+  friendLinkComplete:
+    caption: "Notification of Completion of Friend Link"
+    configurable: true
+    sample:
+      ja_JP: |
+        こんにちは！{{ op_config.sns_name }} からのお知らせです。
+        
+        {{ member.name }} さんがあなたの{{ op_term.sns_name }}リンクリクエストを承諾しました。
+
+  reissuedPassword:
+    caption: "Notification of Confirmation of Changing Password"
+    configurable: false
+    sample:
+      ja_JP: |
+        パスワードを再発行しました。
+        
+        メールアドレス: {{ mailAddress }}
+        新しいパスワード: {{ newPassword }}
+
+  requestRegisterURL:
+    caption: "Notification of Registration URL"
+    configurable: false
+    sample:
+      ja_JP: |
+        こんにちは！MySNS からのお知らせです。
+        {% if name %}
+        {{ name }} があなたをMySNS へ招待しています。
+        
+        {% if message %}
+        ---------- < {{ name }} > からあなたへのメッセージ ----------
+        ---------------------------------------------------
+        {{ message }}
+        ---------------------------------------------------
+        {% endif %}
+        {% endif %}
+        下記のURLから、会員登録(無料)をおこなうと、
+        {{ op_config.sns_name }} に参加できます。
+        
+        ■ {{ op_config.sns_name }} に参加する
+        {% app_url_for('pc_frontend', 'opAuthMailAddress/register?token='~token~'&authMode='~authMode, true) %}
+
+  registerEnd:
+    caption: "Notification of Completion of Your Registration"
+    configurable: false
+    sample:
+      ja_JP: |
+        こんにちは！{{ op_config.sns_name }} からのお知らせです。
+        当サイトへの登録を受け付けました。
+        
+        {{ op_config.sns_name }} が、あなたの今後に役立ちますように、是非、ご活用いただければと思います。
+        
+        {{ url }}
+        
+        ◆登録した覚えがない方へ
+        あなたが誰からの紹介も受けた覚えがなく、当サイトに登録した記憶もないという場合、下記までご連絡ください。
+        お預かりしている情報は責任を持って削除させていただきます。
+        
+        {{ op_config.admin_mail_address }}
+
+  leave:
+    caption: "Notification of Completion of Leaving From the SNS"
+    configurable: false
+    sample:
+      ja_JP: |
+        こんにちは！{{ op_config.sns_name }} からのお知らせです。
+        
+        {{ member.name }} さんの退会手続きが完了しました。
+        ご利用いただきありがとうございます。
+
+  birthday:
+    caption: "Notification of Friend Birthday"
+    configurable: true
+    sample:
+      ja_JP: |
+        {{ member.name }} さんの {{ op_term.my_friend }} に誕生日の近い方がいます！
+        日ごろの感謝をこめて、誕生日の日にお祝いのメッセージを送ってみてはいかがですか。
+        
+        誕生日 : {{ birthMember.getRawValue.getProfile("op_preset_birthday") }}
+        {{ op_term.nickname }} : {{ birthMember.name }}
+        URL : {{ sf_config.op_base_url }}{% app_url_for("mobile_frontend", "member/profile?id="~birthMember.id) %}
+        
+        {{ op_config.sns_name }} が、あなたの今後に役立ちますように、是非、ご活用いただければと思います。
+
+  signature:
+    caption: "Signature"
+    configurable: false
+    sample:
+      ja_JP: |
+        ■□━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        
+        ご意見、ご感想などはお気軽にどうぞ！
+        
+        {{ op_config.sns_name }}
+        URL　　　　　： {{ sf_config.op_base_url }}
+        お問い合わせ ： {{ op_config.admin_mail_address }}
+        
+        このメールに書かれた内容の無断転載、無断複製を禁じます。
+        
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━□■
+
