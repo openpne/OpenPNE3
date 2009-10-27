@@ -97,7 +97,9 @@ body
 #plotMobileProfileContents div,
 #plotMobileProfileBottom div,
 #plotMobileHeaderContents div,
-#plotMobileFooterContents div
+#plotMobileFooterContents div,
+#plotDailyNewsContents div,
+#plotMobileDailyNewsContents div
 {
   width: 100%;
   height: 35px;
@@ -129,7 +131,9 @@ body
 #plotMobileProfileBottom div.emptyGadget,
 #plotMobileLoginContents div.emptyGadget,
 #plotMobileHeaderContents div.emptyGadget,
-#plotMobileFooterContents div.emptyGadget
+#plotMobileFooterContents div.emptyGadget,
+#plotDailyNewsContents div.emptyGadget,
+#plotMobileDailyNewsContents div.emptyGadget
 {
   background-color: transparent;
   border-style: dashed;

@@ -54,3 +54,15 @@ mobileFooter:
   layout:
     default: layoutD
   plot_action: [design, mobileFooterGadgetPlot]
+
+dailyNews:
+  name: "デイリーニュース（PCメールアドレス向け）"
+  layout:
+    default: layoutD
+  plot_action: [design, dailyNewsGadgetPlot]
+
+mobileDailyNews:
+  name: "デイリーニュース（携帯メールアドレス向け）"
+  layout:
+    default: layoutD
+  plot_action: [design, mobileDailyNewsGadgetPlot]
