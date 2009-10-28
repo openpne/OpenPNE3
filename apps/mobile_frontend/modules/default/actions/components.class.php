@@ -23,6 +23,10 @@ class defaultComponents extends sfComponents
   {
   }
 
+  public function executeFreeAreaMail()
+  {
+  }
+
   public function executeLoginFormBox()
   {
     $this->forms = $this->getUser()->getAuthForms();
