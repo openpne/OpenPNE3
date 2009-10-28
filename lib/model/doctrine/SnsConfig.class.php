@@ -28,4 +28,33 @@ class SnsConfig extends BaseSnsConfig
 
     return false;
   }
+
+  public function getValue()
+  {
+    $value = $this->_get('value');
+
+    if ($this->isMultipleSelect())
+    {
+      $value = unserialize($value);
+    }
+
+    return $value;
+  }
+
+  public function setValue($value)
+  {
+    if ($this->isMultipleSelect())
+    {
+      $value = serialize($value);
+    }
+
+    $this->_set('value', $value);
+  }
+
+  protected function isMultipleSelect()
+  {
+    $config = $this->getConfig();
+
+    return ('checkbox' === $config['FormType']);
+  }
 }

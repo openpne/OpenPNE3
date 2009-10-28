@@ -106,6 +106,10 @@ pc:
         
         {{ op_config.sns_name }} が、あなたの今後に役立ちますように、是非、ご活用いただければと思います。
 
+  dailyNews:
+    caption: "Daily News"
+    configurable: true
+
   signature:
     caption: "Signature"
     configurable: false
@@ -230,6 +234,10 @@ mobile:
         URL : {{ sf_config.op_base_url }}{% app_url_for("mobile_frontend", "member/profile?id="~birthMember.id) %}
         
         {{ op_config.sns_name }} が、あなたの今後に役立ちますように、是非、ご活用いただければと思います。
+
+  dailyNews:
+    caption: "Daily News"
+    configurable: true
 
   signature:
     caption: "Signature"

@@ -425,7 +425,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
       if (isset($categoryAttributes[$key]['depending_sns_config']))
       {
         $snsConfig = $categoryAttributes[$key]['depending_sns_config'];
-        if (!Doctrine::getTable('SnsConfig')->get($snsConfig))
+        if (!opConfig::get($snsConfig))
         {
           unset($categories[$key]);
           continue;

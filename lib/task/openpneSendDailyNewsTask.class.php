@@ -35,6 +35,16 @@ EOF;
     $targetMembers = Doctrine::getTable('Member')->findAll();
     foreach ($targetMembers as $member)
     {
+      if (!$member->getConfig('daily_news'))
+      {
+        continue;
+      }
+
+      if (1 == $member->getConfig('daily_news') && !$this->isDailyNewsDay())
+      {
+        continue;
+      }
+
       $address = $member->getEmailAddress();
       $gadgets = $pcGadgets['dailyNewsContents'];
       if (opToolkit::isMobileEmailAddress($address))
@@ -67,5 +77,16 @@ EOF;
       );
       sfOpenPNEMailSend::sendTemplateMail('dailyNews', $address, opConfig::get('admin_mail_address'), $params, $context);
     }
+  }
+
+  protected function isDailyNewsDay()
+  {
+    $day = date('w') - 1;
+    if (0 > $day)
+    {
+      $day = 7;
+    }
+
+    return in_array($day, opConfig::get('daily_news_day')->getRawValue());
   }
 }

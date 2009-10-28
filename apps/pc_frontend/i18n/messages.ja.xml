@@ -1051,6 +1051,26 @@
         <source>Notify of Your Registering</source>
         <target>登録完了のお知らせ</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Mail Configuration</source>
+        <target>メール設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Daily News</source>
+        <target>デイリー・ニュース</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Don't Send</source>
+        <target>送信しない</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>[1]Send once a week (%2%)|[2]Send twice a week (%2%)|(2,+Inf]Send %1% times a week (%2%)</source>
+        <target>[1]週1回送信する (%2%)|[2]週2回送信する (%2%)|(2,+Inf]週%1%回送信する (%2%)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Send Everyday</source>
+        <target>毎日送信する</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

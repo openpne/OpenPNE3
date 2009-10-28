@@ -40,7 +40,14 @@ class SnsConfigForm extends sfForm
       {
         $this->widgetSchema->setHelp($configName, $snsConfig[$configName]['Help']);
       }
-      $this->setDefault($configName, opConfig::get($configName));
+
+      $value = opConfig::get($configName);
+      if ($value instanceof sfOutputEscaperArrayDecorator)
+      {
+        $value = $value->getRawValue();
+      }
+
+      $this->setDefault($configName, $value);
     }
 
     $this->widgetSchema->setNameFormat('sns_config[%s]');
