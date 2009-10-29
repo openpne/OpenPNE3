@@ -66,6 +66,23 @@ general:
     IsRequired:  true
     Default:     "300K"
 
+  daily_news_day:
+    Name:       "daily_news_day"
+    Caption:    "デイリーニュース受信頻度の設定"
+    Help:       "「毎日」「受信しない」以外の選択肢に設定したときの受信頻度を設定します"
+    FormType:   "checkbox"
+    ValueType:  "text"
+    IsRequired: true
+    Default:    [0, 3]
+    Choices:
+      - "月"
+      - "火"
+      - "水"
+      - "木"
+      - "金"
+      - "土"
+      - "日"
+
 authentication:
   enable_registration:
     Name:      "enable_registration"

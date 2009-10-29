@@ -139,6 +139,10 @@
         <target>署名</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Daily News</source>
+        <target>デイリー・ニュース</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>There is %1%'s %my_friend% that its birthday is coming soon.</source>
         <target>%1% さんの %my_friend% に誕生日の近い方がいます！</target>
       </trans-unit>
@@ -173,6 +177,18 @@
       <trans-unit id="">
         <source>New Password</source>
         <target>新しいパスワード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Today News</source>
+        <target>本日の最新情報</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Hi, %1%!</source>
+        <target>%1% さん</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>This is daily news in %1%.</source>
+        <target>%1% からの本日の最新情報のお知らせです。</target>
       </trans-unit>
     </body>
   </file>

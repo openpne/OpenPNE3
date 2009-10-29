@@ -1,7 +1,7 @@
 gadgetSuccess:
   javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
 
-homeGadgetPlotSuccess: &homeGadgetPlotSuccess
+homeGadgetPlotSuccess: &gadget_plot_config
   layout: plain
   stylesheets: [-backend, gadgetPlot]
   javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
@@ -17,25 +17,31 @@ editGadgetSuccess:
   javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
 
 profileGadgetPlotSuccess:
-  <<: *homeGadgetPlotSuccess
+  <<: *gadget_plot_config
 
 loginGadgetPlotSuccess:
-  <<: *homeGadgetPlotSuccess
+  <<: *gadget_plot_config
 
 sideBannerGadgetPlotSuccess:
-  <<: *homeGadgetPlotSuccess
+  <<: *gadget_plot_config
 
 mobileHomeGadgetPlotSuccess:
-  <<: *homeGadgetPlotSuccess
+  <<: *gadget_plot_config
 
 mobileProfileGadgetPlotSuccess:
-  <<: *homeGadgetPlotSuccess
+  <<: *gadget_plot_config
 
 mobileLoginGadgetPlotSuccess:
-  <<: *homeGadgetPlotSuccess
+  <<: *gadget_plot_config
 
 mobileHeaderGadgetPlotSuccess:
-  <<: *homeGadgetPlotSuccess
+  <<: *gadget_plot_config
 
 mobileFooterGadgetPlotSuccess:
-  <<: *homeGadgetPlotSuccess
+  <<: *gadget_plot_config
+
+dailyNewsGadgetPlotSuccess:
+  <<: *gadget_plot_config
+
+mobileDailyNewsGadgetPlotSuccess:
+  <<: *gadget_plot_config

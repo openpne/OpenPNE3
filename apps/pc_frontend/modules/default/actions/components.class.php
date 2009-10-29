@@ -54,6 +54,10 @@ class defaultComponents extends sfComponents
   {
   }
 
+  public function executeFreeAreaMail()
+  {
+  }
+
   public function executeMemberImageBox($request)
   {
     if ($request->hasParameter('id') && $request->getParameter('module') == 'member' && $request->getParameter('action') == 'profile')

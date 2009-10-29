@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class openpneSendBirthDayMailTask extends sfDoctrineBaseTask
+class openpneSendBirthDayMailTask extends opBaseSendMailTask
 {
   protected function configure()
   {
@@ -25,8 +25,7 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
-    sfOpenPNEApplicationConfiguration::registerZend();
-    $databaseManager = new sfDatabaseManager($this->configuration);
+    parent::execute($arguments, $options);
 
     $birthday = Doctrine::getTable('Profile')->retrieveByName('op_preset_birthday');
     if (!$birthday)
@@ -39,7 +38,6 @@ EOF;
       ->andWhere('DATE_FORMAT(value_datetime, ?) = ?', array('%m-%d', date('m-d', strtotime('+ 1 week'))))
       ->execute();
 
-    $_SERVER['SCRIPT_NAME'] = '/index.php';
     $context = sfContext::createInstance($this->createConfiguration('pc_frontend', 'prod'));
     $i18n = $context->getI18N();
 

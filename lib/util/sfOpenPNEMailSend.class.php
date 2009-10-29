@@ -55,6 +55,8 @@ class sfOpenPNEMailSend
     $params['sf_config'] = sfConfig::getAll();
 
     $view = new sfTemplatingComponentPartialView($context, 'superGlobal', 'notify_mail:'.$target.'_'.$template, '');
+    $context->set('view_instance', $view);
+
     $view->setPartialVars($params);
     $view->setAttribute('renderer_config', array('twig' => 'opTemplateRendererTwig'));
     $view->setAttribute('rule_config', array('notify_mail' => array(
@@ -78,7 +80,7 @@ class sfOpenPNEMailSend
     }
   }
 
-  public static function sendTemplateMail($template, $to, $from, $params = array())
+  public static function sendTemplateMail($template, $to, $from, $params = array(), $context)
   {
     if (empty($params['target']))
     {
@@ -94,8 +96,8 @@ class sfOpenPNEMailSend
       return false;
     }
 
-    $body = self::getMailTemplate($template, $target, $params, false);
-    $signature = self::getMailTemplate('signature', $target);
+    $body = self::getMailTemplate($template, $target, $params, false, $context);
+    $signature = self::getMailTemplate('signature', $target, array(), true, $context);
     if ($signature)
     {
       $signature = "\n".$signature;

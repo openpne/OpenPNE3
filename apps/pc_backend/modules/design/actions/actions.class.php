@@ -235,6 +235,28 @@ class designActions extends sfActions
   }
 
  /**
+  * Executes daily news gadget plot action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeDailyNewsGadgetPlot(sfWebRequest $request)
+  {
+    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('dailyNews');
+    $this->gadgetConfig = sfConfig::get('op_daily_news_gadget_list');
+  }
+
+ /**
+  * Executes mobile daily news gadget plot action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeMobileDailyNewsGadgetPlot(sfWebRequest $request)
+  {
+    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileDailyNews');
+    $this->gadgetConfig = sfConfig::get('op_mobile_daily_news_gadget_list');
+  }
+
+ /**
   * Executes add gadget action
   *
   * @param sfRequest $request A request object
