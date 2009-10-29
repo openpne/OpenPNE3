@@ -109,6 +109,25 @@ pc:
   dailyNews:
     caption: "Daily News"
     configurable: true
+    sample:
+      ja_JP: |
+        ━━ {{ sf_config.op_base_url }} ━━━━━━━━━━━━━━━━
+        
+        {{ op_config.sns_name }}
+        
+        本日の最新情報  [{{ today|date('Y. m. d/D') }}]
+        
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        
+        {{ member.name }} さん
+        
+        {{ op_config.sns_name }} からの
+        本日の最新情報のお知らせです。
+        
+        {% for item in gadgets %}
+        {% include_component(item.component.module, item.component.action, item) %}
+        
+        {% endfor %}
 
   signature:
     caption: "Signature"
@@ -238,6 +257,25 @@ mobile:
   dailyNews:
     caption: "Daily News"
     configurable: true
+    sample:
+      ja_JP: |
+        ━━ {{ sf_config.op_base_url }} ━━━━━━━━━━━━━━━━
+        
+        {{ op_config.sns_name }}
+        
+        本日の最新情報  [{{ today|date('Y. m. d/D') }}]
+        
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        
+        {{ member.name }} さん
+        
+        {{ op_config.sns_name }} からの
+        本日の最新情報のお知らせです。
+        
+        {% for item in gadgets %}
+        {% include_component(item.component.module, item.component.action, item) %}
+        
+        {% endfor %}
 
   signature:
     caption: "Signature"
