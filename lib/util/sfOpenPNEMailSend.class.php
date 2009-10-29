@@ -80,7 +80,7 @@ class sfOpenPNEMailSend
     }
   }
 
-  public static function sendTemplateMail($template, $to, $from, $params = array(), $context)
+  public static function sendTemplateMail($template, $to, $from, $params = array(), $context = null)
   {
     if (empty($params['target']))
     {
