@@ -63,7 +63,7 @@ class MemberProfileTable extends opAccessControlDoctrineTable
 
     $profile = $this->retrieveByMemberIdAndProfileName($memberId, $profileName);
 
-    if ($profile && $profile->isViewable($myMemberId)
+    if ($profile && $profile->isViewable($myMemberId))
     {
       return $profile;
     }
