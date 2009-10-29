@@ -132,8 +132,87 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
   {
     return $this->createQuery()
       ->where('community_id = ?', $communityId)
-      ->addWhere('position = ?', '')
+      ->andWhere('position <> ?', 'admin')
+      ->andWhere('position <> ?', 'pre')
       ->execute();
+  }
+
+  public function requestChangeAdmin($memberId, $communityId, $fromMemberId = null)
+  {
+    if (null === $fromMemberId)
+    {
+      $fromMemberId = sfContext::getInstance()->getUser()->getMemberId();
+    }
+
+    if (!$this->isAdmin($fromMemberId, $communityId))
+    {
+      throw new Exception("Requester isn't community's admin.");
+    }
+
+    $communityMember = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
+    if (!$communityMember)
+    {
+      throw new Exception("Invalid community member.");
+    }
+
+    if ($communityMember->getPosition())
+    {
+      throw new Exception("This member is already position of something.");
+    }
+
+    $community = $communityMember->getCommunity();
+    $nowRequestMember = $community->getChangeAdminRequestMember();
+
+    if ($nowRequestMember)
+    {
+      $nowRequestCommunityMember = $this->retrieveByMemberIdAndCommunityId($nowRequestMember->getId(), $communityId);
+      $nowRequestCommunityMember->setPosition('');
+      $nowRequestCommunityMember->save();
+    }
+
+    $communityMember->setPosition('admin_confirm');
+    $communityMember->save();
+  }
+
+  public function changeAdmin($memberId, $communityId)
+  {
+    if (null === $memberId)
+    {
+      $memberId = sfContext::getInstance()->getUser()->getMemberId();
+    }
+
+    $communityMember = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
+    if (!$communityMember)
+    {
+      throw new Exception("Invalid community member.");
+    }
+    if ($communityMember->getPosition() !== 'admin_confirm')
+    {
+      throw new Exception('This member position isn\'t "admin_confirm".');
+    }
+
+    $nowAdmin = $this->getCommunityAdmin($communityId);
+    if (!$nowAdmin)
+    {
+      throw new Exception("Community's admin was not found.");
+    }
+
+    try
+    {
+      $this->getConnection()->beginTransaction();
+
+      $communityMember->setPosition('admin');
+      $communityMember->save();
+      $nowAdmin->setPosition('');
+      $nowAdmin->save();
+
+      $this->getConnection()->commit();
+    }
+    catch(Exception $e)
+    {
+      $this->getConnection()->rollback();
+      throw $e;
+    }
   }
 
   public function appendRoles(Zend_Acl $acl)
