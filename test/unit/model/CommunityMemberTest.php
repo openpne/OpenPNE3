@@ -141,3 +141,78 @@ try {
 } catch (Exception $e) {
   $t->pass($message);
 }
+
+//------------------------------------------------------------
+
+$t->diag('CommunityMemberTable::requestChangeAdmin()');
+$object = $communityMemberTable->retrieveByMemberIdAndCommunityId(2, 3);
+$t->cmp_ok($object->getPosition(), '===', '', 'The second_member position is "" in the community_3');
+$communityMemberTable->requestChangeAdmin(2, 3, 1);
+$object = $communityMemberTable->retrieveByMemberIdAndCommunityId(2, 3);
+$t->cmp_ok($object->getPosition(), '===', 'admin_confirm', 'The second_member position is "admin_confirm" in the community_3');
+
+$message = "requestChangeAdmin() throws exception if fromMember is not community's admin";
+try {
+  $communityMemberTable->requestChangeAdmin(3, 5, 2);
+  $t->fail($message);
+} catch (Exception $e) {
+  $t->cmp_ok($e->getMessage(), '===', "Requester isn't community's admin.", $message);
+}
+
+$message = "requestChangeAdmin() throws exception if member is already position of something";
+try {
+  $communityMemberTable->requestChangeAdmin(2, 4, 1);
+  $t->fail($message);
+} catch (Exception $e) {
+  $t->cmp_ok($e->getMessage(), '===', "This member is already position of something.", $message);
+}
+
+$message = "requestChangeAdmin() throws exception if the community is invalid";
+try {
+  $communityMemberTable->requestChangeAdmin(2, 999, 1);
+  $t->fail($message);
+} catch (Exception $e) {
+  $t->cmp_ok($e->getMessage(), '===', "Requester isn't community's admin.", $message);
+}
+
+$message = "requestChangeAdmin() throws exception if the member is invalid"; 
+try {
+  $communityMemberTable->requestChangeAdmin(999, 1, 1);
+  $t->fail($message);
+} catch (Exception $e) {
+  $t->cmp_ok($e->getMessage(), '===', "Invalid community member.", $message);
+}
+
+//------------------------------------------------------------
+
+$t->diag('CommunityMemberTable::changeAdmin()');
+$t->cmp_ok($communityMemberTable->isAdmin(2, 4), '===', false, 'isAdmin() returns false');
+$t->cmp_ok($communityMemberTable->isAdmin(1, 4), '===', true, 'isAdmin() returns true');
+$communityMemberTable->changeAdmin(2, 4);
+$t->cmp_ok($communityMemberTable->isAdmin(2, 4), '===', true, 'isAdmin() returns true');
+$t->cmp_ok($communityMemberTable->isAdmin(1, 4), '===', false, 'isAdmin() returns false');
+
+
+$message = "changeAdmin() throws exception if the member position isn't \"admin_confirm\""; 
+try {
+  $communityMemberTable->changeAdmin(2, 5);
+  $t->fail($message);
+} catch (Exception $e) {
+  $t->cmp_ok($e->getMessage(), '===', 'This member position isn\'t "admin_confirm".', $message);
+}
+
+$message = "changeAdmin() throws exception if the member is invalid"; 
+try {
+  $communityMemberTable->changeAdmin(999, 5);
+  $t->fail($message);
+} catch (Exception $e) {
+  $t->cmp_ok($e->getMessage(), '===', 'Invalid community member.', $message);
+}
+
+$message = "changeAdmin() throws exception if the community is invalid"; 
+try {
+  $communityMemberTable->changeAdmin(2, 999);
+  $t->fail($message);
+} catch (Exception $e) {
+  $t->cmp_ok($e->getMessage(), '===', 'Invalid community member.', $message);
+}

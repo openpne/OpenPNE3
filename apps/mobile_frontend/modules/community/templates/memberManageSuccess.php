@@ -7,13 +7,24 @@
 <?php
 $list = array();
 foreach ($pager->getResults() as $member) {
-  $communityMembers = $member->getCommunityMember();
+  $communityMember = Doctrine::getTable('communityMember')->retrieveByMemberIdAndCommunityId($member->getId(), $community->getId());
   $list_str = link_to($member->getName(), 'member/profile?id='.$member->getId());
-  if ('admin' !== $communityMembers[0]->getPosition())
+  $operation = array();
+  if ('admin' !== $communityMember->getPosition())
   {
-    $list_str .= '&nbsp;' . link_to(__('Drop this member'), 'community/dropMember?id='.$community->getId().'&member_id='.$member->getId());
+    $operation[] = link_to(__('Drop this member'), 'community/dropMember?id='.$community->getId().'&member_id='.$member->getId());
   }
-  $list[] = $list_str;
+
+  if (!$communityMember->getPosition())
+  {
+    $operation[] = link_to(__("Take over this %community%'s administrator to this member"), 'community/changeAdminRequest?id='.$community->getId().'&member_id='.$member->getId());
+  }
+  elseif ('admin_confirm' === $communityMember->getPosition())
+  {
+    $operation[] = __("You are taking over this %community%'s administrator to this member now.");
+  }
+
+  $list[] = $list_str.(count($operation) ? '<br><br>'.implode('<br>', $operation) : '');
 }
 $option = array(
   'border' => true,

@@ -115,6 +115,34 @@ class CommunityTable extends opAccessControlDoctrineTable
       ->whereIn('id', array_values($communityConfigs->toKeyValueArray('id', 'community_id')));
   }
 
+  public function getChangeAdminRequestCommunities($memberId = null)
+  {
+    if (null === $memberId)
+    {
+      $memberId = sfContext::getInstance()->getUser()->getMemberId();
+    }
+
+    $communityIds = Doctrine::getTable('CommunityMember')->createQuery()
+      ->select('community_id')
+      ->where('member_id = ?', $memberId)
+      ->andWhere('position = ?', 'admin_confirm')
+      ->execute(array(), Doctrine::HYDRATE_NONE);
+
+    if (!$communityIds)
+    {
+      return null;
+    }
+
+    foreach ($communityIds as &$communityId)
+    {
+      $communityId = $communityId[0];
+    }
+
+    return $this->createQuery()
+      ->whereIn('id', $communityIds)
+      ->execute();
+  }
+
   public function appendRoles(Zend_Acl $acl)
   {
     return $acl

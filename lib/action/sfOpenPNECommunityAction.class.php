@@ -37,8 +37,7 @@ abstract class sfOpenPNECommunityAction extends sfActions
   {
     $this->community = Doctrine::getTable('Community')->find($this->id);
     $this->forward404Unless($this->community, 'Undefined community.');
-    $this->community_admin = Doctrine::getTable('CommunityMember')->getCommunityAdmin($this->id);
-    $this->community_admin = Doctrine::getTable('Member')->find($this->community_admin->getMemberId());
+    $this->community_admin = $this->community->getAdminMember();
 
     if (!$this->membersSize)
     {
@@ -276,7 +275,67 @@ abstract class sfOpenPNECommunityAction extends sfActions
       return sfView::ERROR;
     }
 
-    return sfView::SUCCESS;
+    $this->changeAdminRequestMember = $this->community->getChangeAdminRequestMember();
+  }
+
+ /**
+  * Executes changeAdminRequest action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeChangeAdminRequest($request)
+  {
+    $this->forward404Unless($this->isAdmin);
+
+    $this->member = Doctrine::getTable('Member')->find($request->getParameter('member_id'));
+    $this->forward404Unless($this->member);
+
+    $this->community = Doctrine::getTable('Community')->find($this->id);
+    $this->communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($this->member->getId(), $this->id);
+
+    $this->forward404If($this->communityMember->getPosition());
+
+    $this->form = new opChangeCommunityAdminRequestForm();
+    if ($request->hasParameter('admin_request'))
+    {
+      $this->form->bind($request->getParameter('admin_request'));
+      if ($this->form->isValid())
+      {
+        Doctrine::getTable('CommunityMember')->requestChangeAdmin($this->member->getId(), $this->id);
+        $this->redirect('community/memberManage?id='.$this->id);
+      }
+    }
+
+    return sfView::INPUT;
+  }
+
+ /**
+  * Executes changeAdminAccept action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeChangeAdminAccept($request)
+  {
+    $memberId = $this->getUser()->getMemberId();
+    $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($memberId, $this->id);
+    $this->forward404Unless($communityMember && $communityMember->getPosition() === 'admin_confirm');
+    Doctrine::getTable('CommunityMember')->changeAdmin($memberId, $this->id);
+    $this->redirect('community/home?id='.$this->id);
+  }
+
+ /**
+  * Executes changeAdminAccept action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeChangeAdminReject($request)
+  {
+    $memberId = $this->getUser()->getMemberId();
+    $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($memberId, $this->id);
+    $this->forward404Unless($communityMember && $communityMember->getPosition() === 'admin_confirm');
+    $communityMember->setPosition('');
+    $communityMember->save();
+    $this->redirect('community/home?id='.$this->id);
   }
 
  /**

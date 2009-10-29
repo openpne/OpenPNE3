@@ -149,6 +149,21 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
     }
   }
 
+  public function getChangeAdminRequestMember()
+  {
+    $memberId = Doctrine::getTable('CommunityMember')->createQuery()
+      ->select('member_id')
+      ->where('community_id = ?', $this->getId())
+      ->andWhere('position = ?', 'admin_confirm')
+      ->execute(array(), Doctrine::HYDRATE_SINGLE_SCALAR);
+
+    if ($memberId)
+    {
+      return Doctrine::getTable('Member')->find($memberId);
+    }
+    return null;
+  }
+
   public function generateRoleId(Member $member)
   {
     if (Doctrine::getTable('CommunityMember')->isAdmin($member->id, $this->id))

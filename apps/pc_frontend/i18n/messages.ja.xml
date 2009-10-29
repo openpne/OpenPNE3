@@ -119,6 +119,22 @@
         <target>該当する%community%はありませんでした。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>You have received the request to take over administrator of "%1%".</source>
+        <target>「%1%」の管理者交代依頼を受け取っています。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Take over this %community%'s administrator to this member</source>
+        <target>管理権を渡す</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You are taking over this %community%'s administrator to this member now.</source>
+        <target>管理権交代依頼中</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Take over the administrator of "%1%"</source>
+        <target>「%1%」の管理者交代依頼</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Member</source>
         <target>メンバー</target>
       </trans-unit>

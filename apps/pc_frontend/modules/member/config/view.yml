@@ -11,6 +11,11 @@ homeSuccess:
       parts       : [information]
       target      : [bodyBottom]
       is_component: true 
+    cautionAboutChangeAdminRequest:
+      template    : [community, cautionAboutChangeAdminRequest]
+      parts       : [information]
+      target      : [bodyBottom]
+      is_component: true
 
 profileSuccess:
   layout: layoutA
