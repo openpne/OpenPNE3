@@ -17,6 +17,23 @@
  */
 abstract class opDoctrineRecord extends sfDoctrineRecord implements Zend_Acl_Resource_Interface
 {
+ /**
+  * UNDEFINED_DATETIME
+  *
+  * It is used as NULL in a datetime column by getter and setter.
+  * We can't use real NULL value for this use, because NULL is ambiguous among RDBMSs.
+  *
+  * MySQL prepares "0000-00-00 00:00:00" for this use. But it can't be used in PostgreSQL.
+  * PostgreSQL's behavior is like ISO 8601. It accepts "0000-01-01" (it is the year 1 B.C.).
+  * In definition of Standard SQL, TIMESTAMP accepts "0001-01-01 00:00:00".
+  *
+  * OpenPNE will support many type of RDBMS. So we should select acceptable format of every RDBMSs.
+  * As you can see, it is "0001-01-01 00:00:00".
+  *
+  * I referred to hnw's entry: http://openlab.dino.co.jp/2007/11/10/170436147.html [ja]
+  */
+  const UNDEFINED_DATETIME = '0001-01-01 00:00:00';
+
   protected $roleList = array();
 
   public function save(Doctrine_Connection $conn = null)
@@ -38,6 +55,37 @@ abstract class opDoctrineRecord extends sfDoctrineRecord implements Zend_Acl_Res
     }
 
     return parent::hasColumn($name, $type, $length, $options);
+  }
+
+  protected function checkIsDatetimeField($fieldName)
+  {
+    $definition = $this->_table->getColumnDefinition($fieldName);
+
+    return 'datetime' === $definition['type'];
+  }
+
+  protected function _set($fieldName, $value, $load = true)
+  {
+    // In setter, empty value must be handled as opDoctrineRecord::UNDEFINED_DATETIME
+    if ($this->checkIsDatetimeField($fieldName) && empty($value))
+    {
+      $value = self::UNDEFINED_DATETIME;
+    }
+
+    return parent::_set($fieldName, $value, $load);
+  }
+
+  public function _get($fieldName, $load = true)
+  {
+    $value = parent::_get($fieldName, $load);
+
+    // In getter, opDoctrineRecord::UNDEFINED_DATETIME must be handled as null
+    if ($this->checkIsDatetimeField($fieldName) && self::UNDEFINED_DATETIME === $value)
+    {
+      $value = null;
+    }
+
+    return $value;
   }
 
   public function getResourceId()
