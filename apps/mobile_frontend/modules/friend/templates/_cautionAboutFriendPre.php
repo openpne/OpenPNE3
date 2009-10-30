@@ -1,10 +1,11 @@
-<?php foreach ($sf_user->getMember()->getFriendPreTo() as $key => $value) : ?>
+<?php if ($sf_user->getMember()->countFriendPreTo()) : ?>
 <font color="red">
-<?php $member = $value->getMemberRelatedByMemberIdFrom(); ?>
-<?php echo __('Received from the %friend% link message from %1%!', array('%1%' => link_to(sprintf('%s', $member->getName()), 'member/profile?id='.$member->getId()))) ?>
+<?php
+echo __('You\'ve gotten %1% %friend% requests', array(
+  '%1%' => $sf_user->getMember()->countFriendPreTo(),
+));
+?>
 &nbsp;
-<?php echo link_to(__('Accept'), 'friend/linkAccept?id='.$member->getId()) ?>
-&nbsp;
-<?php echo link_to(__('Reject'), 'friend/linkReject?id='.$member->getId()) ?>
-</font><br>
-<?php endforeach; ?>
+<?php echo link_to(__('Go to Confirmation Page'), '@confirmation_list?category=friend_confirm') ?>
+</font>
+<?php endif; ?>

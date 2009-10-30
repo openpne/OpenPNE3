@@ -939,6 +939,26 @@
        <source>Confirmation List</source>
        <target>承認待ち一覧</target>
      </trans-unit>
+      <trans-unit id="">
+        <source>You have just accepted %friend% link request.</source>
+        <target>%friend%ﾘﾝｸを承認しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You have just rejected %friend% link request.</source>
+        <target>%friend%ﾘﾝｸを拒否しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Go to Confirmation Page</source>
+        <target>承認待ち一覧画面へ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You've gotten %1% %friend% requests</source>
+        <target>%1% 件の%friend%申請があります</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Pending %friend% link requests</source>
+        <target>%friend%ﾘﾝｸ承認待ち</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
