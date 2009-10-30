@@ -64,11 +64,6 @@ class MemberRelationshipTable extends Doctrine_Table
 
   public static function friendConfirmList(sfEvent $event)
   {
-    if ('friend_confirm' !== $event['category'])
-    {
-      return false;
-    }
-
     $list = array();
     foreach ($event['member']->getFriendPreTo() as $k => $v)
     {
@@ -95,11 +90,6 @@ class MemberRelationshipTable extends Doctrine_Table
 
   public static function processFriendConfirm(sfEvent $event)
   {
-    if ('friend_confirm' !== $event['category'])
-    {
-      return false;
-    }
-
     $relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($event['member']->id, $event['id']);
     if (!$relation)
     {

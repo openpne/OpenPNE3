@@ -172,11 +172,6 @@ class CommunityTable extends opAccessControlDoctrineTable
 
   public static function adminConfirmList(sfEvent $event)
   {
-    if ('community_admin_request' !== $event['category'])
-    {
-      return false;
-    }
-
     $communities = Doctrine::getTable('Community')->getChangeAdminRequestCommunities($event['member']->id);
 
     if (!$communities)
@@ -213,11 +208,6 @@ class CommunityTable extends opAccessControlDoctrineTable
 
   public static function processAdminConfirm(sfEvent $event)
   {
-    if ('community_admin_request' !== $event['category'])
-    {
-      return false;
-    }
-
     $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($event['member']->id, $event['id']);
     if (!($communityMember && $communityMember->getPosition() === 'admin_confirm'))
     {

@@ -28,12 +28,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     $this->dispatcher->connect('task.cache.clear', array($this, 'clearPluginCache'));
     $this->dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
 
-    $this->dispatcher->connect('op_confirmation.list', array('MemberRelationshipTable', 'friendConfirmList'));
-    $this->dispatcher->connect('op_confirmation.decision', array('MemberRelationshipTable', 'processFriendConfirm'));
-    $this->dispatcher->connect('op_confirmation.list', array('CommunityMemberTable', 'joinConfirmList'));
-    $this->dispatcher->connect('op_confirmation.decision', array('CommunityMemberTable', 'processJoinConfirm'));
-    $this->dispatcher->connect('op_confirmation.list', array('CommunityTable', 'adminConfirmList'));
-    $this->dispatcher->connect('op_confirmation.decision', array('CommunityTable', 'processAdminConfirm'));
+    $this->dispatcher->connect('op_confirmation.list', array(__CLASS__, 'getCoreConfirmList'));
+    $this->dispatcher->connect('op_confirmation.decision', array(__CLASS__, 'processCoreConfirm'));
 
     $this->setConfigHandlers();
   }
@@ -189,6 +185,38 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     sfOutputEscaper::markClassAsSafe('SnsTermTable');
 
     return $parameters;
+  }
+
+  public static function getCoreConfirmList(sfEvent $event)
+  {
+    $list = array(
+      'friend_confirm'          => array('MemberRelationshipTable', 'friendConfirmList'),
+      'community_confirm'       => array('CommunityMemberTable', 'joinConfirmList'),
+      'community_admin_request' => array('CommunityTable', 'adminConfirmList'),
+    );
+
+    return self::processConfirmationEvent($list, $event);
+  }
+
+  public static function processCoreConfirm(sfEvent $event)
+  {
+    $list = array(
+      'friend_confirm'          => array('MemberRelationshipTable', 'processFriendConfirm'),
+      'community_confirm'       => array('CommunityMemberTable', 'processJoinConfirm'),
+      'community_admin_request' => array('CommunityTable', 'processAdminConfirm'),
+    );
+
+    return self::processConfirmationEvent($list, $event);
+  }
+
+  protected static function processConfirmationEvent(array $list, sfEvent $event)
+  {
+    if (isset($list[$event['category']]) && is_callable($list[$event['category']]))
+    {
+      return call_user_func($list[$event['category']], $event);
+    }
+
+    return false;
   }
 
   /**

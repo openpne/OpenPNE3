@@ -254,11 +254,6 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
 
   public static function joinConfirmList(sfEvent $event)
   {
-    if ('community_confirm' !== $event['category'])
-    {
-      return false;
-    }
-
     $list = array();
     $members = Doctrine::getTable('CommunityMember')->getCommunityMembersPre($event['member']->id);
     foreach ($members as $member)
@@ -289,11 +284,6 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
 
   public static function processJoinConfirm(sfEvent $event)
   {
-    if ('community_confirm' !== $event['category'])
-    {
-      return false;
-    }
-
     $communityMember = Doctrine::getTable('CommunityMember')->find($event['id']);
     if ($communityMember->getPosition() !== 'pre')
     {
