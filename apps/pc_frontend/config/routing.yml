@@ -69,6 +69,17 @@ connection_revoke_token:
   param:   { module: connection, action: revokeToken }
   requirements: { id: \d+, sf_method: post }
 
+# confirmation rules
+confirmation_list:
+  url:   /confirmation
+  param: { module: confirmation, action: list }
+
+confirmation_decision:
+  url:   /confirmation/:category/:id
+  class: sfRequestRoute
+  param: { module: confirmation, action: decision }
+  requirements: { id: \d+, sf_method: post }
+
 # for BC
 member_profile:
   url:   /member/:id

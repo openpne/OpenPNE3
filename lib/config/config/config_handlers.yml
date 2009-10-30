@@ -24,3 +24,6 @@ config/sns_term.yml:
 config/mail_template.yml:
   class: sfSimpleYamlConfigHandler
 
+config/confirmation.yml:
+  class: sfSimpleYamlConfigHandler
+
