@@ -196,50 +196,9 @@ abstract class sfOpenPNECommunityAction extends sfActions
     }
 
     Doctrine::getTable('CommunityMember')->join($this->getUser()->getMemberId(), $this->id, $community->getConfig('register_poricy'));
-    $this->sendJoinMail($this->getUser()->getMemberId(), $this->id);
+    self::sendJoinMail($this->getUser()->getMemberId(), $this->id);
 
     $this->redirect('community/home?id='.$this->id);
-  }
-
-  /**
-   * Executes joinAccept action
-   *
-   * @param sfRequest $request A request object
-   */
-  public function executeJoinAccept($request)
-  {
-    $this->forward404Unless($this->isAdmin);
-    
-    $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($request->getParameter('member_id'), $this->id);
-    $this->forward404Unless($communityMember);
-
-    if ($communityMember->getPosition() == 'pre')
-    {
-      $communityMember->setPosition('');
-      $communityMember->save();
-    }
-
-    $this->sendJoinMail($communityMember->getMemberId(), $this->id);
-    $this->redirect('community/home?id='.$this->id);
-  }
-
-  /**
-   * Executes joinReject action
-   *
-   * @param sfRequest $request A request object
-   */
-  public function executeJoinReject($request)
-  {
-    $this->forward404Unless($this->isAdmin);
-    
-    $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($request->getParameter('member_id'), $this->id);
-    $this->forward404Unless($communityMember);
-
-    if ($communityMember->getPosition() == 'pre')
-    {
-      $communityMember->delete();
-    }
-    $this->redirect('community/home?id='.$this->id);   
   }
 
  /**
@@ -367,7 +326,7 @@ abstract class sfOpenPNECommunityAction extends sfActions
     return sfView::INPUT;
   }
 
-  protected function sendJoinMail($memberId, $communityId)
+  public static function sendJoinMail($memberId, $communityId)
   {
     $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($memberId, $communityId);
     if (!$communityMember)

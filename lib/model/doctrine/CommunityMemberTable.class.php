@@ -113,7 +113,7 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     return $ids;
   }
 
-  public function getCommunityMembersPre($memberId)
+  public function getCommunityMembersPreQuery($memberId)
   {
     $adminCommunityIds = $this->getCommunityIdsOfAdminByMemberId($memberId);
 
@@ -121,11 +121,34 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     {
       return $this->createQuery()
         ->whereIn('community_id', $adminCommunityIds)
-        ->andWhere('position = ?', 'pre')
-        ->execute();
+        ->andWhere('position = ?', 'pre');
     }
 
-    return array();
+    return false;
+  }
+
+  public function getCommunityMembersPre($memberId)
+  {
+    $q = $this->getCommunityMembersPreQuery($memberId);
+
+    if (!$q)
+    {
+      return array();
+    }
+
+    return $q->execute();
+  }
+
+  public function countCommunityMembersPre($memberId)
+  {
+    $q = $this->getCommunityMembersPreQuery($memberId);
+
+    if (!$q)
+    {
+      return array();
+    }
+
+    return $q->count();
   }
 
   public function getCommunityMembers($communityId)
@@ -228,5 +251,73 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     return $acl
       ->allow('admin', $resource, 'view')
       ->allow('admin', $resource, 'edit');
+  }
+
+  public static function joinConfirmList(sfEvent $event)
+  {
+    if ('community_confirm' !== $event['category'])
+    {
+      return false;
+    }
+
+    $list = array();
+    $members = Doctrine::getTable('CommunityMember')->getCommunityMembersPre($event['member']->id);
+    foreach ($members as $member)
+    {
+      $list[] = array(
+        'id' => $member->id,
+        'image' => array(
+          'url' => $member->getMember()->getImageFileName(),
+          'link' => '@member_profile?id='.$member->getMember()->id,
+        ),
+        'list' => array(
+          '%nickname%' => array(
+            'text' => $member->getMember()->name,
+            'link' => '@member_profile?id='.$member->getMember()->id,
+          ),
+          '%community%' => array(
+            'text' => $member->getCommunity()->name,
+            'link' => '@community_home?id='.$member->getCommunity()->id,
+          ),
+        ),
+      );
+    }
+
+    $event->setReturnValue($list);
+
+    return true;
+  }
+
+  public static function processJoinConfirm(sfEvent $event)
+  {
+    if ('community_confirm' !== $event['category'])
+    {
+      return false;
+    }
+
+    $communityMember = Doctrine::getTable('CommunityMember')->find($event['id']);
+    if ($communityMember->getPosition() !== 'pre')
+    {
+      return false;
+    }
+
+    $i18n = sfContext::getInstance()->getI18N();
+    if ($event['is_accepted'])
+    {
+      $communityMember->setPosition('');
+      $communityMember->save();
+
+      sfOpenPNECommunityAction::sendJoinMail($communityMember->getMember()->id, $communityMember->getCommunity()->id);
+
+      $event->setReturnValue($i18n->__('You have just accepted joining to %1%', array('%1%' => $communityMember->getCommunity()->getName())));
+    }
+    else
+    {
+      $communityMember->delete();
+
+      $event->setReturnValue($i18n->__('You have just rejected joining to %1%', array('%1%' => $communityMember->getCommunity()->getName())));
+    }
+
+    return true;
   }
 }

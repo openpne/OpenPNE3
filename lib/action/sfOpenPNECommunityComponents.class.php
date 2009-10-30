@@ -21,7 +21,7 @@ abstract class sfOpenPNECommunityComponents extends sfComponents
   {
     $memberId = sfContext::getInstance()->getUser()->getMemberId();
 
-    $this->communityMembers = Doctrine::getTable('CommunityMember')->getCommunityMembersPre($memberId);
+    $this->communityMembersCount = Doctrine::getTable('CommunityMember')->countCommunityMembersPre($memberId);
   }
 
   public function executeCautionAboutChangeAdminRequest()

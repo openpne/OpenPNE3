@@ -30,6 +30,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
     $this->dispatcher->connect('op_confirmation.list', array('MemberRelationshipTable', 'friendConfirmList'));
     $this->dispatcher->connect('op_confirmation.decision', array('MemberRelationshipTable', 'processFriendConfirm'));
+    $this->dispatcher->connect('op_confirmation.list', array('CommunityMemberTable', 'joinConfirmList'));
+    $this->dispatcher->connect('op_confirmation.decision', array('CommunityMemberTable', 'processJoinConfirm'));
 
     $this->setConfigHandlers();
   }

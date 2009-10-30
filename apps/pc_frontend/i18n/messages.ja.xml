@@ -1123,6 +1123,22 @@
         <source>Pending %friend% link requests</source>
         <target>%friend%リンク承認待ち</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>You've gotten %1% one's %community% joining requests</source>
+        <target>%1% 件の%community%参加申請があります</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You have just accepted joining to %1%</source>
+        <target>%1% への参加を承認しました</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You have just rejected joining to %1%</source>
+        <target>%1% への参加を拒否しました</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Pending %community% joining requests</source>
+        <target>%community%参加申請承認待ち</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
