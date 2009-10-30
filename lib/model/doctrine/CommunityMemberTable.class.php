@@ -142,10 +142,9 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
   public function countCommunityMembersPre($memberId)
   {
     $q = $this->getCommunityMembersPreQuery($memberId);
-
     if (!$q)
     {
-      return array();
+      return 0;
     }
 
     return $q->count();

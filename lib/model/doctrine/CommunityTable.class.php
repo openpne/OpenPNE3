@@ -115,18 +115,23 @@ class CommunityTable extends opAccessControlDoctrineTable
       ->whereIn('id', array_values($communityConfigs->toKeyValueArray('id', 'community_id')));
   }
 
-  public function getChangeAdminRequestCommunities($memberId = null)
+  public function getChangeAdminRequestCommunitiesQuery($memberId = null)
   {
     if (null === $memberId)
     {
       $memberId = sfContext::getInstance()->getUser()->getMemberId();
     }
 
-    $communityIds = Doctrine::getTable('CommunityMember')->createQuery()
+    return Doctrine::getTable('CommunityMember')->createQuery()
       ->select('community_id')
       ->where('member_id = ?', $memberId)
-      ->andWhere('position = ?', 'admin_confirm')
-      ->execute(array(), Doctrine::HYDRATE_NONE);
+      ->andWhere('position = ?', 'admin_confirm');
+  }
+
+  public function getChangeAdminRequestCommunities($memberId = null)
+  {
+    $q = $this->getChangeAdminRequestCommunitiesQuery($memberId);
+    $communityIds = $q->execute(array(), Doctrine::HYDRATE_NONE);
 
     if (!$communityIds)
     {
@@ -143,6 +148,13 @@ class CommunityTable extends opAccessControlDoctrineTable
       ->execute();
   }
 
+  public function countChangeAdminRequestCommunities($memberId = null)
+  {
+    $q = $this->getChangeAdminRequestCommunitiesQuery($memberId);
+
+    return $q->count();
+  }
+
   public function appendRoles(Zend_Acl $acl)
   {
     return $acl
@@ -156,5 +168,74 @@ class CommunityTable extends opAccessControlDoctrineTable
     return $acl
       ->allow('everyone', $resource, 'view')
       ->allow('admin', $resource, 'edit');
+  }
+
+  public static function adminConfirmList(sfEvent $event)
+  {
+    if ('community_admin_request' !== $event['category'])
+    {
+      return false;
+    }
+
+    $communities = Doctrine::getTable('Community')->getChangeAdminRequestCommunities($event['member']->id);
+
+    if (!$communities)
+    {
+      return false;
+    }
+
+    $list = array();
+    foreach ($communities as $community)
+    {
+      $list[] = array(
+        'id' => $community->id,
+        'image' => array(
+          'url' => $community->getAdminMember()->getImageFileName(),
+          'link' => '@member_profile?id='.$community->getAdminMember()->id,
+        ),
+        'list' => array(
+          '%nickname%' => array(
+            'text' => $community->getAdminMember()->name,
+            'link' => '@member_profile?id='.$community->getAdminMember()->id,
+          ),
+          '%community%' => array(
+            'text' => $community->name,
+            'link' => '@community_home?id='.$community->id,
+          ),
+        ),
+      );
+    }
+
+    $event->setReturnValue($list);
+
+    return true;
+  }
+
+  public static function processAdminConfirm(sfEvent $event)
+  {
+    if ('community_admin_request' !== $event['category'])
+    {
+      return false;
+    }
+
+    $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($event['member']->id, $event['id']);
+    if (!($communityMember && $communityMember->getPosition() === 'admin_confirm'))
+    {
+      return false;
+    }
+
+    if ($event['is_accepted'])
+    {
+      Doctrine::getTable('CommunityMember')->changeAdmin($event['member']->id, $event['id']);
+      $event->setReturnValue('You have just accepted taking over %community%');
+    }
+    else
+    {
+      $communityMember->setPosition('');
+      $communityMember->save();
+      $event->setReturnValue('You have just rejected taking over %community%');
+    }
+
+    return true;
   }
 }

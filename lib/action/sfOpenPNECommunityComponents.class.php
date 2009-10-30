@@ -14,6 +14,7 @@
  * @package    OpenPNE
  * @subpackage action
  * @author     Shogo Kawahara <kawahara@tejimaya.net>
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 abstract class sfOpenPNECommunityComponents extends sfComponents
 {
@@ -26,10 +27,6 @@ abstract class sfOpenPNECommunityComponents extends sfComponents
 
   public function executeCautionAboutChangeAdminRequest()
   {
-    $this->communities = Doctrine::getTable('Community')->getChangeAdminRequestCommunities();
-    if (!$this->communities)
-    {
-      $this->communities = array();
-    }
+    $this->communityCount = Doctrine::getTable('Community')->countChangeAdminRequestCommunities();
   }
 }

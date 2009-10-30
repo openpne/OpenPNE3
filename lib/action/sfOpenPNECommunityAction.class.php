@@ -269,35 +269,6 @@ abstract class sfOpenPNECommunityAction extends sfActions
   }
 
  /**
-  * Executes changeAdminAccept action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeChangeAdminAccept($request)
-  {
-    $memberId = $this->getUser()->getMemberId();
-    $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($memberId, $this->id);
-    $this->forward404Unless($communityMember && $communityMember->getPosition() === 'admin_confirm');
-    Doctrine::getTable('CommunityMember')->changeAdmin($memberId, $this->id);
-    $this->redirect('community/home?id='.$this->id);
-  }
-
- /**
-  * Executes changeAdminAccept action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeChangeAdminReject($request)
-  {
-    $memberId = $this->getUser()->getMemberId();
-    $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($memberId, $this->id);
-    $this->forward404Unless($communityMember && $communityMember->getPosition() === 'admin_confirm');
-    $communityMember->setPosition('');
-    $communityMember->save();
-    $this->redirect('community/home?id='.$this->id);
-  }
-
- /**
   * Executes dropMember action
   *
   * @param sfRequest $request A request object
