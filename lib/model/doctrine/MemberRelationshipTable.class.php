@@ -61,4 +61,73 @@ class MemberRelationshipTable extends Doctrine_Table
 
     return $result;
   }
+
+  public static function friendConfirmList(sfEvent $event)
+  {
+    if ('friend_confirm' !== $event['category'])
+    {
+      return false;
+    }
+
+    $list = array();
+    foreach ($event['member']->getFriendPreTo() as $k => $v)
+    {
+      $from = $v->getMemberRelatedByMemberIdFrom();
+      $list[] = array(
+        'id' => $from->id,
+        'image' => array(
+          'url'  => $from->getImageFileName(),
+          'link' => '@member_profile?id='.$from->id,
+        ),
+        'list' => array(
+          '%nickname%' => array(
+            'text' => $from->name,
+            'link' => '@member_profile?id='.$from->id,
+          ),
+        ),
+      );
+    }
+
+    $event->setReturnValue($list);
+
+    return true;
+  }
+
+  public static function processFriendConfirm(sfEvent $event)
+  {
+    if ('friend_confirm' !== $event['category'])
+    {
+      return false;
+    }
+
+    $relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($event['member']->id, $event['id']);
+    if (!$relation)
+    {
+      $relation = Doctrine::getTable('MemberRelationship')->create(array('member_id_from' => $event['member']->id, 'member_id_to' => $event['id']));
+    }
+
+    if (!$relation->isFriendPreTo())
+    {
+      return false;
+    }
+
+    if ($event['is_accepted'])
+    {
+      $relation->setFriend();
+      $event->setReturnValue('You have just accepted %friend% link request.');
+
+      $params = array(
+        'subject' => sfContext::getInstance()->getI18N()->__('%1% accepted your %friend% link request', array('%1%' => $event['member']->getName())),
+        'member'  => $event['member'],
+      );
+      sfOpenPNEMailSend::sendTemplateMail('friendLinkComplete', $event['member']->getEmailAddress(), opConfig::get('admin_mail_address'), $params);
+    }
+    else
+    {
+      $event->setReturnValue('You have just rejected %friend% link request.');
+      $relation->removeFriendPre();
+    }
+
+    return true;
+  }
 }

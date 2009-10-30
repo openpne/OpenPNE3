@@ -101,45 +101,6 @@ abstract class sfOpenPNEFriendAction extends sfActions
   }
 
  /**
-  * Executes linkAccept action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeLinkAccept($request)
-  {
-    $this->forward404Unless($this->relation->isFriendPreTo());
-
-    $this->redirectToHomeIfIdIsNotValid();
-
-    $this->relation->setFriend();
-
-    $member = $this->relation->getMember();
-    $params = array(
-      'subject' => sfContext::getInstance()->getI18N()->__('%1% accepted your %friend% link request', array('%1%' => $member->getName())),
-      'member'  => $member,
-    );
-    sfOpenPNEMailSend::sendTemplateMail('friendLinkComplete', $member->getEmailAddress(), opConfig::get('admin_mail_address'), $params);
-
-    $this->redirect('member/profile?id='.$this->id);
-  }
-
- /**
-  * Executes linkReject action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeLinkReject($request)
-  {
-    $this->forward404Unless($this->relation->isFriendPreTo());
-
-    $this->redirectToHomeIfIdIsNotValid();
-
-    $this->relation->removeFriendPre();
-
-    $this->redirect('@homepage');
-  }
-
- /**
   * Executes unlink action
   *
   * @param sfRequest $request A request object

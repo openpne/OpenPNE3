@@ -28,6 +28,9 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     $this->dispatcher->connect('task.cache.clear', array($this, 'clearPluginCache'));
     $this->dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
 
+    $this->dispatcher->connect('op_confirmation.list', array('MemberRelationshipTable', 'friendConfirmList'));
+    $this->dispatcher->connect('op_confirmation.decision', array('MemberRelationshipTable', 'processFriendConfirm'));
+
     $this->setConfigHandlers();
   }
 
