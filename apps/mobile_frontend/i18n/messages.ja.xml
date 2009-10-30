@@ -919,6 +919,26 @@
         <source>Send Everyday</source>
         <target>毎日送信する</target>
       </trans-unit>
+     <trans-unit id="">
+       <source>You have the following pending requests. Select "Accept" or "Reject".</source>
+       <target>以下の承認待ちのﾘｸｴｽﾄがあります。承認または拒否を選択してください。</target>
+     </trans-unit>
+     <trans-unit id="">
+       <source>You don't have any pending requests</source>
+       <target>承認待ちのﾘｸｴｽﾄがありません</target>
+     </trans-unit>
+     <trans-unit id="">
+       <source>Accept</source>
+       <target>承認</target>
+     </trans-unit>
+     <trans-unit id="">
+       <source>Reject</source>
+       <target>拒否</target>
+     </trans-unit>
+     <trans-unit id="">
+       <source>Confirmation List</source>
+       <target>承認待ち一覧</target>
+     </trans-unit>
     </body>
   </file>
 </xliff>
