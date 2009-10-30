@@ -81,7 +81,7 @@ class SnsTermTable extends Doctrine_Table implements ArrayAccess
     {
       $term = new SnsTerm();
       $term->setName($name);
-      $term->setCulture($culture);
+      $term->setLang($culture);
       $term->setApplication($application);
     }
     $term->setValue($value);
