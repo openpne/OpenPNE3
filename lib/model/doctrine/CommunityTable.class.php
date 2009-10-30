@@ -131,7 +131,7 @@ class CommunityTable extends opAccessControlDoctrineTable
   public function getChangeAdminRequestCommunities($memberId = null)
   {
     $q = $this->getChangeAdminRequestCommunitiesQuery($memberId);
-    $communityIds = $q->execute(array(), Doctrine::HYDRATE_NONE);
+    $communityIds = $q->execute(array(), Doctrine::HYDRATE_ARRAY);
 
     if (!$communityIds)
     {
@@ -140,7 +140,7 @@ class CommunityTable extends opAccessControlDoctrineTable
 
     foreach ($communityIds as &$communityId)
     {
-      $communityId = $communityId[0];
+      $communityId = $communityId['community_id'];
     }
 
     return $this->createQuery()
