@@ -968,6 +968,10 @@
         <target>%1% 件の%community%管理者交代依頼があります</target>
       </trans-unit>
       <trans-unit id="">
+        <source>You've gotten %1% %community% administrator taking over requests</source>
+        <target>%1% 件の%community%管理者交代依頼があります</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>You have just accepted joining to %1%</source>
         <target>%1% への参加を承認しました</target>
       </trans-unit>
@@ -978,6 +982,18 @@
       <trans-unit id="">
         <source>Pending %community% joining requests</source>
         <target>%community%参加申請承認待ち</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You have just accepted taking over %community%</source>
+        <target>%community%管理者交代を承認しました</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You have just rejected taking over %community%</source>
+        <target>%community%管理者交代を拒否しました</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Pending %community% administrator taking over requests</source>
+        <target>%community%管理者交代依頼</target>
       </trans-unit>
     </body>
   </file>
