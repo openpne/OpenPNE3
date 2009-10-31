@@ -1,0 +1,243 @@
+How to Install OpenPNE3.1
+=========================
+
+Getting Started
+---------------
+
+This document is for OpenPNE 3.1.
+
+OpenPNE 3 should work under the following server environment.
+
+Web Server
+  Apache
+    * The "mod_rewrite" module must be enabled
+PHP
+  PHP version is >= 5.2.3
+    * The "mbstring" module must be enabled
+    * The "xml" module must be enabled
+    * The "PCRE" module must be enabled (That must be support UTF-8)
+    * The "PDO" module must be enabled (It must contains DBMS drivers that you want to use)
+    * The "JSON" module must be enabled
+    * The GD library must be usable from PHP (That must be support JPEG, GIF and PNG)
+    * The "mcrypt" module should be enabled
+    * The "APC" module should be enabled
+Database Server
+  MySQL4.1+ (Recommended 5.1)
+  
+  PostgreSQL and SQLite are not now supported (They will be supported in the future)
+
+Download Package and Install It
+-------------------------------
+
+Download
+~~~~~~~~
+
+Please download a package of OpenPNE 3.1 from the following URL.
+
+3.1.0 - 3.1.2
+  https://sourceforge.net/project/showfiles.php?group_id=174268&package_id=307735
+3.1.3 +
+  http://github.com/openpne/OpenPNE3/downloads
+
+And unzip the zip file.
+
+Setting Files
+~~~~~~~~~~~~~
+
+Set the files to be the following structure:
+
+::
+
+  ./
+  +-- LICENSE
+  +-- NOTICE
+  +-- apps/
+  +-- cache/
+  +-- config/
+  +-- data/
+  +-- doc/
+  +-- lib/
+  +-- log/
+  +-- plugins/
+  +-- symfony
+  +-- test/
+  
+  (It can be accessable from web browser)
+  +-- web/  (This directory name can be changed)
+      +-- index.php
+      +-- js/
+      +-- mobile_frontend.php
+      +-- pc_backend.php
+        :
+
+Setting the HTTP proxy
+~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to use HTTP proxy, change the "op_http_proxy" configuration in your config/ProjectConfiguration.class.php.
+
+::
+
+  //HTTP proxy to use when downloading plugin packages
+  sfConfig::set('op_http_proxy', 'example.com:8080');
+
+Executing Install Command
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Execute the following command to begin installing process.
+
+::
+
+  $ ./symfony openpne:install
+ 
+If you execute the command, you will be required inputing the following:
+
+*  DBMS (mysql, pgsql or sqlite, but we are now only support MySQL)
+*  Database Username
+*  Database Password
+*  Database Hostname
+*  (If you inputed "MySQL" for the DBMS and "localhost" for the hostname, ) Database Socket Path
+
+Installing will be started automatically based on your inputted information.
+
+Configuring mod_rewrite
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Configure the RewriteBase setting in your web/.htaccess for your environment (It may not be needed).
+
+::
+
+  RewriteBase /                            # Or /web
+
+RewriteBase is must be absoulte path of URL.
+
+Access from Web Browser (PC)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(1) Access http://example.com/index.php
+(2) Input sns@example.com / password to login form, and make sure you to log in
+
+You must change the default email address and password.
+
+Access form Web Browser (Backend)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(1) Access http://example.com/pc_backend.php
+(2) Input admin / password to login form, and make sure you to log in
+
+You must change the default account and password.
+
+Getting from Git and Setup It (3.1.3 +)
+---------------------------------------
+
+Clone OpenPNE3
+~~~~~~~~~~~~~~
+
+::
+
+  $ git clone git://github.com/openpne/OpenPNE3.git
+
+Copy the config/ProjectConfiguration.class.php
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+  $ cd OpenPNE3
+  $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
+
+Setting the HTTP proxy
+~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to use HTTP proxy, change the "op_http_proxy" configuration in your config/ProjectConfiguration.class.php.
+
+::
+
+  //HTTP proxy to use when downloading plugin packages
+  sfConfig::set('op_http_proxy', 'example.com:8080');
+
+Installing
+~~~~~~~~~~
+
+Execute the following command.
+
+::
+
+  $ ./symfony openpne:install
+
+Access from Web Browser (PC)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(1) Access http://example.com/index.php
+(2) Input sns@example.com / password to login form, and make sure you to log in
+
+You must change the default email address and password.
+
+Access form Web Browser (Backend)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(1) Access http://example.com/pc_backend.php
+(2) Input admin / password to login form, and make sure you to log in
+
+You must change the default account and password.
+
+Check out from SVN and Setup It (3.1.0 - 3.1.2)
+-----------------------------------------------
+
+The following assumes the you have already installed symfony 1.2.
+
+Checkout OpenPNE3
+~~~~~~~~~~~~~~~~~
+
+::
+
+  $ svn co https://trac.openpne.jp/svn/OpenPNE3/tags/OpenPNE-3.1.0/
+
+Configure config/ProjectConfiguration.class.php
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+  $ cd OpenPNE-3.1.0
+  $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
+  $ vi config/ProjectConfiguration.class.php
+
+Replace ##SYMFONY_LIB_DIR## to the path to libraries of symfony.
+(e.g. /usr/share/php/data/symfony)
+
+::
+
+    require_once '##SYMFONY_LIB_DIR##/autoload/sfCoreAutoload.class.php';
+
+Setting the HTTP proxy
+~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to use HTTP proxy, change the "op_http_proxy" configuration in your config/ProjectConfiguration.class.php.
+
+::
+
+  //HTTP proxy to use when downloading plugin packages
+  sfConfig::set('op_http_proxy', 'example.com:8080');
+
+Installing
+~~~~~~~~~~
+
+Execute the following command.
+
+::
+
+  $ ./symfony openpne:install
+
+Access from Web Browser (PC)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(1) Access http://example.com/index.php
+(2) Input sns@example.com / password to login form, and make sure you to log in
+
+You must change the default email address and password.
+
+Access form Web Browser (Backend)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(1) Access http://example.com/pc_backend.php
+(2) Input admin / password to login form, and make sure you to log in
+
+You must change the default account and password.

@@ -3,9 +3,10 @@ OpenPNE is a Social Networking Service Engine.
 LICENSE
 -------
 
-see LICENSE file
+See LICENSE file
 
 INSTALLATION
 ------------
 
-see doc/ja/OpenPNE3_Setup_Guide.txt
+See doc/(ja|en)/OpenPNE3_Setup_Guide.txt
+
