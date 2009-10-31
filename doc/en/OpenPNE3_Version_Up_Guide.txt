@@ -46,6 +46,7 @@ Copy the contents in old plugins.
 ::
 
   $ cp -aur /path/to/old/OpenPNE3/plugins/* /path/to/new/OpenPNE3/plugins
+  $ cp -aur /path/to/old/OpenPNE3/plugins/.* /path/to/new/OpenPNE3/plugins
 
 Re-build Models
 ~~~~~~~~~~~~~~~
