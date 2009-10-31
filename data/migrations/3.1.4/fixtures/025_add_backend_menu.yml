@@ -1,0 +1,9 @@
+Navigation:
+  backend_side_mail:
+    type: "backend_side"
+    uri:  "@mail_config"
+    sort_order: 35
+    Translation:
+      ja_JP:
+        caption: "メール設定"
+
