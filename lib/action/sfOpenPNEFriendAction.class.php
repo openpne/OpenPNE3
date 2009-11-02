@@ -85,12 +85,6 @@ abstract class sfOpenPNEFriendAction extends sfActions
         $this->getUser()->setFlash('notice', 'You have requested %friend% link.');
         $this->redirectToHomeIfIdIsNotValid();
         $this->relation->setFriendPre();
-        $this->dispatcher->notify(new sfEvent($this, 'op_action.post_execute_'.$this->moduleName.'_'.$this->actionName, array(
-          'moduleName' => $this->moduleName,
-          'actionName' => $this->actionName,
-          'actionInstance' => $this,
-          'result'     => sfView::SUCCESS,
-        )));
         $this->redirect('member/profile?id='.$this->id);
       }
     }

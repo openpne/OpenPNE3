@@ -15,7 +15,7 @@
  * @subpackage controller
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class opMobileFrontWebController extends sfFrontWebController
+class opMobileFrontWebController extends opFrontWebController
 {
  /**
   * @see sfWebController

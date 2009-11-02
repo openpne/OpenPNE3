@@ -25,9 +25,9 @@ test:
       session_path: %SF_TEST_CACHE_DIR%/sessions
 
 all:
-#  controller:
-#    class: sfFrontWebController
-#
+  controller:
+    class: opPcFrontWebController
+
   request:
     class: sfOpenPNEWebRequest
     param:

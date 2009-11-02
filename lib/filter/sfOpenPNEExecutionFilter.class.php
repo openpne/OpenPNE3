@@ -17,6 +17,31 @@
  */
 class sfOpenPNEExecutionFilter extends sfExecutionFilter
 {
+  public static function notifyPreExecuteActionEvent($subject, sfEventDispatcher $dispatcher, sfAction $actionInstance)
+  {
+    $moduleName = $actionInstance->getModuleName();
+    $actionName = $actionInstance->getActionName();
+
+    $dispatcher->notify(new sfEvent($subject, 'op_action.pre_execute_'.$moduleName.'_'.$actionName, array(
+      'moduleName'     => $moduleName,
+      'actionName'     => $actionName,
+      'actionInstance' => $actionInstance,
+    )));
+  }
+
+  public static function notifyPostExecuteActionEvent($subject, sfEventDispatcher $dispatcher, sfAction $actionInstance, $result)
+  {
+    $moduleName = $actionInstance->getModuleName();
+    $actionName = $actionInstance->getActionName();
+
+    $dispatcher->notify(new sfEvent($subject, 'op_action.post_execute_'.$moduleName.'_'.$actionName, array(
+      'moduleName'     => $moduleName,
+      'actionName'     => $actionName,
+      'actionInstance' => $actionInstance,
+      'result'         => $result,
+    )));
+  }
+
   protected function handleAction($filterChain, $actionInstance)
   {
     $moduleName = $actionInstance->getModuleName();
@@ -28,11 +53,7 @@ class sfOpenPNEExecutionFilter extends sfExecutionFilter
       $this, 'user.change_culture', array('culture' => sfContext::getInstance()->getUser()->getCulture())
     ));
 
-    $dispatcher->notify(new sfEvent($this, 'op_action.pre_execute_'.$moduleName.'_'.$actionName, array(
-      'moduleName'     => $moduleName,
-      'actionName'     => $actionName,
-      'actionInstance' => $actionInstance,
-    )));
+    self::notifyPreExecuteActionEvent($this, $dispatcher, $actionInstance);
 
     Doctrine::getTable('SnsTerm')->configure(sfContext::getInstance()->getUser()->getCulture(), sfConfig::get('sf_app'));
 
@@ -54,12 +75,7 @@ class sfOpenPNEExecutionFilter extends sfExecutionFilter
       throw $e;
     }
 
-    $dispatcher->notify(new sfEvent($this, 'op_action.post_execute_'.$moduleName.'_'.$actionName, array(
-      'moduleName'     => $moduleName,
-      'actionName'     => $actionName,
-      'actionInstance' => $actionInstance,
-      'result'         => $result,
-    )));
+    self::notifyPostExecuteActionEvent($this, $dispatcher, $actionInstance, $result);
 
     return $result;
   }
