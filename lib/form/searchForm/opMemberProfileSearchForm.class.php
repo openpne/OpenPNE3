@@ -18,16 +18,19 @@
 class opMemberProfileSearchForm extends sfForm
 {
   protected static $profileFieldPrefix = 'profile_';
- 
+
+  public function __construct($defaults = array(), $options = array())
+  {
+    parent::__construct($defaults, $options, false)
+  }
+
   protected function getProfiles()
   {
     return Doctrine::getTable('Profile')->retrieveByIsDispSearch();
   }
-  
+
   public function configure()
   {
-    $this->disableCSRFProtection();
-
     $widgets = array();
     $validators = array();
 
