@@ -69,7 +69,7 @@ class opWidgetFormDate extends sfWidgetFormI18nDate
       }
     }
 
-    if (is_array($value) && !checkdate($value['month'], $value['day'], $value['year']))
+    if (is_array($value) && !checkdate((int)$value['month'], (int)$value['day'], (int)$value['year']))
     {
       $dayDefault   = $value['day'];
       $monthDefault = $value['month'];
