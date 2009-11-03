@@ -21,7 +21,7 @@ class opMemberProfileSearchForm extends sfForm
 
   public function __construct($defaults = array(), $options = array())
   {
-    parent::__construct($defaults, $options, false)
+    parent::__construct($defaults, $options, false);
   }
 
   protected function getProfiles()
