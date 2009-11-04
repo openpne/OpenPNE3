@@ -187,18 +187,36 @@ abstract class sfOpenPNECommunityAction extends sfActions
   */
   public function executeJoin($request)
   {
-    $community = Doctrine::getTable('Community')->find($this->id);
-    $this->forward404Unless($community);
+    $this->community = Doctrine::getTable('Community')->find($this->id);
+    $this->forward404Unless($this->community);
 
     if ($this->isCommunityMember || $this->isCommunityPreMember)
     {
       return sfView::ERROR;
     }
 
-    Doctrine::getTable('CommunityMember')->join($this->getUser()->getMemberId(), $this->id, $community->getConfig('register_poricy'));
-    self::sendJoinMail($this->getUser()->getMemberId(), $this->id);
+    $this->form = new opCommunityJoiningForm();
+    if ('close' !== $this->community->getConfig('register_poricy'))
+    {
+      unset($this->form['message']);
+    }
 
-    $this->redirect('community/home?id='.$this->id);
+    if ($request->hasParameter('community_join'))
+    {
+      $this->form->bind($request->getParameter('community_join'));
+      if ($this->form->isValid())
+      {
+        Doctrine::getTable('CommunityMember')->join($this->getUser()->getMemberId(), $this->id, $this->community->getConfig('register_poricy'));
+        self::sendJoinMail($this->getUser()->getMemberId(), $this->id);
+
+        if ('close' !== $this->community->getConfig('register_poricy'))
+        {
+          $this->getUser()->setFlash('notice', 'You have just joined to this %community%.');
+        }
+
+        $this->redirect('community/home?id='.$this->id);
+      }
+    }
   }
 
  /**
@@ -213,8 +231,16 @@ abstract class sfOpenPNECommunityAction extends sfActions
       return sfView::ERROR;
     }
 
-    Doctrine::getTable('CommunityMember')->quit($this->getUser()->getMemberId(), $this->id);
-    $this->redirect('community/home?id=' . $this->id);
+    $this->community = Doctrine::getTable('Community')->find($this->id);
+    $this->form = new sfForm();
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $request->checkCSRFProtection();
+
+      Doctrine::getTable('CommunityMember')->quit($this->getUser()->getMemberId(), $this->id);
+      $this->getUser()->setFlash('notice', 'You have just quitted this %community%.');
+      $this->redirect('community/home?id='.$this->id);
+    }
   }
 
  /**
