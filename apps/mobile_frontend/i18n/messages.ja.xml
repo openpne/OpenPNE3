@@ -995,6 +995,30 @@
         <source>Pending %community% administrator taking over requests</source>
         <target>%community%管理者交代依頼</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Join to "%1%"</source>
+        <target>「%1%」に参加する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you really join to the following %community%?</source>
+        <target>本当に以下の%community%に参加しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You have just joined to this %community%.</source>
+        <target>%community%に参加しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Quit "%1%"</source>
+        <target>「%1%」から退会する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you really quit the following %community%?</source>
+        <target>本当に以下の%community%から退会しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You have just quitted this %community%.</source>
+        <target>%community%から退会しました。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

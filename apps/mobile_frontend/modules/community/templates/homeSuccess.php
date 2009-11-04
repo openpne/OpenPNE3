@@ -20,7 +20,7 @@
 <?php echo op_format_date($community->getCreatedAt(), 'D') ?><br>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Administrator') ?>:</font><br>
 <?php echo link_to($community_admin->getName(), 'member/profile?id='.$community_admin->getId()) ?><br>
-<font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Community Category', array(), 'form_community') ?>:</font><br>
+<font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('%community% Category', array(), 'form_community') ?>:</font><br>
 <?php echo $community->getCommunityCategory() ?><br>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Register poricy', array(), 'form_community') ?>:</font><br>
 <?php echo __($sf_data->getRaw('community')->getRegisterPoricy()) ?><br>
@@ -51,7 +51,7 @@
 <?php echo link_to(__('Quit %community%'), 'community/quit?id=' . $community->getId()) ?><br>
 <?php else : ?>
 <?php if ($isCommunityPreMember) : ?>
-<?php echo __('You are waiting for the participation approval by community\'s administrator.') ?>
+<?php echo __('You are waiting for the participation approval by %community%\'s administrator.') ?>
 <?php else: ?>
 <?php echo link_to(__('Join %community%'), 'community/join?id=' . $community->getId()) ?><br>
 <?php endif; ?>
