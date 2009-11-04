@@ -217,6 +217,8 @@ abstract class sfOpenPNECommunityAction extends sfActions
         $this->redirect('community/home?id='.$this->id);
       }
     }
+
+    return sfView::INPUT;
   }
 
  /**
