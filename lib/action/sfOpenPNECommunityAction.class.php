@@ -96,6 +96,35 @@ abstract class sfOpenPNECommunityAction extends sfActions
   }
 
  /**
+  * Executes search action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeSearch($request)
+  {
+    sfConfig::set('sf_nav_type', 'default');
+
+    $params = $request->getParameter('community', array());
+    if ($request->hasParameter('search_query'))
+    {
+      $params = array_merge($params, array('name' => $request->getParameter('search_query', '')));
+    }
+
+    $this->filters = new CommunityFormFilter();
+    $this->filters->bind($params);
+
+    if (!isset($this->size))
+    {
+      $this->size = 20;
+    }
+
+    $this->pager = new sfDoctrinePager('Community', $this->size);
+    $this->pager->setQuery($this->filters->getQuery());
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
+  }
+
+ /**
   * Executes delete action
   *
   * @param sfRequest $request A request object

@@ -120,6 +120,10 @@ abstract class sfOpenPNEMemberAction extends sfActions
   public function executeSearch($request)
   {
     $params = $request->getParameter('member', array());
+    if ($request->hasParameter('search_query'))
+    {
+      $params = array_merge($params, array('name' => $request->getParameter('search_query', '')));
+    }
 
     $this->filters = new opMemberProfileSearchForm();
     $this->filters->bind($params);
