@@ -225,11 +225,6 @@ abstract class sfOpenPNECommunityAction extends sfActions
     }
 
     $this->form = new opCommunityJoiningForm();
-    if ('close' !== $this->community->getConfig('register_poricy'))
-    {
-      unset($this->form['message']);
-    }
-
     if ($request->hasParameter('community_join'))
     {
       $this->form->bind($request->getParameter('community_join'));
@@ -246,6 +241,8 @@ abstract class sfOpenPNECommunityAction extends sfActions
         $this->redirect('community/home?id='.$this->id);
       }
     }
+
+    return sfView::INPUT;
   }
 
  /**
@@ -261,14 +258,16 @@ abstract class sfOpenPNECommunityAction extends sfActions
     }
 
     $this->community = Doctrine::getTable('Community')->find($this->id);
-    $this->form = new sfForm();
+    $this->form = new opCommunityQuittingForm();
     if ($request->isMethod(sfWebRequest::POST))
     {
-      $request->checkCSRFProtection();
-
-      Doctrine::getTable('CommunityMember')->quit($this->getUser()->getMemberId(), $this->id);
-      $this->getUser()->setFlash('notice', 'You have just quitted this %community%.');
-      $this->redirect('community/home?id='.$this->id);
+      $this->form->bind($request->getParameter('community_quit'));
+      if ($this->form->isValid())
+      {
+        Doctrine::getTable('CommunityMember')->quit($this->getUser()->getMemberId(), $this->id);
+        $this->getUser()->setFlash('notice', 'You have just quitted this %community%.');
+        $this->redirect('community/home?id='.$this->id);
+      }
     }
   }
 

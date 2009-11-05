@@ -9,17 +9,16 @@
  */
 
 /**
- * CommunityConfig form.
+ * opCommunityQuittingForm
  *
  * @package    OpenPNE
  * @subpackage form
- * @author     Shogo Kawahara <kawahara@tejimaya.net>
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class FriendLinkForm extends opBaseForm
+class opCommunityQuittingForm extends opBaseForm
 {
-  public function configure()
+  public function setup()
   {
-    $this->widgetSchema->setNameFormat('friend_link[%s]');
+    $this->widgetSchema->setNameFormat('community_quit[%s]');
   }
 }
