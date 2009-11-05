@@ -13,7 +13,7 @@ if (!empty($options['class'])) $class .= ' '.$options['class'];
 <?php endif; ?>
 
 <?php if (isset($options['title'])): ?>
-<div class="partsHeading"><h3><?php echo $options['title'] ?></h3></div>
+<div class="partsHeading"><h3><?php echo $options->getRaw('title') ?></h3></div>
 <?php endif; ?>
 
 <?php if (isset($options['partsInfo'])): ?>

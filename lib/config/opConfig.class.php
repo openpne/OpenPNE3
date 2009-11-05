@@ -56,8 +56,7 @@ class opConfig extends sfConfig implements ArrayAccess
       }
     }
 
-    sfContext::getInstance()->getConfiguration()->loadHelpers('Escaping');
-    return sfOutputEscaper::escape(sfConfig::get('sf_escaping_method'), $result);
+    return $result;
   }
 
  /**
@@ -77,7 +76,7 @@ class opConfig extends sfConfig implements ArrayAccess
   */
   public function offsetGet($offset)
   {
-    return self::get($offset);
+    return sfOutputEscaper::escape(sfConfig::get('sf_escaping_method'), self::get($offset));
   }
 
  /**
