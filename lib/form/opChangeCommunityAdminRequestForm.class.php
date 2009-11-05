@@ -14,15 +14,12 @@
  * @package    OpenPNE
  * @subpackage form
  * @author     Shogo Kawahara <kawahara@tejimaya.net>
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class opChangeCommunityAdminRequestForm extends sfForm
+class opChangeCommunityAdminRequestForm extends opBaseForm
 {
   public function setup()
   {
-    $this->setWidget('message', new sfWidgetFormTextarea());
-    $this->setValidator('message', new opValidatorString(array('rtrim' => true, 'required' => false)));
-    $this->widgetSchema->setLabel('message', 'Message(Arbitrary)');
-
     $this->widgetSchema->setNameFormat('admin_request[%s]');
   }
 }

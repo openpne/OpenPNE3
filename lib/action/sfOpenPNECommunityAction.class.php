@@ -196,11 +196,6 @@ abstract class sfOpenPNECommunityAction extends sfActions
     }
 
     $this->form = new opCommunityJoiningForm();
-    if ('close' !== $this->community->getConfig('register_poricy'))
-    {
-      unset($this->form['message']);
-    }
-
     if ($request->hasParameter('community_join'))
     {
       $this->form->bind($request->getParameter('community_join'));

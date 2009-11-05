@@ -14,15 +14,12 @@
  * @package    OpenPNE
  * @subpackage form
  * @author     Shogo Kawahara <kawahara@tejimaya.net>
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-
-class FriendLinkForm extends sfForm
+class FriendLinkForm extends opBaseForm
 {
   public function configure()
   {
-    $this->setWidget('message', new sfWidgetFormTextarea());
-    $this->setValidator('message', new sfValidatorString(array('required' => false)));
-
     $this->widgetSchema->setNameFormat('friend_link[%s]');
   }
 }

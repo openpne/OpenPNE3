@@ -15,14 +15,10 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class opCommunityJoiningForm extends sfForm
+class opCommunityJoiningForm extends opBaseForm
 {
   public function setup()
   {
-    $this->setWidget('message', new sfWidgetFormTextarea());
-    $this->setValidator('message', new opValidatorString(array('rtrim' => true, 'required' => false)));
-    $this->widgetSchema->setLabel('message', 'Message(Arbitrary)');
-
     $this->widgetSchema->setNameFormat('community_join[%s]');
   }
 }
