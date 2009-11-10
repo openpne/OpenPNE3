@@ -14,12 +14,13 @@
  * @package    OpenPNE
  * @subpackage admin
  * @author     Shinichi Urabe <urabe@tejimaya.com>
+ * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 class monitoringComponents extends sfComponents
 {
-  public function executeSubMenu(sfRequest $request)
+  public function executeSubmenu(sfRequest $request)
   {
-    $this->navs = Doctrine::getTable('Navigation')->retrieveByType('monitoring_submenu');
+    $this->menu = include(sfContext::getInstance()->getConfigCache()->checkConfig('config/monitoring.yml'));
   }
 }
 

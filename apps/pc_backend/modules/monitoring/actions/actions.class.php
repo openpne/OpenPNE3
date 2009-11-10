@@ -38,7 +38,6 @@ class monitoringActions extends sfActions
       ->getImageFilePager($request->getParameter('page', 1), $request->getParameter('size', 20));
   }
 
-
  /**
   * Executes deleteImage action
   *

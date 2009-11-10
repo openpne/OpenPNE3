@@ -1,5 +1,5 @@
 <?php slot('submenu') ?>
-<?php include_component('monitoring', 'subMenu') ?>
+<?php include_component('monitoring', 'submenu') ?>
 <?php end_slot() ?>
 
 <?php slot('title', __('アップロードファイルリスト')) ?>
