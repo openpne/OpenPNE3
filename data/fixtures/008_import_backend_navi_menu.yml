@@ -7,9 +7,9 @@ Navigation:
       ja_JP:
         caption: "メンバー管理"
 
-  backend_side_monitoring_function:
+  backend_side_monitoring:
     type: "backend_side"
-    uri:  "monitoringFunction/index"
+    uri:  "monitoring/index"
     sort_order: 20
     Translation:
       ja_JP:

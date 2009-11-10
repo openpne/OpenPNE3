@@ -9,17 +9,17 @@
  */
 
 /**
- * monitoringFunction components.
+ * monitoring components.
  *
  * @package    OpenPNE
  * @subpackage admin
  * @author     Shinichi Urabe <urabe@tejimaya.com>
  */
-class monitoringFunctionComponents extends sfComponents
+class monitoringComponents extends sfComponents
 {
   public function executeSubMenu(sfRequest $request)
   {
-    $this->navs = Doctrine::getTable('Navigation')->retrieveByType('monitoring_function_submenu');
+    $this->navs = Doctrine::getTable('Navigation')->retrieveByType('monitoring_submenu');
   }
 }
 

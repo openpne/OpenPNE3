@@ -14,11 +14,11 @@
 <?php foreach($files as $file): ?>
 <tr>
 <td class="type1"><?php echo $file->getId() ?></td>
-<td><a href="<?php echo url_for('monitoringFunction/fileDownload?id='.$file->getId()).'?'.strtotime('now') ?>"><?php echo $file->getName() ?></a></td>
+<td><a href="<?php echo url_for('monitoring/fileDownload?id='.$file->getId()).'?'.strtotime('now') ?>"><?php echo $file->getName() ?></a></td>
 <td><?php echo $file->getOriginalFilename() ?></td>
 <td><?php echo $file->getCreatedAt() ?></td>
 <?php if ($deleteBtn): ?>
-<td><a href="<?php echo url_for('monitoringFunction/deleteFile?id='.$file->getId()) ?>"><?php echo __('削除') ?></a></td>
+<td><a href="<?php echo url_for('monitoring/deleteFile?id='.$file->getId()) ?>"><?php echo __('削除') ?></a></td>
 <?php endif; ?>
 </tr>
 <?php endforeach; ?>

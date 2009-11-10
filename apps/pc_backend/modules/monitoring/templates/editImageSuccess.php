@@ -1,10 +1,10 @@
 <?php slot('submenu') ?>
-<?php include_component('monitoringFunction', 'subMenu') ?>
+<?php include_component('monitoring', 'subMenu') ?>
 <?php end_slot() ?>
 
 <?php slot('title', '画像アップロード・削除') ?>
 
-<?php echo $form->renderFormTag(url_for('monitoringFunction/editImage')) ?>
+<?php echo $form->renderFormTag(url_for('monitoring/editImage')) ?>
   <table>
     <?php echo $form ?>
     <tr>

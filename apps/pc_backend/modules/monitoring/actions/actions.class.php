@@ -9,13 +9,13 @@
  */
 
 /**
- * monitoringFunction actions.
+ * monitoring actions.
  *
  * @package    OpenPNE
  * @subpackage admin
  * @author     Shinichi Urabe <urabe@tejimaya.com>
  */
-class monitoringFunctionActions extends sfActions
+class monitoringActions extends sfActions
 {
  /**
   * Executes index action
@@ -24,7 +24,7 @@ class monitoringFunctionActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->forward('monitoringFunction', 'imageList');
+    $this->forward('monitoring', 'imageList');
   }
 
  /**
@@ -57,7 +57,7 @@ class monitoringFunctionActions extends sfActions
       $this->image->delete();
       $this->getUser()->setFlash('notice', '画像の削除が完了しました');
 
-      $this->redirect('monitoringFunction/imageList');
+      $this->redirect('monitoring/imageList');
     }
   }
 
@@ -78,7 +78,7 @@ class monitoringFunctionActions extends sfActions
           $request->getFiles('image')
         );
         $this->getUser()->setFlash('notice', '画像の追加が完了しました');
-        $this->redirect('monitoringFunction/imageList');
+        $this->redirect('monitoring/imageList');
     }
   }
 
@@ -110,7 +110,7 @@ class monitoringFunctionActions extends sfActions
 
       $this->file->delete();
       $this->getUser()->setFlash('notice', 'ファイルの削除が完了しました');
-      $this->redirect('monitoringFunction/fileList');
+      $this->redirect('monitoring/fileList');
     }
   }
 
