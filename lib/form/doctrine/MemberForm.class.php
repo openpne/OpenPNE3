@@ -20,7 +20,7 @@ class MemberForm extends BaseMemberForm
   public function configure()
   {
     $this->setWidgets(array(
-      'name' => new sfWidgetFormInput(),
+      'name' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(

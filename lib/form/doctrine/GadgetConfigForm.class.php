@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class GadgetConfigForm extends sfForm
+class GadgetConfigForm extends BaseForm
 {
   protected $gadget;
 

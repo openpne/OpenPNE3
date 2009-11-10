@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-abstract class opAuthLoginForm extends sfForm
+abstract class opAuthLoginForm extends BaseForm
 {
   protected
     $adapter = null;

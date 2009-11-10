@@ -1,8 +1,8 @@
 prod:
   .settings:
-    no_script_name:         off
-    logging_enabled:        off
-    check_lock:             on
+    no_script_name:         false
+    logging_enabled:        false
+    check_lock:             true
   .actions:
     error_404_action:       error
     module_disabled_action: error
@@ -10,18 +10,18 @@ prod:
 dev:
   .settings:
     error_reporting:        <?php echo (E_ALL)."\n" ?>
-    web_debug:              on
-    cache:                  off
-    no_script_name:         off
-    etag:                   off
+    web_debug:              true
+    cache:                  false
+    no_script_name:         false
+    etag:                   false
 
 test:
   .settings:
     error_reporting:        <?php echo ((E_ALL) ^ E_NOTICE)."\n" ?>
-    cache:                  off
-    web_debug:              off
-    no_script_name:         off
-    etag:                   off
+    cache:                  false
+    web_debug:              false
+    no_script_name:         false
+    etag:                   false
 
 all:
   .settings:
@@ -99,10 +99,10 @@ all:
 #    orm:                    propel
 #
 #    # Logging
-#    logging_enabled:        on
+#    logging_enabled:        true
 #
 #    # i18n
     default_culture:        ja_JP        # Default user culture
 #
 #    # enable 1.0 compatibility
-#    compat_10:              off
+#    compat_10:              false

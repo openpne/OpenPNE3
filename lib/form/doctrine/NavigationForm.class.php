@@ -13,7 +13,7 @@ class NavigationForm extends BaseNavigationForm
   {
     $this->setWidgets(array(
       'id' => new sfWidgetFormInputHidden(),
-      'uri' => new sfWidgetFormInput(),
+      'uri' => new sfWidgetFormInputText(),
       'type' => new sfWidgetFormInputHidden(),
     ));
 

@@ -16,7 +16,7 @@
  * @author     Shogo Kawahara <kawahara@tejimaya.com>
  */
 
-class CommunityFileForm extends sfForm
+class CommunityFileForm extends BaseForm
 {
   protected
     $community;

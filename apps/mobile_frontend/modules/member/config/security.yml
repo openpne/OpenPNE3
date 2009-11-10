@@ -1,12 +1,12 @@
 all:
-  is_secure: on
+  is_secure: true
   credentials: SNSMember
 
 registerInput:
   credentials: [[SNSRegisterBegin, SNSRegisterFinish]]
 
 configComplete:
-  is_secure: off
+  is_secure: false
 
 registerMobileToRegisterEnd:
-  is_secure: off
+  is_secure: false

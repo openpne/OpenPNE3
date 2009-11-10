@@ -11,6 +11,6 @@ class NavigationTranslationForm extends BaseNavigationTranslationForm
 {
   public function configure()
   {
-    $this->setWidget('caption', new sfWidgetFormInput());
+    $this->setWidget('caption', new sfWidgetFormInputText());
   }
 }

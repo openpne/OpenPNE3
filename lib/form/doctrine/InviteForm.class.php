@@ -19,7 +19,7 @@ class InviteForm extends MemberConfigPcAddressForm
 {
   public function configure()
   {
-    $this->setWidget('mail_address', new sfWidgetFormInput());
+    $this->setWidget('mail_address', new sfWidgetFormInputText());
     $this->setValidator('mail_address', new sfValidatorPass());
 
     if ($this->getOption('invited'))

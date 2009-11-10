@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-abstract class sfOpenPNEAuthForm extends sfForm
+abstract class sfOpenPNEAuthForm extends BaseForm
 {
   public
     $memberForm,

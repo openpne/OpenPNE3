@@ -23,7 +23,7 @@ class ProfileForm extends BaseProfileForm
 
     $isDispOption = array('choices' => array('1' => '表示する', '0' => '表示しない'));
     $this->setWidgets(array(
-      'name' => new sfWidgetFormInput(),
+      'name' => new sfWidgetFormInputText(),
       'is_edit_public_flag' => new sfWidgetFormSelectRadio(array('choices' => array('0' => '固定', '1' => 'メンバー選択'))),
       'default_public_flag' => new sfWidgetFormSelect(array('choices' => Doctrine::getTable('Profile')->getPublicFlags())),
       'is_disp_regist' => new sfWidgetFormSelectRadio($isDispOption),

@@ -1,6 +1,6 @@
 <?php
 
-class opLanguageSelecterForm extends sfForm
+class opLanguageSelecterForm extends BaseForm
 {
   public function __construct($defaults = array(), $options = array())
   {

@@ -29,7 +29,7 @@ Community:
     values:
       name: "**masked**"
     options:
-      unique: on
+      unique: true
 
 MemberConfig:
   pc_mail_address:
@@ -38,7 +38,7 @@ MemberConfig:
     condition:
       name: "pc_address"
     options:
-      unique: on
+      unique: true
       unique_id_column: member_id
   mobile_mail_address:
     values:
@@ -46,7 +46,7 @@ MemberConfig:
     condition:
       name: "mobile_address"
     options:
-      unique: on
+      unique: true
       unique_id_column: member_id
   password:
     values:

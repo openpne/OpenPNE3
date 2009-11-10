@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-abstract class opAuthRegisterForm extends sfForm
+abstract class opAuthRegisterForm extends BaseForm
 {
   public
     $memberForm,

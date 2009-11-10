@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class sfOpenPNEPasswordForm extends sfForm
+class sfOpenPNEPasswordForm extends BaseForm
 {
   public function configure()
   {

@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class opPermitMemberConfigSnsConfigForm extends sfForm
+class opPermitMemberConfigSnsConfigForm extends BaseForm
 {
   public function configure()
   {
