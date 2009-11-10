@@ -46,7 +46,7 @@ abstract class Doctrine_Parser
     /**
      * dumpData
      *
-     * Override in the praser driver
+     * Override in the parser driver
      *
      * @param string $array 
      * @param string $path 
@@ -126,7 +126,7 @@ abstract class Doctrine_Parser
         }
 
         include($path);
-
+        
         // Fix #1569. Need to check if it's still all valid
         $contents = ob_get_clean(); //iconv("UTF-8", "UTF-8", ob_get_clean());
 

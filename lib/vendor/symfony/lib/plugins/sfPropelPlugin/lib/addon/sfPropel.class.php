@@ -11,46 +11,29 @@
 /**
  * Initialization for propel and i18n propel integration.
  *
- * @package    symfony
- * @subpackage propel
+ * @package    sfPropelPlugin
+ * @subpackage addon
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropel.class.php 14025 2008-12-14 15:41:43Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfPropel.class.php 23737 2009-11-09 23:23:25Z Kris.Wallsmith $
  */
 class sfPropel
 {
   static protected
-    $initialized    = false,
     $defaultCulture = 'en';
 
   /**
-   * Initialize sfymfony propel
+   * Initialize symfony propel
    *
    * @param sfEventDispatcher $dispatcher
    * @param string $culture
+   * 
+   * @deprecated Moved to {@link sfPropelPluginConfiguration}
    */
   static public function initialize(sfEventDispatcher $dispatcher, $culture = null)
   {
-    if (sfConfig::get('sf_debug') && sfConfig::get('sf_logging_enabled'))
-    {
-      // add propel logger
-      Propel::setLogger(new sfPropelLogger($dispatcher));
-    }
+    $dispatcher->notify(new sfEvent(__CLASS__, 'application.log', array(__METHOD__.'() has been deprecated. Please call sfPropel::setDefaultCulture() to set the culture.', 'priority' => sfLogger::NOTICE)));
 
-    // propel initialization
-    $configuration = sfPropelDatabase::getConfiguration();
-    if($configuration)
-    {
-      Propel::setConfiguration($configuration);
-
-      if(!Propel::isInit())
-      {
-        Propel::initialize();
-      }
-    }
-
-    $dispatcher->connect('user.change_culture', array('sfPropel', 'listenToChangeCultureEvent'));
-
-    if (!is_null($culture))
+    if (null !== $culture)
     {
       self::setDefaultCulture($culture);
     }
@@ -58,8 +41,6 @@ class sfPropel
     {
       self::setDefaultCulture($user->getCulture());
     }
-
-    self::$initialized = true;
   }
 
   /**
@@ -79,11 +60,6 @@ class sfPropel
    */
   static public function getDefaultCulture()
   {
-    if (!self::$initialized && class_exists('sfProjectConfiguration', false))
-    {
-      self::initialize(sfProjectConfiguration::getActive()->getEventDispatcher());
-    }
-
     return self::$defaultCulture;
   }
 
@@ -99,59 +75,28 @@ class sfPropel
   }
 
   /**
-   * Include once a file specified in DOT notation and return unqualified classname.
-   *
-   * This method is the same as in Propel::import().
-   * The only difference is that this one takes the autoloading into account.
-   *
-   * @see Propel::import()
+   * @deprecated Use Propel::importClass() instead
    */
-  public static function import($path)
+  static public function import($path)
   {
-    // extract classname
-    if (($pos = strrpos($path, '.')) === false)
-    {
-      $class = $path;
-    }
-    else
-    {
-      $class = substr($path, $pos + 1);
-    }
+    return Propel::importClass($path);
+  }
 
-    // check if class exists
-    if (class_exists($class, true))
-    {
-      return $class;
-    }
-
-    // turn to filesystem path
-    $path = strtr($path, '.', DIRECTORY_SEPARATOR).'.php';
-
-    // include class
-    $ret = include_once($path);
-    if ($ret === false)
-    {
-      throw new PropelException("Unable to import class: ".$class." from ".$path);
-    }
-
-    // return qualified name
-    return $class;
+  /**
+   * @deprecated Use Propel::importClass() instead
+   */
+  static public function importClass($path)
+  {
+    return Propel::importClass($path);
   }
 
   /**
    * Clears all instance pools.
+   *
+   * @deprecated Moved to {@link sfPropelPluginConfiguration}
    */
   static public function clearAllInstancePools()
   {
-    $files = sfFinder::type('file')->name('*MapBuilder.php')->in(sfProjectConfiguration::getActive()->getModelDirs());
-    foreach ($files as $file)
-    {
-      $omClass = basename($file, 'MapBuilder.php');
-      if (class_exists($omClass) && is_subclass_of($omClass, 'BaseObject'))
-      {
-        $peer = constant($omClass.'::PEER');
-        call_user_func(array($peer, 'clearInstancePool'));
-      }
-    }
+    sfProjectConfiguration::getActive()->getPluginConfiguration('sfPropelPlugin')->clearAllInstancePools();
   }
 }

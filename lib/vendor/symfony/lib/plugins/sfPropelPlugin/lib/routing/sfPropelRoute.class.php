@@ -16,30 +16,12 @@
  * @package    symfony
  * @subpackage routing
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelRoute.class.php 13027 2008-11-16 16:51:25Z fabien $
+ * @version    SVN: $Id: sfPropelRoute.class.php 21924 2009-09-11 14:59:26Z fabien $
  */
 class sfPropelRoute extends sfObjectRoute
 {
   protected
     $criteria = null;
-
-  /**
-   * Constructor.
-   *
-   * @param string $pattern       The pattern to match
-   * @param array  $defaults      An array of default parameter values
-   * @param array  $requirements  An array of requirements for parameters (regexes)
-   * @param array  $options       An array of options
-   *
-   * @see sfObjectRoute
-   */
-  public function __construct($pattern, array $defaults = array(), array $requirements = array(), array $options = array())
-  {
-    parent::__construct($pattern, $defaults, $requirements, $options);
-
-    $this->options['object_model'] = $this->options['model'];
-    $this->options['model'] = constant($this->options['model'].'::PEER');
-  }
 
   public function setListCriteria(Criteria $criteria)
   {
@@ -53,6 +35,8 @@ class sfPropelRoute extends sfObjectRoute
 
   protected function getObjectForParameters($parameters)
   {
+    $this->fixOptions();
+
     if (!isset($this->options['method']))
     {
       $this->options['method'] = isset($this->options['method_for_criteria']) ? $this->options['method_for_criteria'] : 'doSelectOne';
@@ -86,13 +70,15 @@ class sfPropelRoute extends sfObjectRoute
 
   protected function getObjectsForParameters($parameters)
   {
+    $this->fixOptions();
+
     if (!isset($this->options['method']))
     {
       $this->options['method'] = isset($this->options['method_for_criteria']) ? $this->options['method_for_criteria'] : 'doSelect';
       $parameters = new Criteria();
     }
 
-    if (!is_null($this->criteria))
+    if (null !== $this->criteria)
     {
       $parameters = $this->criteria;
     }
@@ -102,6 +88,8 @@ class sfPropelRoute extends sfObjectRoute
 
   protected function doConvertObjectToArray($object)
   {
+    $this->fixOptions();
+
     if (isset($this->options['convert']) || method_exists($object, 'toParams'))
     {
       return parent::doConvertObjectToArray($object);
@@ -125,5 +113,14 @@ class sfPropelRoute extends sfObjectRoute
     }
 
     return $parameters;
+  }
+
+  protected function fixOptions()
+  {
+    if (!isset($this->options['object_model']))
+    {
+      $this->options['object_model'] = $this->options['model'];
+      $this->options['model'] = constant($this->options['model'].'::PEER');
+    }
   }
 }

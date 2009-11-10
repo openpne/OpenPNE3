@@ -14,26 +14,8 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPluginBaseTask.class.php 6931 2008-01-04 06:31:12Z fabien $
+ * @version    SVN: $Id: sfPluginBaseTask.class.php 19273 2009-06-15 12:47:22Z fabien $
  */
 abstract class sfPluginBaseTask extends sfBaseTask
 {
-  private
-   $pluginManager = null;
-
-  public function getPluginManager()
-  {
-    if (is_null($this->pluginManager))
-    {
-      $environment = new sfPearEnvironment($this->dispatcher, array(
-        'plugin_dir' => sfConfig::get('sf_plugins_dir'),
-        'cache_dir'  => sfConfig::get('sf_cache_dir').'/.pear',
-        'web_dir'    => sfConfig::get('sf_web_dir'),
-      ));
-
-      $this->pluginManager = new sfSymfonyPluginManager($this->dispatcher, $environment);
-    }
-
-    return $this->pluginManager;
-  }
 }

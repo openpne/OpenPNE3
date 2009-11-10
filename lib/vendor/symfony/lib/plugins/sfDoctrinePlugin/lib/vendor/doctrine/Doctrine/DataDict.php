@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: DataDict.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: DataDict.php 6479 2009-10-10 00:08:43Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,54 +27,12 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6479 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
  */
 class Doctrine_DataDict extends Doctrine_Connection_Module
 {
-    /**
-     * Obtain an array of changes that may need to applied
-     *
-     * @param array $current new definition
-     * @param array  $previous old definition
-     * @return array  containing all changes that will need to be applied
-     */
-    public function compareDefinition($current, $previous)
-    {
-        $type = !empty($current['type']) ? $current['type'] : null;
-
-        if ( ! method_exists($this, "_compare{$type}Definition")) {
-            throw new Doctrine_DataDict_Exception('type "'.$current['type'].'" is not yet supported');
-        }
-
-        if (empty($previous['type']) || $previous['type'] != $type) {
-            return $current;
-        }
-
-        $change = $this->{"_compare{$type}Definition"}($current, $previous);
-
-        if ($previous['type'] != $type) {
-            $change['type'] = true;
-        }
-
-        $previous_notnull = !empty($previous['notnull']) ? $previous['notnull'] : false;
-        $notnull = !empty($current['notnull']) ? $current['notnull'] : false;
-        if ($previous_notnull != $notnull) {
-            $change['notnull'] = true;
-        }
-
-        $previous_default = array_key_exists('default', $previous) ? $previous['default'] :
-            ($previous_notnull ? '' : null);
-        $default = array_key_exists('default', $current) ? $current['default'] :
-            ($notnull ? '' : null);
-        if ($previous_default !== $default) {
-            $change['default'] = true;
-        }
-
-        return $change;
-    }
-
     /**
      * parseBoolean
      * parses a literal boolean value and returns 

@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineBuildSqlTask.class.php 14213 2008-12-19 21:03:13Z Jonathan.Wage $
+ * @version    SVN: $Id: sfDoctrineBuildSqlTask.class.php 21936 2009-09-11 17:59:09Z Jonathan.Wage $
  */
 class sfDoctrineBuildSqlTask extends sfDoctrineBaseTask
 {
@@ -54,6 +54,11 @@ EOF;
   protected function execute($arguments = array(), $options = array())
   {
     $this->logSection('doctrine', 'generating sql for models');
+
+    $path = sfConfig::get('sf_data_dir').'/sql';
+    if (!is_dir($path)) {
+      $this->getFilesystem()->mkdirs($path);
+    }
 
     $databaseManager = new sfDatabaseManager($this->configuration);
     $this->callDoctrineCli('generate-sql');

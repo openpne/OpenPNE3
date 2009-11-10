@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPropelBaseTask.class.php');
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelGenerateAdminTask.class.php 15470 2009-02-12 21:27:18Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfPropelGenerateAdminTask.class.php 23194 2009-10-19 16:37:13Z fabien $
  */
 class sfPropelGenerateAdminTask extends sfPropelBaseTask
 {
@@ -36,6 +36,7 @@ class sfPropelGenerateAdminTask extends sfPropelBaseTask
       new sfCommandOption('singular', null, sfCommandOption::PARAMETER_REQUIRED, 'The singular name', null),
       new sfCommandOption('plural', null, sfCommandOption::PARAMETER_REQUIRED, 'The plural name', null),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
+      new sfCommandOption('actions-base-class', null, sfCommandOption::PARAMETER_REQUIRED, 'The base class for the actions', 'sfActions'),
     ));
 
     $this->namespace = 'propel';
@@ -60,7 +61,7 @@ The task creates a module in the [%frontend%|COMMENT] application for the
 [%article%|COMMENT] route definition found in [routing.yml|COMMENT].
 
 For the filters and batch actions to work properly, you need to add
-the [wildcard|COMMENT] option to the route:
+the [with_wildcard_routes|COMMENT] option to the route:
 
   article:
     class: sfPropelRouteCollection
@@ -106,15 +107,9 @@ EOF;
 
     if (!isset($routesArray[$name]))
     {
-      $class = $model.'MapBuilder';
-      $map = new $class();
-      if (!$map->isBuilt())
-      {
-        $map->doBuild();
-      }
-
       $primaryKey = 'id';
-      foreach ($map->getDatabaseMap()->getTable(constant(constant($model.'::PEER').'::TABLE_NAME'))->getColumns() as $column)
+      $map = call_user_func(array($model.'PEER', 'getTableMap'));
+      foreach ($map->getColumns() as $column)
       {
         if ($column->isPrimaryKey())
         {
@@ -130,14 +125,15 @@ EOF;
   options:
     model:                %s
     module:               %s
-    prefix_path:          %s
+    prefix_path:          /%s
     column:               %s
     with_wildcard_routes: true
 
 
 EOF
-      , $name, $model, $module, $module, $primaryKey).$content;
+      , $name, $model, $module, isset($options['plural']) ? $options['plural'] : $module, $primaryKey).$content;
 
+      $this->logSection('file+', $routing);
       file_put_contents($routing, $content);
     }
 
@@ -162,29 +158,20 @@ EOF
     // execute the propel:generate-module task
     $task = new sfPropelGenerateModuleTask($this->dispatcher, $this->formatter);
     $task->setCommandApplication($this->commandApplication);
-
-    $taskOptions = array(
-      '--theme='.$options['theme'],
-      '--env='.$options['env'],
-      '--route-prefix='.$routeOptions['name'],
-      '--with-propel-route',
-      '--generate-in-cache',
-      '--non-verbose-templates',
-    );
-
-    if (!is_null($options['singular']))
-    {
-      $taskOptions[] = '--singular='.$options['singular'];
-    }
-
-    if (!is_null($options['plural']))
-    {
-      $taskOptions[] = '--plural='.$options['plural'];
-    }
+    $task->setConfiguration($this->configuration);
 
     $this->logSection('app', sprintf('Generating admin module "%s" for model "%s"', $module, $model));
 
-    return $task->run(array($arguments['application'], $module, $model), $taskOptions);
+    return $task->run(array($arguments['application'], $module, $model), array(
+      'theme'                 => $options['theme'],
+      'route-prefix'          => $routeOptions['name'],
+      'with-propel-route'     => true,
+      'generate-in-cache'     => true,
+      'non-verbose-templates' => true,
+      'singular'              => $options['singular'],
+      'plural'                => $options['plural'],
+      'actions-base-class'    => $options['actions-base-class'],
+    ));
   }
 
   protected function getRouteFromName($name)

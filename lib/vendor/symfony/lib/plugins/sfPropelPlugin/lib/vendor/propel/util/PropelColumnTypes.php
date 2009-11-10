@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: PropelColumnTypes.php 783 2007-11-08 09:46:20Z heltem $
+ *  $Id: PropelColumnTypes.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -25,7 +25,7 @@
  * THIS CLASS MUST BE KEPT UP-TO-DATE WITH THE MORE EXTENSIVE GENERATOR VERSION OF THIS CLASS.
  *
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
- * @version    $Revision: 783 $
+ * @version    $Revision: 1262 $
  * @package    propel.util
  */
 class PropelColumnTypes {
@@ -56,34 +56,6 @@ class PropelColumnTypes {
 
 	const BOOLEAN = "BOOLEAN";
 
-	/*
-	private static $propelToPhpMap = array(
-		self::CHAR 			=> "string",
-		self::VARCHAR 		=> "string",
-		self::LONGVARCHAR 	=> "string",
-		self::CLOB 			=> "string",
-		self::NUMERIC 		=> "PARAM_STR",
-		self::DECIMAL 		=> "PARAM_STR",
-		self::TINYINT 		=> "PARAM_INT",
-		self::SMALLINT 		=> "PARAM_INT",
-		self::INTEGER 		=> "PARAM_INT",
-		self::BIGINT 		=> "PARAM_STR",
-		self::REAL 			=> "PARAM_STR",
-		self::FLOAT 		=> "PARAM_STR",
-		self::DOUBLE 		=> "PARAM_STR",
-		self::BINARY 		=> "PARAM_STR",
-		self::VARBINARY 	=> "PARAM_STR",
-		self::LONGVARBINARY => "PARAM_STR",
-		self::BLOB 			=> "PARAM_LOB",
-		self::DATE 			=> "PARAM_STR",
-		self::TIME 			=> "PARAM_STR",
-		self::TIMESTAMP 	=> "PARAM_STR",
-		self::BU_DATE 		=> "PARAM_STR",
-		self::BU_TIMESTAMP 	=> "PARAM_STR",
-		self::BOOLEAN 		=> "PARAM_BOOL",
-	);
-	*/
-
 	private static $propelToPdoMap = array(
 		self::CHAR 			=> PDO::PARAM_STR,
 		self::VARCHAR 		=> PDO::PARAM_STR,
@@ -109,19 +81,6 @@ class PropelColumnTypes {
 		self::BU_TIMESTAMP 	=> PDO::PARAM_STR,
 		self::BOOLEAN 		=> PDO::PARAM_BOOL,
 	);
-
-	/**
-	 * Return native PHP type which corresponds to the Propel type provided.
-	 *
-	 * @param      $propelType The Propel type.
-	 * @return     string Name of the native PHP type
-	 */
-	 /*
-	public static function getPhpType($propelType)
-	{
-		return self::$propelToPhpMap[$propelType];
-	}
-	*/
 
 	/**
 	 * Resturns the PDO type (PDO::PARAM_* constant) value for the Propel type provided.

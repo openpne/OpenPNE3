@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+require_once dirname(__FILE__).'/sfRichTextEditor.class.php';
+
 /**
  * sfRichTextEditorTinyMCE implements the TinyMCE rich text editor.
  *
@@ -26,7 +28,7 @@
  * @package    symfony
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfRichTextEditorTinyMCE.class.php 17861 2009-05-01 22:52:26Z FabianLange $
+ * @version    SVN: $Id: sfRichTextEditorTinyMCE.class.php 23515 2009-11-02 13:12:42Z Kris.Wallsmith $
  */
 class sfRichTextEditorTinyMCE extends sfRichTextEditor
 {

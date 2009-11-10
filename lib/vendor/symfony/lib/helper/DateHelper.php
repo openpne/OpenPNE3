@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: DateHelper.php 11783 2008-09-25 16:21:27Z fabien $
+ * @version    SVN: $Id: DateHelper.php 21908 2009-09-11 12:06:21Z fabien $
  */
 
 function format_daterange($start_date, $end_date, $format = 'd', $full_text, $start_text, $end_text, $culture = null, $charset = null)
@@ -37,7 +37,7 @@ function format_date($date, $format = 'd', $culture = null, $charset = null)
 {
   static $dateFormats = array();
 
-  if (is_null($date))
+  if (null === $date)
   {
     return null;
   }

@@ -16,7 +16,7 @@ require_once dirname(__FILE__).'/FormHelper.php';
  * @package    symfony
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: DateFormHelper.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: DateFormHelper.php 17865 2009-05-02 09:23:55Z FabianLange $
  */
 
 /**
@@ -831,12 +831,12 @@ function select_number_tag($name, $value, $options = array(), $html_options = ar
 function select_timezone_tag($name, $selected = null, $options = array())
 {
   static $display_keys = array(
-    'identifier'        => 0,
-    'timezone'          => 1,
-    'timezone_abbr'     => 2,
-    'timezone_dst'      => 3,
-    'timezone_dst_abbr' => 4,
-    'city'              => 5,
+    'identifier'        => 'identifier',
+    'timezone'          => 'ls',
+    'timezone_abbr'     => 'ss',
+    'timezone_dst'      => 'ld',
+    'timezone_dst_abbr' => 'sd',
+    'city'              => 'city',
   );
   $display = _get_option($options, 'display', 'identifier');
   $display_key = isset($display_keys[$display]) ? $display_keys[$display] : 0;
@@ -847,7 +847,7 @@ function select_timezone_tag($name, $selected = null, $options = array())
   $timezones = array();
   foreach ($timezone_groups as $tz_group)
   {
-    $array_key = isset($tz_group[0]) ? $tz_group[0] : null;
+    $array_key = isset($tz_group['identifier']) ? $tz_group['identifier'] : null;
     if (isset($tz_group[$display_key]) and !empty($tz_group[$display_key]))
     {
       $timezones[$array_key] = $tz_group[$display_key];
@@ -862,7 +862,7 @@ function select_timezone_tag($name, $selected = null, $options = array())
   // Remove duplicate values
   $timezones = array_unique($timezones);
   
-  asort($timezones);
+  $c->sortArray($timezones);
 
   $option_tags = options_for_select($timezones, $selected);
 

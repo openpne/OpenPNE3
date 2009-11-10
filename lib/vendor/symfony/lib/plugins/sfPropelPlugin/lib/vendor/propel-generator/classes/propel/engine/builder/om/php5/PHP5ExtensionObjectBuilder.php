@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: PHP5ExtensionObjectBuilder.php 974 2008-02-20 21:53:11Z hans $
+ *  $Id: PHP5ExtensionObjectBuilder.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -57,7 +57,7 @@ class PHP5ExtensionObjectBuilder extends ObjectBuilder {
 			break;
 
 			case 'MaterializedPath':
-			case "AdjacencyList":
+			case 'AdjacencyList':
 			default:
 				$requiredClassFilePath = $this->getObjectBuilder()->getClassFilePath();
 			break;
@@ -127,7 +127,9 @@ require '".$requiredClassFilePath."';
 	 */
 	protected function addClassBody(&$script)
 	{
-		$this->addConstructor($script);
+	  if ($this->hasDefaultValues()) {
+	    $this->addConstructor($script);
+	  }
 	}
 
 		/**
@@ -161,6 +163,7 @@ require '".$requiredClassFilePath."';
 		$script .= "
 } // " . $this->getClassname() . "
 ";
+		$this->applyBehaviorModifier('extensionObjectFilter', $script, "");
 	}
 
 } // PHP5ExtensionObjectBuilder

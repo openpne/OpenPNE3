@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetFormSelectRadio.class.php 17068 2009-04-07 08:24:53Z fabien $
+ * @version    SVN: $Id: sfWidgetFormSelectRadio.class.php 22378 2009-09-24 17:03:14Z fabien $
  */
 class sfWidgetFormSelectRadio extends sfWidgetForm
 {
@@ -83,7 +83,7 @@ class sfWidgetFormSelectRadio extends sfWidgetForm
     }
     else
     {
-      return $this->formatChoices($name, $value, $choices, $attributes);;
+      return $this->formatChoices($name, $value, $choices, $attributes);
     }
   }
 
@@ -104,7 +104,7 @@ class sfWidgetFormSelectRadio extends sfWidgetForm
         $baseAttributes['checked'] = 'checked';
       }
 
-      $inputs[] = array(
+      $inputs[$id] = array(
         'input' => $this->renderTag('input', array_merge($baseAttributes, $attributes)),
         'label' => $this->renderContentTag('label', $option, array('for' => $id)),
       );
@@ -121,7 +121,7 @@ class sfWidgetFormSelectRadio extends sfWidgetForm
       $rows[] = $this->renderContentTag('li', $input['input'].$this->getOption('label_separator').$input['label']);
     }
 
-    return $this->renderContentTag('ul', implode($this->getOption('separator'), $rows), array('class' => $this->getOption('class')));
+    return !$rows ? '' : $this->renderContentTag('ul', implode($this->getOption('separator'), $rows), array('class' => $this->getOption('class')));
   }
 
   public function __clone()

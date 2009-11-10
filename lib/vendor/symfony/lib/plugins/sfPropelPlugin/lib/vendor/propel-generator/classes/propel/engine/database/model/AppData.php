@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: AppData.php 521 2007-01-05 13:29:36Z heltem $
+ *  $Id: AppData.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -29,7 +29,7 @@ include_once 'propel/engine/database/model/Database.php';
  * @author     Leon Messerschmidt <leon@opticode.co.za> (Torque)
  * @author     John McNally <jmcnally@collab.net> (Torque)
  * @author     Daniel Rall <dlr@finemaltcoding.com> (Torque)
- * @version    $Revision: 521 $
+ * @version    $Revision: 1262 $
  * @package    propel.engine.database.model
  */
 class AppData {
@@ -61,13 +61,23 @@ class AppData {
 	/**
 	 * Creates a new instance for the specified database type.
 	 *
-	 * @param      Platform $platform The platform class to use for any databases added to this application model.
+	 * @param      Platform $platform The platform object to use for any databases added to this application model.
 	 */
 	public function __construct(Platform $platform)
 	{
 		$this->platform = $platform;
 	}
-
+  
+	/**
+	 * Gets the platform object to use for any databases added to this application model. 
+	 *
+	 * @return Platform
+	 */
+	public function getPlatform()
+	{
+	  return $this->platform;
+	}
+	
 	/**
 	 * Set the name of the database.
 	 *

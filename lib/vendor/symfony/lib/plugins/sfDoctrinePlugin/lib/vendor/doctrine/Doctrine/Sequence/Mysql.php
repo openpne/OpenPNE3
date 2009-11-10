@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Mysql.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Mysql.php 6537 2009-10-19 20:11:24Z guilhermeblanco $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6537 $
  */
 class Doctrine_Sequence_Mysql extends Doctrine_Sequence
 {
@@ -43,15 +43,13 @@ class Doctrine_Sequence_Mysql extends Doctrine_Sequence
     public function nextId($seqName, $onDemand = true)
     {
         $sequenceName  = $this->conn->quoteIdentifier($seqName, true);
-        $seqcolName    = $this->conn->quoteIdentifier($this->conn->getAttribute(Doctrine::ATTR_SEQCOL_NAME), true);
+        $seqcolName    = $this->conn->quoteIdentifier($this->conn->getAttribute(Doctrine_Core::ATTR_SEQCOL_NAME), true);
         $query         = 'INSERT INTO ' . $sequenceName . ' (' . $seqcolName . ') VALUES (NULL)';
         
         try {
-
             $this->conn->exec($query);
-
         } catch(Doctrine_Connection_Exception $e) {
-            if ($onDemand && $e->getPortableCode() == Doctrine::ERR_NOSUCHTABLE) {
+            if ($onDemand && $e->getPortableCode() == Doctrine_Core::ERR_NOSUCHTABLE) {
                 // Since we are creating the sequence on demand
                 // we know the first id = 1 so initialize the
                 // sequence at 2
@@ -60,10 +58,12 @@ class Doctrine_Sequence_Mysql extends Doctrine_Sequence
                 } catch(Doctrine_Exception $e) {
                     throw new Doctrine_Sequence_Exception('on demand sequence ' . $seqName . ' could not be created');
                 }
+
                 // First ID of a newly created sequence is 1
                 return 1;
+            } else {
+                throw new Doctrine_Sequence_Exception('sequence ' .$seqName . ' does not exist');
             }
-            throw $e;
         }
 
         $value = $this->lastInsertId();
@@ -71,13 +71,8 @@ class Doctrine_Sequence_Mysql extends Doctrine_Sequence
         if (is_numeric($value)) {
             $query = 'DELETE FROM ' . $sequenceName . ' WHERE ' . $seqcolName . ' < ' . $value;
             $this->conn->exec($query);
-            /**
-            TODO: is the following needed ?
-            if (PEAR::isError($result)) {
-                $this->warnings[] = 'nextID: could not delete previous sequence table values from '.$seq_name;
-            }
-            */
         }
+        
         return $value;
     }
 
@@ -104,7 +99,7 @@ class Doctrine_Sequence_Mysql extends Doctrine_Sequence
     public function currId($seqName)
     {
         $sequenceName   = $this->conn->quoteIdentifier($seqName, true);
-        $seqcolName     = $this->conn->quoteIdentifier($this->conn->getAttribute(Doctrine::ATTR_SEQCOL_NAME), true);
+        $seqcolName     = $this->conn->quoteIdentifier($this->conn->getAttribute(Doctrine_Core::ATTR_SEQCOL_NAME), true);
         $query          = 'SELECT MAX(' . $seqcolName . ') FROM ' . $sequenceName;
 
         return (int) $this->conn->fetchOne($query);

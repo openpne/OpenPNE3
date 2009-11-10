@@ -13,7 +13,7 @@
  * {@link http://prado.sourceforge.net/}
  *
  * @author     Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version    $Id: sfDateTimeFormatInfo.class.php 9128 2008-05-21 00:58:19Z Carl.Vondrick $
+ * @version    $Id: sfDateTimeFormatInfo.class.php 21908 2009-09-11 12:06:21Z fabien $
  * @package    symfony
  * @subpackage i18n
  */
@@ -160,7 +160,7 @@ class sfDateTimeFormatInfo
   {
     static $invariant;
 
-    if (is_null($invariant))
+    if (null === $invariant)
     {
       $invariant = sfCultureInfo::getInvariantCulture()->DateTimeFormat;
     }
@@ -227,7 +227,7 @@ class sfDateTimeFormatInfo
    */
   function getNarrowDayNames()
   {
-    return $this->data['dayNames']['format']['narrow'];
+    return $this->data['dayNames']['stand-alone']['narrow'];
   }
 
   /**
@@ -240,7 +240,7 @@ class sfDateTimeFormatInfo
    */
   function setNarrowDayNames($value)
   {
-    $this->data['dayNames']['format']['narrow'] = $value;
+    $this->data['dayNames']['stand-alone']['narrow'] = $value;
   }
 
   /**
@@ -280,7 +280,7 @@ class sfDateTimeFormatInfo
    */
   function getNarrowMonthNames()
   {
-    return $this->data['monthNames']['format']['narrow'];
+    return $this->data['monthNames']['stand-alone']['narrow'];
   }
 
   /**
@@ -293,7 +293,7 @@ class sfDateTimeFormatInfo
    */
   function setNarrowMonthNames($value)
   {
-    $this->data['monthNames']['format']['narrow'] = $value;
+    $this->data['monthNames']['stand-alone']['narrow'] = $value;
   }
 
   /**

@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Pgsql.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Pgsql.php 6627 2009-11-03 01:47:36Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -26,7 +26,7 @@
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Paul Cooper <pgc@ucecom.com>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6627 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  */
@@ -102,7 +102,7 @@ class Doctrine_Import_Pgsql extends Doctrine_Import
                                                         (SELECT 't'
                                                           FROM pg_index
                                                           WHERE c.oid = pg_index.indrelid
-                                                          AND pg_index.indkey[0] = a.attnum
+                                                          AND a.attnum = ANY (pg_index.indkey)
                                                           AND pg_index.indisprimary = 't'
                                                         ) AS pri,
                                                         (SELECT pg_attrdef.adsrc
@@ -183,8 +183,8 @@ class Doctrine_Import_Pgsql extends Doctrine_Import
                 'type'      => $decl['type'][0],
                 'alltypes'  => $decl['type'],
                 'length'    => $decl['length'],
-                'fixed'     => $decl['fixed'],
-                'unsigned'  => $decl['unsigned'],
+                'fixed'     => (bool) $decl['fixed'],
+                'unsigned'  => (bool) $decl['unsigned'],
                 'notnull'   => ($val['isnotnull'] == true),
                 'default'   => $val['default'],
                 'primary'   => ($val['pri'] == 't'),
@@ -193,11 +193,18 @@ class Doctrine_Import_Pgsql extends Doctrine_Import
             $matches = array(); 
 
             if (preg_match("/^nextval\('(.*)'(::.*)?\)$/", $description['default'], $matches)) { 
-     
                 $description['sequence'] = $this->conn->formatter->fixSequenceName($matches[1]); 
                 $description['default'] = null; 
-            } 
-            
+            } else if (preg_match("/^'(.*)'::character varying$/", $description['default'], $matches)) {
+                $description['default'] = $matches[1];
+            } else if ($description['type'] == 'boolean') {
+                if ($description['default'] === 'true') {
+                   $description['default'] = true;
+                } else if ($description['default'] === 'false') {
+                   $description['default'] = false;
+                }
+            }
+
             $columns[$val['field']] = $description;
         }
         
@@ -267,11 +274,11 @@ class Doctrine_Import_Pgsql extends Doctrine_Import
         $relations = array();
 
         $results = $this->conn->fetchAssoc($sql, $param);
-        foreach ($results as $result)
-        {
+        foreach ($results as $result) {
             preg_match('/FOREIGN KEY \((.+)\) REFERENCES (.+)\((.+)\)/', $result['condef'], $values);
             if ((strpos(',', $values[1]) === false) && (strpos(',', $values[3]) === false)) {
-                $relations[] = array('table'   => $values[2],
+                $tableName = trim($values[2], '"');
+                $relations[] = array('table'   => $tableName,
                                      'local'   => $values[1],
                                      'foreign' => $values[3]);
             }

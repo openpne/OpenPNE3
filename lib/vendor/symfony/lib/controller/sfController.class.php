@@ -16,7 +16,7 @@
  * @subpackage controller
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfController.class.php 19442 2009-06-21 12:27:42Z fabien $
+ * @version    SVN: $Id: sfController.class.php 20740 2009-08-03 23:27:01Z Kris.Wallsmith $
  */
 abstract class sfController
 {
@@ -24,7 +24,6 @@ abstract class sfController
     $context           = null,
     $dispatcher        = null,
     $controllerClasses = array(),
-    $maxForwards       = 5,
     $renderMode        = sfView::RENDER_CLIENT;
 
   /**
@@ -46,9 +45,6 @@ abstract class sfController
   {
     $this->context    = $context;
     $this->dispatcher = $context->getEventDispatcher();
-
-    // set max forwards
-    $this->maxForwards = sfConfig::get('sf_max_forwards', $this->maxForwards);
   }
 
   /**
@@ -87,7 +83,7 @@ abstract class sfController
    * @param boolean $throwExceptions Whether to throw exceptions if the controller doesn't exist
    *
    * @throws sfConfigurationException thrown if the module is not enabled
-   * @throws sfControllerException thrown if the controller doesn't exist and the $throwExceptions parameter is set to true
+   * @throws sfControllerException    thrown if the controller doesn't exist and the $throwExceptions parameter is set to true
    *
    * @return boolean true if the controller exists, false otherwise
    */
@@ -171,10 +167,11 @@ abstract class sfController
    * @param string $moduleName A module name
    * @param string $actionName An action name
    *
-   * @throws <b>sfConfigurationException</b> If an invalid configuration setting has been found
-   * @throws <b>sfForwardException</b> If an error occurs while forwarding the request
-   * @throws <b>sfInitializationException</b> If the action could not be initialized
-   * @throws <b>sfSecurityException</b> If the action requires security but the user implementation is not of type sfSecurityUser
+   * @throws sfConfigurationException  If an invalid configuration setting has been found
+   * @throws sfForwardException        If an error occurs while forwarding the request
+   * @throws sfError404Exception       If the action not exist
+   * @throws sfInitializationException If the action could not be initialized
+   * @throws sfSecurityException       If the action requires security but the user implementation is not of type sfSecurityUser
    */
   public function forward($moduleName, $actionName)
   {
@@ -182,10 +179,10 @@ abstract class sfController
     $moduleName = preg_replace('/[^a-z0-9_]+/i', '', $moduleName);
     $actionName = preg_replace('/[^a-z0-9_]+/i', '', $actionName);
 
-    if ($this->getActionStack()->getSize() >= $this->maxForwards)
+    if ($this->getActionStack()->getSize() >= 5)
     {
       // let's kill this party before it turns into cpu cycle hell
-      throw new sfForwardException(sprintf('Too many forwards have been detected for this request (> %d).', $this->maxForwards));
+      throw new sfForwardException('Too many forwards have been detected for this request.');
     }
 
     // check for a module generator config file
@@ -381,8 +378,8 @@ abstract class sfController
    *
    * This methods calls a module/action with the sfMailView class.
    *
-   * @param string $module A module name
-   * @param string $action An action name
+   * @param  string  $module  A module name
+   * @param  string  $action  An action name
    *
    * @return string The generated mail content
    *
@@ -490,7 +487,12 @@ abstract class sfController
   /**
    * Sets the presentation rendering mode.
    *
-   * @param int $mode A rendering mode
+   * @param int $mode A rendering mode one of the following:
+   *                  - sfView::RENDER_CLIENT
+   *                  - sfView::RENDER_VAR
+   *                  - sfView::RENDER_NONE
+   *
+   * @return true
    *
    * @throws sfRenderException If an invalid render mode has been set
    */

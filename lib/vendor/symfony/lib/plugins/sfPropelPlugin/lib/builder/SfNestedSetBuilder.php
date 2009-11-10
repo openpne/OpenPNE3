@@ -15,27 +15,19 @@ require_once 'propel/engine/builder/om/php5/PHP5NestedSetBuilder.php';
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @version    SVN: $Id: SfMultiExtendObjectBuilder.php 6707 2007-12-26 08:32:23Z dwhittle $
+ * 
+ * @deprecated since symfony 1.3
  */
 class SfNestedSetBuilder extends PHP5NestedSetBuilder
 {
   public function build()
   {
     $code = parent::build();
-    if (!DataModelBuilder::getBuildProperty('builderAddComments'))
+    if (!$this->getBuildProperty('builderAddComments'))
     {
       $code = sfToolkit::stripComments($code);
     }
 
     return $code;
-  }
-
-  protected function addIncludes(&$script)
-  {
-    if (!DataModelBuilder::getBuildProperty('builderAddIncludes'))
-    {
-      return;
-    }
-
-    parent::addIncludes($script);
   }
 }

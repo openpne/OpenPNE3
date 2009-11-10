@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Pgsql.php 6393 2009-09-21 21:04:43Z guilhermeblanco $
+ *  $Id: Pgsql.php 6498 2009-10-13 04:56:16Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -29,7 +29,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6393 $
+ * @version     $Revision: 6498 $
  */
 class Doctrine_Export_Pgsql extends Doctrine_Export
 {
@@ -371,4 +371,21 @@ class Doctrine_Export_Pgsql extends Doctrine_Export
         return $sql;
     }
 
+     /**
+     * Get the stucture of a field into an array.
+     * 
+     * @param string    $table         name of the table on which the index is to be created
+     * @param string    $name          name of the index to be created
+     * @param array     $definition    associative array that defines properties of the index to be created.
+     * @see Doctrine_Export::createIndex()
+     * @return string
+     */
+    public function createIndexSql($table, $name, array $definition)
+    {
+		$query = parent::createIndexSql($table, $name, $definition);
+		if (isset($definition['where'])) {
+			return $query . ' WHERE ' . $definition['where'];
+		}
+        return $query;
+    }
 }

@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage cache
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfMemcacheCache.class.php 19701 2009-06-30 09:02:32Z fabien $
+ * @version    SVN: $Id: sfMemcacheCache.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfMemcacheCache extends sfCache
 {
@@ -108,7 +108,7 @@ class sfMemcacheCache extends sfCache
    */
   public function set($key, $data, $lifetime = null)
   {
-    $lifetime = is_null($lifetime) ? $this->getOption('lifetime') : $lifetime;
+    $lifetime = null === $lifetime ? $this->getOption('lifetime') : $lifetime;
 
     // save metadata
     $this->setMetadata($key, $lifetime);

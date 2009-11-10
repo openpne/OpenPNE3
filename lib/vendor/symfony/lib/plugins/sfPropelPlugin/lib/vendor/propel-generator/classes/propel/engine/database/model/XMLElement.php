@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: XMLElement.php 989 2008-03-11 14:29:30Z heltem $
+ *  $Id: XMLElement.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -25,7 +25,7 @@ include_once 'propel/engine/database/model/VendorInfo.php';
  * An abstract class for elements represented by XML tags (e.g. Column, Table).
  *
  * @author     Hans Lellelid <hans@xmpl.org>
- * @version    $Revision: 989 $
+ * @version    $Revision: 1262 $
  * @package    propel.engine.database.model
  */
 abstract class XMLElement {
@@ -140,6 +140,31 @@ abstract class XMLElement {
 		}
 	}
 
+  /**
+   * Find the best class name for a given behavior
+   * Looks in build.properties for path like propel.behavior.[bname].class
+   * If not found, tries to autoload [Bname]Behavior
+   * If no success, returns 'Behavior'
+   * 
+   * @param  string $bname behavior name, e.g. 'timestampable'
+   * @return string        behavior class name, e.g. 'TimestampableBehavior'
+   */
+  public function getConfiguredBehavior($bname)
+  {
+    if ($config = $this->getGeneratorConfig()) {
+      if ($class = $config->getConfiguredBehavior($bname)) {
+        return $class;
+      }
+    }
+    // first fallback: maybe the behavior is loaded or autoloaded
+    $gen = new PhpNameGenerator();
+    if(class_exists($class = $gen->generateName($bname, PhpNameGenerator::CONV_METHOD_PHPNAME) . 'Behavior')) {
+      return $class;
+    }
+    // second fallback: use parent behavior class (mostly for unit tests)
+    return 'Behavior';
+  }
+
 	/**
 	 * String representation of the current object.
 	 *
@@ -154,5 +179,14 @@ abstract class XMLElement {
 		$this->appendXml($doc);
 		$xmlstr = $doc->saveXML();
 		return trim(preg_replace('/<\?xml.*?\?>/', '', $xmlstr));
+	}
+	
+	/**
+	 * Magic string method
+	 * @see toString()
+	 */
+	public function __toString()
+	{
+	  return $this->toString();
 	}
 }

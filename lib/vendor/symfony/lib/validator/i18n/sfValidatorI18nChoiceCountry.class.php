@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorI18nChoiceCountry.class.php 11700 2008-09-21 10:53:44Z fabien $
+ * @version    SVN: $Id: sfValidatorI18nChoiceCountry.class.php 22268 2009-09-23 06:24:28Z fabien $
  */
 class sfValidatorI18nChoiceCountry extends sfValidatorChoice
 {
@@ -51,8 +51,6 @@ class sfValidatorI18nChoiceCountry extends sfValidatorChoice
 
       $countries = $options['countries'];
     }
-
-    sort($countries);
 
     $this->setOption('choices', $countries);
   }

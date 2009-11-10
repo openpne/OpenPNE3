@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorFromDescription.class.php 9048 2008-05-19 09:11:23Z FabianLange $
+ * @version    SVN: $Id: sfValidatorFromDescription.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfValidatorFromDescription extends sfValidatorDecorator
 {
@@ -52,7 +52,7 @@ class sfValidatorFromDescription extends sfValidatorDecorator
    */
   public function getValidator()
   {
-    if (is_null($this->validator))
+    if (null === $this->validator)
     {
       $this->validator = $this->reduceTokens($this->tokens, 'getValidator');
     }

@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineGenerateMigrationsModelsTask.class.php 14213 2008-12-19 21:03:13Z Jonathan.Wage $
+ * @version    SVN: $Id: sfDoctrineGenerateMigrationsModelsTask.class.php 23020 2009-10-13 22:48:42Z Kris.Wallsmith $
  */
 class sfDoctrineGenerateMigrationsModelsTask extends sfDoctrineBaseTask
 {
@@ -38,9 +38,10 @@ class sfDoctrineGenerateMigrationsModelsTask extends sfDoctrineBaseTask
     $this->briefDescription = 'Generate migration classes from an existing set of models';
 
     $this->detailedDescription = <<<EOF
-The [doctrine:generate-migration|INFO] task generates migration classes from an existing set of models
+The [doctrine:generate-migrations-models|INFO] task generates migration classes
+from an existing set of models:
 
-  [./symfony doctrine:generate-migration|INFO]
+  [./symfony doctrine:generate-migrations-models|INFO]
 EOF;
   }
 
@@ -49,9 +50,16 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
+    $databaseManager = new sfDatabaseManager($this->configuration);
+    $config = $this->getCliConfig();
+
     $this->logSection('doctrine', 'generating migration classes from models');
 
-    $databaseManager = new sfDatabaseManager($this->configuration);
+    if (!is_dir($config['migrations_path']))
+    {
+      $this->getFilesystem()->mkdirs($config['migrations_path']);
+    }
+
     $this->callDoctrineCli('generate-migrations-models');
   }
 }

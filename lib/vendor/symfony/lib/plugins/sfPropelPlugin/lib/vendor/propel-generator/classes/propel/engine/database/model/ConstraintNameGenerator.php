@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: ConstraintNameGenerator.php 521 2007-01-05 13:29:36Z heltem $
+ *  $Id: ConstraintNameGenerator.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  *
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
  * @author     Daniel Rall <dlr@finemaltcoding.com> (Torque)
- * @version    $Revision: 521 $
+ * @version    $Revision: 1262 $
  * @package    propel.engine.database.model
  */
 class ConstraintNameGenerator implements NameGenerator {

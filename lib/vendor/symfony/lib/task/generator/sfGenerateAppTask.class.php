@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfGeneratorBaseTask.class.php');
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfGenerateAppTask.class.php 17762 2009-04-29 14:50:05Z fabien $
+ * @version    SVN: $Id: sfGenerateAppTask.class.php 23203 2009-10-20 11:36:31Z Kris.Wallsmith $
  */
 class sfGenerateAppTask extends sfGeneratorBaseTask
 {
@@ -42,8 +42,8 @@ class sfGenerateAppTask extends sfGeneratorBaseTask
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('escaping-strategy', null, sfCommandOption::PARAMETER_REQUIRED, 'Output escaping strategy', false),
-      new sfCommandOption('csrf-secret', null, sfCommandOption::PARAMETER_REQUIRED, 'Secret to use for CSRF protection', false),
+      new sfCommandOption('escaping-strategy', null, sfCommandOption::PARAMETER_REQUIRED, 'Output escaping strategy', true),
+      new sfCommandOption('csrf-secret', null, sfCommandOption::PARAMETER_REQUIRED, 'Secret to use for CSRF protection', true),
     ));
 
     $this->aliases = array('init-app');
@@ -70,15 +70,21 @@ For the first application, the production environment script is named
 If an application with the same name already exists,
 it throws a [sfCommandException|COMMENT].
 
-You can enable output escaping (to prevent XSS) by using the [escaping-strategy|COMMENT] option:
+By default, the output escaping is enabled (to prevent XSS), and a random
+secret is also generated to prevent CSRF.
 
-  [./symfony generate:app frontend --escaping-strategy=on|INFO]
+You can disable output escaping by using the [escaping-strategy|COMMENT]
+option:
+
+  [./symfony generate:app frontend --escaping-strategy=false|INFO]
 
 You can enable session token in forms (to prevent CSRF) by defining
 a secret with the [csrf-secret|COMMENT] option:
 
   [./symfony generate:app frontend --csrf-secret=UniqueSecret|INFO]
 
+You can customize the default skeleton used by the task by creating a
+[%sf_data_dir%/skeleton/app|COMMENT] directory.
 EOF;
   }
 
@@ -102,9 +108,18 @@ EOF;
       throw new sfCommandException(sprintf('The application "%s" already exists.', $appDir));
     }
 
+    if (is_readable(sfConfig::get('sf_data_dir').'/skeleton/app'))
+    {
+      $skeletonDir = sfConfig::get('sf_data_dir').'/skeleton/app';
+    }
+    else
+    {
+      $skeletonDir = dirname(__FILE__).'/skeleton/app';
+    }
+
     // Create basic application structure
     $finder = sfFinder::type('any')->discard('.sf');
-    $this->getFilesystem()->mirror(dirname(__FILE__).'/skeleton/app/app', $appDir, $finder);
+    $this->getFilesystem()->mirror($skeletonDir.'/app', $appDir, $finder);
 
     // Create $app.php or index.php if it is our first app
     $indexName = 'index';
@@ -114,21 +129,22 @@ EOF;
       $indexName = $app;
     }
 
-    if (false === $options['csrf-secret'])
+    if (true === $options['csrf-secret'])
     {
-      $options['csrf-secret'] = 'false';
+      $options['csrf-secret'] = sha1(rand(111111111, 99999999).getmypid());
     }
 
     // Set no_script_name value in settings.yml for production environment
     $finder = sfFinder::type('file')->name('settings.yml');
     $this->getFilesystem()->replaceTokens($finder->in($appDir.'/config'), '##', '##', array(
-      'NO_SCRIPT_NAME'    => $firstApp ? 'on' : 'off',
+      'NO_SCRIPT_NAME'    => $firstApp ? 'true' : 'false',
       'CSRF_SECRET'       => sfYamlInline::dump(sfYamlInline::parseScalar($options['csrf-secret'])),
       'ESCAPING_STRATEGY' => sfYamlInline::dump((boolean) sfYamlInline::parseScalar($options['escaping-strategy'])),
+      'USE_DATABASE'      => sfConfig::has('sf_orm') ? 'true' : 'false',
     ));
 
-    $this->getFilesystem()->copy(dirname(__FILE__).'/skeleton/app/web/index.php', sfConfig::get('sf_web_dir').'/'.$indexName.'.php');
-    $this->getFilesystem()->copy(dirname(__FILE__).'/skeleton/app/web/index.php', sfConfig::get('sf_web_dir').'/'.$app.'_dev.php');
+    $this->getFilesystem()->copy($skeletonDir.'/web/index.php', sfConfig::get('sf_web_dir').'/'.$indexName.'.php');
+    $this->getFilesystem()->copy($skeletonDir.'/web/index.php', sfConfig::get('sf_web_dir').'/'.$app.'_dev.php');
 
     $this->getFilesystem()->replaceTokens(sfConfig::get('sf_web_dir').'/'.$indexName.'.php', '##', '##', array(
       'APP_NAME'    => $app,
@@ -155,6 +171,7 @@ EOF;
 
     $fixPerms = new sfProjectPermissionsTask($this->dispatcher, $this->formatter);
     $fixPerms->setCommandApplication($this->commandApplication);
+    $fixPerms->setConfiguration($this->configuration);
     $fixPerms->run();
 
     // Create test dir

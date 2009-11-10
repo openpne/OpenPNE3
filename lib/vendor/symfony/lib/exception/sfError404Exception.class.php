@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage exception
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfError404Exception.class.php 11471 2008-09-12 10:03:49Z fabien $
+ * @version    SVN: $Id: sfError404Exception.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfError404Exception extends sfException
 {
@@ -23,12 +23,12 @@ class sfError404Exception extends sfException
    */
   public function printStackTrace()
   {
-    $exception = is_null($this->wrappedException) ? $this : $this->wrappedException;
+    $exception = null === $this->wrappedException ? $this : $this->wrappedException;
 
-    if (sfConfig::get('sf_debug') && !sfConfig::get('sf_test'))
+    if (sfConfig::get('sf_debug'))
     {
       $response = sfContext::getInstance()->getResponse();
-      if (is_null($response))
+      if (null === $response)
       {
         $response = new sfWebResponse(sfContext::getInstance()->getEventDispatcher());
         sfContext::getInstance()->setResponse($response);

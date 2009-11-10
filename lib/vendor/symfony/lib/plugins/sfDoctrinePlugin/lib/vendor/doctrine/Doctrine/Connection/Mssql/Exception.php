@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Exception.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Exception.php 6484 2009-10-12 17:40:41Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6484 $
  * @link        www.phpdoctrine.org
  */
 class Doctrine_Connection_Mssql_Exception extends Doctrine_Connection_Exception
@@ -38,19 +38,19 @@ class Doctrine_Connection_Mssql_Exception extends Doctrine_Connection_Exception
      *                                  error code from a native database error code
      */
     protected static $errorCodeMap = array(
-                                      110   => Doctrine::ERR_VALUE_COUNT_ON_ROW,
-                                      155   => Doctrine::ERR_NOSUCHFIELD,
-                                      170   => Doctrine::ERR_SYNTAX,
-                                      207   => Doctrine::ERR_NOSUCHFIELD,
-                                      208   => Doctrine::ERR_NOSUCHTABLE,
-                                      245   => Doctrine::ERR_INVALID_NUMBER,
-                                      515   => Doctrine::ERR_CONSTRAINT_NOT_NULL,
-                                      547   => Doctrine::ERR_CONSTRAINT,
-                                      1913  => Doctrine::ERR_ALREADY_EXISTS,
-                                      2627  => Doctrine::ERR_CONSTRAINT,
-                                      2714  => Doctrine::ERR_ALREADY_EXISTS,
-                                      3701  => Doctrine::ERR_NOSUCHTABLE,
-                                      8134  => Doctrine::ERR_DIVZERO,
+                                      110   => Doctrine_Core::ERR_VALUE_COUNT_ON_ROW,
+                                      155   => Doctrine_Core::ERR_NOSUCHFIELD,
+                                      170   => Doctrine_Core::ERR_SYNTAX,
+                                      207   => Doctrine_Core::ERR_NOSUCHFIELD,
+                                      208   => Doctrine_Core::ERR_NOSUCHTABLE,
+                                      245   => Doctrine_Core::ERR_INVALID_NUMBER,
+                                      515   => Doctrine_Core::ERR_CONSTRAINT_NOT_NULL,
+                                      547   => Doctrine_Core::ERR_CONSTRAINT,
+                                      1913  => Doctrine_Core::ERR_ALREADY_EXISTS,
+                                      2627  => Doctrine_Core::ERR_CONSTRAINT,
+                                      2714  => Doctrine_Core::ERR_ALREADY_EXISTS,
+                                      3701  => Doctrine_Core::ERR_NOSUCHTABLE,
+                                      8134  => Doctrine_Core::ERR_DIVZERO,
                                       );
 
     /**

@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage routing
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfRouting.class.php 17749 2009-04-29 11:54:22Z fabien $
+ * @version    SVN: $Id: sfRouting.class.php 20566 2009-07-29 07:04:01Z fabien $
  */
 abstract class sfRouting
 {
@@ -215,16 +215,6 @@ abstract class sfRouting
   public function setDefaultParameters($parameters)
   {
     $this->defaultParameters = $parameters;
-  }
-
-  protected function mergeArrays($arr1, $arr2)
-  {
-    foreach ($arr2 as $key => $value)
-    {
-      $arr1[$key] = $value;
-    }
-
-    return $arr1;
   }
 
   /**

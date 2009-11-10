@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Mysql.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Mysql.php 6638 2009-11-03 05:19:18Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -25,7 +25,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6638 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  */
@@ -143,12 +143,22 @@ class Doctrine_DataDict_Mysql extends Doctrine_DataDict
 
                 return $length ? 'CHAR('.$length.')' : 'CHAR(255)';
             case 'enum':
-                if ($this->conn->getAttribute(Doctrine::ATTR_USE_NATIVE_ENUM)) {
+                if ($this->conn->getAttribute(Doctrine_Core::ATTR_USE_NATIVE_ENUM)) {
                     $values = array();
                     foreach ($field['values'] as $value) {
                       $values[] = $this->conn->quote($value, 'varchar');
                     }
                     return 'ENUM('.implode(', ', $values).')';
+                } else {
+                    $field['length'] = isset($field['length']) && $field['length'] ? $field['length']:255;
+                }
+            case 'set':
+                if ($this->conn->getAttribute(Doctrine_Core::ATTR_USE_NATIVE_SET)) {
+                    $values = array();
+                    foreach ($field['values'] as $value) {
+                        $values[] = $this->conn->quote($value, 'varchar');
+                    }
+                    return 'SET('.implode(', ', $values).')';
                 } else {
                     $field['length'] = isset($field['length']) && $field['length'] ? $field['length']:255;
                 }
@@ -224,12 +234,12 @@ class Doctrine_DataDict_Mysql extends Doctrine_DataDict
                 return 'DOUBLE';
             case 'decimal':
                 $length = !empty($field['length']) ? $field['length'] : 18;
-                $scale = !empty($field['scale']) ? $field['scale'] : $this->conn->getAttribute(Doctrine::ATTR_DECIMAL_PLACES);
+                $scale = !empty($field['scale']) ? $field['scale'] : $this->conn->getAttribute(Doctrine_Core::ATTR_DECIMAL_PLACES);
                 return 'DECIMAL('.$length.','.$scale.')';
             case 'bit':
                 return 'BIT';
         }
-        throw new Doctrine_DataDict_Exception('Unknown field type \'' . $field['type'] .  '\'.');
+        return $field['type'] . (isset($field['length']) ? '('.$field['length'].')':null);
     }
 
     /**
@@ -401,7 +411,8 @@ class Doctrine_DataDict_Mysql extends Doctrine_DataDict
                 $length = null;
             break;
             default:
-                throw new Doctrine_DataDict_Exception('unknown database attribute type: ' . $dbType);
+                $type[] = $field['type'];
+                $length = isset($field['length']) ? $field['length']:null;
         }
 
         $length = ((int) $length == 0) ? null : (int) $length;

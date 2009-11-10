@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage cache
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfEAcceleratorCache.class.php 6365 2007-12-07 16:03:14Z fabien $
+ * @version    SVN: $Id: sfEAcceleratorCache.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfEAcceleratorCache extends sfCache
 {
@@ -44,7 +44,7 @@ class sfEAcceleratorCache extends sfCache
   {
     $value = eaccelerator_get($this->getOption('prefix').$key);
 
-    return is_null($value) ? $default : $value;
+    return null === $value ? $default : $value;
   }
 
   /**
@@ -52,7 +52,7 @@ class sfEAcceleratorCache extends sfCache
    */
   public function has($key)
   {
-    return !is_null(eaccelerator_get($this->getOption('prefix').$key));
+    return null !== eaccelerator_get($this->getOption('prefix'.$key));
   }
 
   /**

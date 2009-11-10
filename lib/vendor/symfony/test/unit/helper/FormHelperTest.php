@@ -48,7 +48,7 @@ class ProjectConfiguration extends sfProjectConfiguration
 
 $configuration = new ProjectConfiguration(dirname(__FILE__).'/../../lib', new sfEventDispatcher());
 
-$t = new lime_test(96, new lime_output_color());
+$t = new lime_test(96);
 
 $context = sfContext::getInstance(array(
   'controller' => 'myController',
@@ -133,7 +133,7 @@ $t->like(select_currency_tag('name', 'EUR'), '/'.preg_quote('<option value="EUR"
 // option
 $t->like(select_currency_tag('name', null, array('class' => 'foo')), '/'.preg_quote('<select name="name" id="name" class="foo">').'/', 'select_currency_tag() takes an array of options as its third argument');
 $t->is(preg_match_all('/<option/', select_currency_tag('name', null, array('currencies' => array('EUR', 'USD'))), $matches), 2, 'select_currency_tag() takes a "currencies" option');
-$t->like(select_currency_tag('name', 'USD', array('currencies' => array('USD'), 'display' => 'symbol')), '/'.preg_quote('<option value="USD" selected="selected">US$<').'/' , 'select_currency_tag() takes a "display" option');
+$t->like(select_currency_tag('name', 'USD', array('currencies' => array('USD'), 'display' => 'symbol')), '/'.preg_quote('<option value="USD" selected="selected">$<').'/' , 'select_currency_tag() takes a "display" option');
 $t->like(select_currency_tag('name', 'USD', array('currencies' => array('USD'), 'display' => 'code')), '/'.preg_quote('<option value="USD" selected="selected">USD<').'/' , 'select_currency_tag() takes a "display" option');
 
 // input_tag()
@@ -175,8 +175,6 @@ $t->is(textarea_tag('name', null, array('class' => 'foo')), '<textarea name="nam
 $t->is(textarea_tag('name', null, array('id' => 'foo')), '<textarea name="name" id="foo"></textarea>', 'textarea_tag() can override the "id" attribute');
 $t->is(textarea_tag('name', null, array('size' => '5x20')), '<textarea name="name" id="name" rows="20" cols="5"></textarea>', 'textarea_tag() can take a "size" attribute');
 
-require_once(sfConfig::get('sf_symfony_lib_dir').'/helper/sfRichTextEditor.class.php');
-require_once(sfConfig::get('sf_symfony_lib_dir').'/helper/sfRichTextEditorTinyMCE.class.php');
 sfConfig::set('sf_web_dir', dirname(__FILE__));
 sfConfig::set('sf_rich_text_js_dir', 'fixtures');
 $t->like(textarea_tag('name', 'content', array('rich' => 'TinyMCE')), '/tinyMCE\.init/', 'textarea_tag() can create a rich textarea tag based on tinyMCE');

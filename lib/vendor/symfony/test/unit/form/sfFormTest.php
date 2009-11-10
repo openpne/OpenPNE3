@@ -10,7 +10,7 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(145, new lime_output_color());
+$t = new lime_test(154);
 
 class FormTest extends sfForm
 {
@@ -26,9 +26,9 @@ class TestForm1 extends FormTest
   {
     $this->disableCSRFProtection();
     $this->setWidgets(array(
-      'a' => new sfWidgetFormInput(),
-      'b' => new sfWidgetFormInput(),
-      'c' => new sfWidgetFormInput(),
+      'a' => new sfWidgetFormInputText(),
+      'b' => new sfWidgetFormInputText(),
+      'c' => new sfWidgetFormInputText(),
     ));
     $this->setValidators(array(
       'a' => new sfValidatorString(array('min_length' => 2)),
@@ -71,6 +71,14 @@ class TestForm2 extends FormTest
     ));
     $this->validatorSchema->setPreValidator(new sfValidatorPass());
     $this->validatorSchema->setPostValidator(new sfValidatorPass());
+  }
+}
+
+class TestForm3 extends FormTest
+{
+  public function configure()
+  {
+    $this->disableLocalCSRFProtection();
   }
 }
 
@@ -157,6 +165,16 @@ $f = new FormTest();
 $v = $f->getValidatorSchema();
 $t->is($v[sfForm::getCSRFFieldName()]->getOption('token'), '*mygreatsecret*', '::enableCSRFProtection() can take a secret argument');
 
+// ->enableLocalCSRFProtection() ->disableLocalCSRFProtection()
+$t->diag('->enableLocalCSRFProtection() ->disableLocalCSRFProtection()');
+$f = new TestForm3();
+sfForm::disableCSRFProtection();
+$t->ok(!$f->isCSRFProtected(),'->disableLocalCSRFProtection() disabled CSRF protection for the current form');
+sfForm::enableCSRFProtection();
+$t->ok(!$f->isCSRFProtected(),'->disableLocalCSRFProtection() disabled CSRF protection for the current form, even if the global CSRF protection is enabled');
+$f = new TestForm3(array(), array(), 'foo');
+$t->ok(!$f->isCSRFProtected(),'->disableLocalCSRFProtection() disabled CSRF protection for the current form, even a CSRF secret is provided in the constructor');
+
 // ::getCSRFFieldName() ::setCSRFFieldName()
 $t->diag('::getCSRFFieldName() ::setCSRFFieldName()');
 sfForm::setCSRFFieldName('_token_');
@@ -193,8 +211,8 @@ $t->ok($f->getValidator('name') == $v3, '->setValidator() sets a validator for a
 $t->diag('->setWidgets() ->setWidgetSchema() ->getWidgetSchema()');
 $f = new FormTest();
 $widgets = array(
-  'first_name' => new sfWidgetFormInput(),
-  'last_name'  => new sfWidgetFormInput(),
+  'first_name' => new sfWidgetFormInputText(),
+  'last_name'  => new sfWidgetFormInputText(),
 );
 $widgetSchema = new sfWidgetFormSchema($widgets);
 $f->setWidgetSchema($widgetSchema);
@@ -203,15 +221,15 @@ $f->setWidgets($widgets);
 $schema = $f->getWidgetSchema();
 $t->ok($schema['first_name'] == $widgets['first_name'], '->setWidgets() sets field widgets');
 $t->ok($schema['last_name'] == $widgets['last_name'], '->setWidgets() sets field widgets');
-$f->setWidget('name', $w3 = new sfWidgetFormInput());
+$f->setWidget('name', $w3 = new sfWidgetFormInputText());
 $t->ok($f->getWidget('name') == $w3, '->setWidget() sets a widget for a field');
 
 // ArrayAccess interface
 $t->diag('ArrayAccess interface');
 $f = new FormTest();
 $f->setWidgetSchema(new sfWidgetFormSchema(array(
-  'first_name' => new sfWidgetFormInput(array('default' => 'Fabien')),
-  'last_name'  => new sfWidgetFormInput(),
+  'first_name' => new sfWidgetFormInputText(array('default' => 'Fabien')),
+  'last_name'  => new sfWidgetFormInputText(),
   'image'      => new sfWidgetFormInputFile(),
 )));
 $f->setValidatorSchema(new sfValidatorSchema(array(
@@ -262,15 +280,15 @@ $f->bind(array(
 ));
 unset($f['first_name']);
 $t->is_deeply($f->getValues(), array('last_name' => 'Doe'), '"sfForm" ArrayAccess implementation removes bound values');
-$w['first_name'] = new sfWidgetFormInput();
+$w['first_name'] = new sfWidgetFormInputText();
 $t->is($f['first_name']->getValue(), '', '"sfForm" ArrayAccess implementation removes tainted values');
 
 // Countable interface
 $t->diag('Countable interface');
 $f = new FormTest();
 $f->setWidgetSchema(new sfWidgetFormSchema(array(
-  'first_name' => new sfWidgetFormInput(array('default' => 'Fabien')),
-  'last_name'  => new sfWidgetFormInput(),
+  'first_name' => new sfWidgetFormInputText(array('default' => 'Fabien')),
+  'last_name'  => new sfWidgetFormInputText(),
   'image'      => new sfWidgetFormInputFile(),
 )));
 $t->is(count($f), 3, '"sfForm" implements the Countable interface');
@@ -279,8 +297,8 @@ $t->is(count($f), 3, '"sfForm" implements the Countable interface');
 $t->diag('Iterator interface');
 $f = new FormTest();
 $f->setWidgetSchema(new sfWidgetFormSchema(array(
-  'first_name' => new sfWidgetFormInput(array('default' => 'Fabien')),
-  'last_name'  => new sfWidgetFormInput(),
+  'first_name' => new sfWidgetFormInputText(array('default' => 'Fabien')),
+  'last_name'  => new sfWidgetFormInputText(),
   'image'      => new sfWidgetFormInputFile(),
 )));
 foreach ($f as $name => $value)
@@ -290,6 +308,39 @@ foreach ($f as $name => $value)
 $t->is(isset($values['first_name']), true, '"sfForm" implements the Iterator interface');
 $t->is(isset($values['last_name']), true, '"sfForm" implements the Iterator interface');
 $t->is_deeply(array_keys($values), array('first_name', 'last_name', 'image'), '"sfForm" implements the Iterator interface');
+
+// ->useFields()
+$t->diag('->useFields()');
+$f = new FormTest();
+$f->setWidgetSchema(new sfWidgetFormSchema(array(
+  'first_name' => new sfWidgetFormInputText(),
+  'last_name'  => new sfWidgetFormInputText(),
+  'email'      => new sfWidgetFormInputText(),
+)));
+$f->useFields(array('first_name', 'last_name'));
+$t->is($f->getWidgetSchema()->getPositions(), array('first_name', 'last_name'), '->useFields() removes all fields except the ones given as an argument');
+$f->setWidgetSchema(new sfWidgetFormSchema(array(
+  'first_name' => new sfWidgetFormInputText(),
+  'last_name'  => new sfWidgetFormInputText(),
+  'email'      => new sfWidgetFormInputText(),
+)));
+$f->useFields(array('email', 'first_name'));
+$t->is($f->getWidgetSchema()->getPositions(), array('email', 'first_name'), '->useFields() reorders the fields');
+$f->setWidgetSchema(new sfWidgetFormSchema(array(
+  'first_name' => new sfWidgetFormInputText(),
+  'last_name'  => new sfWidgetFormInputText(),
+  'email'      => new sfWidgetFormInputText(),
+)));
+$f->useFields(array('email', 'first_name'), false);
+$t->is($f->getWidgetSchema()->getPositions(), array('first_name', 'email'), '->useFields() does not reorder the fields if the second argument is false');
+$f->setWidgetSchema(new sfWidgetFormSchema(array(
+  'id'         => new sfWidgetFormInputHidden(),
+  'first_name' => new sfWidgetFormInputText(),
+  'last_name'  => new sfWidgetFormInputText(),
+  'email'      => new sfWidgetFormInputText(),
+)));
+$f->useFields(array('first_name', 'last_name'));
+$t->is($f->getWidgetSchema()->getPositions(), array('first_name', 'last_name', 'id'), '->useFields() does not remove hidden fields');
 
 // ->bind() ->isValid() ->hasErrors() ->getValues() ->getValue() ->isBound() ->getErrorSchema()
 $t->diag('->bind() ->isValid() ->getValues() ->isBound() ->getErrorSchema()');
@@ -379,8 +430,8 @@ $f->setValidatorSchema(new sfValidatorSchema(array(
 )));
 $f->setWidgetSchema(new sfWidgetFormSchema(array(
   'id'         => new sfWidgetFormInputHidden(),
-  'first_name' => new sfWidgetFormInput(),
-  'last_name'  => new sfWidgetFormInput(),
+  'first_name' => new sfWidgetFormInputText(),
+  'last_name'  => new sfWidgetFormInputText(),
 )));
 $f->bind(array(
   'id'         => 'dddd',
@@ -393,7 +444,7 @@ $output = <<<EOF
   </ul>
 
 EOF;
-$t->is($f->renderGlobalErrors(), $output, '->renderGlobalErrors() renders global errors as an HTML list');
+$t->is($f->renderGlobalErrors(), fix_linebreaks($output), '->renderGlobalErrors() renders global errors as an HTML list');
 
 // ->render()
 $t->diag('->render()');
@@ -405,8 +456,8 @@ $f->setValidators(array(
 ));
 $f->setWidgets(array(
   'id'         => new sfWidgetFormInputHidden(array('default' => 3)),
-  'first_name' => new sfWidgetFormInput(array('default' => 'Thomas')),
-  'last_name'  => new sfWidgetFormInput(),
+  'first_name' => new sfWidgetFormInputText(array('default' => 'Thomas')),
+  'last_name'  => new sfWidgetFormInputText(),
 ));
 
 // unbound
@@ -421,7 +472,7 @@ $output = <<<EOF
 </tr>
 
 EOF;
-$t->is($f->__toString(), $output, '->__toString() renders the form as HTML');
+$t->is($f->__toString(), fix_linebreaks($output), '->__toString() renders the form as HTML');
 $output = <<<EOF
 <tr>
   <th><label for="first_name">First name</label></th>
@@ -433,7 +484,7 @@ $output = <<<EOF
 </tr>
 
 EOF;
-$t->is($f->render(array('first_name' => array('class' => 'foo'))), $output, '->render() renders the form as HTML');
+$t->is($f->render(array('first_name' => array('class' => 'foo'))), fix_linebreaks($output), '->render() renders the form as HTML');
 $t->is((string) $f['id'], '<input type="hidden" name="id" value="3" id="id" />', '->offsetGet() returns a sfFormField');
 $t->is((string) $f['first_name'], '<input type="text" name="first_name" value="Fabien" id="first_name" />', '->offsetGet() returns a sfFormField');
 $t->is((string) $f['last_name'], '<input type="text" name="last_name" value="Potencier" id="last_name" />', '->offsetGet() returns a sfFormField');
@@ -455,7 +506,7 @@ $output = <<<EOF
 </tr>
 
 EOF;
-$t->is($f->__toString(), $output, '->__toString() renders the form as HTML');
+$t->is($f->__toString(), fix_linebreaks($output), '->__toString() renders the form as HTML');
 $output = <<<EOF
 <tr>
   <th><label for="first_name">First name</label></th>
@@ -467,7 +518,7 @@ $output = <<<EOF
 </tr>
 
 EOF;
-$t->is($f->render(array('first_name' => array('class' => 'foo'))), $output, '->render() renders the form as HTML');
+$t->is($f->render(array('first_name' => array('class' => 'foo'))), fix_linebreaks($output), '->render() renders the form as HTML');
 $t->is((string) $f['id'], '<input type="hidden" name="id" value="1" id="id" />', '->offsetGet() returns a sfFormField');
 $t->is((string) $f['first_name'], '<input type="text" name="first_name" value="Fabien" id="first_name" />', '->offsetGet() returns a sfFormField');
 $t->is((string) $f['last_name'], '<input type="text" name="last_name" value="Potencier" id="last_name" />', '->offsetGet() returns a sfFormField');
@@ -475,7 +526,7 @@ $t->is((string) $f['last_name'], '<input type="text" name="last_name" value="Pot
 // renderUsing()
 $t->diag('->renderUsing()');
 $f = new sfForm();
-$f->setWidgets(array('name' => new sfWidgetFormInput()));
+$f->setWidgets(array('name' => new sfWidgetFormInputText()));
 $output = <<<EOF
 <li>
   <label for="name">Name</label>
@@ -483,12 +534,12 @@ $output = <<<EOF
 </li>
 
 EOF;
-$t->is($f->renderUsing('list'), $output, 'renderUsing() renders the widget schema using the given form formatter');
+$t->is($f->renderUsing('list'), fix_linebreaks($output), 'renderUsing() renders the widget schema using the given form formatter');
 $t->is($f->getWidgetSchema()->getFormFormatterName(), 'table', 'renderUsing() does not persist form formatter name for the current form instance');
 
 $w = $f->getWidgetSchema();
 $w->addFormFormatter('custom', new sfWidgetFormSchemaFormatterList($w));
-$t->is($f->renderUsing('custom'), $output, 'renderUsing() renders a custom form formatter');
+$t->is($f->renderUsing('custom'), fix_linebreaks($output), 'renderUsing() renders a custom form formatter');
 
 try
 {
@@ -505,26 +556,40 @@ $t->diag('->renderHiddenFields()');
 $f = new sfForm();
 $f->setWidgets(array(
   'id' => new sfWidgetFormInputHidden(),
-  'name' => new sfWidgetFormInput(),
+  'name' => new sfWidgetFormInputText(),
   'is_admin' => new sfWidgetFormInputHidden(),
 ));
 $output = '<input type="hidden" name="id" id="id" /><input type="hidden" name="is_admin" id="is_admin" />';
 $t->is($f->renderHiddenFields(), $output, 'renderHiddenFields() renders all hidden fields, no visible fields');
 $t->is(count($f->getFormFieldSchema()), 3, 'renderHiddenFields() does not modify the form fields');
 
+$author = new sfForm();
+$author->setWidgets(array('id' => new sfWidgetFormInputHidden(), 'name' => new sfWidgetFormInputText()));
+
+$company = new sfForm();
+$company->setWidgets(array('id' => new sfWidgetFormInputHidden(), 'name' => new sfWidgetFormInputText()));
+
+$author->embedForm('company', $company);
+
+$output = '<input type="hidden" name="id" id="id" /><input type="hidden" name="company[id]" id="company_id" />';
+$t->is($author->renderHiddenFields(), $output, 'renderHiddenFields() renders hidden fields from embedded forms');
+
+$output = '<input type="hidden" name="id" id="id" />';
+$t->is($author->renderHiddenFields(false), $output, 'renderHiddenFields() does not render hidden fields from embedded forms if the first parameter is "false"');
+
 // ->embedForm()
 $t->diag('->embedForm()');
 
 $author = new FormTest(array('first_name' => 'Fabien'));
-$author->setWidgetSchema($author_widget_schema = new sfWidgetFormSchema(array('first_name' => new sfWidgetFormInput())));
+$author->setWidgetSchema($author_widget_schema = new sfWidgetFormSchema(array('first_name' => new sfWidgetFormInputText())));
 $author->setValidatorSchema($author_validator_schema = new sfValidatorSchema(array('first_name' => new sfValidatorString(array('min_length' => 2)))));
 
 $company = new FormTest();
-$company->setWidgetSchema($company_widget_schema = new sfWidgetFormSchema(array('name' => new sfWidgetFormInput())));
+$company->setWidgetSchema($company_widget_schema = new sfWidgetFormSchema(array('name' => new sfWidgetFormInputText())));
 $company->setValidatorSchema($company_validator_schema = new sfValidatorSchema(array('name' => new sfValidatorString(array('min_length' => 2)))));
 
 $article = new FormTest();
-$article->setWidgetSchema($article_widget_schema = new sfWidgetFormSchema(array('title' => new sfWidgetFormInput())));
+$article->setWidgetSchema($article_widget_schema = new sfWidgetFormSchema(array('title' => new sfWidgetFormInputText())));
 $article->setValidatorSchema($article_validator_schema = new sfValidatorSchema(array('title' => new sfValidatorString(array('min_length' => 2)))));
 
 $author->embedForm('company', $company);
@@ -543,13 +608,6 @@ $t->is($w['author'][sfForm::getCSRFFieldName()], null, '->embedForm() removes th
 
 $t->is($w['author']->generateName('first_name'), 'article[author][first_name]', '->embedForm() changes the name format to reflect the embedding');
 $t->is($w['author']['company']->generateName('name'), 'article[author][company][name]', '->embedForm() changes the name format to reflect the embedding');
-
-// tests for ticket #4754
-$f1 = new TestForm1();
-$f2 = new TestForm2();
-$f1->embedForm('f2', $f2);
-$t->is($f1['f2']['c']->render(), '<textarea rows="4" cols="30" name="f2[c]" id="f2_c"></textarea>', '->embedForm() generates a correct id in embedded form fields');
-$t->is($f1['f2']['c']->renderLabel(), '<label for="f2_c">2_c</label>', '->embedForm() generates a correct label id correctly in embedded form fields');
 
 // tests for ticket #4754
 $f1 = new TestForm1();
@@ -580,7 +638,7 @@ $t->is($w['authors'][0]->generateName('first_name'), 'article[authors][0][first_
 // bind too many values for embedded forms
 $t->diag('bind too many values for embedded forms');
 $list = new FormTest();
-$list->setWidgets(array('title' => new sfWidgetFormInput()));
+$list->setWidgets(array('title' => new sfWidgetFormInputText()));
 $list->setValidators(array('title' => new sfValidatorString()));
 $list->embedFormForEach('items', clone $list, 2);
 $list->bind(array(
@@ -608,6 +666,16 @@ $article->embedForm('author', $author);
 $forms = $article->getEmbeddedForms();
 $t->is(array_keys($forms), array('company', 'author'), '->getEmbeddedForms() returns the embedded forms');
 $t->is($forms['company'], $company, '->getEmbeddedForms() returns the embedded forms');
+$t->isa_ok($article->getEmbeddedForm('company'), 'FormTest', '->getEmbeddedForm() return an embedded form');
+try
+{
+  $article->getEmbeddedForm('nonexistant');
+  $t->fail('->getEmbeddedForm() throws an exception if the embedded form does not exist');
+}
+catch (InvalidArgumentException $e)
+{
+  $t->pass('->getEmbeddedForm() throws an exception if the embedded form does not exist');
+}
 
 // ::convertFileInformation()
 $t->diag('::convertFileInformation()');

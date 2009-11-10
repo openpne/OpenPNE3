@@ -10,15 +10,29 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(1, new lime_output_color());
+$t = new lime_test(5);
 
 class sfWebDebugPanelPropelTest extends sfWebDebugPanelPropel
 {
-  protected function getSqlLogs()
+  protected function getPropelConfiguration()
   {
-    return array(
-      'query: SELECT * FROM foo WHERE bar<1',
-    );
+    $config = new PropelConfiguration(array());
+    $config->setParameter('debugpdo.logging.details.slow.enabled', true);
+    $config->setParameter('debugpdo.logging.details.slow.threshold', 1);
+    return $config;
+  }
+}
+
+class sfWebDebugPanelPropelTestDifferentGlue extends sfWebDebugPanelPropel
+{
+  protected function getPropelConfiguration()
+  {
+    $config = new PropelConfiguration(array());
+    $config->setParameter('debugpdo.logging.outerglue', 'xx');
+    $config->setParameter('debugpdo.logging.innerglue', '/ ');
+    $config->setParameter('debugpdo.logging.details.slow.enabled', true);
+    $config->setParameter('debugpdo.logging.details.slow.threshold', 5);
+    return $config;
   }
 }
 
@@ -26,6 +40,18 @@ class sfWebDebugPanelPropelTest extends sfWebDebugPanelPropel
 $t->diag('->getPanelContent()');
 
 $dispatcher = new sfEventDispatcher();
-$debug = new sfWebDebug($dispatcher, new sfVarLogger($dispatcher));
-$panel = new sfWebDebugPanelPropelTest($debug);
-$t->like($panel->getPanelContent(), '/'.preg_quote('query: SELECT * FROM foo WHERE bar&lt;1', '/').'/', '->getPanelContent() returns escaped queries');
+$logger = new sfVarLogger($dispatcher);
+$logger->log('{sfPropelLogger} SELECT * FROM foo WHERE bar<1');
+$logger->log('{sfPropelLogger} time: 3.42 sec | mem: 2.8 MB | SELECT * FROM foo WHERE aText like \' | foo\'');
+$panel = new sfWebDebugPanelPropelTest(new sfWebDebug($dispatcher, $logger));
+$content = $panel->getPanelContent();
+$t->like($content, '/bar&lt;1/', '->getPanelContent() returns escaped queries');
+$t->like($content, '/aText like &#039; | foo&#039;/', '->getPanelContent() works with glue string in SQL');
+$t->like($content, '/sfWebDebugWarning/', '->getPanelContent() contains a slow query warning');
+
+$logger = new sfVarLogger($dispatcher);
+$logger->log('{sfPropelLogger} time/ 3.42 secxxmem/ 2.8 MBxxSELECT * FROM foo WHERE bar == 42');
+$panel = new sfWebDebugPanelPropelTestDifferentGlue(new sfWebDebug($dispatcher, $logger));
+$content = $panel->getPanelContent();
+$t->like($content, '/time\/ 3.42 sec, mem\/ 2.8 MB/', '->getPanelContent() works with strange glue strings');
+$t->unlike($content, '/sfWebDebugWarning/', '->getPanelContent() should not contain a slow warning');

@@ -18,14 +18,15 @@
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfContext.class.php 22003 2009-09-14 09:08:43Z FabianLange $
+ * @version    SVN: $Id: sfContext.class.php 22811 2009-10-05 20:31:46Z Kris.Wallsmith $
  */
-class sfContext
+class sfContext implements ArrayAccess
 {
   protected
-    $dispatcher    = null,
-    $configuration = null,
-    $factories     = array();
+    $dispatcher          = null,
+    $configuration       = null,
+    $mailerConfiguration = array(),
+    $factories           = array();
 
   protected static
     $instances = array(),
@@ -42,7 +43,7 @@ class sfContext
    */
   static public function createInstance(sfApplicationConfiguration $configuration, $name = null, $class = __CLASS__)
   {
-    if (is_null($name))
+    if (null === $name)
     {
       $name = $configuration->getApplication();
     }
@@ -100,7 +101,7 @@ class sfContext
    */
   static public function getInstance($name = null, $class = __CLASS__)
   {
-    if (is_null($name))
+    if (null === $name)
     {
       $name = self::$current;
     }
@@ -123,7 +124,7 @@ class sfContext
 
   public static function hasInstance($name = null)
   {
-    if (is_null($name))
+    if (null === $name)
     {
       $name = self::$current;
     }
@@ -145,10 +146,20 @@ class sfContext
     // create a new action stack
     $this->factories['actionStack'] = new sfActionStack();
 
+    if (sfConfig::get('sf_debug') && sfConfig::get('sf_logging_enabled'))
+    {
+      $timer = sfTimerManager::getTimer('Factories');
+    }
+
     // include the factories configuration
     require($this->configuration->getConfigCache()->checkConfig('config/factories.yml'));
 
     $this->dispatcher->notify(new sfEvent($this, 'context.load_factories'));
+
+    if (sfConfig::get('sf_debug') && sfConfig::get('sf_logging_enabled'))
+    {
+      $timer->addTime();
+    }
   }
 
   /**
@@ -235,6 +246,26 @@ class sfContext
    }
 
    /**
+    * Retrieves the mailer.
+    *
+    * @return sfMailer The current sfMailer implementation instance.
+    */
+   public function getMailer()
+   {
+     if (!isset($this->factories['mailer']))
+     {
+       $this->factories['mailer'] = new $this->mailerConfiguration['class']($this->dispatcher, $this->mailerConfiguration);
+     }
+
+     return $this->factories['mailer'];
+   }
+
+   public function setMailerConfiguration($configuration)
+   {
+     $this->mailerConfiguration = $configuration;
+   }
+
+   /**
     * Retrieve the logger.
     *
     * @return sfLogger The current sfLogger implementation instance.
@@ -265,7 +296,7 @@ class sfContext
    */
   public function getDatabaseConnection($name = 'default')
   {
-    if (!is_null($this->factories['databaseManager']))
+    if (null !== $this->factories['databaseManager'])
     {
       return $this->factories['databaseManager']->getDatabase($name)->getConnection();
     }
@@ -416,6 +447,51 @@ class sfContext
   {
     return $this->configuration->getConfigCache();
   }
+  
+  /**
+   * Returns true if the context object exists (implements the ArrayAccess interface).
+   *
+   * @param  string $name The name of the context object
+   *
+   * @return Boolean true if the context object exists, false otherwise
+   */
+  public function offsetExists($name)
+  {
+    return $this->has($name);
+  }
+
+  /**
+   * Returns the context object associated with the name (implements the ArrayAccess interface).
+   *
+   * @param  string $name  The offset of the value to get
+   *
+   * @return mixed The context object if exists, null otherwise
+   */
+  public function offsetGet($name)
+  {
+    return $this->get($name);
+  }
+
+  /**
+   * Sets the context object associated with the offset (implements the ArrayAccess interface).
+   *
+   * @param string $offset The parameter name
+   * @param string $value The parameter value
+   */
+  public function offsetSet($offset, $value)
+  {
+    $this->set($offset, $value);
+  }
+
+  /**
+   * Unsets the context object associated with the offset (implements the ArrayAccess interface).
+   *
+   * @param string $offset The parameter name
+   */
+  public function offsetUnset($offset)
+  {
+    unset($this->factories[$offset]);
+  }
 
   /**
    * Gets an object from the current context.
@@ -474,6 +550,42 @@ class sfContext
     $parameters['sf_user']     = $this->factories['user'];
 
     return $parameters;
+  }
+  
+  /**
+   * Calls methods defined via sfEventDispatcher.
+   *
+   * If a method cannot be found via sfEventDispatcher, the method name will
+   * be parsed to magically handle getMyFactory() and setMyFactory() methods.
+   *
+   * @param  string $method     The method name
+   * @param  array  $arguments  The method arguments
+   *
+   * @return mixed The returned value of the called method
+   *
+   * @throws <b>sfException</b> if call fails
+   */
+  public function __call($method, $arguments)
+  {
+    $event = $this->dispatcher->notifyUntil(new sfEvent($this, 'context.method_not_found', array('method' => $method, 'arguments' => $arguments)));
+    if (!$event->isProcessed())
+    {
+      $verb = substr($method, 0, 3); // get | set
+      $factory = strtolower(substr($method, 3)); // factory name
+
+      if ('get' == $verb && $this->has($factory))
+      {
+        return $this->factories[$factory];
+      }
+      else if ('set' == $verb && isset($arguments[0]))
+      {
+        return $this->set($factory, $arguments[0]);
+      }
+
+      throw new sfException(sprintf('Call to undefined method %s::%s.', get_class($this), $method));
+    }
+
+    return $event->getReturnValue();
   }
 
   /**

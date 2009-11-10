@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: NestedSet.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: NestedSet.php 6484 2009-10-12 17:40:41Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6484 $
  * @author      Joe Simms <joe.simms@websites4.com>
  * @author      Roman Borschel <roman@code-factory.org>
  */
@@ -61,7 +61,7 @@ class Doctrine_Tree_NestedSet extends Doctrine_Tree implements Doctrine_Tree_Int
     public function setTableDefinition()
     {
         if (($root = $this->getAttribute('rootColumnName')) && (!$this->table->hasColumn($root))) {
-            $this->table->setColumn($root, 'integer', 4);
+            $this->table->setColumn($root, 'integer');
         }
 
         $this->table->setColumn('lft', 'integer', 4);
@@ -112,17 +112,6 @@ class Doctrine_Tree_NestedSet extends Doctrine_Tree implements Doctrine_Tree_Int
     }
 
     /**
-     * returns root node
-     *
-     * @return object $record        instance of Doctrine_Record
-     * @deprecated Use fetchRoot()
-     */
-    public function findRoot($rootId = 1)
-    {
-        return $this->fetchRoot($rootId);
-    }
-
-    /**
      * Fetches a/the root node.
      *
      * @param integer $rootId
@@ -159,7 +148,7 @@ class Doctrine_Tree_NestedSet extends Doctrine_Tree implements Doctrine_Tree_Int
      * Fetches a tree.
      *
      * @param array $options  Options
-     * @param integer $fetchmode  One of the Doctrine::HYDRATE_* constants.
+     * @param integer $fetchmode  One of the Doctrine_Core::HYDRATE_* constants.
      * @return mixed          The tree or FALSE if the tree could not be found.
      */
     public function fetchTree($options = array(), $hydrationMode = null)
@@ -200,7 +189,7 @@ class Doctrine_Tree_NestedSet extends Doctrine_Tree implements Doctrine_Tree_Int
      *
      * @param mixed $pk              primary key as used by table::find() to locate node to traverse tree from
      * @param array $options         Options.
-     * @param integer $fetchmode  One of the Doctrine::HYDRATE_* constants.
+     * @param integer $fetchmode  One of the Doctrine_Core::HYDRATE_* constants.
      * @return mixed                 The branch or FALSE if the branch could not be found.
      * @todo Only fetch the lft and rgt values of the initial record. more is not needed.
      */
@@ -221,7 +210,7 @@ class Doctrine_Tree_NestedSet extends Doctrine_Tree implements Doctrine_Tree_Int
 
         if ( ! is_null($depth)) { 
             $q->addWhere($this->_baseAlias . ".level BETWEEN ? AND ?", array($record->get('level'), $record->get('level')+$depth)); 
-        }        
+        }
 
         $q = $this->returnQueryWithRootId($q, $record->getNode()->getRootValue());
 
@@ -242,54 +231,11 @@ class Doctrine_Tree_NestedSet extends Doctrine_Tree implements Doctrine_Tree_Int
     }
 
     /**
-     * calculates the next available root id
-     *
-     * @return integer
-     * @deprecated THIS METHOD IS DEPRECATED. ROOT IDS ARE NO LONGER AUTOMATICALLY GENERATED.
-     *             ROOT ID MUST BE ASSIGNED MANUALLY OR USING THE DEFAULT BEHAVIOR WHERE
-     *             ROOT_ID = ID. SEE createRoot() FOR DETAILS.
-     */
-    public function getNextRootId()
-    {
-        return $this->getMaxRootId() + 1;
-    }
-
-    /**
-     * calculates the current max root id
-     *
-     * @return integer
-     * @deprecated THIS METHOD IS DEPRECATED. ROOT IDS ARE NO LONGER AUTOMATICALLY GENERATED.
-     *             ROOT ID MUST BE ASSIGNED MANUALLY OR USING THE DEFAULT BEHAVIOR WHERE
-     *             ROOT_ID = ID. SEE createRoot() FOR DETAILS.
-     */
-    public function getMaxRootId()
-    {
-        $component = $this->table->getComponentName();
-        $column = $this->getAttribute('rootColumnName');
-
-        // cannot get this dql to work, cannot retrieve result using $coll[0]->max
-        //$dql = "SELECT MAX(c.$column) FROM $component c";
-
-        $dql = 'SELECT c.' . $column . ' FROM ' . $component . ' c ORDER BY c.' . $column . ' DESC LIMIT 1';
-
-        $coll = $this->table->getConnection()->query($dql);
-
-        if ($coll->count() > 0) {
-            $max = $coll->getFirst()->get($column);
-            $max = ! is_null($max) ? $max : 0;
-        } else {
-            $max = 0;
-        }
-
-        return $max;
-    }
-
-    /**
      * returns parsed query with root id where clause added if applicable
      *
      * @param object    $query    Doctrine_Query
      * @param integer   $root_id  id of destination root
-     * @return object   Doctrine_Query
+     * @return Doctrine_Query
      */
     public function returnQueryWithRootId($query, $rootId = 1)
     {

@@ -11,7 +11,7 @@
 $app = 'frontend';
 require_once(dirname(__FILE__).'/../bootstrap/functional.php');
 
-$t = new lime_test(11, new lime_output_color());
+$t = new lime_test(11);
 
 $article = new Article();
 $article->title = 'test';
@@ -46,11 +46,6 @@ class MyArticleForm extends ArticleForm
 
     unset($this['author_id']);
   }
-
-  public function updateDefaultsFromObject()
-  {
-    parent::updateDefaultsFromObject();
-  }
 }
 
 $article = new Article();
@@ -59,23 +54,29 @@ $articleForm = new MyArticleForm($article);
 $data = array(
   'is_on_homepage' => 1,
   'Author' => array(
-    'name' => 'i18n author test'),
+    'name' => 'i18n author test',
+    'type' => null),
   'en' => array(
     'title' => 'english title',
     'body'  => 'english body'),
   'fr' => array(
     'title' => 'french title',
-    'body'  => 'french body')
+    'body'  => 'french body'),
+  'created_at' => time(),
+  'updated_at' => time(),
 );
 
 $articleForm->bind($data);
 $t->is($articleForm->isValid(), true);
+
+$data = $articleForm->getValues();
 
 $values = array(
   'is_on_homepage' => true,
   'Author' => 
   array(
     'name' => 'i18n author test',
+    'type' => null
   ),
   'en' => 
   array(
@@ -92,8 +93,9 @@ $values = array(
     'slug' => '',
   ),
   'id' => null,
-  'created_at' => null,
-  'updated_at' => null,
+  'type' => null,
+  'created_at' => $data['created_at'],
+  'updated_at' => $data['updated_at'],
 );
 
 $t->is($articleForm->getValues(), $values);
@@ -104,6 +106,7 @@ $expected = array(
   'id' => $article->id,
   'author_id' => $article->Author->id,
   'is_on_homepage' => true,
+  'type' => null,
   'created_at' => $article->created_at,
   'updated_at' => $article->updated_at,
   'Translation' => 
@@ -131,17 +134,19 @@ $expected = array(
   array(
     'id' => $article->Author->id,
     'name' => 'i18n author test',
+    'type' => null
   ),
 );
 
 $t->is($article->toArray(true), $expected);
 
-$articleForm->updateDefaultsFromObject();
+$articleForm = new MyArticleForm($article);
 
 $expected = array(
   'id' => $article->id,
   'author_id' => $article->author_id,
   'is_on_homepage' => true,
+  'type' => null,
   'created_at' => $article->created_at,
   'updated_at' => $article->updated_at,
   'en' => 
@@ -166,6 +171,7 @@ $expected = array(
   array(
     'id' => $article->Author->id,
     'name' => 'i18n author test',
+    'type' => null
   ),
 );
 

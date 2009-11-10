@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPropelBaseTask.class.php');
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelBuildFormsTask.class.php 12537 2008-11-01 14:43:27Z fabien $
+ * @version    SVN: $Id: sfPropelBuildFormsTask.class.php 23516 2009-11-02 13:21:32Z Kris.Wallsmith $
  */
 class sfPropelBuildFormsTask extends sfPropelBaseTask
 {
@@ -70,7 +70,7 @@ EOF;
       'form_dir_name'  => $options['form-dir-name'],
     ));
 
-    $properties = parse_ini_file(sfConfig::get('sf_config_dir').DIRECTORY_SEPARATOR.'properties.ini', true);
+    $properties = parse_ini_file(sfConfig::get('sf_config_dir').'/properties.ini', true);
 
     $constants = array(
       'PROJECT_NAME' => isset($properties['symfony']['name']) ? $properties['symfony']['name'] : 'symfony',
@@ -80,5 +80,15 @@ EOF;
     // customize php and yml files
     $finder = sfFinder::type('file')->name('*.php');
     $this->getFilesystem()->replaceTokens($finder->in(sfConfig::get('sf_lib_dir').'/form/'), '##', '##', $constants);
+
+    // check for base form class
+    if (!class_exists('BaseForm'))
+    {
+      $file = sfConfig::get('sf_lib_dir').'/'.$options['form-dir-name'].'/BaseForm.class.php';
+      $this->getFilesystem()->copy(sfConfig::get('sf_symfony_lib_dir').'/task/generator/skeleton/project/lib/form/BaseForm.class.php', $file);
+      $this->getFilesystem()->replaceTokens($file, '##', '##', $constants);
+    }
+
+    $this->reloadAutoload();
   }
 }

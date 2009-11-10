@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Configurable.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Configurable.php 6484 2009-10-12 17:40:41Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6484 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
 abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
@@ -56,95 +56,27 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
     protected $_params = array();
 
     /**
-     * getAttributeFromString
-     *
-     * Will accept the name of an attribute and return the attribute value
-     * Example: ->getAttributeFromString('portability') will be converted to Doctrine::ATTR_PORTABILITY
-     * and returned
-     *
-     * @param string $stringAttributeName 
-     * @return void
-     */
-    public function getAttributeFromString($stringAttributeName)
-    {
-      if (is_string($stringAttributeName)) {
-          $upper = strtoupper($stringAttributeName);
-
-          $const = 'Doctrine::ATTR_' . $upper; 
-
-          if (defined($const)) {
-              return constant($const);
-          } else {
-              throw new Doctrine_Exception('Unknown attribute: "' . $stringAttributeName . '"');
-          }
-      } else {
-        return false;
-      }
-    }
-
-    /**
-     * getAttributeValueFromString
-     *
-     * Will get the value for an attribute by the string name
-     * Example: ->getAttributeFromString('portability', 'all') will return Doctrine::PORTABILITY_ALL
-     *
-     * @param string $stringAttributeName 
-     * @param string $stringAttributeValueName 
-     * @return void
-     */
-    public function getAttributeValueFromString($stringAttributeName, $stringAttributeValueName)
-    {
-        $const = 'Doctrine::' . strtoupper($stringAttributeName) . '_' . strtoupper($stringAttributeValueName);
-
-        if (defined($const)) {
-            return constant($const);
-        } else {
-            throw new Doctrine_Exception('Unknown attribute value: "' . $const . '"');
-        }
-    }
-
-    /**
      * setAttribute
      * sets a given attribute
      *
      * <code>
-     * $manager->setAttribute(Doctrine::ATTR_PORTABILITY, Doctrine::PORTABILITY_ALL);
-     *
-     * // or
-     *
-     * $manager->setAttribute('portability', Doctrine::PORTABILITY_ALL);
-     *
-     * // or
-     *
-     * $manager->setAttribute('portability', 'all');
+     * $manager->setAttribute(Doctrine_Core::ATTR_PORTABILITY, Doctrine_Core::PORTABILITY_ALL);
      * </code>
      *
-     * @param mixed $attribute              either a Doctrine::ATTR_* integer constant or a string
+     * @param mixed $attribute              either a Doctrine_Core::ATTR_* integer constant or a string
      *                                      corresponding to a constant
      * @param mixed $value                  the value of the attribute
-     * @see Doctrine::ATTR_* constants
+     * @see Doctrine_Core::ATTR_* constants
      * @throws Doctrine_Exception           if the value is invalid
      * @return void
      */
     public function setAttribute($attribute, $value)
     {
-        if (is_string($attribute)) {
-            $stringAttribute = $attribute;
-            $attribute = $this->getAttributeFromString($attribute);
-            $this->_state = $attribute;
-        }
-
-        if (is_string($value) && isset($stringAttribute)) {
-            $value = $this->getAttributeValueFromString($stringAttribute, $value);
-        }
-
         switch ($attribute) {
-            case Doctrine::ATTR_FETCHMODE:
-                throw new Doctrine_Exception('Deprecated attribute. See http://www.phpdoctrine.org/documentation/manual?chapter=configuration');
-            case Doctrine::ATTR_LISTENER:
+            case Doctrine_Core::ATTR_LISTENER:
                 $this->setEventListener($value);
                 break;
-            case Doctrine::ATTR_COLL_KEY:
+            case Doctrine_Core::ATTR_COLL_KEY:
                 if ( ! ($this instanceof Doctrine_Table)) {
                     throw new Doctrine_Exception("This attribute can only be set at table level.");
                 }
@@ -152,58 +84,33 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
                     throw new Doctrine_Exception("Couldn't set collection key attribute. No such field '$value'.");
                 }
                 break;
-            case Doctrine::ATTR_CACHE:
-            case Doctrine::ATTR_RESULT_CACHE:
-            case Doctrine::ATTR_QUERY_CACHE:
+            case Doctrine_Core::ATTR_CACHE:
+            case Doctrine_Core::ATTR_RESULT_CACHE:
+            case Doctrine_Core::ATTR_QUERY_CACHE:
                 if ($value !== null) {
                     if ( ! ($value instanceof Doctrine_Cache_Interface)) {
                         throw new Doctrine_Exception('Cache driver should implement Doctrine_Cache_Interface');
                     }
                 }
                 break;
-            case Doctrine::ATTR_VALIDATE:
-            case Doctrine::ATTR_QUERY_LIMIT:
-            case Doctrine::ATTR_QUOTE_IDENTIFIER:
-            case Doctrine::ATTR_PORTABILITY:
-            case Doctrine::ATTR_DEFAULT_TABLE_TYPE:
-            case Doctrine::ATTR_EMULATE_DATABASE:
-            case Doctrine::ATTR_USE_NATIVE_ENUM:
-            case Doctrine::ATTR_DEFAULT_SEQUENCE:
-            case Doctrine::ATTR_EXPORT:
-            case Doctrine::ATTR_DECIMAL_PLACES:
-            case Doctrine::ATTR_LOAD_REFERENCES:
-            case Doctrine::ATTR_RECORD_LISTENER:
-            case Doctrine::ATTR_THROW_EXCEPTIONS:
-            case Doctrine::ATTR_DEFAULT_PARAM_NAMESPACE:
-            case Doctrine::ATTR_AUTOLOAD_TABLE_CLASSES:
-            case Doctrine::ATTR_MODEL_LOADING:
-            case Doctrine::ATTR_RESULT_CACHE_LIFESPAN:
-            case Doctrine::ATTR_QUERY_CACHE_LIFESPAN:
-            case Doctrine::ATTR_RECURSIVE_MERGE_FIXTURES;
-            case Doctrine::ATTR_USE_DQL_CALLBACKS;
-            case Doctrine::ATTR_AUTO_ACCESSOR_OVERRIDE;
-            case Doctrine::ATTR_HYDRATE_OVERWRITE;
-
-                break;
-            case Doctrine::ATTR_SEQCOL_NAME:
+            case Doctrine_Core::ATTR_SEQCOL_NAME:
                 if ( ! is_string($value)) {
                     throw new Doctrine_Exception('Sequence column name attribute only accepts string values');
                 }
                 break;
-            case Doctrine::ATTR_FIELD_CASE:
+            case Doctrine_Core::ATTR_FIELD_CASE:
                 if ($value != 0 && $value != CASE_LOWER && $value != CASE_UPPER)
                     throw new Doctrine_Exception('Field case attribute should be either 0, CASE_LOWER or CASE_UPPER constant.');
                 break;
-            case Doctrine::ATTR_SEQNAME_FORMAT:
-            case Doctrine::ATTR_IDXNAME_FORMAT:
-            case Doctrine::ATTR_TBLNAME_FORMAT:
+            case Doctrine_Core::ATTR_SEQNAME_FORMAT:
+            case Doctrine_Core::ATTR_IDXNAME_FORMAT:
+            case Doctrine_Core::ATTR_TBLNAME_FORMAT:
+            case Doctrine_Core::ATTR_FKNAME_FORMAT:
                 if ($this instanceof Doctrine_Table) {
                     throw new Doctrine_Exception('Sequence / index name format attributes cannot be set'
                                                . 'at table level (only at connection or global level).');
                 }
                 break;
-            default:
-                throw new Doctrine_Exception("Unknown attribute.");
         }
 
         $this->attributes[$attribute] = $value;
@@ -212,7 +119,7 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
     public function getParams($namespace = null)
     {
     	if ($namespace == null) {
-    	    $namespace = $this->getAttribute(Doctrine::ATTR_DEFAULT_PARAM_NAMESPACE);
+    	    $namespace = $this->getAttribute(Doctrine_Core::ATTR_DEFAULT_PARAM_NAMESPACE);
     	}
     	
     	if ( ! isset($this->_params[$namespace])) {
@@ -230,7 +137,7 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
     public function setParam($name, $value, $namespace = null) 
     {
     	if ($namespace == null) {
-    	    $namespace = $this->getAttribute(Doctrine::ATTR_DEFAULT_PARAM_NAMESPACE);
+    	    $namespace = $this->getAttribute(Doctrine_Core::ATTR_DEFAULT_PARAM_NAMESPACE);
     	}
     	
     	$this->_params[$namespace][$name] = $value;
@@ -241,7 +148,7 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
     public function getParam($name, $namespace = null) 
     {
     	if ($namespace == null) {
-    	    $namespace = $this->getAttribute(Doctrine::ATTR_DEFAULT_PARAM_NAMESPACE);
+    	    $namespace = $this->getAttribute(Doctrine_Core::ATTR_DEFAULT_PARAM_NAMESPACE);
     	}
     	
         if ( ! isset($this->_params[$namespace][$name])) {
@@ -253,6 +160,7 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
         
         return $this->_params[$namespace][$name];
     }
+
     /**
      * setImpl
      * binds given class to given template name
@@ -312,16 +220,16 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
      * addRecordListener
      *
      * @param Doctrine_EventListener_Interface|Doctrine_Overloadable $listener
-     * @return mixed        this object
+     * @return Doctrine_Configurable        this object
      */
     public function addRecordListener($listener, $name = null)
     {
-        if ( ! isset($this->attributes[Doctrine::ATTR_RECORD_LISTENER]) ||
-             ! ($this->attributes[Doctrine::ATTR_RECORD_LISTENER] instanceof Doctrine_Record_Listener_Chain)) {
+        if ( ! isset($this->attributes[Doctrine_Core::ATTR_RECORD_LISTENER]) ||
+             ! ($this->attributes[Doctrine_Core::ATTR_RECORD_LISTENER] instanceof Doctrine_Record_Listener_Chain)) {
 
-            $this->attributes[Doctrine::ATTR_RECORD_LISTENER] = new Doctrine_Record_Listener_Chain();
+            $this->attributes[Doctrine_Core::ATTR_RECORD_LISTENER] = new Doctrine_Record_Listener_Chain();
         }
-        $this->attributes[Doctrine::ATTR_RECORD_LISTENER]->add($listener, $name);
+        $this->attributes[Doctrine_Core::ATTR_RECORD_LISTENER]->add($listener, $name);
 
         return $this;
     }
@@ -333,13 +241,13 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
      */
     public function getRecordListener()
     {
-        if ( ! isset($this->attributes[Doctrine::ATTR_RECORD_LISTENER])) {
+        if ( ! isset($this->attributes[Doctrine_Core::ATTR_RECORD_LISTENER])) {
             if (isset($this->parent)) {
                 return $this->parent->getRecordListener();
             }
             return null;
         }
-        return $this->attributes[Doctrine::ATTR_RECORD_LISTENER];
+        return $this->attributes[Doctrine_Core::ATTR_RECORD_LISTENER];
     }
 
     /**
@@ -355,7 +263,7 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
         ) {
             throw new Doctrine_Exception("Couldn't set eventlistener. Record listeners should implement either Doctrine_Record_Listener_Interface or Doctrine_Overloadable");
         }
-        $this->attributes[Doctrine::ATTR_RECORD_LISTENER] = $listener;
+        $this->attributes[Doctrine_Core::ATTR_RECORD_LISTENER] = $listener;
 
         return $this;
     }
@@ -364,16 +272,16 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
      * addListener
      *
      * @param Doctrine_EventListener_Interface|Doctrine_Overloadable $listener
-     * @return mixed        this object
+     * @return Doctrine_Configurable    this object
      */
     public function addListener($listener, $name = null)
     {
-        if ( ! isset($this->attributes[Doctrine::ATTR_LISTENER]) ||
-             ! ($this->attributes[Doctrine::ATTR_LISTENER] instanceof Doctrine_EventListener_Chain)) {
+        if ( ! isset($this->attributes[Doctrine_Core::ATTR_LISTENER]) ||
+             ! ($this->attributes[Doctrine_Core::ATTR_LISTENER] instanceof Doctrine_EventListener_Chain)) {
 
-            $this->attributes[Doctrine::ATTR_LISTENER] = new Doctrine_EventListener_Chain();
+            $this->attributes[Doctrine_Core::ATTR_LISTENER] = new Doctrine_EventListener_Chain();
         }
-        $this->attributes[Doctrine::ATTR_LISTENER]->add($listener, $name);
+        $this->attributes[Doctrine_Core::ATTR_LISTENER]->add($listener, $name);
 
         return $this;
     }
@@ -385,13 +293,13 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
      */
     public function getListener()
     {
-        if ( ! isset($this->attributes[Doctrine::ATTR_LISTENER])) {
+        if ( ! isset($this->attributes[Doctrine_Core::ATTR_LISTENER])) {
             if (isset($this->parent)) {
                 return $this->parent->getListener();
             }
             return null;
         }
-        return $this->attributes[Doctrine::ATTR_LISTENER];
+        return $this->attributes[Doctrine_Core::ATTR_LISTENER];
     }
 
     /**
@@ -407,7 +315,7 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
         ) {
             throw new Doctrine_EventListener_Exception("Couldn't set eventlistener. EventListeners should implement either Doctrine_EventListener_Interface or Doctrine_Overloadable");
         }
-        $this->attributes[Doctrine::ATTR_LISTENER] = $listener;
+        $this->attributes[Doctrine_Core::ATTR_LISTENER] = $listener;
 
         return $this;
     }
@@ -420,25 +328,6 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
      */
     public function getAttribute($attribute)
     {
-        if (is_string($attribute)) {
-            $upper = strtoupper($attribute);
-
-            $const = 'Doctrine::ATTR_' . $upper; 
-
-            if (defined($const)) {
-                $attribute = constant($const);
-                $this->_state = $attribute;
-            } else {
-                throw new Doctrine_Exception('Unknown attribute: "' . $attribute . '"');
-            }
-        }
-
-        $attribute = (int) $attribute;
-
-        if ($attribute < 0) {
-            throw new Doctrine_Exception('Unknown attribute.');
-        }
-
         if (isset($this->attributes[$attribute])) {
             return $this->attributes[$attribute];
         }
@@ -450,6 +339,19 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
     }
 
     /**
+     * Unset an attribute from this levels attributes
+     *
+     * @param integer $attribute
+     * @return void
+     */
+    public function unsetAttribute($attribute)
+    {
+        if (isset($this->attributes[$attribute])) {
+            unset($this->attributes[$attribute]);
+        }
+    }
+
+    /**
      * getAttributes
      * returns all attributes as an array
      *
@@ -458,6 +360,46 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
     public function getAttributes()
     {
         return $this->attributes;
+    }
+
+    /**
+     * Set the charset
+     *
+     * @param string $charset
+     */
+    public function setCharset($charset)
+    {
+        $this->setAttribute(Doctrine_Core::ATTR_DEFAULT_TABLE_CHARSET, $charset);
+    }
+
+    /**
+     * Get the charset
+     *
+     * @return mixed
+     */
+    public function getCharset()
+    {
+        return $this->getAttribute(Doctrine_Core::ATTR_DEFAULT_TABLE_CHARSET);
+    }
+
+    /**
+     * Set the collate
+     *
+     * @param string $collate
+     */
+    public function setCollate($collate)
+    {
+        $this->setAttribute(Doctrine_Core::ATTR_DEFAULT_TABLE_COLLATE, $collate);
+    }
+
+    /**
+     * Get the collate
+     *
+     * @return mixed $collate
+     */
+    public function getCollate()
+    {
+        return $this->getAttribute(Doctrine_Core::ATTR_DEFAULT_TABLE_COLLATE);
     }
 
     /**

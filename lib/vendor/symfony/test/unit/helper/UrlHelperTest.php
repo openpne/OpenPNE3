@@ -15,7 +15,8 @@ class myController
 {
   public function genUrl($parameters = array(), $absolute = false)
   {
-    return ($absolute ? '/' : '').'module/action';
+    $url = is_array($parameters) && isset($parameters['sf_route']) ? $parameters['sf_route'] : 'module/action';
+    return ($absolute ? '/' : '').$url;
   }
 }
 
@@ -37,7 +38,17 @@ class myRequest
   }
 }
 
-$t = new lime_test(38, new lime_output_color());
+class BaseForm extends sfForm
+{
+  public function getCSRFToken($secret = null)
+  {
+    return '==TOKEN==';
+  }
+}
+
+sfForm::enableCSRFProtection();
+
+$t = new lime_test(44);
 
 $context = sfContext::getInstance(array('controller' => 'myController', 'request' => 'myRequest'));
 
@@ -59,6 +70,7 @@ $t->is(link_to('test', '@homepage', array('absolute' => false)), '<a href="modul
 $t->is(link_to('test', '@homepage', array('query_string' => 'foo=bar')), '<a href="module/action?foo=bar">test</a>', 'link_to() can take a "query_string" option');
 $t->is(link_to('test', '@homepage', array('anchor' => 'bar')), '<a href="module/action#bar">test</a>', 'link_to() can take an "anchor" option');
 $t->is(link_to('', '@homepage'), '<a href="module/action">module/action</a>', 'link_to() takes the url as the link name if the first argument is empty');
+$t->like(link_to('test', '@homepage', array('method' => 'post')), '/==TOKEN==/', 'link_to() includes CSRF token from BaseForm');
 
 // button_to()
 $t->diag('button_to()');
@@ -69,6 +81,7 @@ $t->is(button_to('test', '@homepage', array('popup' => 'true', 'query_string' =>
 $t->is(button_to('test', '@homepage', 'popup=true'), '<input value="test" type="button" onclick="var w=window.open(\'module/action\');w.focus();return false;" />', 'button_to() accepts options as string');
 $t->is(button_to('test', '@homepage', 'confirm=really?'), '<input value="test" type="button" onclick="if (confirm(\'really?\')) { return document.location.href=\'module/action\';} else return false;" />', 'button_to() works with confirm option');
 $t->is(button_to('test', '@homepage', 'popup=true confirm=really?'), '<input value="test" type="button" onclick="if (confirm(\'really?\')) { var w=window.open(\'module/action\');w.focus(); };return false;" />', 'button_to() works with confirm and popup option');
+$t->like(button_to('test', '@homepage', array('method' => 'post')), '/==TOKEN==/', 'button_to() includes CSRF token from BaseForm');
 
 class testObject
 {
@@ -103,11 +116,15 @@ $t->is(link_to_if(false, 'test', '@homepage', array('tag' => 'div')), '<div>test
 $t->is(link_to_if(true, 'test', '@homepage', 'tag=div'), '<a href="module/action">test</a>', 'link_to_if() removes "tag" option (given as string) in true case');
 $t->is(link_to_if(true, 'test', '@homepage', array('tag' => 'div')), '<a href="module/action">test</a>', 'link_to_if() removes "tag" option (given as array) in true case');
 $t->is(link_to_if(false, 'test', '@homepage', array('query_string' => 'foo=bar', 'absolute' => true, 'absolute_url' => 'http://www.google.com/')), '<span>test</span>', 'link_to_if() returns an HTML "span" tag by default if the condition is false');
+$t->is(link_to_if(true, 'test', 'homepage', array(), array('class' => 'test')), '<a class="test" href="homepage">test</a>', 'link_to_if() accepts link_to2 compatible usage');
+$t->is(link_to_if(false, 'test', 'homepage', array(), array('class' => 'test')), '<span class="test">test</span>', 'link_to_if() accepts link_to2 compatible usage');
 
 // link_to_unless()
 $t->diag('link_to_unless()');
 $t->is(link_to_unless(false, 'test', '@homepage'), '<a href="module/action">test</a>', 'link_to_unless() returns an HTML "a" tag if the condition is false');
 $t->is(link_to_unless(true, 'test', '@homepage'), '<span>test</span>', 'link_to_unless() returns an HTML "span" tag by default if the condition is true');
+$t->is(link_to_unless(true, 'test', 'homepage', array(), array('class' => 'test')), '<span class="test">test</span>', 'link_to_unless() accepts link_to2 compatible usage');
+$t->is(link_to_unless(false, 'test', 'homepage', array(), array('class' => 'test')), '<a class="test" href="homepage">test</a>', 'link_to_unless() accepts link_to2 compatible usage');
 
 // public_path()
 $t->diag('public_path()');

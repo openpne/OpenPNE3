@@ -2,7 +2,7 @@
 
 /*
  * This file is part of the symfony package.
- * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
+ * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  * 
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,9 +14,9 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTestFunctionalTask.class.php 18136 2009-05-11 11:57:32Z fabien $
+ * @version    SVN: $Id: sfTestFunctionalTask.class.php 23740 2009-11-09 23:48:16Z FabianLange $
  */
-class sfTestFunctionalTask extends sfBaseTask
+class sfTestFunctionalTask extends sfTestBaseTask
 {
   /**
    * @see sfTask
@@ -26,6 +26,10 @@ class sfTestFunctionalTask extends sfBaseTask
     $this->addArguments(array(
       new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'),
       new sfCommandArgument('controller', sfCommandArgument::OPTIONAL | sfCommandArgument::IS_ARRAY, 'The controller name'),
+    ));
+
+    $this->addOptions(array(
+      new sfCommandOption('xml', null, sfCommandOption::PARAMETER_REQUIRED, 'The file name for the JUnit compatible XML log file'),
     ));
 
     $this->aliases = array('test-functional');
@@ -41,6 +45,11 @@ given application:
 
 The task launches all tests found in [test/functional/%application%|COMMENT].
 
+If some tests fail, you can use the [--trace|COMMENT] option to have more
+information about the failures:
+
+    [./symfony test:functional frontend -t|INFO]
+
 You can launch all functional tests for a specific controller by
 giving a controller name:
 
@@ -49,6 +58,11 @@ giving a controller name:
 You can also launch all functional tests for several controllers:
 
   [./symfony test:functional frontend article comment|INFO]
+
+The task can output a JUnit compatible XML log file with the [--xml|COMMENT]
+options:
+
+  [./symfony test:functional --xml=log.xml|INFO]
 EOF;
   }
 
@@ -61,27 +75,46 @@ EOF;
 
     if (count($arguments['controller']))
     {
+      $files = array();
+
       foreach ($arguments['controller'] as $controller)
       {
-        $files = sfFinder::type('file')->follow_link()->name(basename($controller).'Test.php')->in(sfConfig::get('sf_test_dir').DIRECTORY_SEPARATOR.'functional'.DIRECTORY_SEPARATOR.$app.DIRECTORY_SEPARATOR.dirname($controller));
-        foreach ($files as $file)
+        $finder = sfFinder::type('file')->follow_link()->name(basename($controller).'Test.php');
+        $files = array_merge($files, $finder->in(sfConfig::get('sf_test_dir').'/functional/'.$app.'/'.dirname($controller)));
+      }
+
+      if($allFiles = $this->filterTestFiles($files, $arguments, $options))
+      {
+        foreach ($allFiles as $file)
         {
           include($file);
         }
       }
+      else
+      {
+        $this->logSection('functional', 'no controller found', null, 'ERROR');
+      }
     }
     else
     {
-      require_once(sfConfig::get('sf_symfony_lib_dir').'/vendor/lime/lime.php');
+      require_once dirname(__FILE__).'/sfLimeHarness.class.php';
 
-      $h = new lime_harness(new lime_output_color());
+      $h = new sfLimeHarness(array('force_colors' => $options['color'], 'verbose' => $options['trace']));
+      $h->addPlugins(array_map(array($this->configuration, 'getPluginConfiguration'), $this->configuration->getPlugins()));
       $h->base_dir = sfConfig::get('sf_test_dir').'/functional/'.$app;
 
-      // register functional tests
+      // filter and register functional tests
       $finder = sfFinder::type('file')->follow_link()->name('*Test.php');
-      $h->register($finder->in($h->base_dir));
+      $h->register($this->filterTestFiles($finder->in($h->base_dir), $arguments, $options));
 
-      return $h->run() ? 0 : 1;
+      $ret = $h->run() ? 0 : 1;
+
+      if ($options['xml'])
+      {
+        file_put_contents($options['xml'], $h->to_xml());
+      }
+
+      return $ret;
     }
   }
 }

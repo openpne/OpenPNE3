@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTestCoverageTask.class.php 12069 2008-10-08 12:27:04Z fabien $
+ * @version    SVN: $Id: sfTestCoverageTask.class.php 23200 2009-10-19 21:29:50Z Kris.Wallsmith $
  */
 class sfTestCoverageTask extends sfBaseTask
 {
@@ -55,7 +55,7 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    require_once(sfConfig::get('sf_symfony_lib_dir').'/vendor/lime/lime.php');
+    require_once sfConfig::get('sf_symfony_lib_dir').'/vendor/lime/lime.php';
 
     $coverage = $this->getCoverage($this->getTestHarness(), $options['detailed']);
 
@@ -73,7 +73,10 @@ EOF;
 
   protected function getTestHarness()
   {
-    $harness = new lime_harness(new lime_output_color());
+    require_once dirname(__FILE__).'/sfLimeHarness.class.php';
+
+    $harness = new sfLimeHarness(array('force_colors' => $options['color']));
+    $harness->addPlugins(array_map(array($this->configuration, 'getPluginConfiguration'), $this->configuration->getPlugins()));
     $harness->base_dir = sfConfig::get('sf_root_dir');
 
     return $harness;

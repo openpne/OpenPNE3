@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineGenerateMigrationTask.class.php 14213 2008-12-19 21:03:13Z Jonathan.Wage $
+ * @version    SVN: $Id: sfDoctrineGenerateMigrationTask.class.php 22770 2009-10-04 11:15:42Z FabianLange $
  */
 class sfDoctrineGenerateMigrationTask extends sfDoctrineBaseTask
 {
@@ -34,6 +34,7 @@ class sfDoctrineGenerateMigrationTask extends sfDoctrineBaseTask
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
+      new sfCommandOption('editor-cmd', null, sfCommandOption::PARAMETER_REQUIRED, 'Open script with this command upon creation'),
     ));
 
     $this->aliases = array('doctrine-generate-migration');
@@ -44,7 +45,12 @@ class sfDoctrineGenerateMigrationTask extends sfDoctrineBaseTask
     $this->detailedDescription = <<<EOF
 The [doctrine:generate-migration|INFO] task generates migration template
 
-  [./symfony doctrine:generate-migration|INFO]
+  [./symfony doctrine:generate-migration AddUserEmailColumn|INFO]
+
+You can provide an [--editor-cmd|COMMENT] option to open the new migration class in your
+editor of choice upon creation:
+
+  [./symfony doctrine:generate-migration AddUserEmailColumn --editor-cmd=mate|INFO]
 EOF;
   }
 
@@ -53,9 +59,35 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
+    $databaseManager = new sfDatabaseManager($this->configuration);
+    $config = $this->getCliConfig();
+
     $this->logSection('doctrine', sprintf('generating migration class named "%s"', $arguments['name']));
 
-    $databaseManager = new sfDatabaseManager($this->configuration);
+    if (!is_dir($config['migrations_path']))
+    {
+      $this->getFilesystem()->mkdirs($config['migrations_path']);
+    }
+
     $this->callDoctrineCli('generate-migration', array('name' => $arguments['name']));
+
+    $finder = sfFinder::type('file')->sort_by_name()->name('*.php');
+    if ($files = $finder->in($config['migrations_path']))
+    {
+      $file = array_pop($files);
+
+      $contents = file_get_contents($file);
+      $contents = strtr(sfToolkit::stripComments($contents), array(
+        "{\n\n" => "{\n",
+        "\n}"   => "\n}\n",
+        '    '  => '  ',
+      ));
+      file_put_contents($file, $contents);
+
+      if (isset($options['editor-cmd']))
+      {
+        $this->getFilesystem()->sh($options['editor-cmd'].' '.escapeshellarg($file));
+      }
+    }
   }
 }

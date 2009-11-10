@@ -8,15 +8,13 @@
  * file that was distributed with this source code.
  */
 
-require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'config/config.php');
-
 /**
  * Base class for all symfony Propel tasks.
  *
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelBaseTask.class.php 15727 2009-02-23 16:19:10Z fabien $
+ * @version    SVN: $Id: sfPropelBaseTask.class.php 23739 2009-11-09 23:32:46Z Kris.Wallsmith $
  */
 abstract class sfPropelBaseTask extends sfBaseTask
 {
@@ -40,22 +38,6 @@ abstract class sfPropelBaseTask extends sfBaseTask
 
       self::$done = true;
     }
-  }
-
-  protected function createConfiguration($application, $env)
-  {
-    $configuration = parent::createConfiguration($application, $env);
-
-    $autoloader = sfSimpleAutoload::getInstance();
-    $config = new sfAutoloadConfigHandler();
-    $mapping = $config->evaluate($configuration->getConfigPaths('config/autoload.yml'));
-    foreach ($mapping as $class => $file)
-    {
-      $autoloader->setClassPath($class, $file);
-    }
-    $autoloader->register();
-
-    return $configuration;
   }
 
   protected function process(sfCommandManager $commandManager, $options)
@@ -212,9 +194,9 @@ abstract class sfPropelBaseTask extends sfBaseTask
 
   protected function cleanup()
   {
-    if (is_null($this->commandApplication) || !$this->commandApplication->withTrace())
+    if (null === $this->commandApplication || !$this->commandApplication->withTrace())
     {
-      $finder = sfFinder::type('file')->name('/^generated-.*schema(-transformed)?.xml$/');
+      $finder = sfFinder::type('file')->name('generated-*schema.xml')->name('*schema-transformed.xml');
       $this->getFilesystem()->remove($finder->in(array('config', 'plugins')));
     }
   }
@@ -229,12 +211,12 @@ abstract class sfPropelBaseTask extends sfBaseTask
 
     // Call phing targets
     sfToolkit::addIncludePath(array(
-      sfConfig::get('sf_root_dir'),
-      realpath(dirname(__FILE__).'/../vendor/propel-generator/classes'),
+      sfConfig::get('sf_symfony_lib_dir'),
+      sfConfig::get('sf_propel_generator_path', realpath(dirname(__FILE__).'/../vendor/propel-generator/classes')),
     ));
 
     $args = array();
-    $bufferPhingOutput = is_null($this->commandApplication) || !$this->commandApplication->withTrace();
+    $bufferPhingOutput = null === $this->commandApplication || !$this->commandApplication->withTrace();
 
     $properties = array_merge(array(
       'build.properties'  => 'propel.ini',
@@ -274,6 +256,9 @@ abstract class sfPropelBaseTask extends sfBaseTask
 
     $args[] = $taskName;
 
+    // filter arguments through the event dispatcher
+    $args = $this->dispatcher->filter(new sfEvent($this, 'propel.filter_phing_args'), $args)->getReturnValue();
+
     require_once dirname(__FILE__).'/sfPhing.class.php';
 
     // enable output buffering
@@ -307,15 +292,18 @@ abstract class sfPropelBaseTask extends sfBaseTask
 
       foreach (sfPhingListener::getExceptions() as $exception)
       {
-        $messages[] = '  '.preg_replace('/^.*build\-propel\.xml/', 'build-propel.xml', $exception->getMessage());
+        $messages[] = '';
+        $messages[] = preg_replace('/^.*build\-propel\.xml/', 'build-propel.xml', $exception->getMessage());
+        $messages[] = '';
       }
 
       if (count(sfPhingListener::getErrors()))
       {
-        $messages[] = '  If the exception message is not clear enough, read the output of the task for more information';
+        $messages[] = 'If the exception message is not clear enough, read the output of the task for';
+        $messages[] = 'more information';
       }
 
-      $this->logBlock($messages, 'ERROR');
+      $this->logBlock($messages, 'ERROR_LARGE');
 
       $ret = false;
     }

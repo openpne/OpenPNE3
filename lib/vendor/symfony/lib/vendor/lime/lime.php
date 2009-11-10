@@ -13,7 +13,7 @@
  *
  * @package    lime
  * @author     Fabien Potencier <fabien.potencier@gmail.com>
- * @version    SVN: $Id: lime.php 19870 2009-07-04 12:26:25Z fabien $
+ * @version    SVN: $Id: lime.php 23736 2009-11-09 23:07:17Z FabianLange $
  */
 class lime_test
 {
@@ -134,20 +134,20 @@ class lime_test
 
     if ($total > $plan)
     {
-      $this->output->red_bar(sprintf(" Looks like you planned %d tests but ran %d extra.", $plan, $total - $plan));
+      $this->output->red_bar(sprintf("# Looks like you planned %d tests but ran %d extra.", $plan, $total - $plan));
     }
     elseif ($total < $plan)
     {
-      $this->output->red_bar(sprintf(" Looks like you planned %d tests but only ran %d.", $plan, $total));
+      $this->output->red_bar(sprintf("# Looks like you planned %d tests but only ran %d.", $plan, $total));
     }
 
     if ($failed)
     {
-      $this->output->red_bar(sprintf(" Looks like you failed %d tests of %d.", $failed, $passed + $failed));
+      $this->output->red_bar(sprintf("# Looks like you failed %d tests of %d.", $failed, $passed + $failed));
     }
     else if ($total == $plan)
     {
-      $this->output->green_bar(" Looks like everything went fine.");
+      $this->output->green_bar("# Looks like everything went fine.");
     }
 
     flush();
@@ -598,11 +598,26 @@ class lime_colorizer
 {
   static public $styles = array();
 
-  protected $force_colors = false;
+  protected $colors_supported = false;
 
   public function __construct($force_colors = false)
   {
-    $this->force_colors = $force_colors;
+    if ($force_colors)
+    {
+      $this->colors_supported = true;
+    }
+    else
+    {
+      // colors are supported on windows with ansicon or on tty consoles
+      if (DIRECTORY_SEPARATOR == '\\')
+      {
+        $this->colors_supported = false !== getenv('ANSICON');
+      }
+      else
+      {
+        $this->colors_supported = function_exists('posix_isatty') && @posix_isatty(STDOUT);
+      }
+    }
   }
 
   public static function style($name, $options = array())
@@ -612,8 +627,8 @@ class lime_colorizer
 
   public function colorize($text = '', $parameters = array())
   {
-    // disable colors if not supported (windows or non tty console)
-    if (!$this->force_colors && (DIRECTORY_SEPARATOR == '\\' || !function_exists('posix_isatty') || !@posix_isatty(STDOUT)))
+
+    if (!$this->colors_supported)
     {
       return $text;
     }

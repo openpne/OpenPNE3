@@ -16,7 +16,7 @@
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     David Heinemeier Hansson
- * @version    SVN: $Id: FormHelper.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: FormHelper.php 23515 2009-11-02 13:12:42Z Kris.Wallsmith $
  */
 
 /**
@@ -229,7 +229,7 @@ function select_country_tag($name, $selected = null, $options = array())
     $countries = array_intersect_key($countries, array_flip($country_option)); 
   }
 
-  asort($countries);
+  $c->sortArray($countries);
 
   $option_tags = options_for_select($countries, $selected, $options);
   unset($options['include_blank'], $options['include_custom']);
@@ -275,7 +275,7 @@ function select_language_tag($name, $selected = null, $options = array())
     $languages = array_intersect_key($languages, array_flip($language_option)); 
   }
 
-  asort($languages);
+  $c->sortArray($languages);
 
   $option_tags = options_for_select($languages, $selected, $options);
   unset($options['include_blank'], $options['include_custom']);
@@ -334,7 +334,7 @@ function select_currency_tag($name, $selected = null, $options = array())
     }
   }
 
-  asort($currencies);
+  $c->sortArray($currencies);
 
   $option_tags = options_for_select($currencies, $selected, $options);
   unset($options['include_blank'], $options['include_custom']);
@@ -510,7 +510,11 @@ function textarea_tag($name, $content = null, $options = array())
 
     $editorClass = 'sfRichTextEditor'.$rich;
 
-    if (!class_exists($editorClass))
+    if (!class_exists($editorClass, false) && file_exists($file = dirname(__FILE__).'/'.$editorClass.'.class.php'))
+    {
+      require_once $file;
+    }
+    else if (!class_exists($editorClass))
     {
       throw new sfConfigurationException(sprintf('The rich text editor "%s" does not exist.', $editorClass));
     }

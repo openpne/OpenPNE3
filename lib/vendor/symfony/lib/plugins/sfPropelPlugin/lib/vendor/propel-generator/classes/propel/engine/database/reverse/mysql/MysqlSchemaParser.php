@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: MysqlSchemaParser.php 1010 2008-03-19 23:08:08Z hans $
+ *  $Id: MysqlSchemaParser.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -25,7 +25,7 @@ require_once 'propel/engine/database/reverse/BaseSchemaParser.php';
  * Mysql database schema parser.
  *
  * @author     Hans Lellelid <hans@xmpl.org>
- * @version    $Revision: 1010 $
+ * @version    $Revision: 1262 $
  * @package    propel.engine.database.reverse.mysql
  */
 class MysqlSchemaParser extends BaseSchemaParser {

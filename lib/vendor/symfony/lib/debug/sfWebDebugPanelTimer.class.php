@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage debug
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWebDebugPanelTimer.class.php 12982 2008-11-13 17:25:10Z hartym $
+ * @version    SVN: $Id: sfWebDebugPanelTimer.class.php 22955 2009-10-12 16:44:07Z Kris.Wallsmith $
  */
 class sfWebDebugPanelTimer extends sfWebDebugPanel
 {
@@ -24,7 +24,7 @@ class sfWebDebugPanelTimer extends sfWebDebugPanel
   /**
    * Constructor.
    *
-   * @param sfWebDebug $webDebug The web debut toolbar instance
+   * @param sfWebDebug $webDebug The web debug toolbar instance
    */
   public function __construct(sfWebDebug $webDebug)
   {
@@ -80,11 +80,11 @@ class sfWebDebugPanelTimer extends sfWebDebugPanel
 
   static public function isStarted()
   {
-    return !is_null(self::$startTime);
+    return null !== self::$startTime;
   }
 
   protected function getTotalTime()
   {
-    return !is_null(self::$startTime) ? sprintf('%.0f', (microtime(true) - self::$startTime) * 1000) : 0;
+    return null !== self::$startTime ? sprintf('%.0f', (microtime(true) - self::$startTime) * 1000) : 0;
   }
 }

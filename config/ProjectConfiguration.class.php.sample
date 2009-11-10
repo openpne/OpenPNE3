@@ -20,7 +20,6 @@ class ProjectConfiguration extends sfProjectConfiguration
 
     $this->setOpenPNEConfiguration();
 
-    sfConfig::set('sfDoctrinePlugin_doctrine_lib_path', sfConfig::get('sf_lib_dir').'/vendor/doctrine/Doctrine.php');
     sfConfig::set('doctrine_model_builder_options', array(
       'baseClassName' => 'opDoctrineRecord',
     ));

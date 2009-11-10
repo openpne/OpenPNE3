@@ -11,13 +11,13 @@
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 require_once(dirname(__FILE__).'/sfCacheDriverTests.class.php');
 
-$plan = 121;
-$t = new lime_test($plan, new lime_output_color());
+$plan = 129;
+$t = new lime_test($plan);
 
-if (!extension_loaded('SQLite')) 
+if (!extension_loaded('SQLite') && !extension_loaded('pdo_SQLite')) 
 {
   $t->skip('SQLite extension not loaded, skipping tests', $plan);
-  exit(0);
+  return;
 }
 
 try

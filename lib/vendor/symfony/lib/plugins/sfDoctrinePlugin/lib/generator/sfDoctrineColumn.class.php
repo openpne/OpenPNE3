@@ -126,7 +126,7 @@ class sfDoctrineColumn implements ArrayAccess
     $doctrineType = $this->getDoctrineType();
 
     // we simulate the CHAR/VARCHAR types to generate input_tags
-    if ('string' == $doctrineType && !is_null($this->getSize()) && $this->getSize() <= 255)
+    if ('string' == $doctrineType && null !== $this->getSize() && $this->getSize() <= 255)
     {
       return 'VARCHAR';
     }
@@ -173,6 +173,24 @@ class sfDoctrineColumn implements ArrayAccess
       return $this->definition[$key];
     } else {
       return false;
+    }
+  }
+
+  /**
+   * Returns a value from the current column's relation.
+   * 
+   * @param string $key
+   * 
+   * @return mixed|null
+   */
+  public function getRelationKey($key)
+  {
+    foreach ($this->table->getRelations() as $relation)
+    {
+      if (strtolower($relation['local']) == strtolower($this->name))
+      {
+        return $relation[$key];
+      }
     }
   }
 
@@ -260,7 +278,7 @@ class sfDoctrineColumn implements ArrayAccess
   {
     if ($this->isForeignKey())
     {
-      return Doctrine::getTable($this->foreignClassName);
+      return Doctrine_Core::getTable($this->foreignClassName);
     } else {
       return false;
     }

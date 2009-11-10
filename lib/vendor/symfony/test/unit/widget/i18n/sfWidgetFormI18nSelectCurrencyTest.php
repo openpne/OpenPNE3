@@ -10,7 +10,7 @@
 
 require_once(dirname(__FILE__).'/../../../bootstrap/unit.php');
 
-$t = new lime_test(6, new lime_output_color());
+$t = new lime_test(6);
 
 $dom = new DomDocument('1.0', 'utf-8');
 $dom->validateOnParse = true;
@@ -28,7 +28,7 @@ catch (InvalidArgumentException $e)
 }
 
 $v = new sfWidgetFormI18nSelectCurrency(array('culture' => 'en', 'currencies' => array('EUR', 'USD')));
-$t->is(array_keys($v->getOption('choices')), array('USD', 'EUR'), '->configure() can restrict the number of currencies with the currencies option');
+$t->is(array_keys($v->getOption('choices')), array('EUR', 'USD'), '->configure() can restrict the number of currencies with the currencies option');
 
 // ->render()
 $t->diag('->render()');

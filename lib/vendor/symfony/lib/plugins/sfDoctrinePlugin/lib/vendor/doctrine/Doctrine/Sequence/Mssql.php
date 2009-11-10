@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Mssql.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Mssql.php 6537 2009-10-19 20:11:24Z guilhermeblanco $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6537 $
  */
 class Doctrine_Sequence_Mssql extends Doctrine_Sequence
 {
@@ -43,7 +43,7 @@ class Doctrine_Sequence_Mssql extends Doctrine_Sequence
     public function nextId($seqName, $onDemand = true)
     {
         $sequenceName = $this->conn->quoteIdentifier($this->conn->formatter->getSequenceName($seqName), true);
-        $seqcolName   = $this->conn->quoteIdentifier($this->conn->getAttribute(Doctrine::ATTR_SEQCOL_NAME), true);
+        $seqcolName   = $this->conn->quoteIdentifier($this->conn->getAttribute(Doctrine_Core::ATTR_SEQCOL_NAME), true);
 
 
         if ($this->checkSequence($sequenceName)) {
@@ -54,11 +54,9 @@ class Doctrine_Sequence_Mssql extends Doctrine_Sequence
         }
         
         try {
-
             $this->conn->exec($query);
-
         } catch(Doctrine_Connection_Exception $e) {
-            if ($onDemand && $e->getPortableCode() == Doctrine::ERR_NOSUCHTABLE) {
+            if ($onDemand && $e->getPortableCode() == Doctrine_Core::ERR_NOSUCHTABLE) {
                 // Since we are creating the sequence on demand
                 // we know the first id = 1 so initialize the
                 // sequence at 2
@@ -79,6 +77,7 @@ class Doctrine_Sequence_Mssql extends Doctrine_Sequence
                 
                 return 1;
             }
+            
             throw $e;
         }
         
@@ -90,9 +89,11 @@ class Doctrine_Sequence_Mssql extends Doctrine_Sequence
             try {
                 $this->conn->exec($query);
             } catch (Doctrine_Connection_Exception $e) {
-                throw new Doctrine_Sequence_Exception('Could not delete previous sequence from ' . $sequenceName . 
-                                                      ' at ' . __FILE__ . ' in ' . __FUNCTION__ . ' with the message: ' .
-                                                      $e->getMessage());
+                throw new Doctrine_Sequence_Exception(
+                    'Could not delete previous sequence from ' . 
+                    $sequenceName . ' at ' . __FILE__ . ' in ' . 
+                    __FUNCTION__ . ' with the message: ' . $e->getMessage()
+                );
             }
         }
         return $value;
@@ -111,7 +112,7 @@ class Doctrine_Sequence_Mssql extends Doctrine_Sequence
         try {
             $this->conn->execute($query);
         } catch (Doctrine_Connection_Exception $e) {
-            if ($e->getPortableCode() == Doctrine::ERR_NOSUCHTABLE) {
+            if ($e->getPortableCode() == Doctrine_Core::ERR_NOSUCHTABLE) {
                 return false;
             }
         }

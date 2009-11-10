@@ -1,5 +1,10 @@
 propel:
   _attributes:      { defaultIdMethod: none, package: lib.model }
+  _propel_behaviors:
+    timestampable:
+      boolean: true
+      create_column: create_date
+
   ab_group:
     _attributes:    { phpName: Group, package: foo.bar.lib.model }
     id:
@@ -51,6 +56,9 @@ propel:
     _behaviors:
       paranoid: { column: deleted_at }
       act_as_nested_set:
+    _propel_behaviors:
+      paranoid: { column: deleted_at }
+      act_as_nested_set:
 
   kl_article:
     title:          varchar(50)
@@ -78,9 +86,9 @@ propel:
   my_nested_sets:
     _attributes: { phpName: myNestedSetNode }
     id:
-    lft:    { type: integer, required: on }
-    rgt:    { type: integer, required: on }
-    scope:  { type: integer, required: on }
+    lft:    { type: integer, required: true }
+    rgt:    { type: integer, required: true }
+    scope:  { type: integer, required: true }
     _nestedSet:
       left:   lft
       right:  rgt

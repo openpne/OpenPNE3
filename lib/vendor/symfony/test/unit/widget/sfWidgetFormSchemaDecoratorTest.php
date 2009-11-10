@@ -10,10 +10,10 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(16, new lime_output_color());
+$t = new lime_test(16);
 
-$w1 = new sfWidgetFormInput();
-$w2 = new sfWidgetFormInput();
+$w1 = new sfWidgetFormInputText();
+$w2 = new sfWidgetFormInputText();
 $ws = new sfWidgetFormSchema(array('w1' => $w1));
 
 $w = new sfWidgetFormSchemaDecorator($ws, "<table>\n%content%</table>");
@@ -32,7 +32,7 @@ $output = <<<EOF
 </tr>
 </table>
 EOF;
-$t->is($w->render(null), $output, '->render() decorates the widget');
+$t->is($w->render(null), fix_linebreaks($output), '->render() decorates the widget');
 
 // implements ArrayAccess
 $t->diag('implements ArrayAccess');

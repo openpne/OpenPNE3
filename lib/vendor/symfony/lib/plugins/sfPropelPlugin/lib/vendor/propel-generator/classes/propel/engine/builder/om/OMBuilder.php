@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: OMBuilder.php 989 2008-03-11 14:29:30Z heltem $
+ *  $Id: OMBuilder.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -49,7 +49,9 @@ abstract class OMBuilder extends DataModelBuilder {
 		$this->validateModel();
 
 		$script = "<" . "?php\n"; // intentional concatenation
-		$this->addIncludes($script);
+		if ($this->isAddIncludes()) {
+			$this->addIncludes($script);
+		}
 		$this->addClassOpen($script);
 		$this->addClassBody($script);
 		$this->addClassClose($script);
@@ -180,7 +182,7 @@ abstract class OMBuilder extends DataModelBuilder {
 			throw $e;
 		}
 		if ($classname === null) {
-			$classname = $this->getPeerClassname();
+			return $col->getConstantName();
 		}
 		// was it overridden in schema.xml ?
 		if ($col->getPeerName()) {
@@ -204,4 +206,163 @@ abstract class OMBuilder extends DataModelBuilder {
 		return $class;
 	}
 
+	/**
+	 * Convenience method to get the foreign Table object for an fkey.
+	 * @return     Table
+	 */
+	protected function getForeignTable(ForeignKey $fk)
+	{
+		return $this->getTable()->getDatabase()->getTable($fk->getForeignTableName());
+	}
+
+	/**
+	 * Gets the PHP method name affix to be used for fkeys for the current table (not referrers to this table).
+	 *
+	 * The difference between this method and the getRefFKPhpNameAffix() method is that in this method the
+	 * classname in the affix is the foreign table classname.
+	 *
+	 * @param      ForeignKey $fk The local FK that we need a name for.
+	 * @param      boolean $plural Whether the php name should be plural (e.g. initRelatedObjs() vs. addRelatedObj()
+	 * @return     string
+	 */
+	public function getFKPhpNameAffix(ForeignKey $fk, $plural = false)
+	{
+		if ($fk->getPhpName()) {
+			if ($plural) {
+				return $this->getPluralizer()->getPluralForm($fk->getPhpName());
+			} else {
+				return $fk->getPhpName();
+			}
+		} else {
+			$className = $this->getForeignTable($fk)->getPhpName();
+			if ($plural) {
+				$className = $this->getPluralizer()->getPluralForm($className);
+			}
+			return $className . $this->getRelatedBySuffix($fk, true);
+		}
+	}
+
+	/**
+	 * Gets the PHP method name affix to be used for referencing foreign key methods and variable names (e.g. set????(), $coll???).
+	 *
+	 * The difference between this method and the getFKPhpNameAffix() method is that in this method the
+	 * classname in the affix is the classname of the local fkey table.
+	 *
+	 * @param      ForeignKey $fk The referrer FK that we need a name for.
+	 * @param      boolean $plural Whether the php name should be plural (e.g. initRelatedObjs() vs. addRelatedObj()
+	 * @return     string
+	 */
+	public function getRefFKPhpNameAffix(ForeignKey $fk, $plural = false)
+	{
+		if ($fk->getRefPhpName()) {
+			if ($plural) {
+				return $this->getPluralizer()->getPluralForm($fk->getRefPhpName());
+			} else {
+				return $fk->getRefPhpName();
+			}
+		} else {
+			$className = $fk->getTable()->getPhpName();
+			if ($plural) {
+				$className = $this->getPluralizer()->getPluralForm($className);
+			}
+			return $className . $this->getRelatedBySuffix($fk);
+		}
+	}
+
+	/**
+	 * Gets the "RelatedBy*" suffix (if needed) that is attached to method and variable names.
+	 *
+	 * The related by suffix is based on the local columns of the foreign key.  If there is more than
+	 * one column in a table that points to the same foreign table, then a 'RelatedByLocalColName' suffix
+	 * will be appended.
+	 *
+	 * @return     string
+	 */
+	protected function getRelatedBySuffix(ForeignKey $fk, $columnCheck = false)
+	{
+		$relCol = "";
+		foreach ($fk->getLocalColumns() as $columnName) {
+			$column = $fk->getTable()->getColumn($columnName);
+			if (!$column) {
+				throw new Exception("Could not fetch column: $columnName in table " . $fk->getTable()->getName());
+			}
+
+			if ( count($column->getTable()->getForeignKeysReferencingTable($fk->getForeignTableName())) > 1
+			|| $fk->getForeignTableName() == $fk->getTable()->getName()) {
+				// if there are seeral foreign keys that point to the same table
+				// then we need to generate methods like getAuthorRelatedByColName()
+				// instead of just getAuthor().  Currently we are doing the same
+				// for self-referential foreign keys, to avoid confusion.
+				$relCol .= $column->getPhpName();
+			}
+		}
+
+		#var_dump($fk->getForeignTableName() . ' - ' .$fk->getTableName() . ' - ' . $this->getTable()->getName());
+
+		#$fk->getForeignTableName() != $this->getTable()->getName() &&
+		// @todo comment on it
+		if ($columnCheck && !$relCol && $fk->getTable()->getColumn($fk->getForeignTableName())) {
+			foreach ($fk->getLocalColumns() as $columnName) {
+				$column = $fk->getTable()->getColumn($columnName);
+				$relCol .= $column->getPhpName();
+			}
+		}
+
+
+		if ($relCol != "") {
+			$relCol = "RelatedBy" . $relCol;
+		}
+
+		return $relCol;
+	}
+	
+	/**
+	 * Whether to add the include statements.
+	 * This is based on the build property propel.addIncludes
+	 */
+	protected function isAddIncludes()
+	{
+		return $this->getBuildProperty('addIncludes');
+	}
+	
+	/**
+   * Checks whether any registered behavior on that table has a modifier for a hook
+   * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
+   * @param string $modifier The name of the modifier object providing the method in the behavior
+   * @return boolean
+   */
+  public function hasBehaviorModifier($hookName, $modifier)
+  {
+    $modifierGetter = 'get' . $modifier;
+    foreach ($this->getTable()->getBehaviors() as $behavior) {
+      if(method_exists($behavior->$modifierGetter(), $hookName)) { 
+        return true;
+      }
+      return false;
+    }
+  }
+
+  /**
+   * Checks whether any registered behavior on that table has a modifier for a hook
+   * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
+   * @param string $modifier The name of the modifier object providing the method in the behavior
+	 * @param string &$script The script will be modified in this method.
+   */
+  public function applyBehaviorModifier($hookName, $modifier, &$script, $tab = "		")
+  {
+    $modifierGetter = 'get' . $modifier;
+    foreach ($this->getTable()->getBehaviors() as $behavior) {
+      $modifier = $behavior->$modifierGetter();
+      if(method_exists($modifier, $hookName)) {
+        if (strpos($hookName, 'Filter') !== false) {
+          // filter hook: the script string will be modified by the behavior
+          $modifier->$hookName($script);
+        } else {
+          // regular hook: the behavior returns a string to append to the script string
+          $script .= "\n" . $tab . '// ' . $behavior->getName() . " behavior\n";
+          $script .= preg_replace('/^/m', $tab, $modifier->$hookName());           
+         }
+      }
+    }
+  }
 }

@@ -10,9 +10,9 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(69, new lime_output_color());
+$t = new lime_test(69);
 
-$tmpDir = sfToolkit::getTmpDir();
+$tmpDir = sys_get_temp_dir();
 $content = 'This is an ASCII file.';
 file_put_contents($tmpDir.'/test.txt', $content);
 

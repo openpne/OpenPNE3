@@ -11,7 +11,7 @@
 $app = 'frontend';
 require_once(dirname(__FILE__).'/../bootstrap/functional.php');
 
-$t = new lime_test(11, new lime_output_color());
+$t = new lime_test(13);
 
 $total = 50;
 for ($i = 0; $i < $total; $i++)
@@ -27,19 +27,21 @@ $pager->setTableMethod('testTableMethod');
 $pager->setPage(1);
 $pager->init();
 
-$t->is($pager->getQuery()->getSql(), 'SELECT a.id AS a__id, a.name AS a__name FROM author a WHERE a.id > 0 LIMIT 25');
+$t->is($pager->getQuery()->getSqlQuery(), 'SELECT a.id AS a__id, a.name AS a__name, a.type AS a__type FROM author a WHERE (a.id > 0) LIMIT 25');
+$t->ok($pager->isFirstPage());
 
 $pager->setPage(2);
 $pager->init();
 
-$t->is($pager->getQuery()->getSql(), 'SELECT a.id AS a__id, a.name AS a__name FROM author a WHERE a.id > 0 LIMIT 25 OFFSET 25');
+$t->is($pager->getQuery()->getSqlQuery(), 'SELECT a.id AS a__id, a.name AS a__name, a.type AS a__type FROM author a WHERE (a.id > 0) LIMIT 25 OFFSET 25');
+$t->is($pager->getQuery()->count(), $total);
+$t->ok($pager->isLastPage());
 
 $results = $pager->getResults();
 
 $t->is(gettype($results), 'object');
 $t->is(get_class($results), 'Doctrine_Collection');
 $t->is(count($results), $numPerPage);
-$t->is($pager->getQuery()->count(), $total);
 $t->is($pager->getCountQuery()->count(), $total);
 
 $pager = new sfDoctrinePager('Author', $numPerPage);
@@ -47,7 +49,7 @@ $pager->setTableMethod('testTableMethod');
 $pager->setPage(1);
 $pager->init();
 
-$results = $pager->getResults('array');
+$results = $pager->getResults(Doctrine::HYDRATE_ARRAY);
 
 $t->is(gettype($results), 'array');
 $t->is(count($results), $numPerPage);
@@ -58,7 +60,7 @@ $pager->setQuery(Doctrine_Query::create()->from('Author a')->where('a.id < 99999
 $pager->setPage(1);
 $pager->init();
 
-$t->is($pager->getQuery()->getSql(), 'SELECT a.id AS a__id, a.name AS a__name FROM author a WHERE a.id < 9999999 AND a.id > 0 LIMIT 25');
+$t->is($pager->getQuery()->getSqlQuery(), 'SELECT a.id AS a__id, a.name AS a__name, a.type AS a__type FROM author a WHERE (a.id < 9999999 AND a.id > 0) LIMIT 25');
 
 
 $pager = new sfDoctrinePager('Author', $numPerPage);
@@ -66,4 +68,4 @@ $pager->setQuery(Doctrine_Query::create()->from('Author a')->where('a.id < 99999
 $pager->setPage(1);
 $pager->init();
 
-$t->is($pager->getQuery()->getSql(), 'SELECT a.id AS a__id, a.name AS a__name FROM author a WHERE a.id < 9999999 LIMIT 25');
+$t->is($pager->getQuery()->getSqlQuery(), 'SELECT a.id AS a__id, a.name AS a__name, a.type AS a__type FROM author a WHERE (a.id < 9999999) LIMIT 25');

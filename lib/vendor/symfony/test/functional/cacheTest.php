@@ -272,7 +272,7 @@ class myTestBrowser extends sfTestBrowser
 $b = new myTestBrowser();
 
 // non HTML cache
-$image = file_get_contents(dirname(__FILE__).'/fixtures/project/apps/cache/modules/cache/data/ok48.png');
+$image = file_get_contents(dirname(__FILE__).'/fixtures/apps/cache/modules/cache/data/ok48.png');
 sfConfig::set('sf_web_debug', true);
 $b->
   get('/cache/imageWithLayoutCacheWithLayout')->
@@ -404,7 +404,7 @@ $b->
 $b->launch();
 
 // test with sfSQLiteCache class
-if (extension_loaded('SQLite')) 
+if (extension_loaded('SQLite') || extension_loaded('pdo_SQLite')) 
 {
   sfConfig::set('sf_factory_view_cache', 'sfSQLiteCache');
   sfConfig::set('sf_factory_view_cache_parameters', array('database' => sfConfig::get('sf_template_cache_dir').DIRECTORY_SEPARATOR.'cache.db'));

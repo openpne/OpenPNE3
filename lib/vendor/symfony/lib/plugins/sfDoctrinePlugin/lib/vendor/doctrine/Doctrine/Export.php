@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Export.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Export.php 6491 2009-10-12 21:00:11Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -29,7 +29,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6491 $
  */
 class Doctrine_Export extends Doctrine_Connection_Module
 {
@@ -56,7 +56,9 @@ class Doctrine_Export extends Doctrine_Connection_Module
      */
     public function dropDatabase($database)
     {
-        $this->conn->execute($this->dropDatabaseSql($database));
+        foreach ((array) $this->dropDatabaseSql($database) as $query) {
+            $this->conn->execute($query);
+        }
     }
 
     /**
@@ -470,7 +472,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
         $table  = $this->conn->quoteIdentifier($table);
         $name   = $this->conn->quoteIdentifier($name);
         $type   = '';
-
+        
         if (isset($definition['type'])) {
             switch (strtolower($definition['type'])) {
                 case 'unique':
@@ -503,7 +505,6 @@ class Doctrine_Export extends Doctrine_Connection_Module
     public function createForeignKeySql($table, array $definition)
     {
         $table = $this->conn->quoteIdentifier($table);
-
         $query = 'ALTER TABLE ' . $table . ' ADD ' . $this->getForeignKeyDeclaration($definition);
 
         return $query;
@@ -767,7 +768,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
                     ? null : $this->valid_default_values[$field['type']];
 
                 if ($field['default'] === '' &&
-                   ($this->conn->getAttribute(Doctrine::ATTR_PORTABILITY) & Doctrine::PORTABILITY_EMPTY_TO_NULL)) {
+                   ($this->conn->getAttribute(Doctrine_Core::ATTR_PORTABILITY) & Doctrine_Core::PORTABILITY_EMPTY_TO_NULL)) {
                     $field['default'] = null;
                 }
             }
@@ -1006,7 +1007,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
     {
         $sql = '';
         if (isset($definition['name'])) {
-            $sql .= ' CONSTRAINT ' . $this->conn->quoteIdentifier($definition['name']) . ' ';
+            $sql .= 'CONSTRAINT ' . $this->conn->quoteIdentifier($this->conn->formatter->getForeignKeyName($definition['name'])) . ' ';
         }
         $sql .= 'FOREIGN KEY (';
 
@@ -1083,7 +1084,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      * Then it iterates through all declared classes and creates tables for the ones
      * that extend Doctrine_Record and are not abstract classes
      *
-     * @throws Doctrine_Connection_Exception    if some error other than Doctrine::ERR_ALREADY_EXISTS
+     * @throws Doctrine_Connection_Exception    if some error other than Doctrine_Core::ERR_ALREADY_EXISTS
      *                                          occurred during the create table operation
      * @param string $directory     optional directory parameter
      * @return void
@@ -1091,9 +1092,9 @@ class Doctrine_Export extends Doctrine_Connection_Module
     public function exportSchema($directory = null)
     {
         if ($directory !== null) {
-            $models = Doctrine::filterInvalidModels(Doctrine::loadModels($directory));
+            $models = Doctrine_Core::filterInvalidModels(Doctrine_Core::loadModels($directory));
         } else {
-            $models = Doctrine::getLoadedModels();
+            $models = Doctrine_Core::getLoadedModels();
         }
 
         $this->exportClasses($models);
@@ -1153,13 +1154,21 @@ class Doctrine_Export extends Doctrine_Connection_Module
                      unset($sql[$key]);
                      continue;
                  }
-                 
+
                  // If create trgger statement
                  if (substr($query, 0, strlen('CREATE TRIGGER')) == 'CREATE TRIGGER') {
-                 	$connections[$connectionName]['create_triggers'][] = $query;
-                 	
-                 	unset($sql[$key]);
-                 	continue;
+                     $connections[$connectionName]['create_triggers'][] = $query;
+
+                 	 unset($sql[$key]);
+                     continue;
+                 }
+
+                 // If comment statement
+                 if (substr($query, 0, strlen('COMMENT ON')) == 'COMMENT ON') {
+                     $connections[$connectionName]['comments'][] = $query;
+
+                     unset($sql[$key]);
+                     continue;
                  }
              }
          }
@@ -1186,7 +1195,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      *
      * FIXME: This function has ugly hacks in it to make sure sql is inserted in the correct order.
      *
-     * @throws Doctrine_Connection_Exception    if some error other than Doctrine::ERR_ALREADY_EXISTS
+     * @throws Doctrine_Connection_Exception    if some error other than Doctrine_Core::ERR_ALREADY_EXISTS
      *                                          occurred during the create table operation
      * @param array $classes
      * @return void
@@ -1205,7 +1214,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
                      $connection->exec($query);
                  } catch (Doctrine_Connection_Exception $e) {
                      // we only want to silence table already exists errors
-                     if ($e->getPortableCode() !== Doctrine::ERR_ALREADY_EXISTS) {
+                     if ($e->getPortableCode() !== Doctrine_Core::ERR_ALREADY_EXISTS) {
                          $connection->rollback();
                          throw new Doctrine_Export_Exception($e->getMessage() . '. Failing Query: ' . $query);
                      }
@@ -1220,49 +1229,49 @@ class Doctrine_Export extends Doctrine_Connection_Module
      * exportClassesSql
      * method for exporting Doctrine_Record classes to a schema
      *
-     * @throws Doctrine_Connection_Exception    if some error other than Doctrine::ERR_ALREADY_EXISTS
+     * @throws Doctrine_Connection_Exception    if some error other than Doctrine_Core::ERR_ALREADY_EXISTS
      *                                          occurred during the create table operation
      * @param array $classes
      * @return void
      */
     public function exportClassesSql(array $classes)
     {
-        $models = Doctrine::filterInvalidModels($classes);
+        $models = Doctrine_Core::filterInvalidModels($classes);
         
         $sql = array();
         
         foreach ($models as $name) {
-            try {
-                $record = new $name();
-                $table  = $record->getTable();
+            $record = new $name();
+            $table  = $record->getTable();
 
-                $parents = $table->getOption('joinedParents');
+            $parents = $table->getOption('joinedParents');
 
-                foreach ($parents as $parent) {
-                    $data  = $table->getConnection()->getTable($parent)->getExportableFormat();
-
-                    $query = $this->conn->export->createTableSql($data['tableName'], $data['columns'], $data['options']);
-
-                    $sql = array_merge($sql, (array) $query);
-                }
-
-                $data = $table->getExportableFormat();
+            foreach ($parents as $parent) {
+                $data  = $table->getConnection()->getTable($parent)->getExportableFormat();
 
                 $query = $this->conn->export->createTableSql($data['tableName'], $data['columns'], $data['options']);
 
-                if (is_array($query)) {
-                    $sql = array_merge($sql, $query);
-                } else {
-                    $sql[] = $query;
-                }
-
-                if ($table->getAttribute(Doctrine::ATTR_EXPORT) & Doctrine::EXPORT_PLUGINS) {
-                    $sql = array_merge($sql, $this->exportGeneratorsSql($table));
-                }
-            } catch (Exception $e) {
-                throw new Doctrine_Export_Exception("While exporting model class '$name' to SQL: " . $e->getMessage());
+                $sql = array_merge($sql, (array) $query);
             }
 
+            // Don't export the tables with attribute EXPORT_NONE'
+            if ($table->getAttribute(Doctrine_Core::ATTR_EXPORT) === Doctrine_Core::EXPORT_NONE) {
+                continue;
+            }
+
+            $data = $table->getExportableFormat();
+
+            $query = $this->conn->export->createTableSql($data['tableName'], $data['columns'], $data['options']);
+
+            if (is_array($query)) {
+                $sql = array_merge($sql, $query);
+            } else {
+                $sql[] = $query;
+            }
+
+            if ($table->getAttribute(Doctrine_Core::ATTR_EXPORT) & Doctrine_Core::EXPORT_PLUGINS) {
+                $sql = array_merge($sql, $this->exportGeneratorsSql($table));
+            }
         }
         
         $sql = array_unique($sql);
@@ -1336,7 +1345,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      * Then it iterates through all declared classes and creates tables for the ones
      * that extend Doctrine_Record and are not abstract classes
      *
-     * @throws Doctrine_Connection_Exception    if some error other than Doctrine::ERR_ALREADY_EXISTS
+     * @throws Doctrine_Connection_Exception    if some error other than Doctrine_Core::ERR_ALREADY_EXISTS
      *                                          occurred during the create table operation
      * @param string $directory     optional directory parameter
      * @return void
@@ -1344,9 +1353,9 @@ class Doctrine_Export extends Doctrine_Connection_Module
     public function exportSql($directory = null)
     {
         if ($directory !== null) {
-            $models = Doctrine::filterInvalidModels(Doctrine::loadModels($directory));
+            $models = Doctrine_Core::filterInvalidModels(Doctrine_Core::loadModels($directory));
         } else {
-            $models = Doctrine::getLoadedModels();
+            $models = Doctrine_Core::getLoadedModels();
         }
         
         return $this->exportSortedClassesSql($models, false);
@@ -1356,7 +1365,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      * exportTable
      * exports given table into database based on column and option definitions
      *
-     * @throws Doctrine_Connection_Exception    if some error other than Doctrine::ERR_ALREADY_EXISTS
+     * @throws Doctrine_Connection_Exception    if some error other than Doctrine_Core::ERR_ALREADY_EXISTS
      *                                          occurred during the create table operation
      * @return boolean                          whether or not the export operation was successful
      *                                          false if table already existed in the database
@@ -1369,7 +1378,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
             $this->conn->export->createTable($data['tableName'], $data['columns'], $data['options']);
         } catch(Doctrine_Connection_Exception $e) {
             // we only want to silence table already exists errors
-            if ($e->getPortableCode() !== Doctrine::ERR_ALREADY_EXISTS) {
+            if ($e->getPortableCode() !== Doctrine_Core::ERR_ALREADY_EXISTS) {
                 throw $e;
             }
         }

@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: DataModelBuilder.php 989 2008-03-11 14:29:30Z heltem $
+ *  $Id: DataModelBuilder.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -79,12 +79,6 @@ abstract class DataModelBuilder {
 	 * @var        DataModelBuilder
 	 */
 	private $stubObjectBuilder;
-
-	/**
-	 * MapBuilder builder class for current table.
-	 * @var        DataModelBuilder
-	 */
-	private $mapBuilderBuilder;
 
 	/**
 	 * Stub Interface builder class for current table.
@@ -220,18 +214,6 @@ abstract class DataModelBuilder {
 			$this->stubObjectBuilder = $this->getGeneratorConfig()->getConfiguredBuilder($this->getTable(), 'objectstub');
 		}
 		return $this->stubObjectBuilder;
-	}
-
-	/**
-	 * Returns new or existing MapBuilder builder class for this table.
-	 * @return     ObjectBuilder
-	 */
-	public function getMapBuilderBuilder()
-	{
-		if (!isset($this->mapBuilderBuilder)) {
-			$this->mapBuilderBuilder = $this->getGeneratorConfig()->getConfiguredBuilder($this->getTable(), 'mapbuilder');
-		}
-		return $this->mapBuilderBuilder;
 	}
 
 	/**

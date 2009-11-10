@@ -25,23 +25,6 @@ class sfDoctrineRoute extends sfObjectRoute
   protected
     $query = null;
 
-  /**
-   * Constructor.
-   *
-   * @param string $pattern       The pattern to match
-   * @param array  $defaults      An array of default parameter values
-   * @param array  $requirements  An array of requirements for parameters (regexes)
-   * @param array  $options       An array of options
-   *
-   * @see sfObjectRoute
-   */
-  public function __construct($pattern, array $defaults = array(), array $requirements = array(), array $options = array())
-  {
-    parent::__construct($pattern, $defaults, $requirements, $options);
-
-    $this->options['object_model'] = $this->options['model'];
-  }
-
   public function setListQuery(Doctrine_Query $query)
   {
     if (!$this->isBound())
@@ -78,7 +61,7 @@ class sfDoctrineRoute extends sfObjectRoute
 
   protected function getObjectsForParameters($parameters)
   {
-    $this->options['model'] = Doctrine::getTable($this->options['model']);
+    $this->options['model'] = Doctrine_Core::getTable($this->options['model']);
 
     $variables = array();
     $values = array();
@@ -93,7 +76,7 @@ class sfDoctrineRoute extends sfObjectRoute
 
     if (!isset($this->options['method']))
     {
-      if (is_null($this->query))
+      if (null === $this->query)
       {
         $q = $this->options['model']->createQuery('a');
         foreach ($values as $variable => $value)

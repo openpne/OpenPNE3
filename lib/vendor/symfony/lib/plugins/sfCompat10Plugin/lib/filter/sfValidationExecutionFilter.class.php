@@ -17,7 +17,7 @@
  * @subpackage filter
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfValidationExecutionFilter.class.php 11254 2008-08-30 12:20:19Z fabien $
+ * @version    SVN: $Id: sfValidationExecutionFilter.class.php 20546 2009-07-28 07:13:31Z fabien $
  */
 class sfValidationExecutionFilter extends sfFilter
 {

@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: ValidatorMap.php 521 2007-01-05 13:29:36Z heltem $
+ *  $Id: ValidatorMap.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,16 +27,10 @@
  * The propel.map classes are abstract building-block classes for modeling
  * the database at runtime.  These classes are similar (a lite version) to the
  * propel.engine.database.model classes, which are build-time modeling classes.
- * These classes in themselves do not do any database metadata lookups, but instead
- * are used by the MapBuilder classes that were generated for your datamodel. The
- * MapBuilder that was created for your datamodel build a representation of your
- * database by creating instances of the DatabaseMap, TableMap, ColumnMap, etc.
- * classes. See propel/templates/om/php5/MapBuilder.tpl and the classes generated
- * by that template for your datamodel to further understand how these are put
- * together.
+ * These classes in themselves do not do any database metadata lookups.
  *
  * @author     Michael Aichler <aichler@mediacluster.de>
- * @version    $Revision: 521 $
+ * @version    $Revision: 1262 $
  * @package    propel.map
  */
 class ValidatorMap

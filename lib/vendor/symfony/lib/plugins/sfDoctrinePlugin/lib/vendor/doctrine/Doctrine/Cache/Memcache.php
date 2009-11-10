@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Memcache.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Memcache.php 6559 2009-10-23 17:09:38Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,8 +27,9 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6559 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
  */
 class Doctrine_Cache_Memcache extends Doctrine_Cache_Driver
 {
@@ -72,13 +73,12 @@ class Doctrine_Cache_Memcache extends Doctrine_Cache_Driver
     }
 
     /**
-     * Test if a cache is available for the given id and (if yes) return it (false else)
-     * 
+     * Test if a cache record exists for the passed id
+     *
      * @param string $id cache id
-     * @param boolean $testCacheValidity        if set to false, the cache validity won't be tested
-     * @return mixed The stored variable on success. FALSE on failure.
+     * @return mixed false (a cache is not available) or "last modified" timestamp (int) of the available cache record
      */
-    public function fetch($id, $testCacheValidity = true) 
+    protected function _doFetch($id, $testCacheValidity = true) 
     {
         return $this->_memcache->get($id);
     }
@@ -89,22 +89,21 @@ class Doctrine_Cache_Memcache extends Doctrine_Cache_Driver
      * @param string $id cache id
      * @return mixed false (a cache is not available) or "last modified" timestamp (int) of the available cache record
      */
-    public function contains($id) 
+    protected function _doContains($id) 
     {
         return (bool) $this->_memcache->get($id);
     }
 
     /**
-     * Save some string datas into a cache record
+     * Save a cache record directly. This method is implemented by the cache
+     * drivers and used in Doctrine_Cache_Driver::save()
      *
-     * Note : $data is always saved as a string
-     *
-     * @param string $data      data to cache
      * @param string $id        cache id
+     * @param string $data      data to cache
      * @param int $lifeTime     if != false, set a specific lifetime for this cache record (null => infinite lifeTime)
      * @return boolean true if no problem
      */
-    public function save($id, $data, $lifeTime = false)
+    protected function _doSave($id, $data, $lifeTime = false)
     {
         if ($this->_options['compression']) {
             $flag = MEMCACHE_COMPRESSED;
@@ -112,16 +111,17 @@ class Doctrine_Cache_Memcache extends Doctrine_Cache_Driver
             $flag = 0;
         }
 
-        $result = $this->_memcache->set($id, $data, $flag, $lifeTime);
+        return $this->_memcache->set($id, $data, $flag, $lifeTime);
     }
 
     /**
-     * Remove a cache record
+     * Remove a cache record directly. This method is implemented by the cache
+     * drivers and used in Doctrine_Cache_Driver::delete()
      * 
      * @param string $id cache id
      * @return boolean true if no problem
      */
-    public function delete($id) 
+    protected function _doDelete($id) 
     {
         return $this->_memcache->delete($id);
     }

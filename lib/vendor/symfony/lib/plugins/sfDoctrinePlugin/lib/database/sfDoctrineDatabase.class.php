@@ -16,7 +16,7 @@
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineDatabase.class.php 14977 2009-01-26 23:11:38Z Jonathan.Wage $
+ * @version    SVN: $Id: sfDoctrineDatabase.class.php 22987 2009-10-13 08:02:48Z FabianLange $
  */
 class sfDoctrineDatabase extends sfDatabase
 {
@@ -27,6 +27,11 @@ class sfDoctrineDatabase extends sfDatabase
    * @var Doctrine_Connection $_doctrineConnection
    */
   protected $_doctrineConnection = null;
+
+  /**
+   * @var sfDoctrineConnectionProfiler
+   **/
+  protected $profiler = null;
 
   /**
    * Initialize a sfDoctrineDatabase connection with the given parameters.
@@ -46,7 +51,7 @@ class sfDoctrineDatabase extends sfDatabase
   {
     parent::initialize($parameters);
 
-    if (!is_null($this->_doctrineConnection))
+    if (null !== $this->_doctrineConnection)
     {
       return;
     }
@@ -61,28 +66,45 @@ class sfDoctrineDatabase extends sfDatabase
     }
 
     // Make the Doctrine connection for $dsn and $name
-    $this->_doctrineConnection = Doctrine_Manager::connection($dsn, $name);
+    $configuration = sfProjectConfiguration::getActive();
+    $dispatcher = $configuration->getEventDispatcher();
+    $manager = Doctrine_Manager::getInstance();
+
+    $this->_doctrineConnection = $manager->openConnection($dsn, $name);
+
     $attributes = $this->getParameter('attributes', array());
     foreach ($attributes as $name => $value)
     {
+      if (is_string($name))
+      {
+        $stringName = $name;
+        $name = constant('Doctrine_Core::ATTR_'.strtoupper($name));
+      }
+
+      if (is_string($value))
+      {
+        $value = constant('Doctrine_Core::'.strtoupper($stringName).'_'.strtoupper($value));
+      }
+
       $this->_doctrineConnection->setAttribute($name, $value);
     }
 
-    $encoding = $this->getParameter('encoding', 'UTF8'); 
-    $eventListener = new sfDoctrineConnectionListener($this->_doctrineConnection, $encoding); 
+    $encoding = $this->getParameter('encoding', 'UTF8');
+    $eventListener = new sfDoctrineConnectionListener($this->_doctrineConnection, $encoding);
     $this->_doctrineConnection->addListener($eventListener);
 
-    // Load Query Logger Listener
-    if (sfConfig::get('sf_debug') && sfConfig::get('sf_logging_enabled'))
+    // Load Query Profiler
+    if ($this->getParameter('profiler', sfConfig::get('sf_debug')))
     {
-      $this->_doctrineConnection->addListener(new sfDoctrineLogger());
+      $this->profiler = new sfDoctrineConnectionProfiler($dispatcher, array(
+        'logging' => $this->getParameter('logging', sfConfig::get('sf_logging_enabled')),
+      ));
+      $this->_doctrineConnection->addListener($this->profiler);
     }
 
-    // Invoke the configuration methods for the connection if they exist
-    $configuration = sfProjectConfiguration::getActive();
-
+    // Invoke the configuration methods for the connection if they exist (deprecated in favor of the "doctrine.configure_connection" event)
     $method = sprintf('configureDoctrineConnection%s', ucwords($this->_doctrineConnection->getName()));
-    
+
     if (method_exists($configuration, 'configureDoctrineConnection') && ! method_exists($configuration, $method))
     {
       $configuration->configureDoctrineConnection($this->_doctrineConnection);
@@ -92,6 +114,8 @@ class sfDoctrineDatabase extends sfDatabase
     {
       $configuration->$method($this->_doctrineConnection);
     }
+
+    $dispatcher->notify(new sfEvent($manager, 'doctrine.configure_connection', array('connection' => $this->_doctrineConnection, 'database' => $this)));
   }
 
   /**
@@ -102,6 +126,16 @@ class sfDoctrineDatabase extends sfDatabase
   public function getDoctrineConnection()
   {
     return $this->_doctrineConnection;
+  }
+
+  /**
+   * Returns the connection profiler.
+   * 
+   * @return sfDoctrineConnectionProfiler|null
+   */
+  public function getProfiler()
+  {
+    return $this->profiler;
   }
 
   /**

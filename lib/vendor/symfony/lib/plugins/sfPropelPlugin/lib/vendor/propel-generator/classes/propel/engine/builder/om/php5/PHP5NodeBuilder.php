@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: PHP5NodeBuilder.php 1067 2008-08-06 07:37:21Z ron $
+ *  $Id: PHP5NodeBuilder.php 1264 2009-10-26 21:58:09Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -279,8 +279,8 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
 
 		\$itclass = ucfirst(strtolower(\$type)) . 'OrderNodeIterator';
 
-";
-		$script .= "
+    require_once('propel/om/' . \$itclass . '.php'); 
+		return new \$itclass(\$this, \$opts); 
 	}
 ";
 	}
@@ -447,6 +447,7 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
 			\$criteria = new Criteria($peerClassname::DATABASE_NAME);
 			\$criteria->add($nodePeerClassname::NPATH_COLNAME, \$this->getNodePath() . $nodePeerClassname::NPATH_SEP . '%', Criteria::LIKE);
 			\$criteria->addAnd($nodePeerClassname::NPATH_COLNAME, \$this->getNodePath() . $nodePeerClassname::NPATH_SEP . '%' . $nodePeerClassname::NPATH_SEP . '%', Criteria::NOT_LIKE);
+			$peerClassname::addSelectColumns(\$criteria);
 			\$criteria->addAsColumn('npathlen', \$db->strLength($nodePeerClassname::NPATH_COLNAME));
 			\$criteria->addDescendingOrderByColumn('npathlen');
 			\$criteria->addDescendingOrderByColumn($nodePeerClassname::NPATH_COLNAME);
@@ -783,6 +784,7 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
 
 	protected function addDelete(&$script)
 	{
+		$peerClassname = $this->getStubPeerBuilder()->getClassname();
 		$nodePeerClassname = $this->getStubNodePeerBuilder()->getClassname();
 		$script .= "
 	/**
@@ -794,16 +796,19 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
 	 */
 	public function delete(PropelPDO \$con = null)
 	{
-		if (\$this->obj->isDeleted())
+		if (\$this->obj->isDeleted()) {
 			throw new PropelException('This node has already been deleted.');
+		}
 
-		if (!\$this->obj->isNew())
-		{
+		if (\$con === null) {
+			\$con = Propel::getConnection($peerClassname::DATABASE_NAME, Propel::CONNECTION_WRITE);
+		}
+			
+		if (!\$this->obj->isNew()) {
 			$nodePeerClassname::deleteNodeSubTree(\$this->getNodePath(), \$con);
 		}
 
-		if (\$parentNode = \$this->getParentNode(true, \$con))
-		{
+		if (\$parentNode = \$this->getParentNode(true, \$con)) {
 			\$parentNode->detachChildNode(\$this);
 			\$parentNode->shiftChildNodes(-1, \$this->getNodeIndex()+1, \$con);
 		}

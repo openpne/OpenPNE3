@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: MssqlPlatform.php 521 2007-01-05 13:29:36Z heltem $
+ *  $Id: MssqlPlatform.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@ include_once 'propel/engine/database/model/Domain.php';
  *
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
  * @author     Martin Poeschl <mpoeschl@marmot.at> (Torque)
- * @version    $Revision: 521 $
+ * @version    $Revision: 1262 $
  * @package    propel.engine.platform
  */
 class MssqlPlatform extends DefaultPlatform {
@@ -81,6 +81,14 @@ class MssqlPlatform extends DefaultPlatform {
 	}
 
 	/**
+	 * @see        Platform::supportsInsertNullPk()
+	 */
+	public function supportsInsertNullPk()
+	{
+		return false;
+	}
+	
+	/**
 	 * @see        Platform::hasSize(String)
 	 */
 	public function hasSize($sqlType)
@@ -95,5 +103,15 @@ class MssqlPlatform extends DefaultPlatform {
 	{
 		return '[' . $text . ']';
 	}
+
+   /**
+   * Gets the preferred timestamp formatter for setting date/time values.
+   * @return     string
+   */
+  public function getTimestampFormatter()
+  {
+    return 'Y-m-d H:i:s';
+  }
+
 
 }

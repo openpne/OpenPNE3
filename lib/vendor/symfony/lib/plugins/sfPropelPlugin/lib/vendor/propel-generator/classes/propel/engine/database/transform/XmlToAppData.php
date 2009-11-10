@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: XmlToAppData.php 989 2008-03-11 14:29:30Z heltem $
+ *  $Id: XmlToAppData.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -35,7 +35,7 @@ include_once 'phing/system/io/FileReader.php';
  * @author     Jason van Zyl <jvanzyl@apache.org> (Torque)
  * @author     Martin Poeschl <mpoeschl@marmot.at> (Torque)
  * @author     Daniel Rall <dlr@collab.net> (Torque)
- * @version    $Revision: 989 $
+ * @version    $Revision: 1262 $
  * @package    propel.engine.database.transform
  */
 class XmlToAppData extends AbstractHandler {
@@ -52,6 +52,7 @@ class XmlToAppData extends AbstractHandler {
 	private $currIndex;
 	private $currUnique;
 	private $currValidator;
+	private $currBehavior;
 	private $currVendorObject;
 
 	private $isForReferenceOnly;
@@ -189,7 +190,7 @@ class XmlToAppData extends AbstractHandler {
 						$this->parseFile($xmlFile);
 					break;
 
-		  case "domain":
+    		  case "domain":
 					  $this->currDB->addDomain($attributes);
 				  break;
 
@@ -203,6 +204,10 @@ class XmlToAppData extends AbstractHandler {
 
 					case "vendor":
 						$this->currVendorObject = $this->currDB->addVendorInfo($attributes);
+					break;
+
+					case "behavior":
+					  $this->currBehavior = $this->currDB->addBehavior($attributes);
 					break;
 
 					default:
@@ -232,14 +237,18 @@ class XmlToAppData extends AbstractHandler {
 						$this->currVendorObject = $this->currTable->addVendorInfo($attributes);
 					break;
 
-		  			case "validator":
+		  		case "validator":
 					  $this->currValidator = $this->currTable->addValidator($attributes);
-		  			break;
+		  		break;
 
-		  			case "id-method-parameter":
+		  		case "id-method-parameter":
 						$this->currTable->addIdMethodParameter($attributes);
 					break;
-
+          
+					case "behavior":
+					  $this->currBehavior = $this->currTable->addBehavior($attributes);
+					break;
+					
 					default:
 						$this->_throwInvalidTagException($name);
 				}
@@ -298,6 +307,16 @@ class XmlToAppData extends AbstractHandler {
 
 					case "vendor":
 						$this->currVendorObject = $this->currUnique->addVendorInfo($attributes);
+					break;
+
+					default:
+						$this->_throwInvalidTagException($name);
+				}
+			} elseif ($parentTag == "behavior") {
+
+				switch($name) {
+					case "parameter":
+						$this->currBehavior->addParameter($attributes);
 					break;
 
 					default:

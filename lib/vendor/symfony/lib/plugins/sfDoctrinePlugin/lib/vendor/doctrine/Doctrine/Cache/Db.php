@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Db.php 6353 2009-09-14 18:58:37Z jwage $
+ *  $Id: Db.php 6559 2009-10-23 17:09:38Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,8 +27,9 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6353 $
+ * @version     $Revision: 6559 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
  */
 class Doctrine_Cache_Db extends Doctrine_Cache_Driver implements Countable
 {
@@ -38,7 +39,7 @@ class Doctrine_Cache_Db extends Doctrine_Cache_Driver implements Countable
      *
      * @param array $_options      an array of options
      */
-    public function __construct($options) 
+    public function __construct($options = array()) 
     {
         if ( ! isset($options['connection']) || 
              ! ($options['connection'] instanceof Doctrine_Connection)) {
@@ -67,13 +68,13 @@ class Doctrine_Cache_Db extends Doctrine_Cache_Driver implements Countable
     }
 
     /**
-     * Test if a cache is available for the given id and (if yes) return it (false else).
+     * Fetch a cache record from this cache driver instance
      *
      * @param string $id cache id
      * @param boolean $testCacheValidity        if set to false, the cache validity won't be tested
      * @return string cached datas (or false)
      */
-    public function fetch($id, $testCacheValidity = true)
+    protected function _doFetch($id, $testCacheValidity = true)
     {
         $sql = 'SELECT data, expire FROM ' . $this->_options['tableName']
              . ' WHERE id = ?';
@@ -82,68 +83,49 @@ class Doctrine_Cache_Db extends Doctrine_Cache_Driver implements Countable
             $sql .= " AND (expire is null OR expire > '" . date('Y-m-d H:i:s') . "')";
         }
 
-        $result = $this->getConnection()->execute($sql, array($id))->fetchAll(Doctrine::FETCH_NUM);
-        
+        $result = $this->getConnection()->execute($sql, array($id))->fetchAll(Doctrine_Core::FETCH_NUM);
+
         if ( ! isset($result[0])) {
             return false;
         }
 
-        return unserialize($this->_hex2Bin($result[0][0]));
-    }
-
-    protected function _hex2bin($hex)
-    {
-        if ( ! is_string($hex)) {
-            return null;
-        }
-
-        if ( ! ctype_xdigit($hex)) {
-            return $hex;
-        }
-
-        $bin = '';
-        for ($a = 0; $a < strlen($hex); $a += 2) {
-            $bin .= chr(hexdec($hex{$a} . $hex{($a + 1)}));
-        }
-
-        return $bin;
+        return unserialize($this->_hex2bin($result[0][0]));
     }
 
     /**
-     * Test if a cache is available or not (for the given id)
+     * Test if a cache record exists for the passed id
      *
      * @param string $id cache id
      * @return mixed false (a cache is not available) or "last modified" timestamp (int) of the available cache record
      */
-    public function contains($id) 
+    protected function _doContains($id) 
     {
         $sql = 'SELECT id, expire FROM ' . $this->_options['tableName']
              . ' WHERE id = ?';
 
         $result = $this->getConnection()->fetchOne($sql, array($id));
 
-        if(isset($result[0] )){
+        if (isset($result[0] )) {
             return time();
         }
         return false;
     }
 
     /**
-     * Save some string datas into a cache record
-     *
-     * Note : $data is always saved as a string
+     * Save a cache record directly. This method is implemented by the cache
+     * drivers and used in Doctrine_Cache_Driver::save()
      *
      * @param string $id        cache id
      * @param string $data      data to cache
      * @param int $lifeTime     if != false, set a specific lifetime for this cache record (null => infinite lifeTime)
      * @return boolean true if no problem
      */
-    public function save($id, $data, $lifeTime = false)
+    protected function _doSave($id, $data, $lifeTime = false, $saveKey = true)
     {
-        if ($this->contains($id)){
+        if ($this->contains($id)) {
             //record is in database, do update
             $sql = 'UPDATE ' . $this->_options['tableName']
-                . ' SET data=?, expire=? '
+                . ' SET data = ?, expire=? '
                 . ' WHERE id = ?';
 
             if ($lifeTime) {
@@ -151,7 +133,8 @@ class Doctrine_Cache_Db extends Doctrine_Cache_Driver implements Countable
             } else {
                 $expire = NULL;
             }
-            $params = array(bin2hex(serialize($data)), $expire, $id);   
+
+            $params = array(bin2hex(serialize($data)), $expire, $id);
         } else {
             //record is not in database, do insert
             $sql = 'INSERT INTO ' . $this->_options['tableName']
@@ -163,48 +146,23 @@ class Doctrine_Cache_Db extends Doctrine_Cache_Driver implements Countable
                 $expire = NULL;
             }
 
-            $params = array($id, bin2hex(serialize($data)), $expire);   
+            $params = array($id, bin2hex(serialize($data)), $expire);
         }
 
-        return (bool) $this->getConnection()->exec($sql, $params);
+        return $this->getConnection()->exec($sql, $params);
     }
 
     /**
-     * Remove a cache record
+     * Remove a cache record directly. This method is implemented by the cache
+     * drivers and used in Doctrine_Cache_Driver::delete()
      * 
      * @param string $id cache id
      * @return boolean true if no problem
      */
-    public function delete($id) 
+    protected function _doDelete($id) 
     {
         $sql = 'DELETE FROM ' . $this->_options['tableName'] . ' WHERE id = ?';
-
-        return (bool) $this->getConnection()->exec($sql, array($id));
-    }
-
-    /**
-     * Removes all cache records
-     *
-     * $return bool true on success, false on failure
-     */
-    public function deleteAll()
-    {
-        $sql = 'DELETE FROM ' . $this->_options['tableName'];
-        
-        return (bool) $this->getConnection()->exec($sql);
-    }
-
-    /**
-     * count
-     * returns the number of cached elements
-     *
-     * @return integer
-     */
-    public function count()
-    {
-        $sql = 'SELECT COUNT(*) FROM ' . $this->_options['tableName'];
-        
-        return (int) $this->getConnection()->fetchOne($sql);
+        return $this->getConnection()->exec($sql, array($id));
     }
 
     /**
@@ -234,5 +192,30 @@ class Doctrine_Cache_Db extends Doctrine_Cache_Driver implements Countable
         );
         
         $this->getConnection()->export->createTable($name, $fields, $options);
+    }
+
+    /**
+     * Convert hex data to binary data. If passed data is not hex then
+     * it is returned as is.
+     *
+     * @param string $hex 
+     * @return string $binary
+     */
+    protected function _hex2bin($hex)
+    {
+        if ( ! is_string($hex)) {
+            return null;
+        }
+
+        if ( ! ctype_xdigit($hex)) {
+            return $hex;
+        }
+
+        $bin = '';
+        for ($a = 0; $a < strlen($hex); $a += 2) {
+            $bin .= chr(hexdec($hex{$a} . $hex{($a + 1)}));
+        }
+
+        return $bin;
     }
 }

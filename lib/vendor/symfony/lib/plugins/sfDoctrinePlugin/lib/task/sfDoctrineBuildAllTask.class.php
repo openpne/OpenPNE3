@@ -18,7 +18,9 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineBuildAllTask.class.php 16087 2009-03-07 22:08:50Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineBuildAllTask.class.php 21087 2009-08-12 07:51:04Z Kris.Wallsmith $
+ *
+ * @deprecated Use doctrine:build instead
  */
 class sfDoctrineBuildAllTask extends sfDoctrineBaseTask
 {
@@ -27,17 +29,18 @@ class sfDoctrineBuildAllTask extends sfDoctrineBaseTask
    */
   protected function configure()
   {
-    $this->aliases = array('doctrine-build-all');
-    $this->namespace = 'doctrine';
-    $this->name = 'build-all';
-    $this->briefDescription = 'Generates Doctrine model, SQL and initializes the database';
-
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
-      new sfCommandOption('skip-forms', 'F', sfCommandOption::PARAMETER_NONE, 'Skip generating forms')
+      new sfCommandOption('skip-forms', 'F', sfCommandOption::PARAMETER_NONE, 'Skip generating forms'),
+      new sfCommandOption('migrate', null, sfCommandOption::PARAMETER_NONE, 'Migrate instead of reset the database'),
     ));
+  
+    $this->aliases = array('doctrine-build-all');
+    $this->namespace = 'doctrine';
+    $this->name = 'build-all';
+    $this->briefDescription = 'Generates Doctrine model, SQL and initializes the database';
 
     $this->detailedDescription = <<<EOF
 The [doctrine:build-all|INFO] task is a shortcut for three other tasks:
@@ -57,6 +60,18 @@ To bypass the confirmation, you can pass the [no-confirmation|COMMENT]
 option:
 
   [./symfony doctrine:buil-all-load --no-confirmation|INFO]
+
+Include the [--migrate|COMMENT] option if you would like to run your project's
+migrations rather than inserting the Doctrine SQL.
+
+  [./symfony doctrine:build-all --migrate|INFO]
+
+This is equivalent to:
+
+  [./symfony doctrine:build-model|INFO]
+  [./symfony doctrine:build-sql|INFO]
+  [./symfony doctrine:build-forms|INFO]
+  [./symfony doctrine:migrate|INFO]
 EOF;
   }
 
@@ -65,62 +80,18 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    $baseOptions = $this->configuration instanceof sfApplicationConfiguration ? array(
-      '--application='.$this->configuration->getApplication(),
-      '--env='.$options['env'],
-    ) : array();
-
-    $buildDb = new sfDoctrineBuildDbTask($this->dispatcher, $this->formatter);
-    $buildDb->setCommandApplication($this->commandApplication);
-    $ret = $buildDb->run(array(), $baseOptions);
-
-    if ($ret)
-    {
-      return $ret;
-    }
-
-    $buildModel = new sfDoctrineBuildModelTask($this->dispatcher, $this->formatter);
-    $buildModel->setCommandApplication($this->commandApplication);
-    $ret = $buildModel->run(array(), $baseOptions);
-
-    if ($ret)
-    {
-      return $ret;
-    }
-
-    $buildSql = new sfDoctrineBuildSqlTask($this->dispatcher, $this->formatter);
-    $buildSql->setCommandApplication($this->commandApplication);
-    $ret = $buildSql->run(array(), $baseOptions);
-
-    if ($ret)
-    {
-      return $ret;
-    }
-
-    if (!$options['skip-forms'])
-    {
-      $buildForms = new sfDoctrineBuildFormsTask($this->dispatcher, $this->formatter);
-      $buildForms->setCommandApplication($this->commandApplication);
-      $ret = $buildForms->run(array(), $baseOptions);
-
-      if ($ret)
-      {
-        return $ret;
-      }
-
-      $buildFilters = new sfDoctrineBuildFiltersTask($this->dispatcher, $this->formatter);
-      $buildFilters->setCommandApplication($this->commandApplication);
-      $ret = $buildFilters->run(array(), $baseOptions);
-
-      if ($ret)
-      {
-        return $ret;
-      }
-    }
-
-    $insertSql = new sfDoctrineInsertSqlTask($this->dispatcher, $this->formatter);
-    $insertSql->setCommandApplication($this->commandApplication);
-    $ret = $insertSql->run(array(), $baseOptions);
+    $task = new sfDoctrineBuildTask($this->dispatcher, $this->formatter);
+    $task->setCommandApplication($this->commandApplication);
+    $task->setConfiguration($this->configuration);
+    $ret = $task->run(array(), array(
+      'no-confirmation' => $options['no-confirmation'],
+      'db'              => true,
+      'model'           => true,
+      'forms'           => !$options['skip-forms'],
+      'filters'         => !$options['skip-forms'],
+      'sql'             => true,
+      'and-migrate'     => $options['migrate'],
+    ));
 
     return $ret;
   }

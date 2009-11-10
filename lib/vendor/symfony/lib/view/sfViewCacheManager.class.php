@@ -18,7 +18,7 @@
  * @package    symfony
  * @subpackage view
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfViewCacheManager.class.php 21979 2009-09-13 13:38:00Z FabianLange $
+ * @version    SVN: $Id: sfViewCacheManager.class.php 23600 2009-11-04 09:43:06Z FabianLange $
  */
 class sfViewCacheManager
 {
@@ -29,6 +29,7 @@ class sfViewCacheManager
     $dispatcher  = null,
     $controller  = null,
     $routing     = null,
+    $request     = null,
     $loaded      = array();
 
   /**
@@ -36,9 +37,9 @@ class sfViewCacheManager
    *
    * @see initialize()
    */
-  public function __construct($context, sfCache $cache)
+  public function __construct($context, sfCache $cache, $options = array())
   {
-    $this->initialize($context, $cache);
+    $this->initialize($context, $cache, $options);
   }
 
   /**
@@ -47,11 +48,16 @@ class sfViewCacheManager
    * @param sfContext $context  Current application context
    * @param sfCache   $cache    An sfCache instance
    */
-  public function initialize($context, sfCache $cache)
+  public function initialize($context, sfCache $cache, $options = array())
   {
     $this->context    = $context;
     $this->dispatcher = $context->getEventDispatcher();
     $this->controller = $context->getController();
+    $this->request    = $context->getRequest();
+    $this->options    = array_merge(array(
+        'cache_key_use_vary_headers' => true,
+        'cache_key_use_host_name'    => true,
+      ), $options);
 
     if (sfConfig::get('sf_web_debug'))
     {
@@ -157,44 +163,76 @@ class sfViewCacheManager
       $cacheKey .= $this->convertParametersToKey($params);
     }
 
-    // prefix with vary headers
-    if (!$vary)
-    {
-      $varyHeaders = $this->getVary($internalUri);
-      if ($varyHeaders)
-      {
-        sort($varyHeaders);
-        $request = $this->context->getRequest();
-        $vary = '';
-
-        foreach ($varyHeaders as $header)
-        {
-          $vary .= $request->getHttpHeader($header).'|';
-        }
-
-        $vary = $vary;
-      }
-      else
-      {
-        $vary = 'all';
-      }
-    }
-
-    // prefix with hostname
-    if (!$hostName)
-    {
-      $request = $this->context->getRequest();
-      $hostName = $request->getHost();
-    }
-    $hostName = preg_replace('/[^a-z0-9\*]/i', '_', $hostName);
-    $hostName = strtolower(preg_replace('/_+/', '_', $hostName));
-
-    $cacheKey = sprintf('/%s/%s/%s', $hostName, $vary, $cacheKey);
+    $cacheKey = sprintf('/%s/%s/%s', $this->getCacheKeyHostNamePart($hostName), $this->getCacheKeyVaryHeaderPart($internalUri, $vary), $cacheKey);
 
     // replace multiple /
     $cacheKey = preg_replace('#/+#', '/', $cacheKey);
 
     return $cacheKey;
+  }
+
+  /**
+   * Gets the vary header part of view cache key.
+   *
+   * @param  string $vary
+   * @return string
+   */
+  protected function getCacheKeyVaryHeaderPart($internalUri, $vary = '')
+  {
+    if (!$this->options['cache_key_use_vary_headers'])
+    {
+      return '';
+    }
+
+    // prefix with vary headers
+    if (!$vary)
+    {
+      $varyHeaders = $this->getVary($internalUri);
+
+      if (!$varyHeaders)
+      {
+        return 'all';
+      }
+
+      sort($varyHeaders);
+      $request = $this->context->getRequest();
+      $vary = '';
+
+      foreach ($varyHeaders as $header)
+      {
+        $value = $request->getHttpHeader($header);
+        $value = preg_replace('/[^a-z0-9\*]/i', '_', $value);
+        $value = preg_replace('/_+/', '_', $value);
+
+        $vary .= $value.'|';
+      }
+    }
+
+    return $vary;
+  }
+
+  /**
+   * Gets the hostname part of view cache key.
+   *
+   * @param string $hostName
+   * @return void
+   */
+  protected function getCacheKeyHostNamePart($hostName = '')
+  {
+    if (!$this->options['cache_key_use_host_name'])
+    {
+      return '';
+    }
+
+    if (!$hostName)
+    {
+      $hostName = $this->context->getRequest()->getHost();
+    }
+
+    $hostName = preg_replace('/[^a-z0-9\*]/i', '_', $hostName);
+    $hostName = preg_replace('/_+/', '_', $hostName);
+
+    return strtolower($hostName);
   }
 
   /**
@@ -373,7 +411,7 @@ class sfViewCacheManager
    */
   public function isCacheable($internalUri)
   {
-    if (count($_GET) || count($_POST))
+    if ($this->request instanceof sfWebRequest && !$this->request->isMethod(sfRequest::GET))
     {
       return false;
     }
@@ -396,17 +434,17 @@ class sfViewCacheManager
 
   /**
    * Returns true if the action is cacheable.
-   * 
+   *
    * @param  string $moduleName A module name
    * @param  string $actionName An action or partial template name
-   * 
+   *
    * @return boolean True if the action is cacheable
-   * 
+   *
    * @see isCacheable()
    */
   public function isActionCacheable($moduleName, $actionName)
   {
-    if (count($_GET) || count($_POST))
+    if ($this->request instanceof sfWebRequest && !$this->request->isMethod(sfRequest::GET))
     {
       return false;
     }
@@ -667,12 +705,12 @@ class sfViewCacheManager
 
   /**
    * Checks that the supplied parameters include a cache key.
-   * 
+   *
    * If no 'sf_cache_key' parameter is present one is added to the array as
    * it is passed by reference.
-   * 
+   *
    * @param  array  $parameters An array of parameters
-   * 
+   *
    * @return string The cache key
    */
   public function checkCacheKey(array & $parameters)
@@ -731,7 +769,7 @@ class sfViewCacheManager
     // retrieve content from cache
     $cache = $this->get($uri);
 
-    if (is_null($cache))
+    if (null === $cache)
     {
       return null;
     }
@@ -805,7 +843,7 @@ class sfViewCacheManager
     // retrieve content from cache
     $cache = $this->get($uri);
 
-    if (is_null($cache))
+    if (null === $cache)
     {
       return null;
     }
@@ -883,7 +921,7 @@ class sfViewCacheManager
   {
     $retval = $this->get($uri);
 
-    if (is_null($retval))
+    if (null === $retval)
     {
       return false;
     }
@@ -929,8 +967,10 @@ class sfViewCacheManager
 
     $this->context->getConfiguration()->loadHelpers(array('Helper', 'Url', 'Asset', 'Tag'));
 
+    $sf_cache_key = $this->generateCacheKey($event['uri']);
     $bgColor      = $event['new'] ? '#9ff' : '#ff9';
-    $lastModified = $this->getLastModified($event['uri']);
+    $lastModified = $this->cache->getLastModified($sf_cache_key);
+    $cacheKey     = $this->cache->getOption('prefix').$sf_cache_key;
     $id           = md5($event['uri']);
 
     return '
@@ -939,6 +979,7 @@ class sfViewCacheManager
       <div style="height: 16px; padding: 2px"><a href="#" onclick="sfWebDebugToggle(\'sub_main_info_'.$id.'\'); return false;"><strong>cache information</strong></a>&nbsp;<a href="#" onclick="sfWebDebugToggle(\'sub_main_'.$id.'\'); document.getElementById(\'main_'.$id.'\').style.border = \'none\'; return false;">'.image_tag(sfConfig::get('sf_web_debug_web_dir').'/images/close.png', array('alt' => 'close')).'</a>&nbsp;</div>
         <div style="padding: 2px; display: none" id="sub_main_info_'.$id.'">
         [uri]&nbsp;'.htmlspecialchars($event['uri'], ENT_QUOTES, sfConfig::get('sf_charset')).'<br />
+        [key&nbsp;for&nbsp;cache]&nbsp;'.htmlspecialchars($cacheKey, ENT_QUOTES, sfConfig::get('sf_charset')).'<br />
         [life&nbsp;time]&nbsp;'.$this->getLifeTime($event['uri']).'&nbsp;seconds<br />
         [last&nbsp;modified]&nbsp;'.(time() - $lastModified).'&nbsp;seconds<br />
         &nbsp;<br />&nbsp;

@@ -6,7 +6,7 @@
  * @package    ##PROJECT_NAME##
  * @subpackage <?php echo $this->getGeneratedModuleName()."\n" ?>
  * @author     ##AUTHOR_NAME##
- * @version    SVN: $Id: actions.class.php 16948 2009-04-03 15:52:30Z fabien $
+ * @version    SVN: $Id: actions.class.php 20546 2009-07-28 07:13:31Z fabien $
  */
 class <?php echo $this->getGeneratedModuleName() ?>Actions extends sfActions
 {
@@ -111,7 +111,7 @@ else
   {
     $this-><?php echo $this->getSingularName() ?> = $this->get<?php echo $this->getClassName() ?>OrCreate();
 
-    if ($request->isMethod('post'))
+    if ($request->isMethod(sfRequest::POST))
     {
       $this->update<?php echo $this->getClassName() ?>FromRequest();
 

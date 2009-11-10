@@ -18,7 +18,7 @@
  * @subpackage request
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfWebRequest.class.php 21875 2009-09-11 05:54:39Z fabien $
+ * @version    SVN: $Id: sfWebRequest.class.php 22453 2009-09-26 12:48:05Z fabien $
  */
 class sfWebRequest extends sfRequest
 {
@@ -58,15 +58,18 @@ class sfWebRequest extends sfRequest
    */
   public function initialize(sfEventDispatcher $dispatcher, $parameters = array(), $attributes = array(), $options = array())
   {
+    $options = array_merge(array(
+      'path_info_key'   => 'PATH_INFO',
+      'path_info_array' => 'SERVER',
+      'default_format'  => null, // to maintain bc
+    ), $options);
     parent::initialize($dispatcher, $parameters, $attributes, $options);
 
     // GET parameters
     $this->getParameters = get_magic_quotes_gpc() ? sfToolkit::stripslashesDeep($_GET) : $_GET;
     $this->parameterHolder->add($this->getParameters);
 
-    // POST parameters
-    $this->postParameters = get_magic_quotes_gpc() ? sfToolkit::stripslashesDeep($_POST) : $_POST;
-    $this->parameterHolder->add($this->postParameters);
+    $postParameters = $_POST;
 
     if (isset($_SERVER['REQUEST_METHOD']))
     {
@@ -77,16 +80,37 @@ class sfWebRequest extends sfRequest
           break;
 
         case 'POST':
-          $this->setMethod(strtoupper($this->getParameter('sf_method', 'POST')));
+          if (isset($_POST['sf_method']))
+          {
+            $this->setMethod(strtoupper($_POST['sf_method']));
+            unset($postParameters['sf_method']);
+          }
+          elseif (isset($_GET['sf_method']))
+          {
+            $this->setMethod(strtoupper($_GET['sf_method']));
+            unset($_GET['sf_method']);
+          }
+          else
+          {
+            $this->setMethod(self::POST);
+          }
           $this->parameterHolder->remove('sf_method');
           break;
 
         case 'PUT':
           $this->setMethod(self::PUT);
+          if ('application/x-www-form-urlencoded' === $this->getContentType())
+          {
+            parse_str($this->getContent(), $postParameters);
+          }
           break;
 
         case 'DELETE':
           $this->setMethod(self::DELETE);
+          if ('application/x-www-form-urlencoded' === $this->getContentType())
+          {
+            parse_str($this->getContent(), $postParameters);
+          }
           break;
 
         case 'HEAD':
@@ -103,6 +127,9 @@ class sfWebRequest extends sfRequest
       $this->setMethod(self::GET);
     }
 
+    $this->postParameters = get_magic_quotes_gpc() ? sfToolkit::stripslashesDeep($postParameters) : $postParameters;
+    $this->parameterHolder->add($this->postParameters);
+
     if (isset($this->options['formats']))
     {
       foreach ($this->options['formats'] as $format => $mimeTypes)
@@ -111,21 +138,30 @@ class sfWebRequest extends sfRequest
       }
     }
 
-    if (!isset($this->options['path_info_key']))
-    {
-      $this->options['path_info_key'] = 'PATH_INFO';
-    }
-
-    if (!isset($this->options['path_info_array']))
-    {
-      $this->options['path_info_array'] = 'SERVER';
-    }
-
     // additional parameters
     $this->requestParameters = $this->parseRequestParameters();
     $this->parameterHolder->add($this->requestParameters);
 
     $this->fixParameters();
+  }
+
+  /**
+   * Returns the content type of the current request.
+   *
+   * @param  Boolean $trimmed If false the full Content-Type header will be returned
+   *
+   * @return string
+   */
+  public function getContentType($trim = true)
+  {
+    $contentType = $this->getHttpHeader('Content-Type', null);
+
+    if ($trim && false !== $pos = strpos($contentType, ';'))
+    {
+      $contentType = substr($contentType, 0, $pos);
+    }
+
+    return $contentType;
   }
 
   /**
@@ -181,7 +217,7 @@ class sfWebRequest extends sfRequest
       $protocol = 'http';
     }
 
-    $host = explode(":", $this->getHost());
+    $host = explode(':', $this->getHost());
     if (count($host) == 1)
     {
       $host[] = isset($pathArray['SERVER_PORT']) ? $pathArray['SERVER_PORT'] : '';
@@ -192,7 +228,7 @@ class sfWebRequest extends sfRequest
       unset($host[1]);
     }
 
-    return $protocol.'://'.implode(':', $host);;
+    return $protocol.'://'.implode(':', $host);
   }
 
   /**
@@ -251,7 +287,7 @@ class sfWebRequest extends sfRequest
     if (!isset($this->options['no_script_name']) || !$this->options['no_script_name'])
     {
       $scriptName = $this->getScriptName();
-      $prefix = is_null($prefix) ? $scriptName : $prefix.'/'.basename($scriptName);
+      $prefix = null === $prefix ? $scriptName : $prefix.'/'.basename($scriptName);
     }
 
     return $prefix;
@@ -354,7 +390,7 @@ class sfWebRequest extends sfRequest
   {
     $preferredCultures = $this->getLanguages();
 
-    if (is_null($cultures))
+    if (null === $cultures)
     {
       return isset($preferredCultures[0]) ? $preferredCultures[0] : null;
     }
@@ -540,7 +576,7 @@ class sfWebRequest extends sfRequest
    */
   public function getRelativeUrlRoot()
   {
-    if (is_null($this->relativeUrlRoot))
+    if (null === $this->relativeUrlRoot)
     {
       if (!isset($this->options['relative_url_root']))
       {
@@ -681,15 +717,15 @@ class sfWebRequest extends sfRequest
    *
    *  * format defined by the user (with setRequestFormat())
    *  * sf_format request parameter
-   *  * null
+   *  * default format from factories
    *
    * @return string The request format
    */
   public function getRequestFormat()
   {
-    if (is_null($this->format))
+    if (null === $this->format)
     {
-      $this->setRequestFormat($this->getParameter('sf_format'));
+      $this->setRequestFormat($this->getParameter('sf_format', $this->options['default_format']));
     }
 
     return $this->format;
@@ -708,7 +744,7 @@ class sfWebRequest extends sfRequest
       $this->fixedFileArray = self::convertFileInformation($_FILES);
     }
 
-    return is_null($key) ? $this->fixedFileArray : (isset($this->fixedFileArray[$key]) ? $this->fixedFileArray[$key] : array());
+    return null === $key ? $this->fixedFileArray : (isset($this->fixedFileArray[$key]) ? $this->fixedFileArray[$key] : array());
   }
 
   /**
@@ -835,7 +871,7 @@ class sfWebRequest extends sfRequest
 
   /**
    * Returns an array containing a list of IPs, the first being the client address
-   * and the others the addresses of each proxy that passed the request. The address 
+   * and the others the addresses of each proxy that passed the request. The address
    * for the last proxy can be retrieved via getRemoteAddress().
    *
    * This method returns null if no proxy passed this request. Note that some proxies
@@ -858,7 +894,7 @@ class sfWebRequest extends sfRequest
 
   public function checkCSRFProtection()
   {
-    $form = new sfForm();
+    $form = new BaseForm();
     $form->bind($form->isCSRFProtected() ? array($form->getCSRFFieldName() => $this->getParameter($form->getCSRFFieldName())) : array());
 
     if (!$form->isValid())

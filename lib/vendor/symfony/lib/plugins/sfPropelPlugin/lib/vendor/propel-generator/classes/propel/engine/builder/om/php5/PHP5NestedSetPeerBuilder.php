@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: PHP5NestedSetPeerBuilder.php 1096 2009-02-09 13:36:21Z heltem $
+ *  $Id: PHP5NestedSetPeerBuilder.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -1618,8 +1618,8 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
 			\$con = Propel::getConnection($peerClassname::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
-		\$leftUpdateCol = substr(self::LEFT_COL, strrpos(self::LEFT_COL, '.') + 1);
-		\$rightUpdateCol = substr(self::RIGHT_COL, strrpos(self::RIGHT_COL, '.') + 1);
+		\$leftUpdateCol = self::LEFT_COL;
+		\$rightUpdateCol = self::RIGHT_COL;
 
 		// Shift left column values
 		\$whereCriteria = new Criteria($peerClassname::DATABASE_NAME);

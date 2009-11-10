@@ -46,6 +46,10 @@
   </table>
 
   <table name="author_article">
+    <behavior name="symfony">
+      <parameter name="form" value="false"/>
+      <parameter name="filter" value="false"/>
+    </behavior>
     <column name="author_id" type="integer" primaryKey="true" />
     <foreign-key foreignTable="author">
       <reference local="author_id" foreign="id" />
@@ -65,7 +69,7 @@
     <column autoIncrement="false" name="id" type="integer" required="true" primaryKey="true"/>
     <column autoIncrement="false" name="culture" isCulture="true" type="varchar" size="7" required="true" primaryKey="true"/>
     <column primaryKey="false" required="false" autoIncrement="false" name="name" type="varchar" size="50"/>
-    <foreign-key onDelete="none" onUpdate="none" foreignTable="product">
+    <foreign-key onDelete="none" onUpdate="none" foreignTable="product" refPhpName="Translation">
       <reference local="id" foreign="id"/>
     </foreign-key>
   </table>

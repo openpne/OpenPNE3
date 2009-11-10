@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage action
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfComponent.class.php 21904 2009-09-11 11:05:56Z FabianLange $
+ * @version    SVN: $Id: sfComponent.class.php 23544 2009-11-03 08:48:31Z fabien $
  */
 abstract class sfComponent
 {
@@ -253,6 +253,16 @@ abstract class sfComponent
   public function getUser()
   {
     return $this->context->getUser();
+  }
+
+  /**
+   * Gets the current mailer instance.
+   *
+   * @return sfMailer A sfMailer instance
+   */
+  public function getMailer()
+  {
+    return $this->getContext()->getMailer();
   }
 
   /**

@@ -9,9 +9,17 @@
  */
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
-sfToolkit::addIncludePath(sfConfig::get('sf_symfony_lib_dir').'/plugins/sfPropelPlugin/lib/vendor');
 
-$t = new lime_test(1, new lime_output_color());
+$t = new lime_test(1);
+
+class ProjectConfiguration extends sfProjectConfiguration
+{
+  protected $plugins = array('sfPropelPlugin');
+}
+new ProjectConfiguration();
+
+// ->__construct()
+$t->diag('->__construct()');
 
 $configuration = array(
   'propel' => array(
@@ -48,4 +56,4 @@ $parametersTests = array(
 );
 
 $p = new sfPropelDatabase($parametersTests);
-$t->is($p->getConfiguration(), $configuration, 'initialize() - creates a valid propel configuration from parameters');
+$t->is_deeply($p->getConfiguration(), $configuration, '->__construct() creates a valid propel configuration from parameters');

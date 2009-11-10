@@ -21,27 +21,15 @@
 class sfWebDebugPanelDoctrine extends sfWebDebugPanel
 {
   /**
-   * Constructor.
-   *
-   * @param sfWebDebug $webDebug The web debut toolbar instance
-   */
-  public function __construct(sfWebDebug $webDebug)
-  {
-    parent::__construct($webDebug);
-
-    $this->webDebug->getEventDispatcher()->connect('debug.web.filter_logs', array($this, 'filterLogs'));
-  }
-
-  /**
    * Get the title/icon for the panel
    *
    * @return string $html
    */
   public function getTitle()
   {
-    if ($sqlLogs = $this->getSqlLogs())
+    if ($events = $this->getDoctrineEvents())
     {
-      return '<img src="'.$this->webDebug->getOption('image_root_path').'/database.png" alt="SQL queries" /> '.count($sqlLogs);
+      return '<img src="'.$this->webDebug->getOption('image_root_path').'/database.png" alt="SQL queries" /> '.count($events);
     }
   }
 
@@ -64,37 +52,14 @@ class sfWebDebugPanelDoctrine extends sfWebDebugPanel
   {
     return '
       <div id="sfWebDebugDatabaseLogs">
-      <ol><li>'.implode("</li>\n<li>", $this->getSqlLogs()).'</li></ol>
+        <h3>Doctrine Version: '.Doctrine_Core::VERSION.'</h3>
+        <ol>'.implode("\n", $this->getSqlLogs()).'</ol>
       </div>
     ';
   }
-  
-  /**
-   * Filter the logs to only include the entries from sfDoctrineLogger
-   *
-   * @param sfEvent $event
-   * @param array $Logs
-   * @return array $newLogs
-   */
-  public function filterLogs(sfEvent $event, $newSqlogs)
-  {
-    $newLogs = array();
-    foreach ($newSqlogs as $newSqlog)
-    {
-      if ('sfDoctrineLogger' != $newSqlog['type'])
-      {
-        $newLogs[] = $newSqlog;
-      }
-    }
-
-    return $newLogs;
-  }
 
   /**
-   * Hook to allow the loading of the Doctrine webdebug toolbar with the rest of the panels
-   *
-   * @param sfEvent $event 
-   * @return void
+   * Listens to debug.web.load_panels and adds this panel.
    */
   static public function listenToAddPanelEvent(sfEvent $event)
   {
@@ -102,67 +67,93 @@ class sfWebDebugPanelDoctrine extends sfWebDebugPanel
   }
 
   /**
-   * Build the sql logs and return them as an array
-   *
-   * @return array $newSqlogs
+   * Returns an array of Doctrine query events.
+   * 
+   * @return array
    */
-  protected function getSqlLogs()
+  protected function getDoctrineEvents()
   {
-    $logs = array();
-    $bindings = array();
-    $i = 0;
-    foreach ($this->webDebug->getLogger()->getLogs() as $log)
-    {
-      if ('sfDoctrineLogger' != $log['type'])
-      {
-        continue;
-      }
+    $databaseManager = sfContext::getInstance()->getDatabaseManager();
 
-      if (preg_match('/^.*?(\b(?:SELECT|INSERT|UPDATE|DELETE)\b.*)$/', $log['message'], $match))
+    $events = array();
+    foreach ($databaseManager->getNames() as $name)
+    {
+      $database = $databaseManager->getDatabase($name);
+      if ($database instanceof sfDoctrineDatabase && $profiler = $database->getProfiler())
       {
-        $logs[$i++] = self::formatSql($match[1]);
-        $bindings[$i - 1] = array();
-      }
-      else if (preg_match('/Binding (.*) at position (.+?) w\//', $log['message'], $match))
-      {
-        $bindings[$i - 1][] = $match[2].' = '.$match[1];
+        foreach ($profiler->getQueryExecutionEvents() as $event)
+        {
+          $events[$event->getSequence()] = $event;
+        }
       }
     }
 
-    foreach ($logs as $i => $log)
-    {
-      if (count($bindings[$i]))
-      {
-        $logs[$i] .= sprintf(' (%s)', implode(', ', $bindings[$i]));
-      }
-    }
+    // sequence events
+    ksort($events);
 
-    return $logs;
+    return $events;
   }
 
   /**
-   * Format a SQL with some colors on SQL keywords to make it more readable
+   * Builds the sql logs and returns them as an array.
    *
-   * @param  string $sql    SQL string to format
-   * @return string $newSql The new formatted SQL string
+   * @return array
    */
-  static protected function formatSql($sql)
+  protected function getSqlLogs()
   {
-    $color = "#990099";
-    $newSql = $sql;
-    $newSql = str_replace("SELECT ", "<span style=\"color: $color;\"><b>SELECT </b></span>  ",$newSql);
-    $newSql = str_replace("FROM ", "<span style=\"color: $color;\"><b>FROM </b></span>",$newSql);
-    $newSql = str_replace(" LEFT JOIN ", "<span style=\"color: $color;\"><b> LEFT JOIN </b></span>",$newSql);
-    $newSql = str_replace(" INNER JOIN ", "<span style=\"color: $color;\"><b> INNER JOIN </b></span>",$newSql);
-    $newSql = str_replace(" WHERE ", "<span style=\"color: $color;\"><b> WHERE </b></span>",$newSql);
-    $newSql = str_replace(" GROUP BY ", "<span style=\"color: $color;\"><b> GROUP BY </b></span>",$newSql);
-    $newSql = str_replace(" HAVING ", "<span style=\"color: $color;\"><b> HAVING </b></span>",$newSql);
-    $newSql = str_replace(" AS ", "<span style=\"color: $color;\"><b> AS </b></span>  ",$newSql);
-    $newSql = str_replace(" ON ", "<span style=\"color: $color;\"><b> ON </b></span>",$newSql);
-    $newSql = str_replace(" ORDER BY ", "<span style=\"color: $color;\"><b> ORDER BY </b></span>",$newSql);
-    $newSql = str_replace(" LIMIT ", "<span style=\"color: $color;\"><b> LIMIT </b></span>",$newSql);
-    $newSql = str_replace(" OFFSET ", "<span style=\"color: $color;\"><b> OFFSET </b></span>",$newSql);
+    $logs = $this->webDebug->getLogger()->getLogs();
 
-    return $newSql;
+    $html = array();
+    foreach ($this->getDoctrineEvents() as $i => $event)
+    {
+      $conn = $event->getInvoker() instanceof Doctrine_Connection ? $event->getInvoker() : $event->getInvoker()->getConnection();
+      $params = sfDoctrineConnectionProfiler::fixParams($event->getParams());
+      $query = $this->formatSql(htmlspecialchars($event->getQuery(), ENT_QUOTES, sfConfig::get('sf_charset')));
+
+      // interpolate parameters
+      foreach ($params as $param)
+      {
+        $query = join(var_export(is_scalar($param) ? $param : (string) $param, true), explode('?', $query, 2));
+      }
+
+      // slow query
+      if ($event->slowQuery && $this->getStatus() > sfLogger::NOTICE)
+      {
+        $this->setStatus(sfLogger::NOTICE);
+      }
+
+      // backtrace
+      $backtrace = null;
+      foreach ($logs as $i => $log)
+      {
+        if (!$log['debug_backtrace'])
+        {
+          // backtrace disabled
+          break;
+        }
+
+        if (false !== strpos($log['message'], $event->getQuery()))
+        {
+          // assume queries are being requested in order
+          unset($logs[$i]);
+          $backtrace = '&nbsp;'.$this->getToggleableDebugStack($log['debug_backtrace']);
+          break;
+        }
+      }
+
+      $html[] = sprintf('
+        <li class="%s">
+          <p class="sfWebDebugDatabaseQuery">%s</p>
+          <div class="sfWebDebugDatabaseLogInfo">%ss, "%s" connection%s</div>
+        </li>',
+        $event->slowQuery ? 'sfWebDebugWarning' : '',
+        $query,
+        number_format($event->getElapsedSecs(), 2),
+        $conn->getName(),
+        $backtrace
+      );
+    }
+
+    return $html;
   }
 }

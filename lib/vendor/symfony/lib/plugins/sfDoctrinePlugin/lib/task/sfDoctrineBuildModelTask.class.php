@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineBuildModelTask.class.php 14213 2008-12-19 21:03:13Z Jonathan.Wage $
+ * @version    SVN: $Id: sfDoctrineBuildModelTask.class.php 23314 2009-10-25 00:47:39Z Kris.Wallsmith $
  */
 class sfDoctrineBuildModelTask extends sfDoctrineBaseTask
 {
@@ -43,7 +43,7 @@ The [doctrine:build-model|INFO] task creates model classes from the schema:
   [./symfony doctrine:build-model|INFO]
 
 The task read the schema information in [config/doctrine/*.yml|COMMENT]
-from the project and all installed plugins.
+from the project and all enabled plugins.
 
 The model classes files are created in [lib/model/doctrine|COMMENT].
 
@@ -60,78 +60,69 @@ EOF;
     $this->logSection('doctrine', 'generating model classes');
 
     $config = $this->getCliConfig();
+    $builderOptions = $this->configuration->getPluginConfiguration('sfDoctrinePlugin')->getModelBuilderOptions();
 
-    $this->_checkForPackageParameter($config['yaml_schema_path']);
+    $finder = sfFinder::type('file')->maxdepth(0)->name('*'.$builderOptions['suffix']);
+    $before = $finder->in($config['models_path']);
 
-    $tmpPath = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'tmp';
-
-    if (!file_exists($tmpPath))
-    {
-      Doctrine_Lib::makeDirectories($tmpPath);
-    }
-
-    $plugins = $this->configuration->getPlugins();
-    foreach ($this->configuration->getAllPluginPaths() as $plugin => $path)
-    {
-      if (!in_array($plugin, $plugins))
-      {
-        continue;
-      }
-      $schemas = sfFinder::type('file')->name('*.yml')->in($path.'/config/doctrine');
-      foreach ($schemas as $schema)
-      {
-        $tmpSchemaPath = $tmpPath.DIRECTORY_SEPARATOR.$plugin.'-'.basename($schema);
-
-        $models = Doctrine_Parser::load($schema, 'yml');
-        if (!isset($models['package']))
-        {
-          $models['package'] = $plugin.'.lib.model.doctrine';
-          $models['package_custom_path'] = $path.'/lib/model/doctrine';
-        }
-        Doctrine_Parser::dump($models, 'yml', $tmpSchemaPath);
-      }
-    }
-
-    $options = array('generateBaseClasses'  => true,
-                     'generateTableClasses' => true,
-                     'packagesPath'         => sfConfig::get('sf_plugins_dir'),
-                     'packagesPrefix'       => 'Plugin',
-                     'suffix'               => '.class.php',
-                     'baseClassesDirectory' => 'base',
-                     'baseClassName'        => 'sfDoctrineRecord');
-    $options = array_merge($options, sfConfig::get('doctrine_model_builder_options', array()));
+    $schema = $this->prepareSchemaFile($config['yaml_schema_path']);
 
     $import = new Doctrine_Import_Schema();
-    $import->setOptions($options);
-    $import->importSchema(array($tmpPath, $config['yaml_schema_path']), 'yml', $config['models_path']);
-  }
+    $import->setOptions($builderOptions);
+    $import->importSchema($schema, 'yml', $config['models_path']);
 
-  /**
-   * Check for package parameter in main schema files.
-   * sfDoctrinePlugin uses the package feature of Doctrine
-   * for plugins and cannot be used by the user
-   *
-   * @param string $path
-   * @return void
-   */
-  protected function _checkForPackageParameter($path)
-  {
-    $files = sfFinder::type('file')->name('*.yml')->in($path);
-    foreach ($files as $file)
+    // markup base classes with magic methods
+    foreach (sfYaml::load($schema) as $model => $definition)
     {
-      $array = sfYaml::load($file);
-      if (is_array($array) AND !empty($array))
+      $file = sprintf('%s%s/%s/Base%s%s', $config['models_path'], isset($definition['package']) ? '/'.substr($definition['package'], 0, strpos($definition['package'], '.')) : '', $builderOptions['baseClassesDirectory'], $model, $builderOptions['suffix']);
+      $code = file_get_contents($file);
+
+      // introspect the model without loading the class
+      if (preg_match_all('/@property (\w+) \$(\w+)/', $code, $matches, PREG_SET_ORDER))
       {
-        foreach ($array as $key => $value)
+        $properties = array();
+        foreach ($matches as $match)
         {
-          if ($key == 'package' || (is_array($value) && isset($value['package'])))
-          {
-            throw new sfDoctrineException(
-              sprintf('Cannot use package parameter in symfony Doctrine schema files. Found in "%s"', $file)
-            );
-          }
+          $properties[$match[2]] = $match[1];
         }
+
+        $typePad = max(array_map('strlen', array_merge(array_values($properties), array($model))));
+        $namePad = max(array_map('strlen', array_keys(array_map(array('sfInflector', 'camelize'), $properties))));
+        $setters = array();
+        $getters = array();
+
+        foreach ($properties as $name => $type)
+        {
+          $camelized = sfInflector::camelize($name);
+          $collection = 'Doctrine_Collection' == $type;
+
+          $getters[] = sprintf('@method %-'.$typePad.'s %s%-'.($namePad + 2).'s Returns the current record\'s "%s" %s', $type, 'get', $camelized.'()', $name, $collection ? 'collection' : 'value');
+          $setters[] = sprintf('@method %-'.$typePad.'s %s%-'.($namePad + 2).'s Sets the current record\'s "%s" %s', $model, 'set', $camelized.'()', $name, $collection ? 'collection' : 'value');
+        }
+
+        // use the last match as a search string
+        $code = str_replace($match[0], $match[0].PHP_EOL.' * '.PHP_EOL.' * '.implode(PHP_EOL.' * ', array_merge($getters, $setters)), $code);
+        file_put_contents($file, $code);
       }
     }
+
+    // cleanup stub classes
+    $properties = parse_ini_file(sfConfig::get('sf_config_dir').'/properties.ini', true);
+    $this->getFilesystem()->replaceTokens(array_diff($finder->in($config['models_path']), $before), '', '', array(
+      '##PACKAGE##'    => isset($properties['symfony']['name']) ? $properties['symfony']['name'] : 'symfony',
+      '##SUBPACKAGE##' => 'model',
+      '##NAME##'       => isset($properties['symfony']['author']) ? $properties['symfony']['author'] : 'Your name here',
+      ' <##EMAIL##>'   => '',
+      "{\n\n}"         => "{\n}\n",
+    ));
+
+    $finder = sfFinder::type('file')->maxdepth(0)->name('*Table'.$builderOptions['suffix']);
+    foreach (array_diff($finder->in($config['models_path']), $before) as $file)
+    {
+      $contents = file_get_contents($file);
+      file_put_contents($file, sfToolkit::stripComments($contents));
+    }
+
+    $this->reloadAutoload();
   }
 }

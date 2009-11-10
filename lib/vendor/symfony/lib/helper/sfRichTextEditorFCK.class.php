@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+require_once dirname(__FILE__).'/sfRichTextEditor.class.php';
+
 /**
  * sfRichTextEditorFCK implements the FCK rich text editor.
  *
@@ -18,7 +20,7 @@
  * @package    symfony
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfRichTextEditorFCK.class.php 17860 2009-05-01 22:33:31Z FabianLange $
+ * @version    SVN: $Id: sfRichTextEditorFCK.class.php 23515 2009-11-02 13:12:42Z Kris.Wallsmith $
  */
 class sfRichTextEditorFCK extends sfRichTextEditor
 {

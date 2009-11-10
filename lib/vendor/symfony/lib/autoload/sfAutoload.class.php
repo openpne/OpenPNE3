@@ -17,7 +17,7 @@
  * @package    symfony
  * @subpackage autoload
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfAutoload.class.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: sfAutoload.class.php 23205 2009-10-20 13:20:17Z Kris.Wallsmith $
  */
 class sfAutoload
 {
@@ -73,30 +73,54 @@ class sfAutoload
     spl_autoload_unregister(array(self::getInstance(), 'autoload'));
   }
 
+  /**
+   * Sets the path for a particular class.
+   *
+   * @param string $class A PHP class name
+   * @param string $path  An absolute path
+   */
   public function setClassPath($class, $path)
   {
+    $class = strtolower($class);
+
     $this->overriden[$class] = $path;
 
     $this->classes[$class] = $path;
   }
 
+  /**
+   * Returns the path where a particular class can be found.
+   *
+   * @param string $class A PHP class name
+   *
+   * @return string|null An absolute path
+   */
   public function getClassPath($class)
   {
+    $class = strtolower($class);
+
     return isset($this->classes[$class]) ? $this->classes[$class] : null;
   }
 
+  /**
+   * Reloads the autoloader.
+   *
+   * @param  boolean $force Whether to force a reload
+   *
+   * @return boolean True if the reload was successful, otherwise false
+   */
   public function reloadClasses($force = false)
   {
     // only (re)load the autoloading cache once per request
-    if (self::$freshCache)
+    if (self::$freshCache && !$force)
     {
-      return;
+      return false;
     }
 
     $configuration = sfProjectConfiguration::getActive();
     if (!$configuration || !$configuration instanceof sfApplicationConfiguration)
     {
-      return;
+      return false;
     }
 
     self::$freshCache = true;
@@ -117,12 +141,14 @@ class sfAutoload
     {
       $this->classes[$class] = $path;
     }
+
+    return true;
   }
 
   /**
    * Handles autoloading of classes that have been specified in autoload.yml.
    *
-   * @param string $class A class name.
+   * @param  string  $class  A class name.
    *
    * @return boolean Returns true if the class has been loaded
    */
@@ -137,22 +163,17 @@ class sfAutoload
     return self::loadClass($class);
   }
 
-  public function autoloadAgain($class)
-  {
-    self::reloadClasses(true);
-
-    return self::loadClass($class);
-  }
-
   /**
    * Tries to load a class that has been specified in autoload.yml.
    *
-   * @param string $class A class name.
+   * @param  string  $class  A class name.
    *
    * @return boolean Returns true if the class has been loaded
    */
   public function loadClass($class)
   {
+    $class = strtolower($class);
+
     // class already exists
     if (class_exists($class, false) || interface_exists($class, false))
     {
@@ -162,16 +183,43 @@ class sfAutoload
     // we have a class path, let's include it
     if (isset($this->classes[$class]))
     {
-      require($this->classes[$class]);
+      try
+      {
+        require $this->classes[$class];
+      }
+      catch (sfException $e)
+      {
+        $e->printStackTrace();
+      }
+      catch (Exception $e)
+      {
+        sfException::createFromException($e)->printStackTrace();
+      }
 
       return true;
     }
 
     // see if the file exists in the current module lib directory
-    // must be in a module context
-    if (sfContext::hasInstance() && ($module = sfContext::getInstance()->getModuleName()) && isset($this->classes[$module.'/'.$class]))
+    if (
+      sfContext::hasInstance()
+      &&
+      ($module = sfContext::getInstance()->getModuleName())
+      &&
+      isset($this->classes[$module.'/'.$class])
+    )
     {
-      require($this->classes[$module.'/'.$class]);
+      try
+      {
+        require $this->classes[$module.'/'.$class];
+      }
+      catch (sfException $e)
+      {
+        $e->printStackTrace();
+      }
+      catch (Exception $e)
+      {
+        sfException::createFromException($e)->printStackTrace();
+      }
 
       return true;
     }

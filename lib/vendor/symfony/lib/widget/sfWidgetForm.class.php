@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetForm.class.php 17749 2009-04-29 11:54:22Z fabien $
+ * @version    SVN: $Id: sfWidgetForm.class.php 22446 2009-09-26 07:55:47Z fabien $
  */
 abstract class sfWidgetForm extends sfWidget
 {
@@ -49,10 +49,14 @@ abstract class sfWidgetForm extends sfWidget
    * Sets the default value for the widget.
    *
    * @param string $value The default value
+   *
+   * @return sfWidget The current widget instance
    */
   public function setDefault($value)
   {
     $this->setOption('default', $value);
+
+    return $this;
   }
 
   /**
@@ -69,10 +73,14 @@ abstract class sfWidgetForm extends sfWidget
    * Sets the label for the widget.
    *
    * @param string $value The label
+   *
+   * @return sfWidget The current widget instance
    */
   public function setLabel($value)
   {
     $this->setOption('label', $value);
+
+    return $this;
   }
 
   /**
@@ -89,10 +97,14 @@ abstract class sfWidgetForm extends sfWidget
    * Sets the format for HTML id attributes.
    *
    * @param string $format  The format string (must contain a %s for the id placeholder)
+   *
+   * @return sfWidget The current widget instance
    */
   public function setIdFormat($format)
   {
     $this->setOption('id_format', $format);
+
+    return $this;
   }
 
   /**
@@ -119,10 +131,14 @@ abstract class sfWidgetForm extends sfWidget
    * Sets the hidden flag for the widget.
    *
    * @param bool $boolean  true if the widget must be hidden, false otherwise
+   *
+   * @return sfWidget The current widget instance
    */
   public function setHidden($boolean)
   {
     $this->setOption('is_hidden', (boolean) $boolean);
+
+    return $this;
   }
 
   /**
@@ -220,7 +236,7 @@ abstract class sfWidgetForm extends sfWidget
     // check to see if we have an array variable for a field name
     if (strstr($name, '['))
     {
-      $name = str_replace(array('[]', '][', '[', ']'), array((!is_null($value) ? '_'.$value : ''), '_', '_', ''), $name);
+      $name = str_replace(array('[]', '][', '[', ']'), array((null !== $value ? '_'.$value : ''), '_', '_', ''), $name);
     }
 
     if (false !== strpos($this->getOption('id_format'), '%s'))

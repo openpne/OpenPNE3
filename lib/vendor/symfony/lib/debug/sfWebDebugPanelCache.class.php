@@ -15,7 +15,7 @@
  * @package    symfony
  * @subpackage debug
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWebDebugPanelCache.class.php 12982 2008-11-13 17:25:10Z hartym $
+ * @version    SVN: $Id: sfWebDebugPanelCache.class.php 22932 2009-10-11 22:40:20Z Kris.Wallsmith $
  */
 class sfWebDebugPanelCache extends sfWebDebugPanel
 {
@@ -26,7 +26,16 @@ class sfWebDebugPanelCache extends sfWebDebugPanel
 
   public function getTitleUrl()
   {
-    return $_SERVER['PHP_SELF'].((strpos($_SERVER['PHP_SELF'], '_sf_ignore_cache') === false) ? '?_sf_ignore_cache=1' : '');
+    $queryString = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+
+    if (false === strpos($queryString, '_sf_ignore_cache'))
+    {
+      return sprintf('?%s_sf_ignore_cache=1', $queryString ? $queryString.'&' : '');
+    }
+    else
+    {
+      return '?'.$queryString;
+    }
   }
 
   public function getPanelTitle()

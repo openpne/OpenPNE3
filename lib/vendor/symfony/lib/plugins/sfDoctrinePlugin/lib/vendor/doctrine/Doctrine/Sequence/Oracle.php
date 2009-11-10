@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Oracle.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Oracle.php 6538 2009-10-19 20:14:12Z guilhermeblanco $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6538 $
  */
 class Doctrine_Sequence_Oracle extends Doctrine_Sequence
 {
@@ -43,22 +43,24 @@ class Doctrine_Sequence_Oracle extends Doctrine_Sequence
     public function nextID($seqName, $onDemand = true)
     {
         $sequenceName = $this->conn->quoteIdentifier($this->conn->formatter->getSequenceName($seqName), true);
-        $query        = 'SELECT ' . $sequenceName . '.nextval FROM DUAL';
+        $query = 'SELECT ' . $sequenceName . '.nextval FROM DUAL';
 
         try {
             $result = $this->conn->fetchOne($query);
         } catch(Doctrine_Connection_Exception $e) {
-            if ($onDemand && $e->getPortableCode() == Doctrine::ERR_NOSUCHTABLE) {
-
+            if ($onDemand && $e->getPortableCode() == Doctrine_Core::ERR_NOSUCHTABLE) {
                 try {
                     $result = $this->conn->export->createSequence($seqName);
                 } catch(Doctrine_Exception $e) {
                     throw new Doctrine_Sequence_Exception('on demand sequence ' . $seqName . ' could not be created');
                 }
+
                 return $this->nextId($seqName, false);
+            } else {
+                throw new Doctrine_Sequence_Exception('sequence ' .$seqName . ' does not exist');
             }
-            throw $e;
         }
+
         return $result;
     }
 
@@ -84,7 +86,7 @@ class Doctrine_Sequence_Oracle extends Doctrine_Sequence
      *
      * @return integer          current id in the given sequence
      */
-    public function currID($seqName)
+    public function currId($seqName)
     {
         $sequenceName = $this->conn->quoteIdentifier($this->conn->formatter->getSequenceName($seqName), true);
         $query   = 'SELECT (last_number-1) FROM user_sequences';

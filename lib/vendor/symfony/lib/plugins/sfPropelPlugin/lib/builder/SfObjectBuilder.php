@@ -14,46 +14,21 @@ require_once 'propel/engine/builder/om/php5/PHP5ObjectBuilder.php';
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: SfObjectBuilder.php 14378 2008-12-29 20:04:39Z Kris.Wallsmith $
+ * @version    SVN: $Id: SfObjectBuilder.php 23357 2009-10-26 17:29:41Z Kris.Wallsmith $
+ * 
+ * @deprecated since symfony 1.3
  */
 class SfObjectBuilder extends PHP5ObjectBuilder
 {
   public function build()
   {
     $objectCode = parent::build();
-    if (!DataModelBuilder::getBuildProperty('builderAddComments'))
+    if (!$this->getBuildProperty('builderAddComments'))
     {
       $objectCode = sfToolkit::stripComments($objectCode);
     }
 
-    if(!DataModelBuilder::getBuildProperty('builderAddIncludes'))
-    {
-       // remove all inline includes: object classes include the peers
-      $objectCode = preg_replace("/include_once\s*.*Base.*Peer\.php.*\s*/", "", $objectCode);
-    }
-
     return $objectCode;
-  }
-
-  protected function addIncludes(&$script)
-  {
-    if (!DataModelBuilder::getBuildProperty('builderAddIncludes'))
-    {
-      return;
-    }
-
-    parent::addIncludes($script);
-
-    // include the i18n classes if needed
-    if ($this->getTable()->getAttribute('isI18N'))
-    {
-      $relatedTable   = $this->getDatabase()->getTable($this->getTable()->getAttribute('i18nTable'));
-
-      $script .= '
-require_once \''.ClassTools::getFilePath($this->getStubObjectBuilder()->getPackage().'.', $relatedTable->getPhpName().'Peer').'\';
-require_once \''.ClassTools::getFilePath($this->getStubObjectBuilder()->getPackage().'.', $relatedTable->getPhpName()).'\';
-';
-    }
   }
 
   protected function addClassBody(&$script)
@@ -73,7 +48,7 @@ require_once \''.ClassTools::getFilePath($this->getStubObjectBuilder()->getPacka
       $this->addI18nMethods($script);
     }
 
-    if (DataModelBuilder::getBuildProperty('builderAddBehaviors'))
+    if ($this->getBuildProperty('builderAddBehaviors'))
     {
       $this->addCall($script);
     }
@@ -82,7 +57,6 @@ require_once \''.ClassTools::getFilePath($this->getStubObjectBuilder()->getPacka
   protected function addCall(&$script)
   {
     $script .= "
-
   public function __call(\$method, \$arguments)
   {
     if (!\$callable = sfMixer::getCallable('{$this->getClassname()}:'.\$method))
@@ -94,7 +68,6 @@ require_once \''.ClassTools::getFilePath($this->getStubObjectBuilder()->getPacka
 
     return call_user_func_array(\$callable, \$arguments);
   }
-
 ";
   }
 
@@ -192,9 +165,9 @@ $script .= '
 
   public function getCurrent'.$className.'($culture = null)
   {
-    if (is_null($culture))
+    if (null === $culture)
     {
-      $culture = is_null($this->culture) ? sfPropel::getDefaultCulture() : $this->culture;
+      $culture = null === $this->culture ? sfPropel::getDefaultCulture() : $this->culture;
     }
 
     if (!isset($this->current_i18n[$culture]))
@@ -264,7 +237,7 @@ $script .= '
     $tmp = '';
     parent::addDelete($tmp);
 
-    if (DataModelBuilder::getBuildProperty('builderAddBehaviors'))
+    if ($this->getBuildProperty('builderAddBehaviors'))
     {
       // add sfMixer call
       $pre_mixer_script = "
@@ -331,7 +304,7 @@ $script .= '
     }
     $tmp = preg_replace('/{/', '{'.$date_script, $tmp, 1);
 
-    if (DataModelBuilder::getBuildProperty('builderAddBehaviors'))
+    if ($this->getBuildProperty('builderAddBehaviors'))
     {
       // add sfMixer call
       $pre_mixer_script = "
@@ -372,16 +345,7 @@ EOF;
       $behavior_file_name = 'Base'.$this->getTable()->getPhpName().'Behaviors';
       $behavior_file_path = ClassTools::getFilePath($this->getStubObjectBuilder()->getPackage().'.om', $behavior_file_name);
 
-      $behavior_include_script = <<<EOF
-
-
-if (sfProjectConfiguration::getActive() instanceof sfApplicationConfiguration)
-{
-  include_once '%s';
-}
-
-EOF;
-      $script .= sprintf($behavior_include_script, $behavior_file_path);
+      $script .= sprintf("\ninclude_once '%s';\n", $behavior_file_path);
     }
   }
 

@@ -19,7 +19,7 @@
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfParameterHolder.class.php 10835 2008-08-13 11:58:38Z fabien $
+ * @version    SVN: $Id: sfParameterHolder.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfParameterHolder implements Serializable
 {
@@ -164,7 +164,7 @@ class sfParameterHolder implements Serializable
    */
   public function add($parameters)
   {
-    if (is_null($parameters))
+    if (null === $parameters)
     {
       return;
     }

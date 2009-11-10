@@ -26,11 +26,10 @@ class sfDoctrineBuildFormsTask extends sfDoctrineBaseTask
   protected function configure()
   {
     $this->addOptions(array(
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'doctrine'),
-      new sfCommandOption('model-dir-name', null, sfCommandOption::PARAMETER_REQUIRED, 'The model dir name', 'model'),
-      new sfCommandOption('form-dir-name', null, sfCommandOption::PARAMETER_REQUIRED, 'The form dir name', 'form'),
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
+      new sfCommandOption('model-dir-name', null, sfCommandOption::PARAMETER_REQUIRED, 'The model dir name', 'model'),
+      new sfCommandOption('form-dir-name', null, sfCommandOption::PARAMETER_REQUIRED, 'The form dir name', 'form'),
     ));
 
     $this->namespace = 'doctrine';
@@ -42,18 +41,11 @@ The [doctrine:build-forms|INFO] task creates form classes from the schema:
 
   [./symfony doctrine:build-forms|INFO]
 
-The task read the schema information in [config/*schema.xml|COMMENT] and/or
-[config/*schema.yml|COMMENT] from the project and all installed plugins.
+This task creates form classes based on the model. The classes are created
+in [lib/doctrine/form|COMMENT].
 
-The task use the [doctrine|COMMENT] connection as defined in [config/databases.yml|COMMENT].
-You can use another connection by using the [--connection|COMMENT] option:
-
-  [./symfony doctrine:build-forms --connection="name"|INFO]
-
-The model form classes files are created in [lib/form|COMMENT].
-
-This task never overrides custom classes in [lib/form|COMMENT].
-It only replaces base classes generated in [lib/form/base|COMMENT].
+This task never overrides custom classes in [lib/doctrine/form|COMMENT].
+It only replaces base classes generated in [lib/doctrine/form/base|COMMENT].
 EOF;
   }
 
@@ -66,7 +58,6 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $generatorManager = new sfGeneratorManager($this->configuration);
     $generatorManager->generate('sfDoctrineFormGenerator', array(
-      'connection'     => $options['connection'],
       'model_dir_name' => $options['model-dir-name'],
       'form_dir_name'  => $options['form-dir-name'],
     ));
@@ -81,5 +72,15 @@ EOF;
     // customize php and yml files
     $finder = sfFinder::type('file')->name('*.php');
     $this->getFilesystem()->replaceTokens($finder->in(sfConfig::get('sf_lib_dir').'/form/'), '##', '##', $constants);
+
+    // check for base form class
+    if (!class_exists('BaseForm'))
+    {
+      $file = sfConfig::get('sf_lib_dir').'/'.$options['form-dir-name'].'/BaseForm.class.php';
+      $this->getFilesystem()->copy(sfConfig::get('sf_symfony_lib_dir').'/task/generator/skeleton/project/lib/form/BaseForm.class.php', $file);
+      $this->getFilesystem()->replaceTokens($file, '##', '##', $constants);
+    }
+
+    $this->reloadAutoload();
   }
 }

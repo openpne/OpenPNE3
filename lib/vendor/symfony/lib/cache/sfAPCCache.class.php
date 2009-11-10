@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage cache
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfAPCCache.class.php 7605 2008-02-25 12:58:56Z fabien $
+ * @version    SVN: $Id: sfAPCCache.class.php 21990 2009-09-13 21:09:18Z FabianLange $
  */
 class sfAPCCache extends sfCache
 {
@@ -42,9 +42,8 @@ class sfAPCCache extends sfCache
   */
   public function get($key, $default = null)
   {
-    $value = apc_fetch($this->getOption('prefix').$key);
-
-    return false === $value ? $default : $value;
+    $value = $this->fetch($this->getOption('prefix').$key, $has);
+    return $has ? $value : $default;
   }
 
   /**
@@ -52,9 +51,27 @@ class sfAPCCache extends sfCache
    */
   public function has($key)
   {
-    return !(false === apc_fetch($this->getOption('prefix').$key));
+    $this->fetch($this->getOption('prefix').$key, $has);
+    return $has;
   }
 
+  private function fetch($key, &$success)
+  {
+    $has = null;
+    $value = apc_fetch($key, $has);
+    // the second argument was added in APC 3.0.17. If it is still null we fall back to the value returned
+    if (null !== $has)
+    {
+      $success = $has;
+    }
+    else
+    {
+      $success = $value !== false;
+    }
+    return $value;
+  }
+  
+  
   /**
    * @see sfCache
    */

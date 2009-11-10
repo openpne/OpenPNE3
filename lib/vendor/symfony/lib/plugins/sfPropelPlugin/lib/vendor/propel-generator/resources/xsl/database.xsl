@@ -31,6 +31,7 @@
 			<xsl:apply-templates select='@*'/>
 			<xsl:apply-templates select='external-schema'/>
 			<xsl:apply-templates select='table'/>
+			<xsl:apply-templates select='behavior'/>
 		</database>
 	</xsl:template>
 
@@ -116,6 +117,7 @@
 			<xsl:apply-templates select='id-method-parameter'/>
 			<xsl:apply-templates select='validator'/>
 			<xsl:apply-templates select='vendor'/>
+			<xsl:apply-templates select='behavior'/>
 		</table>
 	</xsl:template>
 
@@ -155,6 +157,17 @@
 			<xsl:apply-templates select='unique-column'/>
 		</unique>
 	</xsl:template>
+
+	<!--
+	Just copy the behavior node with attributes and add the param
+	-->
+	<xsl:template match='behavior'>
+		<behavior>
+			<xsl:apply-templates select='@*'/>
+			<xsl:apply-templates select='parameter'/>
+		</behavior>
+	</xsl:template>
+
 
 	<!--
 	Just copy the unique-column node with attributes and add the vendor node

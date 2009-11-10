@@ -26,21 +26,26 @@ class sfValidatorDoctrineChoice extends sfValidatorBase
    * Available options:
    *
    *  * model:      The model class (required)
-   *  * alias:      The alias of the root component used in the query
    *  * query:      A query to use when retrieving objects
    *  * column:     The column name (null by default which means we use the primary key)
    *                must be in field name format
-   *  * connection: The Doctrine connection to use (null by default)
+   *  * multiple:   true if the select tag must allow multiple selections
+   *  * min:        The minimum number of values that need to be selected (this option is only active if multiple is true)
+   *  * max:        The maximum number of values that need to be selected (this option is only active if multiple is true)
    *
    * @see sfValidatorBase
    */
   protected function configure($options = array(), $messages = array())
   {
     $this->addRequiredOption('model');
-    $this->addOption('alias', 'a');
     $this->addOption('query', null);
     $this->addOption('column', null);
-    $this->addOption('connection', null);
+    $this->addOption('multiple', false);
+    $this->addOption('min');
+    $this->addOption('max');
+
+    $this->addMessage('min', 'At least %min% values must be selected (%count% values selected).');
+    $this->addMessage('max', 'At most %max% values must be selected (%count% values selected).');
   }
 
   /**
@@ -48,15 +53,53 @@ class sfValidatorDoctrineChoice extends sfValidatorBase
    */
   protected function doClean($value)
   {
-    $a = ($q = $this->getOption('query')) ? $q->getRootAlias():$this->getOption('alias');
-    $q = is_null($this->getOption('query')) ? Doctrine_Query::create()->from($this->getOption('model') . ' ' . $a) : $this->getOption('query');
-    $q->addWhere($a . '.' . $this->getColumn() . ' = ?', $value);
-
-    $object = $q->fetchOne();
-    
-    if (!$object)
+    if ($this->getOption('multiple'))
     {
-      throw new sfValidatorError($this, 'invalid', array('value' => $value));
+      if (!is_array($value))
+      {
+        $value = array($value);
+      }
+
+      if (isset($value[0]) && !$value[0])
+      {
+        unset($value[0]);
+      }
+
+      $count = count($value);
+
+      if ($this->hasOption('min') && $count < $this->getOption('min'))
+      {
+        throw new sfValidatorError($this, 'min', array('count' => $count, 'min' => $this->getOption('min')));
+      }
+
+      if ($this->hasOption('max') && $count > $this->getOption('max'))
+      {
+        throw new sfValidatorError($this, 'max', array('count' => $count, 'max' => $this->getOption('max')));
+      }
+
+      if (!$query = $this->getOption('query'))
+      {
+        $query = Doctrine_Core::getTable($this->getOption('model'))->createQuery();
+      }
+      $query->andWhereIn(sprintf('%s.%s', $query->getRootAlias(), $this->getColumn()), $value);
+
+      if ($query->count() != count($value))
+      {
+        throw new sfValidatorError($this, 'invalid', array('value' => $value));
+      }
+    }
+    else
+    {
+      if (!$query = $this->getOption('query'))
+      {
+        $query = Doctrine_Core::getTable($this->getOption('model'))->createQuery();
+      }
+      $query->andWhere(sprintf('%s.%s = ?', $query->getRootAlias(), $this->getColumn()), $value);
+
+      if (!$query->count())
+      {
+        throw new sfValidatorError($this, 'invalid', array('value' => $value));
+      }
     }
 
     return $value;
@@ -71,7 +114,7 @@ class sfValidatorDoctrineChoice extends sfValidatorBase
    */
   protected function getColumn()
   {
-    $table = Doctrine::getTable($this->getOption('model'));
+    $table = Doctrine_Core::getTable($this->getOption('model'));
     if ($this->getOption('column'))
     {
       $columnName = $this->getOption('column');

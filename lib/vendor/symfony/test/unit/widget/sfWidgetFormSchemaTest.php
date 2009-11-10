@@ -10,10 +10,10 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(90, new lime_output_color());
+$t = new lime_test(90);
 
-$w1 = new sfWidgetFormInput(array(), array('class' => 'foo1'));
-$w2 = new sfWidgetFormInput();
+$w1 = new sfWidgetFormInputText(array(), array('class' => 'foo1'));
+$w2 = new sfWidgetFormInputText();
 
 // __construct()
 $t->diag('__construct()');
@@ -132,9 +132,9 @@ catch (InvalidArgumentException $e)
 
 $w = new sfWidgetFormSchema(array(
   'author' => new sfWidgetFormSchema(array(
-    'first_name' => new sfWidgetFormInput(),
+    'first_name' => new sfWidgetFormInputText(),
     'company'    => new sfWidgetFormSchema(array(
-      'name' => new sfWidgetFormInput(),
+      'name' => new sfWidgetFormInputText(),
     )),
   )),
 ));
@@ -144,15 +144,15 @@ $t->is($w['author']['company']->generateName('name'), 'article[author][company][
 
 // ->getParent() ->setParent()
 $t->diag('->getParent() ->setParent()');
-$author = new sfWidgetFormSchema(array('first_name' => new sfWidgetFormInput()));
-$company = new sfWidgetFormSchema(array('name' => new sfWidgetFormInput()));
+$author = new sfWidgetFormSchema(array('first_name' => new sfWidgetFormInputText()));
+$company = new sfWidgetFormSchema(array('name' => new sfWidgetFormInputText()));
 $t->is($company->getParent(), null, '->getParent() returns null if there is no parent widget schema');
 $company->setParent($author);
 $t->is($company->getParent(), $author, '->getParent() returns the parent widget schema');
 
 // ->setLabels() ->setLabel() ->getLabels() ->getLabel() ->generateLabelName()
 $t->diag('->setLabels() ->setLabel() ->getLabels() ->getLabel() ->generateLabelName()');
-$w = new sfWidgetFormSchema(array('first_name' => new sfWidgetFormInput()));
+$w = new sfWidgetFormSchema(array('first_name' => new sfWidgetFormInputText()));
 $w->setLabel('first_name', 'A first name');
 $t->is($w->getLabels(), array('first_name' => 'A first name'), '->getLabels() returns all current labels');
 
@@ -368,7 +368,7 @@ $expected = <<<EOF
 
 EOF;
 $rendered = $w->render(null, array('first_name' => 'Fabien', 'last_name' => 'Potencier'), array('first_name' => array('class' => 'foo'), 'last_name' => array('class' => 'bar')), array('first_name' => 'Too short', 'Global error message', 'id' => 'Required'));
-$t->is($rendered, $expected, '->render() renders a schema to HTML');
+$t->is($rendered, fix_linebreaks($expected), '->render() renders a schema to HTML');
 
 $t->diag('Widget schema with only hidden fields');
 $w = new sfWidgetFormSchema(array('w1' => new sfWidgetFormInputHidden()));
@@ -377,7 +377,7 @@ $t->is($w->render(null), '<input type="hidden" name="w1" id="w1" />', '->render(
 $t->diag('Widget schema with an embed form as the last field and hidden fields');
 $w = new sfWidgetFormSchema();
 $w['w1'] = new sfWidgetFormInputHidden();
-$ew = new sfWidgetFormSchema(array('w3' => new sfWidgetFormInput()));
+$ew = new sfWidgetFormSchema(array('w3' => new sfWidgetFormInputText()));
 $w['w4'] = new sfWidgetFormSchemaDecorator($ew, $w->getFormFormatter()->getDecoratorFormat());
 $expected = <<<EOF
 <tr>
@@ -394,7 +394,7 @@ $expected = <<<EOF
 </tr>
 
 EOF;
-$t->is(str_replace("\n", '', preg_replace('/^ +/m', '', $w->render(null))), str_replace("\n", '', preg_replace('/^ +/m', '', $expected)), '->render() is able to render widget schema that only contains hidden fields when the last field is a form');
+$t->is(str_replace("\n", '', preg_replace('/^ +/m', '', $w->render(null))), str_replace("\n", '', preg_replace('/^ +/m', '', fix_linebreaks($expected))), '->render() is able to render widget schema that only contains hidden fields when the last field is a form');
 
 // __clone()
 $t->diag('__clone()');

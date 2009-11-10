@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorOr.class.php 13127 2008-11-18 15:35:59Z nicolas $
+ * @version    SVN: $Id: sfValidatorOr.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfValidatorOr extends sfValidatorBase
 {
@@ -49,7 +49,7 @@ class sfValidatorOr extends sfValidatorBase
         $this->addValidator($validator);
       }
     }
-    else if (!is_null($validators))
+    else if (null !== $validators)
     {
       throw new InvalidArgumentException('sfValidatorOr constructor takes a sfValidatorBase object, or a sfValidatorBase array.');
     }

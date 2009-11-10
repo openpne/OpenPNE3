@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: DBPostgres.php 1011 2008-03-20 11:36:27Z hans $
+ *  $Id: DBPostgres.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  *
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
  * @author     Hakan Tandogan <hakan42@gmx.de> (Torque)
- * @version    $Revision: 1011 $
+ * @version    $Revision: 1262 $
  * @package    propel.adapter
  */
 class DBPostgres extends DBAdapter {

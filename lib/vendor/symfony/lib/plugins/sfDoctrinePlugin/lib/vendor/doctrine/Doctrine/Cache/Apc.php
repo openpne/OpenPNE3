@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Apc.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Apc.php 6559 2009-10-23 17:09:38Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,8 +27,9 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6559 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
  */
 class Doctrine_Cache_Apc extends Doctrine_Cache_Driver
 {
@@ -46,52 +47,52 @@ class Doctrine_Cache_Apc extends Doctrine_Cache_Driver
     }
 
     /**
-     * Test if a cache is available for the given id and (if yes) return it (false else).
-     * 
+     * Fetch a cache record from this cache driver instance
+     *
      * @param string $id cache id
      * @param boolean $testCacheValidity        if set to false, the cache validity won't be tested
-     * @return mixed The stored variable on success. FALSE on failure.
+     * @return string cached datas (or false)
      */
-    public function fetch($id, $testCacheValidity = true) 
+    protected function _doFetch($id, $testCacheValidity = true) 
     {
-        $results = apc_fetch($id);
-        $results = (array) $results;
-        return $results[0];
+        return apc_fetch($id);
     }
 
     /**
-     * Test if a cache is available or not (for the given id)
+     * Test if a cache record exists for the passed id
      *
      * @param string $id cache id
      * @return mixed false (a cache is not available) or "last modified" timestamp (int) of the available cache record
      */
-    public function contains($id) 
+    protected function _doContains($id) 
     {
-        return apc_fetch($id) === false ? false : true;
+        $found = false;
+        apc_fetch($id, $found);
+        return $found;
     }
 
     /**
-     * Save some string datas into a cache record
+     * Save a cache record directly. This method is implemented by the cache
+     * drivers and used in Doctrine_Cache_Driver::save()
      *
-     * Note : $data is always saved as a string
-     *
-     * @param string $data      data to cache
      * @param string $id        cache id
+     * @param string $data      data to cache
      * @param int $lifeTime     if != false, set a specific lifetime for this cache record (null => infinite lifeTime)
      * @return boolean true if no problem
      */
-    public function save($id, $data, $lifeTime = false)
+    protected function _doSave($id, $data, $lifeTime = false)
     {
-        return (bool) apc_store($id, $data, $lifeTime);
+        return apc_store($id, $data, $lifeTime);
     }
 
     /**
-     * Remove a cache record
+     * Remove a cache record directly. This method is implemented by the cache
+     * drivers and used in Doctrine_Cache_Driver::delete()
      * 
      * @param string $id cache id
      * @return boolean true if no problem
      */
-    public function delete($id) 
+    protected function _doDelete($id) 
     {
         return apc_delete($id);
     }

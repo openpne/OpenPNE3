@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfApplicationConfiguration.class.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: sfApplicationConfiguration.class.php 22202 2009-09-20 15:10:09Z fabien $
  */
 abstract class sfApplicationConfiguration extends ProjectConfiguration
 {
@@ -32,10 +32,10 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
   /**
    * Constructor.
    *
-   * @param string            $environment The environment name
-   * @param Boolean           $debug       true to enable debug mode
-   * @param string            $rootDir     The project root directory
-   * @param sfEventDispatcher $dispatcher  An event dispatcher
+   * @param string            $environment    The environment name
+   * @param Boolean           $debug          true to enable debug mode
+   * @param string            $rootDir        The project root directory
+   * @param sfEventDispatcher $dispatcher     An event dispatcher
    */
   public function __construct($environment, $debug, $rootDir = null, sfEventDispatcher $dispatcher = null)
   {
@@ -54,9 +54,9 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
       $this->checkLock();
     }
 
-    if (sfConfig::get('sf_check_symfony_version'))
+    if (file_exists($file = sfConfig::get('sf_app_cache_dir').'/config/configuration.php'))
     {
-      $this->checkSymfonyVersion();
+      $this->cache = require $file;
     }
 
     $this->initialize();
@@ -108,8 +108,13 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
       $configCache->import('config/core_compile.yml', false);
     }
 
+    // autoloader(s)
     $this->dispatcher->connect('autoload.filter_config', array($this, 'filterAutoloadConfig'));
     sfAutoload::getInstance()->register();
+    if ($this->isDebug())
+    {
+      sfAutoloadAgain::getInstance()->register();
+    }
 
     // load base settings
     include($configCache->checkConfig('config/settings.yml'));
@@ -143,14 +148,6 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
     // initialize plugin configuration objects
     $this->initializePlugins();
 
-    // Disabled by default in symfony 1.1 because it causes problems with Doctrine.
-    // If you want to enable it in your application, just copy the spl_autoload_register() line
-    // in your configuration class.
-    if (0 && $this->isDebug())
-    {
-      spl_autoload_register(array(sfAutoload::getInstance(), 'autoloadAgain'));
-    }
-
     // compress output
     if (!self::$coreLoaded)
     {
@@ -181,10 +178,10 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
   /**
    * Adds enabled plugins to autoload config.
    * 
-   * @param sfEvent $event
-   * @param array   $config
+   * @param   sfEvent $event
+   * @param   array   $config
    * 
-   * @return array
+   * @return  array
    */
   public function filterAutoloadConfig(sfEvent $event, array $config)
   {
@@ -203,7 +200,7 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
    */
   public function getConfigCache()
   {
-    if (is_null($this->configCache))
+    if (null === $this->configCache)
     {
       $this->configCache = new sfConfigCache($this);
     }
@@ -219,9 +216,9 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
   public function checkLock()
   {
     if (
-      sfToolkit::hasLockFile(sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.$this->getApplication().'_'.$this->getEnvironment().'-cli.lck', 5)
+      $this->hasLockFile(sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.$this->getApplication().'_'.$this->getEnvironment().'-cli.lck', 5)
       ||
-      sfToolkit::hasLockFile(sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.$this->getApplication().'_'.$this->getEnvironment().'.lck')
+      $this->hasLockFile(sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.$this->getApplication().'_'.$this->getEnvironment().'.lck')
     )
     {
       // application is not available - we'll find the most specific unavailable page...
@@ -246,18 +243,32 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
   }
 
   /**
-   * Checks symfony version and clears cache if recent update.
+   * Determines if a lock file is present.
    *
-   * @return void
+   * @param  string  $lockFile             Name of the lock file.
+   * @param  integer $maxLockFileLifeTime  A max amount of life time for the lock file.
+   *
+   * @return bool true, if the lock file is present, otherwise false.
    */
-  public function checkSymfonyVersion()
+  protected function hasLockFile($lockFile, $maxLockFileLifeTime = 0)
   {
-    // recent symfony update?
-    if (SYMFONY_VERSION != @file_get_contents(sfConfig::get('sf_config_cache_dir').'/VERSION'))
+    $isLocked = false;
+    if (is_readable($lockFile) && ($last_access = fileatime($lockFile)))
     {
-      // clear cache
-      sfToolkit::clearDirectory(sfConfig::get('sf_config_cache_dir'));
+      $now = time();
+      $timeDiff = $now - $last_access;
+
+      if (!$maxLockFileLifeTime || $timeDiff < $maxLockFileLifeTime)
+      {
+        $isLocked = true;
+      }
+      else
+      {
+        $isLocked = @unlink($lockFile) ? false : true;
+      }
     }
+
+    return $isLocked;
   }
 
   /**
@@ -326,11 +337,12 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
    */
   public function getControllerDirs($moduleName)
   {
-    $dirs = array();
-    foreach (sfConfig::get('sf_module_dirs', array()) as $key => $value)
+    if (null !== $this->cache['getControllerDirs'][$moduleName])
     {
-      $dirs[$key.'/'.$moduleName.'/actions'] = $value;
+      return $this->cache['getControllerDirs'][$moduleName];
     }
+
+    $dirs = array();
 
     $dirs[sfConfig::get('sf_app_module_dir').'/'.$moduleName.'/actions'] = false;             // application
 
@@ -357,10 +369,6 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
   public function getLibDirs($moduleName)
   {
     $dirs = array();
-    foreach (sfConfig::get('sf_module_dirs', array()) as $key => $value)
-    {
-      $dirs[] = $key.'/'.$moduleName.'/lib';
-    }
 
     $dirs[] = sfConfig::get('sf_app_module_dir').'/'.$moduleName.'/lib';                  // application
     $dirs = array_merge($dirs, $this->getPluginSubPaths('/modules/'.$moduleName.'/lib')); // plugins
@@ -380,10 +388,6 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
   public function getTemplateDirs($moduleName)
   {
     $dirs = array();
-    foreach (sfConfig::get('sf_module_dirs', array()) as $key => $value)
-    {
-      $dirs[] = $key.'/'.$moduleName.'/templates';
-    }
 
     $dirs[] = sfConfig::get('sf_app_module_dir').'/'.$moduleName.'/templates';                  // application
     $dirs = array_merge($dirs, $this->getPluginSubPaths('/modules/'.$moduleName.'/templates')); // plugins
@@ -396,9 +400,9 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
   /**
    * Gets the helper directories for a given module name.
    *
-   * @param string $moduleName The module name
+   * @param  string $moduleName The module name
    *
-   * @return array An array of directories
+   * @return array  An array of directories
    */
   public function getHelperDirs($moduleName = '')
   {
@@ -425,13 +429,18 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
   /**
    * Gets the template directory to use for a given module and template file.
    *
-   * @param string $moduleName   The module name
-   * @param string $templateFile The template file
+   * @param string $moduleName    The module name
+   * @param string $templateFile  The template file
    *
    * @return string A template directory
    */
   public function getTemplateDir($moduleName, $templateFile)
   {
+    if (null !== $this->cache['getTemplateDir'][$moduleName][$templateFile])
+    {
+      return $this->cache['getTemplateDir'][$moduleName][$templateFile];
+    }
+
     foreach ($this->getTemplateDirs($moduleName) as $dir)
     {
       if (is_readable($dir.'/'.$templateFile))
@@ -446,8 +455,8 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
   /**
    * Gets the template to use for a given module and template file.
    *
-   * @param string $moduleName   The module name
-   * @param string $templateFile The template file
+   * @param string $moduleName    The module name
+   * @param string $templateFile  The template file
    *
    * @return string A template path
    */
@@ -461,7 +470,7 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
   /**
    * Gets the decorator directories.
    *
-   * @return array An array of the decorator directories
+   * @return array  An array of the decorator directories
    */
   public function getDecoratorDirs()
   {
@@ -471,7 +480,7 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
   /**
    * Gets the decorator directory for a given template.
    *
-   * @param string $template The template file
+   * @param  string $template The template file
    *
    * @return string A template directory
    */
@@ -590,8 +599,8 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
   /**
    * Loads helpers.
    *
-   * @param array  $helpers    An array of helpers to load
-   * @param string $moduleName A module name (optional)
+   * @param array  $helpers     An array of helpers to load
+   * @param string $moduleName  A module name (optional)
    */
   public function loadHelpers($helpers, $moduleName = '')
   {

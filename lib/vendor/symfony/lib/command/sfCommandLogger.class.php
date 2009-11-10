@@ -13,7 +13,7 @@
  * @package    symfony
  * @subpackage log
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCommandLogger.class.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: sfCommandLogger.class.php 17865 2009-05-02 09:23:55Z FabianLange $
  */
 class sfCommandLogger extends sfConsoleLogger
 {

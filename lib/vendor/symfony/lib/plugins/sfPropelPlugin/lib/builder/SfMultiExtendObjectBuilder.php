@@ -14,14 +14,16 @@ require_once 'propel/engine/builder/om/php5/PHP5MultiExtendObjectBuilder.php';
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: SfMultiExtendObjectBuilder.php 9567 2008-06-12 23:38:08Z dwhittle $
+ * @version    SVN: $Id: SfMultiExtendObjectBuilder.php 23357 2009-10-26 17:29:41Z Kris.Wallsmith $
+ * 
+ * @deprecated since symfony 1.3
  */
 class SfMultiExtendObjectBuilder extends PHP5MultiExtendObjectBuilder
 {
   public function build()
   {
     $code = parent::build();
-    if (!DataModelBuilder::getBuildProperty('builderAddComments'))
+    if (!$this->getBuildProperty('builderAddComments'))
     {
       $code = sfToolkit::stripComments($code);
     }
@@ -29,13 +31,27 @@ class SfMultiExtendObjectBuilder extends PHP5MultiExtendObjectBuilder
     return $code;
   }
 
-  protected function addIncludes(&$script)
+  protected function addClassOpen(&$script)
   {
-    if (!DataModelBuilder::getBuildProperty('builderAddIncludes'))
-    {
-      return;
-    }
+    parent::addClassOpen($script);
 
-    parent::addIncludes($script);
+    // remove comments and fix coding standards
+    $script = str_replace(array(" {\n", "\n\n\n"), array("\n{", "\n"), sfToolkit::stripComments($script));
+  }
+
+  protected function addClassBody(&$script)
+  {
+    parent::addClassBody($script);
+
+    // remove comments and fix coding standards
+    $script = str_replace(array("\t", "{\n  \n"), array('  ', "{\n"), sfToolkit::stripComments($script));
+  }
+
+  protected function addClassClose(&$script)
+  {
+    parent::addClassClose($script);
+
+    // fix coding standards
+    $script = preg_replace('#\n} // .+$#m', '}', $script);
   }
 }

@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfHelpTask.class.php 7397 2008-02-08 06:48:35Z fabien $
+ * @version    SVN: $Id: sfHelpTask.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfHelpTask extends sfCommandApplicationTask
 {
@@ -27,9 +27,23 @@ class sfHelpTask extends sfCommandApplicationTask
       new sfCommandArgument('task_name', sfCommandArgument::OPTIONAL, 'The task name', 'help'),
     ));
 
+    $this->addOptions(array(
+      new sfCommandOption('xml', null, sfCommandOption::PARAMETER_NONE, 'To output help as XML'),
+    ));
+
     $this->aliases = array('h');
 
     $this->briefDescription = 'Displays help for a task';
+
+    $this->detailedDescription = <<<EOF
+The [help|INFO] task displays help for a given task:
+
+  [./symfony help test:all|INFO]
+
+You can also output the help as XML by using the [--xml|COMMENT] option:
+
+  [./symfony help test:all --xml|INFO]
+EOF;
   }
 
   /**
@@ -44,10 +58,22 @@ class sfHelpTask extends sfCommandApplicationTask
 
     $task = $this->commandApplication->getTask($arguments['task_name']);
 
+    if ($options['xml'])
+    {
+      $this->outputAsXml($task);
+    }
+    else
+    {
+      $this->outputAsText($task);
+    }
+  }
+
+  protected function outputAsText(sfTask $task)
+  {
     $messages = array();
 
     $messages[] = $this->formatter->format('Usage:', 'COMMENT');
-    $messages[] = $this->formatter->format(sprintf(' '.$task->getSynopsis(), is_null($this->commandApplication) ? '' : $this->commandApplication->getName()))."\n";
+    $messages[] = $this->formatter->format(sprintf(' '.$task->getSynopsis(), null === $this->commandApplication ? '' : $this->commandApplication->getName()))."\n";
 
     // find the largest option or argument name
     $max = 0;
@@ -71,7 +97,7 @@ class sfHelpTask extends sfCommandApplicationTask
       $messages[] = $this->formatter->format('Arguments:', 'COMMENT');
       foreach ($task->getArguments() as $argument)
       {
-        $default = !is_null($argument->getDefault()) && (!is_array($argument->getDefault()) || count($argument->getDefault())) ? $this->formatter->format(sprintf(' (default: %s)', is_array($argument->getDefault()) ? str_replace("\n", '', print_r($argument->getDefault(), true)): $argument->getDefault()), 'COMMENT') : '';
+        $default = null !== $argument->getDefault() && (!is_array($argument->getDefault()) || count($argument->getDefault())) ? $this->formatter->format(sprintf(' (default: %s)', is_array($argument->getDefault()) ? str_replace("\n", '', print_r($argument->getDefault(), true)): $argument->getDefault()), 'COMMENT') : '';
         $messages[] = sprintf(" %-${max}s %s%s", $this->formatter->format($argument->getName(), 'INFO'), $argument->getHelp(), $default);
       }
 
@@ -84,7 +110,7 @@ class sfHelpTask extends sfCommandApplicationTask
 
       foreach ($task->getOptions() as $option)
       {
-        $default = $option->acceptParameter() && !is_null($option->getDefault()) && (!is_array($option->getDefault()) || count($option->getDefault())) ? $this->formatter->format(sprintf(' (default: %s)', is_array($option->getDefault()) ? str_replace("\n", '', print_r($option->getDefault(), true)): $option->getDefault()), 'COMMENT') : '';
+        $default = $option->acceptParameter() && null !== $option->getDefault() && (!is_array($option->getDefault()) || count($option->getDefault())) ? $this->formatter->format(sprintf(' (default: %s)', is_array($option->getDefault()) ? str_replace("\n", '', print_r($option->getDefault(), true)): $option->getDefault()), 'COMMENT') : '';
         $multiple = $option->isArray() ? $this->formatter->format(' (multiple values allowed)', 'COMMENT') : '';
         $messages[] = sprintf(' %-'.$max.'s %s%s%s%s', $this->formatter->format('--'.$option->getName(), 'INFO'), $option->getShortcut() ? sprintf('(-%s) ', $option->getShortcut()) : '', $option->getHelp(), $default, $multiple);
       }
@@ -100,5 +126,10 @@ class sfHelpTask extends sfCommandApplicationTask
     }
 
     $this->log($messages);
+  }
+
+  protected function outputAsXml(sfTask $task)
+  {
+    echo $task->asXml();
   }
 }

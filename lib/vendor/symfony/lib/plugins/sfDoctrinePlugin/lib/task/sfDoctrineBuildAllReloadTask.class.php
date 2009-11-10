@@ -18,7 +18,9 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineBuildAllReloadTask.class.php 15823 2009-02-26 19:16:05Z Jonathan.Wage $
+ * @version    SVN: $Id: sfDoctrineBuildAllReloadTask.class.php 21087 2009-08-12 07:51:04Z Kris.Wallsmith $
+ *
+ * @deprecated Use doctrine:build instead
  */
 class sfDoctrineBuildAllReloadTask extends sfDoctrineBaseTask
 {
@@ -30,10 +32,11 @@ class sfDoctrineBuildAllReloadTask extends sfDoctrineBaseTask
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'doctrine'),
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
       new sfCommandOption('skip-forms', 'F', sfCommandOption::PARAMETER_NONE, 'Skip generating forms'),
+      new sfCommandOption('migrate', null, sfCommandOption::PARAMETER_NONE, 'Migrate instead of reset the database'),
       new sfCommandOption('dir', null, sfCommandOption::PARAMETER_REQUIRED | sfCommandOption::IS_ARRAY, 'The directories to look for fixtures'),
+      new sfCommandOption('append', null, sfCommandOption::PARAMETER_NONE, 'Don\'t delete current data in the database'),
     ));
 
     $this->aliases = array('doctrine-build-all-reload');
@@ -53,6 +56,11 @@ The task is equivalent to:
   [./symfony doctrine:build-model|INFO]
   [./symfony doctrine:insert-sql|INFO]
   [./symfony doctrine:data-load|INFO]
+
+Include the [--migrate|COMMENT] option if you would like to run your project's
+migrations rather than inserting the Doctrine SQL.
+
+  [./symfony doctrine:build-all-reload --migrate|INFO]
 EOF;
   }
 
@@ -61,47 +69,21 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    $dropDb = new sfDoctrineDropDbTask($this->dispatcher, $this->formatter);
-    $dropDb->setCommandApplication($this->commandApplication);
+    $task = new sfDoctrineBuildTask($this->dispatcher, $this->formatter);
+    $task->setCommandApplication($this->commandApplication);
+    $task->setConfiguration($this->configuration);
+    $ret = $task->run(array(), array(
+      'no-confirmation' => $options['no-confirmation'],
+      'db'              => true,
+      'model'           => true,
+      'forms'           => !$options['skip-forms'],
+      'filters'         => !$options['skip-forms'],
+      'sql'             => true,
+      'and-migrate'     => $options['migrate'],
+      'and-load'        => $options['append'] ? false : (count($options['dir']) ? $options['dir'] : true),
+      'and-append'      => $options['append'] ? (count($options['dir']) ? $options['dir'] : true) : false,
+    ));
 
-    $dropDbOptions = array();
-    $dropDbOptions[] = '--env='.$options['env'];
-    if (isset($options['no-confirmation']) && $options['no-confirmation'])
-    {
-      $dropDbOptions[] = '--no-confirmation';
-    }
-    if (isset($options['application']) && $options['application'])
-    {
-      $dropDbOptions[] = '--application=' . $options['application'];
-    }
-    $ret = $dropDb->run(array(), $dropDbOptions);
-
-    if ($ret)
-    {
-      return $ret;
-    }
-
-    $buildAllLoad = new sfDoctrineBuildAllLoadTask($this->dispatcher, $this->formatter);
-    $buildAllLoad->setCommandApplication($this->commandApplication);
-
-    $buildAllLoadOptions = array();
-    $buildAllLoadOptions[] = '--env='.$options['env'];
-    if (!empty($options['dir']))
-    {
-      $buildAllLoadOptions[] = '--dir=' . implode(' --dir=', $options['dir']);
-    }
-    if (isset($options['append']) && $options['append'])
-    {
-      $buildAllLoadOptions[] = '--append';
-    }
-    if (isset($options['application']) && $options['application'])
-    {
-      $buildAllLoadOptions[] = '--application=' . $options['application'];
-    }
-    if (isset($options['skip-forms']) && $options['skip-forms'])
-    {
-      $buildAllLoadOptions[] = '--skip-forms';
-    }
-    $buildAllLoad->run(array(), $buildAllLoadOptions);
+    return $ret;
   }
 }

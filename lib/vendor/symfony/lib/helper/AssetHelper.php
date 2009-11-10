@@ -16,7 +16,7 @@
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     David Heinemeier Hansson
- * @version    SVN: $Id: AssetHelper.php 21387 2009-08-24 11:41:17Z fabien $
+ * @version    SVN: $Id: AssetHelper.php 22402 2009-09-25 05:16:05Z Kris.Wallsmith $
  */
 
 /**
@@ -75,7 +75,7 @@ function auto_discovery_link_tag($type = 'rss', $url = '', $tag_options = array(
  */
 function javascript_path($source, $absolute = false)
 {
-  return _compute_public_path($source, 'js', 'js', $absolute);
+  return _compute_public_path($source, sfConfig::get('sf_web_js_dir_name', 'js'), 'js', $absolute);
 }
 
 /**
@@ -130,7 +130,7 @@ function javascript_include_tag()
     $options = array_merge(array('type' => 'text/javascript', 'src' => $source), $sourceOptions);
     $tag = content_tag('script', '', $options);
 
-    if (!is_null($condition))
+    if (null !== $condition)
     {
       $tag = comment_as_conditional($condition, $tag);
     }
@@ -163,7 +163,7 @@ function javascript_include_tag()
  */
 function stylesheet_path($source, $absolute = false)
 {
-  return _compute_public_path($source, 'css', 'css', $absolute);
+  return _compute_public_path($source, sfConfig::get('sf_web_css_dir_name', 'css'), 'css', $absolute);
 }
 
 /**
@@ -228,7 +228,7 @@ function stylesheet_tag()
     $options = array_merge(array('rel' => 'stylesheet', 'type' => 'text/css', 'media' => 'screen', 'href' => $source), $sourceOptions);
     $tag = tag('link', $options);
 
-    if (!is_null($condition))
+    if (null !== $condition)
     {
       $tag = comment_as_conditional($condition, $tag);
     }
@@ -298,7 +298,7 @@ function decorate_with($layout)
  */
 function image_path($source, $absolute = false)
 {
-  return _compute_public_path($source, 'images', 'png', $absolute);
+  return _compute_public_path($source, sfConfig::get('sf_web_images_dir_name', 'images'), 'png', $absolute);
 }
 
 /**
@@ -446,7 +446,7 @@ function include_metas()
   $i18n = sfConfig::get('sf_i18n') ? $context->getI18N() : null;
   foreach ($context->getResponse()->getMetas() as $name => $content)
   {
-    echo tag('meta', array('name' => $name, 'content' => is_null($i18n) ? $content : $i18n->__($content)))."\n";
+    echo tag('meta', array('name' => $name, 'content' => null === $i18n ? $content : $i18n->__($content)))."\n";
   }
 }
 
@@ -501,7 +501,6 @@ function include_title()
 function get_javascripts()
 {
   $response = sfContext::getInstance()->getResponse();
-  sfConfig::set('symfony.asset.javascripts_included', true);
 
   $html = '';
   foreach ($response->getJavascripts() as $file => $options)
@@ -534,7 +533,6 @@ function include_javascripts()
 function get_stylesheets()
 {
   $response = sfContext::getInstance()->getResponse();
-  sfConfig::set('symfony.asset.stylesheets_included', true);
 
   $html = '';
   foreach ($response->getStylesheets() as $file => $options)
@@ -649,6 +647,21 @@ function include_javascripts_for_form(sfForm $form)
 }
 
 /**
+ * Adds javascripts from the supplied form to the response object.
+ *
+ * @param sfForm $form
+ */
+function use_javascripts_for_form(sfForm $form)
+{
+  $response = sfContext::getInstance()->getResponse();
+
+  foreach ($form->getJavascripts() as $file)
+  {
+    $response->addJavascript($file);
+  }
+}
+
+/**
  * Returns <link> tags for all stylesheets associated with the given form.
  *
  * The stylesheets are set by implementing the getStyleSheets() method in the
@@ -685,4 +698,19 @@ function get_stylesheets_for_form(sfForm $form)
 function include_stylesheets_for_form(sfForm $form)
 {
   echo get_stylesheets_for_form($form);
+}
+
+/**
+ * Adds stylesheets from the supplied form to the response object.
+ *
+ * @param sfForm $form
+ */
+function use_stylesheets_for_form(sfForm $form)
+{
+  $response = sfContext::getInstance()->getResponse();
+
+  foreach ($form->getStylesheets() as $file => $media)
+  {
+    $response->addStylesheet($file, '', array('media' => $media));
+  }
 }

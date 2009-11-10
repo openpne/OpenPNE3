@@ -11,7 +11,7 @@
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 require_once(dirname(__FILE__).'/../../../lib/helper/NumberHelper.php');
 
-$t = new lime_test(7, new lime_output_color());
+$t = new lime_test(7);
 
 // format_number()
 $t->diag('format_number()');
@@ -21,8 +21,8 @@ $t->is(format_number(10012.1, 'en'), '10,012.1', 'format_number() takes a number
 $t->todo('format_number() takes the current user culture if no second argument is given');
 
 // format_currency()
-$t->is(format_currency(1200000.00, 'USD', 'en'), 'US$1,200,000.00', 'format_currency() takes a number as its first argument');
-$t->is(format_currency(1200000.1, 'USD', 'en'), 'US$1,200,000.10', 'format_currency() takes a number as its first argument');
-$t->is(format_currency(1200000.10, 'USD', 'en'), 'US$1,200,000.10', 'format_currency() takes a number as its first argument');
-$t->is(format_currency(1200000.101, 'USD', 'en'), 'US$1,200,000.10', 'format_currency() takes a number as its first argument');
-$t->is(format_currency('1200000', 'USD', 'en'), 'US$1,200,000.00', 'format_currency() takes a number as its first argument');
+$t->is(format_currency(1200000.00, 'USD', 'en'), '$1,200,000.00', 'format_currency() takes a number as its first argument');
+$t->is(format_currency(1200000.1, 'USD', 'en'), '$1,200,000.10', 'format_currency() takes a number as its first argument');
+$t->is(format_currency(1200000.10, 'USD', 'en'), '$1,200,000.10', 'format_currency() takes a number as its first argument');
+$t->is(format_currency(1200000.101, 'USD', 'en'), '$1,200,000.10', 'format_currency() takes a number as its first argument');
+$t->is(format_currency('1200000', 'USD', 'en'), '$1,200,000.00', 'format_currency() takes a number as its first argument');

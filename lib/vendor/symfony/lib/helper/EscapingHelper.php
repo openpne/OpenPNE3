@@ -28,7 +28,7 @@
  * @package    symfony
  * @subpackage helper
  * @author     Mike Squire <mike@somosis.co.uk>
- * @version    SVN: $Id: EscapingHelper.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: EscapingHelper.php 18907 2009-06-04 09:36:30Z FabianLange $
  */
 
 /**
@@ -103,7 +103,9 @@ define('ESC_JS', 'esc_js');
  */
 function esc_js_no_entities($value)
 {
-  return addcslashes($value, "\0..\37\\'\"\177..\377\/");
+  return str_replace(array("\\"  , "\n"  , "\r" , "\""  , "'"  ),
+                     array("\\\\", "\\n" , "\\r", "\\\"", "\\'"),
+                     $value);
 }
 
 define('ESC_JS_NO_ENTITIES', 'esc_js_no_entities');

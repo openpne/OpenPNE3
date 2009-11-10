@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: AbstractPropelDataModelTask.php 1032 2008-04-29 15:22:43Z ron $
+ *  $Id: AbstractPropelDataModelTask.php 1297 2009-11-08 07:26:13Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -457,7 +457,7 @@ abstract class AbstractPropelDataModelTask extends Task {
 				if ($this->validate && $this->xsdFile) {
 					$this->log("Validating XML doc (".$xmlFile->getPath().") using schema file " . $this->xsdFile->getPath(), Project::MSG_VERBOSE);
 					if (!$dom->schemaValidate($this->xsdFile->getAbsolutePath())) {
-						throw new BuildException("XML schema file (".$xmlFile->getPath().") does not validate.  See warnings above for reasons validation failed (make sure error_reporting is set to show E_WARNING if you don't see any).");		throw new EngineException("XML schema does not validate (using schema file $xsdFile).  See warnings above for reasons validation failed (make sure error_reporting is set to show E_WARNING if you don't see any).", $this->getLocation());
+						throw new EngineException("XML schema file (".$xmlFile->getPath().") does not validate. See warnings above for reasons validation failed (make sure error_reporting is set to show E_WARNING if you don't see any).", $this->getLocation());
 					}
 				}
 

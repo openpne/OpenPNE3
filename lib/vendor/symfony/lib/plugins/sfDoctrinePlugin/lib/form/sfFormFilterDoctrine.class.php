@@ -12,6 +12,11 @@
 /**
  * sfFormFilterDoctrine is the base class for filter forms based on Doctrine objects.
  *
+ * Available options:
+ *
+ *  * query:        The query object to use
+ *  * table_method: A method on the table class that will either filter the passed query object or create a new one
+ *
  * @package    symfony
  * @subpackage form
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
@@ -20,9 +25,6 @@
  */
 abstract class sfFormFilterDoctrine extends sfFormFilter
 {
-  protected
-    $tableMethodName       = null;
-
   /**
    * Returns the current model name.
    *
@@ -40,22 +42,34 @@ abstract class sfFormFilterDoctrine extends sfFormFilter
   /**
    * Get the name of the table method used to retrieve the query object for the filter
    *
-   * @return string $tableMethodName
+   * @return string
    */
   public function getTableMethod()
   {
-    return $this->tableMethodName;
+    return $this->getOption('table_method');
   }
 
   /**
    * Set the name of the table method used to retrieve the query object for the filter
    *
-   * @param string $tableMethodName 
-   * @return void
+   * The specified method will be passed the query object before any changes
+   * are made based on incoming parameters.
+   *
+   * @param string $tableMethod
    */
-  public function setTableMethod($tableMethodName)
+  public function setTableMethod($tableMethod)
   {
-    $this->tableMethodName = $tableMethodName;
+    $this->setOption('table_method', $tableMethod);
+  }
+
+  /**
+   * Sets the query object to use.
+   * 
+   * @param Doctrine_Query $query
+   */
+  public function setQuery($query)
+  {
+    $this->setOption('query', $query);
   }
 
   /**
@@ -93,17 +107,7 @@ abstract class sfFormFilterDoctrine extends sfFormFilter
     $originalValues = $values;
     foreach ($originalValues as $field => $value)
     {
-      try
-      {
-        $method = sprintf('convert%sValue', self::camelize($field));
-      }
-      catch (Exception $e)
-      {
-        // no a "real" column of this object
-        continue;
-      }
-
-      if (method_exists($this, $method))
+      if (method_exists($this, $method = sprintf('convert%sValue', self::camelize($field))))
       {
         if (false === $ret = $this->$method($value))
         {
@@ -128,19 +132,43 @@ abstract class sfFormFilterDoctrine extends sfFormFilter
    */
   public function buildQuery(array $values)
   {
-    $values = $this->processValues($values);
+    return $this->doBuildQuery($this->processValues($values));
+  }
 
-    $query = $this->getTable()->createQuery('r');
+  /**
+   * Builds a Doctrine query with processed values.
+   *
+   * Overload this method instead of {@link buildQuery()} to avoid running
+   * {@link processValues()} multiple times.
+   *
+   * @param  array $values
+   *
+   * @return Doctrine_Query
+   */
+  protected function doBuildQuery(array $values)
+  {
+    $query = isset($this->options['query']) ? clone $this->options['query'] : $this->getTable()->createQuery('r');
 
-    if ($this->tableMethodName)
+    if ($method = $this->getTableMethod())
     {
-      $method = $this->tableMethodName;
-      $query = $this->getTable()->$method($query);
+      $tmp = $this->getTable()->$method($query);
+
+      // for backward compatibility
+      if ($tmp instanceof Doctrine_Query)
+      {
+        $query = $tmp;
+      }
     }
 
-    foreach ($this->getFields() as $field => $type)
+    $fields = $this->getFields();
+
+    // add those fields that are not represented in getFields() with a null type
+    $names = array_merge($fields, array_diff(array_keys($this->validatorSchema->getFields()), array_keys($fields)));
+    $fields = array_merge($fields, array_combine($names, array_fill(0, count($names), null)));
+
+    foreach ($fields as $field => $type)
     {
-      if (!isset($values[$field]) || is_null($values[$field]) || '' === $values[$field])
+      if (!isset($values[$field]) || null === $values[$field] || '' === $values[$field])
       {
         continue;
       }
@@ -148,19 +176,17 @@ abstract class sfFormFilterDoctrine extends sfFormFilter
       if ($this->getTable()->hasField($field))
       {
         $method = sprintf('add%sColumnQuery', self::camelize($this->getFieldName($field)));
-      } else {
-        // not a "real" column
-        if (!method_exists($this, $method = sprintf('add%sColumnQuery', self::camelize($field))))
-        {
-          throw new LogicException(sprintf('You must define a "%s" method to be able to filter with the "%s" field.', $method, $field));
-        }  
+      }
+      else if (!method_exists($this, $method = sprintf('add%sColumnQuery', self::camelize($field))) && null !== $type)
+      {
+        throw new LogicException(sprintf('You must define a "%s" method to be able to filter with the "%s" field.', $method, $field));
       }
 
       if (method_exists($this, $method))
       {
         $this->$method($query, $field, $values[$field]);
       }
-      else
+      else if (null !== $type)
       {
         if (!method_exists($this, $method = sprintf('add%sQuery', $type)))
         {
@@ -180,7 +206,7 @@ abstract class sfFormFilterDoctrine extends sfFormFilter
 
     if (is_array($value))
     {
-      $query->orWhereIn(sprintf('%s.%s', $query->getRootAlias(), $fieldName), $value);
+      $query->andWhereIn(sprintf('%s.%s', $query->getRootAlias(), $fieldName), $value);
     }
     else
     {
@@ -239,20 +265,50 @@ abstract class sfFormFilterDoctrine extends sfFormFilter
     }
     else
     {
-      if (!is_null($values['from']) && !is_null($values['to']))
+      if (null !== $values['from'] && null !== $values['to'])
       {
         $query->andWhere(sprintf('%s.%s >= ?', $query->getRootAlias(), $fieldName), $values['from']);
         $query->andWhere(sprintf('%s.%s <= ?', $query->getRootAlias(), $fieldName), $values['to']);
       }
-      else if (!is_null($values['from']))
+      else if (null !== $values['from'])
       {
         $query->andWhere(sprintf('%s.%s >= ?', $query->getRootAlias(), $fieldName), $values['from']);
       }
-      else if (!is_null($values['to']))
+      else if (null !== $values['to'])
       {
         $query->andWhere(sprintf('%s.%s <= ?', $query->getRootAlias(), $fieldName), $values['to']);
       }
     }
+  }
+
+  /**
+   * Used in generated forms when models use inheritance.
+   */
+  protected function setupInheritance()
+  {
+  }
+
+  /**
+   * Returns the name of the related model.
+   * 
+   * @param string $alias A relation alias
+   * 
+   * @return string
+   * 
+   * @throws InvalidArgumentException If no relation with the supplied alias exists on the current model
+   */
+  protected function getRelatedModelName($alias)
+  {
+    $table = Doctrine_Core::getTable($this->getModelName());
+
+    if (!$table->hasRelation($alias))
+    {
+      throw new InvalidArgumentException(sprintf('The "%s" model has to "%s" relation.', $this->getModelName(), $alias));
+    }
+
+    $relation = $table->getRelation($alias);
+
+    return $relation['class'];
   }
 
   protected function getColName($field)
@@ -272,6 +328,6 @@ abstract class sfFormFilterDoctrine extends sfFormFilter
 
   protected function getTable()
   {
-    return Doctrine::getTable($this->getModelName());
+    return Doctrine_Core::getTable($this->getModelName());
   }
 }

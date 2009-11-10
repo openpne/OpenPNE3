@@ -10,7 +10,7 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(113, new lime_output_color());
+$t = new lime_test(112);
 
 // ::stringToArray()
 $t->diag('::stringToArray()');
@@ -114,10 +114,6 @@ EOF;
 $stripped_php = '<?php $i = 1; ';
 
 $t->is(preg_replace('/\s*(\r?\n)+/', ' ', sfToolkit::stripComments($php)), $stripped_php, '::stripComments() strip all comments from a php string');
-sfConfig::set('sf_strip_comments', false);
-$t->is(sfToolkit::stripComments($php), $php, '::stripComments() do nothing if "sf_strip_comments" is false');
-
-sfConfig::set('sf_strip_comments', true);
 
 $php = <<<EOF
 <?php
@@ -138,7 +134,7 @@ $t->is(sfToolkit::stripslashesDeep(array(array('foo' => addslashes("foo's bar"))
 
 // ::clearDirectory()
 $t->diag('::clearDirectory()');
-$tmp_dir = sfToolkit::getTmpDir().DIRECTORY_SEPARATOR.'symfony_tests_'.rand(1, 999);
+$tmp_dir = sys_get_temp_dir().DIRECTORY_SEPARATOR.'symfony_tests_'.rand(1, 999);
 mkdir($tmp_dir);
 file_put_contents($tmp_dir.DIRECTORY_SEPARATOR.'test', 'ok');
 mkdir($tmp_dir.DIRECTORY_SEPARATOR.'foo');
@@ -151,7 +147,7 @@ rmdir($tmp_dir);
 
 // ::clearGlob()
 $t->diag('::clearGlob()');
-$tmp_dir = sfToolkit::getTmpDir().DIRECTORY_SEPARATOR.'symfony_tests_'.rand(1, 999);
+$tmp_dir = sys_get_temp_dir().DIRECTORY_SEPARATOR.'symfony_tests_'.rand(1, 999);
 mkdir($tmp_dir);
 mkdir($tmp_dir.DIRECTORY_SEPARATOR.'foo');
 mkdir($tmp_dir.DIRECTORY_SEPARATOR.'bar');

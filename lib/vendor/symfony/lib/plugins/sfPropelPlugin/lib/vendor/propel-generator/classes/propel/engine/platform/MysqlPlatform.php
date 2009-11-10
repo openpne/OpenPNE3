@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: MysqlPlatform.php 949 2008-01-30 22:41:59Z hans $
+ *  $Id: MysqlPlatform.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -26,7 +26,7 @@ require_once 'propel/engine/platform/DefaultPlatform.php';
  *
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
  * @author     Martin Poeschl <mpoeschl@marmot.at> (Torque)
- * @version    $Revision: 949 $
+ * @version    $Revision: 1262 $
  * @package    propel.engine.platform
  */
 class MysqlPlatform extends DefaultPlatform {

@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorErrorSchema.class.php 15393 2009-02-10 12:58:49Z fabien $
+ * @version    SVN: $Id: sfValidatorErrorSchema.class.php 22446 2009-09-26 07:55:47Z fabien $
  */
 class sfValidatorErrorSchema extends sfValidatorError implements ArrayAccess, Iterator, Countable
 {
@@ -49,10 +49,12 @@ class sfValidatorErrorSchema extends sfValidatorError implements ArrayAccess, It
    *
    * @param sfValidatorError $error  An sfValidatorError instance
    * @param string           $name   The error name
+   *
+   * @return sfValidatorErrorSchema The current error schema instance
    */
   public function addError(sfValidatorError $error, $name = null)
   {
-    if (is_null($name) || is_integer($name))
+    if (null === $name || is_integer($name))
     {
       if ($error instanceof sfValidatorErrorSchema)
       {
@@ -97,12 +99,16 @@ class sfValidatorErrorSchema extends sfValidatorError implements ArrayAccess, It
 
     $this->updateCode();
     $this->updateMessage();
+
+    return $this;
   }
 
   /**
    * Adds an array of errors.
    *
    * @param array $errors  An array of sfValidatorError instances
+   *
+   * @return sfValidatorErrorSchema The current error schema instance
    */
   public function addErrors($errors)
   {
@@ -125,6 +131,8 @@ class sfValidatorErrorSchema extends sfValidatorError implements ArrayAccess, It
         $this->addError($error, $name);
       }
     }
+
+    return $this;
   }
 
   /**

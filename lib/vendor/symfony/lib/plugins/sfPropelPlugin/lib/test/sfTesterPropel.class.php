@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTesterPropel.class.php 12237 2008-10-17 22:25:25Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfTesterPropel.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfTesterPropel extends sfTester
 {
@@ -43,7 +43,7 @@ class sfTesterPropel extends sfTester
    */
   public function check($model, $criteria, $value = true)
   {
-    if (is_null($criteria))
+    if (null === $criteria)
     {
       $criteria = new Criteria();
     }

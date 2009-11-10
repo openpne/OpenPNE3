@@ -14,23 +14,18 @@ require_once 'propel/engine/builder/om/php5/PHP5PeerBuilder.php';
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: SfPeerBuilder.php 17357 2009-04-16 11:46:01Z FabianLange $
+ * @version    SVN: $Id: SfPeerBuilder.php 23357 2009-10-26 17:29:41Z Kris.Wallsmith $
+ * 
+ * @deprecated since symfony 1.3
  */
 class SfPeerBuilder extends PHP5PeerBuilder
 {
   public function build()
   {
     $peerCode = parent::build();
-    if (!DataModelBuilder::getBuildProperty('builderAddComments'))
+    if (!$this->getBuildProperty('builderAddComments'))
     {
       $peerCode =  sfToolkit::stripComments($peerCode);
-    }
-
-    if (!DataModelBuilder::getBuildProperty('builderAddIncludes'))
-    {
-      // remove all inline includes: peer class include inline the mapbuilder classes
-      $peerCode = preg_replace("/(include|require)_once\s*.*Base.*Peer\.php.*\s*/", "", $peerCode);
-      $peerCode = preg_replace("/(include|require)_once\s*.*MapBuilder\.php.*\s*/", "", $peerCode);
     }
 
     // change Propel::import() calls to sfPropel::import()
@@ -39,14 +34,15 @@ class SfPeerBuilder extends PHP5PeerBuilder
     return $peerCode;
   }
 
-  protected function addIncludes(&$script)
+  protected function addConstantsAndAttributes(&$script)
   {
-    if (!DataModelBuilder::getBuildProperty('builderAddIncludes'))
-    {
-      return;
-    }
+    $boolean = $this->getTable()->getAttribute('isI18N') ? 'true' : 'false';
+    $script .= "
+	/** class enabled with symfony I18N functionality */
+	const IS_I18N = $boolean;
+";
 
-    parent::addIncludes($script);
+    parent::addConstantsAndAttributes($script);
   }
 
   protected function addSelectMethods(&$script)
@@ -146,7 +142,7 @@ class SfPeerBuilder extends PHP5PeerBuilder
     }
 ";
 
-    if (DataModelBuilder::getBuildProperty('builderAddBehaviors'))
+    if ($this->getBuildProperty('builderAddBehaviors'))
     {
       $script .= "
 
@@ -242,7 +238,7 @@ class SfPeerBuilder extends PHP5PeerBuilder
     $tmp = '';
     parent::addDoSelectStmt($tmp);
 
-    if (DataModelBuilder::getBuildProperty('builderAddBehaviors'))
+    if ($this->getBuildProperty('builderAddBehaviors'))
     {
       $mixer_script = "
 
@@ -264,13 +260,13 @@ class SfPeerBuilder extends PHP5PeerBuilder
     $tmp = '';
     parent::addDoSelectJoin($tmp);
 
-    if (DataModelBuilder::getBuildProperty('builderAddBehaviors'))
+    if ($this->getBuildProperty('builderAddBehaviors'))
     {
       $mixer_script = "
 
     foreach (sfMixer::getCallables('{$this->getClassname()}:doSelectJoin:doSelectJoin') as \$callable)
     {
-      call_user_func(\$callable, '{$this->getClassname()}', \$c, \$con);
+      call_user_func(\$callable, '{$this->getClassname()}', \$criteria, \$con);
     }
 
 ";
@@ -285,13 +281,13 @@ class SfPeerBuilder extends PHP5PeerBuilder
     $tmp = '';
     parent::addDoSelectJoinAll($tmp);
 
-    if (DataModelBuilder::getBuildProperty('builderAddBehaviors'))
+    if ($this->getBuildProperty('builderAddBehaviors'))
     {
       $mixer_script = "
 
     foreach (sfMixer::getCallables('{$this->getClassname()}:doSelectJoinAll:doSelectJoinAll') as \$callable)
     {
-      call_user_func(\$callable, '{$this->getClassname()}', \$c, \$con);
+      call_user_func(\$callable, '{$this->getClassname()}', \$criteria, \$con);
     }
 
 ";
@@ -306,13 +302,13 @@ class SfPeerBuilder extends PHP5PeerBuilder
     $tmp = '';
     parent::addDoSelectJoinAllExcept($tmp);
 
-    if (DataModelBuilder::getBuildProperty('builderAddBehaviors'))
+    if ($this->getBuildProperty('builderAddBehaviors'))
     {
       $mixer_script = "
 
     foreach (sfMixer::getCallables('{$this->getClassname()}:doSelectJoinAllExcept:doSelectJoinAllExcept') as \$callable)
     {
-      call_user_func(\$callable, '{$this->getClassname()}', \$c, \$con);
+      call_user_func(\$callable, '{$this->getClassname()}', \$criteria, \$con);
     }
 
 ";
@@ -327,7 +323,7 @@ class SfPeerBuilder extends PHP5PeerBuilder
     $tmp = '';
     parent::addDoUpdate($tmp);
 
-    if (DataModelBuilder::getBuildProperty('builderAddBehaviors'))
+    if ($this->getBuildProperty('builderAddBehaviors'))
     {
       // add sfMixer call
       $pre_mixer_script = "
@@ -365,7 +361,7 @@ class SfPeerBuilder extends PHP5PeerBuilder
     $tmp = '';
     parent::addDoInsert($tmp);
 
-    if (DataModelBuilder::getBuildProperty('builderAddBehaviors'))
+    if ($this->getBuildProperty('builderAddBehaviors'))
     {
       // add sfMixer call
       $pre_mixer_script = "
@@ -415,16 +411,7 @@ class SfPeerBuilder extends PHP5PeerBuilder
     {
       file_put_contents($absolute_behavior_file_path, sprintf("<?php\nsfPropelBehavior::add('%s', %s);\n", $this->getTable()->getPhpName(), var_export(unserialize($behaviors), true)));
 
-      $behavior_include_script = <<<EOF
-
-
-if (sfProjectConfiguration::getActive() instanceof sfApplicationConfiguration)
-{
-  include_once '%s';
-}
-
-EOF;
-      $script .= sprintf($behavior_include_script, $behavior_file_path);
+      $script .= sprintf("\ninclude_once '%s';\n", $behavior_file_path);
     }
   }
 
@@ -481,7 +468,7 @@ EOF;
 	/**
 	 * Returns the number of rows matching criteria, joining the related ".$thisTableObjectBuilder->getFKPhpNameAffix($fk, $plural = false)." table
 	 *
-	 * @param      Criteria \$c
+	 * @param      Criteria \$criteria
 	 * @param      boolean \$distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
 	 * @param      PropelPDO \$con
 	 * @param      String    \$join_behavior the type of joins to use, defaults to $join_behavior
@@ -540,7 +527,7 @@ EOF;
 						$script .= "), \$join_behavior);
 ";
 
-    if (DataModelBuilder::getBuildProperty('builderAddBehaviors'))
+    if ($this->getBuildProperty('builderAddBehaviors'))
     {
       $script .= "
 
@@ -586,7 +573,7 @@ EOF;
 	/**
 	 * Returns the number of rows matching criteria, joining all related tables
 	 *
-	 * @param      Criteria \$c
+	 * @param      Criteria \$criteria
 	 * @param      boolean \$distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
 	 * @param      PropelPDO \$con
 	 * @param      String    \$join_behavior the type of joins to use, defaults to $join_behavior
@@ -654,7 +641,7 @@ EOF;
 			} // if fk->getForeignTableName != table->getName
 		} // foreach [sub] foreign keys
 
-    if (DataModelBuilder::getBuildProperty('builderAddBehaviors'))
+    if ($this->getBuildProperty('builderAddBehaviors'))
     {
       $script .= "
 
@@ -708,7 +695,7 @@ EOF;
 	/**
 	 * Returns the number of rows matching criteria, joining the related ".$thisTableObjectBuilder->getFKPhpNameAffix($fk, $plural = false)." table
 	 *
-	 * @param      Criteria \$c
+	 * @param      Criteria \$criteria
 	 * @param      boolean \$distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
 	 * @param      PropelPDO \$con
 	 * @param      String    \$join_behavior the type of joins to use, defaults to $join_behavior
@@ -774,7 +761,7 @@ EOF;
 			} // foreach fkeys
 
 
-    if (DataModelBuilder::getBuildProperty('builderAddBehaviors'))
+    if ($this->getBuildProperty('builderAddBehaviors'))
     {
       $script .= "
 
@@ -843,7 +830,7 @@ EOF;
 			\$con = Propel::getConnection(".$this->getPeerClassname()."::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 ";
-    if (DataModelBuilder::getBuildProperty('builderAddBehaviors'))
+    if ($this->getBuildProperty('builderAddBehaviors'))
     {
       $script .= "
 

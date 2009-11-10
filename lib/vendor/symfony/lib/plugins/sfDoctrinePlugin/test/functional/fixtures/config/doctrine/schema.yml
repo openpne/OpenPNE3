@@ -18,6 +18,15 @@ Article:
     Author:
       foreignAlias: Articles
 
+BlogArticle:
+  inheritance:
+    extends: Article
+    type: column_aggregation
+  relations:
+    Author:
+      class: BlogAuthor
+      foreignAlias: Articles
+
 CamelCase:
   columns:
     article_id: integer
@@ -29,6 +38,22 @@ CamelCase:
 Author:
   columns:
     name: string(255)
+
+AuthorInheritance:
+  inheritance:
+    extends: Author
+    type: column_aggregation
+
+BlogAuthor:
+  inheritance:
+    extends: Author
+    type: column_aggregation
+
+AuthorInheritanceConcrete:
+  inheritance:
+    extends: Author
+  columns:
+    additional: string(255)
 
 Subscription:
   connection: doctrine2
@@ -74,7 +99,6 @@ UniqueTest:
           length: 10
       type: unique
 
-
 Profile:
   columns:
     user_id: integer
@@ -99,6 +123,10 @@ Permission:
     name: string(255)
 
 UserGroup:
+  options:
+    symfony:
+      form: false
+      filter: false
   columns:
     user_id:
       type: integer
@@ -108,6 +136,10 @@ UserGroup:
       primary: true
 
 UserPermission:
+  options:
+    symfony:
+      form: false
+      filter: false
   columns:
     user_id:
       type: integer
@@ -117,6 +149,10 @@ UserPermission:
       primary: true
 
 GroupPermission:
+  options:
+    symfony:
+      form: false
+      filter: false
   columns:
     group_id:
       type: integer
@@ -124,3 +160,26 @@ GroupPermission:
     permission_id:
       type: integer
       primary: true
+
+FormGeneratorTest:
+  options:
+    symfony:
+      form: true
+      filter: false
+  columns:
+    name: string(255)
+
+FormGeneratorTest2:
+  options:
+    symfony:
+      form: false
+      filter: true
+  columns:
+    name: string(255)
+
+DefaultValueTest:
+  columns:
+    name:
+      type: string(255)
+      notnull: true
+      default: ''

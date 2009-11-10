@@ -4,7 +4,7 @@
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
  * (c) 2004-2006 Sean Kerr <sean@code-box.org>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -18,7 +18,7 @@
  * @subpackage view
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfView.class.php 13572 2008-12-01 02:10:36Z dwhittle $
+ * @version    SVN: $Id: sfView.class.php 22066 2009-09-16 03:53:39Z dwhittle $
  */
 abstract class sfView
 {
@@ -120,25 +120,26 @@ abstract class sfView
     $this->parameterHolder->add(sfConfig::get('mod_'.strtolower($moduleName).'_view_param', array()));
 
     $request = $context->getRequest();
-    if (!is_null($format = $request->getRequestFormat()))
+
+    $format = $request->getRequestFormat();
+    if (null !== $format)
     {
       if ('html' != $format)
       {
         $this->setExtension('.'.$format.$this->getExtension());
       }
-      
+
       if ($mimeType = $request->getMimeType($format))
       {
         $this->context->getResponse()->setContentType($mimeType);
-        
+
         if ('html' != $format)
         {
           $this->setDecorator(false);
         }
       }
-
-      $this->dispatcher->notify(new sfEvent($this, 'view.configure_format', array('format' => $format, 'response' => $context->getResponse(), 'request' => $context->getRequest())));
     }
+    $this->dispatcher->notify(new sfEvent($this, 'view.configure_format', array('format' => $format, 'response' => $context->getResponse(), 'request' => $context->getRequest())));
 
     // include view configuration
     $this->configure();
@@ -351,7 +352,7 @@ abstract class sfView
    */
   protected function preRenderCheck()
   {
-    if (is_null($this->template))
+    if (null === $this->template)
     {
       // a template has not been set
       throw new sfRenderException('A template has not been set.');
@@ -415,7 +416,7 @@ abstract class sfView
 
       return;
     }
-    else if (is_null($template))
+    else if (null === $template)
     {
       return;
     }

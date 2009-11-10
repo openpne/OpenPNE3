@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: CacheHelper.php 8443 2008-04-14 14:02:47Z fabien $
+ * @version    SVN: $Id: CacheHelper.php 21908 2009-09-11 12:06:21Z fabien $
  */
 
 /* Usage
@@ -43,7 +43,7 @@ function cache($name, $lifeTime = 86400)
 
   $data = $cache->start($name, $lifeTime);
 
-  if (is_null($data))
+  if (null === $data)
   {
     sfConfig::set('symfony.cache.started', true);
     sfConfig::set('symfony.cache.current_name', $name);

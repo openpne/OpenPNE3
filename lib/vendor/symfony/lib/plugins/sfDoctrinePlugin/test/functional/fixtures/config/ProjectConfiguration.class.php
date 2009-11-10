@@ -14,8 +14,15 @@ class ProjectConfiguration extends sfProjectConfiguration
   {
     chdir(sfConfig::get('sf_root_dir'));
 
-    $task = new sfDoctrineBuildAllTask($this->dispatcher, new sfFormatter());
-    $task->run(array(), array('--env=test'));
+    $task = new sfDoctrineBuildTask($this->dispatcher, new sfFormatter());
+    $task->setConfiguration($this);
+    $task->run(array(), array(
+      'no-confirmation' => true,
+      'db'              => true,
+      'model'           => true,
+      'forms'           => true,
+      'filters'         => true,
+    ));
   }
 
   public function loadFixtures($fixtures)
@@ -25,13 +32,14 @@ class ProjectConfiguration extends sfProjectConfiguration
       throw new sfException('Invalid data fixtures file');
     }
     chdir(sfConfig::get('sf_root_dir'));
-    $task = new sfDoctrineLoadDataTask($this->dispatcher, new sfFormatter());
-    $task->run(array(), array('--env=test', '--dir=' . $path));
+    $task = new sfDoctrineDataLoadTask($this->dispatcher, new sfFormatter());
+    $task->setConfiguration($this);
+    $task->run(array($path));
   }
 
   public function configureDoctrine(Doctrine_Manager $manager)
   {
-    $manager->setAttribute('validate', true);
+    $manager->setAttribute(Doctrine::ATTR_VALIDATE, true);
 
     $options = array('baseClassName' => 'myDoctrineRecord');
     sfConfig::set('doctrine_model_builder_options', $options);
@@ -43,6 +51,6 @@ class ProjectConfiguration extends sfProjectConfiguration
 
   public function configureDoctrineConnectionDoctrine2(Doctrine_Connection $connection)
   {
-    $connection->setAttribute('validate', false);
+    $connection->setAttribute(Doctrine::ATTR_VALIDATE, false);
   }
 }

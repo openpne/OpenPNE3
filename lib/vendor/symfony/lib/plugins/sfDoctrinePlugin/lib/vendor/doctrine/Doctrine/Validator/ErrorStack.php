@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: ErrorStack.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: ErrorStack.php 6478 2009-10-09 23:46:51Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -29,7 +29,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6478 $
  */
 class Doctrine_Validator_ErrorStack extends Doctrine_Access implements Countable, IteratorAggregate
 {
@@ -71,12 +71,13 @@ class Doctrine_Validator_ErrorStack extends Doctrine_Access implements Countable
      */
     public function add($invalidFieldName, $errorCode = 'general')
     {
-        // FIXME: In the future the error stack should contain nothing but validator objects
-        if (is_object($errorCode) && strpos(get_class($errorCode), 'Doctrine_Validator_') !== false) {
+        if (is_object($errorCode)) {
+            if ( ! ($errorCode instanceof Doctrine_Validator_Driver)) {
+                throw new Doctrine_Exception('Validators must be an instance of Doctrine_Validator_Driver');
+            }
             $validator = $errorCode;
             $this->_validators[$invalidFieldName][] = $validator;
-            $className = get_class($errorCode);
-            $errorCode = strtolower(substr($className, strlen('Doctrine_Validator_'), strlen($className)));
+            $errorCode = (string) $validator;
         }
 
         $this->_errors[$invalidFieldName][] = $errorCode;
@@ -91,6 +92,9 @@ class Doctrine_Validator_ErrorStack extends Doctrine_Access implements Countable
     {
         if (isset($this->_errors[$fieldName])) {
             unset($this->_errors[$fieldName]);
+            if (isset($this->_validators[$fieldName])) {
+                unset($this->_validators[$fieldName]);
+            }
         }
     }
 
@@ -136,6 +140,7 @@ class Doctrine_Validator_ErrorStack extends Doctrine_Access implements Countable
     public function clear()
     {
         $this->_errors = array();
+        $this->_validators = array();
     }
 
     /**

@@ -21,7 +21,7 @@
  * @package    symfony
  * @subpackage generator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfAdminGenerator.class.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: sfAdminGenerator.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 abstract class sfAdminGenerator extends sfCrudGenerator
 {
@@ -718,7 +718,7 @@ EOF;
    */
   public function getFormObject()
   {
-    if (is_null($this->formObject))
+    if (null === $this->formObject)
     {
       $class = $this->getFormClassName();
 
@@ -828,7 +828,7 @@ EOF;
  * @package    symfony
  * @subpackage generator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfAdminGenerator.class.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: sfAdminGenerator.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfAdminColumn
 {

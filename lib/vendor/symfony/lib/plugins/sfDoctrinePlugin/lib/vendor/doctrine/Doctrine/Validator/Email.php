@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Email.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Email.php 6468 2009-10-09 20:41:28Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,10 +27,10 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6468 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
-class Doctrine_Validator_Email
+class Doctrine_Validator_Email extends Doctrine_Validator_Driver
 {
     /**
      * checks if given value is a valid email address
@@ -44,18 +44,18 @@ class Doctrine_Validator_Email
         if (is_null($value)) {
             return true;
         }
-        if (isset($this->args)) {
+
+        if (isset($this->args) && (! isset($this->args['check_mx']) || $this->args['check_mx'] == true)) {
             $parts = explode('@', $value);
-        
-            if (isset($parts[1]) && $parts[1] && function_exists('checkdnsrr')) {
-                if ( ! checkdnsrr($parts[1], 'MX')) {
-                    return false;
-                }
+
+            if (isset($parts[1]) && $parts[1] && ! $this->_checkMX($parts[1])) {
+                return false;
             }
         }
 
         $e = explode('.', $value);
         $tld = end($e);
+
         if (preg_match("/[^a-zA-Z]/", $tld)) {
             return false;
         }
@@ -70,6 +70,7 @@ class Doctrine_Validator_Email
         $subDomain = "($domainRef|$domainLiteral)";
         $word = "($atom|$quotedString)";
         $domain = "$subDomain(\\x2e$subDomain)+";
+        
         /*
           following pseudocode to allow strict checking - ask pookey about this if you're puzzled
 
@@ -77,9 +78,42 @@ class Doctrine_Validator_Email
               $domain = "$sub_domain(\\x2e$sub_domain)*";
           }
         */
+        
         $localPart = "$word(\\x2e$word)*";
         $addrSpec = "$localPart\\x40$domain";
-
+        
         return (bool) preg_match("!^$addrSpec$!D", $value);
+    }
+    
+    /**
+     * Check DNA Records for MX type
+     *
+     * @param string $host Host name
+     * @return boolean
+     */
+    private function _checkMX($host)
+    {
+        // We have different behavior here depending of OS and PHP version
+        if (strtolower(substr(PHP_OS, 0, 3)) == 'win' && version_compare(PHP_VERSION, '5.3.0', '<')) {
+            $output = array();
+            
+            @exec('nslookup -type=MX '.escapeshellcmd($host) . ' 2>&1', $output);
+            
+            if (empty($output)) {
+                throw new Doctrine_Exception('Unable to execute DNS lookup. Are you sure PHP can call exec()?');
+            }    
+
+            foreach ($output as $line) {
+                if (preg_match('/^'.$host.'/', $line)) { 
+                    return true; 
+                }
+            }
+            
+            return false;
+        } else if (function_exists('checkdnsrr')) {
+            return checkdnsrr($host, 'MX');
+        }
+        
+        throw new Doctrine_Exception('Could not retrieve DNS record information. Remove check_mx = true to prevent this warning');
     }
 }

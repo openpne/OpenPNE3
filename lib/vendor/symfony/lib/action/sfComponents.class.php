@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage action
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfComponents.class.php 20048 2009-07-09 09:53:03Z FabianLange $
+ * @version    SVN: $Id: sfComponents.class.php 20780 2009-08-04 20:30:32Z Kris.Wallsmith $
  */
 abstract class sfComponents extends sfComponent
 {

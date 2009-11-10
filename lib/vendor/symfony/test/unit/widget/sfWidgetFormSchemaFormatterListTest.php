@@ -10,7 +10,7 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(2, new lime_output_color());
+$t = new lime_test(2);
 
 $f = new sfWidgetFormSchemaFormatterList(new sfWidgetFormSchema());
 
@@ -23,7 +23,7 @@ $output = <<<EOF
 </li>
 
 EOF;
-$t->is($f->formatRow('label', '<input />', array(), 'help', ''), $output, '->formatRow() formats a field in a row');
+$t->is($f->formatRow('label', '<input />', array(), 'help', ''), fix_linebreaks($output), '->formatRow() formats a field in a row');
 
 // ->formatErrorRow()
 $t->diag('->formatErrorRow()');
@@ -37,4 +37,4 @@ $output = <<<EOF
 </li>
 
 EOF;
-$t->is($f->formatErrorRow(array('Global error', 'id' => 'required', array('sub_id' => 'required'))), $output, '->formatErrorRow() formats an array of errors in a row');
+$t->is($f->formatErrorRow(array('Global error', 'id' => 'required', array('sub_id' => 'required'))), fix_linebreaks($output), '->formatErrorRow() formats an array of errors in a row');

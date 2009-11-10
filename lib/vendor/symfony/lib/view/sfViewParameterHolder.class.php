@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage view
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfViewParameterHolder.class.php 9316 2008-05-27 13:32:04Z fabien $
+ * @version    SVN: $Id: sfViewParameterHolder.class.php 21884 2009-09-11 07:38:24Z fabien $
  */
 class sfViewParameterHolder extends sfParameterHolder
 {
@@ -66,7 +66,7 @@ class sfViewParameterHolder extends sfParameterHolder
    */
   public function isEscaped()
   {
-    return in_array($this->getEscaping(), array('on', true), true);
+    return in_array($this->getEscaping(), array('on', 'true', true), true);
   }
 
   /**

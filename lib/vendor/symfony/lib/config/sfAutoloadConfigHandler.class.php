@@ -15,7 +15,7 @@
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfAutoloadConfigHandler.class.php 17047 2009-04-06 14:43:02Z fabien $
+ * @version    SVN: $Id: sfAutoloadConfigHandler.class.php 22916 2009-10-10 13:26:53Z Kris.Wallsmith $
  */
 class sfAutoloadConfigHandler extends sfYamlConfigHandler
 {
@@ -82,7 +82,7 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
         // file mapping
         foreach ($entry['files'] as $class => $file)
         {
-          $mapping[$class] = $file;
+          $mapping[strtolower($class)] = $file;
         }
       }
       else
@@ -140,7 +140,7 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
         }
       }
 
-      $mapping[$localPrefix.$class] = $file;
+      $mapping[$localPrefix.strtolower($class)] = $file;
     }
 
     return $mapping;

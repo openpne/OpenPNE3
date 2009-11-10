@@ -38,24 +38,18 @@ class Doctrine_Template_SoftDelete extends Doctrine_Template
      *
      * @var string
      */
-    protected $_options = array('name'          =>  'deleted',
-                                'type'          =>  'boolean',
-                                'length'        =>  1,
-                                'options'       =>  array('default' => false,
-                                                          'notnull' => true,
-                                                          ),
+    protected $_options = array(
+        'name'          =>  'deleted_at',
+        'type'          =>  'timestamp',
+        'length'        =>  null,
+        'options'       =>  array(
+            'default' => null,
+            'notnull' => false
+        ),
+        'hardDelete' => false
     );
 
-    /**
-     * __construct
-     *
-     * @param string $array
-     * @return void
-     */
-    public function __construct(array $options = array())
-    {
-        $this->_options = Doctrine_Lib::arrayDeepMerge($this->_options, $options);
-    }
+    protected $_listener;
 
     /**
      * Set table definition for SoftDelete behavior
@@ -64,16 +58,32 @@ class Doctrine_Template_SoftDelete extends Doctrine_Template
      */
     public function setTableDefinition()
     {
+        // BC to 1.0.X of SoftDelete behavior
+        if ($this->_options['type'] == 'boolean') {
+            $this->_options['length'] = 1;
+            $this->_options['options'] = array('default' => false, 'notnull' => true);
+        }
+    
         $this->hasColumn($this->_options['name'], $this->_options['type'], $this->_options['length'], $this->_options['options']);
 
-        $this->addListener(new Doctrine_Template_Listener_SoftDelete($this->_options));
+        $this->_listener = new Doctrine_Template_Listener_SoftDelete($this->_options);
+        $this->addListener($this->_listener);
     }
 
     /**
-     * @nodoc
+     * Add a hardDelete() method to any of the models who act as SoftDelete behavior
+     *
+     * @param Doctrine_Connection $conn
+     * @return integer $result Number of affected rows.
      */
-    public function getOption($name)
+    public function hardDelete($conn = null)
     {
-        return $this->_options[$name];
+        if ($conn === null) {
+            $conn = $this->_table->getConnection();
+        }
+        $this->_listener->hardDelete(true);
+        $result = $this->_invoker->delete();
+        $this->_listener->hardDelete(false);
+        return $result;
     }
 }

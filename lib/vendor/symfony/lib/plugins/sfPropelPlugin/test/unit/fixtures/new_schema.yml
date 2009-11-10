@@ -1,6 +1,10 @@
 connection:           propel
 defaultIdMethod:      none
 package:              lib.model
+propel_behaviors:
+  timestampable:
+    boolean:       true
+    create_column: create_date
 
 classes:
   Group:
@@ -64,6 +68,9 @@ classes:
     behaviors:
       paranoid: { column: deleted_at }
       act_as_nested_set:
+    propel_behaviors:
+      paranoid: { column: deleted_at }
+      act_as_nested_set:
 
   KlArticle:
     tableName:        kl_article
@@ -97,9 +104,9 @@ classes:
     tableName: my_nested_sets
     columns:
       id:
-      lft: { type: integer, required: on }
-      rgt: { type: integer, required: on }
-      scope: { type: integer, required: on }
+      lft: { type: integer, required: true }
+      rgt: { type: integer, required: true }
+      scope: { type: integer, required: true }
     nestedSet:
       left: lft
       right: rgt

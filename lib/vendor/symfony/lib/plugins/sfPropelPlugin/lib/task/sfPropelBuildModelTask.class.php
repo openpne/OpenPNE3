@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPropelBaseTask.class.php');
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelBuildModelTask.class.php 12129 2008-10-10 14:00:53Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfPropelBuildModelTask.class.php 20867 2009-08-06 21:43:11Z Kris.Wallsmith $
  */
 class sfPropelBuildModelTask extends sfPropelBaseTask
 {
@@ -62,12 +62,7 @@ EOF;
     $ret = $this->callPhing('om', self::CHECK_SCHEMA);
     $this->cleanup();
 
-    if ($ret)
-    {
-      $this->logSection('autoload', 'reloading autoloading');
-
-      sfSimpleAutoload::getInstance()->reload();
-    }
+    $this->reloadAutoload();
 
     return !$ret;
   }

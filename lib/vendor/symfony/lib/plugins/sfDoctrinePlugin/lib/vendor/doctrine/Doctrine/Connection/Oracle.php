@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Oracle.php 5893 2009-06-16 15:25:42Z jwage $
+ *  $Id: Oracle.php 6131 2009-07-20 19:11:20Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,10 +27,10 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5893 $
+ * @version     $Revision: 6131 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
-class Doctrine_Connection_Oracle extends Doctrine_Connection
+class Doctrine_Connection_Oracle extends Doctrine_Connection_Common
 {
     /**
      * @var string $driverName                  the name of this connection driver
@@ -60,11 +60,17 @@ class Doctrine_Connection_Oracle extends Doctrine_Connection
                           'pattern_escaping'     => true,
                           );
         
-        $this->properties['sql_file_delimiter']   = "\n/\n";
-        $this->properties['varchar2_max_length']  = 4000;
-        $this->properties['number_max_precision'] = 38;
-        
+        $this->properties['sql_file_delimiter']    = "\n/\n";
+        $this->properties['number_max_precision']  = 38;
+        $this->properties['max_identifier_length'] = 30;
+
         parent::__construct($manager, $adapter);
+        
+        // moving properties to params to make them changeable by user
+        // VARCHAR2 allowed length is 4000 BYTE. For UTF8 strings is better to use 1000 CHAR 
+        $this->setParam('varchar2_max_length', 4000);
+        // Oracle's default unit for char data types is BYTE. For UTF8 string it is better to use CHAR
+        $this->setParam('char_unit', null);
     }
 
     /**
@@ -99,7 +105,7 @@ class Doctrine_Connection_Oracle extends Doctrine_Connection
             }
             if ($limit > 0) {
                 $max = $offset + $limit;
-                $column = $column === null ? '*' : $column;
+                $column = $column === null ? '*' : $this->quoteIdentifier($column);
                 if ($offset > 0) {
                     $min = $offset + 1;
                     $query = 'SELECT b.'.$column.' FROM ('.
@@ -134,6 +140,6 @@ class Doctrine_Connection_Oracle extends Doctrine_Connection
 
     public function getTmpConnection($info)
     {
-        return $this;
+        return clone $this;
     }
 }

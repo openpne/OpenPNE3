@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Propel.php 989 2008-03-11 14:29:30Z heltem $
+ *  $Id: Propel.php 1299 2009-11-08 13:39:31Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -37,7 +37,7 @@ require 'propel/util/PropelPDO.php';
  * @author     Martin Poeschl <mpoeschl@marmot.at> (Torque)
  * @author     Henning P. Schmiedehausen <hps@intermeta.de> (Torque)
  * @author     Kurt Schrader <kschrader@karmalab.org> (Torque)
- * @version    $Revision: 989 $
+ * @version    $Revision: 1299 $
  * @package    propel
  */
 class Propel
@@ -90,7 +90,7 @@ class Propel
 	/**
 	 * The Propel version.
 	 */
-	const VERSION = '1.3.0-dev';
+	const VERSION = '1.4.0';
 
 	/**
 	 * The class name for a PDO object.
@@ -138,7 +138,7 @@ class Propel
 	private static $connectionMap = array();
 
 	/**
-	 * @var        array Propel-specific configuration.
+	 * @var        PropelConfiguration Propel-specific configuration.
 	 */
 	private static $configuration;
 
@@ -173,54 +173,61 @@ class Propel
 	private static $autoloadMap = array(
 		'PropelException' => 'propel/PropelException.php',
 
-		'DBAdapter' => 'propel/adapter/DBAdapter.php',
-		'DBMSSQL' => 'propel/adapter/DBMSSQL.php',
-		'DBMySQL' => 'propel/adapter/DBMySQL.php',
-		'DBMySQLi' => 'propel/adapter/DBMySQLi.php',
-		'DBNone' => 'propel/adapter/DBNone.php',
-		'DBOracle' => 'propel/adapter/DBOracle.php',
-		'DBPostgres' => 'propel/adapter/DBPostgres.php',
-		'DBSQLite' => 'propel/adapter/DBSQLite.php',
-		'DBSybase' => 'propel/adapter/DBSybase.php',
+		'DBAdapter'       => 'propel/adapter/DBAdapter.php',
+		'DBMSSQL'         => 'propel/adapter/DBMSSQL.php',
+		'MssqlPropelPDO'  => 'propel/adapter/MSSQL/MssqlPropelPDO.php',
+		'MssqlDebugPDO'   => 'propel/adapter/MSSQL/MssqlDebugPDO.php',	
+		'MssqlDateTime'   => 'propel/adapter/MSSQL/MssqlDateTime.class.php',
+		'DBMySQL'         => 'propel/adapter/DBMySQL.php',
+		'DBMySQLi'        => 'propel/adapter/DBMySQLi.php',
+		'DBNone'          => 'propel/adapter/DBNone.php',
+		'DBOracle'        => 'propel/adapter/DBOracle.php',
+		'DBPostgres'      => 'propel/adapter/DBPostgres.php',
+		'DBSQLite'        => 'propel/adapter/DBSQLite.php',
+		'DBSybase'        => 'propel/adapter/DBSybase.php',
 
-		'BasicLogger' => 'propel/logger/BasicLogger.php',
-		'MojaviLogAdapter' => 'propel/logger/MojaviLogAdapter.php',
+		'BasicLogger'       => 'propel/logger/BasicLogger.php',
+		'MojaviLogAdapter'  => 'propel/logger/MojaviLogAdapter.php',
 
-		'ColumnMap' => 'propel/map/ColumnMap.php',
-		'DatabaseMap' => 'propel/map/DatabaseMap.php',
-		'MapBuilder' => 'propel/map/MapBuilder.php',
-		'TableMap' => 'propel/map/TableMap.php',
+		'ColumnMap'    => 'propel/map/ColumnMap.php',
+		'DatabaseMap'  => 'propel/map/DatabaseMap.php',
+		'TableMap'     => 'propel/map/TableMap.php',
+		'RelationMap'  => 'propel/map/RelationMap.php',
 		'ValidatorMap' => 'propel/map/ValidatorMap.php',
 
-		'BaseObject' => 'propel/om/BaseObject.php',
-		'NodeObject' => 'propel/om/NodeObject.php',
-		'Persistent' => 'propel/om/Persistent.php',
-		'PreOrderNodeIterator' => 'propel/om/PreOrderNodeIterator.php',
+		'BaseObject'                    => 'propel/om/BaseObject.php',
+		'NodeObject'                    => 'propel/om/NodeObject.php',
+		'Persistent'                    => 'propel/om/Persistent.php',
+		'PreOrderNodeIterator'          => 'propel/om/PreOrderNodeIterator.php',
 		'NestedSetPreOrderNodeIterator' => 'propel/om/NestedSetPreOrderNodeIterator.php',
-		'NestedSetRecursiveIterator' => 'propel/om/NestedSetRecursiveIterator.php',
+		'NestedSetRecursiveIterator'    => 'propel/om/NestedSetRecursiveIterator.php',
 
-		'BasePeer' => 'propel/util/BasePeer.php',
-		'NodePeer' => 'propel/util/NodePeer.php',
-		'Criteria' => 'propel/util/Criteria.php',
-		'PeerInfo' => 'propel/util/PeerInfo.php',
-		'PropelColumnTypes' => 'propel/util/PropelColumnTypes.php',
-		'PropelPDO' => 'propel/util/PropelPDO.php',
-		'PropelPager' => 'propel/util/PropelPager.php',
-		'PropelDateTime' => 'propel/util/PropelDateTime.php',
-		'DebugPDO' => 'propel/util/DebugPDO.php',
-		'DebugPDOStatement' => 'propel/util/DebugPDOStatement.php',
+		'BasePeer'            => 'propel/util/BasePeer.php',
+		'NodePeer'            => 'propel/util/NodePeer.php',
+		'Criteria'            => 'propel/util/Criteria.php',
+		'Join'                => 'propel/util/Join.php',
+		'PeerInfo'            => 'propel/util/PeerInfo.php',
+		'PropelColumnTypes'   => 'propel/util/PropelColumnTypes.php',
+		'PropelConfiguration' => 'propel/util/PropelConfiguration.php',
+		'PropelConfigurationIterator' => 'propel/util/PropelConfigurationIterator.php',
+		'PropelPDO'           => 'propel/util/PropelPDO.php',
+		'PropelPager'         => 'propel/util/PropelPager.php',
+		'PropelDateTime'      => 'propel/util/PropelDateTime.php',
+		'DebugPDO'            => 'propel/util/DebugPDO.php',
+		'DebugPDOStatement'   => 'propel/util/DebugPDOStatement.php',
 
-		'BasicValidator' => 'propel/validator/BasicValidator.php',
-		'MatchValidator' => 'propel/validator/MatchValidator.php',
-		'MaxLengthValidator' => 'propel/validator/MaxLengthValidator.php',
-		'MaxValueValidator' => 'propel/validator/MaxValueValidator.php',
-		'MinLengthValidator' => 'propel/validator/MinLengthValidator.php',
-		'MinValueValidator' => 'propel/validator/MinValueValidator.php',
-		'NotMatchValidator' => 'propel/validator/NotMatchValidator.php',
-		'RequiredValidator' => 'propel/validator/RequiredValidator.php',
-		'UniqueValidator' => 'propel/validator/UniqueValidator.php',
+
+		'BasicValidator'      => 'propel/validator/BasicValidator.php',
+		'MatchValidator'      => 'propel/validator/MatchValidator.php',
+		'MaxLengthValidator'  => 'propel/validator/MaxLengthValidator.php',
+		'MaxValueValidator'   => 'propel/validator/MaxValueValidator.php',
+		'MinLengthValidator'  => 'propel/validator/MinLengthValidator.php',
+		'MinValueValidator'   => 'propel/validator/MinValueValidator.php',
+		'NotMatchValidator'   => 'propel/validator/NotMatchValidator.php',
+		'RequiredValidator'   => 'propel/validator/RequiredValidator.php',
+		'UniqueValidator'     => 'propel/validator/UniqueValidator.php',
 		'ValidValuesValidator' => 'propel/validator/ValidValuesValidator.php',
-		'ValidationFailed' => 'propel/validator/ValidationFailed.php',
+		'ValidationFailed'    => 'propel/validator/ValidationFailed.php',
 	);
 
 	/**
@@ -232,28 +239,18 @@ class Propel
 	public static function initialize()
 	{
 		if (self::$configuration === null) {
-			throw new PropelException("Propel cannot be initialized without "
-			. "a valid configuration. Please check the log files "
-			. "for further details.");
+			throw new PropelException("Propel cannot be initialized without a valid configuration. Please check the log files for further details.");
 		}
 
 		self::configureLogging();
 
-		// Support having the configuration stored within a 'propel' sub-section or at the top-level
-		if (isset(self::$configuration['propel']) && is_array(self::$configuration['propel'])) {
-			self::$configuration = self::$configuration['propel'];
-		}
-
 		// reset the connection map (this should enable runtime changes of connection params)
 		self::$connectionMap = array();
-
-		foreach (self::$configuration['datasources'] as $key => $datasource) {
-			if ($key != 'default' && isset($datasource['classes'])) {
-				// merge the classes to the autoload map
-				self::$autoloadMap = array_merge($datasource['classes'], self::$autoloadMap);
-			}
-		}
-
+		
+		if (isset(self::$configuration['classmap']) && is_array(self::$configuration['classmap'])) {
+		  self::$autoloadMap = array_merge(self::$configuration['classmap'], self::$autoloadMap);
+	  }
+		
 		self::$isInit = true;
 	}
 
@@ -267,10 +264,11 @@ class Propel
 	 */
 	public static function configure($configFile)
 	{
-		self::$configuration = include($configFile);
-		if (self::$configuration === false) {
+		$configuration = include($configFile);
+		if ($configuration === false) {
 			throw new PropelException("Unable to open configuration file: " . var_export($configFile, true));
 		}
+		self::setConfiguration($configuration);
 	}
 
 	/**
@@ -319,21 +317,32 @@ class Propel
 	/**
 	 * Sets the configuration for Propel and all dependencies.
 	 *
-	 * @param      array The Configuration
+	 * @param      mixed The Configuration (array or PropelConfiguration)
 	 */
 	public static function setConfiguration($c)
 	{
+		if (is_array($c)) {
+			if (isset($c['propel']) && is_array($c['propel'])) {
+			  $c = $c['propel'];
+		  }
+			$c = new PropelConfiguration($c);
+		}
 		self::$configuration = $c;
 	}
 
 	/**
 	 * Get the configuration for this component.
 	 *
-	 * @return     array The Configuration
+	 * @param      int - PropelConfiguration::TYPE_ARRAY: return the configuration as an array
+	 *                   (for backward compatibility this is the default)
+	 *                 - PropelConfiguration::TYPE_ARRAY_FLAT: return the configuration as a flat array
+	 *                   ($config['name.space.item'])
+	 *                 - PropelConfiguration::TYPE_OBJECT: return the configuration as a PropelConfiguration instance
+	 * @return     mixed The Configuration (array or PropelConfiguration)
 	 */
-	public static function getConfiguration()
+	public static function getConfiguration($type = PropelConfiguration::TYPE_ARRAY)
 	{
-		return self::$configuration;
+		return self::$configuration->getParameters($type);
 	}
 
 	/**
@@ -427,7 +436,7 @@ class Propel
 		if ($name === null) {
 			$name = self::getDefaultDB();
 			if ($name === null) {
-				throw new PropelException("DatabaseMap name was null!");
+				throw new PropelException("DatabaseMap name is null!");
 			}
 		}
 

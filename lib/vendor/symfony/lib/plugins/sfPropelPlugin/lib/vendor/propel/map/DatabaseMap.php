@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: DatabaseMap.php 521 2007-01-05 13:29:36Z heltem $
+ *  $Id: DatabaseMap.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,125 +28,173 @@
  * The propel.map classes are abstract building-block classes for modeling
  * the database at runtime.  These classes are similar (a lite version) to the
  * propel.engine.database.model classes, which are build-time modeling classes.
- * These classes in themselves do not do any database metadata lookups, but instead
- * are used by the MapBuilder classes that were generated for your datamodel. The
- * MapBuilder that was created for your datamodel build a representation of your
- * database by creating instances of the DatabaseMap, TableMap, ColumnMap, etc.
- * classes.
+ * These classes in themselves do not do any database metadata lookups.
  *
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
  * @author     John D. McNally <jmcnally@collab.net> (Torque)
  * @author     Daniel Rall <dlr@collab.net> (Torque)
- * @version    $Revision: 521 $
+ * @version    $Revision: 1262 $
  * @package    propel.map
  */
-class DatabaseMap {
+class DatabaseMap
+{
 
-	/** Name of the database. */
-	private $name;
+  /** @var string Name of the database. */
+  protected $name;
 
-	/** Name of the tables in the database. */
-	protected $tables = array();
+  /** @var array TableMap[] Tables in the database, using table name as key */ 
+  protected $tables = array();
+  
+  /** @var array TableMap[] Tables in the database, using table phpName as key */
+  protected $tablesByPhpName = array();
 
-	/**
-	 * The table MapBuilder objects that will initialize tables (on demand).
-	 * @var        array Map of table builders (name => MapBuilder)
-	 */
-	private $tableBuilders = array();
+  /**
+   * Constructor.
+   *
+   * @param      string $name Name of the database.
+   */
+  public function __construct($name)
+  {
+    $this->name = $name;
+  }
+  
+  /**
+   * Get the name of this database.
+   *
+   * @return     string The name of the database.
+   */
+  public function getName()
+  {
+    return $this->name;
+  }
+  
+  /**
+   * Add a new table to the database by name.
+   *
+   * @param      string $tableName The name of the table.
+   * @return     TableMap The newly created TableMap.
+   */
+  public function addTable($tableName)
+  {
+    $this->tables[$tableName] = new TableMap($tableName, $this);
+    return $this->tables[$tableName];
+  }
+  
+  /**
+   * Add a new table object to the database.
+   *
+   * @param      TableMap $table The table to add
+   */
+  public function addTableObject(TableMap $table)
+  {
+    $table->setDatabaseMap($this);
+    $this->tables[$table->getName()] = $table;
+    $this->tablesByPhpName[$table->getPhpName()] = $table;
+  }
+  
+  /**
+   * Add a new table to the database, using the tablemap class name.
+   *
+   * @param      string $tableMapClass The name of the table map to add
+   * @return     TableMap The TableMap object
+   */
+  public function addTableFromMapClass($tableMapClass)
+  {
+    $table = new $tableMapClass();
+    if(!$this->hasTable($table->getName())) {
+      $this->addTableObject($table);
+      return $table;
+    } else {
+      return $this->getTable($table->getName());
+    }
+  }
+  
+  /**
+   * Does this database contain this specific table?
+   *
+   * @param      string $name The String representation of the table.
+   * @return     boolean True if the database contains the table.
+   */
+  public function hasTable($name)
+  {
+    if ( strpos($name, '.') > 0) {
+      $name = substr($name, 0, strpos($name, '.'));
+    }
+    return isset($this->tables[$name]);
+  }
 
-	/**
-	 * Constructor.
-	 *
-	 * @param      string $name Name of the database.
-	 */
-	public function __construct($name)
-	{
-		$this->name = $name;
-	}
+  /**
+   * Get a TableMap for the table by name.
+   *
+   * @param      string $name Name of the table.
+   * @return     TableMap A TableMap
+   * @throws     PropelException if the table is undefined
+   */
+  public function getTable($name)
+  {
+    if (!isset($this->tables[$name])) {
+      throw new PropelException("Cannot fetch TableMap for undefined table: " . $name );
+    }
+    return $this->tables[$name];
+  }
 
-	/**
-	 * Does this database contain this specific table?
-	 *
-	 * @param      string $name The String representation of the table.
-	 * @return     boolean True if the database contains the table.
-	 */
-	public function containsTable($name)
-	{
-		if ( strpos($name, '.') > 0) {
-			$name = substr($name, 0, strpos($name, '.'));
-		}
-		// table builders are *always* loaded, whereas the tables aren't necessarily
-		return isset($this->tableBuilders[$name]);
-	}
+  /**
+   * Get a TableMap[] of all of the tables in the database.
+   *
+   * @return     array A TableMap[].
+   */
+  public function getTables()
+  {
+    return $this->tables;
+  }
 
-	/**
-	 * Get the name of this database.
-	 *
-	 * @return     string The name of the database.
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
-
-	/**
-	 * Get a TableMap for the table by name.
-	 *
-	 * @param      string $name Name of the table.
-	 * @return     TableMap A TableMap
-	 * @throws     PropelException if the table is undefined
-	 */
-	public function getTable($name)
-	{
-		if (!isset($this->tables[$name])) {
-			if (!isset($this->tableBuilders[$name])) {
-				throw new PropelException("Cannot fetch TableMap for undefined table: " . $name . ".  Make sure you have the static MapBuilder registration code after your peer stub class definition.");
-			}
-			$this->tableBuilders[$name]->doBuild();
-		}
-		return $this->tables[$name];
-	}
-
-	/**
-	 * Get a TableMap[] of all of the tables in the database.
-	 *
-	 * @return     array A TableMap[].
-	 */
-	public function getTables()
-	{
-		// if there's a mismatch in the tables and tableBuilders
-		if (count($this->tableBuilders) != count($this->tables)) {
-			$missingTables = array_diff(array_keys($this->tableBuilders), array_keys($this->tables));
-			foreach ($missingTables as $table) {
-				$this->tableBuilders[$table]->doBuild();
-			}
-		}
-		return $this->tables;
-	}
-
-	/**
-	 * Add a new table to the database by name.
-	 *
-	 * This method creates an empty TableMap that must then be populated. This
-	 * is called indirectly on-demand by the getTable() method, when there is
-	 * a table builder (MapBuilder) registered, but no TableMap loaded.
-	 *
-	 * @param      string $tableName The name of the table.
-	 * @return     TableMap The newly created TableMap.
-	 */
-	public function addTable($tableName)
-	{
-		$this->tables[$tableName] = new TableMap($tableName, $this);
-		return $this->tables[$tableName];
-	}
-
-	/**
-	 * Add a new table builder (MapBuilder) to the database by name.
-	 *
-	 * @param      string $tableName The name of the table.
-	 */
-	public function addTableBuilder($tableName, MapBuilder $builder)
-	{
-		$this->tableBuilders[$tableName] = $builder;
-	}
+  /**
+   * Get a ColumnMap for the column by name.
+   * Name must be fully qualified, e.g. book.AUTHOR_ID
+   *
+   * @param      $qualifiedColumnName Name of the column.
+   * @return     ColumnMap A TableMap
+   * @throws     PropelException if the table is undefined, or if the table is undefined
+   */  
+  public function getColumn($qualifiedColumnName)
+  {
+    list($tableName, $columnName) = explode('.', $qualifiedColumnName);
+    return $this->getTable($tableName)->getColumn($columnName, false);
+  }
+  
+  // deprecated methods
+  
+  /**
+   * Does this database contain this specific table?
+   *
+   * @deprecated Use hasTable() instead
+   * @param      string $name The String representation of the table.
+   * @return     boolean True if the database contains the table.
+   */
+  public function containsTable($name)
+  {
+    return $this->hasTable($name);
+  }
+  
+  public function getTableByPhpName($phpName)
+  {
+    if (array_key_exists($phpName, $this->tablesByPhpName)) {
+      return $this->tablesByPhpName[$phpName];
+    } else if (class_exists($tmClass = $phpName . 'TableMap')) {
+      $this->addTableFromMapClass($tmClass);
+      return $this->tablesByPhpName[$phpName];
+    } else {
+      throw new PropelException("Cannot fetch TableMap for undefined table phpName: " . $phpName);
+    }
+  }
+  
+  /** 
+   * Convenience method to get the DBAdapter registered with Propel for this database. 
+   * @return  DBAdapter
+   * @see     Propel::getDB(string) 
+   */ 
+  public function getDBAdapter() 
+  { 
+    return Propel::getDB($this->name); 
+  }  
 }

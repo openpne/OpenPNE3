@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: Database.php 1020 2008-04-04 10:03:56Z hans $
+ *  $Id: Database.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -24,6 +24,8 @@ require_once 'propel/engine/database/model/XMLElement.php';
 include_once 'propel/engine/database/model/IDMethod.php';
 include_once 'propel/engine/database/model/NameGenerator.php';
 include_once 'propel/engine/database/model/Table.php';
+include_once 'propel/engine/database/model/Behavior.php';
+
 
 /**
  * A class for holding application data structures.
@@ -34,7 +36,7 @@ include_once 'propel/engine/database/model/Table.php';
  * @author     Martin Poeschl<mpoeschl@marmot.at> (Torque)
  * @author     Daniel Rall<dlr@collab.net> (Torque)
  * @author     Byron Foster <byron_foster@yahoo.com> (Torque)
- * @version    $Revision: 1020 $
+ * @version    $Revision: 1262 $
  * @package    propel.engine.database.model
  */
 class Database extends XMLElement {
@@ -55,6 +57,13 @@ class Database extends XMLElement {
 	private $heavyIndexing;
 
 	private $domainMap = array();
+
+  /**
+   * List of behaviors registered for this table
+   * 
+   * @var array
+   */
+  protected $behaviors = array();
 
 	/**
 	 * Constructs a new Database object.
@@ -367,8 +376,69 @@ class Database extends XMLElement {
 		return null; // just to be explicit
 	}
 
+  public function getGeneratorConfig()
+  {
+    return $this->getAppData()->getPlatform()->getGeneratorConfig();
+  }
+  
+  /**
+   * Adds a new Behavior to the database
+   * @return Behavior A behavior instance
+   */
+  public function addBehavior($bdata)
+  {
+    if ($bdata instanceof Behavior) {
+      $behavior = $bdata;
+      $behavior->setDatabase($this);
+      $this->behaviors[$behavior->getName()] = $behavior;
+      return $behavior;
+    } else {
+      $class = $this->getConfiguredBehavior($bdata['name']);
+      $behavior = new $class();
+      $behavior->loadFromXML($bdata);
+      return $this->addBehavior($behavior);
+    }
+  }
+  
+  /**
+   * Get the database behaviors
+   * @return Array of Behavior objects
+   */
+  public function getBehaviors()
+  {
+    return $this->behaviors;
+  }
+  
+  /**
+   * Get one database behavior by name
+   * @param string $name the behavior name
+   * @return Behavior a behavior object
+   */
+  public function getBehavior($name)
+  {
+    return $this->behaviors[$name];
+  }
+
+
 	public function doFinalInitialization()
 	{
+	  $config = $this->getGeneratorConfig();
+    if($config && ($defaultBehaviors = $config->getBuildProperty('behaviorDefault')))
+    {
+      // add generic behaviors from build.properties 
+      $defaultBehaviors = explode(',', $defaultBehaviors);
+      foreach ($defaultBehaviors as $behavior)
+      {
+        $this->addBehavior(array('name' => trim($behavior)));
+      }
+    }
+    
+    // execute behavior database modifiers
+    foreach ($this->getBehaviors() as $behavior)
+    {
+      $behavior->modifyDatabase();
+    }
+
 		$tables = $this->getTables();
 
 		for ($i=0,$size=count($tables); $i < $size; $i++) {

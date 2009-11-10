@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: DefaultPlatform.php 989 2008-03-11 14:29:30Z heltem $
+ *  $Id: DefaultPlatform.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@ include_once 'propel/engine/database/model/PropelTypes.php';
  * Default implementation for the Platform interface.
  *
  * @author     Martin Poeschl <mpoeschl@marmot.at> (Torque)
- * @version    $Revision: 989 $
+ * @version    $Revision: 1262 $
  * @package    propel.engine.platform
  */
 class DefaultPlatform implements Platform {
@@ -253,6 +253,14 @@ class DefaultPlatform implements Platform {
 		return false;
 	}
 
+	/**
+	 * @see        Platform::supportsInsertNullPk()
+	 */
+	public function supportsInsertNullPk()
+	{
+		return true;
+	}
+	
 	/**
 	 * Whether the underlying PDO driver for this platform returns BLOB columns as streams (instead of strings).
 	 * @return     boolean

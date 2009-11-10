@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Criteria.php 1077 2008-08-21 02:08:42Z hans $
+ *  $Id: Criteria.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -32,7 +32,7 @@
  * @author     Eric Dobbs <eric@dobbse.net> (Torque)
  * @author     Henning P. Schmiedehausen <hps@intermeta.de> (Torque)
  * @author     Sam Joseph <sam@neurogrid.com> (Torque)
- * @version    $Revision: 1077 $
+ * @version    $Revision: 1262 $
  * @package    propel.util
  */
 class Criteria implements IteratorAggregate {
@@ -625,19 +625,75 @@ class Criteria implements IteratorAggregate {
 	 * left = PROJECT.PROJECT_ID
 	 * right = FOO.PROJECT_ID
 	 *
-	 * @param      string $left A String with the left side of the join.
-	 * @param      string $right A String with the right side of the join.
-		 * @param      string $operator A String with the join operator e.g. LEFT JOIN, ...
+	 * @param      mixed $left A String with the left side of the join.
+	 * @param      mixed $right A String with the right side of the join.
+	 * @param      mixed $operator A String with the join operator e.g. LEFT JOIN, ...
+   *
 	 * @return     Criteria A modified Criteria object.
 	 */
 	public function addJoin($left, $right, $operator = null)
 	{
-		$j = new Join($left, $right, $operator);
-		if (!in_array($j, $this->joins)) { // compare equality, NOT identity
-			$this->joins[] = $j;
+		$join = new Join();
+    if (!is_array($left)) {
+      // simple join
+      $join->addCondition($left, $right);
+    } else {
+      // join with multiple conditions
+      // deprecated: use addMultipleJoin() instead
+      foreach ($left as $key => $value)
+      {
+        $join->addCondition($value, $right[$key]);
+      }
+    }
+		$join->setJoinType($operator);
+		
+		return $this->addJoinObject($join);
+	}
+
+	/**
+	 * Add a join with multiple conditions
+	 * see http://propel.phpdb.org/trac/ticket/167, http://propel.phpdb.org/trac/ticket/606
+	 * 
+	 * Example usage:
+	 * $c->addMultipleJoin(array(
+	 *     array(LeftPeer::LEFT_COLUMN, RightPeer::RIGHT_COLUMN),  // if no third argument, defaults to Criteria::EQUAL
+	 *     array(FoldersPeer::alias( 'fo', FoldersPeer::LFT ), FoldersPeer::alias( 'parent', FoldersPeer::RGT ), Criteria::LESS_EQUAL )
+	 *   ),
+	 *   Criteria::LEFT_JOIN
+ 	 * );
+	 * 
+	 * @see        addJoin()
+	 * @param      array $conditions An array of conditions, each condition being an array (left, right, operator)
+	 * @param      string $joinType  A String with the join operator. Defaults to an implicit join.
+	 *
+	 * @return     Criteria A modified Criteria object.
+	 */
+	public function addMultipleJoin($conditions, $joinType = null) 
+  {
+		$join = new Join();
+		foreach ($conditions as $condition) {
+		  $join->addCondition($condition[0], $condition[1], isset($condition[2]) ? $condition[2] : Criteria::EQUAL);
+		}
+		$join->setJoinType($joinType);
+		
+		return $this->addJoinObject($join);
+	}
+	
+	/**
+	 * Add a join object to the Criteria
+	 *
+	 * @param Join $join A join object
+	 *
+	 * @return Criteria A modified Criteria object
+	 */
+	public function addJoinObject(Join $join)
+	{
+	  if (!in_array($join, $this->joins)) { // compare equality, NOT identity
+			$this->joins[] = $join;
 		}
 		return $this;
 	}
+
 
 	/**
 	 * Get the array of Joins.
@@ -1694,126 +1750,5 @@ class Criterion  {
 		foreach ( $c->getClauses() as $clause ) {
 			$this->traverseCriterion($clause, $a);
 		}
-	}
-}
-
-/**
-* Data object to describe a join between two tables, for example
-* <pre>
-* table_a LEFT JOIN table_b ON table_a.id = table_b.a_id
-* </pre>
-*/
-class Join
-{
-	/** the left column of the join condition */
-	private $leftColumn = null;
-
-	/** the right column of the join condition */
-	private $rightColumn = null;
-
-	/** the type of the join (LEFT JOIN, ...), or null */
-	private $joinType = null;
-
-	/**
-	 * Constructor
-	 * @param      leftColumn the left column of the join condition;
-	 *        might contain an alias name
-	 * @param      rightColumn the right column of the join condition
-	 *        might contain an alias name
-	 * @param      joinType the type of the join. Valid join types are
-	 *        null (adding the join condition to the where clause),
-	 *        Criteria::LEFT_JOIN(), Criteria::RIGHT_JOIN(), and Criteria::INNER_JOIN()
-	 */
-	public function __construct($leftColumn, $rightColumn, $joinType = null)
-	{
-		if (!is_array($leftColumn) ) {
-			$leftColumn = array($leftColumn);
-		}
-		if (!is_array($rightColumn) ) {
-			$rightColumn = array($rightColumn);
-		}
-		if (count($leftColumn) != count($rightColumn) ) {
-			throw new PropelException("Unable to create join because the left column count isn't equal to the right column count");
-		}
-		$this->leftColumn = $leftColumn;
-		$this->rightColumn = $rightColumn;
-		$this->joinType = $joinType;
-	}
-
-	/**
-	 * @return     the type of the join, i.e. Criteria::LEFT_JOIN(), ...,
-	 *         or null for adding the join condition to the where Clause
-	 */
-	public function getJoinType()
-	{
-		return $this->joinType;
-	}
-
-	/**
-	 * @return     the left column of the join condition
-	 */
-	public function getLeftColumn($index = 0)
-	{
-		return $this->leftColumn[$index];
-	}
-	
-	/**
-	 * @return     all right columns of the join condition
-	 */
-	public function getLeftColumns() {
-		return $this->leftColumn;
-	}
-
-
-	public function getLeftColumnName($index = 0)
-	{
-		return substr($this->leftColumn[$index], strrpos($this->leftColumn[$index], '.') + 1);
-	}
-
-	public function getLeftTableName($index = 0)
-	{
-		return substr($this->leftColumn[$index], 0, strrpos($this->leftColumn[$index], '.'));
-	}
-
-	/**
-	 * @return     the right column of the join condition
-	 */
-	public function getRightColumn($index = 0)
-	{
-		return $this->rightColumn[$index];
-	}
-	
-	/**
-	 * @return     all right columns of the join condition
-	 */
-	public function getRightColumns() {
-		return $this->rightColumn;
-	}
-
-	public function getRightColumnName($index = 0)
-	{
-		return substr($this->rightColumn[$index], strrpos($this->rightColumn[$index], '.') + 1);
-	}
-
-	public function getRightTableName($index = 0)
-	{
-		return substr($this->rightColumn[$index], 0, strrpos($this->rightColumn[$index], '.'));
-	}
-
-	/**
-	 * returns a String representation of the class,
-	 * mainly for debugging purposes
-	 * @return     a String representation of the class
-	 */
-	public function toString()
-	{
-		$result = "";
-		if ($this->joinType !== null)
-		{
-			$result .= $this->joinType . " : ";
-		}
-		$result .= $this->leftColumn . "=" . $this->rightColumn . " (ignoreCase not considered)";
-
-		return $result;
 	}
 }

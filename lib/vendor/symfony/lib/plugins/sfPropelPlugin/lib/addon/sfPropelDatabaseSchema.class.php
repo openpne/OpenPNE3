@@ -112,7 +112,7 @@ class sfPropelDatabaseSchema
       $tmp = array_keys($schema);
       $connection_name = array_shift($tmp);
 
-      if(!empty($connection_name) && isset($schema[$connection_name]))
+      if (!empty($connection_name) && isset($schema[$connection_name]))
       {
         $new_schema['connection'] = $connection_name;
 
@@ -123,6 +123,11 @@ class sfPropelDatabaseSchema
           {
             // Database attributes
             $new_schema = array_merge($new_schema, $table_params);
+          }
+          else if ('_propel_behaviors' == $table)
+          {
+            // Database behaviors
+            $new_schema['propel_behaviors'] = $table_params;
           }
           else
           {
@@ -151,6 +156,9 @@ class sfPropelDatabaseSchema
               {
                 case '_behaviors':
                   $classes[$phpName]['behaviors'] = $column_params;
+                  break;
+                case '_propel_behaviors':
+                  $classes[$phpName]['propel_behaviors'] = $column_params;
                   break;
                 case '_inheritance':
                   $classes[$phpName]['inheritance'] = $column_params;
@@ -241,6 +249,11 @@ class sfPropelDatabaseSchema
           $tableParams['_behaviors'] = $classParams['behaviors'];
           unset($classParams['behaviors']);
         }
+        if (isset($classParams['propel_behaviors']))
+        {
+          $tableParams['_propel_behaviors'] = $classParams['propel_behaviors'];
+          unset($classParams['propel_behaviors']);
+        }
 
         // Inheritance
         if (isset($classParams['inheritance']))
@@ -284,6 +297,13 @@ class sfPropelDatabaseSchema
       unset($schema['classes']);
     }
 
+    // Database behaviors
+    if (isset($schema['propel_behaviors']))
+    {
+      $database['_propel_behaviors'] = $schema['propel_behaviors'];
+      unset($schema['propel_behaviors']);
+    }
+
     // Database attributes
     if ($schema)
     {
@@ -303,6 +323,27 @@ class sfPropelDatabaseSchema
     $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
     $xml .= "<database name=\"$this->connection_name\"".$this->getAttributesFor($this->database).">\n";
+
+    if (isset($this->database['_propel_behaviors']))
+    {
+      foreach ($this->database['_propel_behaviors'] as $name => $parameters)
+      {
+        $xml .= "\n  <behavior name=\"$name\"";
+        if (is_array($parameters) && count($parameters))
+        {
+          $xml .= ">\n";
+          foreach ($parameters as $key => $value)
+          {
+            $xml .= "    <parameter name=\"$key\" value=\"{$this->fixXMLBoolean($value)}\"/>\n";
+          }
+          $xml .= "  </behavior>\n";
+        }
+        else
+        {
+          $xml .= "/>\n";
+        }
+      }
+    }
 
     // tables
     foreach ($this->getChildren($this->database) as $tb_name => $table)
@@ -337,7 +378,28 @@ class sfPropelDatabaseSchema
         $xml .= sprintf(" behaviors=\"%s\"", htmlspecialchars(serialize($table['_behaviors'])), ENT_QUOTES, sfConfig::get('sf_charset'));
       }
       $xml .= ">\n";
-
+      
+      // behaviors
+      if (isset($table['_propel_behaviors']))
+      {
+        foreach ($table['_propel_behaviors'] as $behavior_name => $parameters)
+        {
+          if ($parameters)
+          {
+            $xml .= "    <behavior name=\"$behavior_name\">\n";
+            foreach ($parameters as $param_name => $param_value)
+            {
+              $xml .= "      <parameter name=\"$param_name\" value=\"$param_value\" />\n";
+            }
+            $xml .= "    </behavior>\n";
+          }
+          else
+          {
+            $xml .= "    <behavior name=\"$behavior_name\" />\n";
+          }
+        }
+      }
+      
       // columns
       foreach ($this->getChildren($table) as $col_name => $column)
       {
@@ -862,7 +924,7 @@ class sfPropelDatabaseSchema
     }
     else
     {
-      return is_null($value) ? 'null' : $value;
+      return null === $value ? 'null' : $value;
     }
   }
 
@@ -1171,6 +1233,19 @@ class sfPropelDatabaseSchema
           $this->database[$table][$column] = null;
         }
       }
+    }
+  }
+
+  protected function fixXMLBoolean($value)
+  {
+    switch (true)
+    {
+      case true === $value:
+        return 'true';
+      case false === $value:
+        return 'false';
+      default:
+        return $value;
     }
   }
 

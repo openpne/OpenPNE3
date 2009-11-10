@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTesterForm.class.php 20144 2009-07-13 11:07:31Z FabianLange $
+ * @version    SVN: $Id: sfTesterForm.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfTesterForm extends sfTester
 {
@@ -47,7 +47,7 @@ class sfTesterForm extends sfTester
    */
   public function initialize()
   {
-    if (is_null($this->form))
+    if (null === $this->form)
     {
       $action = $this->browser->getContext()->getActionStack()->getLastEntry()->getActionInstance();
 
@@ -81,7 +81,7 @@ class sfTesterForm extends sfTester
    */
   public function hasErrors($value = true)
   {
-    if (is_null($this->form))
+    if (null === $this->form)
     {
       throw new LogicException('no form has been submitted.');
     }
@@ -120,12 +120,12 @@ class sfTesterForm extends sfTester
    */
   public function isError($field, $value = true)
   {
-    if (is_null($this->form))
+    if (null === $this->form)
     {
       throw new LogicException('no form has been submitted.');
     }
 
-    if (is_null($field))
+    if (null === $field)
     {
       $error = new sfValidatorErrorSchema(new sfValidatorPass(), $this->form->getGlobalErrors());
     }
@@ -184,7 +184,7 @@ class sfTesterForm extends sfTester
    */
   public function debug()
   {
-    if (is_null($this->form))
+    if (null === $this->form)
     {
       throw new LogicException('no form has been submitted.');
     }

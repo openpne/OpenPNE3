@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage routing
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPathInfoRouting.class.php 11313 2008-09-03 17:28:33Z fabien $
+ * @version    SVN: $Id: sfPathInfoRouting.class.php 20566 2009-07-29 07:04:01Z fabien $
  */
 class sfPathInfoRouting extends sfRouting
 {
@@ -110,5 +110,15 @@ class sfPathInfoRouting extends sfRouting
    */
   public function clearRoutes()
   {
+  }
+
+  protected function mergeArrays($arr1, $arr2)
+  {
+    foreach ($arr2 as $key => $value)
+    {
+      $arr1[$key] = $value;
+    }
+
+    return $arr1;
   }
 }

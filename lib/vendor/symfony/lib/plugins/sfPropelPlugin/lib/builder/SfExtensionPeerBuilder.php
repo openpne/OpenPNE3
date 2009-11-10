@@ -14,29 +14,21 @@ require_once 'propel/engine/builder/om/php5/PHP5ExtensionPeerBuilder.php';
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: SfExtensionPeerBuilder.php 12141 2008-10-11 12:33:03Z fabien $
+ * @version    SVN: $Id: SfExtensionPeerBuilder.php 23357 2009-10-26 17:29:41Z Kris.Wallsmith $
+ * 
+ * @deprecated since symfony 1.3
  */
 class SfExtensionPeerBuilder extends PHP5ExtensionPeerBuilder
 {
   public function build()
   {
     $code = parent::build();
-    if (!DataModelBuilder::getBuildProperty('builderAddComments'))
+    if (!$this->getBuildProperty('builderAddComments'))
     {
       $code = sfToolkit::stripComments($code);
     }
 
     return $code;
-  }
-
-  protected function addIncludes(&$script)
-  {
-    if (!DataModelBuilder::getBuildProperty('builderAddIncludes'))
-    {
-      return;
-    }
-
-    parent::addIncludes($script);
   }
 
   /**

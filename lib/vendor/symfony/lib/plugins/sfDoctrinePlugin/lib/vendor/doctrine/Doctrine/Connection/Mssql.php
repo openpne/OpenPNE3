@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Mssql.php 5804 2009-06-02 19:52:42Z jwage $
+ *  $Id: Mssql.php 6484 2009-10-12 17:40:41Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,11 +27,11 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
- * @version     $Revision: 5804 $
+ * @version     $Revision: 6484 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  */
-class Doctrine_Connection_Mssql extends Doctrine_Connection
+class Doctrine_Connection_Mssql extends Doctrine_Connection_Common
 {
     /**
      * @var string $driverName                  the name of this connection driver
@@ -81,7 +81,7 @@ class Doctrine_Connection_Mssql extends Doctrine_Connection
      */
     public function quoteIdentifier($identifier, $checkOption = false)
     {
-        if ($checkOption && ! $this->getAttribute(Doctrine::ATTR_QUOTE_IDENTIFIER)) {
+        if ($checkOption && ! $this->getAttribute(Doctrine_Core::ATTR_QUOTE_IDENTIFIER)) {
             return $identifier;
         }
         
@@ -147,33 +147,33 @@ class Doctrine_Connection_Mssql extends Doctrine_Connection
             if ($offset < 0) {
                 throw new Doctrine_Connection_Exception("LIMIT argument offset=$offset is not valid");
             }
-    
+
             $orderby = stristr($query, 'ORDER BY');
 
             if ($orderby !== false) {
                 // Ticket #1835: Fix for ORDER BY alias
-				// Ticket #2050: Fix for multiple ORDER BY clause 
+                // Ticket #2050: Fix for multiple ORDER BY clause
                 $order = str_ireplace('ORDER BY', '', $orderby);
-                $orders = explode(',', $order); 
- 
-                for ($i = 0; $i < count($orders); $i++) { 
-                    $sorts[$i] = (stripos($orders[$i], ' desc') !== false) ? 'desc' : 'asc'; 
-                    $orders[$i] = trim(preg_replace('/\s+(ASC|DESC)$/i', '', $orders[$i])); 
-	 
-                    // find alias in query string 
-                    $helper_string = stristr($query, $orders[$i]); 
+                $orders = explode(',', $order);
 
-                    $from_clause_pos = strpos($helper_string, ' FROM '); 
-                    $fields_string = substr($helper_string, 0, $from_clause_pos + 1); 
-	 
-                    $field_array = explode(',', $fields_string); 
-                    $field_array = array_shift($field_array); 
-                    $aux2 = spliti(' as ', $field_array); 
+                for ($i = 0; $i < count($orders); $i++) {
+                    $sorts[$i] = (stripos($orders[$i], ' desc') !== false) ? 'desc' : 'asc';
+                    $orders[$i] = trim(preg_replace('/\s+(ASC|DESC)$/i', '', $orders[$i]));
 
-                    $aliases[$i] = trim(end($aux2)); 
+                    // find alias in query string
+                    $helper_string = stristr($query, $orders[$i]);
+
+                    $from_clause_pos = strpos($helper_string, ' FROM ');
+                    $fields_string = substr($helper_string, 0, $from_clause_pos + 1);
+
+                    $field_array = explode(',', $fields_string);
+                    $field_array = array_shift($field_array);
+                    $aux2 = spliti(' as ', $field_array);
+
+                    $aliases[$i] = trim(end($aux2));
                 }
             }
-    
+
             // Ticket #1259: Fix for limit-subquery in MSSQL
             $selectRegExp = 'SELECT\s+';
             $selectReplace = 'SELECT ';
@@ -216,12 +216,12 @@ class Doctrine_Connection_Mssql extends Doctrine_Connection
 
         return $query;
     }
-
+    
     /**
      * return version information about the server
      *
      * @param bool   $native  determines if the raw version string should be returned
-     * @return mixed array/string with version information or MDB2 error object
+     * @return array    version information
      */
     public function getServerVersion($native = false)
     {
@@ -267,7 +267,7 @@ class Doctrine_Connection_Mssql extends Doctrine_Connection
         try {
             $this->exec($query);
         } catch(Doctrine_Connection_Exception $e) {
-            if ($e->getPortableCode() == Doctrine::ERR_NOSUCHTABLE) {
+            if ($e->getPortableCode() == Doctrine_Core::ERR_NOSUCHTABLE) {
                 return false;
             }
 

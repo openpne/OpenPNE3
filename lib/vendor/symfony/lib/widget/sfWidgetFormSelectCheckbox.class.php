@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetFormSelectCheckbox.class.php 17068 2009-04-07 08:24:53Z fabien $
+ * @version    SVN: $Id: sfWidgetFormSelectCheckbox.class.php 22378 2009-09-24 17:03:14Z fabien $
  */
 class sfWidgetFormSelectCheckbox extends sfWidgetForm
 {
@@ -64,7 +64,7 @@ class sfWidgetFormSelectCheckbox extends sfWidgetForm
       $name .= '[]';
     }
 
-    if (is_null($value))
+    if (null === $value)
     {
       $value = array();
     }
@@ -88,7 +88,7 @@ class sfWidgetFormSelectCheckbox extends sfWidgetForm
     }
     else
     {
-      return $this->formatChoices($name, $value, $choices, $attributes);;
+      return $this->formatChoices($name, $value, $choices, $attributes);
     }
   }
 
@@ -109,7 +109,7 @@ class sfWidgetFormSelectCheckbox extends sfWidgetForm
         $baseAttributes['checked'] = 'checked';
       }
 
-      $inputs[] = array(
+      $inputs[$id] = array(
         'input' => $this->renderTag('input', array_merge($baseAttributes, $attributes)),
         'label' => $this->renderContentTag('label', $option, array('for' => $id)),
       );
@@ -126,7 +126,7 @@ class sfWidgetFormSelectCheckbox extends sfWidgetForm
       $rows[] = $this->renderContentTag('li', $input['input'].$this->getOption('label_separator').$input['label']);
     }
 
-    return $this->renderContentTag('ul', implode($this->getOption('separator'), $rows), array('class' => $this->getOption('class')));
+    return !$rows ? '' : $this->renderContentTag('ul', implode($this->getOption('separator'), $rows), array('class' => $this->getOption('class')));
   }
 
   public function __clone()

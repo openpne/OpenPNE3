@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetFormPropelSelect.class.php 12803 2008-11-09 07:26:18Z fabien $
+ * @version    SVN: $Id: sfWidgetFormPropelSelect.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfWidgetFormPropelSelect extends sfWidgetFormSelect
 {
@@ -78,7 +78,7 @@ class sfWidgetFormPropelSelect extends sfWidgetFormSelect
 
     $class = constant($this->getOption('model').'::PEER');
 
-    $criteria = is_null($this->getOption('criteria')) ? new Criteria() : clone $this->getOption('criteria');
+    $criteria = null === $this->getOption('criteria') ? new Criteria() : clone $this->getOption('criteria');
     if ($order = $this->getOption('order_by'))
     {
       $method = sprintf('add%sOrderByColumn', 0 === strpos(strtoupper($order[1]), 'ASC') ? 'Ascending' : 'Descending');

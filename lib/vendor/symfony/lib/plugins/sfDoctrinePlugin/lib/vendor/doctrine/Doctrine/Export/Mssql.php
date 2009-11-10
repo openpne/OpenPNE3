@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Mssql.php 6343 2009-09-11 20:14:04Z dcousineau $
+ *  $Id: Mssql.php 6345 2009-09-11 20:14:24Z dcousineau $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -30,7 +30,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6343 $
+ * @version     $Revision: 6345 $
  */
 class Doctrine_Export_Mssql extends Doctrine_Export
 {

@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: ObjectBuilder.php 842 2007-12-02 16:28:20Z heltem $
+ *  $Id: ObjectBuilder.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -148,4 +148,40 @@ abstract class ObjectBuilder extends OMBuilder {
 		return (!$table->isAlias() && $this->getBuildProperty('addGenericAccessors'));
 	}
 
+	/**
+	 * Whether to add the validate() method.
+	 * This is based on the build property propel.addValidateMethod
+	 */
+	protected function isAddValidateMethod()
+	{
+		return $this->getBuildProperty('addValidateMethod');
+	}
+	
+	protected function hasDefaultValues()
+	{
+		foreach ($this->getTable()->getColumns() as $col) {
+			if($col->getDefaultValue() !== null) return true;
+		}
+		return false;
+	}
+
+  /**
+   * Checks whether any registered behavior on that table has a modifier for a hook
+   * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
+   * @return boolean
+   */
+  public function hasBehaviorModifier($hookName)
+  {
+    return parent::hasBehaviorModifier($hookName, 'ObjectBuilderModifier');
+  }
+
+  /**
+   * Checks whether any registered behavior on that table has a modifier for a hook
+   * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
+	 * @param string &$script The script will be modified in this method.
+   */
+  public function applyBehaviorModifier($hookName, &$script, $tab = "		")
+  {
+    return parent::applyBehaviorModifier($hookName, 'ObjectBuilderModifier', $script, $tab);
+  }
 }

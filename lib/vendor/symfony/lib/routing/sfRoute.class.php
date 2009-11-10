@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage routing
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfRoute.class.php 21898 2009-09-11 09:51:11Z fabien $
+ * @version    SVN: $Id: sfRoute.class.php 22273 2009-09-23 07:15:50Z fabien $
  */
 class sfRoute implements Serializable
 {
@@ -83,7 +83,7 @@ class sfRoute implements Serializable
   }
 
   /**
-   * Returns true if the URL matches this route, false otherwise.
+   * Returns an array of parameters if the URL matches this route, false otherwise.
    *
    * @param  string  $url     The URL
    * @param  array   $context The context
@@ -109,11 +109,11 @@ class sfRoute implements Serializable
     if (isset($matches['_star']))
     {
       $parameters = $this->parseStarParameter($matches['_star']);
-      unset($matches['_star']);
+      unset($matches['_star'], $parameters['module'], $parameters['action']);
     }
 
     // defaults
-    $parameters = $this->mergeArrays($parameters, $defaults);
+    $parameters = $this->mergeArrays($defaults, $parameters);
 
     // variables
     foreach ($matches as $key => $value)
@@ -231,7 +231,7 @@ class sfRoute implements Serializable
       {
         $url = str_replace($value, urlencode($tparams[$variable]), $url);
       }
-      
+
       if(!in_array($this->suffix, $this->options['segment_separators']))
       {
         $url .= $this->suffix;
@@ -415,7 +415,7 @@ class sfRoute implements Serializable
   /**
    * Compiles the current route instance.
    */
-  protected function compile()
+  public function compile()
   {
     if ($this->compiled)
     {
@@ -630,7 +630,6 @@ class sfRoute implements Serializable
 
   public function setDefaultOptions($options)
   {
-    $this->compiled = false;
     $this->defaultOptions = $options;
   }
 
@@ -782,6 +781,52 @@ class sfRoute implements Serializable
     {
       $this->suffix = $this->options['suffix'];
     }
+  }
+
+  /**
+   * Sets the data representing this compiled route.
+   *
+   * @param array $data An array of data representing the compiled route
+   */
+  public function setCompiledData($data)
+  {
+    $this->tokens = $data['tokens'];
+    $this->defaultParameters = $data['default_parameters'];
+    $this->defaultOptions = $data['default_options'];
+    $this->options = $data['options'];
+    $this->pattern = $data['pattern'];
+    $this->regex = $data['regex'];
+    $this->variables = $data['variables'];
+    $this->defaults = $data['defaults'];
+    $this->requirements = $data['requirements'];
+
+    $this->compiled = true;
+  }
+
+  /**
+   * Returns the data representing this compiled route.
+   *
+   * @return array An array of data representing the compiled route
+   */
+  public function getCompiledData()
+  {
+    if (!$this->compiled)
+    {
+      $this->compile();
+    }
+
+    return array(
+      'tokens'             => $this->tokens,
+      'default_parameters' => $this->defaultParameters,
+      'default_options'    => $this->defaultOptions,
+      'options'            => $this->options,
+      'pattern'            => $this->pattern,
+      'regex'              => $this->regex,
+      'variables'          => $this->variables,
+      'defaults'           => $this->defaults,
+      'requirements'       => $this->requirements,
+      'suffix'             => $this->suffix,
+    );
   }
 
   public function serialize()

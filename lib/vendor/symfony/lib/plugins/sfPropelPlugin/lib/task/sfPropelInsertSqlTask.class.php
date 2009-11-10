@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPropelBaseTask.class.php');
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelInsertSqlTask.class.php 14299 2008-12-24 04:57:47Z dwhittle $
+ * @version    SVN: $Id: sfPropelInsertSqlTask.class.php 22691 2009-10-01 16:53:31Z FabianLange $
  */
 class sfPropelInsertSqlTask extends sfPropelBaseTask
 {
@@ -68,29 +68,16 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    if (
-      !$options['no-confirmation']
-      &&
-      !$this->askConfirmation(array('This command will remove all data in your database.', 'Are you sure you want to proceed? (y/N)'), null, false)
-    )
-    {
-      $this->logSection('propel', 'Task aborted.');
-
-      return 1;
-    }
-
     $this->schemaToXML(self::DO_NOT_CHECK_SCHEMA, 'generated-');
     $this->copyXmlSchemaFromPlugins('generated-');
 
     $databaseManager = new sfDatabaseManager($this->configuration);
 
-    register_shutdown_function(array($this, 'removeTmpDir'));
-
     $properties = $this->getProperties(sfConfig::get('sf_data_dir').'/sql/sqldb.map');
     $sqls = array();
     foreach ($properties as $file => $connection)
     {
-      if (!is_null($options['connection']) && $options['connection'] != $connection)
+      if (null !== $options['connection'] && $options['connection'] != $connection)
       {
         continue;
       }
@@ -103,7 +90,24 @@ EOF;
       $sqls[$connection][] = $file;
     }
 
-    $this->tmpDir = sfToolkit::getTmpDir().'/propel_insert_sql_'.rand(11111, 99999);
+    if (
+      !$options['no-confirmation']
+      &&
+      !$this->askConfirmation(array(
+          'WARNING: The data in the database'.(count($sqls) > 1 ? 's' : '').' related to the connection name'.(count($sqls) > 1 ? 's' : ''),
+          sprintf('         %s will be removed.', implode(', ', array_keys($sqls))),
+          '',
+          'Are you sure you want to proceed? (y/N)',
+        ), 'QUESTION_LARGE', false)
+    )
+    {
+      $this->logSection('propel', 'Task aborted.');
+
+      return 1;
+    }
+
+    $this->tmpDir = sys_get_temp_dir().'/propel_insert_sql_'.rand(11111, 99999);
+    register_shutdown_function(array($this, 'removeTmpDir'));
     mkdir($this->tmpDir, 0777, true);
     foreach ($sqls as $connection => $files)
     {
