@@ -1,0 +1,11 @@
+imageList:
+  caption: "Uploaded image list"
+  url:     "monitoring/imageList"
+
+editImage:
+  caption: "Upload image"
+  url:     "monitoring/editImage"
+
+fileList:
+  caption: "Uploaded file list"
+  url:     "monitoring/fileList"

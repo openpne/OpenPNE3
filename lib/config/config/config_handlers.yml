@@ -27,3 +27,6 @@ config/mail_template.yml:
 config/confirmation.yml:
   class: sfSimpleYamlConfigHandler
 
+config/monitoring.yml:
+  class: sfSimpleYamlConfigHandler
+
