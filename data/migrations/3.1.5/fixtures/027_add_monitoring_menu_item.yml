@@ -1,0 +1,8 @@
+Navigation:
+  backend_side_monitoring:
+    type: "backend_side"
+    uri:  "monitoring/index"
+    sort_order: 20
+    Translation:
+      ja_JP:
+        caption: "画像・書き込み管理"
