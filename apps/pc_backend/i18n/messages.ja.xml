@@ -556,6 +556,18 @@
         <source>Edit Templates of E-mail Notification</source>
         <target>メール通知テンプレート設定</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Uploaded image list</source>
+        <target>アップロード画像リスト</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Upload image</source>
+        <target>画像アップロード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Uploaded file list</source>
+        <target>アップロードファイルリスト</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

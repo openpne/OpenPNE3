@@ -2,7 +2,7 @@
 <?php include_component('monitoring', 'submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', '画像アップロード・削除') ?>
+<?php slot('title', '画像アップロード') ?>
 
 <?php echo $form->renderFormTag(url_for('monitoring/editImage')) ?>
   <table>
