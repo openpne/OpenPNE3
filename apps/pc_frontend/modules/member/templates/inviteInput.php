@@ -16,8 +16,7 @@ op_include_form('inviteForm', $form, $options);
 <h3><?php echo __('Mail address list during invitation') ?></h3>
 </div>
 
-<form method="post" action="<?php echo url_for('member/invite') ?>">
-
+<?php echo $listform->renderFormTag(url_for('member/invite')) ?>
 <?php $i = 0 ?>
 <?php foreach ($listform as $field): ?>
 <?php if ($field->isHidden()) continue; ?>
@@ -39,7 +38,6 @@ op_include_form('inviteForm', $form, $options);
 </li>
 </ul>
 </div>
-
 </form>
 
 </div>

@@ -49,14 +49,18 @@ class MemberTable extends opAccessControlDoctrineTable
 
   public function retrivesByInviteMemberId($memberId)
   {
-//    opActivateBehavior::disable();
+    $e = opActivateBehavior::getEnabled();
+    opActivateBehavior::disable();
 
     $members = $this->createQuery()
       ->where('invite_member_id = ?', $memberId)
       ->andWhere('is_active = ?', false)
       ->execute();
 
-//    opActivateBehavior::enable();
+    if ($e)
+    {
+      opActivateBehavior::enable();
+    }
 
     return $members;
   }
