@@ -8,7 +8,7 @@
 </option> 
 <?php endforeach; ?>
 </select>
-<span class="textBtnS"><input type="submit" value="　変　更　"></span>
+<span class="textBtnS"><input type="submit" value="変更"></span>
 <?php if(!empty($params['caution'])): ?>
 <span class="btnCaution"><?php echo $params['caution'] ?></span>
 <?php endif; ?>

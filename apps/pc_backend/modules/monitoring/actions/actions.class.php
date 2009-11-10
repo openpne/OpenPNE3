@@ -50,7 +50,8 @@ class monitoringActions extends sfActions
 
     $this->form = new sfForm();
 
-    if ($request->isMethod(sfWebRequest::POST)) {
+    if ($request->isMethod(sfWebRequest::POST))
+    {
       $request->checkCSRFProtection();
 
       $this->image->delete();
@@ -71,13 +72,9 @@ class monitoringActions extends sfActions
 
     if ($request->isMethod(sfWebRequest::POST))
     {
-        $this->form->bindAndSave
-        (
-          $request->getParameter('image'),
-          $request->getFiles('image')
-        );
-        $this->getUser()->setFlash('notice', '画像の追加が完了しました');
-        $this->redirect('monitoring/imageList');
+      $this->form->bindAndSave ($request->getParameter('image'), $request->getFiles('image'));
+      $this->getUser()->setFlash('notice', '画像の追加が完了しました');
+      $this->redirect('monitoring/imageList');
     }
   }
 
@@ -104,7 +101,8 @@ class monitoringActions extends sfActions
 
     $this->form = new sfForm();
 
-    if ($request->isMethod(sfWebRequest::POST)) {
+    if ($request->isMethod(sfWebRequest::POST))
+    {
       $request->checkCSRFProtection();
 
       $this->file->delete();
