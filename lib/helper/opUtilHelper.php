@@ -662,3 +662,19 @@ function op_decoration($string, $is_strip = false, $is_use_stylesheet = null)
 
   return opWidgetFormRichTextareaOpenPNE::toHtml($string, $is_strip, $is_use_stylesheet);
 }
+
+function op_is_accessable_url($uri)
+{
+  $info = sfContext::getInstance()->getController()->convertUrlStringToParameters($uri);
+
+  if (!empty($info[0]))
+  {
+    return sfContext::getInstance()->getRouting()->hasRouteName($info[0]);
+  }
+  elseif (!empty($info[1]))
+  {
+    return sfContext::getInstance()->getController()->actionExists($info[1]['module'], $info[1]['action']);
+  }
+}
+
+

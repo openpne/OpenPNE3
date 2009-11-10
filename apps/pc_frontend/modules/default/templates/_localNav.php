@@ -1,11 +1,17 @@
 <?php if ($navs): ?>
-<ul class="<?php echo $type ?>">
+<ul class="<?php echo $type; ?>">
 <?php foreach ($navs as $nav): ?>
-<li><?php if (isset($navId)): ?>
-<?php echo link_to($nav->caption, $nav->uri.'?id='.$navId) ?>
-<?php else: ?>
-<?php echo link_to($nav->caption, $nav->uri) ?>
-<?php endif; ?></li><?php endforeach; ?>
 
+<?php if (isset($navId)): ?>
+<?php $uri = $nav->uri.'?id='.$navId; ?>
+<?php else: ?>
+<?php $uri = $nav->uri; ?>
+<?php endif; ?>
+
+<?php if (op_is_accessable_url($uri)): ?>
+<li><?php echo link_to($nav->caption, $uri); ?></li>
+<?php endif; ?>
+
+<?php endforeach; ?>
 </ul>
 <?php endif; ?>

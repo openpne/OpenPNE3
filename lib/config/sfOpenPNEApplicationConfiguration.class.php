@@ -51,9 +51,10 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
       include($file);
     }
 
-    if (sfConfig::get('op_plugin_activation'))
+    $pluginActivations = array_merge(sfConfig::get('op_plugin_activation', array()), $this->getPluginListForDatabase());
+    if ($pluginActivations)
     {
-      $pluginActivations = array_merge(array_fill_keys($this->getPlugins(), true), sfConfig::get('op_plugin_activation'));
+      $pluginActivations = array_merge(array_fill_keys($this->getPlugins(), true), $pluginActivations);
       foreach ($pluginActivations as $key => $value)
       {
         if (!in_array($key, $this->getPlugins()))
@@ -86,6 +87,11 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     }
 
     return $result;
+  }
+
+  public function getDisabledPlugins()
+  {
+    return array_diff($this->getAllPlugins(), $this->getPlugins());
   }
 
   public function getAllPlugins()
@@ -321,8 +327,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
       $files = array_merge($files, $libDirs); // library configurations
     }
 
-    $files = array_merge($files, $this->globEnablePlugin($configPath));
-    $files = array_merge($files, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/'.$configPath));
+    $files = array_merge($files, $this->globEnablePlugin($configPath, false));
+    $files = array_merge($files, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/'.$configPath, false));
 
     $configs = array();
     foreach (array_unique($files) as $file)
@@ -337,10 +343,16 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     return $configs;
   }
 
-  public function globEnablePlugin($pattern, $isControllerPath = false)
+  public function globPlugins($pattern, $force = true, $isControllerPath = false)
   {
+    $method = 'getAllPluginPaths';
+    if (!$force)
+    {
+      $method = 'getPluginPaths';
+    }
+
     $dirs = array();
-    $pluginPaths = $this->getPluginPaths();
+    $pluginPaths = $this->$method();
 
     foreach ($pluginPaths as $pluginPath)
     {
@@ -358,6 +370,11 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     }
 
     return $dirs;
+  }
+
+  public function globEnablePlugin($pattern, $isControllerPath = false)
+  {
+    return $this->globPlugins($pattern, false, $isControllerPath);
   }
 
   public function getGlobalTemplateDir($templateFile)
@@ -391,6 +408,53 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
     $this->getConfigCache()->registerConfigHandler('config/community_config.yml', 'opConfigConfigHandler', array('prefix' => 'openpne_community_'));
     include($this->getConfigCache()->checkConfig('config/community_config.yml'));
+  }
+
+  protected function getPluginListForDatabase()
+  {
+    $config =  sfSimpleYamlConfigHandler::getConfiguration(array($this->getRootDir().'/config/databases.yml'));
+
+    if (isset($config['all']['master']))
+    {
+      $connConfig = $config['all']['master']['param'];
+    }
+    elseif (isset($config['all']['doctrine']))
+    {
+      $connConfig = $config['all']['doctrine']['param'];
+    }
+    else
+    {
+      $connConfig = array_shift($config['all']);
+      $connConfig = $connConfig['param'];
+    }
+    $connConfig = array_merge(array('password' => null), $connConfig);
+
+    $result = array();
+    try
+    {
+      $conn = new PDO($connConfig['dsn'], $connConfig['username'], $connConfig['password']);
+      $state = $conn->query('SELECT name, is_enabled FROM plugin');
+      if ($state)
+      {
+        foreach ($state as $row)
+        {
+          $result[$row['name']] = (bool)$row['is_enabled'];
+        }
+      }
+    }
+    catch (PDOException $e)
+    {
+      // do nothing
+    }
+
+    return $result;
+  }
+
+  public function filterAutoloadConfig(sfEvent $event, array $config)
+  {
+    $config['autoload']['project_model']['exclude'] = $this->getDisabledPlugins();
+
+    return parent::filterAutoloadConfig($event, $config);
   }
 
   static public function registerZend()

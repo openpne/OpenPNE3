@@ -60,6 +60,12 @@ class Gadget extends BaseGadget
       return false;
     }
 
+    $controller = sfContext::getInstance()->getController();
+    if (!$controller->componentExists($this->getComponentModule(), $this->getComponentAction()))
+    {
+      return false;
+    }
+
     return true;
   }
 

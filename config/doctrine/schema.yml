@@ -538,3 +538,20 @@ NotificationMail:
     collate: utf8_unicode_ci
     charset: utf8
     comment: "Saves configuration of notification mail"
+
+Plugin:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    name: { type: string(64), default: "", notnull: true, comment: "Nickname" }
+    is_enabled: { type: boolean, default: true, notnull: true, comment: "Notification Enabled" }
+  indexes:
+    is_enabled_INDEX:
+      fields: [is_enabled]
+    name_UNIQUE:
+      fields: [name]
+      type: unique
+  options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
+    comment: "Saves informations of plugins"
