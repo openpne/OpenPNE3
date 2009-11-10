@@ -1,0 +1,13 @@
+<?php use_helper('sfImage')?>
+<div class="cell">
+<dl>
+<dt class="day"><?php echo $image->getCreatedAt() ?></dt>
+<dd class="upImage"><a href="<?php echo sf_image_path($image->getName()) ?>"><?php echo image_tag_sf_image($image->getName(), $options = array('size' => '120x120')) ?></a></dd>
+<dd class="fileName"><?php echo $image->getOriginalFilename() ?></dd>
+<?php if ($deleteBtn): ?>
+<dd class="delete"> 
+[ <?php echo link_to(__('削除する'), 'monitoringFunction/deleteImage?id='.$image->getId()) ?> ]
+</dd>
+<?php endif; ?>
+</dl>
+</div>
