@@ -25,9 +25,6 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
     require sfConfig::get('sf_data_dir').'/version.php';
 
-//    require_once dirname(__FILE__).'/../vendor/symfony-1.3/sfFormSymfony.class.php';
-//    sfFormSymfony::setEventDispatcher($this->dispatcher);
-
     $this->dispatcher->connect('task.cache.clear', array($this, 'clearPluginCache'));
     $this->dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
 
