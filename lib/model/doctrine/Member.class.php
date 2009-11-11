@@ -251,21 +251,18 @@ class Member extends BaseMember implements opAccessControlRecordInterface
 
     foreach ($communityIds as $communityId)
     {
-      if (!$communityMemberTable->getCommunityMembers($communityId)->count())
+      $communityMembers = $communityMemberTable->getCommunityMembers($communityId);
+      if (!$communityMembers->count())
       {
         $community = Doctrine::getTable('Community')->find($communityId);
         $community->delete();
         continue;
       }
-      $communityMember = $communityMemberTable->createQuery()
-        ->where('community_id = ?', $communityId)
-        ->addWhere('position = ?', '')
-        ->fetchOne();
-      $communityMember->setPosition('admin');
-      $communityMember->save();
+      $communityMembers[0]->setPosition('admin');
+      $communityMembers[0]->save();
 
-      $communityMember = $communityMemberTable->retrieveByMemberIdAndCommunityId($this->getId(), $communityId);
-      $communityMember->delete();
+      $adminCommunityMember = $communityMemberTable->retrieveByMemberIdAndCommunityId($this->getId(), $communityId);
+      $adminCommunityMember->delete();
     }
     return parent::delete($conn);
   }
