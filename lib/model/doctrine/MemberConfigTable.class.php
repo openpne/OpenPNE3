@@ -72,6 +72,24 @@ class MemberConfigTable extends opAccessControlDoctrineTable
     return $this->results[$memberId];
   }
 
+  public function setValue($memberId, $name, $value, $isDateTime = false)
+  {
+    $config = $this->retrieveByNameAndMemberId($name, $memberId);
+    if (!$config)
+    {
+      $config = new memberConfig();
+      $config->setMemberId($memberId);
+      $config->setName($name);
+    }
+    if ($isDateTime)
+    {
+      $config->setValueDatetime($value);
+    }
+    $config->setValue($value);
+    $config->save();
+    $this->results[$memberId][$name] = $config;
+  }
+
   public function appendRoles(Zend_Acl $acl)
   {
     return $acl

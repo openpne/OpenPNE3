@@ -41,19 +41,7 @@ class Member extends BaseMember implements opAccessControlRecordInterface
 
   public function setConfig($configName, $value, $isDateTime = false)
   {
-    $config = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($configName, $this->getId());
-    if (!$config)
-    {
-      $config = new MemberConfig();
-      $config->setMember($this);
-      $config->setName($configName);
-    }
-    if ($isDateTime)
-    {
-      $config->setValueDatetime($value);
-    }
-    $config->setValue($value);
-    $config->save();
+    Doctrine::getTable('MemberConfig')->setValue($this->getId(), $configName, $value, $isDateTime);
   }
 
   public function getFriends($limit = null, $isRandom = false)
