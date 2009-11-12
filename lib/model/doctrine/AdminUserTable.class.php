@@ -10,6 +10,7 @@
 
 class AdminUserTable extends Doctrine_Table
 {
+  //TODO: use findOneByUsername()
   public function retrieveByUsername($username)
   {
     return $this->createQuery()
@@ -17,6 +18,7 @@ class AdminUserTable extends Doctrine_Table
       ->fetchOne();
   }
 
+  //TODO: use findAll()
   public function retrievesAll()
   {
     return $this->createQuery()->execute();

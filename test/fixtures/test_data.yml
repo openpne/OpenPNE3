@@ -1,148 +1,196 @@
 Profile:
   profile_sex:
-    id: ~
+    name: "op_preset_sex"
     is_required: 1
-    name: "sex"
     form_type: "select"
-    value_type: "integer"
+    value_type: "string"
     is_disp_regist: 1
     is_disp_config: 1
     is_disp_search: 1
     is_edit_public_flag: 0
     default_public_flag: 1
     sort_order: 110
-    Translation:
-      ja_JP:
-        caption: "性別"
-      en:
-        caption: "Sex"
 
   profile_birthday:
-    id: ~
-    is_required: 1
-    name: "birthday"
+    name: "op_preset_birthday"
+    is_required: 0
     form_type: "date"
     value_type: "string"
     is_disp_regist: 1
     is_disp_config: 1
     is_disp_search: 1
-    value_min: "-100years"
-    value_max: "now"
     is_edit_public_flag: 0
     default_public_flag: 1
     sort_order: 120
-    Translation:
-      ja_JP:
-        caption: "誕生日"
-      en:
-        caption: "Birthday"
+
+  profile_region:
+    name: "op_preset_region"
+    is_required: 0
+    form_type: "region_select"
+    value_type: "JP"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    is_edit_public_flag: 1
+    default_public_flag: 1
+    sort_order: 125
 
   profile_self_intro:
-    id: ~
-    is_required: 1
-    name: "self_intro"
+    name: "op_preset_self_introduction"
+    is_required: 0
     form_type: "textarea"
     value_type: "string"
     is_disp_regist: 1
     is_disp_config: 1
     is_disp_search: 1
-    is_edit_public_flag: 0
+    is_edit_public_flag: 1
     default_public_flag: 1
     sort_order: 130
-    Translation:
-      ja_JP:
-        caption: "自己紹介"
-      en:
-        caption: "Self Introduction"
+
+  profile_select_item:
+    name: "select_item"
+    is_required: 0
+    form_type: "select"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    is_edit_public_flag: 1
+    default_public_flag: 1
+    sort_order: 1000
+
+  profile_checkbox_item:
+    name: "checkbox_item"
+    is_required: 0
+    form_type: "checkbox"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    is_edit_public_flag: 1
+    default_public_flag: 1
+    sort_order: 1010
 
 ProfileOption:
-  profile_option_sex_man:
-    id: ~
+  profile_option_select_item1:
     sort_order: 0
-    Profile: profile_sex
+    Profile: profile_select_item
     Translation:
       ja_JP:
-        value: "男性"
+        value: "あ"
       en:
-        value: "Male"
+        value: "A"
 
-  profile_option_sex_woman:
-    id: ~
+  profile_option_select_item2:
     sort_order: 1
-    Profile: profile_sex
+    Profile: profile_select_item
     Translation:
       ja_JP:
-        value: "女性"
+        value: "い"
       en:
-        value: "Female"
+        value: "B"
 
-  profile_option_birthday_year:
-    id: ~
+  profile_option_checkbox_item1:
     sort_order: 0
-    Profile: profile_birthday
+    Profile: profile_checkbox_item
+    Translation:
+      ja_JP:
+        value: "う"
+      en:
+        value: "C"
 
-  profile_option_birthday_month:
-    id: ~
+  profile_option_checkbox_item2:
     sort_order: 1
-    Profile: profile_birthday
-
-  profile_option_birthday_day:
-    id: ~
-    sort_order: 2
-    Profile: profile_birthday
+    Profile: profile_checkbox_item
+    Translation:
+      ja_JP:
+        value: "え"
+      en:
+        value: "D"
 
 Member:
   first_member:
-    id: ~
-    name: "OpenPNE君"
+    name: "A"
     is_active: 1
   second_member:
-    name: "Tanaka"
+    name: "B"
+    Member: first_member
     is_active: 1
   third_member:
-    name: "Sasaki"
+    name: "C"
     is_active: 1
+  fourth_member:
+    name: "D"
+    is_active: 1
+  fifth_member:
+    name: "E"
 
+File:
+  dummy_file1:
+    name: "dummy_file"
+    type: "image/png"
+    original_filename: "dummy.png"
+    FileBin:
+      bin: ~
+  dummy_file2:
+    name: "dummy_file2"
+    type: "image/jpeg"
+    original_filename: "dummy.jpg"
+    FileBin:
+      bin: ~
+  dummy_file3:
+    name: "dummy_file3"
+    type: "text/plain"
+    original_filename: "dummy.txt"
+    FileBin:
+      bin: ~
+
+MemberImage:
+  first_member_image1:
+    Member: first_member
+    File: dummy_file1
+    is_primary: 1
+  first_member_image2:
+    Member: first_member
+    File: dummy_file1
+  second_member_image1:
+    Member: second_member
+    File: dummy_file1
+  
 MemberProfile:
   first_member_profile_sex:
+    value: "Man"
     public_flag: 1
     Member: first_member
     Profile: profile_sex
-    ProfileOption: profile_option_sex_man
-    children: []
 
   first_member_profile_birthday:
+    value: "1988-04-23"
     public_flag: 1
     Member: first_member
     Profile: profile_birthday
-    children:
-      first_member_profile_birthday_day:
-        value: "23"
-        Member: first_member
-        Profile: profile_birthday
-        ProfileOption: profile_option_birthday_day
-      first_member_profile_birthday_month:
-        value: "4"
-        Member: first_member
-        Profile: profile_birthday
-        ProfileOption: profile_option_birthday_month
-      first_member_profile_birthday_year:
-        value: "1988"
-        Member: first_member
-        Profile: profile_birthday
-        ProfileOption: profile_option_birthday_year
+
+  first_member_profile_region:
+    value: "Tokyo"
+    public_flag: 2
+    Member: first_member
+    Profile: profile_region
 
   first_member_profile_self_intro:
     value: "よろしくお願いします。"
-    public_flag: 1
+    public_flag: 3
     Member: first_member
     Profile: profile_self_intro
-    children: []
 
 MemberConfig:
   first_member_pc_address:
     name: "pc_address"
     value: "sns@example.com"
+    Member: first_member
+
+  first_member_mobile_address:
+    name: "mobile_address"
+    value: "sns@m.example.com"
     Member: first_member
 
   first_member_password:
@@ -311,21 +359,32 @@ MemberRelationship:
   first_member_second_member:
     Member: first_member
     MemberRelatedByMemberIdFrom: second_member
+    is_friend: 1
   second_member_first_member:
     Member: second_member
     MemberRelatedByMemberIdFrom: first_member
+    is_friend: 1
+  first_member_fourth_member:
+    Member: first_member
+    MemberRelatedByMemberIdFrom: fourth_member
+    is_friend_pre: 1
+  first_member_fifth_member:
+    Member: first_member
+    MemberRelatedByMemberIdFrom: fifth_member
+    is_access_block: 1
 
 Community:
   community_1:
-    name: "最初のコミュニティ"
+    name: "CommunityA"
+    File: dummy_file1
   community_2:
-    name: "2番目のコミュニティ"
+    name: "CommunityB"
   community_3:
-    name: "3番目のコミュニティ"
+    name: "CommunityC"
   community_4:
-    name: "4番目のコミュニティ"
+    name: "CommunityD"
   community_5:
-    name: "5番目のコミュニティ"
+    name: "CommunityE"
 
 CommunityConfig:
   community_1_description:
@@ -386,6 +445,10 @@ CommunityMember:
   community_5_third_member:
     Community: community_5
     Member: third_member
+  community_5_fourth_member:
+    Community: community_5
+    Member: fourth_member
+    position: "pre"
 
 Gadget:
   gadget_search:
@@ -462,3 +525,7 @@ Gadget:
     type: "mobileProfileBottom"
     name: "communityJoinListBox"
     sort_order: 20
+
+Blacklist:
+  dummy_black_uid:
+    uid: "TEST"

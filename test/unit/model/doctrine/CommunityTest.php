@@ -1,0 +1,96 @@
+<?php
+
+include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
+include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
+sfContext::createInstance($configuration);
+
+$t = new lime_test(31, new lime_output_color());
+
+$community1 = Doctrine::getTable('Community')->findOneByName('CommunityA');
+$community2 = Doctrine::getTable('Community')->findOneByName('CommunityB');
+$community4 = Doctrine::getTable('Community')->findOneByName('CommunityD');
+
+//------------------------------------------------------------
+$t->diag('Community');
+$t->diag('Community::getImageFileName()');
+$t->is($community1->getImageFileName(), 'dummy_file');
+$t->is($community2->getImageFileName(), '');
+
+//------------------------------------------------------------
+$t->diag('Community::getConfigs()');
+$result = $community1->getConfigs();
+$t->isa_ok($result, 'array');
+
+//------------------------------------------------------------
+$t->diag('Community::getConfig()');
+$t->is($community1->getConfig('description'), 'IDが1番のコミュニティ', 'getConfig(\'description\') returns right description');
+$t->is($community1->getConfig('is_default'), true, 'getConfig(\'is_default\') returns true');
+$t->is($community1->getConfig('xxxxxxxxxx'), null, 'getConfig(\'xxxxxxxxxx\') returns null');
+
+//------------------------------------------------------------
+$t->diag('Community::getMembers()');
+$t->isa_ok($community1->getMembers(), 'Doctrine_Collection', 'getMembers() returns Doctrine_Collection object');
+$t->isa_ok($community1->getMembers(1), 'Doctrine_Collection', 'getMembers(1) returns Doctrine_Collection object');
+$t->isa_ok($community1->getMembers(1, true), 'Doctrine_Collection', 'getMembers(1, true) returns Doctrine_Collection object');
+
+//------------------------------------------------------------
+$t->diag('Community::getAdminMember()');
+$t->is($community1->getAdminMember()->getId(), 1, 'getAdminMember() returns right admin member');
+$t->is($community2->getAdminMember()->getId(), 2, 'getAdminMember() returns right admin member');
+
+//------------------------------------------------------------
+$t->diag('Community::checkPrivilegeBelong()');
+function checkPrivilegeBelong($object, $memberId)
+{
+  try
+  {
+    $object->checkPrivilegeBelong($memberId);
+    return true;
+  }
+  catch (opPrivilegeException $e)
+  {
+    return false;
+  }
+}
+$t->ok(checkPrivilegeBelong($community1, 1), 'checkPrivilegeBelong() is pass');
+$t->ok(checkPrivilegeBelong($community2, 2), 'checkPrivilegeBelong() is pass');
+$t->ok(!checkPrivilegeBelong($community1, 3), 'checkPrivilegeBelong() throw the opPrivilegeException');
+$t->ok(!checkPrivilegeBelong($community2, 1), 'checkPrivilegeBelong() throw the opPrivilegeException');
+
+//------------------------------------------------------------
+$t->diag('Community::isPrivilegeBelong()');
+$t->is($community1->isPrivilegeBelong(1), true, 'isPrivilegeBelong() checks the member belonged');
+$t->is($community2->isPrivilegeBelong(2), true, 'isPrivilegeBelong() checks the member belonged');
+$t->is($community1->isPrivilegeBelong(3), false, 'isPrivilegeBelong() checks the member not belonged');
+$t->is($community2->isPrivilegeBelong(1), false, 'isPrivilegeBelong() checks the member not belonged');
+
+//------------------------------------------------------------
+$t->diag('Community::isAdmin()');
+$t->is($community1->isAdmin(1), true, 'isAdmin() returns true for admin');
+$t->is($community1->isAdmin(2), false, 'isAdmin() returns false for not admin');
+
+//------------------------------------------------------------
+$t->diag('Community::countCommunityMembers()');
+$t->is($community1->countCommunityMembers(), 2, 'countCommunityMembers() returns 2');
+
+//------------------------------------------------------------
+$t->diag('Community::getNameAndCount()');
+$t->is($community1->getNameAndCount(), 'CommunityA (2)', 'getNameAndCount() returns a string formated "%s (%d)"');
+$t->is($community1->getNameAndCount('[%s] - %d'), '[CommunityA] - 2', 'getNameAndCount() returns a string formated "[%s] - %d"');
+
+//------------------------------------------------------------
+$t->diag('Community::getRegisterPoricy()');
+$t->is($community1->getRegisterPoricy(), 'Everyone can join', 'getRegisterPoricy() returns "Everyone can join" for opened community');
+$t->is($community2->getRegisterPoricy(), '%Community%\'s admin authorization needed', 'getRegisterPoricy() returns "Community\'s admin authorization needed" for closed community');
+
+//------------------------------------------------------------
+$t->diag('Community::getChangeAdminRequestMember()');
+$object = $community4->getChangeAdminRequestMember();
+$t->ok(($object instanceof Member) && $object->getId() == 2, 'getChangeAdminRequestMember() returns an instance of Member 2');
+$t->cmp_ok($community1->getChangeAdminRequestMember(), '===', null, 'getChangeAdminRequestMember() returns null');
+
+//------------------------------------------------------------
+$t->diag('Community::generateRoleId()');
+$t->is($community1->generateRoleId(Doctrine::getTable('Member')->find(1)), 'admin', 'generateRoleId() returns "admin"');
+$t->is($community1->generateRoleId(Doctrine::getTable('Member')->find(2)), 'member', 'generateRoleId() returns "member"');
+$t->is($community1->generateRoleId(Doctrine::getTable('Member')->find(3)), 'everyone', 'generateRoleId() returns "everyone"');

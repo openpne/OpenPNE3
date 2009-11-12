@@ -59,6 +59,7 @@ class ProfileTable extends Doctrine_Table
       ->execute();
   }
 
+  // TODO: Use findOneByName
   public function retrieveByName($name)
   {
     return $this->createQuery()
