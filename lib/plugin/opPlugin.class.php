@@ -29,7 +29,7 @@ class opPlugin
   {
     $this->name = $pluginName;
 
-    $config = sfConfig::get('op_plugin_activation', array());
+    $config = sfContext::getInstance()->getConfiguration()->getPluginActivationList();
     if (isset($config[$pluginName]))
     {
       $this->isActive = $config[$pluginName];
@@ -106,17 +106,12 @@ class opPlugin
 
   public function setIsActive($isActive)
   {
-    $file = sfConfig::get('sf_data_dir').'/config/plugin.yml';
-    $config = array('activation' => array());
-
-    if (file_exists($file))
+    $plugin = Doctrine::getTable('Plugin')->findOneByName($this->name);
+    if (!$plugin)
     {
-      $config = array_merge($config, sfYaml::load($file));
+      $plugin = Doctrine::getTable('Plugin')->create(array('name' => $this->name));
     }
-
-    $config['activation'][$this->getName()] = $isActive;
-
-    file_put_contents($file, sfYaml::dump($config, 4));
-    chmod($file, 0777);
+    $plugin->is_enabled = $isActive;
+    $plugin->save();
   }
 }

@@ -51,7 +51,7 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
       include($file);
     }
 
-    $pluginActivations = array_merge(sfConfig::get('op_plugin_activation', array()), $this->getPluginListForDatabase());
+    $pluginActivations = $this->getPluginActivationList();
     if ($pluginActivations)
     {
       $pluginActivations = array_merge(array_fill_keys($this->getPlugins(), true), $pluginActivations);
@@ -87,6 +87,11 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     }
 
     return $result;
+  }
+
+  public function getPluginActivationList()
+  {
+    return array_merge(sfConfig::get('op_plugin_activation', array()), $this->getPluginListForDatabase());
   }
 
   public function getDisabledPlugins()

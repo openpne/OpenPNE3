@@ -42,6 +42,7 @@ class pluginActions extends sfActions
     if ($request->isMethod(sfRequest::POST))
     {
       $this->form->bind($this->request->getParameter('plugin_activation'));
+      $this->getUser()->setFlash('notice', 'Saved.');
       $this->redirectIf($this->form->save(), 'plugin/list');
     }
 
