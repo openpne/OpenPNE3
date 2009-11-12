@@ -14,6 +14,11 @@ class opPluginSyncTask extends sfBaseTask
   {
     $this->namespace        = 'opPlugin';
     $this->name             = 'sync';
+
+    $this->addOptions(array(
+      new sfCommandOption('target', null, sfCommandOption::PARAMETER_OPTIONAL, 'The target of sync'),
+    ));
+
     $this->briefDescription = 'Synchronize bandled plugins';
     $this->detailedDescription = <<<EOF
 The [opPlugin:sync|INFO] task synchronizes all bandled plugins.
@@ -32,6 +37,11 @@ EOF;
     $pluginList = $this->getPluginList();
     foreach ($pluginList as $name => $info)
     {
+      if ($options['target'] && $name !== $options['target'])
+      {
+        continue;
+      }
+
       if (!preg_match('/^op[a-zA-Z0-9_\-]+Plugin$/', $name))
       {
         continue;

@@ -56,7 +56,7 @@ EOF;
     $oldPluginList = sfFinder::type('dir')->in(sfConfig::get('sf_plugins_dir'));
     if (!$options['no-update-plugin'])
     {
-      $this->installPlugins();
+      $this->installPlugins($options['target']);
     }
     $newPluginList = sfFinder::type('dir')->name('op*Plugin')->maxdepth(1)->in(sfConfig::get('sf_plugins_dir'));
     $installedPlugins = array_map('basename', array_diff($newPluginList, $oldPluginList));
@@ -77,7 +77,14 @@ EOF;
       Doctrine::createTablesFromModels($modelDir);
     }
 
-    $targets = array_merge(array('OpenPNE'), $this->getEnabledOpenPNEPlugin());
+    if ($options['target'])
+    {
+      $targets = array($options['target']);
+    }
+    else
+    {
+      $targets = array_merge(array('OpenPNE'), $this->getEnabledOpenPNEPlugin());
+    }
     $databaseManager = new sfDatabaseManager($this->configuration);
     foreach ($targets as $target)
     {
@@ -160,19 +167,31 @@ EOF;
     $task = new sfDoctrineBuildFiltersTask($this->dispatcher, $this->formatter);
     $task->run();
     $task = new sfCacheClearTask($this->dispatcher, $this->formatter);
-    $task->run();
+    @$task->run();
     $task = new openpnePermissionTask($this->dispatcher, $this->formatter);
-    $task->run();
+    @$task->run();
   }
 
-  protected function installPlugins()
+  protected function installPlugins($target = null)
   {
+    if ('OpenPNE' === $target)
+    {
+      return null;
+    }
+
     $task = new sfCacheClearTask($this->dispatcher, $this->formatter);
-    $task->run();
+    @$task->run();
     $task = new openpnePermissionTask($this->dispatcher, $this->formatter);
-    $task->run();
+    @$task->run();
+
+    $options = array();
+    if ($target)
+    {
+      $options[] = '--target='.$target;
+    }
+
     $task = new opPluginSyncTask($this->dispatcher, $this->formatter);
-    $task->run();
+    $task->run(array(), $options);
   }
 
   protected function getEnabledOpenPNEPlugin()
