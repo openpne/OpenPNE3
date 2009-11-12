@@ -21,8 +21,6 @@ class openpneMigrateTask extends sfDoctrineBaseTask
 
     $this->addOptions(array(
       new sfCommandOption('target', null, sfCommandOption::PARAMETER_OPTIONAL, 'The target of migration. This must be "OpenPNE" or a plugin name.'),
-      new sfCommandOption('to-version', 'v', sfCommandOption::PARAMETER_OPTIONAL, 'A version'),
-      new sfCommandOption('to-revision', 'r', sfCommandOption::PARAMETER_OPTIONAL, 'A revision'),
       new sfCommandOption('no-update-plugin', null, sfCommandOption::PARAMETER_NONE, 'Do not update plugins'),
       new sfCommandOption('no-build-model', null, sfCommandOption::PARAMETER_NONE, 'Do not build model classes'),
     ));
@@ -83,12 +81,7 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     foreach ($targets as $target)
     {
-      $params = array(
-        'version'  => $options['to-version'],
-        'revision' => $options['to-revision'],
-      );
-
-      $this->migrateFromScript($target, $databaseManager, $params);
+      $this->migrateFromScript($target, $databaseManager);
     }
 
     $targets = array_merge($targets, $installedPlugins);
@@ -103,11 +96,11 @@ EOF;
     }
   }
 
-  protected function migrateFromScript($target, $databaseManager, $params)
+  protected function migrateFromScript($target, $databaseManager)
   {
     try
     {
-      $migration = new opMigration($this->dispatcher, $databaseManager, $target, null, $params);
+      $migration = new opMigration($this->dispatcher, $databaseManager, $target, null);
       if (!$migration->hasMigrationScriptDirectory())
       {
         $this->logSection('migrate', sprintf('%s is not supporting migration.', $target));

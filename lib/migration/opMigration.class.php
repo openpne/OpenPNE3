@@ -24,16 +24,13 @@ class opMigration extends Doctrine_Migration
     $dbManager = null,
     $pluginInstance = null,
 
-    $version = null,
-    $revision = null,
-
     $targetName = '',
     $connectionName = '';
 
  /**
   * Constructor
   */
-  public function __construct($dispatcher, $dbManager, $targetName = '', $connectionName = '', $params = array())
+  public function __construct($dispatcher, $dbManager, $targetName = '', $connectionName = '')
   {
     $this->migrationBase = new opMigrationBase();
 
@@ -44,16 +41,6 @@ class opMigration extends Doctrine_Migration
     $this->initializeDatabaseConfiguration();
 
     $this->setTargetName($targetName);
-
-    if (isset($params['revision']))
-    {
-      $this->revision = $params['revision'];
-    }
-    elseif (isset($params['version']))
-    {
-      $this->version = $params['version'];
-      $this->revision = (string)$this->getRevisionByVersion($this->getVersion(), $this->getMigrationScriptDirectory());
-    }
 
     $this->setFormatter();
     return parent::__construct($this->getMigrationScriptDirectory());
@@ -124,14 +111,6 @@ class opMigration extends Doctrine_Migration
   */
   public function migrate($to = null)
   {
-    if (is_null($to))
-    {
-      if (!is_null($this->revision))
-      {
-        $to = $this->revision;
-      }
-    }
-
     parent::migrate($to);
 
     $file = $this->getMigrationFixtureFile();
@@ -282,11 +261,6 @@ class opMigration extends Doctrine_Migration
 
   public function getVersion()
   {
-    if ($this->version)
-    {
-      return $this->version;
-    }
-
     return $this->getSourceVersion();
   }
 
