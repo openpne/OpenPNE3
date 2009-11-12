@@ -198,6 +198,16 @@ MemberConfig:
     value: <?php echo md5('password') . "\n"; ?>
     Member: first_member
 
+  second_member_pc_address_pre:
+    name: "pc_address_pre"
+    value: "sns2@example.com"
+    Member: second_member
+
+  third_member_pc_address_pre:
+    name: "pc_address_pre"
+    value: "sns2@example.com"
+    Member: third_member
+
 AdminUser:
   first_admin:
     id: ~
