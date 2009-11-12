@@ -51,7 +51,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
       include($file);
     }
 
-    $pluginActivations = $this->getPluginActivationList();
+    require_once dirname(__FILE__).'/../plugin/opPluginManager.class.php';
+    $pluginActivations = opPluginManager::getPluginActivationList();
     if ($pluginActivations)
     {
       $pluginActivations = array_merge(array_fill_keys($this->getPlugins(), true), $pluginActivations);
@@ -87,11 +88,6 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     }
 
     return $result;
-  }
-
-  public function getPluginActivationList()
-  {
-    return array_merge(sfConfig::get('op_plugin_activation', array()), $this->getPluginListForDatabase());
   }
 
   public function getDisabledPlugins()
@@ -413,46 +409,6 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
     $this->getConfigCache()->registerConfigHandler('config/community_config.yml', 'opConfigConfigHandler', array('prefix' => 'openpne_community_'));
     include($this->getConfigCache()->checkConfig('config/community_config.yml'));
-  }
-
-  protected function getPluginListForDatabase()
-  {
-    $config =  sfSimpleYamlConfigHandler::getConfiguration(array($this->getRootDir().'/config/databases.yml'));
-
-    if (isset($config['all']['master']))
-    {
-      $connConfig = $config['all']['master']['param'];
-    }
-    elseif (isset($config['all']['doctrine']))
-    {
-      $connConfig = $config['all']['doctrine']['param'];
-    }
-    else
-    {
-      $connConfig = array_shift($config['all']);
-      $connConfig = $connConfig['param'];
-    }
-    $connConfig = array_merge(array('password' => null), $connConfig);
-
-    $result = array();
-    try
-    {
-      $conn = new PDO($connConfig['dsn'], $connConfig['username'], $connConfig['password']);
-      $state = $conn->query('SELECT name, is_enabled FROM plugin');
-      if ($state)
-      {
-        foreach ($state as $row)
-        {
-          $result[$row['name']] = (bool)$row['is_enabled'];
-        }
-      }
-    }
-    catch (PDOException $e)
-    {
-      // do nothing
-    }
-
-    return $result;
   }
 
   public function filterAutoloadConfig(sfEvent $event, array $config)

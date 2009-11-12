@@ -113,4 +113,50 @@ class opPluginManager extends sfSymfonyPluginManager
       }
     }
   }
+
+  public static function getPluginActivationList()
+  {
+    return array_merge(sfConfig::get('op_plugin_activation', array()), self::getPluginListForDatabase());
+  }
+
+  public static function getPluginListForDatabase()
+  {
+    $config =  sfSimpleYamlConfigHandler::getConfiguration(array(sfConfig::get('sf_root_dir').'/config/databases.yml'));
+
+    if (isset($config['all']['master']))
+    {
+      $connConfig = $config['all']['master']['param'];
+    }
+    elseif (isset($config['all']['doctrine']))
+    {
+      $connConfig = $config['all']['doctrine']['param'];
+    }
+    else
+    {
+      $connConfig = array_shift($config['all']);
+      $connConfig = $connConfig['param'];
+    }
+    $connConfig = array_merge(array('password' => null), $connConfig);
+
+    $result = array();
+    try
+    {
+      $conn = new PDO($connConfig['dsn'], $connConfig['username'], $connConfig['password']);
+      $state = $conn->query('SELECT name, is_enabled FROM plugin');
+      if ($state)
+      {
+        foreach ($state as $row)
+        {
+          $result[$row['name']] = (bool)$row['is_enabled'];
+        }
+      }
+    }
+    catch (PDOException $e)
+    {
+      // do nothing
+    }
+
+    return $result;
+  }
+
 }

@@ -29,7 +29,7 @@ class opPlugin
   {
     $this->name = $pluginName;
 
-    $config = sfContext::getInstance()->getConfiguration()->getPluginActivationList();
+    $config = opPluginManager::getPluginActivationList();
     if (isset($config[$pluginName]))
     {
       $this->isActive = $config[$pluginName];
