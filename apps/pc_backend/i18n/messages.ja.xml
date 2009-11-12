@@ -568,6 +568,22 @@
         <source>Uploaded file list</source>
         <target>アップロードファイルリスト</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Cache Clear</source>
+        <target>キャッシュの削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Caches are now cleared.</source>
+        <target>キャッシュが削除されました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If something is wrong with this site, it may be fixed by your clicking the following button to clear caches.</source>
+        <target>サイトに何か異常がある場合、以下のボタンをクリックしてキャッシュを削除することで直る場合があります。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>A response from this site will be transiently-lowered during caches are clearing.</source>
+        <target>キャッシュを削除する間、一時的にサイトからのレスポンスが遅くなるかもしれません。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

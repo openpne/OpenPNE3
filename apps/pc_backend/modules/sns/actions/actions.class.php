@@ -92,4 +92,19 @@ class snsActions extends sfActions
       $this->list[$type][] = new NavigationForm($nav);
     }
   }
+
+  public function executeCache(sfWebRequest $request)
+  {
+    $this->form = new sfForm();
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $request->checkCSRFProtection();
+
+      opToolkit::clearCache();
+
+      $this->getUser()->setFlash('notice', 'Caches are now cleared.');
+      $this->redirect('sns/cache');
+    }
+  }
 }
