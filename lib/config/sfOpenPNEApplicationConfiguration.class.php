@@ -456,4 +456,16 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     require_once 'Auth/OpenID/FileStore.php';
     require_once 'Auth/OpenID/SReg.php';
   }
+
+  public function setCacheDir($cacheDir)
+  {
+    $newCacheDir = $cacheDir.DIRECTORY_SEPARATOR.php_sapi_name();
+
+    sfConfig::set('sf_cache_dir', $newCacheDir);
+
+    $filesystem = new sfFilesystem();
+    $filesystem->mkdirs(sfConfig::get('sf_cache_dir'));
+
+    parent::setCacheDir($newCacheDir);
+  }
 }

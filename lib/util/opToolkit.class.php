@@ -382,4 +382,10 @@ class opToolkit
 
     return true;
   }
+
+  public static function clearCache()
+  {
+    $filesystem = new sfFilesystem();
+    $filesystem->remove(sfFinder::type('file')->discard('.sf')->in(sfConfig::get('sf_cache_dir')));
+  }
 }

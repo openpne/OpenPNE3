@@ -42,6 +42,8 @@ class PluginActivationForm extends sfForm
       $plugins[$key]->setIsActive($value);
     }
 
+    opToolkit::clearCache();
+
     return true;
   }
 }
