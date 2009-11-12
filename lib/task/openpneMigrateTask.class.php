@@ -27,25 +27,19 @@ class openpneMigrateTask extends sfDoctrineBaseTask
 
     $this->briefDescription = 'migrate OpenPNE and/or the plugins to newer/older version one';
     $this->detailedDescription = <<<EOF
-The [openpne:migrate|INFO] task lets OpenPNE migrate and/or the plugins newer/older version.
+The [openpne:migrate|INFO] task lets OpenPNE migrate and/or the plugins newer version.
 
 Call it with:
   1.  [./symfony openpne:migrate|INFO]
   2.  [./symfony openpne:migrate --target=opSamplePlugin|INFO]
-  3.  [./symfony openpne:migrate -r 10 --target=OpenPNE|INFO]
-  4.  [./symfony openpne:migrate -v 3.0.2 --target=OpenPNE|INFO]
+  3.  [./symfony openpne:migrate --target=OpenPNE|INFO]
 
-    1. In the first form, any targets, versions and revisions aren't specified.
-       This task executes the migration scripts for OpenPNE and all the plugins to newer version.
+    1. In the first form, any targets aren't specified.
+       This task executes the migration scripts for OpenPNE and all the plugins to newer revision.
 
-    2. In the second form, the specified target (OpenPNE or a plugin) will be migrated newer version.
+    2. In the second form, the specified plugin will be migrated newer revision.
 
-    3. In the third form, the specified target (OpenPNE or a plugin) will be migrated specified revision (internal version).
-
-    4. In the fourth form, the specified target (OpenPNE or a plugin) will be migrated specified version.
-
-  When the specified value of the [-r|INFO] option or the [-v|INFO] option is newer than the current revision of the target, it will be upgraded.
-  And, when the specified value of the [-r|INFO] option or the [-v|INFO] option is older than the current revision of the target, it will be downgraded.
+    3. In the third form, OpenPNE will be migrated newer revision.
 EOF;
   }
 
