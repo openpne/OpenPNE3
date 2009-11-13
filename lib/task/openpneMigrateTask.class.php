@@ -45,6 +45,8 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
+    new sfDatabaseManager($this->configuration);  // opening connection
+
     @$this->createCacheDirectory();
 
     $oldPluginList = sfFinder::type('dir')->in(sfConfig::get('sf_plugins_dir'));
@@ -53,6 +55,16 @@ EOF;
       $this->installPlugins($options['target']);
     }
     $newPluginList = sfFinder::type('dir')->name('op*Plugin')->maxdepth(1)->in(sfConfig::get('sf_plugins_dir'));
+    foreach ($newPluginList as $plugin)
+    {
+      $pluginName = basename($plugin);
+
+      // It needs initializing
+      if ((bool)Doctrine::getTable('SnsConfig')->get($pluginName.'_needs_data_load', false))
+      {
+        $newPluginList[] = $plugin;
+      }
+    }
     $installedPlugins = array_map('basename', array_diff($newPluginList, $oldPluginList));
 
     if (!$options['no-build-model'])
