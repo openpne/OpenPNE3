@@ -90,10 +90,11 @@ class MemberRelationshipTable extends Doctrine_Table
 
   public static function processFriendConfirm(sfEvent $event)
   {
-    $relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($event['member']->id, $event['id']);
+    $toMember = Doctrine::getTable('Member')->find($event['id']);
+    $relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($event['member']->id, $toMember->id);
     if (!$relation)
     {
-      $relation = Doctrine::getTable('MemberRelationship')->create(array('member_id_from' => $event['member']->id, 'member_id_to' => $event['id']));
+      $relation = Doctrine::getTable('MemberRelationship')->create(array('member_id_from' => $event['member']->id, 'member_id_to' => $toMember->id));
     }
 
     if (!$relation->isFriendPreTo())
@@ -110,7 +111,7 @@ class MemberRelationshipTable extends Doctrine_Table
         'subject' => sfContext::getInstance()->getI18N()->__('%1% accepted your %friend% link request', array('%1%' => $event['member']->getName())),
         'member'  => $event['member'],
       );
-      sfOpenPNEMailSend::sendTemplateMail('friendLinkComplete', $event['member']->getEmailAddress(), opConfig::get('admin_mail_address'), $params);
+      sfOpenPNEMailSend::sendTemplateMail('friendLinkComplete', $toMember->getEmailAddress(), opConfig::get('admin_mail_address'), $params);
     }
     else
     {
