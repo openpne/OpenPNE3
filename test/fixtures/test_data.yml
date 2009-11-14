@@ -307,56 +307,6 @@ Navigation:
       en:
         caption: "My Home"
 
-  secure_global_navigation_member_search:
-    type: "secure_global"
-    uri: "member/search"
-    sort_order: 10
-    Translation:
-      ja_JP:
-        caption: "メンバー検索"
-      en:
-        caption: "Search Members"
-
-  secure_global_navigation_community_search:
-    type: "secure_global"
-    uri: "community/search"
-    sort_order: 20
-    Translation:
-      ja_JP:
-        caption: "コミュニティ検索"
-      en:
-        caption: "Search Communities"
-
-  secure_global_navigation_config:
-    type: "secure_global"
-    uri: "member/config"
-    sort_order: 30
-    Translation:
-      ja_JP:
-        caption: "設定変更"
-      en:
-        caption: "Settings"
-
-  secure_global_navigation_invite:
-    type: "secure_global"
-    uri: "member/invite"
-    sort_order: 40
-    Translation:
-      ja_JP:
-        caption: "友人を招待する"
-      en:
-        caption: "Invite"
-
-  secure_global_navigation_logout:
-    type: "secure_global"
-    uri: "member/logout"
-    sort_order: 50
-    Translation:
-      ja_JP:
-        caption: "ログアウト"
-      en:
-        caption: "Logout"
-
   default_navigation_home:
     type: "default"
     uri: "@homepage"
@@ -366,36 +316,6 @@ Navigation:
         caption: "ホーム"
       en:
         caption: "Home"
-
-  default_navigation_friend_list:
-    type: "default"
-    uri: "friend/list"
-    sort_order: 10
-    Translation:
-      ja_JP:
-        caption: "マイフレンド"
-      en:
-        caption: "My Friends"
-
-  default_navigation_profile_confirm:
-    type: "default"
-    uri: "member/profile"
-    sort_order: 20
-    Translation:
-      ja_JP:
-        caption: "プロフィール確認"
-      en:
-        caption: "Profile"
-
-  default_navigation_profile_edit:
-    type: "default"
-    uri: "member/editProfile"
-    sort_order: 30
-    Translation:
-      ja_JP:
-        caption: "プロフィール編集"
-      en:
-        caption: "Edit Profile"
 
   friend_navigation_home:
     type: "friend"
@@ -407,16 +327,6 @@ Navigation:
       en:
         caption: "Home"
 
-  friend_navigation_friend_list:
-    type: "friend"
-    uri: "friend/list"
-    sort_order: 20
-    Translation:
-      ja_JP:
-        caption: "フレンドリスト"
-      en:
-        caption: "Friends"
-
   community_navigation_home:
     type: "community"
     uri: "community/home"
@@ -426,26 +336,6 @@ Navigation:
         caption: "コミュニティトップ"
       en:
         caption: "Community Top"
-
-  community_navigation_join:
-    type: "community"
-    uri: "community/join"
-    sort_order: 10
-    Translation:
-      ja_JP:
-        caption: "コミュニティに参加"
-      en:
-        caption: "Join Community"
-
-  community_navigation_quit:
-    type: "community"
-    uri: "community/quit"
-    sort_order: 20
-    Translation:
-      ja_JP:
-        caption: "コミュニティを退会"
-      en:
-        caption: "Leave Community"
 
 MemberRelationship:
   first_member_second_member:
@@ -558,25 +448,15 @@ Gadget:
     name: "searchBox"
     sort_order: 10
 
-  gadget_information:
-    type: "top"
-    name: "informationBox"
-    sort_order: 20
-
   gadget_member_image:
     type: "sideMenu"
     name: "memberImageBox"
     sort_order: 10
 
-  gadget_friend_table:
+  gadget_friend_list_box:
     type: "sideMenu"
     name: "friendListBox"
     sort_order: 20
-
-  gadget_community_table:
-    type: "sideMenu"
-    name: "communityJoinListBox"
-    sort_order: 30
 
   gadget_language_select_box:
     type: "sideBannerContents"
@@ -602,16 +482,6 @@ Gadget:
     type: "profileSideMenu"
     name: "memberImageBox"
     sort_order: 10
-
-  profile_gadget_friend_table:
-    type: "profileSideMenu"
-    name: "friendListBox"
-    sort_order: 20
-
-  profile_gadget_community_table:
-    type: "profileSideMenu"
-    name: "communityJoinListBox"
-    sort_order: 30
 
   profile_gadget_profile:
     type: "profileContents"
