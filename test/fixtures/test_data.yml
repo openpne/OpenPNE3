@@ -623,10 +623,20 @@ Gadget:
     name: "friendListBox"
     sort_order: 10
 
-  mobile_profile_gadget_community_table:
-    type: "mobileProfileBottom"
-    name: "communityJoinListBox"
-    sort_order: 20
+GadgetConfig:
+  gadget_friend_list_box_config_row:
+    Gadget: gadget_friend_list_box
+    name: "row"
+    value: 1
+
+SnsConfig:
+  sns_config1:
+    name: "sns_name"
+    value: "test1"
+  sns_config2:
+    name: "daily_news_day"
+    value: ""
+
 
 Blacklist:
   dummy_black_uid:
