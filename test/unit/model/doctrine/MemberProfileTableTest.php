@@ -7,7 +7,7 @@ $user = sfContext::getInstance()->getUser();
 $user->setAuthenticated(true);
 $user->setMemberId(1);
 
-$t = new lime_test(null, new lime_output_color());
+$t = new lime_test(12, new lime_output_color());
 $table = Doctrine::getTable('MemberProfile');
 
 //------------------------------------------------------------
