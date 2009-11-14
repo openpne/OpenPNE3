@@ -478,6 +478,16 @@ Community:
   community_5:
     name: "CommunityE"
 
+CommunityCategory:
+  community_category:
+    name: "コミュニティカテゴリ"
+    is_allow_member_community: 1
+
+  community_category_1:
+    name: "CategoryA"
+    tree_key: 1
+    is_allow_member_community: 1
+
 CommunityConfig:
   community_1_description:
     Community: community_1

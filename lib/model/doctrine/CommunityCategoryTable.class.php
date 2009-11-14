@@ -10,11 +10,13 @@
 
 class CommunityCategoryTable extends Doctrine_Table
 {
+  //TODO: use findAll()
   public function retrieveAll()
   {
     return $this->createQuery()->execute();
   }
 
+  //TODO: use getTree()->fetchRoots()
   public function retrieveAllRoots()
   {
     return $this->createQuery()
