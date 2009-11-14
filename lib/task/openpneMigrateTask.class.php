@@ -55,14 +55,13 @@ EOF;
       $this->installPlugins($options['target']);
     }
     $newPluginList = sfFinder::type('dir')->name('op*Plugin')->maxdepth(1)->in(sfConfig::get('sf_plugins_dir'));
-    foreach ($newPluginList as $plugin)
+    foreach ($oldPluginList as $k => $v)
     {
-      $pluginName = basename($plugin);
-
-      // It needs initializing
+      $pluginName = basename($v);
       if ((bool)Doctrine::getTable('SnsConfig')->get($pluginName.'_needs_data_load', false))
       {
-        $newPluginList[] = $plugin;
+        // It needs initializing
+        unset($oldPluginList[$k]);
       }
     }
     $installedPlugins = array_map('basename', array_diff($newPluginList, $oldPluginList));
