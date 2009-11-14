@@ -71,6 +71,18 @@ Profile:
     default_public_flag: 1
     sort_order: 1010
 
+  profile_date_item:
+    name: "date_item"
+    is_required: 0
+    form_type: "date"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    is_edit_public_flag: 1
+    default_public_flag: 1
+    sort_order: 1020
+
 ProfileOption:
   profile_option_select_item1:
     sort_order: 0
@@ -108,6 +120,18 @@ ProfileOption:
       en:
         value: "D"
 
+  profile_option_date_year:
+    sort_order: 0
+    Profile: profile_date_item
+
+  profile_option_date_month:
+    sort_order: 1
+    Profile: profile_date_item
+
+  profile_option_date_day:
+    sort_order: 2
+    Profile: profile_date_item
+
 Member:
   first_member:
     name: "A"
@@ -124,6 +148,7 @@ Member:
     is_active: 1
   fifth_member:
     name: "E"
+    is_active: 1
 
 File:
   dummy_file1:
@@ -163,24 +188,81 @@ MemberProfile:
     public_flag: 1
     Member: first_member
     Profile: profile_sex
+    children: []
 
   first_member_profile_birthday:
     value: "1988-04-23"
+    value_datetime: "1988-04-23"
     public_flag: 1
     Member: first_member
     Profile: profile_birthday
+    children: []
 
   first_member_profile_region:
     value: "Tokyo"
     public_flag: 2
     Member: first_member
     Profile: profile_region
+    children: []
 
   first_member_profile_self_intro:
     value: "よろしくお願いします。"
     public_flag: 3
     Member: first_member
     Profile: profile_self_intro
+    children: []
+
+  first_member_profile_select_item:
+    public_flag: 1
+    Profile: profile_select_item
+    ProfileOption: profile_option_select_item1
+    Member: first_member
+    children: []
+
+  first_member_profile_option_item:
+    public_flag: 1
+    Profile: profile_checkbox_item
+    Member: first_member
+    children:
+      first_member_profile_option_item_1:
+        Member: first_member
+        Profile: profile_checkbox_item
+        ProfileOption: profile_option_checkbox_item1
+      first_member_profile_option_item2:
+        Member: first_member
+        Profile: profile_checkbox_item
+        ProfileOption: profile_option_checkbox_item2
+
+  first_member_profile_date_item:
+    public_flag: 1
+    Profile: profile_date_item
+    Member: first_member
+    children:
+      first_member_profile_date_day:
+        Member: first_member
+        Profile: profile_date_item
+        ProfileOption: profile_option_date_day
+        value: 8
+      first_member_profile_date_month:
+        Member: first_member
+        Profile: profile_date_item
+        ProfileOption: profile_option_date_month
+        value: 1
+      first_member_profile_date_year:
+        Member: first_member
+        Profile: profile_date_item
+        ProfileOption: profile_option_date_year
+        value: 1989
+
+  second_member_profile_option_item:
+    public_flag: 1
+    Profile: profile_checkbox_item
+    Member: second_member
+    children:
+      second_member_profile_option_item_1:
+        Member: second_member
+        Profile: profile_checkbox_item
+        ProfileOption: profile_option_checkbox_item1
 
 MemberConfig:
   first_member_pc_address:
@@ -378,9 +460,9 @@ MemberRelationship:
     Member: first_member
     MemberRelatedByMemberIdFrom: fourth_member
     is_friend_pre: 1
-  first_member_fifth_member:
-    Member: first_member
-    MemberRelatedByMemberIdFrom: fifth_member
+  fifth_member_first_member:
+    Member: fifth_member
+    MemberRelatedByMemberIdFrom: first_member
     is_access_block: 1
 
 Community:

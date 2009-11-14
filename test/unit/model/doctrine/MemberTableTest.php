@@ -30,7 +30,7 @@ $t->diag('ACL Test');
 $t->cmp_ok($member1->isAllowed($member1, 'view'), '===', true);
 $t->cmp_ok($member1->isAllowed($member2, 'view'), '===', true);
 $t->cmp_ok($member1->isAllowed($member3, 'view'), '===', true);
-$t->cmp_ok($member5->isAllowed($member1, 'view'), '===', false);
+$t->cmp_ok($member1->isAllowed($member5, 'view'), '===', false);
 
 $t->cmp_ok($member1->isAllowed($member1, 'edit'), '===', true);
 $t->cmp_ok($member1->isAllowed($member2, 'edit'), '===', false);

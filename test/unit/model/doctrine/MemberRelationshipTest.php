@@ -10,7 +10,7 @@ $table = Doctrine::getTable('MemberRelationship');
 $relation1 = $table->retrieveByFromAndTo(1, 2); //is_friend
 $relation2 = $table->retrieveByFromAndTo(2, 1); //is_friend
 $relation3 = $table->retrieveByFromAndTo(4, 1); //is_friend_pre
-$relation4 = $table->retrieveByFromAndTo(5, 1); //is_access_block
+$relation4 = $table->retrieveByFromAndTo(1, 5); //is_access_block
 
 $dummyRelation1 = new MemberRelationship();
 $dummyRelation1->setMemberIdTo(4);
@@ -21,8 +21,8 @@ $dummyRelation2->setMemberIdTo(1);
 $dummyRelation2->setMemberIdFrom(1);
 
 $dummyRelation3 = new MemberRelationship();
-$dummyRelation3->setMemberIdTo(5);
-$dummyRelation3->setMemberIdFrom(1);
+$dummyRelation3->setMemberIdTo(1);
+$dummyRelation3->setMemberIdFrom(5);
 
 $newRelation1 = new MemberRelationship();
 $newRelation1->setMemberIdTo(3);

@@ -51,6 +51,6 @@ $t->isa_ok($result, 'Profile');
 
 //------------------------------------------------------------
 $t->diag('ProfileTable::getMaxSortOrder()');
-$t->is($table->getMaxSortOrder(), 1010);
+$t->is($table->getMaxSortOrder(), 1020);
 
 

@@ -17,7 +17,7 @@ $t->is($table->retrieveByFromAndTo(1, 999), null);
 $t->diag('MemberRelationshipTable::retrievesByMemberIdFrom()');
 $result = $table->retrievesByMemberIdFrom(1);
 $t->isa_ok($result, 'Doctrine_Collection');
-$t->is($result->count(), 1);
+$t->is($result->count(), 2);
 
 //------------------------------------------------------------
 $t->diag('MemberRelationshipTable::getFriendListPager()');

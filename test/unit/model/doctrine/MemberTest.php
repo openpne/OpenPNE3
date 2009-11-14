@@ -16,19 +16,19 @@ $t->diag('Member');
 $t->diag('Member::getProfiles()');
 $result = $member1->getProfiles();
 $t->isa_ok($result, 'array');
-$t->is(count($result), 4);
+$t->is(count($result), 7);
 
 $result = $member1->getProfiles(true, $member2->getId());
 $t->isa_ok($result, 'array');
-$t->is(count($result), 3);
+$t->is(count($result), 6);
 
 $result = $member1->getProfiles(true, $member3->getId());
 $t->isa_ok($result, 'array');
-$t->is(count($result), 2);
+$t->is(count($result), 5);
 
 $result = $member1->getProfiles(true, $member4->getId());
 $t->isa_ok($result, 'array');
-$t->is(count($result), 2);
+$t->is(count($result), 5);
 
 //------------------------------------------------------------
 $t->diag('Member::getProfile()');
@@ -147,7 +147,7 @@ $t->is($member1->getMailAddressHash(), 'ac049c237300');
 $t->diag('Member::generateRoleId()');
 $t->is($member1->generateRoleId($member1), 'self');
 $t->is($member1->generateRoleId($member2), 'everyone');
-$t->is($member5->generateRoleId($member1), 'blocked');
+$t->is($member1->generateRoleId($member5), 'blocked');
 
 //------------------------------------------------------------
 $t->diag('Member::delete()');

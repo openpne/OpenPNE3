@@ -21,11 +21,11 @@ $t->diag('Profile::getOptionsArray()');
 $result = $profileSex->getOptionsArray();
 $t->is($result, array('Female' => 'Female', 'Man' => 'Man'));
 
-$result = $profileBirthday->getOptionsArray();
+$result = $profileSelfIntro->getOptionsArray();
 $t->is($result, array());
 
 $result = $profileSelectItem->getOptionsArray();
-$t->is($result, array(1 => 'あ', 2 => 'い'));
+$t->is($result, array(1 => 'あ', 7 => 'い'));
 
 //------------------------------------------------------------
 $t->diag('Profile::getPresetOptionsArray()');
