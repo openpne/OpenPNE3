@@ -93,7 +93,34 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     foreach ($targets as $target)
     {
-      $this->migrateFromScript($target, $databaseManager);
+      if (in_array($target, $installedPlugins))
+      {
+        continue;
+      }
+
+      try
+      {
+        $this->migrateFromScript($target, $databaseManager);
+      }
+      catch (Doctrine_Migration_Exception $e)
+      {
+        if ('OpenPNE' === $target)
+        {
+          throw $e;
+        }
+
+        $errorText = '';
+
+        $errors = array();
+        preg_match_all('/Error #[0-9]+ \- .*$/m', $e->getMessage(), $errors, PREG_SET_ORDER);
+        foreach ($errors as $error)
+        {
+          $errorText .= $error[0]."\n";
+        }
+
+        $e = new Exception(sprintf("migrating of %s encountered the following errors:\n %s", $target, $errorText));
+        $this->commandApplication->renderException($e);
+      }
     }
 
     $targets = array_merge($targets, $installedPlugins);
