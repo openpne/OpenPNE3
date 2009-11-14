@@ -413,7 +413,12 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
   public function filterAutoloadConfig(sfEvent $event, array $config)
   {
-    $config['autoload']['project_model']['exclude'] = $this->getDisabledPlugins();
+    // full overwrite this entry because adding exclude item breaks this entry later
+    $config['autoload']['project_model'] = array(
+      'path'      => sfConfig::get('sf_lib_dir').DIRECTORY_SEPARATOR.'model',
+      'exclude'   => $this->getDisabledPlugins(),
+      'recursive' => true,
+    );
 
     return parent::filterAutoloadConfig($event, $config);
   }
