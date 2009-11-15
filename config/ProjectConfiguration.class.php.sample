@@ -15,7 +15,7 @@ class ProjectConfiguration extends sfProjectConfiguration
 
   public function setup()
   {
-    $this->enableAllPluginsExcept(array('sfCompat10Plugin', 'sfPropelPlugin'));
+    $this->enableAllPluginsExcept(array('sfPropelPlugin'));
     $this->setIncludePath();
 
     $this->setOpenPNEConfiguration();
