@@ -92,7 +92,6 @@ EOF;
       }
 
       $this->publishAssets();
-      $this->clearCache();
     }
   }
 
@@ -199,8 +198,18 @@ EOF;
       $i++;
     }
 
-    $buildAllLoad = new sfDoctrineBuildAllReloadTask($this->dispatcher, $this->formatter);
-    $buildAllLoad->run(array(), array('--no-confirmation', '--dir='.$tmpdir));
+    $task = new sfDoctrineBuildTask($this->dispatcher, $this->formatter);
+    $task->setCommandApplication($this->commandApplication);
+    $task->setConfiguration($this->configuration);
+    $task->run(array(), array(
+      'no-confirmation' => true,
+      'db'              => true,
+      'model'           => true,
+      'forms'           => true,
+      'filters'         => true,
+      'sql'             => true,
+      'and-load'        => $tmpdir,
+    ));
 
     $this->getFilesystem()->remove(sfFinder::type('file')->in(array($tmpdir)));
     $this->getFilesystem()->remove($tmpdir);
