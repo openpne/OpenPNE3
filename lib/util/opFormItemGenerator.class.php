@@ -88,7 +88,8 @@ class opFormItemGenerator
     switch ($field['FormType'])
     {
       case 'checkbox':
-        $obj = new sfWidgetFormChoiceMany($params);
+        $params['multiple'] = true;
+        $obj = new sfWidgetFormChoice($params);
         break;
       case 'select':
         $obj = new sfWidgetFormChoice($params);
@@ -168,7 +169,8 @@ class opFormItemGenerator
     if ($field['FormType'] === 'checkbox')
     {
       $option['choices'] = $choices;
-      $obj = new sfValidatorChoiceMany($option);
+      $option['multiple'] = true;
+      $obj = new sfValidatorChoice($option);
       return $obj;
     }
     if ($field['FormType'] === 'select' || $field['FormType'] === 'radio')

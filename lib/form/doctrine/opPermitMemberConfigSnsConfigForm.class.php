@@ -40,7 +40,7 @@ class opPermitMemberConfigSnsConfigForm extends BaseForm
     ));
 
     $this->setValidators(array(
-      'ignored_sns_config' => new sfValidatorChoiceMany(array('choices' => array_keys($choices), 'required' => false)),
+      'ignored_sns_config' => new sfValidatorChoice(array('multiple' => true, 'choices' => array_keys($choices), 'required' => false)),
     ));
 
     $default = Doctrine::getTable('SnsConfig')->get('ignored_sns_config', array());
