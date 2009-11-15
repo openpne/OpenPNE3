@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPropelBaseTask.class.php');
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelSchemaToYmlTask.class.php 14972 2009-01-26 21:39:14Z FabianLange $
+ * @version    SVN: $Id: sfPropelSchemaToYmlTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfPropelSchemaToYmlTask extends sfPropelBaseTask
 {
@@ -25,7 +25,6 @@ class sfPropelSchemaToYmlTask extends sfPropelBaseTask
    */
   protected function configure()
   {
-    $this->aliases = array('propel-convert-xml-schema');
     $this->namespace = 'propel';
     $this->name = 'schema-to-yml';
     $this->briefDescription = 'Creates schema.yml from schema.xml';

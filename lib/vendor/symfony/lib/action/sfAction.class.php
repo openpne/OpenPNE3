@@ -16,7 +16,7 @@
  * @subpackage action
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfAction.class.php 23544 2009-11-03 08:48:31Z fabien $
+ * @version    SVN: $Id: sfAction.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 abstract class sfAction extends sfComponent
 {
@@ -352,57 +352,6 @@ abstract class sfAction extends sfComponent
   public function renderComponent($moduleName, $componentName, $vars = null)
   {
     return $this->renderText($this->getComponent($moduleName, $componentName, $vars));
-  }
-
-  /**
-   * Retrieves the default view to be executed when a given request is not served by this action.
-   *
-   * @return string A string containing the view name associated with this action
-   *
-   * @throws sfConfigurationException If compat_10 is not enabled
-   */
-  public function getDefaultView()
-  {
-    if (!sfConfig::get('sf_compat_10'))
-    {
-      throw new sfConfigurationException('You must set "compat_10" to true if you want to use this method which is deprecated.');
-    }
-
-    return sfView::INPUT;
-  }
-
-  /**
-   * Executes any post-validation error application logic.
-   *
-   * @return string A string containing the view name associated with this action
-   *
-   * @throws sfConfigurationException If compat_10 is not enabled
-   */
-  public function handleError()
-  {
-    if (!sfConfig::get('sf_compat_10'))
-    {
-      throw new sfConfigurationException('You must set "compat_10" to true if you want to use this method which is deprecated.');
-    }
-
-    return sfView::ERROR;
-  }
-
-  /**
-   * Validates manually files and parameters.
-   *
-   * @return bool true, if validation completes successfully, otherwise false.
-   *
-   * @throws sfConfigurationException If compat_10 is not enabled
-   */
-  public function validate()
-  {
-    if (!sfConfig::get('sf_compat_10'))
-    {
-      throw new sfConfigurationException('You must set "compat_10" to true if you want to use this method which is deprecated.');
-    }
-
-    return true;
   }
 
   /**

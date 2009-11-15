@@ -8,7 +8,7 @@
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 5845 2009-06-09 07:36:57Z jwage $
+ * @version    SVN: $Id: CamelCase.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class CamelCase extends BaseCamelCase
 {

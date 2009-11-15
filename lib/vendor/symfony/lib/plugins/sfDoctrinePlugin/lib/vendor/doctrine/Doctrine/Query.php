@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Query.php 6659 2009-11-03 21:50:56Z jwage $
+ *  $Id: Query.php 6713 2009-11-12 18:28:28Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -30,7 +30,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6659 $
+ * @version     $Revision: 6713 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @todo        Proposal: This class does far too much. It should have only 1 task: Collecting
  *              the DQL query parts and the query parameters (the query state and caching options/methods
@@ -1291,21 +1291,24 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
         }
 
         // Add the default orderBy statements defined in the relationships and table classes
-        $added = array();
-        foreach ($this->_queryComponents as $alias => $map) {
-            $sqlAlias = $this->getSqlTableAlias($alias);
-            if (isset($map['relation'])) {
-                $orderBy = $map['relation']->getOrderByStatement($sqlAlias, true);
-            } else {
-                $orderBy = $map['table']->getOrderByStatement($sqlAlias, true);
-            }
+        // Only do this for SELECT queries
+        if ($this->_type === self::SELECT) {
+            $added = array();
+            foreach ($this->_queryComponents as $alias => $map) {
+                $sqlAlias = $this->getSqlTableAlias($alias);
+                if (isset($map['relation'])) {
+                    $orderBy = $map['relation']->getOrderByStatement($sqlAlias, true);
+                } else {
+                    $orderBy = $map['table']->getOrderByStatement($sqlAlias, true);
+                }
 
-            if ($orderBy) {
-                $e = explode(',', $orderBy);
-                $e = array_map('trim', $e);
-                foreach ($e as $v) {
-                    if ( ! in_array($v, $this->_sqlParts['orderby'])) {
-                        $this->_sqlParts['orderby'][] = $v;
+                if ($orderBy) {
+                    $e = explode(',', $orderBy);
+                    $e = array_map('trim', $e);
+                    foreach ($e as $v) {
+                        if ( ! in_array($v, $this->_sqlParts['orderby'])) {
+                            $this->_sqlParts['orderby'][] = $v;
+                        }
                     }
                 }
             }
@@ -2145,6 +2148,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
     public function __clone()
     {
         $this->_parsers = array();
+        $this->_hydrator = clone $this->_hydrator;
 
         // Subqueries share some information from the parent so it can intermingle
         // with the dql of the main query. So when a subquery is cloned we need to

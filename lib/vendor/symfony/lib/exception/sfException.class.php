@@ -18,7 +18,7 @@
  * @subpackage exception
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfException.class.php 23612 2009-11-04 13:22:20Z fabien $
+ * @version    SVN: $Id: sfException.class.php 23901 2009-11-14 13:33:03Z bschussek $
  */
 class sfException extends Exception
 {
@@ -66,6 +66,14 @@ class sfException extends Exception
     return self::$lastException;
   }
 
+  /**
+   * Clears the $lastException property (added for #6342)
+   */
+  static public function clearLastException()
+  {
+  	self::$lastException = null;
+  }
+  
   /**
    * Prints the stack trace for this exception.
    */

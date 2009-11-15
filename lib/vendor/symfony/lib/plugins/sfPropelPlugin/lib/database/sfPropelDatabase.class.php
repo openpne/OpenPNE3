@@ -14,7 +14,7 @@
  * @package    sfPropelPlugin
  * @subpackage database
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelDatabase.class.php 23737 2009-11-09 23:23:25Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfPropelDatabase.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfPropelDatabase extends sfPDODatabase
 {

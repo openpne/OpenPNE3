@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Db2.php 6538 2009-10-19 20:14:12Z guilhermeblanco $
+ *  $Id: Db2.php 6712 2009-11-12 18:26:29Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6538 $
+ * @version     $Revision: 6712 $
  */
 class Doctrine_Sequence_Db2 extends Doctrine_Sequence
 {
@@ -50,7 +50,7 @@ class Doctrine_Sequence_Db2 extends Doctrine_Sequence
             $result = $this->conn->fetchOne($query);
             $result = ($result) ? $result['VAL'] : null; 
         } catch(Doctrine_Connection_Exception $e) {
-            if ($onDemand && $e->getPortableCode() == Doctrine::ERR_NOSUCHTABLE) {
+            if ($onDemand && $e->getPortableCode() == Doctrine_Core::ERR_NOSUCHTABLE) {
                 try {
                     $result = $this->conn->export->createSequence($seqName);
                 } catch(Doctrine_Exception $e) {

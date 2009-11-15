@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage exception
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfStopException.class.php 5139 2007-09-16 12:31:07Z fabien $
+ * @version    SVN: $Id: sfStopException.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfStopException extends sfException
 {

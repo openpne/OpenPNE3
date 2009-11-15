@@ -5,7 +5,7 @@
  *
  * @package    form
  * @subpackage Author
- * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
+ * @version    SVN: $Id: AuthorForm.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class AuthorForm extends BaseAuthorForm
 {

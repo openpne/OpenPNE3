@@ -18,7 +18,7 @@
  * @subpackage request
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfWebRequest.class.php 22453 2009-09-26 12:48:05Z fabien $
+ * @version    SVN: $Id: sfWebRequest.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfWebRequest extends sfRequest
 {
@@ -362,21 +362,6 @@ class sfWebRequest extends sfRequest
   public function isMethod($method)
   {
     return strtoupper($method) == $this->getMethod();
-  }
-
-  /**
-   * Returns request method.
-   *
-   * @return string
-   */
-  public function getMethodName()
-  {
-    if ($this->options['logging'])
-    {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array('The "sfWebRequest::getMethodName()" method is deprecated, please use "getMethod()" instead.', 'priority' => sfLogger::WARNING)));
-    }
-
-    return $this->getMethod();
   }
 
   /**

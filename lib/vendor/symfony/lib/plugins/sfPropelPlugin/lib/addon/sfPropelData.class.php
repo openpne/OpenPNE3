@@ -15,7 +15,7 @@
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelData.class.php 22881 2009-10-08 16:50:37Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfPropelData.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfPropelData extends sfData
 {

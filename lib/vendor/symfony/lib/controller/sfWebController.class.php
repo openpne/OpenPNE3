@@ -16,7 +16,7 @@
  * @subpackage controller
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfWebController.class.php 17865 2009-05-02 09:23:55Z FabianLange $
+ * @version    SVN: $Id: sfWebController.class.php 23954 2009-11-14 21:59:28Z FabianLange $
  */
 abstract class sfWebController extends sfController
 {
@@ -30,28 +30,27 @@ abstract class sfWebController extends sfController
    */
   public function genUrl($parameters = array(), $absolute = false)
   {
-    // absolute URL or symfony URL?
-    if (is_string($parameters) && preg_match('#^[a-z][a-z0-9\+.\-]*\://#i', $parameters))
-    {
-      return $parameters;
-    }
-
-    // relative URL?
-    if (is_string($parameters) && 0 === strpos($parameters, '/'))
-    {
-      return $parameters;
-    }
-
-    if (is_string($parameters) && $parameters == '#')
-    {
-      return $parameters;
-    }
-
     $route = '';
     $fragment = '';
 
     if (is_string($parameters))
     {
+      // absolute URL or symfony URL?
+      if (preg_match('#^[a-z][a-z0-9\+.\-]*\://#i', $parameters))
+      {
+        return $parameters;
+      }
+      // relative URL?
+      if (0 === strpos($parameters, '/'))
+      {
+        return $parameters;
+      }
+
+      if (is_string($parameters) && $parameters == '#')
+      {
+        return $parameters;
+      }
+  
       // strip fragment
       if (false !== ($pos = strpos($parameters, '#')))
       {
@@ -167,13 +166,18 @@ abstract class sfWebController extends sfController
   /**
    * Redirects the request to another URL.
    *
-   * @param string $url        An existing URL
+   * @param string $url        An associative array of URL parameters or an internal URI as a string
    * @param int    $delay      A delay in seconds before redirecting. This is only needed on
    *                           browsers that do not support HTTP headers
    * @param int    $statusCode The status code
+   * @throws InvalidArgumentException If the url argument is null or an empty string
    */
   public function redirect($url, $delay = 0, $statusCode = 302)
   {
+    if(empty($url))
+    {
+      throw new InvalidArgumentException('url parameter cannot be empty'); 
+    } 
     $url = $this->genUrl($url, true);
 
     if (sfConfig::get('sf_logging_enabled'))

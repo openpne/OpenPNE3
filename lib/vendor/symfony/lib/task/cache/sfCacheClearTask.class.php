@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCacheClearTask.class.php 22180 2009-09-19 18:47:20Z FabianLange $
+ * @version    SVN: $Id: sfCacheClearTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfCacheClearTask extends sfBaseTask
 {
@@ -32,7 +32,7 @@ class sfCacheClearTask extends sfBaseTask
       new sfCommandOption('type', null, sfCommandOption::PARAMETER_OPTIONAL, 'The type', 'all'),
     ));
 
-    $this->aliases = array('cc', 'clear-cache');
+    $this->aliases = array('cc');
     $this->namespace = 'cache';
     $this->name = 'clear';
     $this->briefDescription = 'Clears the cache';

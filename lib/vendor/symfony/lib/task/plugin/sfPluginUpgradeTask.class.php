@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPluginBaseTask.class.php');
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPluginUpgradeTask.class.php 8474 2008-04-15 22:47:27Z fabien $
+ * @version    SVN: $Id: sfPluginUpgradeTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfPluginUpgradeTask extends sfPluginBaseTask
 {
@@ -35,7 +35,6 @@ class sfPluginUpgradeTask extends sfPluginBaseTask
       new sfCommandOption('channel', 'c', sfCommandOption::PARAMETER_REQUIRED, 'The PEAR channel name', null),
     ));
 
-    $this->aliases = array('plugin-upgrade');
     $this->namespace = 'plugin';
     $this->name = 'upgrade';
 

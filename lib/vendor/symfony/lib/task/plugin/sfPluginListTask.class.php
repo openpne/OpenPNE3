@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPluginBaseTask.class.php');
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPluginListTask.class.php 7655 2008-02-28 09:52:40Z fabien $
+ * @version    SVN: $Id: sfPluginListTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfPluginListTask extends sfPluginBaseTask
 {
@@ -25,7 +25,6 @@ class sfPluginListTask extends sfPluginBaseTask
    */
   protected function configure()
   {
-    $this->aliases = array('plugin-list');
     $this->namespace = 'plugin';
     $this->name = 'list';
 

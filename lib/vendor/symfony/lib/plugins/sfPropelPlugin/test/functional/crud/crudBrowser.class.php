@@ -12,6 +12,8 @@ class CrudBrowser extends sfTestBrowser
 {
   protected
     $urlPrefix = 'article',
+    $singularName = 'Article',
+    $pluralName = 'Articles',
     $projectDir = '';
 
   public function setup($options)
@@ -22,6 +24,8 @@ class CrudBrowser extends sfTestBrowser
     chdir($this->projectDir);
     $task = new sfPropelGenerateModuleTask(new sfEventDispatcher(), new sfFormatter());
     $options[] = 'env=test';
+    $options[] = 'singular='.$this->singularName;
+    $options[] = 'plural='.$this->pluralName;
     $options[] = '--non-verbose-templates';
     $task->run(array('crud', 'article', 'Article'), $options);
 
@@ -53,7 +57,7 @@ class CrudBrowser extends sfTestBrowser
       with('response')->begin()->
         isStatusCode(200)->
 
-        checkElement('h1', ucfirst($this->urlPrefix).' List')->
+        checkElement('h1', $this->pluralName.' List')->
 
         checkElement('table thead tr th:nth(0)', 'Id')->
         checkElement('table thead tr th:nth(1)', 'Title')->
@@ -91,7 +95,7 @@ class CrudBrowser extends sfTestBrowser
       end()->
       with('response')->begin()->
         isStatusCode(200)->
-        checkElement('h1', 'New '.ucfirst($this->urlPrefix))->
+        checkElement('h1', 'New '.$this->singularName)->
         checkElement(sprintf('a[href*="/%s"]', $this->urlPrefix), 'Back to list')->
         checkElement(sprintf('a[href*="/%s/"]', $this->urlPrefix), false)->
       end()->
@@ -124,9 +128,11 @@ class CrudBrowser extends sfTestBrowser
     $this->
       info('go back to the list')->
       click('Back to list')->
-      isStatusCode(200)->
-      isRequestParameter('module', $this->urlPrefix)->
-      isRequestParameter('action', 'index')
+      with('request')->begin()->
+        isParameter('module', $this->urlPrefix)->
+        isParameter('action', 'index')->
+      end()->
+      with('response')->isStatusCode(200)
     ;
 
     // edit page
@@ -148,7 +154,7 @@ class CrudBrowser extends sfTestBrowser
       end()->
       with('response')->begin()->
         isStatusCode(200)->
-        checkElement('h1', 'Edit '.ucfirst($this->urlPrefix))->
+        checkElement('h1', 'Edit '.$this->singularName)->
         checkElement(sprintf('a[href*="/%s"]', $this->urlPrefix), 'Back to list')->
         checkElement(sprintf('a[href*="/%s/3"]', $this->urlPrefix), 'Delete')->
         checkElement(sprintf('a[href*="/%s/3"][onclick*="confirm"]', $this->urlPrefix))->
@@ -182,14 +188,18 @@ class CrudBrowser extends sfTestBrowser
     $this->
       info('save / validation')->
       click('Save', array('article' => $values))->
-      isStatusCode(200)->
-      isRequestParameter('module', $this->urlPrefix)->
-      isRequestParameter('action', 'update')->
+      with('request')->begin()->
+        isParameter('module', $this->urlPrefix)->
+        isParameter('action', 'update')->
+      end()->
       checkFormValues(array_merge($values, array(
         'end_date' => array('year' => null, 'month' => null, 'day' => 15, 'hour' => '10', 'minute' => '20')))
       )->
-      checkResponseElement('ul[class="error_list"] li:contains("Required.")', 2)->
-      checkResponseElement('ul[class="error_list"] li:contains("Invalid.")', 4)
+      with('response')->begin()->
+        isStatusCode(200)->
+        checkElement('ul[class="error_list"] li:contains("Required.")', 2)->
+        checkElement('ul[class="error_list"] li:contains("Invalid.")', 4)->
+      end()
     ;
 
     // save
@@ -211,9 +221,11 @@ class CrudBrowser extends sfTestBrowser
     $this->
       info('go back to the list')->
       click('Back to list')->
-      isStatusCode(200)->
-      isRequestParameter('module', $this->urlPrefix)->
-      isRequestParameter('action', 'index')
+      with('request')->begin()->
+        isParameter('module', $this->urlPrefix)->
+        isParameter('action', 'index')->
+      end()->
+      with('response')->isStatusCode(200)
     ;
 
     // delete
@@ -221,17 +233,22 @@ class CrudBrowser extends sfTestBrowser
       info('delete')->
       get(sprintf('/%s/3/edit', $this->urlPrefix))->
       click('Delete', array(), array('method' => 'delete', '_with_csrf' => true))->
-      isStatusCode(302)->
-      isRequestParameter('module', $this->urlPrefix)->
-      isRequestParameter('action', 'delete')->
-      isRedirected()->
-      followRedirect()->
-      isStatusCode(200)->
-      isRequestParameter('module', $this->urlPrefix)->
-      isRequestParameter('action', 'index')->
+      with('request')->begin()->
+        isParameter('module', $this->urlPrefix)->
+        isParameter('action', 'delete')->
+      end()->
+      with('response')->begin()->
+        isRedirected()->
+        followRedirect()->
+      end()->
+      with('request')->begin()->
+        isParameter('module', $this->urlPrefix)->
+        isParameter('action', 'index')->
+      end()->
+      with('response')->isStatusCode(200)->
 
       get(sprintf('/%s/3/edit', $this->urlPrefix))->
-      isStatusCode(404)
+      with('response')->isStatusCode(404)
     ;
 
     if (in_array('with-show', $options))
@@ -263,7 +280,7 @@ class CrudBrowser extends sfTestBrowser
     }
     else
     {
-      $this->get(sprintf('/%s/show/id/2', $this->urlPrefix))->isStatusCode(404);
+      $this->get(sprintf('/%s/show/id/2', $this->urlPrefix))->with('response')->isStatusCode(404);
     }
 
     $this->teardown();
@@ -275,17 +292,22 @@ class CrudBrowser extends sfTestBrowser
   {
     $this->
       click('Save', array('article' => $values))->
-      isRedirected()->
-      isRequestParameter('module', $this->urlPrefix)->
-      isRequestParameter('action', $creation ? 'create' : 'update')
-    ;
-
-    $this->
-      followRedirect()->
-      isStatusCode(200)->
-      isRequestParameter('module', $this->urlPrefix)->
-      isRequestParameter('action', 'edit')->
-      isRequestParameter('id', $id)->
+      with('request')->begin()->
+        isParameter('module', $this->urlPrefix)->
+        isParameter('action', $creation ? 'create' : 'update')->
+      end()->
+      with('response')->begin()->
+        isRedirected()->
+        followRedirect()->
+      end()->
+      with('response')->begin()->
+        isStatusCode(200)->
+      end()->
+      with('request')->begin()->
+        isParameter('module', $this->urlPrefix)->
+        isParameter('action', 'edit')->
+        isParameter('id', $id)->
+      end()->
       checkFormValues($values)
     ;
 

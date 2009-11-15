@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfLogRotateTask.class.php 9890 2008-06-26 11:35:01Z fabien $
+ * @version    SVN: $Id: sfLogRotateTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfLogRotateTask extends sfBaseTask
 {
@@ -39,7 +39,6 @@ class sfLogRotateTask extends sfBaseTask
       new sfCommandOption('period', null, sfCommandOption::PARAMETER_REQUIRED, 'The period in days', 7),
     ));
 
-    $this->aliases = array('log-rotate');
     $this->namespace = 'log';
     $this->name = 'rotate';
     $this->briefDescription = 'Rotates an application log files';

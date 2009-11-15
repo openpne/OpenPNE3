@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: NestedSet.php 6484 2009-10-12 17:40:41Z jwage $
+ *  $Id: NestedSet.php 6692 2009-11-10 17:01:33Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6484 $
+ * @version     $Revision: 6692 $
  * @author      Joe Simms <joe.simms@websites4.com>
  * @author      Roman Borschel <roman@code-factory.org>
  */
@@ -66,7 +66,11 @@ class Doctrine_Tree_NestedSet extends Doctrine_Tree implements Doctrine_Tree_Int
 
         $this->table->setColumn('lft', 'integer', 4);
         $this->table->setColumn('rgt', 'integer', 4);
-        $this->table->setColumn('level', 'integer', 2);
+        if ($level = $this->getAttribute('levelColumnName')) {
+            $this->table->setColumn($level . ' AS level', 'integer', 2);
+        } else {
+            $this->table->setColumn('level', 'integer', 2);
+        }
     }
 
     /**

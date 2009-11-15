@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelUpgrade.class.php 23527 2009-11-02 19:04:51Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfPropelUpgrade.class.php 23947 2009-11-14 20:02:28Z FabianLange $
  */
 class sfPropelUpgrade extends sfUpgrade
 {
@@ -43,6 +43,16 @@ class sfPropelUpgrade extends sfUpgrade
 
   public function upgrade()
   {
+    if (!in_array('sfPropelPlugin', $this->configuration->getPlugins()))
+    {
+      if (file_exists($file = sfConfig::get('sf_config_dir').'/propel.ini'))
+      {
+        $this->getFilesystem()->remove($file);
+      }
+
+      return;
+    }
+
     if (
       file_exists($old = sfConfig::get('sf_lib_dir').'/filter/base/BaseFormFilterPropel.class.php')
       &&
@@ -55,7 +65,7 @@ class sfPropelUpgrade extends sfUpgrade
     if (file_exists($file = sfConfig::get('sf_config_dir').'/propel.ini'))
     {
       // use phing to parse propel.ini
-      Phing::startup();
+      sfPhing::startup();
       $this->properties = new Properties();
       $this->properties->load(new PhingFile($file));
 

@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTesterResponse.class.php 23568 2009-11-03 13:31:13Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfTesterResponse.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfTesterResponse extends sfTester
 {
@@ -356,20 +356,6 @@ class sfTesterResponse extends sfTester
     }
 
     $this->tester->fail(sprintf('response sets cookie "%s"', $name));
-
-    return $this->getObjectToReturn();
-  }
-
-  /**
-   * Tests whether or not a given string is in the response.
-   *
-   * @param string Text to check
-   *
-   * @return sfTestFunctionalBase|sfTester
-   */
-  public function contains($text)
-  {
-    $this->tester->like($this->response->getContent(), '/'.preg_quote($text, '/').'/', sprintf('response contains "%s"', substr($text, 0, 40)));
 
     return $this->getObjectToReturn();
   }

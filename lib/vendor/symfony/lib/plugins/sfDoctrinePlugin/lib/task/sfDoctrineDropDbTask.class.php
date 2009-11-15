@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineDropDbTask.class.php 23020 2009-10-13 22:48:42Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineDropDbTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfDoctrineDropDbTask extends sfDoctrineBaseTask
 {
@@ -33,7 +33,6 @@ class sfDoctrineDropDbTask extends sfDoctrineBaseTask
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Whether to force dropping of the database')
     ));
 
-    $this->aliases = array('doctrine-drop-db');
     $this->namespace = 'doctrine';
     $this->name = 'drop-db';
     $this->briefDescription = 'Drops database for current model';

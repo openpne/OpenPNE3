@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: HelperHelper.php 11783 2008-09-25 16:21:27Z fabien $
+ * @version    SVN: $Id: HelperHelper.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 
 function use_helper()

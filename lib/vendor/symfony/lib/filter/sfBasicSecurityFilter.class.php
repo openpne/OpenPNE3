@@ -18,7 +18,7 @@
  * @package    symfony
  * @subpackage filter
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfBasicSecurityFilter.class.php 22157 2009-09-18 17:15:23Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfBasicSecurityFilter.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfBasicSecurityFilter extends sfFilter
 {

@@ -16,7 +16,7 @@
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineBaseTask.class.php 23518 2009-11-02 13:39:34Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineBaseTask.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 abstract class sfDoctrineBaseTask extends sfBaseTask
 {

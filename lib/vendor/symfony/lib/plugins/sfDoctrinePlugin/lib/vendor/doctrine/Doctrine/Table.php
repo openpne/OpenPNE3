@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Table.php 6638 2009-11-03 05:19:18Z jwage $
+ *  $Id: Table.php 6721 2009-11-12 20:47:47Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  * @package     Doctrine
  * @subpackage  Table
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @version     $Revision: 6638 $
+ * @version     $Revision: 6721 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  * @method mixed findBy*(mixed $value) magic finders; @see __call()
@@ -912,15 +912,19 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable
      * database until you use @see export().
      *
      * @param array $fields     values are fieldnames
+     * @param array $options    array of options for unique validator
+     * @param bool $createUniqueIndex  Whether or not to create a unique index in the database
      * @return void
      */
-    public function unique($fields)
+    public function unique($fields, $options = array(), $createdUniqueIndex = true)
     {
-        $name = implode('_', $fields) . '_unqidx';
-        $definition = array('type' => 'unique', 'fields' => $fields);
-        $this->addIndex($name, $definition);
+        if ($createdUniqueIndex) {
+            $name = implode('_', $fields) . '_unqidx';
+            $definition = array('type' => 'unique', 'fields' => $fields);
+            $this->addIndex($name, $definition);
+        }
 
-        $this->_uniques[] = $fields;
+        $this->_uniques[] = array($fields, $options);
     }
 
     /**
@@ -2102,8 +2106,10 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable
         $validator = Doctrine_Validator::getValidator('unique');
         $validator->invoker = $record;
 
-        foreach ($this->_uniques as $fields)
+        foreach ($this->_uniques as $unique)
         {
+            list($fields, $options) = $unique;
+            $validator->args = $options;
             $validator->field = $fields;
             $values = array();
             foreach ($fields as $field) {

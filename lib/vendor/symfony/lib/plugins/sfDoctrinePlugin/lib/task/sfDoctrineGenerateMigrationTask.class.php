@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineGenerateMigrationTask.class.php 22770 2009-10-04 11:15:42Z FabianLange $
+ * @version    SVN: $Id: sfDoctrineGenerateMigrationTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfDoctrineGenerateMigrationTask extends sfDoctrineBaseTask
 {
@@ -37,7 +37,6 @@ class sfDoctrineGenerateMigrationTask extends sfDoctrineBaseTask
       new sfCommandOption('editor-cmd', null, sfCommandOption::PARAMETER_REQUIRED, 'Open script with this command upon creation'),
     ));
 
-    $this->aliases = array('doctrine-generate-migration');
     $this->namespace = 'doctrine';
     $this->name = 'generate-migration';
     $this->briefDescription = 'Generate migration class';

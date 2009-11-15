@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorI18nChoiceLanguage.class.php 23734 2009-11-09 22:50:08Z FabianLange $
+ * @version    SVN: $Id: sfValidatorI18nChoiceLanguage.class.php 23940 2009-11-14 17:58:19Z fabien $
  */
 class sfValidatorI18nChoiceLanguage extends sfValidatorChoice
 {
@@ -34,8 +34,6 @@ class sfValidatorI18nChoiceLanguage extends sfValidatorChoice
   {
     parent::configure($options, $messages);
 
-    // culture is deprecated
-    $this->addOption('culture');
     $this->addOption('languages');
 
     // populate choices with all languages

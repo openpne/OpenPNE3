@@ -17,7 +17,7 @@
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineRecord.class.php 19997 2009-07-07 22:41:04Z Jonathan.Wage $
+ * @version    SVN: $Id: sfDoctrineRecord.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 abstract class sfDoctrineRecord extends Doctrine_Record
 {

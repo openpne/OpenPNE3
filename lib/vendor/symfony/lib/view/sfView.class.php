@@ -18,7 +18,7 @@
  * @subpackage view
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfView.class.php 22066 2009-09-16 03:53:39Z dwhittle $
+ * @version    SVN: $Id: sfView.class.php 23940 2009-11-14 17:58:19Z fabien $
  */
 abstract class sfView
 {
@@ -112,7 +112,7 @@ abstract class sfView
     $this->context    = $context;
     $this->dispatcher = $context->getEventDispatcher();
 
-    sfOutputEscaper::markClassesAsSafe(array('sfForm', 'sfModelGeneratorHelper'));
+    sfOutputEscaper::markClassesAsSafe(array('sfForm', 'sfFormField', 'sfFormFieldSchema', 'sfModelGeneratorHelper'));
 
     $this->attributeHolder = $this->initializeAttributeHolder();
 
@@ -149,17 +149,6 @@ abstract class sfView
 
   protected function initializeAttributeHolder($attributes = array())
   {
-    if ('both' === sfConfig::get('sf_escaping_strategy'))
-    {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array('Escaping strategy "both" is deprecated, please use "on".', 'priority' => sfLogger::ERR)));
-      sfConfig::set('sf_escaping_strategy', 'on');
-    }
-    else if ('bc' === sfConfig::get('sf_escaping_strategy'))
-    {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array('Escaping strategy "bc" is deprecated, please use "off".', 'priority' => sfLogger::ERR)));
-      sfConfig::set('sf_escaping_strategy', 'off');
-    }
-
     $attributeHolder = new sfViewParameterHolder($this->dispatcher, $attributes, array(
       'escaping_method'   => sfConfig::get('sf_escaping_method'),
       'escaping_strategy' => sfConfig::get('sf_escaping_strategy'),

@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Oracle.php 6484 2009-10-12 17:40:41Z jwage $
+ *  $Id: Oracle.php 6720 2009-11-12 20:18:24Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -29,7 +29,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6484 $
+ * @version     $Revision: 6720 $
  */
 class Doctrine_Export_Oracle extends Doctrine_Export
 {
@@ -77,12 +77,12 @@ BEGIN
   -- user_tables contains also materialized views
   FOR I IN (SELECT table_name FROM user_tables WHERE table_name NOT IN (SELECT mview_name FROM user_mviews))
   LOOP 
-    EXECUTE IMMEDIATE 'DROP TABLE "'||I.table_name||'" CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE \"'||I.table_name||'\" CASCADE CONSTRAINTS';
   END LOOP;
   
   FOR I IN (SELECT SEQUENCE_NAME FROM USER_SEQUENCES)
   LOOP
-    EXECUTE IMMEDIATE 'DROP SEQUENCE "'||I.SEQUENCE_NAME||'"';
+    EXECUTE IMMEDIATE 'DROP SEQUENCE \"'||I.SEQUENCE_OWNER||'\".\"'||I.SEQUENCE_NAME||'\"';
   END LOOP;
 END;
 

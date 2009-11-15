@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @package    symfony
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfDoctrineGenerateAdminTask.class.php 12474 2008-10-31 10:41:27Z fabien $
+ * @version    SVN: $Id: sfDoctrineGenerateAdminTask.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfDoctrineGenerateAdminTask extends sfDoctrineBaseTask
 {

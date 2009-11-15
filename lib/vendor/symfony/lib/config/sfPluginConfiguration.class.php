@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage config
  * @author     Kris Wallsmith <kris.wallsmith@symfony-project.com>
- * @version    SVN: $Id: sfPluginConfiguration.class.php 23360 2009-10-26 18:10:48Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfPluginConfiguration.class.php 23822 2009-11-12 15:13:48Z Kris.Wallsmith $
  */
 abstract class sfPluginConfiguration
 {
@@ -114,6 +114,7 @@ abstract class sfPluginConfiguration
     {
       $this->configuration->getEventDispatcher()->connect('autoload.filter_config', array($this, 'filterAutoloadConfig'));
       $autoload->loadConfiguration(array($file));
+      $this->configuration->getEventDispatcher()->disconnect('autoload.filter_config', array($this, 'filterAutoloadConfig'));
     }
     else
     {

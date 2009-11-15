@@ -16,7 +16,7 @@
  * @subpackage view
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfPHPView.class.php 21908 2009-09-11 12:06:21Z fabien $
+ * @version    SVN: $Id: sfPHPView.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfPHPView extends sfView
 {
@@ -42,12 +42,6 @@ class sfPHPView extends sfView
     $coreHelpersLoaded = 1;
 
     $helpers = array_unique(array_merge(array('Helper', 'Url', 'Asset', 'Tag', 'Escaping'), sfConfig::get('sf_standard_helpers')));
-
-    // remove default Form helper if compat_10 is false
-    if (!sfConfig::get('sf_compat_10') && false !== $i = array_search('Form', $helpers))
-    {
-      unset($helpers[$i]);
-    }
 
     $this->context->getConfiguration()->loadHelpers($helpers);
   }

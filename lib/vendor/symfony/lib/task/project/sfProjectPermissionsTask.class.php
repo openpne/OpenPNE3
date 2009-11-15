@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfProjectPermissionsTask.class.php 22820 2009-10-06 12:09:34Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfProjectPermissionsTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfProjectPermissionsTask extends sfBaseTask
 {
@@ -27,7 +27,6 @@ class sfProjectPermissionsTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->aliases = array('permissions', 'fix-perms');
     $this->namespace = 'project';
     $this->name = 'permissions';
     $this->briefDescription = 'Fixes symfony directory permissions';

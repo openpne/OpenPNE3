@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfConfigureDatabaseTask.class.php 14965 2009-01-26 12:43:53Z FabianLange $
+ * @version    SVN: $Id: sfDoctrineConfigureDatabaseTask.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfDoctrineConfigureDatabaseTask extends sfBaseTask
 {

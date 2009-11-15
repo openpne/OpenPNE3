@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPropelBaseTask.class.php');
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelDataDumpTask.class.php 21908 2009-09-11 12:06:21Z fabien $
+ * @version    SVN: $Id: sfPropelDataDumpTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfPropelDataDumpTask extends sfPropelBaseTask
 {
@@ -36,7 +36,6 @@ class sfPropelDataDumpTask extends sfPropelBaseTask
       new sfCommandOption('classes', null, sfCommandOption::PARAMETER_REQUIRED, 'The class names to dump (separated by a colon)', null),
     ));
 
-    $this->aliases = array('propel-dump-data');
     $this->namespace = 'propel';
     $this->name = 'data-dump';
     $this->briefDescription = 'Dumps data to the fixtures directory';

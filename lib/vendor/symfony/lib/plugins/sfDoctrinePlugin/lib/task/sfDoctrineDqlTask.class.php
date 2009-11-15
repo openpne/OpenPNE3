@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineDqlTask.class.php 22987 2009-10-13 08:02:48Z FabianLange $
+ * @version    SVN: $Id: sfDoctrineDqlTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfDoctrineDqlTask extends sfDoctrineBaseTask
 {
@@ -38,7 +38,6 @@ class sfDoctrineDqlTask extends sfDoctrineBaseTask
       new sfCommandOption('table', null, sfCommandOption::PARAMETER_NONE, 'Return results in table format'),
     ));
 
-    $this->aliases = array('doctrine-dql');
     $this->namespace = 'doctrine';
     $this->name = 'dql';
     $this->briefDescription = 'Execute a DQL query and view the results';

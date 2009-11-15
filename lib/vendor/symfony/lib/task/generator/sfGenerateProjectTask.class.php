@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfGeneratorBaseTask.class.php');
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfGenerateProjectTask.class.php 23322 2009-10-25 13:11:48Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfGenerateProjectTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfGenerateProjectTask extends sfGeneratorBaseTask
 {
@@ -45,7 +45,6 @@ class sfGenerateProjectTask extends sfGeneratorBaseTask
       new sfCommandOption('installer', null, sfCommandOption::PARAMETER_REQUIRED, 'An installer script to execute', null),
     ));
 
-    $this->aliases = array('init-project');
     $this->namespace = 'generate';
     $this->name = 'project';
 

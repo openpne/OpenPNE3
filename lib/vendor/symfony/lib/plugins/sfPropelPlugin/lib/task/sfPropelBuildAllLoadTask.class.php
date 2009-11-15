@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPropelBaseTask.class.php');
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelBuildAllLoadTask.class.php 23076 2009-10-15 06:43:20Z fabien $
+ * @version    SVN: $Id: sfPropelBuildAllLoadTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfPropelBuildAllLoadTask extends sfPropelBaseTask
 {
@@ -37,7 +37,6 @@ class sfPropelBuildAllLoadTask extends sfPropelBaseTask
       new sfCommandOption('dir', null, sfCommandOption::PARAMETER_REQUIRED | sfCommandOption::IS_ARRAY, 'The directories to look for fixtures'),
     ));
 
-    $this->aliases = array('propel-build-all-load');
     $this->namespace = 'propel';
     $this->name = 'build-all-load';
     $this->briefDescription = 'Generates Propel model and form classes, SQL, initializes the database, and loads data';
@@ -68,8 +67,6 @@ EOF;
   {
     // load Propel configuration before Phing
     $databaseManager = new sfDatabaseManager($this->configuration);
-
-    require_once dirname(__FILE__) . '/../addon/sfPropelAutoload.php';
 
     $buildAll = new sfPropelBuildAllTask($this->dispatcher, $this->formatter);
     $buildAll->setCommandApplication($this->commandApplication);

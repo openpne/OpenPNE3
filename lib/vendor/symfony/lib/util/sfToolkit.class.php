@@ -16,7 +16,7 @@
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfToolkit.class.php 21127 2009-08-13 07:42:33Z fabien $
+ * @version    SVN: $Id: sfToolkit.class.php 23945 2009-11-14 18:12:41Z fabien $
  */
 class sfToolkit
 {
@@ -438,64 +438,6 @@ class sfToolkit
   }
 
   /**
-   * Returns a reference to an array value for a path.
-   *
-   * @param array  $values   The values to search
-   * @param string $name     The token name
-   * @param array  $default  Default if not found
-   *
-   * @return array reference
-   */
-  public static function &getArrayValueForPathByRef(&$values, $name, $default = null)
-  {
-    if (false === $offset = strpos($name, '['))
-    {
-      $return = $default;
-      if (isset($values[$name]))
-      {
-        $return = &$values[$name];
-      }
-      return $return;
-    }
-
-    if (!isset($values[substr($name, 0, $offset)]))
-    {
-      return $default;
-    }
-
-    $array = &$values[substr($name, 0, $offset)];
-
-    while (false !== $pos = strpos($name, '[', $offset))
-    {
-      $end = strpos($name, ']', $pos);
-      if ($end == $pos + 1)
-      {
-        // reached a []
-        if (!is_array($array))
-        {
-          return $default;
-        }
-        break;
-      }
-      else if (!isset($array[substr($name, $pos + 1, $end - $pos - 1)]))
-      {
-        return $default;
-      }
-      else if (is_array($array))
-      {
-        $array = &$array[substr($name, $pos + 1, $end - $pos - 1)];
-        $offset = $end;
-      }
-      else
-      {
-        return $default;
-      }
-    }
-
-    return $array;
-  }
-
-  /**
    * Returns an array value for a path.
    *
    * @param array  $values   The values to search
@@ -549,121 +491,6 @@ class sfToolkit
   }
 
   /**
-   * Returns true if the a path exists for the given array.
-   *
-   * @param array  $values  The values to search
-   * @param string $name    The token name
-   *
-   * @return bool
-   */
-  public static function hasArrayValueForPath($values, $name)
-  {
-    if (false === $offset = strpos($name, '['))
-    {
-      return array_key_exists($name, $values);
-    }
-
-    if (!isset($values[substr($name, 0, $offset)]))
-    {
-      return false;
-    }
-
-    $array = $values[substr($name, 0, $offset)];
-    while (false !== $pos = strpos($name, '[', $offset))
-    {
-      $end = strpos($name, ']', $pos);
-      if ($end == $pos + 1)
-      {
-        // reached a []
-        return is_array($array);
-      }
-      else if (!isset($array[substr($name, $pos + 1, $end - $pos - 1)]))
-      {
-        return false;
-      }
-      else if (is_array($array))
-      {
-        $array = $array[substr($name, $pos + 1, $end - $pos - 1)];
-        $offset = $end;
-      }
-      else
-      {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  /**
-   * Removes a path for the given array.
-   *
-   * @param array  $values   The values to search
-   * @param string $name     The token name
-   * @param mixed  $default  The default value to return if the name does not exist
-   */
-  public static function removeArrayValueForPath(&$values, $name, $default = null)
-  {
-    if (false === $offset = strpos($name, '['))
-    {
-      if (isset($values[$name]))
-      {
-        $value = $values[$name];
-        unset($values[$name]);
-
-        return $value;
-      }
-      else
-      {
-        return $default;
-      }
-    }
-
-    if (!isset($values[substr($name, 0, $offset)]))
-    {
-      return $default;
-    }
-
-    $value = &$values[substr($name, 0, $offset)];
-
-    while (false !== $pos = strpos($name, '[', $offset))
-    {
-      $end = strpos($name, ']', $pos);
-      if ($end == $pos + 1)
-      {
-        // reached a []
-        if (!is_array($value))
-        {
-          return $default;
-        }
-        break;
-      }
-      else if (!isset($value[substr($name, $pos + 1, $end - $pos - 1)]))
-      {
-        return $default;
-      }
-      else if (is_array($value))
-      {
-        $parent = &$value;
-        $key = substr($name, $pos + 1, $end - $pos - 1);
-        $value = &$value[$key];
-        $offset = $end;
-      }
-      else
-      {
-        return $default;
-      }
-    }
-
-    if ($key)
-    {
-      unset($parent[$key]);
-    }
-
-    return $value;
-  }
-
-  /**
    * Get path to php cli.
    *
    * @throws sfException If no php cli found
@@ -688,14 +515,6 @@ class sfToolkit
     }
 
     throw new sfException('Unable to find PHP executable.');
-  }
-
-  /**
-   * DEPRECATED. Use sys_get_temp_dir() directly (available since PHP 5.2.1).
-   */
-  public static function getTmpDir()
-  {
-    return sys_get_temp_dir();
   }
 
   /**
@@ -746,10 +565,10 @@ class sfToolkit
 
   /**
    * Adds a path to the PHP include_path setting.
-   * 
+   *
    * @param   mixed  $path     Single string path or an array of paths
    * @param   string $position Either 'front' or 'back'
-   * 
+   *
    * @return  string The old include path
    */
   static public function addIncludePath($path, $position = 'front')

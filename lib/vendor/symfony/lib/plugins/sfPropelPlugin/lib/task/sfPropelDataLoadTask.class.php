@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPropelBaseTask.class.php');
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelDataLoadTask.class.php 22422 2009-09-25 16:53:39Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfPropelDataLoadTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfPropelDataLoadTask extends sfPropelBaseTask
 {
@@ -36,7 +36,6 @@ class sfPropelDataLoadTask extends sfPropelBaseTask
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
     ));
 
-    $this->aliases = array('propel-load-data');
     $this->namespace = 'propel';
     $this->name = 'data-load';
     $this->briefDescription = 'Loads YAML fixture data';

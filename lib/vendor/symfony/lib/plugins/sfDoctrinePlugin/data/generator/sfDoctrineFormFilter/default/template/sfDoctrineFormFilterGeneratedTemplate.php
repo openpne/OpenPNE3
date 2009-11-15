@@ -6,7 +6,7 @@
  * @package    ##PROJECT_NAME##
  * @subpackage filter
  * @author     ##AUTHOR_NAME##
- * @version    SVN: $Id$
+ * @version    SVN: $Id: sfDoctrineFormFilterGeneratedTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class Base<?php echo $this->table->getOption('name') ?>FormFilter extends <?php echo $this->getFormClassToExtend() . "\n" ?>
 {

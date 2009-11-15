@@ -8,7 +8,7 @@
  * @package    ##PROJECT_NAME##
  * @subpackage form
  * @author     ##AUTHOR_NAME##
- * @version    SVN: $Id$
+ * @version    SVN: $Id: sfDoctrineFormGeneratedInheritanceTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class Base<?php echo $this->modelName ?>Form extends <?php echo $this->getFormClassToExtend() . "\n" ?>
 {

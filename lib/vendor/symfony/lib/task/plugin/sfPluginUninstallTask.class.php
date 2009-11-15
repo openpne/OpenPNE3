@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPluginBaseTask.class.php');
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPluginUninstallTask.class.php 8474 2008-04-15 22:47:27Z fabien $
+ * @version    SVN: $Id: sfPluginUninstallTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfPluginUninstallTask extends sfPluginBaseTask
 {
@@ -34,7 +34,6 @@ class sfPluginUninstallTask extends sfPluginBaseTask
       new sfCommandOption('install_deps', 'd', sfCommandOption::PARAMETER_NONE, 'Whether to force installation of dependencies', null),
     ));
 
-    $this->aliases = array('plugin-uninstall');
     $this->namespace = 'plugin';
     $this->name = 'uninstall';
 

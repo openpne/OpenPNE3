@@ -18,7 +18,7 @@
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfDatabaseConfigHandler.class.php 12159 2008-10-13 07:37:30Z fabien $
+ * @version    SVN: $Id: sfDatabaseConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfDatabaseConfigHandler extends sfYamlConfigHandler
 {

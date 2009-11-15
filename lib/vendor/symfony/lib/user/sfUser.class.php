@@ -20,7 +20,7 @@
  * @subpackage user
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfUser.class.php 21908 2009-09-11 12:06:21Z fabien $
+ * @version    SVN: $Id: sfUser.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfUser implements ArrayAccess
 {

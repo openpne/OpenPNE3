@@ -16,7 +16,7 @@
  * @subpackage exception
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfInitializationException.class.php 7792 2008-03-09 22:06:59Z fabien $
+ * @version    SVN: $Id: sfInitializationException.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfInitializationException extends sfException
 {

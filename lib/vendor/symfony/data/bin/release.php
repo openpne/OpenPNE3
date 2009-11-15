@@ -15,7 +15,7 @@
  *
  * @package    symfony
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id$
+ * @version    SVN: $Id: release.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 require_once(dirname(__FILE__).'/../../lib/exception/sfException.class.php');
 require_once(dirname(__FILE__).'/../../lib/task/sfFilesystem.class.php');

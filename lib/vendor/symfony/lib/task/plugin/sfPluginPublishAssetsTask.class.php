@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPluginBaseTask.class.php');
  * @package    symfony
  * @subpackage task
  * @author     Fabian Lange <fabian.lange@symfony-project.com>
- * @version    SVN: $Id: sfPluginPublishAssetsTask.class.php 7655 2008-02-28 09:52:40Z fabien $
+ * @version    SVN: $Id: sfPluginPublishAssetsTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfPluginPublishAssetsTask extends sfPluginBaseTask
 {
@@ -33,7 +33,6 @@ class sfPluginPublishAssetsTask extends sfPluginBaseTask
       new sfCommandOption('core-only', '', sfCommandOption::PARAMETER_NONE, 'If set only core plugins will publish their assets'),
     ));
 
-    $this->aliases = array();
     $this->namespace = 'plugin';
     $this->name = 'publish-assets';
 

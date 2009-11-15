@@ -16,7 +16,7 @@
  * @subpackage action
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfActionStackEntry.class.php 17865 2009-05-02 09:23:55Z FabianLange $
+ * @version    SVN: $Id: sfActionStackEntry.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfActionStackEntry
 {

@@ -16,7 +16,7 @@
  * @subpackage debug
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfWebDebugPanelDoctrine.class.php 11205 2008-08-27 16:24:17Z fabien $
+ * @version    SVN: $Id: sfWebDebugPanelDoctrine.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfWebDebugPanelDoctrine extends sfWebDebugPanel
 {

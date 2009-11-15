@@ -15,7 +15,7 @@
  * @package    symfony
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfYamlConfigHandler.class.php 22876 2009-10-08 15:24:02Z fabien $
+ * @version    SVN: $Id: sfYamlConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 abstract class sfYamlConfigHandler extends sfConfigHandler
 {

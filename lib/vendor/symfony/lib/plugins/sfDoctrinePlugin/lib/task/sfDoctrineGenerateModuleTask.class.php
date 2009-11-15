@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @package    symfony
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfDoctrineGenerateModuleTask.class.php 12474 2008-10-31 10:41:27Z fabien $
+ * @version    SVN: $Id: sfDoctrineGenerateModuleTask.class.php 23947 2009-11-14 20:02:28Z FabianLange $
  */
 class sfDoctrineGenerateModuleTask extends sfDoctrineBaseTask
 {
@@ -44,7 +44,6 @@ class sfDoctrineGenerateModuleTask extends sfDoctrineBaseTask
       new sfCommandOption('actions-base-class', null, sfCommandOption::PARAMETER_REQUIRED, 'The base class for the actions', 'sfActions'),
     ));
 
-    $this->aliases = array('doctrine-generate-crud', 'doctrine:generate-crud');
     $this->namespace = 'doctrine';
     $this->name = 'generate-module';
     $this->briefDescription = 'Generates a Doctrine module';
@@ -95,6 +94,10 @@ EOF;
     );
 
     $method = $options['generate-in-cache'] ? 'executeInit' : 'executeGenerate';
+
+    // for backwarads compatibility symfony uses the model name as singular and plural form if none specified (#5640)
+    $options['singular']  = $options['singular'] ? $options['singular'] : $arguments['model'];
+    $options['plural']  = $options['plural'] ? $options['plural'] : $arguments['model'].'s';
 
     $this->$method($arguments, $options);
   }

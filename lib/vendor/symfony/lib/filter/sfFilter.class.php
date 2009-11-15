@@ -16,7 +16,7 @@
  * @subpackage filter
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfFilter.class.php 23338 2009-10-25 22:16:41Z FabianLange $
+ * @version    SVN: $Id: sfFilter.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 abstract class sfFilter
 {

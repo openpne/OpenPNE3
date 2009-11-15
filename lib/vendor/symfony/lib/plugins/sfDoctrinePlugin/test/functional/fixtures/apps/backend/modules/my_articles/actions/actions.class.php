@@ -9,7 +9,7 @@ require_once dirname(__FILE__).'/../lib/my_articlesGeneratorHelper.class.php';
  * @package    symfony12
  * @subpackage my_articles
  * @author     Your name here
- * @version    SVN: $Id: actions.class.php 12474 2008-10-31 10:41:27Z fabien $
+ * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class my_articlesActions extends autoMy_articlesActions
 {

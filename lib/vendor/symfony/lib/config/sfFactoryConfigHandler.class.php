@@ -17,7 +17,7 @@
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfFactoryConfigHandler.class.php 21985 2009-09-13 15:30:06Z fabien $
+ * @version    SVN: $Id: sfFactoryConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfFactoryConfigHandler extends sfYamlConfigHandler
 {

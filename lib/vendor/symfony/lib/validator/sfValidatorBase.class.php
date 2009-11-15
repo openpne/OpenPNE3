@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorBase.class.php 22446 2009-09-26 07:55:47Z fabien $
+ * @version    SVN: $Id: sfValidatorBase.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 abstract class sfValidatorBase
 {
@@ -289,30 +289,6 @@ abstract class sfValidatorBase
   static public function setDefaultMessage($name, $message)
   {
     self::$globalDefaultMessages[$name] = $message;
-  }
-
-  /**
-   * Sets the default invalid message.
-   *
-   * DEPRECATED. Use setDefaultMessage instead.
-   *
-   * @param string $message
-   */
-  static public function setInvalidMessage($message)
-  {
-    self::setDefaultMessage('invalid', $message);
-  }
-
-  /**
-   * Sets the default required message.
-   *
-   * DEPRECATED. Use setDefaultMessage instead.
-   *
-   * @param string $message
-   */
-  static public function setRequiredMessage($message)
-  {
-    self::setDefaultMessage('required', $message);
   }
 
   /**

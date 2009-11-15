@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfFilesystem.class.php 19056 2009-06-09 10:41:14Z fabien $
+ * @version    SVN: $Id: sfFilesystem.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfFilesystem
 {
@@ -270,30 +270,6 @@ class sfFilesystem
         throw new sfException(sprintf('Unable to guess "%s" file type.', $file));
       }
     }
-  }
-
-  /**
-   * DEPRECATED: Executes a shell command.
-   *
-   * This method is deprecated. Use the more powerful execute() method instead.
-   *
-   * @param string $cmd  The command to execute on the shell
-   */
-  public function sh($cmd)
-  {
-    $this->logSection('exec ', $cmd);
-
-    ob_start();
-    passthru($cmd.' 2>&1', $return);
-    $content = ob_get_contents();
-    ob_end_clean();
-
-    if ($return > 0)
-    {
-      throw new sfException(sprintf('Problem executing command %s', "\n".$content));
-    }
-
-    return $content;
   }
 
   /**

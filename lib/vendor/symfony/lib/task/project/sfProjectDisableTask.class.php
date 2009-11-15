@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfProjectDisableTask.class.php 20862 2009-08-06 18:37:28Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfProjectDisableTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfProjectDisableTask extends sfBaseTask
 {
@@ -28,7 +28,6 @@ class sfProjectDisableTask extends sfBaseTask
       new sfCommandArgument('app', sfCommandArgument::OPTIONAL | sfCommandArgument::IS_ARRAY, 'The application name'),
     ));
 
-    $this->aliases = array('disable');
     $this->namespace = 'project';
     $this->name = 'disable';
     $this->briefDescription = 'Disables an application in a given environment';

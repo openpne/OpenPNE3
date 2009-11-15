@@ -18,7 +18,7 @@
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfContext.class.php 22811 2009-10-05 20:31:46Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfContext.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfContext implements ArrayAccess
 {
@@ -302,13 +302,6 @@ class sfContext implements ArrayAccess
     }
 
     return null;
-  }
-
-  public function retrieveObjects($class, $peerMethod)
-  {
-    $retrievingClass = 'sf'.ucfirst(sfConfig::get('sf_orm', 'propel')).'DataRetriever';
-
-    return call_user_func(array($retrievingClass, 'retrieveObjects'), $class, $peerMethod);
   }
 
   /**

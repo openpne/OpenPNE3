@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: PartialHelper.php 23376 2009-10-27 07:53:11Z nicolas $
+ * @version    SVN: $Id: PartialHelper.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 
 /**

@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineBuildDbTask.class.php 14213 2008-12-19 21:03:13Z Jonathan.Wage $
+ * @version    SVN: $Id: sfDoctrineBuildDbTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfDoctrineBuildDbTask extends sfDoctrineBaseTask
 {
@@ -32,7 +32,6 @@ class sfDoctrineBuildDbTask extends sfDoctrineBaseTask
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
     ));
 
-    $this->aliases = array('doctrine-build-db');
     $this->namespace = 'doctrine';
     $this->name = 'build-db';
     $this->briefDescription = 'Creates database for current model';

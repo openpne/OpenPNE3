@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineDataLoadTask.class.php 22422 2009-09-25 16:53:39Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineDataLoadTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfDoctrineDataLoadTask extends sfDoctrineBaseTask
 {
@@ -37,7 +37,6 @@ class sfDoctrineDataLoadTask extends sfDoctrineBaseTask
       new sfCommandOption('append', null, sfCommandOption::PARAMETER_NONE, 'Don\'t delete current data in the database'),
     ));
 
-    $this->aliases = array('doctrine-load-data');
     $this->namespace = 'doctrine';
     $this->name = 'data-load';
     $this->briefDescription = 'Loads YAML fixture data';

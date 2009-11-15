@@ -18,7 +18,7 @@
  * @subpackage form
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfFormDoctrine.class.php 7845 2008-03-12 22:36:14Z fabien $
+ * @version    SVN: $Id: sfFormDoctrine.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 abstract class sfFormDoctrine extends sfFormObject
 {

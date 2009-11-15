@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfProjectClearControllersTask.class.php 10582 2008-08-01 14:45:42Z nicolas $
+ * @version    SVN: $Id: sfProjectClearControllersTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfProjectClearControllersTask extends sfBaseTask
 {
@@ -23,7 +23,6 @@ class sfProjectClearControllersTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->aliases = array('clear-controllers');
     $this->namespace = 'project';
     $this->name = 'clear-controllers';
     $this->briefDescription = 'Clears all non production environment controllers';

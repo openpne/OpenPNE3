@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorFile.class.php 23073 2009-10-15 06:28:28Z fabien $
+ * @version    SVN: $Id: sfValidatorFile.class.php 23951 2009-11-14 20:44:22Z FabianLange $
  */
 class sfValidatorFile extends sfValidatorBase
 {
@@ -253,7 +253,8 @@ class sfValidatorFile extends sfValidatorBase
   protected function guessFromFileBinary($file)
   {
     ob_start();
-    passthru(sprintf('file -bi %s 2>/dev/null', escapeshellarg($file)), $return);
+    //need to use --mime instead of -i. see #6641
+    passthru(sprintf('file -b --mime %s 2>/dev/null', escapeshellarg($file)), $return);
     if ($return > 0)
     {
       ob_end_clean();

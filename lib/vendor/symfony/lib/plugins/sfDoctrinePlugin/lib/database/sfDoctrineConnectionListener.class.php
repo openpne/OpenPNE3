@@ -16,7 +16,7 @@
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineConnectionListener.class.php 11878 2008-09-30 20:14:40Z Jonathan.Wage $
+ * @version    SVN: $Id: sfDoctrineConnectionListener.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfDoctrineConnectionListener extends Doctrine_EventListener
 {

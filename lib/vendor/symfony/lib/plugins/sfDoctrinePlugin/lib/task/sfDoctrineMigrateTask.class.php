@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineMigrateTask.class.php 22859 2009-10-07 18:33:31Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineMigrateTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfDoctrineMigrateTask extends sfDoctrineBaseTask
 {
@@ -39,7 +39,6 @@ class sfDoctrineMigrateTask extends sfDoctrineBaseTask
       new sfCommandOption('dry-run', null, sfCommandOption::PARAMETER_NONE, 'Do not persist migrations'),
     ));
 
-    $this->aliases = array('doctrine-migrate');
     $this->namespace = 'doctrine';
     $this->name = 'migrate';
     $this->briefDescription = 'Migrates database to current/specified version';

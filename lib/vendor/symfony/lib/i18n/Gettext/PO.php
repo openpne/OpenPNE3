@@ -12,7 +12,7 @@
 // | Copyright (c) 2004 Michael Wallner <mike@iworks.at>                  |
 // +----------------------------------------------------------------------+
 //
-// $Id: PO.php 9856 2008-06-25 11:33:49Z fabien $
+// $Id: PO.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
 
 /**
  * File::Gettext::PO

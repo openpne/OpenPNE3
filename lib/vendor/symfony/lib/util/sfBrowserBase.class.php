@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfBrowserBase.class.php 22945 2009-10-12 12:55:22Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfBrowserBase.class.php 23901 2009-11-14 13:33:03Z bschussek $
  */
 abstract class sfBrowserBase
 {
@@ -513,6 +513,7 @@ abstract class sfBrowserBase
   public function resetCurrentException()
   {
     $this->currentException = null;
+    sfException::clearLastException();
   }
 
   /**

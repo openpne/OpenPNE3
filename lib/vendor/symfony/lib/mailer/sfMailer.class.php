@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage mailer
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id$
+ * @version    SVN: $Id: sfMailer.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfMailer extends Swift_Mailer
 {
@@ -106,7 +106,7 @@ class sfMailer extends Swift_Mailer
       }
       $arguments = isset($options['spool_arguments']) ? $options['spool_arguments'] : array();
 
-      if ($options)
+      if ($arguments)
       {
         $r = new ReflectionClass($options['spool_class']);
         $this->spool = $r->newInstanceArgs($arguments);
@@ -305,12 +305,17 @@ class sfMailer extends Swift_Mailer
    */
   public function flushQueue(&$failedRecipients = null)
   {
+    return $this->getSpool()->flushQueue($this->realtimeTransport, $failedRecipients);
+  }
+
+  public function getSpool()
+  {
     if (self::SPOOL != $this->strategy)
     {
       throw new LogicException(sprintf('You can only send messages in the spool if the delivery strategy is "spool" (%s is the current strategy).', $this->strategy));
     }
 
-    return $this->spool->flushQueue($this->realtimeTransport, $failedRecipients);
+    return $this->spool;
   }
 
   static public function initialize()

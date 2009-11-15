@@ -16,7 +16,7 @@
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     David Heinemeier Hansson
- * @version    SVN: $Id: AssetHelper.php 22402 2009-09-25 05:16:05Z Kris.Wallsmith $
+ * @version    SVN: $Id: AssetHelper.php 23922 2009-11-14 14:58:38Z fabien $
  */
 
 /**
@@ -361,15 +361,6 @@ function image_tag($source, $options = array())
       $options['title'] = $options['alt_title'];
     }
     unset($options['alt_title']);
-  }
-
-  if (!isset($options['alt']) && sfConfig::get('sf_compat_10'))
-  {
-    $path_pos = strrpos($source, '/');
-    $dot_pos = strrpos($source, '.');
-    $begin = $path_pos ? $path_pos + 1 : 0;
-    $nb_str = ($dot_pos ? $dot_pos : strlen($source)) - $begin;
-    $options['alt'] = ucfirst(substr($source, $begin, $nb_str));
   }
 
   if (isset($options['size']))

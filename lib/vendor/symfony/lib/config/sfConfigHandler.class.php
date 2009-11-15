@@ -18,7 +18,7 @@
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfConfigHandler.class.php 13547 2008-11-30 14:05:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 abstract class sfConfigHandler
 {

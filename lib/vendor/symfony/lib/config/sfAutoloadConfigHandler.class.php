@@ -15,7 +15,7 @@
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfAutoloadConfigHandler.class.php 22916 2009-10-10 13:26:53Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfAutoloadConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfAutoloadConfigHandler extends sfYamlConfigHandler
 {

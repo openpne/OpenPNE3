@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineDataDumpTask.class.php 23019 2009-10-13 22:48:07Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineDataDumpTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfDoctrineDataDumpTask extends sfDoctrineBaseTask
 {
@@ -36,7 +36,6 @@ class sfDoctrineDataDumpTask extends sfDoctrineBaseTask
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
     ));
 
-    $this->aliases = array('doctrine-dump-data');
     $this->namespace = 'doctrine';
     $this->name = 'data-dump';
     $this->briefDescription = 'Dumps data to the fixtures directory';

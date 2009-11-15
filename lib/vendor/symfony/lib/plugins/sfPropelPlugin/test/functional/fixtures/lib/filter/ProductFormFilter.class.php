@@ -6,7 +6,7 @@
  * @package    ##PROJECT_NAME##
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterTemplate.php 11675 2008-09-19 15:21:38Z fabien $
+ * @version    SVN: $Id: ProductFormFilter.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class ProductFormFilter extends BaseProductFormFilter
 {

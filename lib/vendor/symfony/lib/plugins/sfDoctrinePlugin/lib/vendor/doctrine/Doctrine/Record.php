@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Record.php 6638 2009-11-03 05:19:18Z jwage $
+ *  $Id: Record.php 6696 2009-11-10 17:48:03Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -29,7 +29,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6638 $
+ * @version     $Revision: 6696 $
  */
 abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Countable, IteratorAggregate, Serializable
 {
@@ -1011,15 +1011,29 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
         if (is_null($name)) {
             foreach ($this->_table->getRelations() as $rel) {
                 $reference = $rel->fetchRelatedFor($this);
-                if ($reference instanceof Doctrine_Collection || ($reference && $reference->exists())) {
+                if ($reference instanceof Doctrine_Collection) {
                     $this->_references[$rel->getAlias()] = $reference;
+                }
+                if ($reference instanceof Doctrine_Record) {
+                    if ($reference->exists()) {
+                        $this->_references[$rel->getAlias()] = $reference;
+                    } else {
+                        $reference->free();
+                    }
                 }
             }
         } else {
             $rel = $this->_table->getRelation($name);
             $reference = $rel->fetchRelatedFor($this);
-            if ($reference instanceof Doctrine_Collection || ($reference && $reference->exists())) {
+            if ($reference instanceof Doctrine_Collection) {
                 $this->_references[$name] = $reference;
+            }
+            if ($reference instanceof Doctrine_Record) {
+                if ($reference->exists()) {
+                    $this->_references[$name] = $reference;
+                } else {
+                    $reference->free();
+                }
             }
         }
     }

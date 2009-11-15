@@ -15,7 +15,7 @@
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Fabian Lange <fabian.lange@symfony-project.com>
- * @version    SVN: $Id: sfValidatorDateTime.class.php 5581 2007-10-18 13:56:14Z fabien $
+ * @version    SVN: $Id: sfValidatorTime.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfValidatorTime extends sfValidatorBase
 {

@@ -20,7 +20,7 @@
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
  * @author     Julien Garand <julien.garand@gmail.com>
- * @version    SVN: $Id: sfMySQLiSessionStorage.class.php 15543 2009-02-16 21:37:03Z dwhittle $
+ * @version    SVN: $Id: sfMySQLiSessionStorage.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfMySQLiSessionStorage extends sfMySQLSessionStorage
 {

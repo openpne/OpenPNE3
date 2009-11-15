@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineGenerateMigrationsDbTask.class.php 23048 2009-10-14 14:44:50Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineGenerateMigrationsDbTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfDoctrineGenerateMigrationsDbTask extends sfDoctrineBaseTask
 {
@@ -32,7 +32,6 @@ class sfDoctrineGenerateMigrationsDbTask extends sfDoctrineBaseTask
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
     ));
 
-    $this->aliases = array('doctrine-generate-migrations-db', 'doctrine-gen-migrations-from-db');
     $this->namespace = 'doctrine';
     $this->name = 'generate-migrations-db';
     $this->briefDescription = 'Generate migration classes from existing database connections';

@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorI18nChoiceCountry.class.php 22268 2009-09-23 06:24:28Z fabien $
+ * @version    SVN: $Id: sfValidatorI18nChoiceCountry.class.php 23940 2009-11-14 17:58:19Z fabien $
  */
 class sfValidatorI18nChoiceCountry extends sfValidatorChoice
 {
@@ -34,8 +34,6 @@ class sfValidatorI18nChoiceCountry extends sfValidatorChoice
   {
     parent::configure($options, $messages);
 
-    // culture is deprecated
-    $this->addOption('culture');
     $this->addOption('countries');
 
     // populate choices with all countries

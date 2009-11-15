@@ -42,7 +42,7 @@ class AdminGenBrowser extends sfTestBrowser
   {
     $this->
       get('/my_articles')->
-      isStatusCode('200')
+      with('response')->isStatusCode('200')
     ;
   }
 
@@ -55,13 +55,13 @@ class AdminGenBrowser extends sfTestBrowser
     $this->
       get('/articles/new')->
         with('response')->begin()->
-          contains('En')->
-          contains('Fr')->
-          contains('Title')->
-          contains('Body')->
-          contains('Slug')->
-          contains('Jonathan H. Wage')->
-          contains('Fabien POTENCIER')->
+          matches('/En/')->
+          matches('/Fr/')->
+          matches('/Title/')->
+          matches('/Body/')->
+          matches('/Slug/')->
+          matches('/Jonathan H. Wage/')->
+          matches('/Fabien POTENCIER/')->
         end()->
         with('request')->begin()->
           isParameter('module', 'articles')->
@@ -99,9 +99,9 @@ class AdminGenBrowser extends sfTestBrowser
     $this->
       get('/users/new')->
         with('response')->begin()->
-          contains('Profile')->
-          contains('First name')->
-          contains('Last name')->
+          matches('/Profile/')->
+          matches('/First name/')->
+          matches('/Last name/')->
         end()
     ;
 
@@ -196,10 +196,10 @@ class AdminGenBrowser extends sfTestBrowser
     foreach ($this->_modules as $module)
     {
       $this->info('Removing admin gen module "' . $module . '"');
-      $fs->sh('rm -rf ' . sfConfig::get('sf_app_module_dir') . '/' . $module);
+      $fs->execute('rm -rf ' . sfConfig::get('sf_app_module_dir') . '/' . $module);
     }
-    $fs->sh('rm -rf ' . sfConfig::get('sf_test_dir') . '/functional/backend');
-    $fs->sh('rm -rf ' . sfConfig::get('sf_data_dir') . '/*.sqlite');
+    $fs->execute('rm -rf ' . sfConfig::get('sf_test_dir') . '/functional/backend');
+    $fs->execute('rm -rf ' . sfConfig::get('sf_data_dir') . '/*.sqlite');
   }
 
   public function __destruct()

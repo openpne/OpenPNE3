@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage log
  * @author     Dustin Whittle <dustin.whittle@symfony-project.com>
- * @version    SVN: $Id: sfPropelLogger.class.php 21908 2009-09-11 12:06:21Z fabien $
+ * @version    SVN: $Id: sfPropelLogger.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfPropelLogger implements BasicLogger
 {

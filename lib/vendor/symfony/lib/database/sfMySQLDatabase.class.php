@@ -24,7 +24,7 @@
  * @subpackage database
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfMySQLDatabase.class.php 19110 2009-06-10 02:23:21Z fabien $
+ * @version    SVN: $Id: sfMySQLDatabase.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfMySQLDatabase extends sfDatabase
 {

@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: UnitOfWork.php 6635 2009-11-03 03:32:26Z jwage $
+ *  $Id: UnitOfWork.php 6690 2009-11-10 16:34:23Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -33,7 +33,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6635 $
+ * @version     $Revision: 6690 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Roman Borschel <roman@code-factory.org>
  */
@@ -51,6 +51,7 @@ class Doctrine_Connection_UnitOfWork extends Doctrine_Connection_Module
         $record->assignInheritanceValues();
 
         $conn = $this->getConnection();
+        $conn->connect();
 
         $state = $record->state();
         if ($state === Doctrine_Record::STATE_LOCKED || $state === Doctrine_Record::STATE_TLOCKED) {
@@ -626,7 +627,7 @@ class Doctrine_Connection_UnitOfWork extends Doctrine_Connection_Module
             }
         }
 
-        $this->_assignSequence($record);
+        $this->_assignSequence($record, $fields);
         $this->conn->insert($table, $fields);
         $this->_assignIdentifier($record);
     }
@@ -893,7 +894,7 @@ class Doctrine_Connection_UnitOfWork extends Doctrine_Connection_Module
         return $dataSet;
     }
 
-    protected function _assignSequence(Doctrine_Record $record)
+    protected function _assignSequence(Doctrine_Record $record, &$fields = null)
     {
         $table = $record->getTable();
         $seq = $table->sequenceName;
@@ -901,9 +902,13 @@ class Doctrine_Connection_UnitOfWork extends Doctrine_Connection_Module
         if ( ! empty($seq)) {
             $id = $this->conn->sequence->nextId($seq);
             $seqName = $table->getIdentifier();
-            $fields[$seqName] = $id;
+            if ($fields) {
+                $fields[$seqName] = $id;
+            }
 
             $record->assignIdentifier($id);
+
+            return $id;
         }
     }
 

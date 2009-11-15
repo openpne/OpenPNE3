@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorFile.class.php 20550 2009-07-28 07:41:19Z fabien $
+ * @version    SVN: $Id: sfValidatedFile.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfValidatedFile
 {

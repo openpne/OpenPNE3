@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTesterDoctrine.class.php 12237 2008-10-17 22:25:25Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfTesterDoctrine.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfTesterDoctrine extends sfTester
 {
