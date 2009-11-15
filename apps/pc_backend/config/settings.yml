@@ -80,7 +80,7 @@ all:
 #    calendar_web_dir:       /sf/calendar
 #
 #    # Helpers included in all templates by default
-    standard_helpers:       [Partial, Cache, Form, I18N, sfImage, opUtil]
+    standard_helpers:       [Partial, Cache, I18N, sfImage, opUtil]
 #
 #    # Activated modules from plugins or from the symfony core
     enabled_modules:        [default, image]
