@@ -19,6 +19,14 @@ class addNavigationItemForMobileHomeCenter extends Doctrine_Migration_Base
     $navi->setUri('member/profile');
     $navi->setSortOrder(0);
     $navi->save();
+
+    // and try to fix community topic revision if the plugin is exists
+    $conn = Doctrine_Manager::getInstance()->getConnectionForComponent('SnsConfig');
+    $result = $conn->fetchOne('SELECT value FROM sns_config WHERE name = ?', array('opCommunityTopicPlugin_revision'));
+    if (!$result)
+    {
+      Doctrine::getTable('SnsConfig')->set('opCommunityTopicPlugin_revision', '4');
+    }
   }
 
   public function down()
