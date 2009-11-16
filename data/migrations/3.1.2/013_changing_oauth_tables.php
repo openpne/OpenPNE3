@@ -16,8 +16,6 @@ class changingOAuthTables extends Doctrine_Migration_Base
     $this->removeColumn('o_auth_admin_token', 'expires_at');
     $this->addColumn('o_auth_admin_token', 'callback_url', 'string');
     $this->addColumn('o_auth_admin_token', 'verifier', 'string');
-
-    $this->dropForeignKey('o_auth_admin_token', 'o_auth_admin_token_admin_user_id_admin_user_id');
   }
 
   public function down()
@@ -28,14 +26,5 @@ class changingOAuthTables extends Doctrine_Migration_Base
     ));
     $this->addColumn('o_auth_admin_token', 'expires_at', 'timestamp');
     $this->removeColumn('o_auth_admin_token', 'callback_url', 'string');
-
-    $this->createForeignkey('o_auth_admin_token', 'o_auth_admin_token_admin_user_id_admin_user_id', array(
-      'name'         => 'o_auth_admin_token_admin_user_id_admin_user_id',
-      'local'        => 'admin_user_id',
-      'foreign'      => 'id',
-      'foreignTable' => 'admin_user',
-      'onUpdate'     => '',
-      'onDelete'     => 'cascade',
-    ));
   }
 }
