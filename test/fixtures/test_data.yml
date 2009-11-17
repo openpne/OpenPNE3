@@ -560,3 +560,25 @@ OAuthMemberToken:
     secret: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
     type: "access"
     verifier: "FFFFF"
+
+Banner:
+  dummy_banner1:
+    name: "banner1"
+    is_use_html: false
+    caption: ""
+
+  dummy_banner2:
+    name: "banner2"
+    html: "testtest"
+    is_use_html: true
+
+BannerImage:
+  dummy_banner_image1:
+    File: dummy_file1
+  dummy_banner_image2:
+    File: dummy_file2
+
+BannerUseImage:
+  banner_use_image1:
+    Banner: dummy_banner1
+    BannerImage: dummy_banner_image1

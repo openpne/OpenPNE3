@@ -17,6 +17,6 @@ class BannerImage extends BaseBannerImage
       $bannerUseImage->delete();
     }
 
-    return parent::delete($con);
+    return parent::delete($conn);
   }
 }
