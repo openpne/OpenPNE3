@@ -10,6 +10,7 @@
 
 class BlacklistTable extends Doctrine_Table
 {
+  // TODO: use findOneByUid()
   public function retrieveByUid($mobileUid)
   {
     return $this->createQuery()
