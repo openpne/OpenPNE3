@@ -104,16 +104,11 @@ class opMigration extends Doctrine_Migration
     }
   }
 
- /**
-  * migrate
-  *
-  * @see Doctrine_Migration
-  */
-  public function migrate($to = null)
+  protected function _doMigrateStep($direction, $num)
   {
-    parent::migrate($to);
+    parent::_doMigrateStep($direction, $num);
 
-    $file = $this->getMigrationFixtureFile();
+    $file = $this->getMigrationFixtureFile($num);
     if ($file)
     {
       Doctrine::loadData($file, true);
@@ -226,7 +221,7 @@ class opMigration extends Doctrine_Migration
   *
   * @return string
   */
-  protected function getMigrationFixtureFile()
+  protected function getMigrationFixtureFile($num)
   {
     $dir = $this->getMigrationScriptDirectory();
     if (!$dir)
@@ -234,7 +229,7 @@ class opMigration extends Doctrine_Migration
       return false;
     }
 
-    $result = sfFinder::type('file')->name(str_pad($this->getCurrentVersion(), 3, '0', STR_PAD_LEFT).'_*.yml')->in($dir);
+    $result = sfFinder::type('file')->name(str_pad($num, 3, '0', STR_PAD_LEFT).'_*.yml')->in($dir);
     if ($result)
     {
       return array_shift($result);
