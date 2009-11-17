@@ -507,7 +507,56 @@ SnsConfig:
     name: "daily_news_day"
     value: ""
 
-
 Blacklist:
   dummy_black_uid:
     uid: "TEST"
+
+OAuthConsumerInformation:
+  dummy_consumer_information1:
+    name: "test1"
+    description: "testtest"
+    key_string: "AAAAAAAAAAAAAAAA"
+    secret: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    Image: dummy_file1
+    using_apis: ["webapi_member_get"]
+
+  dummy_consumer_information2:
+    name: "test2"
+    description: "testtest"
+    key_string: "BBBBBBBBBBBBBBBB"
+    secret: "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+    Image: dummy_file1
+    using_apis: ["webapi_member_get"]
+    Member: first_member
+
+OAuthAdminToken:
+  dummy_admin_token1:
+    Consumer: dummy_consumer_information1
+    key_string: "CCCCCCCCCCCCCCCC"
+    secret: "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+    type: "request"
+    verifier: "CCCCC"
+
+  dummy_admin_token2:
+    Consumer: dummy_consumer_information1
+    key_string: "DDDDDDDDDDDDDDDD"
+    secret: "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
+    type: "access"
+    verifier: "DDDDD"
+
+OAuthMemberToken:
+  dummy_member_token1:
+    Consumer: dummy_consumer_information2
+    Member: first_member
+    key_string: "EEEEEEEEEEEEEEEE"
+    secret: "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
+    type: "request"
+    verifier: "EEEEE"
+
+  dummy_member_token2:
+    Consumer: dummy_consumer_information2
+    Member: first_member
+    key_string: "FFFFFFFFFFFFFFFF"
+    secret: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+    type: "access"
+    verifier: "FFFFF"
