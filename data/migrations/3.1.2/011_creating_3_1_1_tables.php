@@ -77,7 +77,6 @@ class creating311Tables extends Doctrine_Migration_Base
       array(
         'id'                => array('type' => 'integer', 'length' => '4', 'primary' => '1'),
         'oauth_consumer_id' => array('type' => 'integer', 'notnull' => '1', 'length' => '4'),
-        'admin_user_id'     => array('type' => 'integer', 'notnull' => '1', 'length' => '4'),
         'key_string'        => array('type' => 'string', 'default' => '', 'notnull' => '1', 'length' => '16'),
         'secret'            => array('type' => 'string', 'default' => '', 'notnull' => '1', 'length' => '32'),
         'type'              => array('type' => 'enum', 'values' => array(0 => 'request', 1 => 'access'), 'default' => 'request', 'length' => ''),

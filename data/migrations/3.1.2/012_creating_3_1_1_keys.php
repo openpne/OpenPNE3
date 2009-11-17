@@ -51,15 +51,6 @@ class creating311Keys extends Doctrine_Migration_Base
       'foreignTable' => 'banner_image',
     ));
 
-    $this->foreignkey($direction, 'o_auth_admin_token', 'o_auth_admin_token_admin_user_id_admin_user_id', array(
-      'name'         => 'o_auth_admin_token_admin_user_id_admin_user_id',
-      'local'        => 'admin_user_id',
-      'foreign'      => 'id',
-      'foreignTable' => 'admin_user',
-      'onUpdate'     => '',
-      'onDelete'     => 'cascade',
-    ));
-
     $this->foreignkey($direction, 'oauth_consumer', 'oauth_consumer_file_id_file_id', array(
       'name'         => 'oauth_consumer_file_id_file_id',
       'local'        => 'file_id',

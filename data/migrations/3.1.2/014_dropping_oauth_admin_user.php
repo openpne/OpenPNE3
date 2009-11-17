@@ -12,14 +12,10 @@ class droppingOAuthAdminUser extends Doctrine_Migration_Base
 {
   public function up()
   {
-    $this->removeColumn('o_auth_admin_token', 'admin_user_id');
   }
 
   public function down()
   {
-    $this->addColumn('o_auth_admin_token', 'admin_user_id', 'integer', 4, array(
-      'notnull' => '1',
-    ));
   }
 }
 
