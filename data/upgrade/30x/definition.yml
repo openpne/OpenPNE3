@@ -1,0 +1,4 @@
+dbconfig:
+  strategy: opUpgradeFrom30DBConfiguraitonStrategy
+  file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30DBConfiguraitonStrategy.class.php
+
