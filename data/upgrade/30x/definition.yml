@@ -71,3 +71,6 @@ convert_member_application:
 convert_member_image:
   strategy: SQLImport
 
+convert_member_relationship:
+  strategy: SQLImport
+
