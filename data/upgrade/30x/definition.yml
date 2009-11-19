@@ -28,3 +28,22 @@ normalize_opensocial:
   strategy: opUpgradeFrom30NormalizeOpensocialStrategy
   file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30NormalizeOpensocialStrategy.class.php
 
+create_translation_table_for_opensocial:
+  strategy: opUpgradeFrom30CreateTranslationTableStrategy
+  file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30CreateTranslationTableStrategy.class.php
+  options:
+    models: [Application]
+    required_rules: [normalize_opensocial]
+
+create_translation_table:
+  strategy: opUpgradeFrom30CreateTranslationTableStrategy
+  file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30CreateTranslationTableStrategy.class.php
+  options:
+    models: [Banner, MessageType, Navigation, Profile, ProfileOption]
+
+import_translation:
+  strategy: opUpgradeFrom30ConvertTranslationTableStrategy
+  file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30ConvertTranslationTableStrategy.class.php
+  options:
+    tables: [application, banner, message_type, navigation, profile, profile_option]
+
