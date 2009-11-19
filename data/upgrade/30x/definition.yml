@@ -89,3 +89,6 @@ convert_profile:
 convert_community_member:
   strategy: SQLImport
 
+convert_member:
+  strategy: SQLImport
+
