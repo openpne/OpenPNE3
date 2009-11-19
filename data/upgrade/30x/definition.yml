@@ -95,3 +95,8 @@ convert_member:
 convert_member_config:
   strategy: SQLImport
 
+create_tables:
+  strategy: CreateTable
+  options:
+    models: [Album, AlbumImage, DiaryCommentUpdate, NotificationMail, OAuthAdminToken, OAuthMemberToken, OAuthConsumerInformation, OpenIDTrustLog, Plugin, Session, SnsTerm]
+
