@@ -47,3 +47,6 @@ import_translation:
   options:
     tables: [application, banner, message_type, navigation, profile, profile_option]
 
+append_member_application_setting_column:
+  strategy: SQLImport
+
