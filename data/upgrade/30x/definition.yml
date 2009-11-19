@@ -77,3 +77,6 @@ convert_member_relationship:
 convert_message:
   strategy: SQLImport
 
+convert_message_send_list:
+  strategy: SQLImport
+
