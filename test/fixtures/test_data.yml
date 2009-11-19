@@ -582,3 +582,10 @@ BannerUseImage:
   banner_use_image1:
     Banner: dummy_banner1
     BannerImage: dummy_banner_image1
+
+OpenIDTrustLog:
+  dummy_openid_trust_log1:
+    Member: first_member
+    uri: "example.com"
+    uri_key: <?php echo md5("example.com")."\n"; ?>
+    is_permanent: false
