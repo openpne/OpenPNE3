@@ -15,3 +15,6 @@ fix_revisions:
 append_date_column:
   strategy: SQLImport
 
+convert_ashiato:
+  strategy: SQLImport
+
