@@ -83,3 +83,6 @@ convert_message_send_list:
 convert_message_type:
   strategy: SQLImport
 
+convert_profile:
+  strategy: SQLImport
+
