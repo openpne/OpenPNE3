@@ -5,6 +5,9 @@ dbconfig:
 sync_plugin:
   strategy: SyncPlugin
 
+build_model:
+  strategy: BuildModel
+
 append_date_column:
   strategy: SQLImport
 
