@@ -62,3 +62,6 @@ convert_application:
 convert_application_persistent_data:
   strategy: SQLImport
 
+convert_banner:
+  strategy: SQLImport
+
