@@ -30,8 +30,18 @@ class opUpgradeSQLImportStrategy extends opUpgradeAbstractStrategy
 
     $db = $this->getDatabaseManager()->getDatabase('doctrine');
 
-    $sql = $this->parseSql($path);
-    $db->getDoctrineConnection()->execute($sql);
+    $sql = opToolkit::unifyEOLCharacter($this->parseSql($path));
+    $queries = explode("\n", $sql);
+    foreach ($queries as $query)
+    {
+      $query = trim($query);
+      if (!$query)
+      {
+        continue;
+      }
+
+      $db->getDoctrineConnection()->execute($query);
+    }
   }
 
   protected function parseSql($file)
