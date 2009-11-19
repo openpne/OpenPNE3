@@ -80,3 +80,6 @@ convert_message:
 convert_message_send_list:
   strategy: SQLImport
 
+convert_message_type:
+  strategy: SQLImport
+
