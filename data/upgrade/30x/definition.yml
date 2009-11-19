@@ -24,3 +24,7 @@ convert_community_category:
 convert_member_profile:
   strategy: SQLImport
 
+normalize_opensocial:
+  strategy: opUpgradeFrom30NormalizeOpensocialStrategy
+  file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30NormalizeOpensocialStrategy.class.php
+
