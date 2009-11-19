@@ -1,0 +1,92 @@
+# opBlogPlugin : 020_gadget.yml
+Gadget:
+  blog_profile_user:
+    type: "profileContents"
+    name: "blogUser"
+    sort_order: 100
+
+# opDiaryPlugin : 020_gadget.yml
+  diary_comment_history:
+     type: "contents"
+     name: "diaryCommentHistory"
+     sort_order: 103
+
+  diary_profile_list:
+     type: "profileContents"
+     name: "diaryMemberList"
+     sort_order: 101
+
+  mobile_diay_friend_list:
+     type: "mobileContents"
+     name: "diaryFriendList"
+     sort_order: 101
+
+  mobile_diay_list:
+     type: "mobileContents"
+     name: "diaryList"
+     sort_order: 102
+
+  mobile_diary_comment_history:
+     type: "mobileContents"
+     name: "diaryCommentHistory"
+     sort_order: 103
+
+  mobile_diary_my_list:
+     type: "mobileContents"
+     name: "diaryMyList"
+     sort_order: 104
+
+  mobile_diary_profile_list:
+     type: "mobileProfileContents"
+     name: "diaryMemberList"
+     sort_order: 101
+
+# opAlbumPlugin
+  album_friend_list:
+    type: "contents"
+    name: "albumFriendList"
+    sort_order: 141
+
+  album_list:
+    type: "contents"
+    name: "albumList"
+    sort_order: 142
+
+  album_my_list:
+    type: "contents"
+    name: "albumMyList"
+    sort_order: 143
+
+  album_profile_list:
+    type: "profileContents"
+    name: "albumMemberList"
+    sort_order: 141
+
+Navigation:
+  secure_global_navigation_album:
+    type: "secure_global"
+    uri: "@album_list"
+    sort_order: 25
+    Translation:
+      en:
+        caption: "Album"
+      ja_JP:
+        caption: "アルバム"
+  default_navigation_album:
+    type: "default"
+    uri: "@album_list_mine"
+    sort_order: 15
+    Translation:
+      en:
+        caption: "Album"
+      ja_JP:
+        caption: "アルバム"
+  friend_navigation_album:
+    type: "friend"
+    uri: "@album_list_member"
+    sort_order: 15
+    Translation:
+      en:
+        caption: "Album"
+      ja_JP:
+        caption: "アルバム"

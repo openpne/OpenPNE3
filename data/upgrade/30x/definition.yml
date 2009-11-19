@@ -100,3 +100,9 @@ create_tables:
   options:
     models: [Album, AlbumImage, DiaryCommentUpdate, NotificationMail, OAuthAdminToken, OAuthMemberToken, OAuthConsumerInformation, OpenIDTrustLog, Plugin, Session, SnsTerm]
 
+load_data:
+  strategy: DataLoad
+
+plugin_load_data:
+  strategy: DataLoad
+

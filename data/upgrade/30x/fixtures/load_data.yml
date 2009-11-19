@@ -1,0 +1,205 @@
+# 005_import_gadgets.yml
+Gadget:
+  gadget_sidebanner:
+    type: "sideBannerContents"
+    name: "sideBanner"
+    sort_order: 20
+
+  profile_gadget_member_image:
+    type: "profileSideMenu"
+    name: "memberImageBox"
+    sort_order: 10
+
+  profile_gadget_friend_table:
+    type: "profileSideMenu"
+    name: "friendListBox"
+    sort_order: 20
+
+  profile_gadget_community_table:
+    type: "profileSideMenu"
+    name: "communityJoinListBox"
+    sort_order: 30
+
+  profile_gadget_profile:
+    type: "profileContents"
+    name: "profileListBox"
+    sort_order: 10
+
+  mobile_profile_gadget_friend_table:
+    type: "mobileProfileBottom"
+    name: "friendListBox"
+    sort_order: 10
+
+  mobile_profile_gadget_community_table:
+    type: "mobileProfileBottom"
+    name: "communityJoinListBox"
+    sort_order: 20
+
+# 006_import_mobile_navi_menu.yml
+Navigation:
+  mobile_home_center_navigation_profile:
+    type: "mobile_home_center"
+    uri: "member/profile"
+    sort_order: 0
+    Translation:
+      ja_JP:
+        caption: "[i:140]ﾌﾟﾛﾌｨｰﾙ"
+      en:
+        caption: "Profile"
+
+# 008_import_backend_navi_menu.yml
+Navigation:
+  backend_side_member:
+    type: "backend_side"
+    uri:  "member/index"
+    sort_order: 10
+    Translation:
+      ja_JP:
+        caption: "メンバー管理"
+
+  backend_side_monitoring:
+    type: "backend_side"
+    uri:  "monitoring/index"
+    sort_order: 20
+    Translation:
+      ja_JP:
+        caption: "画像・書き込み管理"
+
+  backend_side_community:
+    type: "backend_side"
+    uri:  "community/index"
+    sort_order: 30
+    Translation:
+      ja_JP:
+        caption: "コミュニティ管理"
+
+  backend_side_sns_config:
+    type: "backend_side"
+    uri:  "sns/config"
+    sort_order: 40
+    Translation:
+      ja_JP:
+        caption: "SNS設定"
+
+  backend_side_mail:
+    type: "backend_side"
+    uri:  "@mail_config"
+    sort_order: 35
+    Translation:
+      ja_JP:
+        caption: "メール設定"
+
+  backend_side_design:
+    type: "backend_side"
+    uri:  "design/index"
+    sort_order: 50
+    Translation:
+      ja_JP:
+        caption: "デザイン設定"
+
+  backend_side_navigation:
+    type: "backend_side"
+    uri:  "navigation/index"
+    sort_order: 60
+    Translation:
+      ja_JP:
+        caption: "ナビゲーション設定"
+
+  backend_side_profile_list:
+    type: "backend_side"
+    uri:  "profile/list"
+    sort_order: 70
+    Translation:
+      ja_JP:
+        caption: "プロフィール項目設定"
+
+  backend_side_plugin_list:
+    type: "backend_side"
+    uri:  "plugin/list"
+    sort_order: 80
+    Translation:
+      ja_JP:
+        caption: "プラグイン設定"
+
+  backend_side_admin:
+    type: "backend_side"
+    uri:  "admin/index"
+    sort_order: 90
+    Translation:
+      ja_JP:
+        caption: "管理画面設定"
+
+# 010_import_sns_terms.yml
+SnsTerm:
+  term_friend_pc_frontend:
+    name: "friend"
+    application: "pc_frontend"
+    Translation:
+      ja_JP:
+        value: "フレンド"
+      en:
+        value: "friend"
+
+  term_friend_mobile_frontend:
+    name: "friend"
+    application: "mobile_frontend"
+    Translation:
+      ja_JP:
+        value: "ﾌﾚﾝﾄﾞ"
+      en:
+        value: "friend"
+
+  term_my_friend_pc_frontend:
+    name: "my_friend"
+    application: "pc_frontend"
+    Translation:
+      ja_JP:
+        value: "マイフレンド"
+      en:
+        value: "my friend"
+
+  term_my_friend_mobile_frontend:
+    name: "my_friend"
+    application: "mobile_frontend"
+    Translation:
+      ja_JP:
+        value: "ﾏｲﾌﾚﾝﾄﾞ"
+      en:
+        value: "my friend"
+
+  term_community_pc_frontend:
+    name: "community"
+    application: "pc_frontend"
+    Translation:
+      ja_JP:
+        value: "コミュニティ"
+      en:
+        value: "community"
+
+  term_community_mobile_frontend:
+    name: "community"
+    application: "mobile_frontend"
+    Translation:
+      ja_JP:
+        value: "ｺﾐｭﾆﾃｨ"
+      en:
+        value: "community"
+
+  term_nickname_pc_frontend:
+    name: "nickname"
+    application: "pc_frontend"
+    Translation:
+      ja_JP:
+        value: "ニックネーム"
+      en:
+        value: "nickname"
+
+  term_nickname_mobile_frontend:
+    name: "nickname"
+    application: "mobile_frontend"
+    Translation:
+      ja_JP:
+        value: "ﾆｯｸﾈｰﾑ"
+      en:
+        value: "nickname"
+
