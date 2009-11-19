@@ -68,3 +68,6 @@ convert_banner:
 convert_member_application:
   strategy: SQLImport
 
+convert_member_image:
+  strategy: SQLImport
+
