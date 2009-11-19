@@ -56,3 +56,6 @@ recreate_keys:
   options:
     ignores: [favorite, intro_friend]
 
+convert_application:
+  strategy: SQLImport
+
