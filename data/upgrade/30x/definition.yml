@@ -106,3 +106,7 @@ load_data:
 plugin_load_data:
   strategy: DataLoad
 
+deactivate_unsupported_plugin:
+  strategy: opUpgradeFrom30DeactivatePluginStrategy
+  file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30DeactivatePluginStrategy.class.php
+
