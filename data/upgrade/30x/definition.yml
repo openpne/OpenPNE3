@@ -92,3 +92,6 @@ convert_community_member:
 convert_member:
   strategy: SQLImport
 
+convert_member_config:
+  strategy: SQLImport
+
