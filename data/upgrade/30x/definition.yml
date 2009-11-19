@@ -21,3 +21,6 @@ convert_ashiato:
 convert_community_category:
   strategy: SQLImport
 
+convert_member_profile:
+  strategy: SQLImport
+
