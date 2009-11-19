@@ -50,3 +50,9 @@ import_translation:
 append_member_application_setting_column:
   strategy: SQLImport
 
+recreate_keys:
+  strategy: opUpgradeFrom30RecreateKeysStrategy
+  file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30RecreateKeysStrategy.class.php
+  options:
+    ignores: [favorite, intro_friend]
+
