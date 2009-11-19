@@ -59,3 +59,6 @@ recreate_keys:
 convert_application:
   strategy: SQLImport
 
+convert_application_persistent_data:
+  strategy: SQLImport
+
