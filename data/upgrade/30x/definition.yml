@@ -86,3 +86,6 @@ convert_message_type:
 convert_profile:
   strategy: SQLImport
 
+convert_community_member:
+  strategy: SQLImport
+
