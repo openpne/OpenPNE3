@@ -2,6 +2,10 @@ dbconfig:
   strategy: opUpgradeFrom30DBConfiguraitonStrategy
   file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30DBConfiguraitonStrategy.class.php
 
+remove_blog_plugin:
+  strategy: opUpgradeFrom30RemoveBlogPluginStrategy
+  file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30RemoveBlogPluginStrategy.class.php
+
 sync_plugin:
   strategy: SyncPlugin
 
