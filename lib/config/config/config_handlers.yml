@@ -30,3 +30,6 @@ config/confirmation.yml:
 config/monitoring.yml:
   class: sfSimpleYamlConfigHandler
 
+modules/*/config/security.yml:
+  class:    opSecurityConfigHandler
+

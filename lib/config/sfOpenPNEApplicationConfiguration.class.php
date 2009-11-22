@@ -39,6 +39,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
   public function setup()
   {
+    require_once dirname(__FILE__).'/../config/opSecurityConfigHandler.class.php';
+
     $DS = DIRECTORY_SEPARATOR;
     $OpenPNE2Path = sfConfig::get('sf_lib_dir').$DS.'vendor'.$DS;  // ##PROJECT_LIB_DIR##/vendor/
     set_include_path($OpenPNE2Path.PATH_SEPARATOR.get_include_path());
