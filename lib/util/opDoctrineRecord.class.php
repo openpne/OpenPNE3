@@ -34,6 +34,11 @@ abstract class opDoctrineRecord extends sfDoctrineRecord implements Zend_Acl_Res
   */
   const UNDEFINED_DATETIME = '0001-01-01 00:00:00';
 
+ /**
+  * UNDEFINED_DATETIME_BC
+  */
+  const UNDEFINED_DATETIME_BC = '0000-00-00 00:00:00';
+
   protected $roleList = array();
 
   public function save(Doctrine_Connection $conn = null)
@@ -80,7 +85,7 @@ abstract class opDoctrineRecord extends sfDoctrineRecord implements Zend_Acl_Res
     $value = parent::_get($fieldName, $load);
 
     // In getter, opDoctrineRecord::UNDEFINED_DATETIME must be handled as null
-    if ($this->checkIsDatetimeField($fieldName) && self::UNDEFINED_DATETIME === $value)
+    if ($this->checkIsDatetimeField($fieldName) && in_array($value, array(self::UNDEFINED_DATETIME, self::UNDEFINED_DATETIME_BC), true))
     {
       $value = null;
     }
