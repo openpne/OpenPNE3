@@ -1,7 +1,8 @@
 /**
- * TinyMCE Plugin for OpenPNE
+ * TinyMCE Plugin for OpenPNE3
  *
  * @author Kousuke Ebihara 
+ * @author Shogo Kawahara
  */
 
 (function() {
@@ -173,7 +174,7 @@
             // button
             for (var key in config) {
                 var value = config[key];
-                if (value.isEnabled && key != "op_color") {
+                if (key != "op_color") {
                     ed.addButton(key, {title : '{#openpne.' + key + '}', image: value.imageURL, cmd : 'mceOpenPNE_' + key});
                 }
             }
@@ -219,13 +220,13 @@
 
         createControl: function(n, cm) {
             var c = null;
-            if (n == "op_color" && config["op_color"].isEnabled) {
+            if (n == "op_color") {
                 c = this._createOpenPNEColorButton("op_color", { title : "{#openpne.op_color}", image: config["op_color"].imageURL, cmd : "ForeColor"}, cm);
             }
 
             if (n == "op_emoji_docomo" || 
-                n == "op_emoji_au"  && config["op_emoji_au"] && config["op_emoji_au"].isEnabled ||
-                n == "op_emoji_softbank" && config["op_emoji_softbank"] && config["op_emoji_softbank"].isEnabled) {
+                n == "op_emoji_au"  && config["op_emoji_au"] ||
+                n == "op_emoji_softbank" && config["op_emoji_softbank"]) {
                 var emoji_config = {
                     op_emoji_docomo : {
                         carrier : "i",
@@ -249,7 +250,7 @@
                 c = this._createOpenPNEEmojiButton(n, emoji_config[n], cm);
             }
 
-            if (n == "op_cmd" && config["op_cmd"] && config["op_cmd"].isEnabled) {
+            if (n == "op_cmd" && config["op_cmd"]) {
                 c = this._createOpenPNECmdButton(n, {title: "{#openpne.op_cmd}", image: config["op_cmd"].imageURL, cmd: "mceOpenPNE_op_cmd"}, cm);
             }
 
@@ -259,8 +260,8 @@
         getInfo : function() {
             return {
                 longname : 'OpenPNE plugin',
-                author : 'Kousuke Ebihara',
-                version : "1.0"
+                author : 'Kousuke Ebihara, Shogo Kawahara',
+                version : "2.0"
             }
         },
 
