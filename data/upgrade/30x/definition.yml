@@ -9,6 +9,10 @@ remove_blog_plugin:
 sync_plugin:
   strategy: SyncPlugin
 
+remove_propel_files:
+  strategy: opUpgradeFrom30RemovePropelFilesStrategy
+  file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30RemovePropelFilesStrategy.class.php
+
 build_model:
   strategy: BuildModel
 
