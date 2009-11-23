@@ -589,3 +589,29 @@ OpenIDTrustLog:
     uri: "example.com"
     uri_key: <?php echo md5("example.com")."\n"; ?>
     is_permanent: false
+
+SnsTerm:
+  term_friend_pc_frontend:
+    name: "friend"
+    application: "pc_frontend"
+    Translation:
+      ja_JP:
+        value: "フレンド"
+      en:
+        value: "friend"
+
+NotificationMail:
+  dummy_notification_mail1:
+    name: "name1"
+    is_enabled: true
+    Translation:
+      ja_JP:
+        title: "title1"
+        template: "template1"
+  dummy_notification_mail2:
+    name: "name2"
+    is_enabled: false
+    Translation:
+      ja_JP:
+        title: "title2"
+        template: "template2"
