@@ -20,9 +20,21 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
   static protected $isFirstRenderOpenPNE  = true;
   static protected $isConfiguredTinyMCE   = false;
 
-  static protected $plugins = array('inlinepopups', 'openpne');
+  static protected $plugins = array('openpne');
 
-  static protected $buttons = array('op_b', 'op_u', 'op_s', 'op_i', 'op_large', 'op_small', 'op_color', 'op_emoji_docomo');
+  static protected $buttons = array(
+    'op_b' => array('caption' => 'Bold'),
+    'op_u' => array('caption' => 'Underline'),
+    'op_s' => array('caption' => 'Strikethrough'),
+    'op_i' => array('caption' => 'Itaric'),
+    'op_large' => array('caption' => 'Large'),
+    'op_small' => array('caption' => 'Small'),
+    'op_color' => array('caption' => 'Select text color'),
+    'op_emoji_docomo' => array('caption' => 'Input Emoji(DoCoMo)')
+  );
+
+  static protected $useButtons = null;
+
   static protected $buttonOnclickActions = array(
     'op_emoji_docomo' => 'opEmoji.getInstance("%id%").togglePallet("epDocomo");',
     'op_large' => 'op_mce_insert_tagname("%id%", "op:font", \' size="5"\');',
@@ -75,11 +87,88 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
     self::$extensions[] = $extension;
   }
 
+  static public function getAllButtons()
+  {
+    $buttons = array();
+    foreach (self::$buttons as $key => $button)
+    {
+      if (is_numeric($key))
+      {
+        $buttonName = $button;
+        $buttonConfig = array('imageURL' => image_path('deco_'.$buttonName.'.gif'));
+      }
+      else
+      {
+        $buttonName = $key;
+        if (!isset($button['imageURL']))
+        {
+          $button['imageURL'] = image_path('deco_'.$buttonName.'.gif');
+        }
+        $buttonConfig = $button;
+      }
+      $buttons[$buttonName] = $buttonConfig;
+    }
+
+    return $buttons;
+  }
+
+  static public function getButtons()
+  {
+    if (null !== self::$useButtons)
+    {
+      return self::$useButtons;
+    }
+
+    $buttons = self::getAllButtons();
+    $unenableButtons = Doctrine::getTable('SnsConfig')->get('richtextarea_unenable_buttons', null);
+    $unenableButtons = unserialize($unenableButtons);
+
+    if (is_array($unenableButtons) && count($unenableButtons))
+    {
+      foreach ($unenableButtons as $buttonName)
+      {
+        if (isset($buttons[$buttonName]))
+        {
+          unset($buttons[$buttonName]);
+        }
+      }
+    }
+
+    $buttonsSortOrder = Doctrine::getTable('SnsConfig')->get('richtextarea_buttons_sort_order', null);
+    $buttonsSortOrder = unserialize($buttonsSortOrder);
+
+    if (is_array($buttonsSortOrder) && count($buttonsSortOrder))
+    {
+      $newButtons = array();
+      foreach ($buttonsSortOrder as $buttonName)
+      {
+        if (isset($buttons[$buttonName]))
+        {
+          $newButtons[$buttonName] = $buttons[$buttonName];
+          unset($buttons[$buttonName]);
+        }
+      }
+      self::$useButtons = $newButtons + $buttons;
+    }
+    else
+    {
+      self::$useButtons = $buttons;
+    }
+    return self::$useButtons;
+  }
+
   public function __construct($options = array(), $attributes = array())
   {
+    sfProjectConfiguration::getActive()->loadHelpers('Asset');
     parent::__construct($options, $attributes);
 
-    sfProjectConfiguration::getActive()->loadHelpers('Asset');
+    if (!isset($options['is_textmode']))
+    {
+      if (Doctrine::getTable('SnsConfig')->get('richtextarea_default_mode', 'text') === 'preview')
+      {
+        $this->setOption('is_textmode', false);
+      }
+    }
 
     foreach (self::$extensions as $extension)
     {
@@ -91,14 +180,13 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
         self::$convertCallbackList  = array_merge(self::$convertCallbackList, call_user_func(array($extension, 'getConvertCallbacks')));
         self::$htmlConvertList      = array_merge(self::$htmlConvertList, call_user_func(array($extension, 'getHtmlConverts')));
       }
-      call_user_func_array(array($extension, 'configure'), array(&$this->tinyMCEConfigs));
     }
 
     if (!empty($this->tinyMCEConfigs['plugins']))
     {
       $this->tinyMCEConfigs['plugins'] .= ',';
     }
-    $plugins = array();  
+    $plugins = array();
     foreach (self::$plugins as $name => $path)
     {
       if (is_numeric($name))
@@ -117,19 +205,12 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
     {
       $this->tinyMCEConfigs['theme_advanced_buttons1'] .= ',';
     }
-    $buttons = array();  
-    foreach (self::$buttons as $key => $button)
+    $this->tinyMCEConfigs['theme_advanced_buttons1'] .= implode(',', array_keys(self::getButtons()));
+
+    foreach (self::$extensions as $extension)
     {
-      if (is_numeric($key))
-      {
-        $buttons[] = $button;
-      }
-      else
-      {
-        $buttons[] = $key;
-      }
+      call_user_func_array(array($extension, 'configure'), array(&$this->tinyMCEConfigs));
     }
-    $this->tinyMCEConfigs['theme_advanced_buttons1'] .= implode(',', $buttons);
 
     self::$isConfiguredTinyMCE = true;
   }
@@ -142,21 +223,6 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
     }
 
     $js = '';
-
-    foreach (self::$buttons as $key => $button)
-    {
-      if (is_numeric($key))
-      {
-        $buttonName = $button;
-        $buttonConfig = array('isEnabled' => 1, 'imageURL' => image_path('deco_'.$buttonName.'.gif'));
-      }
-      else
-      {
-        $buttonName = $key;
-        $buttonConfig = $button;
-      }
-      $config[$buttonName] = $buttonConfig;
-    }
 
     if (self::$isFirstRenderOpenPNE)
     {
@@ -173,7 +239,7 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
         $js .= sprintf('tinymce.PluginManager.load("%s", "%s");'."\n", $key, $path);
       }
 
-      $js .= sprintf("function op_mce_editor_get_config() { return %s; }\n", json_encode($config));
+      $js .= sprintf("function op_mce_editor_get_config() { return %s; }\n", json_encode(self::getButtons()));
       $js .= sprintf('function op_get_relative_uri_root() { return "%s"; }', $relativeUrlRoot);
 
       self::$isFirstRenderOpenPNE = false;
@@ -189,7 +255,7 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
     $this->setOption('textarea_template', '<div id="'.$id.'_buttonmenu" class="'.$id.'">'
       .get_partial('global/richTextareaOpenPNEButton', array(
         'id' => $id,
-        'configs' => $config,
+        'configs' => self::getButtons(),
         'onclick_actions' => self::$buttonOnclickActions
       )).
       '</div>'.$this->getOption('textarea_template'));

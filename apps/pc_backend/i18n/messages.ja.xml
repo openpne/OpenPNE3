@@ -584,6 +584,59 @@
         <source>A response from this site will be transiently-lowered during caches are clearing.</source>
         <target>キャッシュを削除する間、一時的にサイトからのレスポンスが遅くなるかもしれません。</target>
       </trans-unit>
+
+      <trans-unit id="">
+        <source>RichTextarea Configuration</source>
+        <target>リッチテキストエリア設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Default edit mode</source>
+        <target>デフォルトの編集モード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Buttons Configuration</source>
+        <target>ボタンの設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Button Image</source>
+        <target>ボタン画像</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Enabled</source>
+        <target>有効</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Bold</source>
+        <target>太字</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Underline</source>
+        <target>下線</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Strikethrough</source>
+        <target>取り消し線</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Itaric</source>
+        <target>斜体</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Large</source>
+        <target>大きめの文字</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Small</source>
+        <target>小さめの文字</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Select text color</source>
+        <target>文字色変更</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Input Emoji(DoCoMo)</source>
+        <target>絵文字挿入(DoCoMo)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
