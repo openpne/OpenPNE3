@@ -2,8 +2,9 @@
 
 include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
+sfContext::createInstance($configuration);
 
-$t = new lime_test(9, new lime_output_color());
+$t = new lime_test(10, new lime_output_color());
 
 $gadget1 = Doctrine::getTable('Gadget')->find(1);
 $gadget3 = Doctrine::getTable('Gadget')->find(3);
