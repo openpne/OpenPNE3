@@ -677,4 +677,8 @@ function op_is_accessable_url($uri)
   }
 }
 
+function op_url_to_id($uri)
+{
+  return str_replace(array('/', ',', ';', '~', '?', '@', '&', '=', '+', '$', '%', '#', '!', '(', ')'), '_', $uri);
+}
 

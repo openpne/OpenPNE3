@@ -1,0 +1,28 @@
+#opSkinClassicPlugin_skin_index:
+#  url: /opSkinClassicPlugin
+#  param: { module: opSkinClassicPlugin, action: index }
+#
+#opSkinClassicPlugin_skin_list:
+#  url: /opSkinClassicPlugin/skin
+#  class: sfRequestRoute
+#  param: { module: opSkinClassicPlugin, action: skinList }
+#  requirements:
+#    sf_method: [get]
+#
+#opSkinClassicPlugin_preset:
+#  url: /opSkinClassicPlugin/preset
+#  class: sfRequestRoute
+#  param: { module: opSkinClassicPlugin, action: preset }
+#  requirements:
+#    sf_method: [post]
+#
+#opSkinClassicPlugin_color:
+#  url: /opSkinClassicPlugin/color
+#  class: sfRequestRoute
+#  param: { module: opSkinClassicPlugin, action: color }
+#  requirements:
+#    sf_method: [post]
+#
+#opSkinClassicPlugin_nodefaults:
+#  url: /opSkinClassicPlugin
+#

@@ -1,0 +1,3 @@
+opSkinClassicPlugin_css:
+  url: /cache/css/:theme.:sf_format
+  param: { module: opSkinClassicPlugin, action: css, sf_format: css }
