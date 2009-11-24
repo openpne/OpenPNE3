@@ -25,7 +25,7 @@ class MemberConfigPcAddressForm extends MemberConfigForm
     {
       $this->savePreConfig($name, $value);
 
-      $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('pc_address_token', $this->member->getId());
+      $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('pc_address_token', $this->member->getId(), true);
       $token = $memberConfig->getValue();
       $this->sendConfirmMail($token, $value, array(
         'id'   => $this->member->getId(),
