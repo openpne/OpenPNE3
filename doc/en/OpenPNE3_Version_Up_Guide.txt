@@ -65,7 +65,9 @@ Execute the following command in the project root directory.
 
 ::
 
+  $ ./symfony openpne:migrate --target=OpenPNE
   $ ./symfony openpne:migrate
+
 
 This command will update OpenPNE and plugins to newer version.
 

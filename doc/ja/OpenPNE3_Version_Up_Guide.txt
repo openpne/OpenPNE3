@@ -65,6 +65,7 @@ config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.cla
 
 ::
 
+  $ ./symfony openpne:migrate --target=OpenPNE
   $ ./symfony openpne:migrate
 
 このコマンドは OpenPNE 本体、プラグインの両方を最新の状態にバージョンアップします。
