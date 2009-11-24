@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage routing
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfRoute.class.php 23947 2009-11-14 20:02:28Z FabianLange $
+ * @version    SVN: $Id: sfRoute.class.php 24293 2009-11-23 21:23:48Z FabianLange $
  */
 class sfRoute implements Serializable
 {
@@ -28,6 +28,7 @@ class sfRoute implements Serializable
     $compiled          = false,
     $options           = array(),
     $pattern           = null,
+    $staticPrefix      = null,
     $regex             = null,
     $variables         = array(),
     $defaults          = array(),
@@ -73,9 +74,9 @@ class sfRoute implements Serializable
   }
 
   /**
-   * Returns true if the form is bound to input values.
+   * Returns true if the route is bound to context and parameters.
    *
-   * @return Boolean true if the form is bound to input values, false otherwise
+   * @return Boolean true if theroute is bound to context and parameters, false otherwise
    */
   public function isBound()
   {
@@ -97,6 +98,11 @@ class sfRoute implements Serializable
       $this->compile();
     }
 
+    // check the static prefix uf the URL first. Only use the more expensive preg_match when it matches
+    if ('' !== $this->staticPrefix  && 0 !== strpos($url, $this->staticPrefix))
+    {
+      return false;
+    }
     if (!preg_match($this->regex, $url, $matches))
     {
       return false;
@@ -308,6 +314,21 @@ class sfRoute implements Serializable
   }
 
   /**
+   * Returns the route parameters.
+   *
+   * @return array The route parameters
+   */
+  public function getParameters()
+  {
+    if (!$this->compiled)
+    {
+      $this->compile();
+    }
+
+    return $this->parameters;
+  }
+
+  /**
    * Returns the compiled pattern.
    *
    * @return string The compiled pattern
@@ -450,7 +471,7 @@ class sfRoute implements Serializable
       $separator = 'separator' == $lastToken[0] ? $lastToken[2] : '';
     }
 
-    $this->regex = "#^\n".implode("\n", $this->segments)."\n".preg_quote($separator, '#')."$#x";
+    $this->regex = "#^".implode("", $this->segments)."".preg_quote($separator, '#')."$#x";
   }
 
   /**
@@ -476,6 +497,26 @@ class sfRoute implements Serializable
     {
       $this->segments[$i] = (0 == $i ? '/?' : '').str_repeat(' ', $i - $this->firstOptional).'(?:'.$this->segments[$i];
       $this->segments[] = str_repeat(' ', $max - $i - 1).')?';
+    }
+
+    $this->staticPrefix = '';
+    foreach ($this->tokens as $token)
+    {
+      switch ($token[0])
+      {
+        case 'separator':
+          break;
+        case 'text':
+          if ($token[2] !== '*')
+          {
+            // non-star text is static
+            $this->staticPrefix .= $token[1].$token[2];
+            break;
+          }
+        default:
+          // everything else indicates variable parts. break switch and for loop
+          break 2;
+      }
     }
   }
 
@@ -774,7 +815,7 @@ class sfRoute implements Serializable
     else if (preg_match('#\.(?:'.$this->options['variable_prefix_regex'].$this->options['variable_regex'].'|'.$this->options['variable_content_regex'].')$#i', $this->pattern))
     {
       // specific suffix for this route
-      // a . with a variable after or some cars without any separators
+      // a . with a variable after or some chars without any separators
       $this->suffix = '';
     }
     else
@@ -787,12 +828,13 @@ class sfRoute implements Serializable
   {
     // always serialize compiled routes
     $this->compile();
-
-    return serialize(array($this->tokens, $this->defaultParameters, $this->defaultOptions, $this->compiled, $this->options, $this->pattern, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix));
+    // sfPatternRouting will always re-set defaultParameters, so no need to serialize them
+    return serialize(array($this->tokens, $this->defaultOptions, $this->options, $this->pattern, $this->staticPrefix, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix));
   }
 
   public function unserialize($data)
   {
-    list($this->tokens, $this->defaultParameters, $this->defaultOptions, $this->compiled, $this->options, $this->pattern, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix) = unserialize($data);
+    list($this->tokens, $this->defaultOptions, $this->options, $this->pattern, $this->staticPrefix, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix) = unserialize($data);
+    $this->compiled = true;
   }
 }

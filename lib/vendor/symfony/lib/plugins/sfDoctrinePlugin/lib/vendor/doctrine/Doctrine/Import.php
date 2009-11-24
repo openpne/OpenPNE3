@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Import.php 6587 2009-10-30 16:14:36Z jwage $
+ *  $Id: Import.php 6733 2009-11-16 18:26:01Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -30,7 +30,7 @@
  * @link        www.phpdoctrine.org
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @since       1.0
- * @version     $Revision: 6587 $
+ * @version     $Revision: 6733 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Jukka Hassinen <Jukka.Hassinen@BrainAlliance.com>
  */
@@ -382,7 +382,7 @@ class Doctrine_Import extends Doctrine_Connection_Module
           foreach ($connection->import->listTables() as $table) {
               $definition = array();
               $definition['tableName'] = $table;
-              $definition['className'] = Doctrine_Inflector::classify($table);
+              $definition['className'] = Doctrine_Inflector::classify(Doctrine_Inflector::tableize($table));
               $definition['columns'] = $connection->import->listTableColumns($table);
               $definition['connection'] = $connection->getName();
               $definition['connectionClassName'] = $definition['className'];

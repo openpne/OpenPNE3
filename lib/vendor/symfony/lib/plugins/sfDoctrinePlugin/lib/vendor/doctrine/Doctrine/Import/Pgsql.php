@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Pgsql.php 6627 2009-11-03 01:47:36Z jwage $
+ *  $Id: Pgsql.php 6777 2009-11-19 19:39:02Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -26,7 +26,7 @@
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Paul Cooper <pgc@ucecom.com>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
- * @version     $Revision: 6627 $
+ * @version     $Revision: 6777 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  */
@@ -169,7 +169,7 @@ class Doctrine_Import_Pgsql extends Doctrine_Import
         foreach ($result as $key => $val) {
             $val = array_change_key_case($val, CASE_LOWER);
 
-            if (strtolower($val['type']) === 'varchar') {
+            if (strtolower($val['type']) === 'character varying') {
                 // get length from varchar definition
                 $length = preg_replace('~.*\(([0-9]*)\).*~', '$1', $val['complete_type']);
                 $val['length'] = $length;

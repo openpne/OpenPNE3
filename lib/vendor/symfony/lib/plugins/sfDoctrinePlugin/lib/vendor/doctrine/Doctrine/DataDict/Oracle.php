@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Oracle.php 6484 2009-10-12 17:40:41Z jwage $
+ *  $Id: Oracle.php 6793 2009-11-23 22:46:06Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -24,7 +24,7 @@
  * @subpackage  DataDict
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
- * @version     $Revision: 6484 $
+ * @version     $Revision: 6793 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  */
@@ -82,23 +82,23 @@ class Doctrine_DataDict_Oracle extends Doctrine_DataDict
                 return 'BLOB';
             case 'integer':
             case 'int':
-                $length = (!empty($field['length'])) ? $field['length'] : false;
-                if ( $length && $length <= $this->conn->number_max_precision)  {
-                    if ($length <= 1) {
-                        return 'NUMBER(3)'; // TINYINT
-                    } elseif ($length == 2) {
-                        return 'NUMBER(5)'; // SMALLINT
-                    } elseif ($length == 3) {
-                        return 'NUMBER(8)'; // MEDIUMINT
-                    } elseif ($length == 4) {
-                        return 'NUMBER(10)'; // INTEGER
-                    } elseif ($length <= 8) {
-                        return 'NUMBER(20)'; // BIGINT
-                    } else {
-                        return 'NUMBER('.$length.')';
-                    }
-                }
-                return 'INT';
+            	$length = (!empty($field['length'])) ? $field['length'] : false;
+            	if ( $length && $length <= $this->conn->number_max_precision)  {
+            		if ($length <= 1) {
+            			return 'NUMBER(3)'; // TINYINT, unsigned max. 256
+            		} elseif ($length == 2) {
+            			return 'NUMBER(5)'; // SMALLINT, unsigend max. 65.536
+            		} elseif ($length == 3) {
+            			return 'NUMBER(8)'; // MEDIUMINT, unsigned max. 16.777.216
+            		} elseif ($length == 4) {
+            			return 'NUMBER(10)'; // INTEGER, unsigend max. 4.294.967.296
+            		} elseif ($length <= 8) {
+            			return 'NUMBER(20)'; // BIGINT, unsigend max. 18.446.744.073.709.551.616
+            		} else {
+            			return 'INTEGER';
+            		}
+            	}
+                return 'INTEGER';
             case 'boolean':
                 return 'NUMBER(1)';
             case 'date':

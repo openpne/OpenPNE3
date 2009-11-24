@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTestAllTask.class.php 23200 2009-10-19 21:29:50Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfTestAllTask.class.php 24266 2009-11-23 12:11:51Z Kris.Wallsmith $
  */
 class sfTestAllTask extends sfTestBaseTask
 {
@@ -28,7 +28,6 @@ class sfTestAllTask extends sfTestBaseTask
       new sfCommandOption('xml', null, sfCommandOption::PARAMETER_REQUIRED, 'The file name for the JUnit compatible XML log file'),
     ));
 
-    $this->aliases = array('test-all');
     $this->namespace = 'test';
     $this->name = 'all';
     $this->briefDescription = 'Launches all tests';

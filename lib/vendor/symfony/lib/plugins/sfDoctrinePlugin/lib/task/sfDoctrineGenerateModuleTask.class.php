@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @package    symfony
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfDoctrineGenerateModuleTask.class.php 23947 2009-11-14 20:02:28Z FabianLange $
+ * @version    SVN: $Id: sfDoctrineGenerateModuleTask.class.php 24266 2009-11-23 12:11:51Z Kris.Wallsmith $
  */
 class sfDoctrineGenerateModuleTask extends sfDoctrineBaseTask
 {
@@ -117,6 +117,7 @@ EOF;
       'plural'                => $options['plural'],
       'route_prefix'          => $options['route-prefix'],
       'with_doctrine_route'   => $options['with-doctrine-route'],
+      'actions_base_class'    => $options['actions-base-class'],
     ));
 
     $moduleDir = sfConfig::get('sf_app_module_dir').'/'.$arguments['module'];

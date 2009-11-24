@@ -18,7 +18,7 @@
  * @subpackage generator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineFormGenerator.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineFormGenerator.class.php 24294 2009-11-23 21:45:03Z Jonathan.Wage $
  */
 class sfDoctrineFormGenerator extends sfGenerator
 {
@@ -619,7 +619,12 @@ class sfDoctrineFormGenerator extends sfGenerator
     foreach ($models as $key => $model)
     {
       $table = Doctrine_Core::getTable($model);
-      $symfonyOptions = $table->getOption('symfony');
+      $symfonyOptions = (array) $table->getOption('symfony');
+
+      if ($table->isGenerator())
+      {
+        $symfonyOptions = array_merge((array) $table->getParentGenerator()->getOption('table')->getOption('symfony'), $symfonyOptions);
+      }
 
       if (isset($symfonyOptions['form']) && !$symfonyOptions['form'])
       {

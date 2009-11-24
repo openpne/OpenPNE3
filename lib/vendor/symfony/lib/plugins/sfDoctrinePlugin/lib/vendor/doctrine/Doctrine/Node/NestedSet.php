@@ -1,6 +1,6 @@
 <?php
 /*
- *    $Id: NestedSet.php 6614 2009-11-02 22:48:22Z jwage $
+ *    $Id: NestedSet.php 6732 2009-11-16 18:17:34Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  * @license    http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link       www.phpdoctrine.org
  * @since      1.0
- * @version    $Revision: 6614 $
+ * @version    $Revision: 6732 $
  * @author     Joe Simms <joe.simms@websites4.com>
  * @author     Roman Borschel <roman@code-factory.org>     
  */
@@ -60,7 +60,7 @@ class Doctrine_Node_NestedSet extends Doctrine_Node implements Doctrine_Node_Int
      */
     public function hasChildren()
     {
-        return (($this->getRightValue() - $this->getLeftValue() ) >1 );        
+        return (($this->getRightValue() - $this->getLeftValue()) > 1);        
     }
 
     /**
@@ -70,7 +70,7 @@ class Doctrine_Node_NestedSet extends Doctrine_Node implements Doctrine_Node_Int
      */
     public function hasParent()
     {
-        return !$this->isRoot();
+        return $this->isValidNode($this->getRecord()) && ! $this->isRoot();
     }
 
     /**

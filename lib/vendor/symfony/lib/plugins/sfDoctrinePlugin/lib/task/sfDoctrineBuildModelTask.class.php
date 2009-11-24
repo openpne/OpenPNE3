@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineBuildModelTask.class.php 23922 2009-11-14 14:58:38Z fabien $
+ * @version    SVN: $Id: sfDoctrineBuildModelTask.class.php 24271 2009-11-23 14:44:28Z Kris.Wallsmith $
  */
 class sfDoctrineBuildModelTask extends sfDoctrineBaseTask
 {
@@ -61,7 +61,7 @@ EOF;
     $config = $this->getCliConfig();
     $builderOptions = $this->configuration->getPluginConfiguration('sfDoctrinePlugin')->getModelBuilderOptions();
 
-    $finder = sfFinder::type('file')->maxdepth(0)->name('*'.$builderOptions['suffix']);
+    $finder = sfFinder::type('file')->prune('base')->name('*'.$builderOptions['suffix']);
     $before = $finder->in($config['models_path']);
 
     $schema = $this->prepareSchemaFile($config['yaml_schema_path']);
@@ -115,7 +115,7 @@ EOF;
       "{\n\n}"         => "{\n}\n",
     ));
 
-    $finder = sfFinder::type('file')->maxdepth(0)->name('*Table'.$builderOptions['suffix']);
+    $finder = sfFinder::type('file')->prune('base')->name('*Table'.$builderOptions['suffix']);
     foreach (array_diff($finder->in($config['models_path']), $before) as $file)
     {
       $contents = file_get_contents($file);

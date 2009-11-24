@@ -15,7 +15,7 @@
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfAutoloadConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfAutoloadConfigHandler.class.php 24062 2009-11-16 23:31:25Z FabianLange $
  */
 class sfAutoloadConfigHandler extends sfYamlConfigHandler
 {
@@ -159,7 +159,8 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
     // move plugin files to front
     foreach ($configFiles as $i => $configFile)
     {
-      $path = realpath(join('/', array_slice(explode(DIRECTORY_SEPARATOR, $configFile), 0, -2)));
+      $configFilePath = str_replace(DIRECTORY_SEPARATOR, '/', $configFile);
+      $path = str_replace(DIRECTORY_SEPARATOR, '/', realpath(join('/', array_slice(explode('/', $configFilePath), 0, -2))));
       if (in_array($path, $pluginPaths))
       {
         $pluginConfigFiles[] = $configFile;

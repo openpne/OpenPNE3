@@ -16,7 +16,7 @@
  * @subpackage controller
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfController.class.php 23922 2009-11-14 14:58:38Z fabien $
+ * @version    SVN: $Id: sfController.class.php 24265 2009-11-23 11:55:33Z Kris.Wallsmith $
  */
 abstract class sfController
 {
@@ -147,13 +147,7 @@ abstract class sfController
     // send an exception if debug
     if ($throwExceptions && sfConfig::get('sf_debug'))
     {
-      $dirs = array_keys($dirs);
-
-      // remove sf_root_dir from dirs
-      foreach ($dirs as &$dir)
-      {
-        $dir = str_replace(sfConfig::get('sf_root_dir'), '%SF_ROOT_DIR%', $dir);
-      }
+      $dirs = array_map(array('sfDebug', 'shortenFilePath'), array_keys($dirs));
 
       throw new sfControllerException(sprintf('Controller "%s/%s" does not exist in: %s.', $moduleName, $controllerName, implode(', ', $dirs)));
     }
@@ -171,7 +165,6 @@ abstract class sfController
    * @throws sfForwardException        If an error occurs while forwarding the request
    * @throws sfError404Exception       If the action not exist
    * @throws sfInitializationException If the action could not be initialized
-   * @throws sfSecurityException       If the action requires security but the user implementation is not of type sfSecurityUser
    */
   public function forward($moduleName, $actionName)
   {

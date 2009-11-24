@@ -11,7 +11,9 @@ Article:
   columns:
     author_id: integer
     is_on_homepage: boolean
-    title: string(255)
+    title:
+      type: string(255)
+      unique: true
     body: string(255)
     test_column: string(255)
   relations:
@@ -177,9 +179,24 @@ FormGeneratorTest2:
   columns:
     name: string(255)
 
+FormGeneratorTest3:
+  options:
+    symfony:
+      form: false
+      filter: false
+  actAs:
+    I18n:
+      fields: [name]
+  columns:
+    name: string(255)  
+
 DefaultValueTest:
   columns:
     name:
       type: string(255)
       notnull: true
       default: ''
+
+Attachment:
+  columns:
+    file_path: string(255)

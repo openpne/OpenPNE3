@@ -18,7 +18,7 @@
  * @package    symfony
  * @subpackage view
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfViewCacheManager.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfViewCacheManager.class.php 23985 2009-11-15 20:09:20Z FabianLange $
  */
 class sfViewCacheManager
 {
@@ -398,10 +398,6 @@ class sfViewCacheManager
 
   /**
    * Returns true if the current content is cacheable.
-   *
-   * Possible break in backward compatibility: If the sf_lazy_cache_key
-   * setting is turned on in settings.yml, this method is not used when
-   * initially checking a partial's cacheability.
    *
    * @see sfPartialView, isActionCacheable()
    *

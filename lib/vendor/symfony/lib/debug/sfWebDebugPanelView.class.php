@@ -14,7 +14,7 @@
  * @package     symfony
  * @subpackage  debug
  * @author      Kris Wallsmith <kris.wallsmith@symfony-project.com>
- * @version     SVN: $Id: sfWebDebugPanelView.class.php 23196 2009-10-19 18:22:27Z Kris.Wallsmith $
+ * @version     SVN: $Id: sfWebDebugPanelView.class.php 24069 2009-11-17 06:59:01Z Kris.Wallsmith $
  */
 class sfWebDebugPanelView extends sfWebDebugPanel
 {
@@ -317,12 +317,12 @@ class sfWebDebugPanelView extends sfWebDebugPanel
 
     // application module
     $sep = preg_quote(DIRECTORY_SEPARATOR);
-    if (preg_match('#apps'.$sep.'\w+'.$sep.'modules'.$sep.'(\w+)'.$sep.'templates'.$sep.'(.*)$#', $path, $match))
+    if (preg_match('#modules'.$sep.'(\w+)'.$sep.'templates'.$sep.'(.*)$#', $path, $match))
     {
-      return $match[1].'/&hellip;/'.$match[2];
+      return $match[1].'&nbsp;&hellip;&nbsp;'.$match[2];
     }
 
-    return $path;
+    return str_replace('SF_ROOT_DIR'.DIRECTORY_SEPARATOR, '', sfDebug::shortenFilePath($path));
   }
 
   /**

@@ -16,7 +16,7 @@
  * @subpackage user
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfBasicSecurityUser.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfBasicSecurityUser.class.php 24045 2009-11-16 18:24:48Z Kris.Wallsmith $
  */
 class sfBasicSecurityUser extends sfUser implements sfSecurityUser
 {
@@ -42,9 +42,11 @@ class sfBasicSecurityUser extends sfUser implements sfSecurityUser
   }
 
   /**
-   * returns an array containing the credentials
+   * Returns the current user's credentials.
+   * 
+   * @return array
    */
-  public function listCredentials()
+  public function getCredentials()
   {
     return $this->credentials;
   }

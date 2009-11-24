@@ -12,7 +12,7 @@
  * @package    symfony
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfRoutingConfigHandler.class.php 23947 2009-11-14 20:02:28Z FabianLange $
+ * @version    SVN: $Id: sfRoutingConfigHandler.class.php 23993 2009-11-15 22:44:01Z FabianLange $
  */
 class sfRoutingConfigHandler extends sfYamlConfigHandler
 {
@@ -42,7 +42,6 @@ class sfRoutingConfigHandler extends sfYamlConfigHandler
       {
         $route->setDefaultOptions($options);
         $data[] = sprintf('$this->routes[\'%s\'] = unserialize(\'%s\');', $name, serialize($route));
-        $date[] = sprintf('$this->routes[\'%s\']->setDefaultParameters($this->defaultParameters);', $name);
       }
     }
 

@@ -35,7 +35,7 @@ class Doctrine_Core
     /**
      * VERSION
      */
-    const VERSION                   = '1.2.0-BETA2';
+    const VERSION                   = '1.2.0-RC1';
 
     /**
      * ERROR CONSTANTS
@@ -639,14 +639,20 @@ class Doctrine_Core
                     $e = explode('.', $file->getFileName());
                     
                     if (end($e) === 'php' && strpos($file->getFileName(), '.inc') === false) {
-                        $className = $e[0];
+                        if ($modelLoading == Doctrine_Core::MODEL_LOADING_PEAR) {
+                            $className = str_replace($dir . DIRECTORY_SEPARATOR, null, $file->getPathName());
+                            $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
+                            $className = substr($className, 0, strpos($className, '.'));
+                        } else {
+                            $className = $e[0];
+                        }
 
                         if ($classPrefix) {
                             $className = $classPrefix . $className;
                         }
 
                         if ( ! class_exists($className, false)) {
-                            if ($modelLoading == Doctrine_Core::MODEL_LOADING_CONSERVATIVE) {
+                            if ($modelLoading == Doctrine_Core::MODEL_LOADING_CONSERVATIVE || $modelLoading == Doctrine_Core::MODEL_LOADING_PEAR) {
                                 self::loadModel($className, $file->getPathName());
 
                                 $loadedModels[$className] = $className;
@@ -1095,6 +1101,10 @@ class Doctrine_Core
      */
     public static function autoload($className)
     {
+        if (strpos($className, 'sfYaml') === 0) {
+            require dirname(__FILE__) . '/../vendor/sfYaml/' . $className . '.php';
+        }
+
         if (0 !== stripos($className, 'Doctrine_') || class_exists($className, false) || interface_exists($className, false)) {
             return false;
         }

@@ -16,7 +16,7 @@
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     David Heinemeier Hansson
- * @version    SVN: $Id: AssetHelper.php 23922 2009-11-14 14:58:38Z fabien $
+ * @version    SVN: $Id: AssetHelper.php 24289 2009-11-23 19:45:06Z Kris.Wallsmith $
  */
 
 /**
@@ -492,6 +492,7 @@ function include_title()
 function get_javascripts()
 {
   $response = sfContext::getInstance()->getResponse();
+  sfConfig::set('symfony.asset.javascripts_included', true);
 
   $html = '';
   foreach ($response->getJavascripts() as $file => $options)
@@ -524,6 +525,7 @@ function include_javascripts()
 function get_stylesheets()
 {
   $response = sfContext::getInstance()->getResponse();
+  sfConfig::set('symfony.asset.stylesheets_included', true);
 
   $html = '';
   foreach ($response->getStylesheets() as $file => $options)

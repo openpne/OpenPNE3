@@ -10,7 +10,7 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(154);
+$t = new lime_test(155);
 
 class FormTest extends sfForm
 {
@@ -105,12 +105,13 @@ $t->ok(!$f->isCSRFProtected(), '__construct() can disable the CSRF protection by
 $f = new FormTest();
 $t->ok($f->isCSRFProtected(), '__construct() uses CSRF protection if null is passed as the second argument and it\'s enabled globally');
 
-// ->getOption() ->setOption()
+// ->getOption() ->setOption() ->getOptions()
 $t->diag('->getOption() ->setOption()');
 $f = new FormTest(array(), array('foo' => 'bar'));
 $t->is($f->getOption('foo'), 'bar', '__construct takes an option array as its second argument');
 $f->setOption('bar', 'foo');
 $t->is($f->getOption('bar'), 'foo', '->setOption() changes the value of an option');
+$t->is_deeply($f->getOptions(), array('foo' => 'bar', 'bar' => 'foo'), '->getOptions() returns all options');
 
 sfForm::disableCSRFProtection();
 
@@ -219,9 +220,11 @@ $f->setWidgetSchema($widgetSchema);
 $t->ok($f->getWidgetSchema() == $widgetSchema, '->setWidgetSchema() sets the current widget schema');
 $f->setWidgets($widgets);
 $schema = $f->getWidgetSchema();
+$widgets['first_name']->setParent($schema); $widgets['last_name']->setParent($schema);
 $t->ok($schema['first_name'] == $widgets['first_name'], '->setWidgets() sets field widgets');
 $t->ok($schema['last_name'] == $widgets['last_name'], '->setWidgets() sets field widgets');
 $f->setWidget('name', $w3 = new sfWidgetFormInputText());
+$w3->setParent($schema);
 $t->ok($f->getWidget('name') == $w3, '->setWidget() sets a widget for a field');
 
 // ArrayAccess interface
@@ -601,6 +604,8 @@ $d = $article->getDefaults();
 $w->setNameFormat('article[%s]');
 
 $t->ok($v['author']['first_name'] == $author_validator_schema['first_name'], '->embedForm() embeds the validator schema');
+// ignore parents in comparison
+$w['author']['first_name']->setParent(null); $author_widget_schema['first_name']->setParent(null);
 $t->ok($w['author']['first_name'] == $author_widget_schema['first_name'], '->embedForm() embeds the widget schema');
 $t->is($d['author']['first_name'], 'Fabien', '->embedForm() merges default values from the embedded form');
 $t->is($v['author'][sfForm::getCSRFFieldName()], null, '->embedForm() removes the CSRF token for the embedded form');
@@ -627,6 +632,8 @@ $w->setNameFormat('article[%s]');
 for ($i = 0; $i < 2; $i++)
 {
   $t->ok($v['authors'][$i]['first_name'] == $author_validator_schema['first_name'], '->embedFormForEach() embeds the validator schema');
+  // ignore the parents in comparison
+  $w['authors'][$i]['first_name']->setParent(null); $author_widget_schema['first_name']->setParent(null);
   $t->ok($w['authors'][$i]['first_name'] == $author_widget_schema['first_name'], '->embedFormForEach() embeds the widget schema');
   $t->is($d['authors'][$i]['first_name'], 'Fabien', '->embedFormForEach() merges default values from the embedded forms');
   $t->is($v['authors'][$i][sfForm::getCSRFFieldName()], null, '->embedFormForEach() removes the CSRF token for the embedded forms');

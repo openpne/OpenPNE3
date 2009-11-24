@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage generator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfDoctrineFormFilterGenerator.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineFormFilterGenerator.class.php 24294 2009-11-23 21:45:03Z Jonathan.Wage $
  */
 class sfDoctrineFormFilterGenerator extends sfDoctrineFormGenerator
 {
@@ -343,7 +343,12 @@ class sfDoctrineFormFilterGenerator extends sfDoctrineFormGenerator
     foreach ($models as $key => $model)
     {
       $table = Doctrine_Core::getTable($model);
-      $symfonyOptions = $table->getOption('symfony');
+      $symfonyOptions = (array) $table->getOption('symfony');
+
+      if ($table->isGenerator())
+      {
+        $symfonyOptions = array_merge((array) $table->getParentGenerator()->getOption('table')->getOption('symfony'), $symfonyOptions);
+      }
 
       if (isset($symfonyOptions['filter']) && !$symfonyOptions['filter'])
       {

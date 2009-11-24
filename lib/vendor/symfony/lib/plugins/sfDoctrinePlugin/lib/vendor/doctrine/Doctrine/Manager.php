@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Manager.php 6694 2009-11-10 17:29:43Z jwage $
+ *  $Id: Manager.php 6763 2009-11-18 20:36:23Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -29,7 +29,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6694 $
+ * @version     $Revision: 6763 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
 class Doctrine_Manager extends Doctrine_Configurable implements Countable, IteratorAggregate
@@ -581,8 +581,12 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
 
         if ($key !== false) {
             unset($this->_connections[$key]);
+
+            if ($key === $this->_currIndex) {
+                $key = key($this->_connections);
+                $this->_currIndex = ($key !== null) ? $key : 0;
+            }
         }
-        $this->_currIndex = key($this->_connections);
 
         unset($connection);
     }

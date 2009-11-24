@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTestFunctionalTask.class.php 23740 2009-11-09 23:48:16Z FabianLange $
+ * @version    SVN: $Id: sfTestFunctionalTask.class.php 24266 2009-11-23 12:11:51Z Kris.Wallsmith $
  */
 class sfTestFunctionalTask extends sfTestBaseTask
 {
@@ -32,7 +32,6 @@ class sfTestFunctionalTask extends sfTestBaseTask
       new sfCommandOption('xml', null, sfCommandOption::PARAMETER_REQUIRED, 'The file name for the JUnit compatible XML log file'),
     ));
 
-    $this->aliases = array('test-functional');
     $this->namespace = 'test';
     $this->name = 'functional';
     $this->briefDescription = 'Launches functional tests';

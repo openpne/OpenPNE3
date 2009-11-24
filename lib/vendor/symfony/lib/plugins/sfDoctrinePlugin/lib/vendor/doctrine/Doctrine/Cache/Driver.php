@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Driver.php 6559 2009-10-23 17:09:38Z jwage $
+ *  $Id: Driver.php 6729 2009-11-16 17:41:40Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6559 $
+ * @version     $Revision: 6729 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Jonathan H. Wage <jonwage@gmail.com>
  */
@@ -213,7 +213,7 @@ abstract class Doctrine_Cache_Driver implements Doctrine_Cache_Interface
         $count = 0;
         $keys = $this->fetch($this->_cacheKeyIndexKey);
         foreach ($keys as $key) {
-            if (strpos($key, $prefix) == 0) {
+            if (strpos($key, $prefix) === 0) {
                 $count++;
                 $this->delete($key);
             }

@@ -16,7 +16,7 @@
  * @subpackage controller
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfWebController.class.php 23954 2009-11-14 21:59:28Z FabianLange $
+ * @version    SVN: $Id: sfWebController.class.php 24039 2009-11-16 17:52:14Z Kris.Wallsmith $
  */
 abstract class sfWebController extends sfController
 {
@@ -40,6 +40,7 @@ abstract class sfWebController extends sfController
       {
         return $parameters;
       }
+
       // relative URL?
       if (0 === strpos($parameters, '/'))
       {
@@ -118,7 +119,6 @@ abstract class sfWebController extends sfController
       $url = substr($url, 1);
     }
 
-
     // routeName?
     if ($url[0] == '@')
     {
@@ -170,14 +170,16 @@ abstract class sfWebController extends sfController
    * @param int    $delay      A delay in seconds before redirecting. This is only needed on
    *                           browsers that do not support HTTP headers
    * @param int    $statusCode The status code
+   *
    * @throws InvalidArgumentException If the url argument is null or an empty string
    */
   public function redirect($url, $delay = 0, $statusCode = 302)
   {
-    if(empty($url))
+    if (empty($url))
     {
-      throw new InvalidArgumentException('url parameter cannot be empty'); 
+      throw new InvalidArgumentException('Cannot redirect to an empty URL.'); 
     } 
+
     $url = $this->genUrl($url, true);
 
     if (sfConfig::get('sf_logging_enabled'))

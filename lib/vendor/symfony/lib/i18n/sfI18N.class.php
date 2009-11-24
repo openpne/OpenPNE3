@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage i18n
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfI18N.class.php 23947 2009-11-14 20:02:28Z FabianLange $
+ * @version    SVN: $Id: sfI18N.class.php 24039 2009-11-16 17:52:14Z Kris.Wallsmith $
  */
 class sfI18N
 {
@@ -362,10 +362,13 @@ class sfI18N
         if (strcasecmp($matches[$timePositions['a']], $timeFormatInfo->getAMDesignator()) == 0)
         {
           $hour = $matches[$timePositions['h']];
-        } else if (strcasecmp($matches[$timePositions['a']], $timeFormatInfo->getPMDesignator()) == 0)
+        }
+        else if (strcasecmp($matches[$timePositions['a']], $timeFormatInfo->getPMDesignator()) == 0)
         {
           $hour = $matches[$timePositions['h']] + 12;
-        } else {
+        }
+        else
+        {
           // am/pm marker is invalid
           // return null; would be the preferred solution but this might break a lot of code
           $hour = $matches[$timePositions['h']];
@@ -375,6 +378,7 @@ class sfI18N
       {
         $hour = $matches[$timePositions['h']];
       }
+
       // We get matching timestamp
       return array($hour, $matches[$timePositions['m']]);
     }

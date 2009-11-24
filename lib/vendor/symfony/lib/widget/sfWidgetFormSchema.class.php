@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetFormSchema.class.php 22446 2009-09-26 07:55:47Z fabien $
+ * @version    SVN: $Id: sfWidgetFormSchema.class.php 24277 2009-11-23 15:16:24Z Kris.Wallsmith $
  */
 class sfWidgetFormSchema extends sfWidgetForm implements ArrayAccess
 {
@@ -30,7 +30,6 @@ class sfWidgetFormSchema extends sfWidgetForm implements ArrayAccess
     $defaultFormatterName = 'table';
 
   protected
-    $parent         = null,
     $formFormatters = array(),
     $options        = array(),
     $fields         = array(),
@@ -631,7 +630,7 @@ class sfWidgetFormSchema extends sfWidgetForm implements ArrayAccess
    * @return string The generated name
    */
   public function generateName($name)
-  {  
+  {
     $format = $this->getNameFormat();
 
     if ('[%s]' == substr($format, -4) && preg_match('/^(.+?)\[(.+)\]$/', $name, $match))
@@ -649,30 +648,6 @@ class sfWidgetFormSchema extends sfWidgetForm implements ArrayAccess
     }
 
     return $name;
-  }
-
-  /**
-   * Gets the parent widget schema.
-   *
-   * @return sfWidgetFormSchema The parent widget schema
-   */
-  public function getParent()
-  {
-    return $this->parent;
-  }
-
-  /**
-   * Sets the parent widget schema.
-   *
-   * @param sfWidgetFormSchema $parent  The parent widget schema
-   *
-   * @return sfWidget The current widget instance
-   */
-  public function setParent(sfWidgetFormSchema $parent = null)
-  {
-    $this->parent = $parent;
-
-    return $this;
   }
 
   /**
@@ -720,10 +695,10 @@ class sfWidgetFormSchema extends sfWidgetForm implements ArrayAccess
     }
 
     $this->fields[$name] = clone $widget;
+    $this->fields[$name]->setParent($this);
 
     if ($widget instanceof sfWidgetFormSchema)
     {
-      $this->fields[$name]->setParent($this);
       $this->fields[$name]->setNameFormat($name.'[%s]');
     }
   }
@@ -780,10 +755,18 @@ class sfWidgetFormSchema extends sfWidgetForm implements ArrayAccess
   public function setPositions(array $positions)
   {
     $positions = array_values($positions);
-    if (array_diff($positions, array_keys($this->fields)) || array_diff(array_keys($this->fields), $positions))
+    $current = array_keys($this->fields);
+
+    if ($diff = array_diff($positions, $current))
     {
-      throw new InvalidArgumentException('Positions must contains all field names.');
+      throw new InvalidArgumentException('Widget schema does not include the following field(s): '.implode(', ', $diff));
     }
+
+    if ($diff = array_diff($current, $positions))
+    {
+      throw new InvalidArgumentException('Positions array must include all fields. Missing: '.implode(', ', $diff));
+    }
+
     foreach ($positions as &$position)
     {
       $position = (string) $position;

@@ -23,7 +23,7 @@
  * @package    symfony
  * @subpackage form
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfForm.class.php 23214 2009-10-20 18:11:23Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfForm.class.php 24278 2009-11-23 15:21:09Z Kris.Wallsmith $
  */
 class sfForm implements ArrayAccess, Iterator, Countable
 {
@@ -731,6 +731,16 @@ class sfForm implements ArrayAccess, Iterator, Countable
   public function getJavaScripts()
   {
     return $this->widgetSchema->getJavaScripts();
+  }
+
+  /**
+   * Returns the current form's options.
+   *
+   * @return array The current form's options
+   */
+  public function getOptions()
+  {
+    return $this->options;
   }
 
   /**

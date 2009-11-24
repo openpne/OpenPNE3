@@ -11,7 +11,7 @@
 /**
  * The current symfony version.
  */
-define('SYMFONY_VERSION', '1.4.0-DEV');
+define('SYMFONY_VERSION', '1.4.0-RC2');
 
 /**
  * sfCoreAutoload class.
@@ -22,7 +22,7 @@ define('SYMFONY_VERSION', '1.4.0-DEV');
  * @package    symfony
  * @subpackage autoload
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCoreAutoload.class.php 23938 2009-11-14 17:45:09Z fabien $
+ * @version    SVN: $Id: sfCoreAutoload.class.php 24309 2009-11-23 22:42:42Z Kris.Wallsmith $
  */
 class sfCoreAutoload
 {
@@ -106,9 +106,9 @@ class sfCoreAutoload
 
   /**
    * Returns the filename of the supplied class.
-   * 
+   *
    * @param  string $class The class name (case insensitive)
-   * 
+   *
    * @return string|null An absolute path or null
    */
   public function getClassPath($class)
@@ -279,6 +279,7 @@ class sfCoreAutoload
     'sfviewexception' => 'exception/sfViewException.class.php',
     'sfbasicsecurityfilter' => 'filter/sfBasicSecurityFilter.class.php',
     'sfcachefilter' => 'filter/sfCacheFilter.class.php',
+    'sfcommonfilter' => 'filter/sfCommonFilter.class.php',
     'sfexecutionfilter' => 'filter/sfExecutionFilter.class.php',
     'sffilter' => 'filter/sfFilter.class.php',
     'sffilterchain' => 'filter/sfFilterChain.class.php',
@@ -396,14 +397,6 @@ class sfCoreAutoload
     'sfprojectoptimizetask' => 'task/project/sfProjectOptimizeTask.class.php',
     'sfprojectpermissionstask' => 'task/project/sfProjectPermissionsTask.class.php',
     'sfprojectsendemailstask' => 'task/project/sfProjectSendEmailsTask.class.php',
-    'sfupgradeto13task' => 'task/project/sfUpgradeTo13Task.class.php',
-    'sfassetsupgrade' => 'task/project/upgrade1.3/sfAssetsUpgrade.class.php',
-    'sfformsupgrade' => 'task/project/upgrade1.3/sfFormsUpgrade.class.php',
-    'sfpropelupgrade' => 'task/project/upgrade1.3/sfPropelUpgrade.class.php',
-    'sftasksupgrade' => 'task/project/upgrade1.3/sfTasksUpgrade.class.php',
-    'sftestsupgrade' => 'task/project/upgrade1.3/sfTestsUpgrade.class.php',
-    'sfupgrade' => 'task/project/upgrade1.3/sfUpgrade.class.php',
-    'sfyamlupgrade' => 'task/project/upgrade1.3/sfYamlUpgrade.class.php',
     'sfbasetask' => 'task/sfBaseTask.class.php',
     'sfcommandapplicationtask' => 'task/sfCommandApplicationTask.class.php',
     'sffilesystem' => 'task/sfFilesystem.class.php',
@@ -486,6 +479,7 @@ class sfCoreAutoload
     'sfwidget' => 'widget/sfWidget.class.php',
     'sfwidgetform' => 'widget/sfWidgetForm.class.php',
     'sfwidgetformchoice' => 'widget/sfWidgetFormChoice.class.php',
+    'sfwidgetformchoicebase' => 'widget/sfWidgetFormChoiceBase.class.php',
     'sfwidgetformdate' => 'widget/sfWidgetFormDate.class.php',
     'sfwidgetformdaterange' => 'widget/sfWidgetFormDateRange.class.php',
     'sfwidgetformdatetime' => 'widget/sfWidgetFormDateTime.class.php',

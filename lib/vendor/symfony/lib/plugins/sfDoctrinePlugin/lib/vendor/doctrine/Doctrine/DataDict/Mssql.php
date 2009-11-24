@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Mssql.php 6517 2009-10-14 20:13:53Z jwage $
+ *  $Id: Mssql.php 6759 2009-11-18 17:24:27Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
  * @author      Frank M. Kromann <frank@kromann.info> (PEAR MDB2 Mssql driver)
  * @author      David Coallier <davidc@php.net> (PEAR MDB2 Mssql driver)
- * @version     $Revision: 6517 $
+ * @version     $Revision: 6759 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  */
@@ -76,7 +76,7 @@ class Doctrine_DataDict_Mssql extends Doctrine_DataDict
 
                 $fixed  = ((isset($field['fixed']) && $field['fixed']) || $field['type'] == 'char') ? true : false;
 
-                return $fixed ? ($length ? 'CHAR('.$length.')' : 'CHAR('.$this->conn->options['default_text_field_length'].')')
+                return $fixed ? ($length ? 'CHAR('.$length.')' : 'CHAR('.$this->conn->varchar_max_length.')')
                     : ($length ? 'VARCHAR('.$length.')' : 'TEXT');
             case 'clob':
                 if ( ! empty($field['length'])) {
@@ -187,6 +187,16 @@ class Doctrine_DataDict_Mssql extends Doctrine_DataDict
             case 'image':
             case 'varbinary':
                 $type[] = 'blob';
+                $length = null;
+            break;
+            case 'uniqueidentifier':
+                $type[] = 'string';
+                $length = 36;
+            break;
+            case 'sql_variant':
+            case 'sysname':
+            case 'binary':
+                $type[] = 'string';
                 $length = null;
             break;
             default:

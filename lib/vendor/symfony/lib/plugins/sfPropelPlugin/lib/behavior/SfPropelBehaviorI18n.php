@@ -16,7 +16,7 @@
  * @package     sfPropelPlugin
  * @subpackage  behavior
  * @author      Kris Wallsmith <kris.wallsmith@symfony-project.com>
- * @version     SVN: $Id: SfPropelBehaviorI18n.php 23737 2009-11-09 23:23:25Z Kris.Wallsmith $
+ * @version     SVN: $Id: SfPropelBehaviorI18n.php 24130 2009-11-18 11:57:33Z Kris.Wallsmith $
  */
 class SfPropelBehaviorI18n extends SfPropelBehaviorBase
 {
@@ -150,7 +150,7 @@ public function get{$column->getPhpName()}(\$culture = null)
  */
 public function set{$column->getPhpName()}(\$value, \$culture = null)
 {
-  \$this->getCurrent{$refPhpName}(\$culture)->set{\$column->getPhpName()}(\$value);
+  \$this->getCurrent{$refPhpName}(\$culture)->set{$column->getPhpName()}(\$value);
   return \$this;
 }
 
@@ -173,7 +173,8 @@ public function getCurrent{$refPhpName}(\$culture = null)
 
   if (!isset(\$this->current_i18n[\$culture]))
   {
-    if (\$object = {$this->getI18nTable()->getPhpName()}Peer::retrieveByPK(\$this->getPrimaryKey(), \$culture))
+    \$object = \$this->isNew() ? null : {$this->getI18nTable()->getPhpName()}Peer::retrieveByPK(\$this->getPrimaryKey(), \$culture);
+    if (\$object)
     {
       \$this->set{$refPhpName}ForCulture(\$object, \$culture);
     }

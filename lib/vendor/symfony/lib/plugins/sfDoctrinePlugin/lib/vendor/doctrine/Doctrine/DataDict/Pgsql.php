@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Pgsql.php 6484 2009-10-12 17:40:41Z jwage $
+ *  $Id: Pgsql.php 6731 2009-11-16 18:09:27Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -26,7 +26,7 @@
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Paul Cooper <pgc@ucecom.com>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
- * @version     $Revision: 6484 $
+ * @version     $Revision: 6731 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  */
@@ -376,7 +376,7 @@ class Doctrine_DataDict_Pgsql extends Doctrine_DataDict
 
                 $fixed  = ((isset($field['fixed']) && $field['fixed']) || $field['type'] == 'char') ? true : false;
 
-                return $fixed ? ($length ? 'CHAR(' . $length . ')' : 'CHAR('.$this->conn->options['default_text_field_length'].')')
+                return $fixed ? ($length ? 'CHAR(' . $length . ')' : 'CHAR('.$this->conn->varchar_max_length.')')
                     : ($length ? 'VARCHAR(' .$length . ')' : 'TEXT');
 
             case 'clob':

@@ -16,7 +16,7 @@
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineBaseTask.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineBaseTask.class.php 24060 2009-11-16 22:17:53Z Kris.Wallsmith $
  */
 abstract class sfDoctrineBaseTask extends sfBaseTask
 {
@@ -62,6 +62,50 @@ abstract class sfDoctrineBaseTask extends sfBaseTask
     $cli->setSymfonyDispatcher($this->dispatcher);
     $cli->setSymfonyFormatter($this->formatter);
     $cli->run($arguments);
+  }
+
+  /**
+   * Returns Doctrine databases from the supplied database manager.
+   *
+   * @param sfDatabaseManager $databaseManager
+   * @param array|null        $names An array of names or NULL for all databases
+   *
+   * @return array An associative array of {@link sfDoctrineDatabase} objects and their names
+   * 
+   * @throws InvalidArgumentException If a requested database is not a Doctrine database
+   */
+  protected function getDoctrineDatabases(sfDatabaseManager $databaseManager, array $names = null)
+  {
+    $databases = array();
+
+    if (null === $names)
+    {
+      foreach ($databaseManager->getNames() as $name)
+      {
+        $database = $databaseManager->getDatabase($name);
+
+        if ($database instanceof sfDoctrineDatabase)
+        {
+          $databases[$name] = $database;
+        }
+      }
+    }
+    else
+    {
+      foreach ($names as $name)
+      {
+        $database = $databaseManager->getDatabase($name);
+
+        if (!$database instanceof sfDoctrineDatabase)
+        {
+          throw new InvalidArgumentException(sprintf('The database "%s" is not a Doctrine database.', $name));
+        }
+
+        $databases[$name] = $database;
+      }
+    }
+
+    return $databases;
   }
 
   /**

@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Mysql.php 6638 2009-11-03 05:19:18Z jwage $
+ *  $Id: Mysql.php 6760 2009-11-18 17:24:57Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -25,7 +25,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
- * @version     $Revision: 6638 $
+ * @version     $Revision: 6760 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  */
@@ -230,12 +230,17 @@ class Doctrine_DataDict_Mysql extends Doctrine_DataDict
             case 'timestamp':
                 return 'DATETIME';
             case 'float':
+                $length = !empty($field['length']) ? $field['length'] : 18;
+                $scale = !empty($field['scale']) ? $field['scale'] : $this->conn->getAttribute(Doctrine_Core::ATTR_DECIMAL_PLACES);
+                return 'FLOAT('.$length.', '.$scale.')';
             case 'double':
-                return 'DOUBLE';
+                $length = !empty($field['length']) ? $field['length'] : 18;
+                $scale = !empty($field['scale']) ? $field['scale'] : $this->conn->getAttribute(Doctrine_Core::ATTR_DECIMAL_PLACES);
+                return 'DOUBLE('.$length.', '.$scale.')';
             case 'decimal':
                 $length = !empty($field['length']) ? $field['length'] : 18;
                 $scale = !empty($field['scale']) ? $field['scale'] : $this->conn->getAttribute(Doctrine_Core::ATTR_DECIMAL_PLACES);
-                return 'DECIMAL('.$length.','.$scale.')';
+                return 'DECIMAL('.$length.', '.$scale.')';
             case 'bit':
                 return 'BIT';
         }
@@ -479,6 +484,7 @@ class Doctrine_DataDict_Mysql extends Doctrine_DataDict
      */
     public function getIntegerDeclaration($name, $field)
     {
+        $unique = (isset($field['unique']) && $field['unique']) ? ' UNIQUE' : '';
         $default = $autoinc = '';
         if ( ! empty($field['autoincrement'])) {
             $autoinc = ' AUTO_INCREMENT';
@@ -491,11 +497,6 @@ class Doctrine_DataDict_Mysql extends Doctrine_DataDict
                 ? 'NULL'
                 : $this->conn->quote($field['default']));
         }
-        /**
-        elseif (empty($field['notnull'])) {
-            $default = ' DEFAULT NULL';
-        }
-        */
 
         $notnull  = (isset($field['notnull'])  && $field['notnull'])  ? ' NOT NULL' : '';
         $unsigned = (isset($field['unsigned']) && $field['unsigned']) ? ' UNSIGNED' : '';
@@ -505,6 +506,6 @@ class Doctrine_DataDict_Mysql extends Doctrine_DataDict
         $name = $this->conn->quoteIdentifier($name, true);
 
         return $name . ' ' . $this->getNativeDeclaration($field) . $unsigned 
-            . $default . $notnull . $autoinc . $comment;
+            . $default . $unique . $notnull . $autoinc . $comment;
     }
 }

@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage form
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfFormPropel.class.php 22917 2009-10-10 13:44:53Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfFormPropel.class.php 24068 2009-11-17 06:39:35Z Kris.Wallsmith $
  */
 abstract class sfFormPropel extends sfFormObject
 {
@@ -80,7 +80,11 @@ abstract class sfFormPropel extends sfFormObject
       $method = sprintf('getCurrent%s', $this->getI18nModelName($culture));
       $i18nObject = $this->getObject()->$method($culture);
       $i18n = new $class($i18nObject);
-      unset($i18n['id'], $i18n['culture']);
+      
+      if ($i18nObject->isNew())
+      {
+        unset($i18n['id'], $i18n['culture']);
+      }
 
       $this->embedForm($culture, $i18n, $decorator);
     }
@@ -290,6 +294,10 @@ abstract class sfFormPropel extends sfFormObject
     if (null !== $filename)
     {
       return $file->save($filename);
+    }
+    else if (method_exists($this, $method))
+    {
+      return $file->save($this->$method($file));
     }
     else if (method_exists($this->getObject(), $method))
     {

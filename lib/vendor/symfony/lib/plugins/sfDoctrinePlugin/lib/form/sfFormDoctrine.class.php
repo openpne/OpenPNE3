@@ -18,7 +18,7 @@
  * @subpackage form
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfFormDoctrine.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfFormDoctrine.class.php 24132 2009-11-18 11:59:02Z fabien $
  */
 abstract class sfFormDoctrine extends sfFormObject
 {
@@ -81,7 +81,11 @@ abstract class sfFormDoctrine extends sfFormObject
     {
       $i18nObject = $this->getObject()->Translation[$culture];
       $i18n = new $class($i18nObject);
-      unset($i18n['id'], $i18n['lang']);
+
+      if (false === $i18nObject->exists())
+      {
+        unset($i18n['id'], $i18n['lang']);
+      }
 
       $this->embedForm($culture, $i18n, $decorator);
     }
@@ -262,7 +266,11 @@ abstract class sfFormDoctrine extends sfFormObject
 
     if (!$values[$field])
     {
-      return $this->getObject()->$field;
+      // this is needed if the form is embedded, in which case
+      // the parent form has already changed the value of the field
+      $oldValues = $this->getObject()->getModified(true, false);
+
+      return isset($oldValues[$field]) ? $oldValues[$field] : $this->object->$field;
     }
 
     // we need the base directory
@@ -315,14 +323,23 @@ abstract class sfFormDoctrine extends sfFormObject
       $file = $this->getValue($field);
     }
 
-    $method = sprintf('generate%sFilename', $field);
+    $method = sprintf('generate%sFilename', $this->camelize($field));
 
     if (null !== $filename)
     {
       return $file->save($filename);
     }
+    else if (method_exists($this, $method))
+    {
+      return $file->save($this->$method($file));
+    }
     else if (method_exists($this->getObject(), $method))
     {
+      return $file->save($this->getObject()->$method($file));
+    }
+    else if (method_exists($this->getObject(), $method = sprintf('generate%sFilename', $field)))
+    {
+      // this non-camelized method name has been deprecated
       return $file->save($this->getObject()->$method($file));
     }
     else

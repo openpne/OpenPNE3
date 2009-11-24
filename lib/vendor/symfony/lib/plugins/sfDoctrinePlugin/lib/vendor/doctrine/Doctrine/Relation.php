@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Relation.php 6532 2009-10-16 23:12:59Z jwage $
+ *  $Id: Relation.php 6743 2009-11-17 20:07:47Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6532 $
+ * @version     $Revision: 6743 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
 abstract class Doctrine_Relation implements ArrayAccess
@@ -410,7 +410,6 @@ abstract class Doctrine_Relation implements ArrayAccess
         }
 
         if (isset($this->definition['orderBy'])) {
-
             return $table->processOrderBy($alias, $this->definition['orderBy'], $columnNames);
         } else {
             return $table->getOrderByStatement($alias, $columnNames);

@@ -18,7 +18,7 @@
  * @subpackage request
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfWebRequest.class.php 23922 2009-11-14 14:58:38Z fabien $
+ * @version    SVN: $Id: sfWebRequest.class.php 24265 2009-11-23 11:55:33Z Kris.Wallsmith $
  */
 class sfWebRequest extends sfRequest
 {
@@ -618,7 +618,7 @@ class sfWebRequest extends sfRequest
   /**
    * Returns the array that contains all request information ($_SERVER or $_ENV).
    *
-   * This information is stored in the [sf_path_info_array] constant.
+   * This information is stored in the path_info_array option.
    *
    * @return  array Path information
    */
