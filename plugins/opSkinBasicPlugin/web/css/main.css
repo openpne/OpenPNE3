@@ -1,0 +1,1306 @@
+@charset "UTF-8";
+
+/*==============================================================================
+ * Reset Default Style
+ *----------------------------------------------------------------------------*/
+body, div, p, pre, blockquote, th, td,
+dl, dt, dd, ul, ol, li,
+h1, h2, h3, h4, h5, h6,
+iframe, object, embed {
+  margin: 0;
+  padding: 0;
+  border: none;
+  text-align: left;
+}
+
+ul, ol {
+  list-style-position: outside;
+  list-style-type: none;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  empty-cells: show;
+  margin: 0;
+  font-size: 1em;
+}
+
+* {
+  word-break: break-all;
+}
+
+*:first-child+html table {
+  border-collapse: collapse;
+}
+
+* html table {
+  border-collapse: collapse;
+}
+
+th, td {
+  vertical-align: middle;
+}
+
+address, cite, caption, th, del, ins,
+abbr, acronym, dfn, em, strong,
+code, kbd, samp, var {
+  border: none;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  text-align: left;
+  text-decoration: none;
+}
+
+img {
+  border: none;
+  vertical-align: baseline;
+}
+
+a img {
+  vertical-align: text-bottom;
+}
+
+* html a img {
+  vertical-align: baseline;
+}
+
+br {
+  letter-spacing: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+q:before, q:after {
+  content: "";
+}
+
+form, fieldset, input, textarea {
+  margin: 0;
+}
+
+form, fieldset {
+  padding: 0;
+}
+
+fieldset {
+  border: none;
+}
+
+form p {
+  margin: 0;
+  padding: 0;
+}
+
+/*==============================================================================
+ * OpenPNE Common Style
+ *----------------------------------------------------------------------------*/
+body {
+  line-height: 1.2;
+  font-style: normal;
+  font-size: 10pt;
+}
+
+input,
+textarea,
+select {
+  color: #333333;
+  font-size: inherit;
+}
+
+a:link {
+  color: #026cd1;
+}
+
+a:visited {
+  color: #004a95;
+}
+
+a:hover, a:active {
+  color: #76afe6;
+}
+
+.input_text,
+.input_password,
+textarea {
+  background-color: #f8f8f8;
+}
+
+.input_text,
+.input_password,
+textarea,
+select {
+  border: 1px solid #888888;
+}
+
+.input_image {
+  border: none;
+}
+
+.input_submit {
+  border: 1px solid #888888;
+  background: #dadce6 url(../images/bg_button.gif) repeat-x scroll 50% 0;
+  letter-spacing: 0;
+}
+
+.input_file {
+  background: none;
+}
+
+strong {
+  font-weight: bold;
+}
+
+.sortable {
+  cursor: move;
+}
+
+/*----------------------------------------------
+ * Table
+ *--------------------------------------------*/
+div.parts table {
+  table-layout: fixed;
+  width: 100%;
+  border-width: 0 1px 1px 0;
+  border-style: solid;
+  border-color: #CCCCCC;
+}
+
+div.parts th,
+div.parts td {
+  border-width: 1px 0 0 1px;
+  border-style: solid;
+  border-color: #CCCCCC;
+}
+
+/*----------------------------------------------
+ * List Marker
+ *--------------------------------------------*/
+ul.moreInfo li {
+  padding: 2px 0 2px 20px;
+  background: url(../images/icon_arrow_1.gif) no-repeat 0 0.4em;
+}
+
+ul.moreInfo.button li {
+  padding: 0;
+  background: none;
+}
+
+ul.moreInfo.button li form {
+  display: inline;
+}
+
+ul.moreInfo.button li form .input_submit {
+  margin: 0 5px;
+}
+
+/*----------------------------------------------
+ * clearfix, overflow: hidden
+ *--------------------------------------------*/
+div#Contents,
+div#LayoutA,
+div#LayoutB,
+div#LayoutC {
+  zoom: 1;
+  overflow: hidden;
+  overflow: -moz-scrollbars-none;
+}
+
+#Left,
+#Center,
+#Top {
+  overflow: hidden;
+}
+
+dd div, dt, ul, ol, td, th, p,
+h1, h2, h3, h4, h5, h6, .partsHeading,
+fieldset, label {
+  overflow: hidden;
+}
+
+dd div div {
+  overflow: visible;
+}
+
+pre {
+  overflow: auto;
+}
+
+/*----------------------------------------------
+ * Base Layout
+ *--------------------------------------------*/
+#Container {
+  min-width: 950px;
+}
+
+#HeaderContainer,
+#ContentsContainer,
+#FooterContainer {
+  margin: 0 auto;
+  width: 950px;
+}
+
+#LayoutA,
+#LayoutB,
+#LayoutC {
+  float: left;
+  width: 720px;
+}
+
+#LayoutA #Left {
+  float: left;
+  width: 270px;
+}
+
+#LayoutA #Center {
+  float: right;
+  width: 440px;
+}
+
+#LayoutA #Bottom {
+  clear: both;
+}
+
+#LayoutB #Left {
+  float: left;
+  width: 175px;
+}
+
+#LayoutB #Center {
+  float: right;
+  width: 540px;
+}
+
+#LayoutB #Bottom {
+  clear: both;
+}
+
+#LayoutC #Center {
+  width: 650px;
+  margin: 0 auto;
+}
+
+#topBanner {
+  height: 48px;
+  left: 474px;
+  position: absolute;
+  top: 2px;
+  width: 468px;
+}
+
+#sideBanner {
+  float: right;
+  width: 225px;
+}
+
+#Footer {
+  clear: both;
+}
+
+/*----------------------------------------------
+ * Header
+ *--------------------------------------------*/
+#Header {
+  background: #092f56 url(../images/bg_header.gif) repeat-x scroll 0 0;
+  overflow: hidden;
+}
+
+#HeaderContainer {
+  position: relative;
+}
+
+#Header h1 {
+  margin: 0;
+  width: 100px;
+  height: 80px;
+  background: transparent url(../images/skin_header_logo.jpg) no-repeat scroll 0 0;
+  float: left;
+}
+
+#Header h1 a {
+  margin: 0;
+  padding: 0;
+  border: medium none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-indent: -9999px;
+  text-decoration: none;
+}
+
+/*----------------------------------------------
+ * Navigation
+ *--------------------------------------------*/
+#globalNav {
+  padding-top: 40px;
+  text-align: right;
+  width: 850px;
+  float: left;
+}
+
+#globalNav li {
+  padding: 0;
+  border-left: 1px solid #204D6C;
+  border-right: 1px solid #082F57;
+  float: left;
+}
+
+#globalNav li a {
+  padding: 0 10px;
+  height: 40px;
+  line-height: 40px;
+  display: block;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+* html #globalNav li {
+  float: none;
+  display: inline;
+}
+
+* html #globalNav li a {
+  display: inline;
+}
+
+#globalNav li a:hover {
+  background: transparent url(../images/bg_globalnav_hover.gif) repeat-x scroll 0 0;
+}
+
+#localNav {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+#localNav ul {
+  background: transparent url(../images/bg_localnav_default.gif) repeat-y 0 0;
+  color: #FFFFFF;
+}
+
+#localNav ul.friend {
+  background: transparent url(../images/bg_localnav_friend.gif) repeat-y 0 0;
+}
+
+#localNav ul.community {
+  background: transparent url(../images/bg_localnav_community.gif) repeat-y 0 0;
+}
+
+#localNav li {
+  line-height: 30px;
+  float: left;
+}
+
+#localNav li a {
+  padding: 0 15px;
+  color: #FFFFFF;
+  text-decoration: none;
+  display: block;
+}
+
+* html #localNav li {
+  float: none;
+  display: inline;
+}
+
+* html #localNav li a {
+  display: inline;
+}
+
+#localNav ul li a:hover {
+  background: transparent url(../images/bg_localnav_default_hover.gif) repeat-x scroll 0 0;
+}
+
+#localNav ul.friend li a:hover {
+  background: transparent url(../images/bg_localnav_friend_hover.gif) repeat-x scroll 0 0;
+}
+
+#localNav ul.community li a:hover {
+  background: transparent url(../images/bg_localnav_community_hover.gif) repeat-x scroll 0 0;
+}
+
+/*----------------------------------------------
+ * Contents
+ *--------------------------------------------*/
+#Contents {
+  background: transparent url(../images/bg_contents.gif) repeat-x scroll 0 0;
+}
+
+/*----------------------------------------------
+ * Footer
+ *--------------------------------------------*/
+#Footer {
+  height: 50px;
+  background: transparent url(../images/bg_footer.gif) repeat-x scroll 0 0;
+  color: #FFFFFF;
+}
+
+#Footer a {
+  color: #FFFFFF;
+}
+
+#Footer p {
+  padding: 0 10px;
+  line-height: 30px;
+  text-align: right;
+}
+
+/*----------------------------------------------
+ * Parts
+ *--------------------------------------------*/
+div.parts,
+div.dparts {
+  margin: 0 auto 10px;
+}
+
+div.dparts div.parts {
+  margin: 0;
+}
+
+div.ditem {
+  padding: 5px 6px;
+}
+
+/*----------------------------------------------
+ * Parts Heading
+ *--------------------------------------------*/
+div.partsHeading {
+  margin-bottom: 5px;
+  padding: 2px 8px 2px 10px;
+  height: 30px;
+  background: transparent url(../images/bg_parts_heading_720.gif) no-repeat 0 0;
+  line-height: 26px;
+  color: #FFFFFF;
+  font-size: 100%;
+  text-align: left;
+}
+
+div.partsHeading a {
+  color: #FFFFFF;
+}
+
+#LayoutA #Left div.partsHeading {
+  background-image: url(../images/bg_parts_heading_270.gif);
+}
+
+#LayoutA #Center div.partsHeading {
+  background-image: url(../images/bg_parts_heading_440.gif);
+}
+
+#LayoutB #Left div.partsHeading {
+  background-image: url(../images/bg_parts_heading_175.gif);
+}
+
+#LayoutB #Center div.partsHeading {
+  background-image: url(../images/bg_parts_heading_540.gif);
+}
+
+#LayoutC #Center div.partsHeading {
+  background-image: url(../images/bg_parts_heading_650.gif);
+}
+
+div.partsHeading h3 {
+  display: inline;
+  font-weight: bold;
+}
+
+div.partsHeading p {
+  margin-left: 0.5em;
+  display: inline;
+}
+
+div.partsHeading p.link {
+  top: 2px;
+  right: 8px;
+  float: right;
+}
+
+/*----------------------------------------------
+ * Parts Items
+ *--------------------------------------------*/
+div.partsInfo {
+  padding: 5px 20px;
+}
+
+div.partsInfo div.body {
+  margin: 10px 0;
+}
+
+div.partsInfo p,
+div.partsInfo ul {
+  margin-bottom: 10px;
+}
+
+div.partsInfo ul {
+  padding-left: 1em;
+  list-style-type: disc;
+}
+
+div.pagerAbsolute {
+  padding: 4px;
+  text-align: center;
+}
+
+div.pagerAbsolute p {
+  display: inline;
+}
+
+div.pagerRelative {
+  padding: 4px;
+  text-align: right;
+}
+
+div.pagerRelativeMulti {
+  padding: 4px;
+}
+
+div.pagerRelative p,
+div.pagerRelativeMulti div.pager p {
+  display: inline;
+  margin-left: 10px;
+}
+
+div.pagerRelative p:first-child,
+div.pagerRelativeMulti div.pager p:first-child,
+div.pagerRelative p.first-child,
+div.pagerRelativeMulti div.pager p.first-child {
+  margin-left: 0;
+}
+
+div.pagerRelativeMulti div.text {
+  float: left;
+  width: 55%;
+}
+
+div.pagerRelativeMulti div.pager {
+  float: right;
+  width: 45%;
+  margin-top: 0.5em;
+  text-align: right;
+}
+
+div.operation {
+  padding: 4px;
+}
+
+div.operation ul.moreInfo {
+  text-align: center;
+}
+
+div.operation ul.moreInfo li {
+  display: inline;
+  background-position: 0 50%;
+}
+
+/*----------------------------------------------
+ * Calendar
+ *--------------------------------------------*/
+#Left .calendar .partsHeading {
+  text-align: center;
+}
+
+#Left .calendar .partsHeading a {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.calendar th {
+  background-color: #EEEEEE;
+  text-align: center;
+}
+
+.calendar td {
+  padding: 1px 2px;
+  text-align: right;
+}
+
+.calendar td,
+.calendar td * {
+  letter-spacing: -1px;
+  word-break: normal;
+}
+
+#Body .calendar .holiday,
+.calendar .sun {
+  color: #d92c49;
+}
+
+.calendar .sat {
+  color: #2c65d9;
+}
+
+/*----------------------------------------------
+ * Page Navigation
+ *--------------------------------------------*/
+#Left .pageNav ul {
+  margin: 1px;
+  border: 1px solid #CCCCCC;
+  background-color: #FFFFFF;
+}
+
+#Left .pageNav li {
+  padding: 4px 0 4px 18px;
+  background: transparent url(../images/icon_1.gif) no-repeat scroll 8px 50%;
+}
+
+#Left .pageNav li.current {
+  background-color: #EEEEEE;
+}
+
+/*==============================================================================
+ * descriptionBox
+ *----------------------------------------------------------------------------*/
+.descriptionBox .parts {
+  padding: 5px 20px;
+  border: 1px solid #CCCCCC;
+  background-color: #FFFFFF;
+}
+
+.descriptionBox div.body {
+  margin: 10px 0;
+}
+
+.descriptionBox p {
+  margin-bottom: 10px;
+}
+
+/*==============================================================================
+ * informationBox
+ *----------------------------------------------------------------------------*/
+.informationBox {
+  padding-left: 102px;
+  border: 1px solid #CCCCCC;
+  background: #EEEEEE url(../images/icon_information.gif) no-repeat 5px 50%;
+}
+.informationBox div.body {
+  min-height: 1.2em;
+  padding: 5px;
+  border-left: 1px solid #CCCCCC;
+  background: #FFFFFF;
+}
+.informationBox .caution {
+  color: #FF0000;
+}
+
+/*==============================================================================
+ * alertBox
+ *----------------------------------------------------------------------------*/
+.alertBox {
+  width: 564px;
+}
+
+#Body .alertBox th {
+  padding: 8px 0;
+  width: 148px;
+  background-color: #FFFFFF;
+  text-align: center;
+}
+
+#Body .alertBox td {
+  padding: 6px;
+  background-color: #FFFFFF;
+  color: #ff0000;
+}
+
+/*==============================================================================
+ * box
+ *----------------------------------------------------------------------------*/
+.box .body {
+  padding: 10px 1em;
+}
+
+.box .operation {
+  padding: 10px 0;
+}
+
+/*==============================================================================
+ * form
+ *----------------------------------------------------------------------------*/
+.form .block {
+  text-align: center;
+  padding: 10px 1em;
+}
+
+.form th,
+.form td {
+  padding: 5px;
+  background-color: #FFFFFF;
+}
+
+.form th {
+  width: 140px;
+}
+
+.form textarea {
+  width: 98%;
+}
+
+.form .input {
+  float: left;
+  width: 70%;
+}
+
+.form .publicFlag {
+  float: right;
+}
+
+.form .publicFlag select {
+  width: 140px;
+}
+
+.form strong {
+  color: #FF0000;
+  font-weight: normal;
+}
+
+.form td .error {
+  color: #FF0000;
+}
+
+.form td .help {
+  color: #FF0000;
+}
+
+/*==============================================================================
+ * news pager
+ *----------------------------------------------------------------------------*/
+.partsNewsPager .block {
+  border-top-width: 0;
+}
+
+.partsNewsPager dl {
+  border-top: 1px solid #CCCCCC;
+  overflow: hidden;
+}
+
+.partsNewsPager dt {
+  float: left;
+  padding: 5px;
+  text-align: center;
+  width: 170px;
+}
+
+.partsNewsPager dd {
+  border-left: 1px solid #CCCCCC;
+  margin-left: 180px;
+  padding: 5px;
+}
+
+/*==============================================================================
+ * listBox
+ *----------------------------------------------------------------------------*/
+.listBox th {
+  width: 83px;
+  background-color: #FFFFFF;
+}
+
+.listBox th, .listBox td {
+  padding: 5px;
+}
+
+/*==============================================================================
+ * YesNo
+ *----------------------------------------------------------------------------*/
+.yesNo .block {
+  text-align: center;
+  padding: 10px 1em;
+}
+
+/*==============================================================================
+ * memberImageBox
+ *----------------------------------------------------------------------------*/
+.memberImageBox * {
+  text-align: center;
+}
+
+.memberImageBox {
+  padding: 7px;
+  border: 1px solid #CCCCCC;
+  background: transparent url(../images/bg_parts_photo_box.gif) repeat-x 0 0;
+}
+
+.memberImageBox p.photo {
+  padding: 7px;
+  border: 1px solid #CCCCCC;
+  background-color: #FFFFFF;
+}
+
+.memberImageBox p.friendLink {
+  margin-bottom: 3px;
+}
+
+.memberImageBox ul.moreInfo {
+  margin: 2px 0 -5px;
+}
+
+.memberImageBox ul.moreInfo li {
+  padding: 1px 0;
+  background: none;
+}
+
+.memberImageBox ul.moreInfo li img {
+  vertical-align: bottom;
+}
+
+.memberImageBox p.rank {
+  margin-top: 6px;
+}
+
+.memberImageBox p.point {
+  margin-top: 2px;
+}
+
+.memberImageBox p.text {
+  margin-top: 4px;
+}
+
+.memberImageBox p.loginTime {
+  margin-top: 0px;
+}
+
+/*==============================================================================
+ * memberImages
+ *----------------------------------------------------------------------------*/
+.memberImagesBox table {
+  border-top: 1px solid #CCCCCC;
+}
+
+#Body .memberImagesBox td {
+  padding: 8px 0;
+  background-color: #FFFFFF;
+  text-align: center;
+}
+
+.memberImagesBox form {
+  float: left;
+  width: 230px;
+}
+
+.memberImagesBox form p {
+  margin: 8px 0;
+  text-align: center;
+}
+
+.memberImagesBox ul {
+  zoom: 1;
+  margin: 8px 0 8px 230px;
+}
+
+.memberImagesBox li {
+  padding-left: 12px;
+  background: url(./skin/default/img/marker.gif) no-repeat 3px 3px;
+}
+
+/*==============================================================================
+ * modalBox
+ *----------------------------------------------------------------------------*/
+.modalWall {
+  background-color: #000000;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  background-repeat: repeat;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
+
+.modalBox {
+  background-color: #ffffff;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 30;
+}
+
+/*==============================================================================
+ * nineTable
+ *----------------------------------------------------------------------------*/
+.nineTable tr.photo td {
+  height: 80px;
+  padding: 2px 0;
+  text-align: center;
+}
+
+.nineTable tr.photo td p.crown {
+  text-align: center;
+}
+
+.nineTable tr.text td {
+  padding: 2px;
+  text-align: center;
+}
+
+.nineTable div.moreInfo ul.moreInfo {
+  width: 11em;
+  margin-left: auto;
+  padding: 6px 0;
+}
+
+/*==============================================================================
+ * searchResultList
+ *----------------------------------------------------------------------------*/
+.searchResultList .partsInfo {
+  background: #EEEEEE;
+}
+
+.searchResultList .ditem {
+  margin: 8px 0;
+}
+
+.searchResultList td.photo {
+  width: 90px;
+  padding: 5px;
+  text-align: center;
+}
+
+.searchResultList th,
+.searchResultList td {
+  padding: 5px;
+}
+
+.searchResultList th {
+  width: 90px;
+}
+
+.searchResultList tr.operation th {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.searchResultList tr.operation td {
+  padding: 0;
+}
+
+.searchResultList tr.operation span.text {
+  float: left;
+  display: block;
+  width: 180px;
+  padding: 5px;
+  border-right: 1px solid #CCCCCC;
+}
+
+.searchResultList tr.operation span.moreInfo {
+  zoom: 1;
+  display: block;
+  margin-left: 121px;
+  padding: 4px 0 3px;
+  text-align: center;
+}
+
+.searchResultList div.operation {
+  text-align: center;
+}
+
+.searchResultList tr.operation span.moreInfo img,
+.searchResultList div.operation form,
+.searchResultList div.operation fieldset {
+  display: inline;
+  vertical-align: top;
+}
+
+/*==============================================================================
+ * searchFormLine
+ *----------------------------------------------------------------------------*/
+#Top div.searchFormLine,
+#Left div.searchFormLine,
+#Center div.searchFormLine {
+  border-width: 0;
+}
+
+.searchFormLine ul {
+  text-align: center;
+  padding: 1px 0;
+}
+.searchFormLine ul li {
+  display: inline;
+}
+.searchFormLine ul li * {
+  vertical-align: middle;
+}
+.searchFormLine ul li label {
+  margin-right: 2px;
+  padding: 1px 13px 0 0;
+  background: url(../images/icon_arrow_2.gif) no-repeat 100% 0;
+}
+
+/*==============================================================================
+ * manageList
+ *----------------------------------------------------------------------------*/
+.manageList td {
+  padding: 5px;
+}
+
+.manageList td.photo {
+  width: 140px;
+  text-align: center;
+}
+
+.manageList td.delete {
+  width: 120px;
+}
+
+.manageList col.date {
+  width: 160px;
+}
+
+* html .manageList col.date {
+  width: 150px;
+}
+
+*:first-child+html .manageList col.date {
+  width: 150px;
+}
+
+.manageList col.name {
+  width: auto;
+}
+
+.manageList colgroup.operation col {
+  width: 86px;
+}
+
+* html .manageList colgroup.operation col {
+  width: 76px;
+}
+
+*:first-child+html .manageList colgroup.operation col {
+  width: 76px;
+}
+
+/*==============================================================================
+ * homeRecentList
+ *----------------------------------------------------------------------------*/
+.homeRecentList div.block {
+  padding: 5px;
+}
+
+.homeRecentList ul.articleList {
+  line-height: 1.3;
+}
+
+.homeRecentList ul.articleList li {
+  padding-bottom: 5px;
+  padding-left: 85px;
+  background: url(../images/icon_1.gif) 3px 0.4em no-repeat scroll;
+  text-indent: -72px;
+}
+
+.homeRecentList span.date {
+  padding-right: 18px;
+  background: url(../images/articleList_marker.gif) 92% 0.3em no-repeat scroll;
+}
+
+.homeRecentList div.moreInfo ul.moreInfo {
+  margin: 0 2px 0 auto;
+  width: 10em;
+}
+
+/*==============================================================================
+ * photoTable
+ *----------------------------------------------------------------------------*/
+.photoTable tr.photo td {
+  height: 100px;
+  padding: 8px 0;
+  text-align: center;
+}
+
+.photoTable tr.photo td p.crown {
+  text-align: center;
+}
+
+.photoTable tr.text td {
+  padding: 5px 2px;
+  text-align: center;
+}
+
+/*==============================================================================
+ * recentList
+ *----------------------------------------------------------------------------*/
+.recentList dl {
+  border: 1px solid #CCCCCC;
+  margin-bottom: 5px;
+}
+
+.recentList dt {
+  float: left;
+  width: 170px;
+  padding: 5px;
+  text-align: center;
+}
+
+.recentList dd {
+  zoom: 1;
+  margin-left: 180px;
+  padding: 5px;
+  border-left: 1px solid #CCCCCC;
+}
+
+* html #Body .recentList dd {
+  height: 1.2em;
+}
+
+/*==============================================================================
+ * commentList
+ *----------------------------------------------------------------------------*/
+.commentList dl {
+  border: 1px solid #CCCCCC;
+  margin-bottom: 10px;
+}
+
+.commentList dt {
+  float: left;
+  width: 70px;
+  padding-top: 5px;
+  text-align: center;
+}
+
+.commentList dd {
+  zoom: 1;
+  min-height: 5.5em;
+  margin-left: 70px;
+  border-left: 1px solid #CCCCCC;
+}
+
+* html .commentList dd {
+  height: 5.5em;
+}
+
+#LayoutC .commentList dt {
+  width: 110px;
+}
+
+#LayoutC .commentList dd {
+  margin-left: 110px;
+}
+
+.commentList dd div {
+  border-top: 1px solid #CCCCCC;
+}
+
+.commentList dd div p {
+  padding: 4px 3px;
+}
+
+.commentList dd div.title {
+  padding: 4px 3px;
+  border-top: none;
+}
+
+.commentList dd div.title p {
+  padding: 0;
+}
+
+.commentList dd ul.photo {
+  padding: 5px 5px 0;
+}
+
+.commentList dd ul.photo li {
+  display: inline;
+  margin-left: 6px;
+}
+
+.commentList dd div.footer p {
+  text-align: right;
+}
+
+.commentList div.operation {
+  padding: 8px 0;
+}
+
+.commentList dd div.attachFile {
+  padding: 16px 5px;
+}
+
+/*==============================================================================
+ * line
+ *----------------------------------------------------------------------------*/
+.line {
+  text-align: center;
+}
+
+/*==============================================================================
+ * loginForm
+ *----------------------------------------------------------------------------*/
+.loginForm {
+  margin: 10px 0 20px 0;
+}
+
+.loginForm th,
+.loginForm td {
+  padding: 3px;
+}
+
+.loginForm input {
+  border: 1px solid #888888;
+  background-color: #f8f8f8;
+}
+
+/*==============================================================================
+ * toolbar of opWidgetFormRichTextareaOpenPNE
+ *----------------------------------------------------------------------------*/
+div.parts table.mceToolbar {
+  width: auto;
+}
+
+/*==============================================================================
+ * Decoration by opWidgetFormRichTextareaOpenPNE
+ *----------------------------------------------------------------------------*/
+span.op_b {
+	text-decoration: inherit;
+	font-style: inherit;
+	font-weight: bold;
+	color: inherit;
+	font-size: inherit;
+}
+
+span.op_u {
+	text-decoration: underline;
+	font-style: inherit;
+	font-weight: inherit;
+	color: inherit;
+	font-size: inherit;
+}
+
+span.op_s {
+	text-decoration: line-through;
+	font-style: inherit;
+	font-weight: inherit;
+	color: inherit;
+	font-size: inherit;
+}
+
+span.op_i {
+	text-decoration: inherit;
+	font-style: italic;
+	font-weight: inherit;
+	color: inherit;
+	font-size: inherit;
+}
+
+span.op_large {
+	text-decoration: inherit;
+	font-style: inherit;
+	font-weight: inherit;
+	color: inherit;
+	font-size: large;
+}
+
+span.op_small {
+	text-decoration: inherit;
+	font-style: inherit;
+	font-weight: inherit;
+	color: inherit;
+	font-size: xx-small;
+}
+
+span.op_color {
+	text-decoration: inherit;
+	font-style: inherit;
+	font-weight: inherit;
+	color: inherit;
+	font-size: inherit;
+}
