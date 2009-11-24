@@ -1,0 +1,86 @@
+OpenPNE 3.0.5+ から OpenPNE 3.2.x へのアップグレード手順
+========================================================
+
+はじめに
+--------
+
+このドキュメントは、 OpenPNE 3.0.5 以上から OpenPNE 3.2.x (beta を含む) へのアップグレード作業の手順を示したものです。
+
+これ以外のバージョンのアップグレードは、このドキュメントでは想定していませんのでご注意ください。
+
+※アップグレードをおこなう前に、データベースのバックアップを取っておくことを強くお勧めします。
+
+手順
+----
+
+アップグレードは以下の手順でおこないます。
+
+(1) ファイルの設置
+(2) 設定ファイルの上書き
+(3) プラグインディレクトリのコピー
+(4) アップグレードコマンドの実行
+
+作業方法
+--------
+
+ファイルの設置
+~~~~~~~~~~~~~~
+
+Web サーバ上に OpenPNE 3.2.x のソースファイルを設置します。
+
+設定ファイルの上書き
+~~~~~~~~~~~~~~~~~~~~
+
+config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.class.php にコピーします。
+
+※config/ProjectConfiguration.class.php に独自の設定を記述している場合は、古いファイルを参考に新しいファイルを変更してください。
+
+古いバージョンの config/databases.yml を新しいバージョンの config/databases.yml としてコピーします。
+
+プラグインディレクトリのコピー
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+古いバージョンの plugins ディレクトリの中身をコピーします。
+
+::
+
+  $ cp -aur /path/to/old/OpenPNE3/plugins/* /path/to/new/OpenPNE3/plugins
+  $ cp -aur /path/to/old/OpenPNE3/plugins/.* /path/to/new/OpenPNE3/plugins
+
+アップグレードコマンドの実行
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+プロジェクトルートディレクトリで、以下のアップグレードコマンドを実行します。
+
+::
+
+  $ ./symfony openpne:upgrade-from-30x
+
+アップグレードに必要な作業はいくつかのステップに分けて自動でおこなわれ、ステップ毎に途中経過が出力されます。
+
+以上でアップグレードは完了です。
+
+アップグレードコマンドでエラーが発生した場合
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+作業中にエラーが発生した場合、いくつかのステップを飛ばして続行します。そのため、途中でエラーが出ている場合、その内容を確認し、必要であれば修復などをおこなったうえで、エラーが発生したステップのみやり直してください。
+
+たとえば、エラー時の表示が以下のようになっていた場合、「append_member_application_setting_column」というステップでエラーが生じています。
+
+::
+  >> upgrade   Processing append_member_application_setting_column
+                                                                               
+    SQLSTATE[42S21]: Column already exists: 1060 Duplicate column name 'type'  
+                                                                               
+  >> upgrade   Processed append_member_application_setting_column (0.00 sec)
+
+この原因を取り除いてこのステップだけやり直したい場合は、以下のコマンドを実行します。
+
+::
+  ./symfony openpne:upgrade-from-30x --rules=append_member_application_setting_column
+
+--rules オプションは複数指定することができます。そのため、「dbconfig」と「append_member_application_setting_column」のふたつのステップを実行したい場合は、以下のようにします。
+
+::
+  ./symfony openpne:upgrade-from-30x --rules=dbconfig --rules=append_member_application_setting_column
+

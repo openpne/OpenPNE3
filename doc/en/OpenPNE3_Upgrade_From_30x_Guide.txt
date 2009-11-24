@@ -1,0 +1,59 @@
+How to Upgrade OpenPNE3.0.5 + to OpenPNE 3.2.x
+==============================================
+
+Getting Started
+---------------
+
+This document is for upgrading OpenPNE 3.0.5 + to OpenPNE 3.2.x (or beta)
+
+Be aware that this document doesn't consider for other versions.
+
+You should backup your database before your upgrading.
+
+Plan
+----
+
+The upgrading plan is the following:
+
+(1) Setting files
+(2) Update the configuration file
+(3) Copy the plugin directory
+(4) Execute the upgrade command
+
+The Way to Work
+---------------
+
+Setting Files
+~~~~~~~~~~~~~
+
+Set the OpenPNE 3.2.x files to your web server.
+
+Update the configuration file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Copy config/ProjectConfiguration.class.php.sample to config/ProjectConfiguration.class.php.
+
+If you write your original configuration to your old config/ProjectConfiguration.class.php, you should change the new file.
+
+And copy the old config/database.yml to new config/database.yml.
+
+Copy the Plugin Directory
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Copy the contents in old plugins.
+
+::
+
+  $ cp -aur /path/to/old/OpenPNE3/plugins/* /path/to/new/OpenPNE3/plugins
+  $ cp -aur /path/to/old/OpenPNE3/plugins/.* /path/to/new/OpenPNE3/plugins
+
+Execute the Upgrading Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Execute the following command in the project root directory.
+
+::
+
+  $ ./symfony openpne:upgrade-from-30x
+
+Now, upgrading has been done.
