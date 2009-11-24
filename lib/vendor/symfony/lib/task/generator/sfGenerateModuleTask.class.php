@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfGeneratorBaseTask.class.php');
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfGenerateModuleTask.class.php 13022 2008-11-15 23:08:23Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfGenerateModuleTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfGenerateModuleTask extends sfGeneratorBaseTask
 {
@@ -30,7 +30,6 @@ class sfGenerateModuleTask extends sfGeneratorBaseTask
       new sfCommandArgument('module', sfCommandArgument::REQUIRED, 'The module name'),
     ));
 
-    $this->aliases = array('init-module');
     $this->namespace = 'generate';
     $this->name = 'module';
 

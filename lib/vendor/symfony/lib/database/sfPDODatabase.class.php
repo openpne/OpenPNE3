@@ -18,7 +18,7 @@
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
  * @author     Dustin Whittle <dustin.whittle@symfony-project.com>
- * @version    SVN: $Id: sfPDODatabase.class.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: sfPDODatabase.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfPDODatabase extends sfDatabase
 {
@@ -29,23 +29,10 @@ class sfPDODatabase extends sfDatabase
    */
   public function connect()
   {
-    // determine how to get our parameters
-    $method = $this->getParameter('method', 'dsn');
-
-    // get parameters
-    switch ($method)
+    if (!$dsn = $this->getParameter('dsn'))
     {
-      case 'dsn':
-
-        $dsn = $this->getParameter('dsn');
-
-        if ($dsn == null)
-        {
-          // missing required dsn parameter
-          throw new sfDatabaseException('Database configuration specifies method "dsn", but is missing dsn parameter.');
-        }
-
-        break;
+      // missing required dsn parameter
+      throw new sfDatabaseException('Database configuration is missing the "dsn" parameter.');
     }
 
     try
@@ -105,7 +92,7 @@ class sfPDODatabase extends sfDatabase
    *
    * @return void
    */
-  public function shutdown ()
+  public function shutdown()
   {
     if ($this->connection !== null)
     {

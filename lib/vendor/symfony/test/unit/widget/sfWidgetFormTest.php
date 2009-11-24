@@ -10,7 +10,7 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(28, new lime_output_color());
+$t = new lime_test(34);
 
 class MyWidgetForm extends sfWidgetForm
 {
@@ -51,6 +51,13 @@ $w = new MyWidgetForm(array('default' => 'foo'));
 $t->is($w->getDefault(), 'foo', '->getDefault() returns the default value');
 $w->setDefault('bar');
 $t->is($w->getDefault(), 'bar', '->setDefault() changes the default value for the widget');
+
+// ->getParent() ->setParent()
+$t->diag('->getParent() ->setParent()');
+$w = new MyWidgetForm();
+$t->is($w->getParent(), null, '->getParent() returns null if no widget schema has been defined');
+$w->setParent($ws = new sfWidgetFormSchema());
+$t->is($w->getParent(), $ws, '->setParent() associates a widget schema to the widget');
 
 // ->getIdFormat() ->setIdFormat()
 $t->diag('->getIdFormat() ->setIdFormat()');
@@ -99,6 +106,12 @@ $t->is($w->generateId('foo'), 'id_for_foo_works', '->setIdFormat() sets the form
 $t->is($w->generateId('foo[]'), 'id_for_foo_works', '->generateId() removes the [] from the name');
 $t->is($w->generateId('foo[bar][]'), 'id_for_foo_bar_works', '->generateId() replaces [] with _');
 $t->is($w->generateId('foo[bar][]', 'test'), 'id_for_foo_bar_test_works', '->generateId() takes the value into account if provided');
+$t->is($w->generateId('_foo[bar][]', 'test'), 'id_for__foo_bar_test_works', '->generateId() leaves valid ids'); 
 
 $w->setIdFormat('id');
 $t->is($w->generateId('foo[bar][]', 'test'), 'foo_bar_test', '->generateId() returns the name if the id format does not contain %s');
+
+$w->setIdFormat('%s');
+$t->is($w->generateId('_foo[bar][]', 'test'), 'foo_bar_test', '->generateId() removes invalid characters'); 
+$t->is($w->generateId('_foo@bar'), 'foo_bar', '->generateId() removes invalid characters'); 
+$t->is($w->generateId('_____foo@bar'), 'foo_bar', '->generateId() removes invalid characters'); 

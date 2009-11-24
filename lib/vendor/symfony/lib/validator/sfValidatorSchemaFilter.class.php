@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorSchemaFilter.class.php 11003 2008-08-20 16:39:20Z fabien $
+ * @version    SVN: $Id: sfValidatorSchemaFilter.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfValidatorSchemaFilter extends sfValidatorSchema
 {
@@ -41,7 +41,7 @@ class sfValidatorSchemaFilter extends sfValidatorSchema
    */
   protected function doClean($values)
   {
-    if (is_null($values))
+    if (null === $values)
     {
       $values = array();
     }

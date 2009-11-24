@@ -5,7 +5,7 @@
  *
  * @package    form
  * @subpackage product
- * @version    SVN: $Id: sfPropelFormTemplate.php 6180 2007-11-27 18:50:50Z dwhittle $
+ * @version    SVN: $Id: ProductForm.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class ProductForm extends BaseProductForm
 {

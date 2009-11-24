@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPropelBaseTask.class.php');
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelBuildSqlTask.class.php 14299 2008-12-24 04:57:47Z dwhittle $
+ * @version    SVN: $Id: sfPropelBuildSqlTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfPropelBuildSqlTask extends sfPropelBaseTask
 {
@@ -29,7 +29,6 @@ class sfPropelBuildSqlTask extends sfPropelBaseTask
       new sfCommandOption('phing-arg', null, sfCommandOption::PARAMETER_REQUIRED | sfCommandOption::IS_ARRAY, 'Arbitrary phing argument'),
     ));
 
-    $this->aliases = array('propel-build-sql');
     $this->namespace = 'propel';
     $this->name = 'build-sql';
     $this->briefDescription = 'Creates SQL for the current model';

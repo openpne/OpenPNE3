@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: PropelDataModelTemplateTask.php 952 2008-02-05 22:59:20Z hans $
+ *  $Id: PropelDataModelTemplateTask.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -34,7 +34,7 @@ include_once 'propel/engine/database/transform/XmlToAppData.php';
  *
  * @author     Hans Lellelid <hans@xmpl.org>
  * @package    propel.phing
- * @version    $Revision: 952 $
+ * @version    $Revision: 1262 $
  */
 class PropelDataModelTemplateTask extends AbstractPropelDataModelTask {
 

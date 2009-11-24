@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetFormPropelChoice.class.php 12803 2008-11-09 07:26:18Z fabien $
+ * @version    SVN: $Id: sfWidgetFormPropelChoice.class.php 22261 2009-09-23 05:31:39Z fabien $
  */
 class sfWidgetFormPropelChoice extends sfWidgetFormChoice
 {
@@ -23,7 +23,7 @@ class sfWidgetFormPropelChoice extends sfWidgetFormChoice
    */
   public function __construct($options = array(), $attributes = array())
   {
-    $options['choices'] = new sfCallable(array($this, 'getChoices'));
+    $options['choices'] = array();
 
     parent::__construct($options, $attributes);
   }
@@ -78,7 +78,7 @@ class sfWidgetFormPropelChoice extends sfWidgetFormChoice
 
     $class = constant($this->getOption('model').'::PEER');
 
-    $criteria = is_null($this->getOption('criteria')) ? new Criteria() : clone $this->getOption('criteria');
+    $criteria = null === $this->getOption('criteria') ? new Criteria() : clone $this->getOption('criteria');
     if ($order = $this->getOption('order_by'))
     {
       $method = sprintf('add%sOrderByColumn', 0 === strpos(strtoupper($order[1]), 'ASC') ? 'Ascending' : 'Descending');

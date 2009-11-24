@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: NameGenerator.php 521 2007-01-05 13:29:36Z heltem $
+ *  $Id: NameGenerator.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -26,7 +26,7 @@
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
  * @author     Daniel Rall <dlr@finemaltcoding.com> (Torque)
  * @author     Byron Foster <byron_foster@yahoo.com> (Torque)
- * @version    $Revision: 521 $
+ * @version    $Revision: 1262 $
  * @package    propel.engine.database.model
  */
 interface NameGenerator {
@@ -46,6 +46,17 @@ interface NameGenerator {
 	 */
 	const CONV_METHOD_UNDERSCORE = "underscore";
 
+	/**
+	 * Heavier method for converting schema table and column names 
+	 * to PHP names. Similar to {@link #CONV_METHOD_UNDERSCORE} but
+	 * this one will pass only letters and numbers through and will
+	 * use as separator any character that is not a letter or a number
+	 * inside the string to be converted. The <code>CONV_METHOD_XXX</code> 
+	 * constants define how names for columns and tales in the 
+	 * database schema will be converted to PHP source names. 
+	 */
+	const CONV_METHOD_CLEAN = "clean";
+	
 	/**
 	 * Similar to {@link #CONV_METHOD_UNDERSCORE} except nothing is
 	 * converted to lowercase.

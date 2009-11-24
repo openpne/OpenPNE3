@@ -35,6 +35,22 @@
 class Doctrine_Template_Versionable extends Doctrine_Template
 {
     /**
+     * Array of AuditLog Options
+     *
+     * @var array
+     */
+    protected $_options = array('version'           => array('name'   => 'version',
+                                                             'alias'  => null,
+                                                             'type'   => 'integer',
+                                                             'length' => 8,
+                                                             'options' => array()),
+								'generateRelations' => true,
+                                'tableName'         => false,
+                                'generateFiles'     => false,
+                                'auditLog'          => true,
+                                'deleteVersions'    => true);
+
+    /**
      * __construct
      *
      * @param array $options
@@ -42,7 +58,8 @@ class Doctrine_Template_Versionable extends Doctrine_Template
      */
     public function __construct(array $options = array())
     {
-        $this->_plugin = new Doctrine_AuditLog($options);
+	    parent::__construct($options);
+        $this->_plugin = new Doctrine_AuditLog($this->_options);
     }
 
     /**
@@ -56,7 +73,9 @@ class Doctrine_Template_Versionable extends Doctrine_Template
             $this->_plugin->initialize($this->_table);
         }
 
-        $this->hasColumn('version', 'integer', 8);
+        $version = $this->_options['version'];
+        $name = $version['name'] . (isset($version['alias']) ? ' as ' . $version['alias'] : '');
+        $this->hasColumn($name, $version['type'], $version['length'], $version['options']);
 
         $this->addListener(new Doctrine_AuditLog_Listener($this->_plugin));
     }

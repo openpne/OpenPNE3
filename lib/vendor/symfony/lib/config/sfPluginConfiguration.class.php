@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage config
  * @author     Kris Wallsmith <kris.wallsmith@symfony-project.com>
- * @version    SVN: $Id: sfPluginConfiguration.class.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: sfPluginConfiguration.class.php 23822 2009-11-12 15:13:48Z Kris.Wallsmith $
  */
 abstract class sfPluginConfiguration
 {
@@ -35,8 +35,8 @@ abstract class sfPluginConfiguration
   {
     $this->configuration = $configuration;
     $this->dispatcher = $configuration->getEventDispatcher();
-    $this->rootDir = is_null($rootDir) ? $this->guessRootDir() : realpath($rootDir);
-    $this->name = is_null($name) ? $this->guessName() : $name;
+    $this->rootDir = null === $rootDir ? $this->guessRootDir() : realpath($rootDir);
+    $this->name = null === $name ? $this->guessName() : $name;
 
     $this->setup();
     $this->configure();
@@ -113,14 +113,8 @@ abstract class sfPluginConfiguration
     if (is_readable($file = $this->rootDir.'/config/autoload.yml'))
     {
       $this->configuration->getEventDispatcher()->connect('autoload.filter_config', array($this, 'filterAutoloadConfig'));
-
-      $config = new sfAutoloadConfigHandler();
-      $mappings = $config->evaluate(array($file));
-
-      foreach ($mappings as $class => $file)
-      {
-        $autoload->setClassPath($class, $file);
-      }
+      $autoload->loadConfiguration(array($file));
+      $this->configuration->getEventDispatcher()->disconnect('autoload.filter_config', array($this, 'filterAutoloadConfig'));
     }
     else
     {
@@ -163,6 +157,56 @@ abstract class sfPluginConfiguration
     }
 
     return $config;
+  }
+
+  /**
+   * Connects the current plugin's tests to the "test:*" tasks.
+   */
+  public function connectTests()
+  {
+    $this->dispatcher->connect('task.test.filter_test_files', array($this, 'filterTestFiles'));
+  }
+
+  /**
+   * Listens for the "task.test.filter_test_files" event and adds tests from the current plugin.
+   * 
+   * @param  sfEvent $event
+   * @param  array   $files
+   * 
+   * @return array An array of files with the appropriate tests from the current plugin merged in
+   */
+  public function filterTestFiles(sfEvent $event, $files)
+  {
+    $task = $event->getSubject();
+
+    if ($task instanceof sfTestAllTask)
+    {
+      $directory = $this->rootDir.'/test';
+      $names = array();
+    }
+    else if ($task instanceof sfTestFunctionalTask)
+    {
+      $directory = $this->rootDir.'/test/functional';
+      $names = $event['arguments']['controller'];
+    }
+    else if ($task instanceof sfTestUnitTask)
+    {
+      $directory = $this->rootDir.'/test/unit';
+      $names = $event['arguments']['name'];
+    }
+
+    if (!count($names))
+    {
+      $names = array('*');
+    }
+
+    foreach ($names as $name)
+    {
+      $finder = sfFinder::type('file')->follow_link()->name(basename($name).'Test.php');
+      $files = array_merge($files, $finder->in($directory.'/'.dirname($name)));
+    }
+
+    return array_unique($files);
   }
 
   /**

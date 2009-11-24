@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -15,7 +15,7 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetFormInputFileEditable.class.php 11544 2008-09-14 17:40:07Z fabien $
+ * @version    SVN: $Id: sfWidgetFormInputFileEditable.class.php 24015 2009-11-16 13:33:34Z bschussek $
  */
 class sfWidgetFormInputFileEditable extends sfWidgetFormInputFile
 {
@@ -84,7 +84,8 @@ class sfWidgetFormInputFileEditable extends sfWidgetFormInputFile
       $deleteName = ']' == substr($name, -1) ? substr($name, 0, -1).'_delete]' : $name.'_delete';
 
       $delete = $this->renderTag('input', array_merge(array('type' => 'checkbox', 'name' => $deleteName), $attributes));
-      $deleteLabel = $this->renderContentTag('label', $this->getOption('delete_label'), array_merge(array('for' => $this->generateId($deleteName))));
+      $deleteLabel = $this->translate($this->getOption('delete_label'));
+      $deleteLabel = $this->renderContentTag('label', $deleteLabel, array_merge(array('for' => $this->generateId($deleteName))));
     }
     else
     {
@@ -99,7 +100,7 @@ class sfWidgetFormInputFileEditable extends sfWidgetFormInputFile
   {
     if ($this->getOption('is_image'))
     {
-      return false !== $this->getOption('file_src') ? $this->renderTag('img', array_merge(array('src' => $this->getOption('file_src'))), $attributes) : '';
+      return false !== $this->getOption('file_src') ? $this->renderTag('img', array_merge(array('src' => $this->getOption('file_src')), $attributes)) : '';
     }
     else
     {

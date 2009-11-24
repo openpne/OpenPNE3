@@ -26,7 +26,7 @@ class OAuthConsumerInformationForm extends BaseOAuthConsumerInformationForm
 
     $apis = opToolkit::retrieveAPIList();
     $this->setWidget('using_apis', new sfWidgetFormSelectMany(array('choices' => $apis), array('size' => 10)));
-    $this->setValidator('using_apis', new sfValidatorChoiceMany(array('choices' => array_keys($apis))));
+    $this->setValidator('using_apis', new sfValidatorChoice(array('multiple' => true, 'choices' => array_keys($apis))));
     $this->getWidgetSchema()->setHelp('using_apis', 'Select apis that your application needs.');
 
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('api');

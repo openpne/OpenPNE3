@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Node.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Node.php 5876 2009-06-10 18:43:12Z piccoloprincipe $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 5876 $
  * @author      Joe Simms <joe.simms@websites4.com>
  */
 class Doctrine_Node implements IteratorAggregate
@@ -101,12 +101,16 @@ class Doctrine_Node implements IteratorAggregate
     }
 
     /**
-     * factory method to return node instance based upon chosen implementation
+     * Factory method for creating a Node.
+     *
+     * This is a factory method that returns node instance based upon chosen
+     * implementation.
      *
      * @param object $record                    instance of Doctrine_Record
-     * @param string $impName                   implementation (NestedSet, AdjacencyList, MaterializedPath)
+     * @param string $implName                  implementation (NestedSet, AdjacencyList, MaterializedPath)
      * @param array $options                    options
-     * @return object $options                  instance of Doctrine_Node
+     * @return Doctrine_Node
+     * @throws Doctrine_Node_Exception          if $implName is not a valid class
      */
     public static function factory(Doctrine_Record $record, $implName, $options = array())
     {
@@ -132,7 +136,7 @@ class Doctrine_Node implements IteratorAggregate
     /**
      * getter for record attribute
      *
-     * @return object                           instance of Doctrine_Record
+     * @return Doctrine_Record
      */
     public function getRecord()
     {

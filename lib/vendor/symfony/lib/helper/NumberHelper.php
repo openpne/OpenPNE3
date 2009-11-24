@@ -14,12 +14,12 @@
  * @package    symfony
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: NumberHelper.php 7757 2008-03-07 10:55:22Z fabien $
+ * @version    SVN: $Id: NumberHelper.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 
 function format_number($number, $culture = null)
 {
-  if (is_null($number))
+  if (null === $number)
   {
     return null;
   }
@@ -31,7 +31,7 @@ function format_number($number, $culture = null)
 
 function format_currency($amount, $currency = null, $culture = null)
 {
-  if (is_null($amount))
+  if (null === $amount)
   {
     return null;
   }

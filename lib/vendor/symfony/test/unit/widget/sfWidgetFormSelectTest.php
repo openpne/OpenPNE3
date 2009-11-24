@@ -10,7 +10,17 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(18, new lime_output_color());
+class FormFormatterStub extends sfWidgetFormSchemaFormatter
+{
+  public function __construct() {}
+
+  public function translate($subject, $parameters = array())
+  {
+    return sprintf('translation[%s]', $subject);
+  }
+}
+
+$t = new lime_test(22);
 
 $dom = new DomDocument('1.0', 'utf-8');
 $dom->validateOnParse = true;
@@ -63,6 +73,32 @@ catch (RuntimeException $e)
 {
   $t->pass('__construct() throws an RuntimeException if you don\'t pass a choices option');
 }
+
+// choices are translated
+$t->diag('choices are translated');
+
+$ws = new sfWidgetFormSchema();
+$ws->addFormFormatter('stub', new FormFormatterStub());
+$ws->setFormFormatterName('stub');
+$w = new sfWidgetFormSelect(array('choices' => array('foo' => 'bar', 'foobar' => 'foo')));
+$w->setParent($ws);
+$dom->loadHTML($w->render('foo'));
+$css = new sfDomCssSelector($dom);
+$t->is($css->matchSingle('#foo option[value="foo"]')->getValue(), 'translation[bar]', '->render() translates the options');
+$t->is($css->matchSingle('#foo option[value="foobar"]')->getValue(), 'translation[foo]', '->render() translates the options');
+
+// optgroup support with translated choices
+$t->diag('optgroup support with translated choices');
+
+$ws = new sfWidgetFormSchema();
+$ws->addFormFormatter('stub', new FormFormatterStub());
+$ws->setFormFormatterName('stub');
+$w = new sfWidgetFormSelect(array('choices' => array('group' => array('foo' => 'bar', 'foobar' => 'foo'))));
+$w->setParent($ws);
+$dom->loadHTML($w->render('foo'));
+$css = new sfDomCssSelector($dom);
+$t->is($css->matchSingle('#foo optgroup[label="translation[group]"] option[value="foo"]')->getValue(), 'translation[bar]', '->render() translates the options');
+$t->is($css->matchSingle('#foo optgroup[label="translation[group]"] option[value="foobar"]')->getValue(), 'translation[foo]', '->render() translates the options');
 
 // choices as a callable
 $t->diag('choices as a callable');

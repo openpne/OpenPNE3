@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfDoctrineGenerator.class.php 12507 2008-10-31 18:26:58Z fabien $
+ * @version    SVN: $Id: sfDoctrineGenerator.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfDoctrineGenerator extends sfModelGenerator
 {
@@ -38,7 +38,7 @@ class sfDoctrineGenerator extends sfModelGenerator
    */
   public function configure()
   {
-    $this->table = Doctrine::getTable($this->modelClass);
+    $this->table = Doctrine_Core::getTable($this->modelClass);
 
     // load all primary keys
     $this->loadPrimaryKeys();

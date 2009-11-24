@@ -34,6 +34,7 @@ class Doctrine_I18n extends Doctrine_Record_Generator
 {
     protected $_options = array(
                             'className'     => '%CLASS%Translation',
+                            'tableName'     => '%TABLE%_translation',
                             'fields'        => array(),
                             'generateFiles' => false,
                             'table'         => false,
@@ -41,7 +42,9 @@ class Doctrine_I18n extends Doctrine_Record_Generator
                             'children'      => array(),
                             'type'          => 'string',
                             'length'        => 2,
-                            'options'       => array()
+                            'options'       => array(),
+                            'cascadeDelete' => true,
+                            'appLevelDelete'=> false
                             );
 
     /**
@@ -113,7 +116,7 @@ class Doctrine_I18n extends Doctrine_Record_Generator
                     $this->_table->getRelationParser()->bind($table, $relation);
         
                     // now try to get the reverse relation, to rewrite it
-                    $rp = Doctrine::getTable($table)->getRelationParser();
+                    $rp = Doctrine_Core::getTable($table)->getRelationParser();
                     $others = $rp->getPendingRelation($originalName);
                     if (isset($others)) {
                         $others['class'] = $this->_table->getClassnameToReturn();

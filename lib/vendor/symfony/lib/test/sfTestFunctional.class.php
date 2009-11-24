@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTestFunctional.class.php 19411 2009-06-20 11:54:04Z fabien $
+ * @version    SVN: $Id: sfTestFunctional.class.php 23937 2009-11-14 17:43:12Z fabien $
  */
 class sfTestFunctional extends sfTestFunctionalBase
 {
@@ -63,36 +63,5 @@ class sfTestFunctional extends sfTestFunctionalBase
     $this->test()->is($entry->getActionName(), $actionName, sprintf('request is forwarded to the "%s" action (%s)', $actionName, $position));
 
     return $this;
-  }
-
-  /**
-   * Tests if the given uri is cached.
-   *
-   * @deprecated since 1.2
-   *
-   * @param  boolean $boolean      Flag for checking the cache
-   * @param  boolean $with_layout  If have or not layout
-   *
-   * @return sfTestFunctional The current sfTestFunctional instance
-   */
-  public function isCached($boolean, $with_layout = false)
-  {
-    return $this->with('view_cache')->isCached($boolean, $with_layout);
-  }
-
-  /**
-   * Tests if the given uri is cached.
-   *
-   * @deprecated since 1.2
-   *
-   * @param  string  $uri          Uniform resource identifier
-   * @param  boolean $boolean      Flag for checking the cache
-   * @param  boolean $with_layout  If have or not layout
-   *
-   * @return sfTestFunctional The current sfTestFunctional instance
-   */
-  public function isUriCached($uri, $boolean, $with_layout = false)
-  {
-    return $this->with('view_cache')->isUriCached($uri, $boolean, $with_layout);
   }
 }

@@ -10,11 +10,11 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(1, new lime_output_color());
+$t = new lime_test(1);
 
 $logger = new sfConsoleLogger(new sfEventDispatcher());
 $logger->setStream($buffer = fopen('php://memory', 'rw'));
 
 $logger->log('foo');
 rewind($buffer);
-$t->is(stream_get_contents($buffer), "foo\n", 'sfConsoleLogger logs messages to the console');
+$t->is(fix_linebreaks(stream_get_contents($buffer)), "foo\n", 'sfConsoleLogger logs messages to the console');

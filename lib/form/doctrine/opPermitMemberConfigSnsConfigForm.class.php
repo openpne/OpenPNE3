@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class opPermitMemberConfigSnsConfigForm extends sfForm
+class opPermitMemberConfigSnsConfigForm extends BaseForm
 {
   public function configure()
   {
@@ -40,7 +40,7 @@ class opPermitMemberConfigSnsConfigForm extends sfForm
     ));
 
     $this->setValidators(array(
-      'ignored_sns_config' => new sfValidatorChoiceMany(array('choices' => array_keys($choices), 'required' => false)),
+      'ignored_sns_config' => new sfValidatorChoice(array('multiple' => true, 'choices' => array_keys($choices), 'required' => false)),
     ));
 
     $default = Doctrine::getTable('SnsConfig')->get('ignored_sns_config', array());

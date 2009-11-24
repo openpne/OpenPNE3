@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage command
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCommandApplication.class.php 19217 2009-06-13 09:15:28Z fabien $
+ * @version    SVN: $Id: sfCommandApplication.class.php 23218 2009-10-20 20:59:02Z FabianLange $
  */
 abstract class sfCommandApplication
 {
@@ -22,7 +22,6 @@ abstract class sfCommandApplication
     $commandManager = null,
     $trace          = false,
     $verbose        = true,
-    $dryrun         = false,
     $nowrite        = false,
     $name           = 'UNKNOWN',
     $version        = 'UNKNOWN',
@@ -35,17 +34,29 @@ abstract class sfCommandApplication
   /**
    * Constructor.
    *
-   * @param sfEventDispatcher $dispatcher A sfEventDispatcher instance
-   * @param sfFormatter       $formatter  A sfFormatter instance
-   * @param array             $options    An array of options
+   * @param sfEventDispatcher $dispatcher   A sfEventDispatcher instance
+   * @param sfFormatter       $formatter    A sfFormatter instance
+   * @param array             $options      An array of options
    */
-  public function __construct(sfEventDispatcher $dispatcher, sfFormatter $formatter, $options = array())
+  public function __construct(sfEventDispatcher $dispatcher, sfFormatter $formatter = null, $options = array())
   {
     $this->dispatcher = $dispatcher;
-    $this->formatter  = $formatter;
-    $this->options    = $options;
+    $this->formatter = null === $formatter ? $this->guessBestFormatter(STDOUT) : $formatter;
+    $this->options = $options;
 
     $this->fixCgi();
+
+    $argumentSet = new sfCommandArgumentSet(array(
+      new sfCommandArgument('task', sfCommandArgument::REQUIRED, 'The task to execute'),
+    ));
+    $optionSet = new sfCommandOptionSet(array(
+      new sfCommandOption('--help',    '-H', sfCommandOption::PARAMETER_NONE, 'Display this help message.'),
+      new sfCommandOption('--quiet',   '-q', sfCommandOption::PARAMETER_NONE, 'Do not log messages to standard output.'),
+      new sfCommandOption('--trace',   '-t', sfCommandOption::PARAMETER_NONE, 'Turn on invoke/execute tracing, enable full backtrace.'),
+      new sfCommandOption('--version', '-V', sfCommandOption::PARAMETER_NONE, 'Display the program version.'),
+      new sfCommandOption('--color',   '',   sfCommandOption::PARAMETER_NONE, 'Forces ANSI color output.'),
+    ));
+    $this->commandManager = new sfCommandManager($argumentSet, $optionSet);
 
     $this->configure();
 
@@ -60,9 +71,9 @@ abstract class sfCommandApplication
   /**
    * Returns the value of a given option.
    *
-   * @param string $name The option name
+   * @param  string  $name  The option name
    *
-   * @return mixed The option value
+   * @return mixed  The option value
    */
   public function getOption($name)
   {
@@ -72,7 +83,7 @@ abstract class sfCommandApplication
   /**
    * Returns the formatter instance.
    *
-   * @return object The formatter instance
+   * @return sfFormatter The formatter instance
    */
   public function getFormatter()
   {
@@ -80,26 +91,37 @@ abstract class sfCommandApplication
   }
 
   /**
+   * Sets the formatter instance.
+   *
+   * @param sfFormatter The formatter instance
+   */
+  public function setFormatter(sfFormatter $formatter)
+  {
+    $this->formatter = $formatter;
+
+    foreach ($this->getTasks() as $task)
+    {
+      $task->setFormatter($formatter);
+    }
+  }
+
+  public function clearTasks()
+  {
+    $this->tasks = array();
+  }
+
+  /**
    * Registers an array of task objects.
    *
    * If you pass null, this method will register all available tasks.
    *
-   * @param array $tasks An array of tasks
+   * @param array  $tasks  An array of tasks
    */
   public function registerTasks($tasks = null)
   {
-    if (is_null($tasks))
+    if (null === $tasks)
     {
-      $tasks = array();
-      foreach (get_declared_classes() as $class)
-      {
-        $r = new ReflectionClass($class);
-
-        if ($r->isSubclassOf('sfTask') && !$r->isAbstract())
-        {
-          $tasks[] = new $class($this->dispatcher, $this->formatter);
-        }
-      }
+      $tasks = $this->autodiscoverTasks();
     }
 
     foreach ($tasks as $task)
@@ -131,6 +153,27 @@ abstract class sfCommandApplication
 
       $this->tasks[$alias] = $task;
     }
+  }
+
+  /**
+   * Autodiscovers task classes.
+   *
+   * @return array An array of tasks instances
+   */
+  public function autodiscoverTasks()
+  {
+    $tasks = array();
+    foreach (get_declared_classes() as $class)
+    {
+      $r = new ReflectionClass($class);
+
+      if ($r->isSubclassOf('sfTask') && !$r->isAbstract())
+      {
+        $tasks[] = new $class($this->dispatcher, $this->formatter);
+      }
+    }
+
+    return $tasks;
   }
 
   /**
@@ -251,16 +294,6 @@ abstract class sfCommandApplication
     return $this->trace;
   }
 
-  /*
-   * Returns whether the application must run in dry mode.
-   *
-   * @return Boolean true if the application must run in dry mode, false otherwise
-   */
-  public function isDryrun()
-  {
-    return $this->dryrun;
-  }
-
   /**
    * Outputs a help message for the current application.
    */
@@ -274,7 +307,11 @@ abstract class sfCommandApplication
 
     foreach ($this->commandManager->getOptionSet()->getOptions() as $option)
     {
-      $messages[] = sprintf('  %-24s %s  %s', $this->formatter->format('--'.$option->getName(), 'INFO'), $this->formatter->format('-'.$option->getShortcut(), 'INFO'), $option->getHelp());
+      $messages[] = sprintf('  %-24s %s  %s',
+        $this->formatter->format('--'.$option->getName(), 'INFO'),
+        $option->getShortcut() ? $this->formatter->format('-'.$option->getShortcut(), 'INFO') : '  ',
+        $option->getHelp()
+      );
     }
 
     $this->dispatcher->notify(new sfEvent($this, 'command.log', $messages));
@@ -287,50 +324,38 @@ abstract class sfCommandApplication
    */
   protected function handleOptions($options = null)
   {
-    $argumentSet = new sfCommandArgumentSet(array(
-      new sfCommandArgument('task', sfCommandArgument::REQUIRED, 'The task to execute'),
-    ));
-    $optionSet = new sfCommandOptionSet(array(
-      new sfCommandOption('--dry-run', '-n', sfCommandOption::PARAMETER_NONE, 'Do a dry run without executing actions.'),
-      new sfCommandOption('--help',    '-H', sfCommandOption::PARAMETER_NONE, 'Display this help message.'),
-      new sfCommandOption('--quiet',   '-q', sfCommandOption::PARAMETER_NONE, 'Do not log messages to standard output.'),
-      new sfCommandOption('--trace',   '-t', sfCommandOption::PARAMETER_NONE, 'Turn on invoke/execute tracing, enable full backtrace.'),
-      new sfCommandOption('--version', '-V', sfCommandOption::PARAMETER_NONE, 'Display the program version.'),
-    ));
-    $this->commandManager = new sfCommandManager($argumentSet, $optionSet);
     $this->commandManager->process($options);
-    foreach ($this->commandManager->getOptionValues() as $opt => $value)
-    {
-      if (false === $value)
-      {
-        continue;
-      }
+    $this->commandOptions = $options;
 
-      switch ($opt)
-      {
-        case 'dry-run':
-          $this->verbose = true;
-          $this->nowrite = true;
-          $this->dryrun = true;
-          $this->trace = true;
-          break;
-        case 'help':
-          $this->help();
-          exit();
-        case 'quiet':
-          $this->verbose = false;
-          break;
-        case 'trace':
-          $this->trace = true;
-          $this->verbose = true;
-          break;
-        case 'version':
-          echo $this->getLongVersion();
-          exit(0);
-      }
+    // the order of option processing matters
+
+    if ($this->commandManager->getOptionSet()->hasOption('color') && false !== $this->commandManager->getOptionValue('color'))
+    {
+      $this->setFormatter(new sfAnsiColorFormatter());
     }
 
-    $this->commandOptions = $options;
+    if ($this->commandManager->getOptionSet()->hasOption('quiet') && false !== $this->commandManager->getOptionValue('quiet'))
+    {
+      $this->verbose = false;
+    }
+
+    if ($this->commandManager->getOptionSet()->hasOption('trace') && false !== $this->commandManager->getOptionValue('trace'))
+    {
+      $this->verbose = true;
+      $this->trace   = true;
+    }
+
+    if ($this->commandManager->getOptionSet()->hasOption('help') && false !== $this->commandManager->getOptionValue('help'))
+    {
+      $this->help();
+      exit(0);
+    }
+
+    if ($this->commandManager->getOptionSet()->hasOption('version') && false !== $this->commandManager->getOptionValue('version'))
+    {
+      echo $this->getLongVersion();
+      exit(0);
+    }
   }
 
   /**
@@ -370,7 +395,7 @@ abstract class sfCommandApplication
     }
     fwrite(STDERR, "\n");
 
-    if (!is_null($this->currentTask) && $e instanceof sfCommandArgumentsException)
+    if (null !== $this->currentTask && $e instanceof sfCommandArgumentsException)
     {
       fwrite(STDERR, $this->formatter->format(sprintf($this->currentTask->getSynopsis(), $this->getName()), 'INFO', STDERR)."\n");
       fwrite(STDERR, "\n");
@@ -407,11 +432,11 @@ abstract class sfCommandApplication
   /**
    * Gets a task from a task name or a shortcut.
    *
-   * @param string $name The task name or a task shortcut
+   * @param  string  $name  The task name or a task shortcut
    *
    * @return sfTask A sfTask object
    */
-  protected function getTaskToExecute($name)
+  public function getTaskToExecute($name)
   {
     // namespace
     if (false !== $pos = strpos($name, ':'))
@@ -585,5 +610,41 @@ abstract class sfCommandApplication
     }
 
     return $abbrevs;
+  }
+
+  /**
+   * Returns true if the stream supports colorization.
+   *
+   * Colorization is disabled if not supported by the stream:
+   *
+   *  -  windows without ansicon
+   *  -  non tty consoles
+   *
+   * @param  mixed  $stream  A stream
+   *
+   * @return Boolean true if the stream supports colorization, false otherwise
+   */
+  protected function isStreamSupportsColors($stream)
+  {
+    if (DIRECTORY_SEPARATOR == '\\')
+    {
+      return false !== getenv('ANSICON');
+    }
+    else
+    {
+      return function_exists('posix_isatty') && @posix_isatty($stream);
+    }
+  }
+
+  /**
+   * Guesses the best formatter for the stream.
+   *
+   * @param  mixed       $stream  A stream
+   *
+   * @return sfFormatter A formatter instance
+   */
+  protected function guessBestFormatter($stream)
+  {
+    return $this->isStreamSupportsColors($stream) ? new sfAnsiColorFormatter() : new sfFormatter();
   }
 }

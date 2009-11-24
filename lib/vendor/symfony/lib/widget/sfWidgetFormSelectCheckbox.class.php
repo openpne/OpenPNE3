@@ -14,9 +14,9 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetFormSelectCheckbox.class.php 17068 2009-04-07 08:24:53Z fabien $
+ * @version    SVN: $Id: sfWidgetFormSelectCheckbox.class.php 23994 2009-11-15 22:55:24Z bschussek $
  */
-class sfWidgetFormSelectCheckbox extends sfWidgetForm
+class sfWidgetFormSelectCheckbox extends sfWidgetFormChoiceBase
 {
   /**
    * Constructor.
@@ -34,11 +34,11 @@ class sfWidgetFormSelectCheckbox extends sfWidgetForm
    * @param array $options     An array of options
    * @param array $attributes  An array of default HTML attributes
    *
-   * @see sfWidgetForm
+   * @see sfWidgetFormChoiceBase
    */
   protected function configure($options = array(), $attributes = array())
   {
-    $this->addRequiredOption('choices');
+    parent::configure($options, $attributes);
 
     $this->addOption('class', 'checkbox_list');
     $this->addOption('label_separator', '&nbsp;');
@@ -64,16 +64,12 @@ class sfWidgetFormSelectCheckbox extends sfWidgetForm
       $name .= '[]';
     }
 
-    if (is_null($value))
+    if (null === $value)
     {
       $value = array();
     }
 
-    $choices = $this->getOption('choices');
-    if ($choices instanceof sfCallable)
-    {
-      $choices = $choices->call();
-    }
+    $choices = $this->getChoices();
 
     // with groups?
     if (count($choices) && is_array(current($choices)))
@@ -88,7 +84,7 @@ class sfWidgetFormSelectCheckbox extends sfWidgetForm
     }
     else
     {
-      return $this->formatChoices($name, $value, $choices, $attributes);;
+      return $this->formatChoices($name, $value, $choices, $attributes);
     }
   }
 
@@ -109,7 +105,7 @@ class sfWidgetFormSelectCheckbox extends sfWidgetForm
         $baseAttributes['checked'] = 'checked';
       }
 
-      $inputs[] = array(
+      $inputs[$id] = array(
         'input' => $this->renderTag('input', array_merge($baseAttributes, $attributes)),
         'label' => $this->renderContentTag('label', $option, array('for' => $id)),
       );
@@ -126,20 +122,6 @@ class sfWidgetFormSelectCheckbox extends sfWidgetForm
       $rows[] = $this->renderContentTag('li', $input['input'].$this->getOption('label_separator').$input['label']);
     }
 
-    return $this->renderContentTag('ul', implode($this->getOption('separator'), $rows), array('class' => $this->getOption('class')));
-  }
-
-  public function __clone()
-  {
-    if ($this->getOption('choices') instanceof sfCallable)
-    {
-      $callable = $this->getOption('choices')->getCallable();
-      $class = __CLASS__;
-      if (is_array($callable) && $callable[0] instanceof $class)
-      {
-        $callable[0] = $this;
-        $this->setOption('choices', new sfCallable($callable));
-      }
-    }
+    return !$rows ? '' : $this->renderContentTag('ul', implode($this->getOption('separator'), $rows), array('class' => $this->getOption('class')));
   }
 }

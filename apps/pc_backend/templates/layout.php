@@ -7,6 +7,9 @@
 
 <title><?php echo $op_config['sns_name'] ?>管理画面</title>
 
+
+    <?php include_stylesheets() ?>
+    <?php include_javascripts() ?>
 </head>
 <body id="<?php echo $sf_request->getParameter('module').'_'.$sf_request->getParameter('action') ?>"<?php if (!$sf_user->isAuthenticated()) : ?> class="insecure"<?php endif; ?>>
 

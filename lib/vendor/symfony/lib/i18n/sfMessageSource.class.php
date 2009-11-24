@@ -13,7 +13,7 @@
  * {@link http://prado.sourceforge.net/}
  *
  * @author     Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version    $Id: sfMessageSource.class.php 11836 2008-09-29 08:07:31Z fabien $
+ * @version    $Id: sfMessageSource.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  * @package    symfony
  * @subpackage i18n
  */

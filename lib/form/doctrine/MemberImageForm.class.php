@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class MemberImageForm extends sfForm
+class MemberImageForm extends BaseForm
 {
   public function configure()
   {

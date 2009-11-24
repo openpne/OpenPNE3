@@ -14,18 +14,15 @@
  * @package    symfony
  * @subpackage debug
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWebDebugPanelMemory.class.php 12982 2008-11-13 17:25:10Z hartym $
+ * @version    SVN: $Id: sfWebDebugPanelMemory.class.php 21069 2009-08-11 23:28:20Z Kris.Wallsmith $
  */
 class sfWebDebugPanelMemory extends sfWebDebugPanel
 {
   public function getTitle()
   {
-    if (function_exists('memory_get_usage'))
-    {
-      $totalMemory = sprintf('%.1f', (memory_get_usage() / 1024));
+    $totalMemory = sprintf('%.1f', (memory_get_peak_usage(true) / 1024));
 
-      return '<img src="'.$this->webDebug->getOption('image_root_path').'/memory.png" alt="Memory" /> '.$totalMemory.' KB';
-    }
+    return '<img src="'.$this->webDebug->getOption('image_root_path').'/memory.png" alt="Memory" /> '.$totalMemory.' KB';
   }
 
   public function getPanelTitle()

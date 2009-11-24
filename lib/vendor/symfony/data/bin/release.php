@@ -11,11 +11,11 @@
 /**
  * Release script.
  *
- * Usage: php data/bin/release.php 1.1.0 stable
+ * Usage: php data/bin/release.php 1.3.0 stable
  *
  * @package    symfony
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id$
+ * @version    SVN: $Id: release.php 24079 2009-11-17 07:59:41Z Kris.Wallsmith $
  */
 require_once(dirname(__FILE__).'/../../lib/exception/sfException.class.php');
 require_once(dirname(__FILE__).'/../../lib/task/sfFilesystem.class.php');
@@ -40,7 +40,7 @@ if (($stability == 'beta' || $stability == 'alpha') && count(explode('.', $argv[
 {
   $version_prefix = $argv[1];
 
-  $result = $filesystem->sh('svn status -u '.getcwd());
+  list($result) = $filesystem->execute('svn status -u '.getcwd());
   if (preg_match('/Status against revision\:\s+(\d+)\s*$/im', $result, $match))
   {
     $version = $match[1];
@@ -62,7 +62,7 @@ else
 print sprintf("Releasing symfony version \"%s\".\n", $version);
 
 // tests
-$result = $filesystem->sh('php test/bin/prove.php');
+list($result) = $filesystem->execute('php data/bin/symfony symfony:test');
 
 if (0 != $result)
 {
@@ -97,7 +97,7 @@ $filesystem->replaceTokens(getcwd().DIRECTORY_SEPARATOR.'package.xml', '##', '##
   'STABILITY'       => $stability,
 ));
 
-$results = $filesystem->sh('pear package');
+list($results) = $filesystem->execute('pear package');
 echo $results;
 
 $filesystem->remove(getcwd().DIRECTORY_SEPARATOR.'package.xml');

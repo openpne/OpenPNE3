@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTesterUser.class.php 15802 2009-02-26 09:40:27Z fabien $
+ * @version    SVN: $Id: sfTesterUser.class.php 21769 2009-09-08 03:01:39Z dwhittle $
  */
 class sfTesterUser extends sfTester
 {
@@ -105,7 +105,7 @@ class sfTesterUser extends sfTester
    */
   public function hasCredential($credentials, $boolean = true, $useAnd = true)
   {
-    $this->tester->is($this->user->hasCredential($credentials, $useAnd), $boolean, sprintf('user has %s the right credentials', $boolean ? '' : 'not '));
+    $this->tester->is($this->user->hasCredential($credentials, $useAnd), $boolean, sprintf('user has %sthe right credentials', $boolean ? '' : 'not '));
 
     return $this->getObjectToReturn();
   }

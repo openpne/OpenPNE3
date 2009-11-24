@@ -17,7 +17,7 @@
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfFactoryConfigHandler.class.php 13547 2008-11-30 14:05:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfFactoryConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfFactoryConfigHandler extends sfYamlConfigHandler
 {
@@ -41,7 +41,7 @@ class sfFactoryConfigHandler extends sfYamlConfigHandler
     $instances = array();
 
     // available list of factories
-    $factories = array('view_cache_manager', 'logger', 'i18n', 'controller', 'request', 'response', 'routing', 'storage', 'user', 'view_cache');
+    $factories = array('view_cache_manager', 'logger', 'i18n', 'controller', 'request', 'response', 'routing', 'storage', 'user', 'view_cache', 'mailer');
 
     // let's do our fancy work
     foreach ($factories as $factory)
@@ -120,13 +120,13 @@ class sfFactoryConfigHandler extends sfYamlConfigHandler
           $instances[] = sprintf("\n  if (sfConfig::get('sf_cache'))\n  {\n".
                              "    \$class = sfConfig::get('sf_factory_view_cache', '%s');\n".
                              "    \$cache = new \$class(sfConfig::get('sf_factory_view_cache_parameters', %s));\n".
-                             "    \$this->factories['viewCacheManager'] = new %s(\$this, \$cache);\n".
+                             "    \$this->factories['viewCacheManager'] = new %s(\$this, \$cache, %s);\n".
                              "  }\n".
                              "  else\n".
                              "  {\n".
                              "    \$this->factories['viewCacheManager'] = null;\n".
                              "  }\n",
-                             $class, var_export($parameters, true), $config['view_cache_manager']['class']);
+                             $class, var_export($parameters, true), $config['view_cache_manager']['class'], var_export($config['view_cache_manager']['param'], true));
           break;
 
         case 'i18n':
@@ -213,6 +213,15 @@ class sfFactoryConfigHandler extends sfYamlConfigHandler
                          "  \$class = sfConfig::get('sf_factory_logger', '%s');\n  \$this->factories['logger'] = new \$class(\$this->dispatcher, array_merge(array('auto_shutdown' => false), sfConfig::get('sf_factory_logger_parameters', %s)));\n".
                          "  %s"
                          , $class, var_export($parameters, true), $loggers);
+          break;
+
+        case 'mailer':
+          $instances[] = sprintf(
+                        "require_once sfConfig::get('sf_symfony_lib_dir').'/vendor/swiftmailer/classes/Swift.php';\n".
+                        "Swift::registerAutoload();\n".
+                        "sfMailer::initialize();\n".
+                        "\$this->setMailerConfiguration(array_merge(array('class' => sfConfig::get('sf_factory_mailer', '%s')), sfConfig::get('sf_factory_mailer_parameters', %s)));\n"
+                         , $class, var_export($parameters, true));
           break;
       }
     }

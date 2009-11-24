@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Null.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Null.php 5901 2009-06-22 15:44:45Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -30,7 +30,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 5901 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
 final class Doctrine_Null
@@ -39,6 +39,7 @@ final class Doctrine_Null
     {
         return false;    
     }
+
     public function __toString()
     {
         return '';

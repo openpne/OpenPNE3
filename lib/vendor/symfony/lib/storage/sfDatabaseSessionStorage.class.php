@@ -16,7 +16,7 @@
  * @subpackage storage
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfDatabaseSessionStorage.class.php 20300 2009-07-19 10:48:26Z fabien $
+ * @version    SVN: $Id: sfDatabaseSessionStorage.class.php 22037 2009-09-15 11:00:20Z fabien $
  */
 abstract class sfDatabaseSessionStorage extends sfSessionStorage
 {
@@ -113,9 +113,10 @@ abstract class sfDatabaseSessionStorage extends sfSessionStorage
     {
       $this->db = $database->getResource();
     }
+    
     $this->con = $database->getConnection();
 
-    if (is_null($this->db) && is_null($this->con))
+    if (null === $this->db && null === $this->con)
     {
       throw new sfDatabaseException('Database connection does not exist. Unable to open session.');
     }

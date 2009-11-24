@@ -70,6 +70,16 @@ class Doctrine_Event
     const RECORD_VALIDATE    = 30;
 
     /**
+     * @var mixed $_nextSequence        the sequence of the next event that will be created
+     */
+    static protected $_nextSequence = 0;
+
+    /**
+     * @var mixed $_sequence            the sequence of this event
+     */
+    protected $_sequence;
+
+    /**
      * @var mixed $_invoker             the handler which invoked this event
      */
     protected $_invoker;
@@ -115,10 +125,11 @@ class Doctrine_Event
      */
     public function __construct($invoker, $code, $query = null, $params = array())
     {
-        $this->_invoker = $invoker;
-        $this->_code    = $code;
-        $this->_query   = $query;
-        $this->_params  = $params;
+        $this->_sequence = self::$_nextSequence++;
+        $this->_invoker  = $invoker;
+        $this->_code     = $code;
+        $this->_query    = $query;
+        $this->_params   = $params;
     }
 
     /**
@@ -303,6 +314,17 @@ class Doctrine_Event
     }
 
     /**
+     * getSequence
+     * returns the sequence of this event
+     *
+     * @return integer
+     */
+    public function getSequence()
+    {
+        return $this->_sequence;
+    }
+
+    /**
      * getInvoker
      * returns the handler that invoked this event
      *
@@ -326,7 +348,6 @@ class Doctrine_Event
         $this->_invoker = $invoker;
     }
 
-
     /**
      * getParams
      * returns the parameters of the query
@@ -342,7 +363,7 @@ class Doctrine_Event
      * Get the elapsed time (in microseconds) that the event ran.  If the event has
      * not yet ended, return false.
      *
-     * @return mixed
+     * @return integer
      */
     public function getElapsedSecs()
     {

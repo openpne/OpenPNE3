@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Sqlite.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Sqlite.php 6497 2009-10-13 04:44:19Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6497 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  */
@@ -71,7 +71,7 @@ class Doctrine_Connection_Sqlite extends Doctrine_Connection_Common
             $this->dbh->sqliteCreateFunction('mod',    array('Doctrine_Expression_Sqlite', 'modImpl'), 2);
             $this->dbh->sqliteCreateFunction('concat', array('Doctrine_Expression_Sqlite', 'concatImpl'));
             $this->dbh->sqliteCreateFunction('md5', 'md5', 1);
-            $this->dbh->sqliteCreateFunction('now', 'time', 0);
+            $this->dbh->sqliteCreateFunction('now', array('Doctrine_Expression_Sqlite', 'nowImpl'), 0);
         }
     }
 
@@ -92,7 +92,7 @@ class Doctrine_Connection_Sqlite extends Doctrine_Connection_Common
         $this->dbh->sqliteCreateFunction('mod',    array('Doctrine_Expression_Sqlite', 'modImpl'), 2);
         $this->dbh->sqliteCreateFunction('concat', array('Doctrine_Expression_Sqlite', 'concatImpl'));
         $this->dbh->sqliteCreateFunction('md5', 'md5', 1);
-        $this->dbh->sqliteCreateFunction('now', 'time', 0);
+        $this->dbh->sqliteCreateFunction('now', array('Doctrine_Expression_Sqlite', 'nowImpl'), 0);
     }
 
     /**
@@ -102,19 +102,13 @@ class Doctrine_Connection_Sqlite extends Doctrine_Connection_Common
      */
     public function createDatabase()
     {
-      try {
-          if ( ! $dsn = $this->getOption('dsn')) {
-              throw new Doctrine_Connection_Exception('You must create your Doctrine_Connection by using a valid Doctrine style dsn in order to use the create/drop database functionality');
-          }
+        if ( ! $dsn = $this->getOption('dsn')) {
+            throw new Doctrine_Connection_Exception('You must create your Doctrine_Connection by using a valid Doctrine style dsn in order to use the create/drop database functionality');
+        }
 
-          $info = $this->getManager()->parseDsn($dsn);
+        $info = $this->getManager()->parseDsn($dsn);
 
-          $this->export->createDatabase($info['database']);
-
-          return 'Successfully created database for connection "' . $this->getName() . '" at path "' . $info['database'] . '"';
-      } catch (Exception $e) {
-          return $e;
-      }
+        $this->export->createDatabase($info['database']);
     }
 
     /**
@@ -124,18 +118,12 @@ class Doctrine_Connection_Sqlite extends Doctrine_Connection_Common
      */
     public function dropDatabase()
     {
-      try {
-          if ( ! $dsn = $this->getOption('dsn')) {
-              throw new Doctrine_Connection_Exception('You must create your Doctrine_Connection by using a valid Doctrine style dsn in order to use the create/drop database functionality');
-          }
-          
-          $info = $this->getManager()->parseDsn($dsn);
+        if ( ! $dsn = $this->getOption('dsn')) {
+            throw new Doctrine_Connection_Exception('You must create your Doctrine_Connection by using a valid Doctrine style dsn in order to use the create/drop database functionality');
+        }
+        
+        $info = $this->getManager()->parseDsn($dsn);
 
-          $this->export->dropDatabase($info['database']);
-
-          return 'Successfully dropped database for connection "' . $this->getName() . '" at path "' . $info['database'] . '"';
-      } catch (Exception $e) {
-          return $e;
-      }
+        $this->export->dropDatabase($info['database']);
     }
 }

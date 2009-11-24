@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage log
  * @author     Dustin Whittle <dustin.whittle@symfony-project.com>
- * @version    SVN: $Id: sfPropelLogger.class.php 12236 2008-10-17 17:46:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfPropelLogger.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfPropelLogger implements BasicLogger
 {
@@ -28,7 +28,7 @@ class sfPropelLogger implements BasicLogger
    */
   public function __construct(sfEventDispatcher $dispatcher = null)
   {
-    if (is_null($dispatcher))
+    if (null === $dispatcher)
     {
       $this->dispatcher = sfProjectConfiguration::getActive()->getEventDispatcher();
     }

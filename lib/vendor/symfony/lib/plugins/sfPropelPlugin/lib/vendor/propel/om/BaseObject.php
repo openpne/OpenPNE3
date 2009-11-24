@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: BaseObject.php 1066 2008-07-17 07:33:35Z ron $
+ *  $Id: BaseObject.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
  * @author     Frank Y. Kim <frank.kim@clearink.com> (Torque)
  * @author     John D. McNally <jmcnally@collab.net> (Torque)
- * @version    $Revision: 1066 $
+ * @version    $Revision: 1262 $
  * @package    propel.om
  */
 abstract class BaseObject {
@@ -130,6 +130,70 @@ abstract class BaseObject {
 		$this->_deleted = (boolean) $b;
 	}
 
+	/**
+	 * Code to be run before persisting the object
+	 * @param PropelPDO $con
+	 * @return bloolean
+	 */
+	public function preSave(PropelPDO $con = null)
+	{
+		return true;
+	}
+
+	/**
+	 * Code to be run after persisting the object
+	 * @param PropelPDO $con
+	 */
+	public function postSave(PropelPDO $con = null) { }
+
+	/**
+	 * Code to be run before inserting to database
+	 * @param PropelPDO $con
+	 * @return boolean
+	 */
+	public function preInsert(PropelPDO $con = null)
+	{
+		return true;
+	}
+	
+	/**
+	 * Code to be run after inserting to database
+	 * @param PropelPDO $con 
+	 */
+	public function postInsert(PropelPDO $con = null) { }
+
+	/**
+	 * Code to be run before updating the object in database
+	 * @param PropelPDO $con
+	 * @return boolean
+	 */
+	public function preUpdate(PropelPDO $con = null)
+	{
+		return true;
+	}
+
+	/**
+	 * Code to be run after updating the object in database
+	 * @param PropelPDO $con
+	 */
+	public function postUpdate(PropelPDO $con = null) { }
+
+	/**
+	 * Code to be run before deleting the object in database
+	 * @param PropelPDO $con
+	 * @return boolean
+	 */
+	public function preDelete(PropelPDO $con = null)
+	{
+		return true;
+	}
+
+	/**
+	 * Code to be run after deleting the object in database
+	 * @param PropelPDO $con
+	 */
+	public function postDelete(PropelPDO $con = null) { }
+	
 	/**
 	 * Sets the modified state for the object to be false.
 	 * @param      string $col If supplied, only the specified column is reset.

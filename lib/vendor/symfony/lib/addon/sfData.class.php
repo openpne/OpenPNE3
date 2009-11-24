@@ -15,7 +15,7 @@
  * @package    symfony
  * @subpackage addon
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfData.class.php 20457 2009-07-24 09:25:18Z FabianLange $
+ * @version    SVN: $Id: sfData.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 abstract class sfData
 {
@@ -71,7 +71,7 @@ abstract class sfData
    *
    * @param array $files The path names of the YAML data files
    */
-  protected function doLoadData($files)
+  protected function doLoadData(array $files)
   {
     $this->object_references = array();
     $this->maps = array();
@@ -96,7 +96,7 @@ abstract class sfData
    */
   public function getFiles($element = null)
   {
-    if (is_null($element))
+    if (null === $element)
     {
       $element = sfConfig::get('sf_data_dir').'/fixtures';
     }

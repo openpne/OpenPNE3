@@ -15,7 +15,7 @@
  * @subpackage member_config
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class MemberConfigForm extends sfForm
+class MemberConfigForm extends BaseForm
 {
   protected $memberConfigSettings = array();
   protected $category = '';

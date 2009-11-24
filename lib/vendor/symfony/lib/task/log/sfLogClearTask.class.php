@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfLogClearTask.class.php 8148 2008-03-29 07:58:59Z fabien $
+ * @version    SVN: $Id: sfLogClearTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfLogClearTask extends sfBaseTask
 {
@@ -23,7 +23,6 @@ class sfLogClearTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->aliases = array('log-purge');
     $this->namespace = 'log';
     $this->name = 'clear';
     $this->briefDescription = 'Clears log files';

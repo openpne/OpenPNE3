@@ -2,7 +2,7 @@
 
 /*
  * This file is part of the symfony package.
- * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
+ * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,65 +14,100 @@ if (!include(dirname(__FILE__).'/../bootstrap/functional.php'))
   return;
 }
 
-$b = new sfTestBrowser();
+class TestBrowser extends sfTestBrowser
+{
+  public $events = array();
+  public function listen(sfEvent $event)
+  {
+    $this->events[] = $event;
+  }
+}
+
+$b = new TestBrowser();
+$b->addListener('context.load_factories', array($b, 'listen'));
+
+// listeners
+$b->get('/');
+$b->test()->is(count($b->events), 1, 'browser can connect to context.load_factories');
 
 // exceptions
 $b->
   get('/exception/noException')->
-  isStatusCode(200)->
-  isRequestParameter('module', 'exception')->
-  isRequestParameter('action', 'noException')->
-  responseContains('foo')->
+  with('request')->begin()->
+    isParameter('module', 'exception')->
+    isParameter('action', 'noException')->
+  end()->
+
+  with('response')->begin()->
+    isStatusCode(200)->
+    matches('/foo/')->
+  end()->
 
   get('/exception/throwsException')->
-  isStatusCode(500)->
-  isRequestParameter('module', 'exception')->
-  isRequestParameter('action', 'throwsException')->
+  with('request')->begin()->
+    isParameter('module', 'exception')->
+    isParameter('action', 'throwsException')->
+  end()->
+  with('response')->isStatusCode(500)->
   throwsException('Exception')->
 
   get('/exception/throwsException')->
-  isStatusCode(500)->
-  isRequestParameter('module', 'exception')->
-  isRequestParameter('action', 'throwsException')->
+  with('request')->begin()->
+    isParameter('module', 'exception')->
+    isParameter('action', 'throwsException')->
+  end()->
+  with('response')->isStatusCode(500)->
   throwsException('Exception', '/Exception message/')->
 
   get('/exception/throwsException')->
-  isStatusCode(500)->
-  isRequestParameter('module', 'exception')->
-  isRequestParameter('action', 'throwsException')->
+  with('request')->begin()->
+    isParameter('module', 'exception')->
+    isParameter('action', 'throwsException')->
+  end()->
+  with('response')->isStatusCode(500)->
   throwsException('Exception', '/message/')->
 
   get('/exception/throwsException')->
-  isStatusCode(500)->
-  isRequestParameter('module', 'exception')->
-  isRequestParameter('action', 'throwsException')->
+  with('request')->begin()->
+    isParameter('module', 'exception')->
+    isParameter('action', 'throwsException')->
+  end()->
+  with('response')->isStatusCode(500)->
   throwsException(null, '!/sfException/')->
 
   get('/exception/throwsSfException')->
-  isStatusCode(500)->
-  isRequestParameter('module', 'exception')->
-  isRequestParameter('action', 'throwsSfException')->
+  with('request')->begin()->
+    isParameter('module', 'exception')->
+    isParameter('action', 'throwsSfException')->
+  end()->
+  with('response')->isStatusCode(500)->
   throwsException('sfException')->
 
   get('/exception/throwsSfException')->
-  isStatusCode(500)->
-  isRequestParameter('module', 'exception')->
-  isRequestParameter('action', 'throwsSfException')->
+  with('request')->begin()->
+    isParameter('module', 'exception')->
+    isParameter('action', 'throwsSfException')->
+  end()->
+  with('response')->isStatusCode(500)->
   throwsException('sfException', 'sfException message')
 ;
 
 $b->
   get('/browser')->
-  responseContains('html')->
-  checkResponseElement('h1', 'html')->
+  with('response')->begin()->
+    matches('/html/')->
+    checkElement('h1', 'html')->
+  end()->
 
   get('/browser/text')->
-  responseContains('text')
+  with('response')->begin()->
+    matches('/text/')->
+  end()
 ;
 
 try
 {
-  $b->checkResponseElement('h1', 'text');
+  $b->with('response')->checkElement('h1', 'text');
   $b->test()->fail('The DOM is not accessible if the response content type is not HTML');
 }
 catch (LogicException $e)
@@ -83,8 +118,8 @@ catch (LogicException $e)
 // check response headers
 $b->
   get('/browser/responseHeader')->
-  isStatusCode()->
   with('response')->begin()->
+    isStatusCode()->
     isHeader('content-type', 'text/plain; charset=utf-8')->
     isHeader('content-type', '#text/plain#')->
     isHeader('content-type', '!#text/html#')->
@@ -107,7 +142,7 @@ $b->
     isCookie('foo', '/a/')->
     isCookie('foo', '!/z/')->
   end()->
-  checkResponseElement('p', 'bar.foo-')->
+  with('response')->checkElement('p', 'bar.foo-')->
   get('/cookie')->
   with('request')->begin()->
     hasCookie('foo')->
@@ -115,21 +150,21 @@ $b->
     isCookie('foo', '/a/')->
     isCookie('foo', '!/z/')->
   end()->
-  checkResponseElement('p', 'bar.foo-')->
+  with('response')->checkElement('p', 'bar.foo-')->
   removeCookie('foo')->
   get('/cookie')->
   with('request')->begin()->
     hasCookie('foo', false)->
     hasCookie('bar')->
   end()->
-  checkResponseElement('p', '.foo-')->
+  with('response')->checkElement('p', '.foo-')->
   clearCookies()->
   get('/cookie')->
   with('request')->begin()->
     hasCookie('foo', false)->
     hasCookie('bar', false)->
   end()->
-  checkResponseElement('p', '.-')
+  with('response')->checkElement('p', '.-')
 ;
 
 $b->
@@ -145,7 +180,7 @@ $b->
     isCookie('foo', '/a/')->
     isCookie('foo', '!/z/')->
   end()->
-  checkResponseElement('p', 'bar.foo-barfoo')->
+  with('response')->checkElement('p', 'bar.foo-barfoo')->
   get('/cookie')->
   with('request')->begin()->
     hasCookie('foo')->
@@ -153,14 +188,14 @@ $b->
     isCookie('foo', '/a/')->
     isCookie('foo', '!/z/')->
   end()->
-  checkResponseElement('p', 'bar.foo-barfoo')->
+  with('response')->checkElement('p', 'bar.foo-barfoo')->
   removeCookie('foo')->
   get('/cookie')->
   with('request')->begin()->
     hasCookie('foo', false)->
     hasCookie('bar')->
   end()->
-  checkResponseElement('p', '.foo-barfoo')->
+  with('response')->checkElement('p', '.foo-barfoo')->
 
   get('/cookie/removeCookie')->
 
@@ -169,7 +204,7 @@ $b->
     hasCookie('foo', false)->
     hasCookie('bar')->
   end()->
-  checkResponseElement('p', '.foo-')->
+  with('response')->checkElement('p', '.foo-')->
 
   get('/cookie/setCookie')->
 
@@ -179,7 +214,7 @@ $b->
     hasCookie('foo', false)->
     hasCookie('bar', false)->
   end()->
-  checkResponseElement('p', '.-')
+  with('response')->checkElement('p', '.-')
 ;
 
 $b->
@@ -194,11 +229,11 @@ $b->
 // sfBrowser: clean the custom view templates
 $b->
   get('/browser/templateCustom')->
-  checkResponseElement('#test', 'template')->
+  with('response')->checkElement('#test', 'template')->
 
   get('/browser/templateCustom/custom/1')->
-  checkResponseElement('#test', 'template 1')->
+  with('response')->checkElement('#test', 'template 1')->
 
   get('/browser/templateCustom')->
-  checkResponseElement('#test', 'template')
+  with('response')->checkElement('#test', 'template')
 ;

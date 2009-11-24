@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Mssql.php 6049 2009-07-10 17:53:39Z dcousineau $
+ *  $Id: Mssql.php 6759 2009-11-18 17:24:27Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
  * @author      Frank M. Kromann <frank@kromann.info> (PEAR MDB2 Mssql driver)
  * @author      David Coallier <davidc@php.net> (PEAR MDB2 Mssql driver)
- * @version     $Revision: 6049 $
+ * @version     $Revision: 6759 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  */
@@ -76,7 +76,7 @@ class Doctrine_DataDict_Mssql extends Doctrine_DataDict
 
                 $fixed  = ((isset($field['fixed']) && $field['fixed']) || $field['type'] == 'char') ? true : false;
 
-                return $fixed ? ($length ? 'CHAR('.$length.')' : 'CHAR('.$this->conn->options['default_text_field_length'].')')
+                return $fixed ? ($length ? 'CHAR('.$length.')' : 'CHAR('.$this->conn->varchar_max_length.')')
                     : ($length ? 'VARCHAR('.$length.')' : 'TEXT');
             case 'clob':
                 if ( ! empty($field['length'])) {
@@ -109,11 +109,10 @@ class Doctrine_DataDict_Mssql extends Doctrine_DataDict
                 return 'FLOAT';
             case 'decimal':
                 $length = !empty($field['length']) ? $field['length'] : 18;
-                $scale = !empty($field['scale']) ? $field['scale'] : $this->conn->getAttribute(Doctrine::ATTR_DECIMAL_PLACES);
+                $scale = !empty($field['scale']) ? $field['scale'] : $this->conn->getAttribute(Doctrine_Core::ATTR_DECIMAL_PLACES);
                 return 'DECIMAL('.$length.','.$scale.')';
         }
-
-        throw new Doctrine_DataDict_Exception('Unknown field type \'' . $field['type'] .  '\'.');
+        return $field['type'] . (isset($field['length']) ? '('.$field['length'].')':null);
     }
 
     /**
@@ -190,8 +189,19 @@ class Doctrine_DataDict_Mssql extends Doctrine_DataDict
                 $type[] = 'blob';
                 $length = null;
             break;
+            case 'uniqueidentifier':
+                $type[] = 'string';
+                $length = 36;
+            break;
+            case 'sql_variant':
+            case 'sysname':
+            case 'binary':
+                $type[] = 'string';
+                $length = null;
+            break;
             default:
-                throw new Doctrine_DataDict_Exception('unknown database attribute type: '.$db_type);
+                $type[] = $field['type'];
+                $length = isset($field['length']) ? $field['length']:null;
         }
 
         return array('type'     => $type,
@@ -241,7 +251,7 @@ class Doctrine_DataDict_Mssql extends Doctrine_DataDict
         }
 
 
-        $notnull  = (isset($field['notnull'])  && $field['notnull'])  ? ' NOT NULL' : '';
+        $notnull = (isset($field['notnull']) && $field['notnull']) ? ' NOT NULL' : ' NULL';
         //$unsigned = (isset($field['unsigned']) && $field['unsigned']) ? ' UNSIGNED' : '';
         // MSSQL does not support the UNSIGNED keyword
         $unsigned = '';

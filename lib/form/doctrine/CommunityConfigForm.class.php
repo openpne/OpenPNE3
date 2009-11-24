@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class CommunityConfigForm extends sfForm
+class CommunityConfigForm extends BaseForm
 {
   protected
     $configSettings = array(),

@@ -10,7 +10,7 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(71, new lime_output_color());
+$t = new lime_test(67);
 
 // ->getInstance()
 $t->diag('->getInstance()');
@@ -120,7 +120,7 @@ $t->is($currencies_fr['EUR'], 'euro', '->getCurrencies() returns a list of curre
 $t->is($currencies_en, $c_en->Currencies, '->getCurrencies() is equivalent to ->Currencies');
 
 $currencies = $c_en->getCurrencies(array('USD', 'EUR'));
-$t->is(array_keys($currencies), array('USD', 'EUR'), '->getCurrencies() takes an array of currencies as its first argument');
+$t->is(array_keys($currencies), array('EUR', 'USD'), '->getCurrencies() takes an array of currencies as its first argument');
 
 try
 {
@@ -165,8 +165,9 @@ $t->is($scripts_en, $c_en->Scripts, '->getScripts() is equivalent to ->Scripts')
 $t->diag('->getTimeZones()');
 $time_zones_en = $c_en->getTimeZones();
 $time_zones_fr = $c_fr->getTimeZones();
-$t->is($time_zones_en[1][0], 'America/Los_Angeles', '->getTimeZones() returns a list of time zones in the language of the localized version');
-$t->is($time_zones_fr[1][0], 'America/Vancouver', '->getTimeZones() returns a list of time zones in the language of the localized version');
+
+$t->is($time_zones_en['America/Juneau']['ld'], 'Alaska Daylight Time', '->getTimeZones() returns a list of time zones in the language of the localized version');
+$t->is($time_zones_fr['America/Juneau']['ld'], 'heure avancée de l’Alaska', '->getTimeZones() returns a list of time zones in the language of the localized version');
 $t->is($time_zones_en, $c_en->TimeZones, '->getTimeZones() is equivalent to ->TimeZones');
 
 // ->validCulture()
@@ -278,30 +279,3 @@ $c->setNumberFormat('.');
 $t->is($c->getNumberFormat(), '.', '->setNumberFormat() sets the sfNumberFormatInfo instance');
 $c->NumberFormat = '#';
 $t->is($c->getNumberFormat(), '#', '->setNumberFormat() is equivalent to ->NumberFormat = ');
-
-// ->simplify()
-$t->diag('->simplify()');
-
-class myCultureInfo extends sfCultureInfo
-{
-  public function __construct($culture = 'en')
-  {
-    parent::__construct($culture);
-  }
-
-  static public function simplify($array)
-  {
-    return parent::simplify($array);
-  }
-}
-
-$array1 = array(0 => 'hello', 1 => 'world');
-$array2 = array(0 => array('hello'), 1 => 'world');
-$array3 = array(0 => array('hello', 'hi'), 1 => 'world');
-
-$ci = new myCultureInfo();
-
-$t->isa_ok($ci->simplify($array1), 'array', '::simplify() returns an array');
-$t->is_deeply($ci->simplify($array1), $array1, '::simplify() leaves 1D-arrays unchanged');
-$t->is_deeply($ci->simplify($array2), $array1, '::simplify() simplifies arrays');
-$t->is_deeply($ci->simplify($array3), $array3, '::simplify() leaves not-simplifiable arrays unchanged');

@@ -15,7 +15,7 @@
  * @package    symfony
  * @subpackage response
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfResponse.class.php 9091 2008-05-20 07:19:07Z FabianLange $
+ * @version    SVN: $Id: sfResponse.class.php 14598 2009-01-11 09:32:32Z dwhittle $
  */
 abstract class sfResponse implements Serializable
 {
@@ -113,6 +113,11 @@ abstract class sfResponse implements Serializable
     $this->sendContent();
   }
 
+  /**
+   * Returns the options.
+   *
+   * @return array The options.
+   */
   public function getOptions()
   {
     return $this->options;

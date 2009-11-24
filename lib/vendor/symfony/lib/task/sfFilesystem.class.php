@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfFilesystem.class.php 14523 2009-01-07 10:33:54Z FabianLange $
+ * @version    SVN: $Id: sfFilesystem.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfFilesystem
 {
@@ -275,23 +275,73 @@ class sfFilesystem
   /**
    * Executes a shell command.
    *
-   * @param string $cmd  The command to execute on the shell
+   * @param string $cmd            The command to execute on the shell
+   * @param array  $stdoutCallback A callback for stdout output
+   * @param array  $stderrCallback A callback for stderr output
+   *
+   * @return array An array composed of the content output and the error output
    */
-  public function sh($cmd)
+  public function execute($cmd, $stdoutCallback = null, $stderrCallback = null)
   {
     $this->logSection('exec ', $cmd);
 
-    ob_start();
-    passthru($cmd.' 2>&1', $return);
-    $content = ob_get_contents();
-    ob_end_clean();
+    $descriptorspec = array(
+      1 => array('pipe', 'w'), // stdout
+      2 => array('pipe', 'w'), // stderr
+    );
 
-    if ($return > 0)
+    $process = proc_open($cmd, $descriptorspec, $pipes);
+    if (!is_resource($process))
     {
-      throw new sfException(sprintf('Problem executing command %s', "\n".$content));
+      throw new RuntimeException('Unable to execute the command.');
     }
 
-    return $content;
+    stream_set_blocking($pipes[1], false);
+    stream_set_blocking($pipes[2], false);
+
+    $output = '';
+    $err = '';
+    while (!feof($pipes[1]))
+    {
+      foreach ($pipes as $key => $pipe)
+      {
+        if (!$line = fread($pipe, 128))
+        {
+          continue;
+        }
+
+        if (1 == $key)
+        {
+          // stdout
+          $output .= $line;
+          if ($stdoutCallback)
+          {
+            call_user_func($stdoutCallback, $line);
+          }
+        }
+        else
+        {
+          // stderr
+          $err .= $line;
+          if ($stderrCallback)
+          {
+            call_user_func($stderrCallback, $line);
+          }
+        }
+      }
+
+      sleep(0.1);
+    }
+
+    fclose($pipes[1]);
+    fclose($pipes[2]);
+
+    if (($return = proc_close($process)) > 0)
+    {
+      throw new RuntimeException('Problem executing command.', $return);
+    }
+
+    return array($output, $err);
   }
 
   /**

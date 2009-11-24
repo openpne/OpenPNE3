@@ -13,12 +13,12 @@ require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
 ob_start();
 $plan = 16;
-$t = new lime_test($plan, new lime_output_color());
+$t = new lime_test($plan);
 
 if (!extension_loaded('mysql'))
 {
   $t->skip('Mysql extension must be loaded', $plan);
-  exit(0);
+  return;
 }
 
 // Configure your database with the settings below in order to run the test

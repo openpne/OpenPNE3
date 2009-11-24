@@ -121,7 +121,7 @@ class Doctrine_Formatter extends Doctrine_Connection_Module
      */
     public function quoteIdentifier($str, $checkOption = true)
     {
-        if ($checkOption && ! $this->conn->getAttribute(Doctrine::ATTR_QUOTE_IDENTIFIER)) {
+        if ($checkOption && ! $this->conn->getAttribute(Doctrine_Core::ATTR_QUOTE_IDENTIFIER)) {
             return $str;
         }
         $tmp = $this->conn->identifier_quoting;
@@ -151,14 +151,13 @@ class Doctrine_Formatter extends Doctrine_Connection_Module
 		return $arr;
     }
 
-
     /**
      * quote
      * quotes given input parameter
      *
      * @param mixed $input      parameter to be quoted
      * @param string $type
-     * @return mixed
+     * @return string
      */
     public function quote($input, $type = null)
     {
@@ -188,9 +187,7 @@ class Doctrine_Formatter extends Doctrine_Connection_Module
         case 'clob':
         case 'enum':
         case 'boolean':
-            $this->conn->connect();
-
-            return $this->conn->getDbh()->quote($input);
+        return "'" . str_replace("'","''",$input) . "'";
         }
     }
 
@@ -202,7 +199,7 @@ class Doctrine_Formatter extends Doctrine_Connection_Module
      */
     public function fixSequenceName($sqn)
     {
-        $seqPattern = '/^'.preg_replace('/%s/', '([a-z0-9_]+)',  $this->conn->getAttribute(Doctrine::ATTR_SEQNAME_FORMAT)).'$/i';
+        $seqPattern = '/^'.preg_replace('/%s/', '([a-z0-9_]+)',  $this->conn->getAttribute(Doctrine_Core::ATTR_SEQNAME_FORMAT)).'$/i';
         $seqName    = preg_replace($seqPattern, '\\1', $sqn);
 
         if ($seqName && ! strcasecmp($sqn, $this->getSequenceName($seqName))) {
@@ -219,7 +216,7 @@ class Doctrine_Formatter extends Doctrine_Connection_Module
      */
     public function fixIndexName($idx)
     {
-        $indexPattern   = '/^'.preg_replace('/%s/', '([a-z0-9_]+)', $this->conn->getAttribute(Doctrine::ATTR_IDXNAME_FORMAT)).'$/i';
+        $indexPattern   = '/^'.preg_replace('/%s/', '([a-z0-9_]+)', $this->conn->getAttribute(Doctrine_Core::ATTR_IDXNAME_FORMAT)).'$/i';
         $indexName      = preg_replace($indexPattern, '\\1', $idx);
         if ($indexName && ! strcasecmp($idx, $this->getIndexName($indexName))) {
             return $indexName;
@@ -235,7 +232,7 @@ class Doctrine_Formatter extends Doctrine_Connection_Module
      */
     public function getSequenceName($sqn)
     {
-        return sprintf($this->conn->getAttribute(Doctrine::ATTR_SEQNAME_FORMAT),
+        return sprintf($this->conn->getAttribute(Doctrine_Core::ATTR_SEQNAME_FORMAT),
             preg_replace('/[^a-z0-9_\$.]/i', '_', $sqn));
     }
 
@@ -247,8 +244,19 @@ class Doctrine_Formatter extends Doctrine_Connection_Module
      */
     public function getIndexName($idx)
     {
-        return sprintf($this->conn->getAttribute(Doctrine::ATTR_IDXNAME_FORMAT),
+        return sprintf($this->conn->getAttribute(Doctrine_Core::ATTR_IDXNAME_FORMAT),
             preg_replace('/[^a-z0-9_\$]/i', '_', $idx));
+    }
+    
+    /**
+     * Formatting a foreign Key name
+     *
+     * @param string    name of the foreign key
+     * @return string   formatted foreign key name
+     */
+    public function getForeignKeyName($fkey)
+    {
+        return preg_replace('/[^a-z0-9_\$]/i', '_', $fkey);
     }
 
     /**
@@ -259,7 +267,7 @@ class Doctrine_Formatter extends Doctrine_Connection_Module
      */
     public function getTableName($table)
     {
-        return sprintf($this->conn->getAttribute(Doctrine::ATTR_TBLNAME_FORMAT),
-                $table);
+        $format = $this->conn->getAttribute(Doctrine_Core::ATTR_TBLNAME_FORMAT);
+        return sprintf($format, str_replace(sprintf($format, null), null, $table));
     }
 }

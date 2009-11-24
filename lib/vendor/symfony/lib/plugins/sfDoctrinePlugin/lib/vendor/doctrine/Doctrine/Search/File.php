@@ -42,7 +42,9 @@ class Doctrine_Search_File extends Doctrine_Search
         parent::__construct($options);
 
         if ( ! isset($this->_options['resource'])) {
-            $table = new Doctrine_Table('File', Doctrine_Manager::connection());
+            $conn = Doctrine_Manager::connection();
+            $tableClass = $conn->getAttribute(Doctrine_Core::ATTR_TABLE_CLASS);
+            $table = new $tableClass('File', $conn);
 
             $table->setColumn('url', 'string', 255, array('primary' => true));
         }
@@ -53,10 +55,12 @@ class Doctrine_Search_File extends Doctrine_Search
 
         $this->initialize($table);
     }
+
     public function buildRelation()
     {
     	
-    }	
+    }
+
     /**
      * indexes given directory
      *

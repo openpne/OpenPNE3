@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class SnsConfigForm extends sfForm
+class SnsConfigForm extends BaseForm
 {
   public function configure()
   {

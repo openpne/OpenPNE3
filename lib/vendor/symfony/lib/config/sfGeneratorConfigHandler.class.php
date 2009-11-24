@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfGeneratorConfigHandler.class.php 13464 2008-11-28 15:45:07Z fabien $
+ * @version    SVN: $Id: sfGeneratorConfigHandler.class.php 23932 2009-11-14 16:32:53Z fabien $
  */
 class sfGeneratorConfigHandler extends sfYamlConfigHandler
 {
@@ -79,22 +79,7 @@ class sfGeneratorConfigHandler extends sfYamlConfigHandler
 
   static public function getContent(sfGeneratorManager $generatorManager, $class, $parameters)
   {
-    $data = '';
-
-    // needed to maintain BC with the 1.0 admin generator
-    $r = new ReflectionClass($class);
-    if (
-      (class_exists('sfPropelAdminGenerator') && ('sfPropelAdminGenerator' == $class || $r->isSubclassOf(new ReflectionClass('sfPropelAdminGenerator'))))
-      ||
-      (class_exists('sfDoctrineAdminGenerator') && ('sfDoctrineAdminGenerator' == $class || $r->isSubclassOf(new ReflectionClass('sfDoctrineAdminGenerator'))))
-    )
-    {
-      $data .= "require sfConfig::get('sf_symfony_lib_dir').'/plugins/sfCompat10Plugin/config/config.php';\n";
-    }
-
-    $data .= $generatorManager->generate($class, $parameters);
-
-    return $data;
+    return $generatorManager->generate($class, $parameters);
   }
 
   /**

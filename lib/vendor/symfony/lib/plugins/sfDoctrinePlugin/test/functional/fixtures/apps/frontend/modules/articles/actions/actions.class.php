@@ -6,13 +6,23 @@
  * @package    symfony12
  * @subpackage articles
  * @author     Your name here
- * @version    SVN: $Id: actions.class.php 8507 2008-04-17 17:32:20Z fabien $
+ * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class articlesActions extends sfActions
 {
   public function executeIndex()
   {
     $this->articleList = $this->getArticleTable()->findAll();
+  }
+
+  public function executeRedirectToShow()
+  {
+    $this->redirect('article', Doctrine::getTable('Article')->createQuery()->fetchOne());
+  }
+
+  public function executeShow()
+  {
+    $this->article = $this->getRoute()->getObject();
   }
 
   public function executeCreate()
@@ -29,7 +39,7 @@ class articlesActions extends sfActions
 
   public function executeUpdate($request)
   {
-    $this->forward404Unless($request->isMethod('post'));
+    $this->forward404Unless($request->isMethod(sfRequest::POST));
 
     $this->form = $this->getArticleForm($request->getParameter('id'));
 

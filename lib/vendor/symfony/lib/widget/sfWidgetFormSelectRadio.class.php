@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -14,9 +14,9 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetFormSelectRadio.class.php 17068 2009-04-07 08:24:53Z fabien $
+ * @version    SVN: $Id: sfWidgetFormSelectRadio.class.php 23994 2009-11-15 22:55:24Z bschussek $
  */
-class sfWidgetFormSelectRadio extends sfWidgetForm
+class sfWidgetFormSelectRadio extends sfWidgetFormChoiceBase
 {
   /**
    * Constructor.
@@ -33,12 +33,12 @@ class sfWidgetFormSelectRadio extends sfWidgetForm
    *
    * @param array $options     An array of options
    * @param array $attributes  An array of default HTML attributes
-   *   
-   * @see sfWidgetForm
+   *
+   * @see sfWidgetFormChoiceBase
    */
   protected function configure($options = array(), $attributes = array())
   {
-    $this->addRequiredOption('choices');
+    parent::configure($options, $attributes);
 
     $this->addOption('class', 'radio_list');
     $this->addOption('label_separator', '&nbsp;');
@@ -64,11 +64,7 @@ class sfWidgetFormSelectRadio extends sfWidgetForm
       $name .= '[]';
     }
 
-    $choices = $this->getOption('choices');
-    if ($choices instanceof sfCallable)
-    {
-      $choices = $choices->call();
-    }
+    $choices = $this->getChoices();
 
     // with groups?
     if (count($choices) && is_array(next($choices)))
@@ -83,7 +79,7 @@ class sfWidgetFormSelectRadio extends sfWidgetForm
     }
     else
     {
-      return $this->formatChoices($name, $value, $choices, $attributes);;
+      return $this->formatChoices($name, $value, $choices, $attributes);
     }
   }
 
@@ -104,7 +100,7 @@ class sfWidgetFormSelectRadio extends sfWidgetForm
         $baseAttributes['checked'] = 'checked';
       }
 
-      $inputs[] = array(
+      $inputs[$id] = array(
         'input' => $this->renderTag('input', array_merge($baseAttributes, $attributes)),
         'label' => $this->renderContentTag('label', $option, array('for' => $id)),
       );
@@ -121,20 +117,6 @@ class sfWidgetFormSelectRadio extends sfWidgetForm
       $rows[] = $this->renderContentTag('li', $input['input'].$this->getOption('label_separator').$input['label']);
     }
 
-    return $this->renderContentTag('ul', implode($this->getOption('separator'), $rows), array('class' => $this->getOption('class')));
-  }
-
-  public function __clone()
-  {
-    if ($this->getOption('choices') instanceof sfCallable)
-    {
-      $callable = $this->getOption('choices')->getCallable();
-      $class = __CLASS__;
-      if (is_array($callable) && $callable[0] instanceof $class)
-      {
-        $callable[0] = $this;
-        $this->setOption('choices', new sfCallable($callable));
-      }
-    }
+    return !$rows ? '' : $this->renderContentTag('ul', implode($this->getOption('separator'), $rows), array('class' => $this->getOption('class')));
   }
 }

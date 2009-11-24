@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfProjectEnableTask.class.php 15156 2009-01-31 21:44:54Z FabianLange $
+ * @version    SVN: $Id: sfProjectEnableTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfProjectEnableTask extends sfBaseTask
 {
@@ -24,19 +24,23 @@ class sfProjectEnableTask extends sfBaseTask
   protected function configure()
   {
     $this->addArguments(array(
-      new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'),
       new sfCommandArgument('env', sfCommandArgument::REQUIRED, 'The environment name'),
+      new sfCommandArgument('app', sfCommandArgument::OPTIONAL | sfCommandArgument::IS_ARRAY, 'The application name'),
     ));
 
-    $this->aliases = array('enable');
     $this->namespace = 'project';
     $this->name = 'enable';
     $this->briefDescription = 'Enables an application in a given environment';
 
     $this->detailedDescription = <<<EOF
-The [project:enable|INFO] task enables an application for a specific environment:
+The [project:enable|INFO] task enables a specific environment:
 
   [./symfony project:enable frontend prod|INFO]
+
+You can also specify individual applications to be enabled in that
+environment:
+
+  [./symfony project:enable prod frontend backend|INFO]
 EOF;
   }
 
@@ -45,23 +49,36 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    $app = $arguments['application'];
-    $env = $arguments['env'];
-
-    $lockFile = sfConfig::get('sf_data_dir').'/'.$app.'_'.$env.'.lck';
-    if (!file_exists($lockFile))
+    if (1 == count($arguments['app']) && !file_exists(sfConfig::get('sf_apps_dir').'/'.$arguments['app'][0]))
     {
-      $this->logSection('enable', sprintf('%s [%s] is currently ENABLED', $app, $env));
+      // support previous task signature
+      $applications = array($arguments['env']);
+      $env = $arguments['app'][0];
     }
     else
     {
-      $this->getFilesystem()->remove($lockFile);
+      $applications = count($arguments['app']) ? $arguments['app'] : sfFinder::type('dir')->relative()->maxdepth(0)->in(sfConfig::get('sf_apps_dir'));
+      $env = $arguments['env'];
+    }
 
-      $clearCache = new sfCacheClearTask($this->dispatcher, $this->formatter);
-      $clearCache->setCommandApplication($this->commandApplication);
-      $clearCache->run(array(), array('--app='.$app, '--env='.$env));
+    foreach ($applications as $app)
+    {
+      $lockFile = sfConfig::get('sf_data_dir').'/'.$app.'_'.$env.'.lck';
+      if (!file_exists($lockFile))
+      {
+        $this->logSection('enable', sprintf('%s [%s] is currently ENABLED', $app, $env));
+      }
+      else
+      {
+        $this->getFilesystem()->remove($lockFile);
 
-      $this->logSection('enable', sprintf('%s [%s] has been ENABLED', $app, $env));
+        $clearCache = new sfCacheClearTask($this->dispatcher, $this->formatter);
+        $clearCache->setCommandApplication($this->commandApplication);
+        $clearCache->setConfiguration($this->configuration);
+        $clearCache->run(array(), array('--app='.$app, '--env='.$env));
+
+        $this->logSection('enable', sprintf('%s [%s] has been ENABLED', $app, $env));
+      }
     }
   }
 }

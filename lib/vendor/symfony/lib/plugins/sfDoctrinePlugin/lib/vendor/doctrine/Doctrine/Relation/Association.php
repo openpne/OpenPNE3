@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Association.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Association.php 6508 2009-10-14 06:28:49Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -30,7 +30,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6508 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
 class Doctrine_Relation_Association extends Doctrine_Relation
@@ -42,6 +42,7 @@ class Doctrine_Relation_Association extends Doctrine_Relation
     {
         return $this->definition['refTable'];
     }
+
     public function getAssociationTable()
     {
         return $this->definition['refTable'];
@@ -65,18 +66,20 @@ class Doctrine_Relation_Association extends Doctrine_Relation
                 $dql .= '.' . $component;
                 $dql .= ' WHERE ' . $this->getTable()->getComponentName()
                 . '.' . $component . '.' . $this->getLocalRefColumnName() . ' IN (' . $sub . ')';
+                $dql .= $this->getOrderBy($this->getTable()->getComponentName(), false);
                 break;
             case "collection":
                 $sub  = substr(str_repeat("?, ", $count),0,-2);
                 $dql  = 'FROM ' . $component . '.' . $this->getTable()->getComponentName();
                 $dql .= ' WHERE ' . $component . '.' . $this->getLocalRefColumnName() . ' IN (' . $sub . ')';
+                $dql .= $this->getOrderBy($component, false);
                 break;
         }
 
         return $dql;
     }
 
-    /**
+	/**
      * getLocalRefColumnName
      * returns the column name of the local reference column
      */
@@ -123,8 +126,8 @@ class Doctrine_Relation_Association extends Doctrine_Relation
     public function fetchRelatedFor(Doctrine_Record $record)
     {
         $id = $record->getIncremented();
-        if (empty($id) || ! $this->definition['table']->getAttribute(Doctrine::ATTR_LOAD_REFERENCES)) {
-            $coll = new Doctrine_Collection($this->getTable());
+        if (empty($id) || ! $this->definition['table']->getAttribute(Doctrine_Core::ATTR_LOAD_REFERENCES)) {
+            $coll = Doctrine_Collection::create($this->getTable());
         } else {
             $coll = $this->getTable()->getConnection()->query($this->getRelationDql(1), array($id));
         }

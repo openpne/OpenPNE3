@@ -10,7 +10,7 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(75, new lime_output_color());
+$t = new lime_test(75);
 
 // __construct()
 $t->diag('__construct()');
@@ -68,12 +68,12 @@ $tests = array(
     'DecimalDigits'          => -1,
     'DecimalSeparator'       => ',',
     'GroupSeparator'         => ' ',
-    'CurrencySymbol'         => '$',
+    'CurrencySymbol'         => '$US',
     'NegativeInfinitySymbol' => '-∞',
     'PositiveInfinitySymbol' => '+∞',
     'NegativeSign'           => '-',
     'PositiveSign'           => '+',
-    'NaNSymbol'              => '�',
+    'NaNSymbol'              => 'NaN',
     'PercentSymbol'          => '%',
     'PerMilleSymbol'         => '‰',
   ),
@@ -81,12 +81,12 @@ $tests = array(
     'DecimalDigits'          => -1,
     'DecimalSeparator'       => '.',
     'GroupSeparator'         => ',',
-    'CurrencySymbol'         => 'US$',
+    'CurrencySymbol'         => '$',
     'NegativeInfinitySymbol' => '-∞',
     'PositiveInfinitySymbol' => '+∞',
     'NegativeSign'           => '-',
     'PositiveSign'           => '+',
-    'NaNSymbol'              => '�',
+    'NaNSymbol'              => 'NaN',
     'PercentSymbol'          => '%',
     'PerMilleSymbol'         => '‰',
   ),

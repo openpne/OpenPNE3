@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: PropelTypes.php 989 2008-03-11 14:29:30Z heltem $
+ *  $Id: PropelTypes.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -23,7 +23,7 @@
  * A class that maps PropelTypes to PHP native types, PDO types (and Creole types).
  *
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
- * @version    $Revision: 989 $
+ * @version    $Revision: 1262 $
  * @package    propel.engine.database.model
  */
 class PropelTypes {

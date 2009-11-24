@@ -12,6 +12,6 @@ $configuration = ProjectConfiguration::getApplicationConfiguration('pc_frontend'
 
 new sfDatabaseManager($configuration);
 
-$task = new sfDoctrineLoadDataTask($configuration->getEventDispatcher(), new sfFormatter());
+$task = new sfDoctrineDataLoadTask($configuration->getEventDispatcher(), new sfFormatter());
 $task->run();
 $task->run(array('--dir='.dirname(__FILE__).'/../fixtures'));

@@ -18,16 +18,23 @@ $b = new sfTestBrowser();
 
 $b->
   get('/autoload/myAutoload')->
-  isStatusCode(200)->
-  isRequestParameter('module', 'autoload')->
-  isRequestParameter('action', 'myAutoload')->
-  checkResponseElement('body div', 'foo')
+  with('request')->begin()->
+    isParameter('module', 'autoload')->
+    isParameter('action', 'myAutoload')->
+  end()->
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('body div', 'foo')->
+  end()
 ;
 
 $t = $b->test();
 
+$autoload = sfAutoload::getInstance();
+$t->ok(@file_get_contents($autoload->getClassPath('sfpropel'), FILE_USE_INCLUDE_PATH), '"sfAutoload" is case insensitive');
+
 $t->ok(class_exists('BaseExtendMe'), 'plugin lib directory added to autoload');
 $r = new ReflectionClass('ExtendMe');
-$t->like($r->getFilename(), '~project/lib/ExtendMe~', 'plugin class can be replaced by project');
+$t->like(str_replace(DIRECTORY_SEPARATOR, '/', $r->getFilename()), '~fixtures/lib/ExtendMe~', 'plugin class can be replaced by project');
 $t->ok(class_exists('NotInLib'), 'plugin autoload sets class paths');
 $t->ok(!class_exists('ExcludedFromAutoload'), 'plugin autoload excludes directories');

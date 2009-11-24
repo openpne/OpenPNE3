@@ -41,11 +41,11 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
     {
 
     }
+
     public function setUp()
     {
     	
     }	
-
 
     /**
      * getTable
@@ -66,7 +66,7 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
      */
     public function addListener($listener, $name = null)
     {
-        $this->_table->addRecordListener($listener, $name = null);
+        $this->_table->addRecordListener($listener, $name);
 
         return $this;
     }
@@ -112,14 +112,34 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
             return $this->_table->addIndex($name, $definition);
         }
     }
+
+    /**
+     * Defines a n-uple of fields that must be unique for every record. 
+     *
+     * This method Will automatically add UNIQUE index definition 
+     * and validate the values on save. The UNIQUE index is not created in the
+     * database until you use @see export().
+     *
+     * @param array $fields     values are fieldnames
+     * @param array $options    array of options for unique validator
+     * @param bool $createUniqueIndex  Whether or not to create a unique index in the database
+     * @return void
+     */
+    public function unique($fields, $options = array(), $createUniqueIndex = true)
+    {
+        return $this->_table->unique($fields, $options, $createUniqueIndex);
+    }
+
     public function setAttribute($attr, $value)
     {
         $this->_table->setAttribute($attr, $value);
     }
+
     public function setTableName($tableName)
     {
         $this->_table->setTableName($tableName);
     }
+
     public function setInheritanceMap($map)
     {
         $this->_table->setOption('inheritanceMap', $map);
@@ -127,9 +147,11 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
 
     public function setSubclasses($map)
     {
-        if (isset($map[get_class($this)])) {
+        $class = get_class($this);
+        // Set the inheritance map for subclasses
+        if (isset($map[$class])) {
             // fix for #1621 
-            $mapFieldNames = $map[get_class($this)]; 
+            $mapFieldNames = $map[$class]; 
             $mapColumnNames = array(); 
 
             foreach ($mapFieldNames as $fieldName => $val) { 
@@ -138,7 +160,13 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
  
             $this->_table->setOption('inheritanceMap', $mapColumnNames);
             return;
+        } else {
+            // Put an index on the key column
+            $mapFieldName = array_keys(end($map));
+            $this->index($this->getTable()->getTableName().'_'.$mapFieldName[0], array('fields' => array($mapFieldName[0])));
         }
+
+        // Set the subclasses array for the parent class
         $this->_table->setOption('subclasses', array_keys($map));
     }
 
@@ -146,7 +174,7 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
      * attribute
      * sets or retrieves an option
      *
-     * @see Doctrine::ATTR_* constants   availible attributes
+     * @see Doctrine_Core::ATTR_* constants   availible attributes
      * @param mixed $attr
      * @param mixed $value
      * @return mixed
@@ -189,10 +217,20 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
             $this->_table->setOption($name, $value);
         }
     }
+    
+    /**
+     * getOptions
+     * returns all options of this record and the associated values
+     *
+     * @return array    all options and their values
+     */
+    public function getOptions()
+    {
+        return $this->_table->getOptions();
+    }
 
     /**
-     * hasOne
-     * binds One-to-One aggregate relation
+     * Binds One-to-One aggregate relation
      *
      * @param string $componentName     the name of the related component
      * @param string $options           relation options
@@ -207,8 +245,7 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
     }
 
     /**
-     * hasMany
-     * binds One-to-Many / Many-to-Many aggregate relation
+     * Binds One-to-Many / Many-to-Many aggregate relation
      *
      * @param string $componentName     the name of the related component
      * @param string $options           relation options
@@ -223,8 +260,7 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
     }
 
     /**
-     * hasColumn
-     * sets a column definition
+     * Sets a column definition
      *
      * @param string $name
      * @param string $type
@@ -232,16 +268,59 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
      * @param mixed $options
      * @return void
      */
-    public function hasColumn($name, $type, $length = null, $options = "")
+    public function hasColumn($name, $type = null, $length = null, $options = array())
     {
         $this->_table->setColumn($name, $type, $length, $options);
     }
+
+    /**
+     * Set multiple column definitions at once
+     *
+     * @param array $definitions 
+     * @return void
+     */
     public function hasColumns(array $definitions)
     {
         foreach ($definitions as $name => $options) {
             $length = isset($options['length']) ? $options['length']:null;
             $this->hasColumn($name, $options['type'], $length, $options);
         }
+    }
+
+    /**
+     * Customize the array of options for a column or multiple columns. First
+     * argument can be a single field/column name or an array of them. The second
+     * argument is an array of options.
+     *
+     *     [php]
+     *     public function setTableDefinition()
+     *     {
+     *         parent::setTableDefinition();
+     *         $this->setColumnOptions('username', array(
+     *             'unique' => true
+     *         ));
+     *     }
+     *
+     * @param string $columnName 
+     * @param array $validators 
+     * @return void
+     */
+    public function setColumnOptions($name, array $options)
+    {
+        $this->_table->setColumnOptions($name, $options);
+    }
+
+    /**
+     * Set an individual column option
+     *
+     * @param string $columnName 
+     * @param string $option 
+     * @param string $value 
+     * @return void
+     */
+    public function setColumnOption($columnName, $option, $value)
+    {
+        $this->_table->setColumnOption($columnName, $option, $value);
     }
 
     /**
@@ -265,13 +344,18 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
         $this->_table->addGenerator($generator, get_class($generator));
     }
 
-
     /**
-     * actAs
-     * loads the given plugin
+     * Loads the given plugin.
      *
-     * @param mixed $tpl
-     * @param array $options
+     * This method loads a behavior in the record. It will add the behavior 
+     * also to the record table if it.
+     * It is tipically called in @see setUp().
+     *
+     * @param mixed $tpl        if an object, must be a subclass of Doctrine_Template. 
+     *                          If a string, Doctrine will try to instantiate an object of the classes Doctrine_Template_$tpl and subsequently $tpl, using also autoloading capabilities if defined.
+     * @param array $options    argument to pass to the template constructor if $tpl is a class name
+     * @throws Doctrine_Record_Exception    if $tpl is neither an instance of Doctrine_Template subclass or a valid class name, that could be instantiated.
+     * @return Doctrine_Record  this object; provides a fluent interface.
      */
     public function actAs($tpl, array $options = array())
     {
@@ -304,11 +388,12 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
     }
 
     /**
-     * check
-     * adds a check constraint
+     * Adds a check constraint.
      *
-     * @param mixed $constraint     either a SQL constraint portion or an array of CHECK constraints
-     * @param string $name          optional constraint name
+     * This method will add a CHECK constraint to the record table.
+     *
+     * @param mixed $constraint     either a SQL constraint portion or an array of CHECK constraints. If array, all values will be added as constraint
+     * @param string $name          optional constraint name. Not used if $constraint is an array.
      * @return Doctrine_Record      this object
      */
     public function check($constraint, $name = null)

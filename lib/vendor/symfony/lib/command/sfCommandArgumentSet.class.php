@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage command
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCommandArgumentSet.class.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: sfCommandArgumentSet.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfCommandArgumentSet
 {
@@ -54,7 +54,7 @@ class sfCommandArgumentSet
    */
   public function addArguments($arguments = array())
   {
-    if (!is_null($arguments))
+    if (null !== $arguments)
     {
       foreach ($arguments as $argument)
       {

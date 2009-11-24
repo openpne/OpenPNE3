@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Transaction.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Transaction.php 6484 2009-10-12 17:40:41Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -30,7 +30,7 @@
  * @subpackage  Transaction
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6484 $
  */
 class Doctrine_Transaction extends Doctrine_Connection_Module
 {
@@ -185,7 +185,7 @@ class Doctrine_Transaction extends Doctrine_Connection_Module
     {
         $this->conn->connect();
         
-        $listener = $this->conn->getAttribute(Doctrine::ATTR_LISTENER);
+        $listener = $this->conn->getAttribute(Doctrine_Core::ATTR_LISTENER);
 
         if ( ! is_null($savepoint)) {
             $this->savePoints[] = $savepoint;
@@ -241,7 +241,7 @@ class Doctrine_Transaction extends Doctrine_Connection_Module
         
         $this->conn->connect();
 
-        $listener = $this->conn->getAttribute(Doctrine::ATTR_LISTENER);
+        $listener = $this->conn->getAttribute(Doctrine_Core::ATTR_LISTENER);
 
         if ( ! is_null($savepoint)) {
             $this->_nestingLevel -= $this->removeSavePoints($savepoint);
@@ -330,7 +330,7 @@ class Doctrine_Transaction extends Doctrine_Connection_Module
             return false;
         }
 
-        $listener = $this->conn->getAttribute(Doctrine::ATTR_LISTENER);
+        $listener = $this->conn->getAttribute(Doctrine_Core::ATTR_LISTENER);
 
         if ( ! is_null($savepoint)) {
             $this->_nestingLevel -= $this->removeSavePoints($savepoint);

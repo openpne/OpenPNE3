@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage debug
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWebDebugPanelConfig.class.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: sfWebDebugPanelConfig.class.php 19774 2009-07-01 09:46:42Z Kris.Wallsmith $
  */
 class sfWebDebugPanelConfig extends sfWebDebugPanel
 {
@@ -74,7 +74,7 @@ class sfWebDebugPanelConfig extends sfWebDebugPanel
     $id = ucfirst(strtolower($id));
 
     return '
-    <h2>'.$id.' <a href="#" onclick="sfWebDebugToggle(\'sfWebDebug'.$id.'\'); return false;"><img src="'.$this->webDebug->getOption('image_root_path').'/toggle.gif" alt="Toggle details" /></a></h2>
+    <h2>'.$id.' '.$this->getToggler('sfWebDebug'.$id).'</h2>
     <div id="sfWebDebug'.$id.'" style="display: none"><pre>'.htmlspecialchars(sfYaml::dump(sfDebug::removeObjects($values)), ENT_QUOTES, sfConfig::get('sf_charset')).'</pre></div>
     ';
   }

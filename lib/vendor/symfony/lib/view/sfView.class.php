@@ -4,7 +4,7 @@
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
  * (c) 2004-2006 Sean Kerr <sean@code-box.org>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -18,7 +18,7 @@
  * @subpackage view
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfView.class.php 13572 2008-12-01 02:10:36Z dwhittle $
+ * @version    SVN: $Id: sfView.class.php 23940 2009-11-14 17:58:19Z fabien $
  */
 abstract class sfView
 {
@@ -112,7 +112,7 @@ abstract class sfView
     $this->context    = $context;
     $this->dispatcher = $context->getEventDispatcher();
 
-    sfOutputEscaper::markClassesAsSafe(array('sfForm', 'sfModelGeneratorHelper'));
+    sfOutputEscaper::markClassesAsSafe(array('sfForm', 'sfFormField', 'sfFormFieldSchema', 'sfModelGeneratorHelper'));
 
     $this->attributeHolder = $this->initializeAttributeHolder();
 
@@ -120,25 +120,26 @@ abstract class sfView
     $this->parameterHolder->add(sfConfig::get('mod_'.strtolower($moduleName).'_view_param', array()));
 
     $request = $context->getRequest();
-    if (!is_null($format = $request->getRequestFormat()))
+
+    $format = $request->getRequestFormat();
+    if (null !== $format)
     {
       if ('html' != $format)
       {
         $this->setExtension('.'.$format.$this->getExtension());
       }
-      
+
       if ($mimeType = $request->getMimeType($format))
       {
         $this->context->getResponse()->setContentType($mimeType);
-        
+
         if ('html' != $format)
         {
           $this->setDecorator(false);
         }
       }
-
-      $this->dispatcher->notify(new sfEvent($this, 'view.configure_format', array('format' => $format, 'response' => $context->getResponse(), 'request' => $context->getRequest())));
     }
+    $this->dispatcher->notify(new sfEvent($this, 'view.configure_format', array('format' => $format, 'response' => $context->getResponse(), 'request' => $context->getRequest())));
 
     // include view configuration
     $this->configure();
@@ -148,17 +149,6 @@ abstract class sfView
 
   protected function initializeAttributeHolder($attributes = array())
   {
-    if ('both' === sfConfig::get('sf_escaping_strategy'))
-    {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array('Escaping strategy "both" is deprecated, please use "on".', 'priority' => sfLogger::ERR)));
-      sfConfig::set('sf_escaping_strategy', 'on');
-    }
-    else if ('bc' === sfConfig::get('sf_escaping_strategy'))
-    {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array('Escaping strategy "bc" is deprecated, please use "off".', 'priority' => sfLogger::ERR)));
-      sfConfig::set('sf_escaping_strategy', 'off');
-    }
-
     $attributeHolder = new sfViewParameterHolder($this->dispatcher, $attributes, array(
       'escaping_method'   => sfConfig::get('sf_escaping_method'),
       'escaping_strategy' => sfConfig::get('sf_escaping_strategy'),
@@ -351,7 +341,7 @@ abstract class sfView
    */
   protected function preRenderCheck()
   {
-    if (is_null($this->template))
+    if (null === $this->template)
     {
       // a template has not been set
       throw new sfRenderException('A template has not been set.');
@@ -415,7 +405,7 @@ abstract class sfView
 
       return;
     }
-    else if (is_null($template))
+    else if (null === $template)
     {
       return;
     }

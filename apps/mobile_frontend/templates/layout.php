@@ -15,6 +15,9 @@
 *{font-size:xx-small;}
 </style>
 <?php endif; ?>
+
+    <?php include_stylesheets() ?>
+    <?php include_javascripts() ?>
 </head>
 <body>
 

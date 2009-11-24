@@ -44,6 +44,22 @@ abstract class Doctrine_Template extends Doctrine_Record_Abstract
     protected $_plugin;
 
     /**
+     * @var array $_options Template options
+     */
+    protected $_options = array();
+
+    /**
+     * __construct
+     *
+     * @param string $array 
+     * @return void
+     */
+    public function __construct(array $options = array())
+    {
+        $this->_options = Doctrine_Lib::arrayDeepMerge($this->_options, $options);
+    }
+
+    /**
      * Set the table object that this Template belongs to
      *
      * @var Doctrine_Table $table        the table object this Template belongs to
@@ -105,6 +121,43 @@ abstract class Doctrine_Template extends Doctrine_Record_Abstract
     public function getPlugin()
     {
         return $this->_plugin;
+    }
+
+    /**
+     * Check if this template has a generator plugin
+     *
+     * @return boolean
+     */
+    public function hasPlugin()
+    {
+        return isset($this->_plugin) ? true : false;
+    }
+
+    /**
+     * getOptions
+     * returns all options of this template and the associated values
+     *
+     * @return array    all options and their values
+     */
+    public function getOptions()
+    {
+        return $this->_options;
+    }
+
+    /**
+     * getOption
+     * returns the value of given option
+     *
+     * @param string $name   the name of the option
+     * @param mixed $default default value if option is not found
+     * @return mixed         the value of given option
+     */
+    public function getOption($name, $default = null)
+    {
+        if (isset($this->_options[$name])) {
+            return $this->_options[$name];
+        }
+        return $default;
     }
 
     /**

@@ -35,6 +35,22 @@
 class Doctrine_Import_Schema
 {
     /**
+     * Schema definition keys that can be applied at the global level.
+     *
+     * @var array
+     */
+    protected static $_globalDefinitionKeys = array(
+        'connection',
+        'attributes',
+        'templates',
+        'actAs',
+        'options',
+        'package',
+        'package_custom_path',
+        'inheritance',
+        'detect_relations');
+
+    /**
      * _relations
      *
      * Array of all relationships parsed from all schema files
@@ -87,7 +103,8 @@ class Doctrine_Import_Schema
                                                           'inheritance',
                                                           'detect_relations',
                                                           'listeners',
-                                                          'checks'),
+                                                          'checks',
+                                                          'comment'),
 
                                    'column'     =>  array('name',
                                                           'format',
@@ -105,7 +122,8 @@ class Doctrine_Import_Schema
                                                           'protected',
                                                           'zerofill',
                                                           'owner',
-                                                          'extra'),
+                                                          'extra',
+                                                          'comment'),
 
                                    'relation'   =>  array('key',
                                                           'class',
@@ -123,7 +141,9 @@ class Doctrine_Import_Schema
                                                           'onUpdate',
                                                           'equal',
                                                           'owningSide',
-                                                          'refClassRelationAlias'),
+                                                          'refClassRelationAlias',
+                                                          'foreignKeyName',
+                                                          'orderBy'),
 
                                    'inheritance'=>  array('type',
                                                           'extends',
@@ -131,29 +151,13 @@ class Doctrine_Import_Schema
                                                           'keyValue'));
 
     /**
-     * _validators
-     *
-     * Array of available validators
-     *
-     * @see getValidators()
-     * @var array Array of available validators
-     */
-    protected $_validators = array();
-
-    /**
-     * getValidators
-     *
-     * Retrieve the array of available validators
-     *
+     * Returns an array of definition keys that can be applied at the global level.
+     * 
      * @return array
      */
-    public function getValidators()
+    public static function getGlobalDefinitionKeys()
     {
-        if (empty($this->_validators)) {
-            $this->_validators = Doctrine_Lib::getValidators();
-        }
-
-        return $this->_validators;
+        return self::$_globalDefinitionKeys;
     }
 
     /**
@@ -224,7 +228,7 @@ class Doctrine_Import_Schema
                 $e = explode('.', $s);
                 if (end($e) === $format) {
                     $array = array_merge($array, $this->parseSchema($s, $format));
-                }
+                }          
             } else if (is_dir($s)) {
                 $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($s),
                                                       RecursiveIteratorIterator::LEAVES_ONLY);
@@ -310,33 +314,18 @@ class Doctrine_Import_Schema
         
         $array = Doctrine_Parser::load($schema, $type);
 
-        // Go through the schema and look for global values so we can assign them to each table/class
-        $globals = array();
-        $globalKeys = array('connection',
-                            'attributes',
-                            'templates',
-                            'actAs',
-                            'options',
-                            'package',
-                            'package_custom_path',
-                            'inheritance',
-                            'detect_relations');
-
         // Loop over and build up all the global values and remove them from the array
+        $globals = array();
         foreach ($array as $key => $value) {
-            if (in_array($key, $globalKeys)) {
+            if (in_array($key, self::$_globalDefinitionKeys)) {
                 unset($array[$key]);
                 $globals[$key] = $value;
             }
         }
 
-        // Apply the globals to each table if it does not have a custom value set already
+        // Merge the globals that aren't specifically set to each class
         foreach ($array as $className => $table) {
-            foreach ($globals as $key => $value) {
-                if (!isset($array[$className][$key])) {
-                    $array[$className][$key] = $value;
-                }
-            }
+            $array[$className] = Doctrine_Lib::arrayDeepMerge($globals, $array[$className]);
         }
 
         $build = array();
@@ -410,7 +399,7 @@ class Doctrine_Import_Schema
                     $colDesc['values'] = isset($field['values']) ? (array) $field['values']:null;
 
                     // Include all the specified and valid validators in the colDesc
-                    $validators = $this->getValidators();
+                    $validators = Doctrine_Manager::getInstance()->getValidators();
 
                     foreach ($validators as $validator) {
                         if (isset($field[$validator])) {
@@ -509,7 +498,24 @@ class Doctrine_Import_Schema
 
                 // Populate the parents subclasses
                 if ($definition['inheritance']['type'] == 'column_aggregation') {
-                    $array[$parent]['inheritance']['subclasses'][$definition['className']] = array($definition['inheritance']['keyField'] => $definition['inheritance']['keyValue']);
+                    // Fix for 2015: loop through superclasses' inheritance to the base-superclass to  
+                    // make sure we collect all keyFields needed (and not only the first) 
+                    $inheritanceFields = array($definition['inheritance']['keyField'] => $definition['inheritance']['keyValue']); 
+
+                    $superClass = $definition['inheritance']['extends']; 
+                    $multiInheritanceDef = $array[$superClass]; 
+
+                    while (count($multiInheritanceDef['inheritance']) > 0 && array_key_exists('extends', $multiInheritanceDef['inheritance']) && $multiInheritanceDef['inheritance']['type'] == 'column_aggregation') { 
+                        $superClass = $multiInheritanceDef['inheritance']['extends'];
+                        
+                        // keep original keyField with it's keyValue
+                        if ( ! isset($inheritanceFields[$multiInheritanceDef['inheritance']['keyField']])) { 
+                            $inheritanceFields[$multiInheritanceDef['inheritance']['keyField']] = $multiInheritanceDef['inheritance']['keyValue'];
+                        } 
+                        $multiInheritanceDef = $array[$superClass]; 
+                    } 
+
+                    $array[$parent]['inheritance']['subclasses'][$definition['className']] = $inheritanceFields;
                 }
             }
         }
@@ -661,7 +667,7 @@ class Doctrine_Import_Schema
                     $newRelation['refClass'] = $relation['refClass'];
                     $newRelation['type'] = isset($relation['foreignType']) ? $relation['foreignType']:$relation['type'];
                 } else {                
-                    if(isset($relation['foreignType'])) {
+                    if (isset($relation['foreignType'])) {
                         $newRelation['type'] = $relation['foreignType'];
                     } else {
                         $newRelation['type'] = $relation['type'] === Doctrine_Relation::ONE ? Doctrine_Relation::MANY:Doctrine_Relation::ONE;
@@ -737,7 +743,7 @@ class Doctrine_Import_Schema
         // Validators are a part of the column validation
         // This should be fixed, made cleaner
         if ($name == 'column') {
-            $validators = $this->getValidators();
+            $validators = Doctrine_Manager::getInstance()->getValidators();
             $validation = array_merge($validation, $validators);
         }
 

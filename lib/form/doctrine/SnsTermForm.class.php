@@ -25,7 +25,7 @@ class SnsTermForm extends BaseSnsTermForm
   {
     $this->setWidgets(array(
       'id' => new sfWidgetFormInputHidden(),
-      'uri' => new sfWidgetFormInput(),
+      'uri' => new sfWidgetFormInputText(),
       'type' => new sfWidgetFormInputHidden(),
     ));
 

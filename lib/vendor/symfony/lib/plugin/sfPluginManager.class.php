@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage plugin
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPluginManager.class.php 19258 2009-06-15 08:52:42Z fabien $
+ * @version    SVN: $Id: sfPluginManager.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfPluginManager
 {
@@ -102,12 +102,14 @@ class sfPluginManager
    *
    * @param string $plugin  The plugin name
    * @param array  $options An array of options
+   *
+   * @return Boolean|string true if the plugin is already installed, the name of the installed plugin otherwise
    */
   public function installPlugin($plugin, $options = array())
   {
     $this->installing = array();
 
-    $this->doInstallPlugin($plugin, $options);
+    return $this->doInstallPlugin($plugin, $options);
   }
 
   /**
@@ -247,11 +249,11 @@ class sfPluginManager
     {
       $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Installation successful for plugin "%s"', $plugin))));
 
-      $this->dispatcher->notify(new sfEvent($this, 'plugin.post_install', array('channel' => $channel, 'plugin' => $plugin)));
+      $this->dispatcher->notify(new sfEvent($this, 'plugin.post_install', array('channel' => $channel, 'plugin' => $pluginPackage->getPackage())));
 
       unset($this->installing[$channel.'/'.$plugin]);
 
-      return true;
+      return $pluginPackage->getPackage();
     }
     else
     {
@@ -272,10 +274,10 @@ class sfPluginManager
       list($channel, $plugin) = explode('/', $plugin);
     }
 
-    $channel = is_null($channel) ? $this->environment->getConfig()->get('default_channel') : $channel;
+    $channel = null === $channel ? $this->environment->getConfig()->get('default_channel') : $channel;
 
     $existing = $this->environment->getRegistry()->packageInfo($plugin, 'version', $channel);
-    if (is_null($existing))
+    if (null === $existing)
     {
       $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Plugin "%s" is not installed', $plugin))));
 
@@ -323,12 +325,6 @@ class sfPluginManager
    */
   public function checkPluginDependencies($plugin, $version, $options = false)
   {
-    // for BC
-    if (!is_array($options))
-    {
-      $options = array('install_deps' => $options);
-    }
-
     $dependencies = $this->environment->getRest()->getPluginDependencies($plugin, $version);
 
     if (!isset($dependencies['required']) || !isset($dependencies['required']['package']))
@@ -442,9 +438,9 @@ class sfPluginManager
     $version   = isset($options['version']) ? $options['version'] : null;
 
     $rest = $this->environment->getRest();
-    $rest->setChannel(is_null($channel) ? $this->environment->getConfig()->get('default_channel') : $channel);
+    $rest->setChannel(null === $channel ? $this->environment->getConfig()->get('default_channel') : $channel);
 
-    if (is_null($version))
+    if (null === $version)
     {
       try
       {

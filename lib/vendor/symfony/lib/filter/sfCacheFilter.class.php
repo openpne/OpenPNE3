@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage filter
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCacheFilter.class.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: sfCacheFilter.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfCacheFilter extends sfFilter
 {
@@ -72,7 +72,7 @@ class sfCacheFilter extends sfFilter
   {
     $uri = $this->routing->getCurrentInternalUri();
 
-    if (is_null($uri))
+    if (null === $uri)
     {
       return true;
     }

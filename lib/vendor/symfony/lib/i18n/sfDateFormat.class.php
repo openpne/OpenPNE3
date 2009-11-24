@@ -12,7 +12,7 @@
  * {@link http://prado.sourceforge.net/}
  *
  * @author     Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version    $Id: sfDateFormat.class.php 17749 2009-04-29 11:54:22Z fabien $
+ * @version    $Id: sfDateFormat.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  * @package    symfony
  * @subpackage i18n
  */
@@ -83,7 +83,7 @@ class sfDateFormat
    */
   function __construct($formatInfo = null)
   {
-    if (is_null($formatInfo))
+    if (null === $formatInfo)
     {
       $this->formatInfo = sfDateTimeFormatInfo::getInvariantInfo();
     }
@@ -113,7 +113,7 @@ class sfDateFormat
    */
   public function getDate($time, $pattern = null)
   {
-    if (is_null($time))
+    if (null === $time)
     {
       return null;
     }
@@ -139,16 +139,24 @@ class sfDateFormat
       $tokens = $this->getTokens($pattern);
       $pregPattern = '';
       $matchNames = array();
+      // current regex allows any char at the end. avoids duplicating [^\d]+ pattern
+      // this could cause issues with utf character width
+      $allowsAllChars=true;
       foreach ($tokens as $token)
       {
         if ($matchName = $this->getFunctionName($token))
         {
+          $allowsAllChars = false;
           $pregPattern .= '(\d+)';
           $matchNames[] = $matchName;
         }
         else
         {
-          $pregPattern .= '[^\d]+';
+          if (!$allowsAllChars)
+          {
+            $allowsAllChars = true;
+            $pregPattern .= '[^\d]+';
+          }
         }
       }
       preg_match('@'.$pregPattern.'@', $time, $matches);
@@ -210,7 +218,7 @@ class sfDateFormat
   {
     $date = $this->getDate($time, $inputPattern);
 
-    if (is_null($pattern))
+    if (null === $pattern)
     {
       $pattern = 'F';
     }
@@ -429,7 +437,7 @@ class sfDateFormat
   /**
    * Gets the year.
    * "yy" will return the last two digits of year.
-   * "yyyy" will return the full integer year.
+   * "y", "yyy" and "yyyy" will return the full integer year.
    *
    * @param array  $date    getdate format.
    * @param string $pattern a pattern.
@@ -442,19 +450,22 @@ class sfDateFormat
     {
       case 'yy':
         return substr($year, 2);
+      case 'y':
+      case 'yyy':
       case 'yyyy':
         return $year;
       default: 
-        throw new sfException('The pattern for year is either "yy" or "yyyy".');
+        throw new sfException('The pattern for year is either "y", "yy", "yyy" or "yyyy".');
     }
   }
 
   /**
    * Gets the month.
    * "M" will return integer 1 through 12
-   * "MM" will return the narrow month name, e.g. "J"
+   * "MM" will return integer 1 through 12 padded with 0 to two characters width
    * "MMM" will return the abrreviated month name, e.g. "Jan"
    * "MMMM" will return the month name, e.g. "January"
+   * "MMMMM" will return the narrow month name, e.g. "J"
    *
    * @param array   $date     getdate format.
    * @param string  $pattern  a pattern.
@@ -472,11 +483,12 @@ class sfDateFormat
         return str_pad($month, 2, '0', STR_PAD_LEFT);
       case 'MMM':
         return $this->formatInfo->AbbreviatedMonthNames[$month - 1];
-        break;
       case 'MMMM':
         return $this->formatInfo->MonthNames[$month - 1];
+      case 'MMMMM':
+        return $this->formatInfo->NarrowMonthNames[$month - 1];
       default:
-        throw new sfException('The pattern for month is "M", "MM", "MMM", or "MMMM".');
+        throw new sfException('The pattern for month is "M", "MM", "MMM", "MMMM", "MMMMM".');
     }
   }
 
@@ -681,12 +693,19 @@ class sfDateFormat
    */
   protected function getTimeZone($date, $pattern = 'z')
   {
-    if ($pattern != 'z')
+    //mapping to PHP pattern symbols
+    switch ($pattern)
     {
-      throw new sfException('The pattern for time zone is "z".');
+      case 'z':
+        $pattern = 'T';
+        break;
+      case 'Z':
+        $pattern = 'O';
+      default:
+        throw new sfException('The pattern for time zone is "z" or "Z".');
     }
 
-    return @date('T', @mktime($date['hours'], $date['minutes'], $date['seconds'], $date['mon'], $date['mday'], $date['year']));
+    return @date($pattern, @mktime($date['hours'], $date['minutes'], $date['seconds'], $date['mon'], $date['mday'], $date['year']));
   }
 
   /**

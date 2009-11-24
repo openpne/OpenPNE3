@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelGenerator.class.php 16976 2009-04-04 12:47:44Z fabien $
+ * @version    SVN: $Id: sfPropelGenerator.class.php 22943 2009-10-12 12:04:19Z Kris.Wallsmith $
  */
 class sfPropelGenerator extends sfModelGenerator
 {
@@ -70,6 +70,9 @@ class sfPropelGenerator extends sfModelGenerator
     // go through all tables to find m2m relationships
     foreach ($this->dbMap->getTables() as $tableName => $table)
     {
+      // load this table's relations and related tables
+      $table->getRelations();
+
       foreach ($table->getColumns() as $column)
       {
         if ($column->isForeignKey() && $column->isPrimaryKey() && $this->getTableMap()->getClassname() == $this->dbMap->getTable($column->getRelatedTableName())->getClassname())
@@ -128,34 +131,13 @@ class sfPropelGenerator extends sfModelGenerator
   protected function loadMapBuilderClasses()
   {
     $this->dbMap = Propel::getDatabaseMap();
-
-    // we must load all map builder classes to be able to deal with foreign keys
-    $classes = sfFinder::type('file')->name('*MapBuilder.php')->in($this->generatorManager->getConfiguration()->getModelDirs());
-    foreach ($classes as $class)
+    $this->tableMap = call_user_func(array($this->modelClass . 'Peer', 'getTableMap'));
+    // load all related table maps, 
+    // and all tables related to the related table maps (for m2m relations)
+    foreach ($this->tableMap->getRelations() as $relation)
     {
-      $omClass = basename($class, 'MapBuilder.php');
-      if (class_exists($omClass) && is_subclass_of($omClass, 'BaseObject'))
-      {
-        $mapBuilderClass = basename($class, '.php');
-        $currentMap = new $mapBuilderClass();
-        if (!$currentMap->isBuilt())
-        {
-          $currentMap->doBuild();
-        }
-
-        if ($this->modelClass == $omClass)
-        {
-          $map = $currentMap;
-        }
-      }
+      $relation->getForeignTable()->getRelations();
     }
-
-    if (!$map)
-    {
-      throw new sfException(sprintf('The model class "%s" does not exist.', $this->modelClass));
-    }
-
-    $this->tableMap = $map->getDatabaseMap()->getTable(constant(constant($this->modelClass.'::PEER').'::TABLE_NAME'));
   }
 
   /**

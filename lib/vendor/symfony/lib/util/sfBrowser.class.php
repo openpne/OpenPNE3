@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfBrowser.class.php 15726 2009-02-23 15:56:12Z fabien $
+ * @version    SVN: $Id: sfBrowser.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfBrowser extends sfBrowserBase
 {
@@ -63,13 +63,23 @@ class sfBrowser extends sfBrowserBase
    */
   public function getContext($forceReload = false)
   {
-    if (is_null($this->context) || $forceReload)
+    if (null === $this->context || $forceReload)
     {
-      $isContextEmpty = is_null($this->context);
+      $isContextEmpty = null === $this->context;
       $context = $isContextEmpty ? sfContext::getInstance() : $this->context;
 
+      // create configuration
       $currentConfiguration = $context->getConfiguration();
       $configuration = ProjectConfiguration::getApplicationConfiguration($currentConfiguration->getApplication(), $currentConfiguration->getEnvironment(), $currentConfiguration->isDebug());
+
+      // connect listeners
+      $configuration->getEventDispatcher()->connect('application.throw_exception', array($this, 'listenToException'));
+      foreach ($this->listeners as $name => $listener)
+      {
+        $configuration->getEventDispatcher()->connect($name, $listener);
+      }
+
+      // create context
       $this->context = sfContext::createInstance($configuration);
       unset($currentConfiguration);
 
@@ -81,12 +91,6 @@ class sfBrowser extends sfBrowserBase
       else
       {
         $this->rawConfiguration = sfConfig::getAll();
-      }
-
-      $this->context->getEventDispatcher()->connect('application.throw_exception', array($this, 'ListenToException'));
-      foreach ($this->listeners as $name => $listener)
-      {
-        $this->context->getEventDispatcher()->connect($name, $listener);
       }
     }
 

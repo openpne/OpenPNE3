@@ -6,7 +6,7 @@
  * @package    test
  * @subpackage i18n
  * @author     Your name here
- * @version    SVN: $Id: actions.class.php 12854 2008-11-09 20:08:32Z fabien $
+ * @version    SVN: $Id: actions.class.php 16987 2009-04-04 14:16:46Z fabien $
  */
 class i18nActions extends sfActions
 {
@@ -28,7 +28,7 @@ class i18nActions extends sfActions
   {
     $this->form = new MovieForm(MoviePeer::retrieveByPk($request->getParameter('id')));
 
-    if ($request->isMethod('post'))
+    if ($request->isMethod(sfRequest::POST))
     {
       $this->form->bind($request->getParameter('movie'));
 

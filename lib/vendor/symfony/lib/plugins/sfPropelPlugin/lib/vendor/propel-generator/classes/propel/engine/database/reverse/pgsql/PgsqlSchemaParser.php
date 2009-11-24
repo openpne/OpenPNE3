@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: PgsqlSchemaParser.php 1051 2008-05-28 09:27:01Z hans $
+ *  $Id: PgsqlSchemaParser.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -25,7 +25,7 @@ require_once 'propel/engine/database/reverse/BaseSchemaParser.php';
  * Postgresql database schema parser.
  *
  * @author     Hans Lellelid <hans@xmpl.org>
- * @version    $Revision: 1051 $
+ * @version    $Revision: 1262 $
  * @package    propel.engine.database.reverse.pgsql
  */
 class PgsqlSchemaParser extends BaseSchemaParser {

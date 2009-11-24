@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Oracle.php 6151 2009-07-21 21:50:23Z jwage $
+ *  $Id: Oracle.php 6484 2009-10-12 17:40:41Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -24,7 +24,7 @@
  * @subpackage  Import
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
- * @version     $Revision: 6151 $
+ * @version     $Revision: 6484 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  */
@@ -37,7 +37,7 @@ class Doctrine_Import_Oracle extends Doctrine_Import
      */
     public function listDatabases()
     {
-        if ( ! $this->conn->getAttribute(Doctrine::ATTR_EMULATE_DATABASE)) {
+        if ( ! $this->conn->getAttribute(Doctrine_Core::ATTR_EMULATE_DATABASE)) {
             throw new Doctrine_Import_Exception('database listing is only supported if the "emulate_database" option is enabled');
         }
 
@@ -140,11 +140,11 @@ QEND;
                'ntype'      => $val['data_type'],
                'type'       => $decl['type'][0],
                'alltypes'   => $decl['type'],
-               'fixed'      => $decl['fixed'],
-               'unsigned'   => $decl['unsigned'],
+               'fixed'      => (bool) $decl['fixed'],
+               'unsigned'   => (bool) $decl['unsigned'],
                'default'    => $val['data_default'],
                'length'     => $val['data_length'],
-               'primary'    => $val['primary'] ? true:false,
+               'primary'    => (bool) $val['primary'],
                'scale'      => isset($val['scale']) ? $val['scale']:null,
             );
         }

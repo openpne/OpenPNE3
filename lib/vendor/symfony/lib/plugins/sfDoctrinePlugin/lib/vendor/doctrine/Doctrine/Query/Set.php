@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Set.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Set.php 5901 2009-06-22 15:44:45Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 5901 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
 class Doctrine_Query_Set extends Doctrine_Query_Part
@@ -58,7 +58,7 @@ class Doctrine_Query_Set extends Doctrine_Query_Part
 
                     $fieldName  = array_pop($e);
                     $reference  = (count($e) > 0) ? implode('.', $e) : $this->query->getRootAlias();
-                    $aliasMap   = $this->query->getAliasDeclaration($reference);
+                    $aliasMap   = $this->query->getQueryComponent($reference);
 
                     if ($aliasMap['table']->hasField($fieldName)) {	
 	                    $columnName = $aliasMap['table']->getColumnName($fieldName);

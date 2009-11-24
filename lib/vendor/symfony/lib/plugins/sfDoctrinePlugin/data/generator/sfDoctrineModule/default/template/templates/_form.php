@@ -1,5 +1,5 @@
-[?php include_stylesheets_for_form($form) ?]
-[?php include_javascripts_for_form($form) ?]
+[?php use_stylesheets_for_form($form) ?]
+[?php use_javascripts_for_form($form) ?]
 
 <?php $form = $this->getFormObject() ?>
 <?php if (isset($this->params['route_prefix']) && $this->params['route_prefix']): ?>
@@ -15,12 +15,12 @@
       <tr>
         <td colspan="2">
 <?php if (!isset($this->params['non_verbose_templates']) || !$this->params['non_verbose_templates']): ?>
-          [?php echo $form->renderHiddenFields() ?]
+          [?php echo $form->renderHiddenFields(false) ?]
 <?php endif; ?>
 <?php if (isset($this->params['route_prefix']) && $this->params['route_prefix']): ?>
-          &nbsp;<a href="[?php echo url_for('<?php echo $this->getUrlForAction('list') ?>') ?]">Cancel</a>
+          &nbsp;<a href="[?php echo url_for('<?php echo $this->getUrlForAction('list') ?>') ?]">Back to list</a>
 <?php else: ?>
-          &nbsp;<a href="[?php echo url_for('<?php echo $this->getModuleName() ?>/index') ?]">Cancel</a>
+          &nbsp;<a href="[?php echo url_for('<?php echo $this->getModuleName() ?>/index') ?]">Back to list</a>
 <?php endif; ?>
           [?php if (!$form->getObject()->isNew()): ?]
 <?php if (isset($this->params['route_prefix']) && $this->params['route_prefix']): ?>

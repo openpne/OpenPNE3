@@ -33,7 +33,15 @@
         <source>Cancel</source>
         <target>Zrušit</target>
       </trans-unit>
-
+      <trans-unit>
+        <source>Choose an action</source>
+        <target>Vybrat akci</target>
+      </trans-unit>
+      <trans-unit>
+        <source>go</source>
+        <target>ok</target>
+      </trans-unit>
+      
       <!-- Filters -->
       <trans-unit>
         <source>Reset</source>
@@ -65,7 +73,19 @@
         <source>desc</source>
         <target>sestupně</target>
       </trans-unit>
-
+      <trans-unit>
+        <source>[0] no result|[1] 1 result|(1,+Inf] %1% results</source>
+        <target>[0] žádné položky|[1] 1 položka|(1,+Inf] %1% položky</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Are you sure?</source>
+        <target>Jste si jist?</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Checked</source>
+        <target>Aktivováno</target>
+      </trans-unit>
+      
       <!-- Pagination -->
       <trans-unit>
         <source>First page</source>
@@ -128,6 +148,30 @@
       <trans-unit>
         <source>A problem occurs when deleting the selected items.</source>
         <target>Došlo k chybě při odstraňování zvolených položek.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>is empty</source>
+        <target>je prázdný</target>
+      </trans-unit>
+      <trans-unit>
+        <source>yes or no</source>
+        <target>ano nebo ne</target>
+      </trans-unit>
+      <trans-unit>
+        <source>yes</source>
+        <target>ano</target>
+      </trans-unit>
+      <trans-unit>
+        <source>no</source>
+        <target>ne</target>
+      </trans-unit>
+      <trans-unit>
+        <source><![CDATA[from %from_date% to %to_date%]]></source>
+        <target><![CDATA[od %from_date% do %to_date%]]></target>
+      </trans-unit>
+      <trans-unit>
+        <source><![CDATA[from %from_date%<br />to %to_date%]]></source>
+        <target><![CDATA[od %from_date%<br />do %to_date%]]></target>
       </trans-unit>
     </body>
   </file>

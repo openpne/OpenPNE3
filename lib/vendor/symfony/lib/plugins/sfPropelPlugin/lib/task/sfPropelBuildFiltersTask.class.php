@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPropelBaseTask.class.php');
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelBuildFiltersTask.class.php 12537 2008-11-01 14:43:27Z fabien $
+ * @version    SVN: $Id: sfPropelBuildFiltersTask.class.php 23927 2009-11-14 16:10:57Z fabien $
  */
 class sfPropelBuildFiltersTask extends sfPropelBaseTask
 {
@@ -30,6 +30,7 @@ class sfPropelBuildFiltersTask extends sfPropelBaseTask
       new sfCommandOption('model-dir-name', null, sfCommandOption::PARAMETER_REQUIRED, 'The model dir name', 'model'),
       new sfCommandOption('filter-dir-name', null, sfCommandOption::PARAMETER_REQUIRED, 'The filter form dir name', 'filter'),
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+      new sfCommandOption('generator-class', null, sfCommandOption::PARAMETER_REQUIRED, 'The generator class', 'sfPropelFormFilterGenerator'),
     ));
 
     $this->namespace = 'propel';
@@ -62,15 +63,15 @@ EOF;
   protected function execute($arguments = array(), $options = array())
   {
     $this->logSection('propel', 'generating filter form classes');
-    
+
     $generatorManager = new sfGeneratorManager($this->configuration);
-    $generatorManager->generate('sfPropelFormFilterGenerator', array(
-      'connection'     => $options['connection'],
-      'model_dir_name' => $options['model-dir-name'],
-      'filter_dir_name'  => $options['filter-dir-name'],
+    $generatorManager->generate($options['generator-class'], array(
+      'connection'      => $options['connection'],
+      'model_dir_name'  => $options['model-dir-name'],
+      'filter_dir_name' => $options['filter-dir-name'],
     ));
 
-    $properties = parse_ini_file(sfConfig::get('sf_config_dir').DIRECTORY_SEPARATOR.'properties.ini', true);
+    $properties = parse_ini_file(sfConfig::get('sf_config_dir').'/properties.ini', true);
 
     $constants = array(
       'PROJECT_NAME' => isset($properties['symfony']['name']) ? $properties['symfony']['name'] : 'symfony',
@@ -80,5 +81,7 @@ EOF;
     // customize php and yml files
     $finder = sfFinder::type('file')->name('*.php');
     $this->getFilesystem()->replaceTokens($finder->in(sfConfig::get('sf_lib_dir').'/filter/'), '##', '##', $constants);
+
+    $this->reloadAutoload();
   }
 }

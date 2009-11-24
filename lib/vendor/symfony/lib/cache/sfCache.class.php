@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage cache
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCache.class.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: sfCache.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 abstract class sfCache
 {
@@ -169,7 +169,7 @@ abstract class sfCache
    */
   public function getLifetime($lifetime)
   {
-    return is_null($lifetime) ? $this->getOption('lifetime') : $lifetime;
+    return null === $lifetime ? $this->getOption('lifetime') : $lifetime;
   }
 
   /**

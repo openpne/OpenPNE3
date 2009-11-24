@@ -20,7 +20,7 @@
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfValidatorDoctrineUnique.class.php 8807 2008-05-06 14:12:28Z fabien $
+ * @version    SVN: $Id: sfValidatorDoctrineUnique.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfValidatorDoctrineUnique extends sfValidatorSchema
 {
@@ -48,7 +48,7 @@ class sfValidatorDoctrineUnique extends sfValidatorSchema
    *  * primary_key:        The primary key column name in Doctrine field name format (optional, will be introspected if not provided)
    *                        You can also pass an array if the table has several primary keys
    *  * connection:         The Doctrine connection to use (null by default)
-   *  * throw_global_error: Whether to throw a global error (true by default) or an error tied to the first field related to the column option array
+   *  * throw_global_error: Whether to throw a global error (false by default) or an error tied to the first field related to the column option array
    *
    * @see sfValidatorBase
    */
@@ -58,7 +58,7 @@ class sfValidatorDoctrineUnique extends sfValidatorSchema
     $this->addRequiredOption('column');
     $this->addOption('primary_key', null);
     $this->addOption('connection', null);
-    $this->addOption('throw_global_error', true);
+    $this->addOption('throw_global_error', false);
 
     $this->setMessage('invalid', 'An object with the same "%column%" already exist.');
   }
@@ -69,7 +69,7 @@ class sfValidatorDoctrineUnique extends sfValidatorSchema
   protected function doClean($values)
   {
     $originalValues = $values;
-    $table = Doctrine::getTable($this->getOption('model'));
+    $table = Doctrine_Core::getTable($this->getOption('model'));
     if (!is_array($this->getOption('column')))
     {
       $this->setOption('column', array($this->getOption('column')));
@@ -83,9 +83,7 @@ class sfValidatorDoctrineUnique extends sfValidatorSchema
       $values = array($columns[0] => $values);
     }
 
-    $q = Doctrine_Query::create()
-          ->from($this->getOption('model') . ' a');
-
+    $q = Doctrine_Core::getTable($this->getOption('model'))->createQuery('a');
     foreach ($this->getOption('column') as $column)
     {
       $colName = $table->getColumnName($column);
@@ -147,9 +145,9 @@ class sfValidatorDoctrineUnique extends sfValidatorSchema
    */
   protected function getPrimaryKeys()
   {
-    if (is_null($this->getOption('primary_key')))
+    if (null === $this->getOption('primary_key'))
     {
-      $primaryKeys = Doctrine::getTable($this->getOption('model'))->getIdentifier();
+      $primaryKeys = Doctrine_Core::getTable($this->getOption('model'))->getIdentifier();
       $this->setOption('primary_key', $primaryKeys);
     }
 

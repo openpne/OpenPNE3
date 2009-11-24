@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Column.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Column.php 5876 2009-06-10 18:43:12Z piccoloprincipe $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,14 +27,14 @@
  * @package     Doctrine
  * @subpackage  Column
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @version     $Revision: 5801 $
+ * @version     $Revision: 5876 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  */
 class Doctrine_Column extends Doctrine_Access implements IteratorAggregate, Countable
 {
     /**
-     * @var array $definition
+     * @var array $_definition  @see getDefinition()
      */
     protected $_definition = array(
                                 'type'    => null,
@@ -42,7 +42,7 @@ class Doctrine_Column extends Doctrine_Access implements IteratorAggregate, Coun
                                 );
 
     /**
-     * @var array $definition
+     * @var array $definition  @see getDefinition()
      */
     public function __construct(array $definition = array())
     {
@@ -50,6 +50,12 @@ class Doctrine_Column extends Doctrine_Access implements IteratorAggregate, Coun
     }
 
     /**
+     * Returns the definition of the column.
+     *
+     * Keys can be: 
+     *     string type,
+     *     integer length,
+     *     array values (only for enum fields, maps integer indexes to mixed values),
      * @return array
      */
     public function getDefinition()
@@ -86,7 +92,7 @@ class Doctrine_Column extends Doctrine_Access implements IteratorAggregate, Coun
      * set
      *
      * @param string $name
-     * @return mixed
+     * @return void
      */
     public function set($name, $value)
     {
@@ -107,11 +113,10 @@ class Doctrine_Column extends Doctrine_Access implements IteratorAggregate, Coun
     }
 
     /**
-     * enumValue
+     * Retrieves an enum value.
      *
-     * @param string $field
      * @param integer $index
-     * @return mixed
+     * @return string       integer ($index) if not present
      */
     public function enumValue($index)
     {

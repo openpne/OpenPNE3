@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Compiler.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Compiler.php 6718 2009-11-12 19:54:30Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -29,7 +29,7 @@
  * @license     http://www.opensource.org/licenses/lgpllicense.php LGPL
  * @link        www.phpdoctrine.
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6718 $
  */
 class Doctrine_Compiler
 {
@@ -52,8 +52,6 @@ class Doctrine_Compiler
         // If we have an array of specified drivers then lets determine which drivers we should exclude
         if ( ! empty($includedDrivers)) {
             $drivers = array('db2',
-                             'firebird',
-                             'informix',
                              'mssql',
                              'mysql',
                              'oracle',
@@ -63,8 +61,8 @@ class Doctrine_Compiler
             $excludedDrivers = array_diff($drivers, $includedDrivers);
         }
         
-        $path = Doctrine::getPath();
-        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::LEAVES_ONLY);
+        $path = Doctrine_Core::getPath();
+        $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path . '/Doctrine'), RecursiveIteratorIterator::LEAVES_ONLY);
 
         foreach ($it as $file) {
             $e = explode('.', $file->getFileName());

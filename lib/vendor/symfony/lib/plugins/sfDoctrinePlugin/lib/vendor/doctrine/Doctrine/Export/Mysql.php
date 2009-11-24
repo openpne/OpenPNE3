@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Mysql.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Mysql.php 6624 2009-11-03 01:21:08Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -29,7 +29,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6624 $
  */
 class Doctrine_Export_Mysql extends Doctrine_Export
 {
@@ -73,7 +73,11 @@ class Doctrine_Export_Mysql extends Doctrine_Export
      */
     public function dropDatabaseSql($name)
     {
-        return 'DROP DATABASE ' . $this->conn->quoteIdentifier($name);
+        return array(
+            'SET FOREIGN_KEY_CHECKS = 0',
+            'DROP DATABASE ' . $this->conn->quoteIdentifier($name),
+            'SET FOREIGN_KEY_CHECKS = 1'
+        );
     }
 
     /**
@@ -188,7 +192,7 @@ class Doctrine_Export_Mysql extends Doctrine_Export
         if (isset($options['type'])) {
             $type = $options['type'];
         } else {
-            $type = $this->conn->getAttribute(Doctrine::ATTR_DEFAULT_TABLE_TYPE);
+            $type = $this->conn->getAttribute(Doctrine_Core::ATTR_DEFAULT_TABLE_TYPE);
         }
 
         if ($type) {
@@ -277,7 +281,7 @@ class Doctrine_Export_Mysql extends Doctrine_Export
             return $this->conn->quoteIdentifier($name, true) 
                  . ' ' . $dec . $charset . $default . $notnull . $comment . $unique . $check . $collation;
         } catch (Exception $e) {
-            throw new Doctrine_Exception('Around field ' . $name . ': ' . $e->getMessage());
+            throw new Doctrine_Exception('Around field ' . $name . ': ' . $e->getMessage() . "\n\n" . $e->getTraceAsString() . "\n\n");
         }
     }
 
@@ -478,7 +482,7 @@ class Doctrine_Export_Mysql extends Doctrine_Export
     public function createSequence($sequenceName, $start = 1, array $options = array())
     {
         $sequenceName   = $this->conn->quoteIdentifier($sequenceName, true);
-        $seqcolName     = $this->conn->quoteIdentifier($this->conn->getAttribute(Doctrine::ATTR_SEQCOL_NAME), true);
+        $seqcolName     = $this->conn->quoteIdentifier($this->conn->getAttribute(Doctrine_Core::ATTR_SEQCOL_NAME), true);
 
         $optionsStrings = array();
 
@@ -499,7 +503,7 @@ class Doctrine_Export_Mysql extends Doctrine_Export
         if (isset($options['type'])) {
             $type = $options['type'];
         } else {
-            $type = $this->conn->getAttribute(Doctrine::ATTR_DEFAULT_TABLE_TYPE);
+            $type = $this->conn->getAttribute(Doctrine_Core::ATTR_DEFAULT_TABLE_TYPE);
         }
         if ($type) {
             $optionsStrings[] = 'ENGINE = ' . $type;
@@ -574,6 +578,8 @@ class Doctrine_Export_Mysql extends Doctrine_Export
     public function createIndexSql($table, $name, array $definition)
     {
         $table  = $table;
+        $table  = $this->conn->quoteIdentifier($table, true);
+
         $name   = $this->conn->formatter->getIndexName($name);
         $name   = $this->conn->quoteIdentifier($name);
         $type   = '';
@@ -612,14 +618,14 @@ class Doctrine_Export_Mysql extends Doctrine_Export
                     ? null : $this->valid_default_values[$field['type']];
 
                 if ($field['default'] === ''
-                    && ($this->conn->getAttribute(Doctrine::ATTR_PORTABILITY) & Doctrine::PORTABILITY_EMPTY_TO_NULL)
+                    && ($this->conn->getAttribute(Doctrine_Core::ATTR_PORTABILITY) & Doctrine_Core::PORTABILITY_EMPTY_TO_NULL)
                 ) {
                     $field['default'] = ' ';
                 }
             }
     
             // Proposed patch:
-            if ($field['type'] == 'enum' && $this->conn->getAttribute(Doctrine::ATTR_USE_NATIVE_ENUM)) {
+            if ($field['type'] == 'enum' && $this->conn->getAttribute(Doctrine_Core::ATTR_USE_NATIVE_ENUM)) {
                 $fieldType = 'varchar';
             } else {
                 $fieldType = $field['type'];

@@ -20,9 +20,9 @@
  * @subpackage user
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfUser.class.php 15553 2009-02-17 11:04:14Z dwhittle $
+ * @version    SVN: $Id: sfUser.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class sfUser
+class sfUser implements ArrayAccess
 {
   /**
    * The namespace under which attributes will be stored.
@@ -100,7 +100,7 @@ class sfUser
     //  - use the culture defined in the user session
     //  - use the default culture set in settings.yml
     $currentCulture = $storage->read(self::CULTURE_NAMESPACE);
-    $this->setCulture(!is_null($this->options['culture']) ? $this->options['culture'] : (!is_null($currentCulture) ? $currentCulture : $this->options['default_culture']));
+    $this->setCulture(null !== $this->options['culture'] ? $this->options['culture'] : (null !== $currentCulture ? $currentCulture : $this->options['default_culture']));
 
     // flag current flash to be removed at shutdown
     if ($this->options['use_flash'] && $names = $this->attributeHolder->getNames('symfony/user/sfUser/flash'))
@@ -212,6 +212,51 @@ class sfUser
   public function getCulture()
   {
     return $this->culture;
+  }
+
+  /**
+   * Returns true if the user attribute exists (implements the ArrayAccess interface).
+   *
+   * @param  string $name The name of the user attribute
+   *
+   * @return Boolean true if the user attribute exists, false otherwise
+   */
+  public function offsetExists($name)
+  {
+    return $this->hasAttribute($name);
+  }
+
+  /**
+   * Returns the user attribute associated with the name (implements the ArrayAccess interface).
+   *
+   * @param  string $name  The offset of the value to get
+   *
+   * @return mixed The user attribute if exists, null otherwise
+   */
+  public function offsetGet($name)
+  {
+    return $this->getAttribute($name, false);
+  }
+
+  /**
+   * Sets the user attribute associated with the offset (implements the ArrayAccess interface).
+   *
+   * @param string $offset The parameter name
+   * @param string $value The parameter value
+   */
+  public function offsetSet($offset, $value)
+  {
+    $this->setAttribute($offset, $value);
+  }
+
+  /**
+   * Unsets the user attribute associated with the offset (implements the ArrayAccess interface).
+   *
+   * @param string $offset The parameter name
+   */
+  public function offsetUnset($offset)
+  {
+    $this->getAttributeHolder()->remove($offset);
   }
 
   public function getAttributeHolder()

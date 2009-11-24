@@ -10,7 +10,7 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(1, new lime_output_color());
+$t = new lime_test(1);
 
 $dispatcher = new sfEventDispatcher();
 
@@ -19,4 +19,4 @@ $logger = new sfStreamLogger($dispatcher, array('stream' => $buffer));
 
 $logger->log('foo');
 rewind($buffer);
-$t->is(stream_get_contents($buffer), "foo\n", 'sfStreamLogger logs messages to a PHP stream');
+$t->is(fix_linebreaks(stream_get_contents($buffer)), "foo\n", 'sfStreamLogger logs messages to a PHP stream');

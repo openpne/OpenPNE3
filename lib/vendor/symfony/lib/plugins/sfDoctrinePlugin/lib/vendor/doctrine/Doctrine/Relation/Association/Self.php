@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Self.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Self.php 6508 2009-10-14 06:28:49Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6508 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
 class Doctrine_Relation_Association_Self extends Doctrine_Relation_Association
@@ -62,6 +62,8 @@ class Doctrine_Relation_Association_Self extends Doctrine_Relation_Association
                       . ' || ' . $this->definition['table']->getComponentName() 
                       . '.' . $identifier
                       . ' IN (' . $sub2 . ')';
+
+                $dql .= $this->getOrderBy($this->definition['table']->getComponentName(), false); 
                 break;
             case 'collection':
                 $sub  = substr(str_repeat('?, ', $count),0,-2);
@@ -69,6 +71,8 @@ class Doctrine_Relation_Association_Self extends Doctrine_Relation_Association
                       . '.' . $this->definition['table']->getComponentName()
                       . ' WHERE '.$this->definition['refTable']->getComponentName()
                       . '.' . $this->definition['local'] . ' IN (' . $sub . ')';
+
+                $dql .= $this->getOrderBy($this->definition['refTable']->getComponentName(), false);
         };
 
         return $dql;
@@ -105,6 +109,7 @@ class Doctrine_Relation_Association_Self extends Doctrine_Relation_Association
                 );
         $q->addComponent($tableName,  $record->getTable()->getComponentName());
         $q->addComponent($assocTable, $record->getTable()->getComponentName(). '.' . $this->getAssociationFactory()->getComponentName());
+        $q->orderBy($this->getOrderByStatement($tableName, true));
 
         return $q->execute(array($id, $id));
     }

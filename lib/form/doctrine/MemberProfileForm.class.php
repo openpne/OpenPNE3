@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class MemberProfileForm extends sfForm
+class MemberProfileForm extends BaseForm
 {
   public function __construct($profileMember = array(), $options = array(), $CSRFSecret = null)
   {

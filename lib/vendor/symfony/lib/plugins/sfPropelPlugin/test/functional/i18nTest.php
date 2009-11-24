@@ -15,52 +15,52 @@ if (!include(dirname(__FILE__).'/../bootstrap/functional.php'))
   return;
 }
 
-class myBrowser extends sfBrowser
-{
-  public function getContext($forceReload = false)
-  {
-    parent::getContext($forceReload);
-
-    sfPropel::initialize($this->context->getEventDispatcher());
-
-    return $this->context;
-  }
-}
-
-$b = new sfTestBrowser(new myBrowser());
+$b = new sfTestBrowser(new sfBrowser());
 $b->setTester('propel', 'sfTesterPropel');
 
 // en
 $b->
   get('/i18n/default')->
-  isStatusCode(200)->
-  isRequestParameter('module', 'i18n')->
-  isRequestParameter('action', 'default')->
-  checkResponseElement('#movies .default:first', '')->
-  checkResponseElement('#movies .it:first', 'La Vita è bella')->
-  checkResponseElement('#movies .fr:first', 'La Vie est belle')
+  with('request')->begin()->
+    isParameter('module', 'i18n')->
+    isParameter('action', 'default')->
+  end()->
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('#movies .default:first', '')->
+    checkElement('#movies .it:first', 'La Vita è bella')->
+    checkElement('#movies .fr:first', 'La Vie est belle')->
+  end()
 ;
 
 // fr
 $b->
   get('/i18n/index')->
-  isStatusCode(200)->
-  isRequestParameter('module', 'i18n')->
-  isRequestParameter('action', 'index')->
-  checkResponseElement('#movies .default:first', 'La Vie est belle')->
-  checkResponseElement('#movies .it:first', 'La Vita è bella')->
-  checkResponseElement('#movies .fr:first', 'La Vie est belle')
+  with('request')->begin()->
+    isParameter('module', 'i18n')->
+    isParameter('action', 'index')->
+  end()->
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('#movies .default:first', 'La Vie est belle')->
+    checkElement('#movies .it:first', 'La Vita è bella')->
+    checkElement('#movies .fr:first', 'La Vie est belle')->
+  end()
 ;
 
 // still fr
 $b->
   get('/i18n/default')->
-  isStatusCode(200)->
-  isRequestParameter('module', 'i18n')->
-  isRequestParameter('action', 'default')->
-  checkResponseElement('#movies .default:first', 'La Vie est belle')->
-  checkResponseElement('#movies .it:first', 'La Vita è bella')->
-  checkResponseElement('#movies .fr:first', 'La Vie est belle')
+  with('request')->begin()->
+    isParameter('module', 'i18n')->
+    isParameter('action', 'default')->
+  end()->
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('#movies .default:first', 'La Vie est belle')->
+    checkElement('#movies .it:first', 'La Vita è bella')->
+    checkElement('#movies .fr:first', 'La Vie est belle')->
+  end()
 ;
 
 // i18n forms
@@ -70,17 +70,23 @@ $b->
     isParameter('module', 'i18n')->
     isParameter('action', 'movie')->
   end()->
-  isStatusCode(200)->
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('#movie_fr_id', false)->
+    checkElement('#movie_fr_culture', false)->
+  end()->
+  
   click('submit', array('movie' => array('director' => 'Robert Aldrich', 'en' => array('title' => 'The Dirty Dozen'), 'fr' => array('title' => 'Les Douze Salopards'))))->
-  isRedirected()->
-
-  followRedirect()->
+  with('response')->begin()->
+    isRedirected()->
+    followRedirect()->
+  end()->
   with('response')->begin()->
     checkElement('input[value="Robert Aldrich"]')->
     checkElement('input[value="The Dirty Dozen"]')->
     checkElement('input[value="Les Douze Salopards"]')->
-    checkElement('#movie_fr_id', false)->
-    checkElement('#movie_fr_culture', false)->
+    checkElement('#movie_fr_id', true)->
+    checkElement('#movie_fr_culture', true)->
   end()->
 
   with('propel')->begin()->
@@ -93,15 +99,14 @@ $b->
   end()->
 
   click('submit', array('movie' => array('director' => 'Robert Aldrich (1)', 'en' => array('title' => 'The Dirty Dozen (1)'), 'fr' => array('title' => 'Les Douze Salopards (1)'))))->
-  isRedirected()->
-
-  followRedirect()->
+  with('response')->begin()->
+    isRedirected()->
+    followRedirect()->
+  end()->
   with('response')->begin()->
     checkElement('input[value="Robert Aldrich (1)"]')->
     checkElement('input[value="The Dirty Dozen (1)"]')->
     checkElement('input[value="Les Douze Salopards (1)"]')->
-    checkElement('#movie_fr_id', false)->
-    checkElement('#movie_fr_culture', false)->
   end()->
 
   with('propel')->begin()->
@@ -111,5 +116,35 @@ $b->
     check('MovieI18N', array('id' => 2), 2)->
     check('MovieI18N', array('culture' => 'fr', 'id' => 2, 'title' => 'Les Douze Salopards (1)'))->
     check('MovieI18N', array('culture' => 'en', 'id' => 2, 'title' => 'The Dirty Dozen (1)'))->
+  end()->
+
+  // Bug #7486
+  click('submit')->
+  
+  with('form')->begin()->
+    hasErrors(false)->
+  end()->
+
+  get('/i18n/movie')->
+  click('submit', array('movie' => array('director' => 'Robert Aldrich', 'en' => array('title' => 'The Dirty Dozen (1)'), 'fr' => array('title' => 'Les Douze Salopards (1)'))))->
+
+  with('form')->begin()->
+    hasErrors(2)->
+  end()->
+
+  click('submit', array('movie' => array('director' => 'Robert Aldrich', 'en' => array('title' => 'The Dirty Dozen'), 'fr' => array('title' => 'Les Douze Salopards'))))->
+
+  with('form')->begin()->
+    hasErrors(false)->
+  end()->
+  with('response')->begin()->
+    isRedirected()->
+    followRedirect()->
+  end()->
+  with('response')->begin()->
+    checkElement('input[value="Robert Aldrich"]')->
+    checkElement('input[value="The Dirty Dozen"]')->
+    checkElement('input[value="Les Douze Salopards"]')->
   end()
+  // END: Bug #7486
 ;

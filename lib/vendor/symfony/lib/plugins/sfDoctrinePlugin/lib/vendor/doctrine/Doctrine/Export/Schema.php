@@ -45,9 +45,9 @@ class Doctrine_Export_Schema
     public function buildSchema($directory = null, $models = array())
     {
         if ($directory !== null) {
-            $loadedModels = Doctrine::filterInvalidModels(Doctrine::loadModels($directory));
+            $loadedModels = Doctrine_Core::filterInvalidModels(Doctrine_Core::loadModels($directory));
         } else {
-            $loadedModels = Doctrine::getLoadedModels();
+            $loadedModels = Doctrine_Core::getLoadedModels();
         }
         
         $array = array();
@@ -64,11 +64,12 @@ class Doctrine_Export_Schema
                 continue;
             }
 
-            $recordTable = Doctrine::getTable($className);
+            $recordTable = Doctrine_Core::getTable($className);
             
             $data = $recordTable->getExportableFormat();
             
             $table = array();
+            $table['connection'] = $recordTable->getConnection()->getName();
             $remove = array('ptype', 'ntype', 'alltypes');
             // Fix explicit length in schema, concat it to type in this format: type(length)
             foreach ($data['columns'] AS $name => $column) {
@@ -116,7 +117,7 @@ class Doctrine_Export_Schema
                 
                 if ($relationData['type'] === Doctrine_Relation::ONE) {
                     $table['relations'][$relationKey]['type'] = 'one';
-                } else if($relationData['type'] === Doctrine_Relation::MANY) {
+                } else if ($relationData['type'] === Doctrine_Relation::MANY) {
                     $table['relations'][$relationKey]['type'] = 'many';
                 } else {
                     $table['relations'][$relationKey]['type'] = 'one';

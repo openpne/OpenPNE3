@@ -86,7 +86,7 @@ class Doctrine_View
         $this->_query->setView($this);
         $this->_conn   = $query->getConnection();
         $this->_dql = $query->getDql();
-        $this->_sql = $query->getSql();
+        $this->_sql = $query->getSqlQuery();
     }
 
     /**
@@ -127,9 +127,9 @@ class Doctrine_View
      */
     public function create()
     {
-        $sql = sprintf(self::CREATE, $this->_name, $this->_query->getQuery());
+        $sql = sprintf(self::CREATE, $this->_name, $this->_query->getSqlQuery());
         try {
-            $this->_conn->execute($sql, $this->_query->getParams());
+            $this->_conn->execute($sql, $this->_query->getFlattenedParams());
         } catch(Doctrine_Exception $e) {
             throw new Doctrine_View_Exception($e->__toString());
         }

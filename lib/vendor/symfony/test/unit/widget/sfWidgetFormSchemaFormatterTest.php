@@ -10,7 +10,7 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(27, new lime_output_color());
+$t = new lime_test(28);
 
 class MyFormatter extends sfWidgetFormSchemaFormatter
 {
@@ -30,8 +30,8 @@ class MyFormatter extends sfWidgetFormSchemaFormatter
   }
 }
 
-$w1 = new sfWidgetFormInput();
-$w2 = new sfWidgetFormInput();
+$w1 = new sfWidgetFormInputText();
+$w2 = new sfWidgetFormInputText();
 $w = new sfWidgetFormSchema(array('w1' => $w1, 'w2' => $w2));
 $f = new MyFormatter($w);
 
@@ -44,7 +44,7 @@ $output = <<<EOF
 </li>
 
 EOF;
-$t->is($f->formatRow('<label>label</label>', '<input />', array(), '<p>help</p>', ''), $output, '->formatRow() formats a field in a row');
+$t->is($f->formatRow('<label>label</label>', '<input />', array(), '<p>help</p>', ''), fix_linebreaks($output), '->formatRow() formats a field in a row');
 
 // ->formatErrorRow()
 $t->diag('->formatErrorRow()');
@@ -58,7 +58,7 @@ $output = <<<EOF
 </li>
 
 EOF;
-$t->is($f->formatErrorRow(array('Global error', 'id' => 'required', array('sub_id' => 'required'))), $output, '->formatErrorRow() formats an array of errors in a row');
+$t->is($f->formatErrorRow(array('Global error', 'id' => 'required', array('sub_id' => 'required'))), fix_linebreaks($output), '->formatErrorRow() formats an array of errors in a row');
 
 // ->unnestErrors()
 $t->diag('->unnestErrors()');
@@ -122,11 +122,13 @@ $t->is($f->translate('label'), '[label]', 'translate() call i18n callable as exp
 $t->diag('->generateLabel() ->generateLabelName() ->setLabel() ->setLabels()');
 MyFormatter::dropTranslationCallable();
 $w = new sfWidgetFormSchema(array(
-  'first_name' => new sfWidgetFormInput(),
-  'last_name'  => new sfWidgetFormInput(),
+  'author_id'  => new sfWidgetFormInputText(),
+  'first_name' => new sfWidgetFormInputText(),
+  'last_name'  => new sfWidgetFormInputText(),
 ));
 $f = new MyFormatter($w);
 $t->is($f->generateLabelName('first_name'), 'First name', '->generateLabelName() generates a label value from a label name');
+$t->is($f->generateLabelName('author_id'), 'Author', '->generateLabelName() removes _id from auto-generated labels');
 
 $w->setLabels(array('first_name' => 'The first name'));
 $t->is($f->generateLabelName('first_name'), 'The first name', '->setLabels() changes all current labels');

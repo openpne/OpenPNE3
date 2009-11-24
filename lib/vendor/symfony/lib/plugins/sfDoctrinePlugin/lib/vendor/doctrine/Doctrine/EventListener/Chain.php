@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Chain.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Chain.php 6744 2009-11-17 20:12:43Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -30,7 +30,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6744 $
  */
 class Doctrine_EventListener_Chain extends Doctrine_Access implements Doctrine_EventListener_Interface
 {
@@ -272,6 +272,97 @@ class Doctrine_EventListener_Chain extends Doctrine_Access implements Doctrine_E
     }
 
     /**
+     * postSavepointCommit
+     * an event invoked after a Doctrine_Connection transaction with savepoint
+     * is committed
+     *
+     * @param Doctrine_Event $event
+     * @return void
+     */
+    public function postSavepointCommit(Doctrine_Event $event)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->postSavepointCommit($event);
+        }
+    }
+
+    /**
+     * preSavepointCommit
+     * an event invoked before a Doctrine_Connection transaction with savepoint
+     * is committed
+     *
+     * @param Doctrine_Event $event
+     * @return void
+     */
+    public function preSavepointCommit(Doctrine_Event $event)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->preSavepointCommit($event);
+        }
+    }
+
+    /**
+     * postSavepointRollback
+     * an event invoked after a Doctrine_Connection transaction with savepoint
+     * is being rolled back
+     *
+     * @param Doctrine_Event $event
+     * @return void
+     */
+    public function postSavepointRollback(Doctrine_Event $event)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->postSavepointRollback($event);
+        }
+    }
+
+    /**
+     * preSavepointRollback
+     * an event invoked before a Doctrine_Connection transaction with savepoint
+     * is being rolled back
+     *
+     * @param Doctrine_Event $event
+     * @return void
+     */
+    public function preSavepointRollback(Doctrine_Event $event)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->preSavepointRollback($event);
+        }
+    }
+
+    /**
+     * postSavepointCreate
+     * an event invoked after a Doctrine_Connection transaction with savepoint
+     * has been started
+     *
+     * @param Doctrine_Event $event
+     * @return void
+     */
+    public function postSavepointCreate(Doctrine_Event $event)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->postSavepointCreate($event);
+        }
+    }
+
+    /**
+     * preSavepointCreate
+     * an event invoked before a Doctrine_Connection transaction with savepoint
+     * is being started
+     *
+     * @param Doctrine_Event $event
+     * @return void
+     */
+    public function preSavepointCreate(Doctrine_Event $event)
+    {
+        foreach ($this->_listeners as $listener) {
+            $listener->preSavepointCreate($event);
+        }
+    }
+    // @end
+
+    /**
      * onCollectionDelete
      * an event invoked after a Doctrine_Collection is being deleted
      *
@@ -298,24 +389,28 @@ class Doctrine_EventListener_Chain extends Doctrine_Access implements Doctrine_E
             $listener->onPreCollectionDelete($collection);
         }
     }
+
     public function postConnect(Doctrine_Event $event)
     {
         foreach ($this->_listeners as $listener) {
             $listener->postConnect($event);
         }
     }
+
     public function preConnect(Doctrine_Event $event)
     {
         foreach ($this->_listeners as $listener) {
             $listener->preConnect($event);
         }
     }
+
     public function preQuery(Doctrine_Event $event)
     { 
         foreach ($this->_listeners as $listener) {
             $listener->preQuery($event);
         }
     }
+
     public function postQuery(Doctrine_Event $event)
     {
         foreach ($this->_listeners as $listener) {
@@ -329,6 +424,7 @@ class Doctrine_EventListener_Chain extends Doctrine_Access implements Doctrine_E
             $listener->prePrepare($event);
         }
     }
+
     public function postPrepare(Doctrine_Event $event)
     {
         foreach ($this->_listeners as $listener) {
@@ -342,6 +438,7 @@ class Doctrine_EventListener_Chain extends Doctrine_Access implements Doctrine_E
             $listener->preExec($event);
         }
     }
+
     public function postExec(Doctrine_Event $event)
     {
         foreach ($this->_listeners as $listener) {
@@ -355,6 +452,7 @@ class Doctrine_EventListener_Chain extends Doctrine_Access implements Doctrine_E
             $listener->preError($event);
         }
     }
+
     public function postError(Doctrine_Event $event)
     {
         foreach ($this->_listeners as $listener) {
@@ -368,6 +466,7 @@ class Doctrine_EventListener_Chain extends Doctrine_Access implements Doctrine_E
             $listener->preFetch($event);
         }
     }
+
     public function postFetch(Doctrine_Event $event)
     {
         foreach ($this->_listeners as $listener) {

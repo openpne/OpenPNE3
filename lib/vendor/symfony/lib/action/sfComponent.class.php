@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage action
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfComponent.class.php 21904 2009-09-11 11:05:56Z FabianLange $
+ * @version    SVN: $Id: sfComponent.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 abstract class sfComponent
 {
@@ -135,21 +135,6 @@ abstract class sfComponent
   }
 
   /**
-   * Displays a message as a short message in the sfWebDebug toolbar.
-   *
-   * @param string $message The message text
-   *
-   * @see sfWebDebug
-   */
-  public function debugMessage($message)
-  {
-    if (sfConfig::get('sf_web_debug') && sfConfig::get('sf_logging_enabled'))
-    {
-      $this->dispatcher->notify(new sfEvent(null, 'application.log', array('This function is deprecated in favor of the logMessage function.', 'priority' => sfLogger::ERR)));
-    }
-  }
-
-  /**
    * Returns the value of a request parameter.
    *
    * This is a proxy method equivalent to:
@@ -253,6 +238,16 @@ abstract class sfComponent
   public function getUser()
   {
     return $this->context->getUser();
+  }
+
+  /**
+   * Gets the current mailer instance.
+   *
+   * @return sfMailer A sfMailer instance
+   */
+  public function getMailer()
+  {
+    return $this->getContext()->getMailer();
   }
 
   /**

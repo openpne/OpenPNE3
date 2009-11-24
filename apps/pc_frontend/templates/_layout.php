@@ -4,6 +4,9 @@
 <?php include_http_metas() ?>
 <?php include_metas() ?>
 <title><?php echo ($op_config['sns_title']) ? $op_config['sns_title'] : $op_config['sns_name'] ?></title>
+
+    <?php include_stylesheets() ?>
+    <?php include_javascripts() ?>
 </head>
 <body id="<?php printf('page_%s_%s', $view->getModuleName(), $view->getActionName()) ?>">
 <div id="Body">

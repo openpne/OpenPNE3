@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: ForeignKey.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: ForeignKey.php 6508 2009-10-14 06:28:49Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -29,7 +29,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6508 $
  */
 class Doctrine_Relation_ForeignKey extends Doctrine_Relation
 {
@@ -53,12 +53,12 @@ class Doctrine_Relation_ForeignKey extends Doctrine_Relation
         }
         if ($this->isOneToOne()) {
             if ( ! $record->exists() || empty($id) || 
-                 ! $this->definition['table']->getAttribute(Doctrine::ATTR_LOAD_REFERENCES)) {
+                 ! $this->definition['table']->getAttribute(Doctrine_Core::ATTR_LOAD_REFERENCES)) {
                 
                 $related = $this->getTable()->create();
             } else {
                 $dql  = 'FROM ' . $this->getTable()->getComponentName()
-                      . ' WHERE ' . $this->getCondition();
+                      . ' WHERE ' . $this->getCondition() . $this->getOrderBy(null, false);
 
                 $coll = $this->getTable()->getConnection()->query($dql, $id);
                 $related = $coll[0];
@@ -69,9 +69,9 @@ class Doctrine_Relation_ForeignKey extends Doctrine_Relation
         } else {
 
             if ( ! $record->exists() || empty($id) || 
-                 ! $this->definition['table']->getAttribute(Doctrine::ATTR_LOAD_REFERENCES)) {
+                 ! $this->definition['table']->getAttribute(Doctrine_Core::ATTR_LOAD_REFERENCES)) {
                 
-                $related = new Doctrine_Collection($this->getTable());
+                $related = Doctrine_Collection::create($this->getTable());
             } else {
                 $query      = $this->getRelationDql(1);
                 $related    = $this->getTable()->getConnection()->query($query, $id);

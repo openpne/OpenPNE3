@@ -13,7 +13,7 @@
  * {@link http://prado.sourceforge.net/}
  *
  * @author     Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version    $Id: sfMessageSource_gettext.class.php 9128 2008-05-21 00:58:19Z Carl.Vondrick $
+ * @version    $Id: sfMessageSource_gettext.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  * @package    symfony
  * @subpackage i18n
  */
@@ -311,7 +311,7 @@ class sfMessageSource_gettext extends sfMessageSource_File
 
   protected function createMessageTemplate($catalogue)
   {
-    if (is_null($catalogue))
+    if (null === $catalogue)
     {
       $catalogue = 'messages';
     }

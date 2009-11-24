@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: PropelSQLExec.php 1059 2008-06-04 03:22:13Z hans $
+ *  $Id: PropelSQLExec.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -35,7 +35,7 @@ require_once 'phing/Task.php';
  * @author     Tim Stephenson <tim.stephenson@sybase.com> (Torque)
  * @author     Jason van Zyl <jvanzyl@apache.org> (Torque)
  * @author     Martin Poeschl <mpoeschl@marmot.at> (Torque)
- * @version    $Revision: 1059 $
+ * @version    $Revision: 1262 $
  * @package    propel.phing
  */
 class PropelSQLExec extends Task {

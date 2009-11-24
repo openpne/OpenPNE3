@@ -13,7 +13,7 @@
  * {@link http://prado.sourceforge.net/}
  *
  * @author     Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version    $Id: sfMessageSource_XLIFF.class.php 19777 2009-07-01 10:14:21Z fabien $
+ * @version    $Id: sfMessageSource_XLIFF.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  * @package    symfony
  * @subpackage i18n
  */
@@ -89,7 +89,7 @@ class sfMessageSource_XLIFF extends sfMessageSource_File
     $dom->formatOutput = true;
     $dom->preserveWhiteSpace = false;
 
-    if (!is_null($xml) && is_string($xml))
+    if (null !== $xml && is_string($xml))
     {
       // Add header for XML with UTF-8
       if (!preg_match('/<\?xml/', $xml))
@@ -114,7 +114,7 @@ class sfMessageSource_XLIFF extends sfMessageSource_File
    */
   protected function getVariants($catalogue = 'messages')
   {
-    if (is_null($catalogue))
+    if (null === $catalogue)
     {
       $catalogue = 'messages';
     }
@@ -170,7 +170,7 @@ class sfMessageSource_XLIFF extends sfMessageSource_File
     $xpath = new DomXPath($dom);
     $body = $xpath->query('//body')->item(0);
 
-    if (is_null($body))
+    if (null === $body)
     {
       //create and try again
       $this->createMessageTemplate($catalogue);
@@ -401,7 +401,7 @@ class sfMessageSource_XLIFF extends sfMessageSource_File
 
   protected function createMessageTemplate($catalogue)
   {
-    if (is_null($catalogue))
+    if (null === $catalogue)
     {
       $catalogue = 'messages';
     }

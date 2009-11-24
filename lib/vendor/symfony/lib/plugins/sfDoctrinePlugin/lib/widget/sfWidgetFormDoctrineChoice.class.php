@@ -16,7 +16,7 @@
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfWidgetFormDoctrineChoice.class.php 11540 2008-09-14 15:23:55Z fabien $
+ * @version    SVN: $Id: sfWidgetFormDoctrineChoice.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfWidgetFormDoctrineChoice extends sfWidgetFormChoice
 {
@@ -25,7 +25,7 @@ class sfWidgetFormDoctrineChoice extends sfWidgetFormChoice
    */
   public function __construct($options = array(), $attributes = array())
   {
-    $options['choices'] = new sfCallable(array($this, 'getChoices'));
+    $options['choices'] = array();
 
     parent::__construct($options, $attributes);
   }
@@ -44,9 +44,8 @@ class sfWidgetFormDoctrineChoice extends sfWidgetFormChoice
    *                    * The column to order by the results (must be in the PhpName format)
    *                    * asc or desc
    *  * query:        A query to use when retrieving objects
-   *  * connection:   The Doctrine connection to use (null by default)
    *  * multiple:     true if the select tag must allow multiple selections
-   *  * table_method: The method to use to display the object keys (getPrimaryKey by default)
+   *  * table_method: A method to return either a query, collection or single object
    *
    * @see sfWidgetFormSelect
    */
@@ -58,7 +57,6 @@ class sfWidgetFormDoctrineChoice extends sfWidgetFormChoice
     $this->addOption('key_method', 'getPrimaryKey');
     $this->addOption('order_by', null);
     $this->addOption('query', null);
-    $this->addOption('connection', null);
     $this->addOption('multiple', false);
     $this->addOption('table_method', null);
 
@@ -78,26 +76,35 @@ class sfWidgetFormDoctrineChoice extends sfWidgetFormChoice
       $choices[''] = true === $this->getOption('add_empty') ? '' : $this->getOption('add_empty');
     }
 
-    if (is_null($this->getOption('table_method')))
+    if (null === $this->getOption('table_method'))
     {
-      $query = is_null($this->getOption('query')) ? Doctrine::getTable($this->getOption('model'))->createQuery() : $this->getOption('query');
+      $query = null === $this->getOption('query') ? Doctrine_Core::getTable($this->getOption('model'))->createQuery() : $this->getOption('query');
       if ($order = $this->getOption('order_by'))
       {
         $query->addOrderBy($order[0] . ' ' . $order[1]);
       }
       $objects = $query->execute();
-    } else {
+    }
+    else
+    {
       $tableMethod = $this->getOption('table_method');
-      $results = Doctrine::getTable($this->getOption('model'))->$tableMethod();
+      $results = Doctrine_Core::getTable($this->getOption('model'))->$tableMethod();
+
       if ($results instanceof Doctrine_Query)
       {
         $objects = $results->execute();
-      } else if ($results instanceof Doctrine_Collection) {
+      }
+      else if ($results instanceof Doctrine_Collection)
+      {
         $objects = $results;
-      } else if ($results instanceof Doctrine_Record) {
+      }
+      else if ($results instanceof Doctrine_Record)
+      {
         $objects = new Doctrine_Collection($this->getOption('model'));
         $objects[] = $results;
-      } else {
+      }
+      else
+      {
         $objects = array();
       }
     }
@@ -107,12 +114,7 @@ class sfWidgetFormDoctrineChoice extends sfWidgetFormChoice
 
     foreach ($objects as $object)
     {
-      try
-      {
-        $choices[$object->$keyMethod()] = $object->$method();
-      } catch (Exception $e) {
-        throw $e;
-      }
+      $choices[$object->$keyMethod()] = $object->$method();
     }
 
     return $choices;

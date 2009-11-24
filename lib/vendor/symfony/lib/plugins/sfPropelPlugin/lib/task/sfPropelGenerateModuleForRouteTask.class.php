@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPropelBaseTask.class.php');
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelGenerateModuleForRouteTask.class.php 12161 2008-10-13 07:42:25Z fabien $
+ * @version    SVN: $Id: sfPropelGenerateModuleForRouteTask.class.php 23194 2009-10-19 16:37:13Z fabien $
  */
 class sfPropelGenerateModuleForRouteTask extends sfPropelBaseTask
 {
@@ -36,6 +36,7 @@ class sfPropelGenerateModuleForRouteTask extends sfPropelBaseTask
       new sfCommandOption('singular', null, sfCommandOption::PARAMETER_REQUIRED, 'The singular name', null),
       new sfCommandOption('plural', null, sfCommandOption::PARAMETER_REQUIRED, 'The plural name', null),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
+      new sfCommandOption('actions-base-class', null, sfCommandOption::PARAMETER_REQUIRED, 'The base class for the actions', 'sfActions'),
     ));
 
     $this->namespace = 'propel';
@@ -79,36 +80,19 @@ EOF;
     // execute the propel:generate-module task
     $task = new sfPropelGenerateModuleTask($this->dispatcher, $this->formatter);
     $task->setCommandApplication($this->commandApplication);
-
-    $taskOptions = array(
-      '--theme='.$options['theme'],
-      '--env='.$options['env'],
-      '--route-prefix='.$routeOptions['name'],
-      '--with-propel-route',
-    );
-
-    if ($routeOptions['with_show'])
-    {
-      $taskOptions[] = '--with-show';
-    }
-
-    if ($options['non-verbose-templates'])
-    {
-      $taskOptions[] = '--non-verbose-templates';
-    }
-
-    if (!is_null($options['singular']))
-    {
-      $taskOptions[] = '--singular='.$options['singular'];
-    }
-
-    if (!is_null($options['plural']))
-    {
-      $taskOptions[] = '--plural='.$options['plural'];
-    }
+    $task->setConfiguration($this->configuration);
 
     $this->logSection('app', sprintf('Generating module "%s" for model "%s"', $module, $model));
 
-    return $task->run(array($arguments['application'], $module, $model), $taskOptions);
+    return $task->run(array($arguments['application'], $module, $model), array(
+      'theme'                 => $options['theme'],
+      'route-prefix'          => $routeOptions['name'],
+      'with-propel-route'     => true,
+      'with-show'             => $routeOptions['with_show'],
+      'non-verbose-templates' => $options['non-verbose-templates'],
+      'singular'              => $options['singular'],
+      'plural'                => $options['plural'],
+      'actions-base-class'    => $options['actions-base-class'],
+    ));
   }
 }

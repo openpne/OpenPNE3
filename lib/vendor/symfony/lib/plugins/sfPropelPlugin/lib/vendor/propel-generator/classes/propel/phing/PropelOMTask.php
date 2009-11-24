@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: PropelOMTask.php 989 2008-03-11 14:29:30Z heltem $
+ *  $Id: PropelOMTask.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -120,11 +120,11 @@ class PropelOMTask extends AbstractPropelDataModelTask {
 						$this->log("\t+ " . $table->getName());
 
 						// -----------------------------------------------------------------------------------------
-						// Create Peer, Object, and MapBuilder classes
+						// Create Peer, Object, and TableMap classes
 						// -----------------------------------------------------------------------------------------
 
 						// these files are always created / overwrite any existing files
-						foreach (array('peer', 'object', 'mapbuilder') as $target) {
+						foreach (array('peer', 'object', 'tablemap') as $target) {
 							$builder = $generatorConfig->getConfiguredBuilder($table, $target);
 							$this->build($builder);
 						}

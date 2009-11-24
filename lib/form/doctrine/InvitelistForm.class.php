@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class InvitelistForm extends sfForm
+class InvitelistForm extends BaseForm
 {
   public function configure()
   {

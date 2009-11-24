@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage storage
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfSessionTestStorage.class.php 11002 2008-08-20 16:34:30Z fabien $
+ * @version    SVN: $Id: sfSessionTestStorage.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfSessionTestStorage extends sfStorage
 {
@@ -46,7 +46,7 @@ class sfSessionTestStorage extends sfStorage
     // initialize parent
     parent::initialize($options);
 
-    $this->sessionId = !is_null($this->options['session_id']) ? $this->options['session_id'] : (array_key_exists('session_id', $_SERVER) ? $_SERVER['session_id'] : null);
+    $this->sessionId = null !== $this->options['session_id'] ? $this->options['session_id'] : (array_key_exists('session_id', $_SERVER) ? $_SERVER['session_id'] : null);
 
     if ($this->sessionId)
     {

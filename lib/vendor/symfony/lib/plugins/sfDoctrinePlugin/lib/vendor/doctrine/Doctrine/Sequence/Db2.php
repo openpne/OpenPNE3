@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Db2.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Db2.php 6712 2009-11-12 18:26:29Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,10 +28,43 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6712 $
  */
 class Doctrine_Sequence_Db2 extends Doctrine_Sequence
 {
+    /**
+     * Returns the next free id of a sequence
+     *
+     * @param string $seqName   name of the sequence
+     * @param bool              when true missing sequences are automatic created
+     *
+     * @return integer          next id in the given sequence
+     * @throws Doctrine_Sequence_Exception
+     */
+    public function nextId($seqName, $ondemand = true)
+    {
+        $sequenceName = $this->conn->quoteIdentifier($this->conn->formatter->getSequenceName($seqName), true);
+        $query = 'SELECT NEXTVAL FOR ' . $sequenceName . ' AS VAL FROM SYSIBM.SYSDUMMY1';
+        
+        try {
+            $result = $this->conn->fetchOne($query);
+            $result = ($result) ? $result['VAL'] : null; 
+        } catch(Doctrine_Connection_Exception $e) {
+            if ($onDemand && $e->getPortableCode() == Doctrine_Core::ERR_NOSUCHTABLE) {
+                try {
+                    $result = $this->conn->export->createSequence($seqName);
+                } catch(Doctrine_Exception $e) {
+                    throw new Doctrine_Sequence_Exception('on demand sequence ' . $seqName . ' could not be created');
+                }
+                
+                return $this->nextId($seqName, false);
+            } else {
+                throw new Doctrine_Sequence_Exception('sequence ' .$seqName . ' does not exist');
+            }
+        }
+        return $result;
+    }
+    
     /**
      * Return the most recent value from the specified sequence in the database.
      * This is supported only on RDBMS brands that support sequences
@@ -41,38 +74,14 @@ class Doctrine_Sequence_Db2 extends Doctrine_Sequence
      * @return integer
      * @throws Doctrine_Adapter_Db2_Exception
      */
-    public function lastSequenceId($sequenceName)
+    public function currId($sequenceName)
     {
         $sql = 'SELECT PREVVAL FOR '
              . $this->quoteIdentifier($this->conn->formatter->getSequenceName($sequenceName))
              . ' AS VAL FROM SYSIBM.SYSDUMMY1';
 
         $stmt   = $this->query($sql);
-        $result = $stmt->fetchAll(Doctrine::FETCH_ASSOC);
-        if ($result) {
-            return $result[0]['VAL'];
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * Generate a new value from the specified sequence in the database, and return it.
-     * This is supported only on RDBMS brands that support sequences
-     * (e.g. Oracle, PostgreSQL, DB2).  Other RDBMS brands return null.
-     *
-     * @param string $sequenceName
-     * @return integer
-     * @throws Doctrine_Adapter_Db2_Exception
-     */
-    public function nextSequenceId($sequenceName)
-    {
-        $this->_connect();
-        $sql = 'SELECT NEXTVAL FOR '
-             . $this->quoteIdentifier($this->conn->formatter->getSequenceName($sequenceName))
-             . ' AS VAL FROM SYSIBM.SYSDUMMY1';
-        $stmt = $this->query($sql);
-        $result = $stmt->fetchAll(Doctrine::FETCH_ASSOC);
+        $result = $stmt->fetchAll(Doctrine_Core::FETCH_ASSOC);
         if ($result) {
             return $result[0]['VAL'];
         } else {
@@ -113,7 +122,7 @@ class Doctrine_Sequence_Db2 extends Doctrine_Sequence
 
         $sql = 'SELECT IDENTITY_VAL_LOCAL() AS VAL FROM SYSIBM.SYSDUMMY1';
         $stmt = $this->query($sql);
-        $result = $stmt->fetchAll(Doctrine::FETCH_ASSOC);
+        $result = $stmt->fetchAll(Doctrine_Core::FETCH_ASSOC);
         if ($result) {
             return $result[0]['VAL'];
         } else {

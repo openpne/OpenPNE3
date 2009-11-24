@@ -14,10 +14,13 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetForm.class.php 17749 2009-04-29 11:54:22Z fabien $
+ * @version    SVN: $Id: sfWidgetForm.class.php 24137 2009-11-18 13:12:40Z fabien $
  */
 abstract class sfWidgetForm extends sfWidget
 {
+  protected
+    $parent   = null;
+
   /**
    * Constructor.
    *
@@ -49,10 +52,14 @@ abstract class sfWidgetForm extends sfWidget
    * Sets the default value for the widget.
    *
    * @param string $value The default value
+   *
+   * @return sfWidget The current widget instance
    */
   public function setDefault($value)
   {
     $this->setOption('default', $value);
+
+    return $this;
   }
 
   /**
@@ -69,10 +76,14 @@ abstract class sfWidgetForm extends sfWidget
    * Sets the label for the widget.
    *
    * @param string $value The label
+   *
+   * @return sfWidget The current widget instance
    */
   public function setLabel($value)
   {
     $this->setOption('label', $value);
+
+    return $this;
   }
 
   /**
@@ -89,10 +100,14 @@ abstract class sfWidgetForm extends sfWidget
    * Sets the format for HTML id attributes.
    *
    * @param string $format  The format string (must contain a %s for the id placeholder)
+   *
+   * @return sfWidget The current widget instance
    */
   public function setIdFormat($format)
   {
     $this->setOption('id_format', $format);
+
+    return $this;
   }
 
   /**
@@ -119,10 +134,14 @@ abstract class sfWidgetForm extends sfWidget
    * Sets the hidden flag for the widget.
    *
    * @param bool $boolean  true if the widget must be hidden, false otherwise
+   *
+   * @return sfWidget The current widget instance
    */
   public function setHidden($boolean)
   {
     $this->setOption('is_hidden', (boolean) $boolean);
+
+    return $this;
   }
 
   /**
@@ -195,7 +214,7 @@ abstract class sfWidgetForm extends sfWidget
   /**
    * Returns a formatted id based on the field name and optionally on the field value.
    *
-   * This function determines the proper form field id name based on the parameters. If a form field has an
+   * This method determines the proper form field id name based on the parameters. If a form field has an
    * array value as a name we need to convert them to proper and unique ids like so:
    *
    * <samp>
@@ -204,6 +223,11 @@ abstract class sfWidgetForm extends sfWidget
    *  name[bob] => name_bob
    *  name[item][total] => name_item_total
    * </samp>
+   *
+   * This method also changes all invalid characters to an underscore (_):
+   *
+   * Ids must begin with a letter ([A-Za-z]) and may be followed by any number of letters, digits
+   * ([0-9]), hyphens ("-"), underscores ("_"), colons (":"), and periods (".").
    *
    * @param  string $name   The field name
    * @param  string $value  The field value
@@ -220,17 +244,20 @@ abstract class sfWidgetForm extends sfWidget
     // check to see if we have an array variable for a field name
     if (strstr($name, '['))
     {
-      $name = str_replace(array('[]', '][', '[', ']'), array((!is_null($value) ? '_'.$value : ''), '_', '_', ''), $name);
+      $name = str_replace(array('[]', '][', '[', ']'), array((null !== $value ? '_'.$value : ''), '_', '_', ''), $name);
     }
 
     if (false !== strpos($this->getOption('id_format'), '%s'))
     {
-      return sprintf($this->getOption('id_format'), $name);
+      $name = sprintf($this->getOption('id_format'), $name);
     }
+
+    // remove illegal characters
+    $name = preg_replace(array('/^[^A-Za-z]+/', '/[^A-Za-z0-9\:_\.\-]/'), array('', '_'), $name);
 
     return $name;
   }
-  
+
   /**
    * Generates a two chars range
    *
@@ -241,10 +268,87 @@ abstract class sfWidgetForm extends sfWidget
   static protected function generateTwoCharsRange($start, $stop)
   {
     $results = array();
-    for ($i = $start; $i <= $stop; $i++) 
+    for ($i = $start; $i <= $stop; $i++)
     {
       $results[$i] = sprintf('%02d', $i);
     }
     return $results;
+  }
+
+  /**
+   * Sets the parent widget schema.
+   *
+   * @param  sfWidgetFormSchema|null $widgetSchema
+   *
+   * @return sfWidgetForm The current widget instance
+   */
+  public function setParent(sfWidgetFormSchema $widgetSchema = null)
+  {
+    $this->parent = $widgetSchema;
+
+    return $this;
+  }
+
+  /**
+   * Returns the parent widget schema.
+   *
+   * If no schema has been set with setWidgetSchema(), NULL is returned.
+   *
+   * @return sfWidgetFormSchema|null
+   */
+  public function getParent()
+  {
+    return $this->parent;
+  }
+
+  /**
+   * Translates the given text.
+   *
+   * @param  string $text       The text with optional placeholders
+   * @param  array $parameters  The values to replace the placeholders
+   *
+   * @return string             The translated text
+   *
+   * @see sfWidgetFormSchemaFormatter::translate()
+   */
+  protected function translate($text, array $parameters = array())
+  {
+    if (null === $this->parent)
+    {
+      return $text;
+    }
+    else
+    {
+      return $this->parent->getFormFormatter()->translate($text, $parameters);
+    }
+  }
+
+  /**
+   * Translates all values of the given array.
+   *
+   * @param  array $texts       The texts with optional placeholders
+   * @param  array $parameters  The values to replace the placeholders
+   *
+   * @return array              The translated texts
+   * 
+   * @see sfWidgetFormSchemaFormatter::translate()
+   */
+  protected function translateAll(array $texts, array $parameters = array())
+  {
+    if (null === $this->parent)
+    {
+      return $texts;
+    }
+    else
+    {
+      $result = array();
+
+      foreach ($texts as $key => $text)
+      {
+        $result[$key] = $this->parent->getFormFormatter()->translate($text, $parameters);
+      }
+
+      return $result;
+    }
   }
 }

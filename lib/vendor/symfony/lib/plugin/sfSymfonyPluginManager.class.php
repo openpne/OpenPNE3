@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage plugin
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfSymfonyPluginManager.class.php 12847 2008-11-09 19:01:49Z FabianLange $
+ * @version    SVN: $Id: sfSymfonyPluginManager.class.php 20837 2009-08-06 06:05:00Z fabien $
  */
 class sfSymfonyPluginManager extends sfPluginManager
 {
@@ -55,8 +55,9 @@ class sfSymfonyPluginManager extends sfPluginManager
     $this->registerSymfonyPackage();
 
     // register callbacks to manage web content
-    $this->dispatcher->connect('plugin.post_install',  array($this, 'ListenToPluginPostInstall'));
-    $this->dispatcher->connect('plugin.pre_uninstall', array($this, 'ListenToPluginPostUninstall'));
+    $this->dispatcher->connect('plugin.post_install',  array($this, 'listenToPluginPostInstall'));
+    $this->dispatcher->connect('plugin.pre_uninstall', array($this, 'listenToPluginPostUninstall'));
+    $this->dispatcher->connect('plugin.post_uninstall', array($this, 'listenToPluginPostUnintall'));
   }
 
   /**
@@ -103,14 +104,64 @@ class sfSymfonyPluginManager extends sfPluginManager
   }
 
   /**
+   * Enables a plugin in the ProjectConfiguration class.
+   *
+   * This is a static method that does not rely on the PEAR environment
+   * as we don't want this method to have PEAR as a dependency.
+   *
+   * @param string $plugin    The name of the plugin
+   * @param string $configDir The config directory
+   */
+  static public function enablePlugin($plugin, $configDir)
+  {
+    if (!$configDir)
+    {
+      throw new sfPluginException('You must provide a "config_dir" option.');
+    }
+
+    $manipulator = sfClassManipulator::fromFile($configDir.'/ProjectConfiguration.class.php');
+    $manipulator->wrapMethod('setup', '', sprintf('$this->enablePlugins(\'%s\');', $plugin));
+    $manipulator->save();
+  }
+
+  /**
+   * Disables a plugin in the ProjectConfiguration class.
+   *
+   * This is a static method that does not rely on the PEAR environment
+   * as we don't want this method to have PEAR as a dependency.
+   *
+   * @param string $plugin The name of the plugin
+   * @param string $configDir The config directory
+   */
+  static protected function disablePlugin($plugin, $configDir)
+  {
+    if (!$configDir)
+    {
+      throw new sfPluginException('You must provide a "config_dir" option.');
+    }
+
+    $file = $configDir.'/ProjectConfiguration.class.php';
+    $source = file_get_contents($file);
+
+    $source = preg_replace(sprintf('# *\$this\->enablePlugins\(array\(([^\)]+), *\'%s\'([^\)]*)\)\)#', $plugin), '$this->enablePlugins(array($1$2))', $source);
+    $source = preg_replace(sprintf('# *\$this\->enablePlugins\(array\(\'%s\', *([^\)]*)\)\)#', $plugin), '$this->enablePlugins(array($1))', $source);
+    $source = preg_replace(sprintf('# *\$this\->enablePlugins\(\'%s\'\); *\n?#', $plugin), '', $source);
+    $source = preg_replace(sprintf('# *\$this\->enablePlugins\(array\(\'%s\'\)\); *\n?#', $plugin), '', $source);
+    $source = preg_replace(sprintf('# *\$this\->enablePlugins\(array\(\)\); *\n?#', $plugin), '', $source);
+
+    file_put_contents($file, $source);
+  }
+
+  /**
    * Listens to the plugin.post_install event.
    *
    * @param sfEvent $event An sfEvent instance
    */
-  public function ListenToPluginPostInstall($event)
+  public function listenToPluginPostInstall($event)
   {
-    $this->installWebContent($event['plugin'], 
-           isset($event['plugin_dir']) ? $event['plugin_dir'] : $this->environment->getOption('plugin_dir'));
+    $this->installWebContent($event['plugin'], isset($event['plugin_dir']) ? $event['plugin_dir'] : $this->environment->getOption('plugin_dir'));
+
+    $this->enablePlugin($event['plugin'], $this->environment->getOption('config_dir'));
   }
 
   /**
@@ -118,9 +169,14 @@ class sfSymfonyPluginManager extends sfPluginManager
    *
    * @param sfEvent $event An sfEvent instance
    */
-  public function ListenToPluginPostUninstall($event)
+  public function listenToPluginPostUninstall($event)
   {
     $this->uninstallWebContent($event['plugin']);
+  }
+
+  public function listenToPluginPostUnintall(sfEvent $event)
+  {
+    $this->disablePlugin($event['plugin'], $this->environment->getOption('config_dir'));
   }
 
   /**

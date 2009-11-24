@@ -15,12 +15,11 @@ class ProjectConfiguration extends sfProjectConfiguration
 
   public function setup()
   {
-    $this->enableAllPluginsExcept(array('sfCompat10Plugin', 'sfPropelPlugin'));
+    $this->enableAllPluginsExcept(array('sfPropelPlugin'));
     $this->setIncludePath();
 
     $this->setOpenPNEConfiguration();
 
-    sfConfig::set('sfDoctrinePlugin_doctrine_lib_path', sfConfig::get('sf_lib_dir').'/vendor/doctrine/Doctrine.php');
     sfConfig::set('doctrine_model_builder_options', array(
       'baseClassName' => 'opDoctrineRecord',
     ));

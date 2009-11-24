@@ -1,6 +1,0 @@
-This vendor directory is for using symfony 1.3 (1.4) library in OpenPNE3.
-
-OpenPNE3 will go to symfony 1.4 by 2009/12/31. You MUST NOT use libraries in this directory without consideration of forward compatible.
-
- * sfFormSymfony - revision 19675
-

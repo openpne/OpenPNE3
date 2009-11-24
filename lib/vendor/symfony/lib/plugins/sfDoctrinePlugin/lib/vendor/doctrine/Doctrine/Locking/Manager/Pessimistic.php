@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Pessimistic.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Pessimistic.php 6484 2009-10-12 17:40:41Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -32,7 +32,7 @@
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6484 $
  */
 class Doctrine_Locking_Manager_Pessimistic
 {
@@ -60,7 +60,7 @@ class Doctrine_Locking_Manager_Pessimistic
     {
         $this->conn = $conn;
 
-        if ($this->conn->getAttribute(Doctrine::ATTR_EXPORT) & Doctrine::EXPORT_TABLES) {
+        if ($this->conn->getAttribute(Doctrine_Core::ATTR_EXPORT) & Doctrine_Core::EXPORT_TABLES) {
             $columns = array();
             $columns['object_type']        = array('type'    => 'string',
                                                    'length'  => 50,
@@ -200,8 +200,8 @@ class Doctrine_Locking_Manager_Pessimistic
      * Gets the unique user identifier of a lock
      *
      * @param  string $objectType  The type of the object (component name)
-     * @param  mixed  $key         The unique key of the object
-     * @return mixed  The unique user identifier for the specified lock
+     * @param  mixed  $key         The unique key of the object. Can be string or array
+     * @return string              The unique user identifier for the specified lock
      * @throws Doctrine_Locking_Exception If the query failed due to database errors
      */
     private function _getLockingUserIdent($objectType, $key)

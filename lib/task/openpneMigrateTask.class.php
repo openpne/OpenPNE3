@@ -192,12 +192,16 @@ EOF;
 
   protected function buildModel()
   {
-    $task = new sfDoctrineBuildModelTask($this->dispatcher, $this->formatter);
-    $task->run();
-    $task = new sfDoctrineBuildFormsTask($this->dispatcher, $this->formatter);
-    $task->run();
-    $task = new sfDoctrineBuildFiltersTask($this->dispatcher, $this->formatter);
-    $task->run();
+    $task = new sfDoctrineBuildTask($this->dispatcher, $this->formatter);
+    $task->setCommandApplication($this->commandApplication);
+    $task->setConfiguration($this->configuration);
+    $task->run(array(), array(
+      'no-confirmation' => true,
+      'model'           => true,
+      'forms'           => true,
+      'filters'         => true,
+    ));
+
     $task = new sfCacheClearTask($this->dispatcher, $this->formatter);
     @$task->run();
     $task = new openpnePermissionTask($this->dispatcher, $this->formatter);

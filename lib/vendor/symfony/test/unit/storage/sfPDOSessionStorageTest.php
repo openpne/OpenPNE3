@@ -11,12 +11,13 @@
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
 ob_start();
-$t = new lime_test($tests = 15, new lime_output_color());
+$plan = 15;
+$t = new lime_test($plan);
 
-if (!extension_loaded('SQLite'))
+if (!extension_loaded('SQLite') && !extension_loaded('pdo_SQLite'))
 {
-  $t->skip('SQLite needed to run these tests', $tests);
-  exit(0);
+  $t->skip('SQLite needed to run these tests', $plan);
+  return;
 }
 
 // initialize the storage

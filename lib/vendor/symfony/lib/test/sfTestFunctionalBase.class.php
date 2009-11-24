@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/../vendor/lime/lime.php');
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTestFunctionalBase.class.php 21875 2009-09-11 05:54:39Z fabien $
+ * @version    SVN: $Id: sfTestFunctionalBase.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 abstract class sfTestFunctionalBase
 {
@@ -39,15 +39,16 @@ abstract class sfTestFunctionalBase
   {
     $this->browser = $browser;
 
-    if (is_null(self::$test))
+    if (null === self::$test)
     {
-      self::$test = !is_null($lime) ? $lime : new lime_test(null, new lime_output_color());
+      self::$test = null !== $lime ? $lime : new lime_test();
     }
 
     $this->setTesters(array_merge(array(
       'request'  => 'sfTesterRequest',
       'response' => 'sfTesterResponse',
       'user'     => 'sfTesterUser',
+      'mailer'   => 'sfTesterMailer',
     ), $testers));
 
     // register our shutdown function
@@ -105,7 +106,7 @@ abstract class sfTestFunctionalBase
    */
   public function end()
   {
-    if (is_null($this->blockTester))
+    if (null === $this->blockTester)
     {
       throw new LogicException(sprintf('There is not current tester block to end.'));
     }
@@ -286,7 +287,21 @@ abstract class sfTestFunctionalBase
    */
   public function click($name, $arguments = array(), $options = array())
   {
-    list($uri, $method, $parameters) = $this->browser->doClick($name, $arguments, $options);
+    if ($name instanceof DOMElement)
+    {
+      list($uri, $method, $parameters) = $this->doClickElement($name, $arguments, $options);
+    }
+    else
+    {
+      try
+      {
+        list($uri, $method, $parameters) = $this->doClick($name, $arguments, $options);
+      }
+      catch (InvalidArgumentException $e)
+      {
+        list($uri, $method, $parameters) = $this->doClickCssSelector($name, $arguments, $options);
+      }
+    }
 
     return $this->call($uri, $method, $parameters);
   }
@@ -334,20 +349,6 @@ abstract class sfTestFunctionalBase
   }
 
   /**
-   * Tests if the current request has been redirected.
-   *
-   * @deprecated since 1.2
-   *
-   * @param  bool $boolean  Flag for redirection mode
-   *
-   * @return sfTestFunctionalBase The current sfTestFunctionalBase instance
-   */
-  public function isRedirected($boolean = true)
-  {
-    return $this->with('response')->isRedirected($boolean);
-  }
-
-  /**
    * Checks that the current response contains a given text.
    *
    * @param  string $uri   Uniform resource identifier
@@ -365,108 +366,6 @@ abstract class sfTestFunctionalBase
     }
 
     return $this;
-  }
-
-  /**
-   * Test an status code for the current test browser.
-   *
-   * @deprecated since 1.2
-   *
-   * @param string Status code to check, default 200
-   *
-   * @return sfTestFunctionalBase The current sfTestFunctionalBase instance
-   */
-  public function isStatusCode($statusCode = 200)
-  {
-    return $this->with('response')->isStatusCode($statusCode);
-  }
-
-  /**
-   * Tests whether or not a given string is in the response.
-   *
-   * @deprecated since 1.2
-   *
-   * @param string Text to check
-   *
-   * @return sfTestFunctionalBase The current sfTestFunctionalBase instance
-   */
-  public function responseContains($text)
-  {
-    return $this->with('response')->contains($text);
-  }
-
-  /**
-   * Tests whether or not a given key and value exists in the current request.
-   *
-   * @deprecated since 1.2
-   *
-   * @param string $key
-   * @param string $value
-   *
-   * @return sfTestFunctionalBase The current sfTestFunctionalBase instance
-   */
-  public function isRequestParameter($key, $value)
-  {
-    return $this->with('request')->isParameter($key, $value);
-  }
-
-  /**
-   * Tests for a response header.
-   *
-   * @deprecated since 1.2
-   *
-   * @param  string $key
-   * @param  string $value
-   *
-   * @return sfTestFunctionalBase The current sfTestFunctionalBase instance
-   */
-  public function isResponseHeader($key, $value)
-  {
-    return $this->with('response')->isHeader($key, $value);
-  }
-
-  /**
-   * Tests for the user culture.
-   *
-   * @deprecated since 1.2
-   *
-   * @param  string $culture  The user culture
-   *
-   * @return sfTestFunctionalBase The current sfTestFunctionalBase instance
-   */
-  public function isUserCulture($culture)
-  {
-    return $this->with('user')->isCulture($culture);
-  }
-
-  /**
-   * Tests for the request is in the given format.
-   *
-   * @deprecated since 1.2
-   *
-   * @param  string $format  The request format
-   *
-   * @return sfTestFunctionalBase The current sfTestFunctionalBase instance
-   */
-  public function isRequestFormat($format)
-  {
-    return $this->with('request')->isFormat($format);
-  }
-
-  /**
-   * Tests that the current response matches a given CSS selector.
-   *
-   * @deprecated since 1.2
-   *
-   * @param  string $selector  The response selector or a sfDomCssSelector object
-   * @param  mixed  $value     Flag for the selector
-   * @param  array  $options   Options for the current test
-   *
-   * @return sfTestFunctionalBase The current sfTestFunctionalBase instance
-   */
-  public function checkResponseElement($selector, $value = true, $options = array())
-  {
-    return $this->with('response')->checkElement($selector, $value, $options);
   }
 
   /**

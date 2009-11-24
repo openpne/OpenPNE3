@@ -16,7 +16,7 @@
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfToolkit.class.php 19980 2009-07-07 16:29:54Z nicolas $
+ * @version    SVN: $Id: sfToolkit.class.php 23945 2009-11-14 18:12:41Z fabien $
  */
 class sfToolkit
 {
@@ -143,35 +143,6 @@ class sfToolkit
   }
 
   /**
-   * Determine if a lock file is present.
-   *
-   * @param  string  $lockFile             Name of the lock file.
-   * @param  integer $maxLockFileLifeTime  A max amount of life time for the lock file.
-   *
-   * @return bool true, if the lock file is present, otherwise false.
-   */
-  public static function hasLockFile($lockFile, $maxLockFileLifeTime = 0)
-  {
-    $isLocked = false;
-    if (is_readable($lockFile) && ($last_access = fileatime($lockFile)))
-    {
-      $now = time();
-      $timeDiff = $now - $last_access;
-
-      if (!$maxLockFileLifeTime || $timeDiff < $maxLockFileLifeTime)
-      {
-        $isLocked = true;
-      }
-      else
-      {
-        $isLocked = @unlink($lockFile) ? false : true;
-      }
-    }
-
-    return $isLocked;
-  }
-
-  /**
    * Strips comments from php source code
    *
    * @param  string $source  PHP source code.
@@ -180,7 +151,7 @@ class sfToolkit
    */
   public static function stripComments($source)
   {
-    if (!sfConfig::get('sf_strip_comments', true) || !function_exists('token_get_all'))
+    if (!function_exists('token_get_all'))
     {
       return $source;
     }
@@ -467,64 +438,6 @@ class sfToolkit
   }
 
   /**
-   * Returns a reference to an array value for a path.
-   *
-   * @param array  $values   The values to search
-   * @param string $name     The token name
-   * @param array  $default  Default if not found
-   *
-   * @return array reference
-   */
-  public static function &getArrayValueForPathByRef(&$values, $name, $default = null)
-  {
-    if (false === $offset = strpos($name, '['))
-    {
-      $return = $default;
-      if (isset($values[$name]))
-      {
-        $return = &$values[$name];
-      }
-      return $return;
-    }
-
-    if (!isset($values[substr($name, 0, $offset)]))
-    {
-      return $default;
-    }
-
-    $array = &$values[substr($name, 0, $offset)];
-
-    while (false !== $pos = strpos($name, '[', $offset))
-    {
-      $end = strpos($name, ']', $pos);
-      if ($end == $pos + 1)
-      {
-        // reached a []
-        if (!is_array($array))
-        {
-          return $default;
-        }
-        break;
-      }
-      else if (!isset($array[substr($name, $pos + 1, $end - $pos - 1)]))
-      {
-        return $default;
-      }
-      else if (is_array($array))
-      {
-        $array = &$array[substr($name, $pos + 1, $end - $pos - 1)];
-        $offset = $end;
-      }
-      else
-      {
-        return $default;
-      }
-    }
-
-    return $array;
-  }
-
-  /**
    * Returns an array value for a path.
    *
    * @param array  $values   The values to search
@@ -578,121 +491,6 @@ class sfToolkit
   }
 
   /**
-   * Returns true if the a path exists for the given array.
-   *
-   * @param array  $values  The values to search
-   * @param string $name    The token name
-   *
-   * @return bool
-   */
-  public static function hasArrayValueForPath($values, $name)
-  {
-    if (false === $offset = strpos($name, '['))
-    {
-      return array_key_exists($name, $values);
-    }
-
-    if (!isset($values[substr($name, 0, $offset)]))
-    {
-      return false;
-    }
-
-    $array = $values[substr($name, 0, $offset)];
-    while (false !== $pos = strpos($name, '[', $offset))
-    {
-      $end = strpos($name, ']', $pos);
-      if ($end == $pos + 1)
-      {
-        // reached a []
-        return is_array($array);
-      }
-      else if (!isset($array[substr($name, $pos + 1, $end - $pos - 1)]))
-      {
-        return false;
-      }
-      else if (is_array($array))
-      {
-        $array = $array[substr($name, $pos + 1, $end - $pos - 1)];
-        $offset = $end;
-      }
-      else
-      {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  /**
-   * Removes a path for the given array.
-   *
-   * @param array  $values   The values to search
-   * @param string $name     The token name
-   * @param mixed  $default  The default value to return if the name does not exist
-   */
-  public static function removeArrayValueForPath(&$values, $name, $default = null)
-  {
-    if (false === $offset = strpos($name, '['))
-    {
-      if (isset($values[$name]))
-      {
-        $value = $values[$name];
-        unset($values[$name]);
-
-        return $value;
-      }
-      else
-      {
-        return $default;
-      }
-    }
-
-    if (!isset($values[substr($name, 0, $offset)]))
-    {
-      return $default;
-    }
-
-    $value = &$values[substr($name, 0, $offset)];
-
-    while (false !== $pos = strpos($name, '[', $offset))
-    {
-      $end = strpos($name, ']', $pos);
-      if ($end == $pos + 1)
-      {
-        // reached a []
-        if (!is_array($value))
-        {
-          return $default;
-        }
-        break;
-      }
-      else if (!isset($value[substr($name, $pos + 1, $end - $pos - 1)]))
-      {
-        return $default;
-      }
-      else if (is_array($value))
-      {
-        $parent = &$value;
-        $key = substr($name, $pos + 1, $end - $pos - 1);
-        $value = &$value[$key];
-        $offset = $end;
-      }
-      else
-      {
-        return $default;
-      }
-    }
-
-    if ($key)
-    {
-      unset($parent[$key]);
-    }
-
-    return $value;
-  }
-
-  /**
    * Get path to php cli.
    *
    * @throws sfException If no php cli found
@@ -717,47 +515,6 @@ class sfToolkit
     }
 
     throw new sfException('Unable to find PHP executable.');
-  }
-
-  /**
-   * From PEAR System.php
-   *
-   * LICENSE: This source file is subject to version 3.0 of the PHP license
-   * that is available through the world-wide-web at the following URI:
-   * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
-   * the PHP License and are unable to obtain it through the web, please
-   * send a note to license@php.net so we can mail you a copy immediately.
-   *
-   * @author     Tomas V.V.Cox <cox@idecnet.com>
-   * @copyright  1997-2006 The PHP Group
-   * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
-   */
-  public static function getTmpDir()
-  {
-    if (DIRECTORY_SEPARATOR == '\\')
-    {
-      if ($var = isset($_ENV['TEMP']) ? $_ENV['TEMP'] : getenv('TEMP'))
-      {
-        return $var;
-      }
-      if ($var = isset($_ENV['TMP']) ? $_ENV['TMP'] : getenv('TMP'))
-      {
-        return $var;
-      }
-      if ($var = isset($_ENV['windir']) ? $_ENV['windir'] : getenv('windir'))
-      {
-        return $var;
-      }
-
-      return getenv('SystemRoot').'\temp';
-    }
-
-    if ($var = isset($_ENV['TMPDIR']) ? $_ENV['TMPDIR'] : getenv('TMPDIR'))
-    {
-      return $var;
-    }
-
-    return '/tmp';
   }
 
   /**
@@ -808,10 +565,10 @@ class sfToolkit
 
   /**
    * Adds a path to the PHP include_path setting.
-   * 
+   *
    * @param   mixed  $path     Single string path or an array of paths
    * @param   string $position Either 'front' or 'back'
-   * 
+   *
    * @return  string The old include path
    */
   static public function addIncludePath($path, $position = 'front')

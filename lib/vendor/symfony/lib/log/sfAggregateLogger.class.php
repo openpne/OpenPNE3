@@ -14,12 +14,11 @@
  * @package    symfony
  * @subpackage log
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfAggregateLogger.class.php 9081 2008-05-20 00:47:12Z Carl.Vondrick $
+ * @version    SVN: $Id: sfAggregateLogger.class.php 14603 2009-01-11 10:35:17Z dwhittle $
  */
 class sfAggregateLogger extends sfLogger
 {
   protected
-    $dispatcher = null,
     $loggers = array();
 
   /**
@@ -37,7 +36,7 @@ class sfAggregateLogger extends sfLogger
   public function initialize(sfEventDispatcher $dispatcher, $options = array())
   {
     $this->dispatcher = $dispatcher;
-
+    
     if (isset($options['loggers']))
     {
       if (!is_array($options['loggers']))

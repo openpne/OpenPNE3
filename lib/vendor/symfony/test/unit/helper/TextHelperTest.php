@@ -13,7 +13,7 @@ require_once(dirname(__FILE__).'/../../../test/bootstrap/unit.php');
 require_once(dirname(__FILE__).'/../../../lib/helper/TagHelper.php');
 require_once(dirname(__FILE__).'/../../../lib/helper/TextHelper.php');
 
-$t = new lime_test(50, new lime_output_color());
+$t = new lime_test(50);
 
 // truncate_text()
 $t->diag('truncate_text()');

@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage view
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPartialView.class.php 17749 2009-04-29 11:54:22Z fabien $
+ * @version    SVN: $Id: sfPartialView.class.php 23985 2009-11-15 20:09:20Z FabianLange $
  */
 class sfPartialView extends sfPHPView
 {
@@ -37,7 +37,7 @@ class sfPartialView extends sfPHPView
 
     if (sfConfig::get('sf_cache'))
     {
-      $this->checkCache = sfConfig::get('sf_lazy_cache_key') ? $this->viewCache->isActionCacheable($moduleName, $actionName) : true;
+      $this->checkCache = $this->viewCache->isActionCacheable($moduleName, $actionName);
     }
 
     return $ret;

@@ -15,7 +15,7 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class opMemberProfileSearchForm extends sfForm
+class opMemberProfileSearchForm extends BaseForm
 {
   protected static $profileFieldPrefix = 'profile_';
 
@@ -36,11 +36,11 @@ class opMemberProfileSearchForm extends sfForm
 
     if ($this->getOption('is_use_id'))
     {
-      $widgets += array('id' => new sfWidgetFormInput());
+      $widgets += array('id' => new sfWidgetFormInputText());
       $validators += array('id' => new sfValidatorPass());
     }
 
-    $widgets += array('name' => new sfWidgetFormInput());
+    $widgets += array('name' => new sfWidgetFormInputText());
     $validators += array('name' => new opValidatorSearchQueryString(array('required' => false)));
 
     $culture = sfContext::getInstance()->getUser()->getCulture();

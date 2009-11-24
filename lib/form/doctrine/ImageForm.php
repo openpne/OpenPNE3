@@ -21,7 +21,7 @@ class ImageForm extends BaseFileForm
   {
     $this->setWidgets(array(
       'file'      => new sfWidgetFormInputFile(),
-      'imageName' => new sfWidgetFormInput(),
+      'imageName' => new sfWidgetFormInputText(),
     ));
     $this->widgetSchema->setLabels(array(
       'file'      => sfContext::getInstance()->getI18N()->__('画像ファイル'),

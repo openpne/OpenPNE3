@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Array.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Array.php 6559 2009-10-23 17:09:38Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,10 +27,11 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6559 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
  */
-class Doctrine_Cache_Array implements Countable, Doctrine_Cache_Interface
+class Doctrine_Cache_Array extends Doctrine_Cache_Driver implements Countable
 {
     /**
      * @var array $data         an array of cached data
@@ -38,15 +39,13 @@ class Doctrine_Cache_Array implements Countable, Doctrine_Cache_Interface
     protected $data;
 
     /**
-     * Test if a cache is available for the given id and (if yes) return it (false else)
-     * 
-     * Note : return value is always "string" (unserialization is done by the core not by the backend)
-     * 
+     * Fetch a cache record from this cache driver instance
+     *
      * @param string $id cache id
      * @param boolean $testCacheValidity        if set to false, the cache validity won't be tested
      * @return string cached datas (or false)
      */
-    public function fetch($id, $testCacheValidity = true) 
+    protected function _doFetch($id, $testCacheValidity = true) 
     {
         if (isset($this->data[$id])) {
             return $this->data[$id];
@@ -55,59 +54,43 @@ class Doctrine_Cache_Array implements Countable, Doctrine_Cache_Interface
     }
 
     /**
-     * Test if a cache is available or not (for the given id)
+     * Test if a cache record exists for the passed id
      *
      * @param string $id cache id
      * @return mixed false (a cache is not available) or "last modified" timestamp (int) of the available cache record
      */
-    public function contains($id)
+    protected function _doContains($id)
     {
         return isset($this->data[$id]);
     }
 
     /**
-     * Save some string datas into a cache record
+     * Save a cache record directly. This method is implemented by the cache
+     * drivers and used in Doctrine_Cache_Driver::save()
      *
-     * Note : $data is always saved as a string
-     *
-     * @param string $data      data to cache
      * @param string $id        cache id
+     * @param string $data      data to cache
      * @param int $lifeTime     if != false, set a specific lifetime for this cache record (null => infinite lifeTime)
      * @return boolean true if no problem
      */
-    public function save($id, $data, $lifeTime = false)
+    protected function _doSave($id, $data, $lifeTime = false)
     {
         $this->data[$id] = $data;
+
+        return true;
     }
 
     /**
-     * Remove a cache record
+     * Remove a cache record directly. This method is implemented by the cache
+     * drivers and used in Doctrine_Cache_Driver::delete()
      * 
      * @param string $id cache id
      * @return boolean true if no problem
      */
-    public function delete($id)
+    protected function _doDelete($id)
     {
         unset($this->data[$id]);
-    }
 
-    /**
-     * Remove all cache record
-     * 
-     * @return boolean true if no problem
-     */
-    public function deleteAll()
-    {
-        $this->data = array();
-    }
-
-    /**
-     * count
-     *
-     * @return integer
-     */
-    public function count() 
-    {
-        return count($this->data);
+        return true;
     }
 }

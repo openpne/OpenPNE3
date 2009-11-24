@@ -16,7 +16,7 @@
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 
-require_once sfConfig::get('sf_symfony_lib_dir').'/plugins/sfProtoculousPlugin/lib/helper/JavascriptHelper.php';
+require_once sfConfig::get('sf_plugins_dir').'/sfProtoculousPlugin/lib/helper/JavascriptHelper.php';
 
 /**
  * Makes contents to be a modal box.

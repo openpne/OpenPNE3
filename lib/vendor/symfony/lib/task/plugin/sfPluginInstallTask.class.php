@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPluginBaseTask.class.php');
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPluginInstallTask.class.php 15796 2009-02-26 09:22:31Z fabien $
+ * @version    SVN: $Id: sfPluginInstallTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
 class sfPluginInstallTask extends sfPluginBaseTask
 {
@@ -37,7 +37,6 @@ class sfPluginInstallTask extends sfPluginBaseTask
       new sfCommandOption('force-license', null, sfCommandOption::PARAMETER_NONE, 'Whether to force installation even if the license is not MIT like'),
     ));
 
-    $this->aliases = array('plugin-install');
     $this->namespace = 'plugin';
     $this->name = 'install';
 
@@ -113,7 +112,7 @@ EOF;
       if (false !== $license)
       {
         $temp = trim(str_replace('license', '', strtolower($license)));
-        if (!is_null($license) && !in_array($temp, array('mit', 'bsd', 'lgpl', 'php', 'apache')))
+        if (null !== $license && !in_array($temp, array('mit', 'bsd', 'lgpl', 'php', 'apache')))
         {
           throw new sfCommandException(sprintf('The license of this plugin "%s" is not MIT like (use --force-license to force installation).', $license));
         }

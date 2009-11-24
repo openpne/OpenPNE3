@@ -17,7 +17,7 @@
  * @subpackage database
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfDatabase.class.php 9086 2008-05-20 01:56:29Z Carl.Vondrick $
+ * @version    SVN: $Id: sfDatabase.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 abstract class sfDatabase
 {
@@ -70,7 +70,7 @@ abstract class sfDatabase
    */
   public function getConnection()
   {
-    if (is_null($this->connection))
+    if (null === $this->connection)
     {
       $this->connect();
     }
@@ -87,7 +87,7 @@ abstract class sfDatabase
    */
   public function getResource()
   {
-    if (is_null($this->resource))
+    if (null === $this->resource)
     {
       $this->connect();
     }

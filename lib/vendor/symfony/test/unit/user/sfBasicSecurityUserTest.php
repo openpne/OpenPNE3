@@ -10,7 +10,7 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(47, new lime_output_color());
+$t = new lime_test(47);
 
 class MySessionStorage extends sfSessionTestStorage
 {
@@ -23,7 +23,7 @@ class MySessionStorage extends sfSessionTestStorage
 }
 
 $dispatcher = new sfEventDispatcher();
-$sessionPath = sfToolkit::getTmpDir().'/sessions_'.rand(11111, 99999);
+$sessionPath = sys_get_temp_dir().'/sessions_'.rand(11111, 99999);
 $storage = new MySessionStorage(array('session_path' => $sessionPath));
 
 $user = new sfBasicSecurityUser($dispatcher, $storage);
@@ -32,11 +32,11 @@ $user = new sfBasicSecurityUser($dispatcher, $storage);
 $t->diag('->initialize()');
 $t->todo('->initialize() times out the user if no request made for a long time');
 
-// ->listCredentials()
-$t->diag('->listCredentials()');
+// ->getCredentials()
+$t->diag('->getCredentials()');
 $user->clearCredentials();
 $user->addCredential('user');
-$t->is($user->listCredentials(), array('user'), '->listCredentials() returns user credentials as an array');
+$t->is($user->getCredentials(), array('user'), '->getCredentials() returns user credentials as an array');
 
 // ->setAuthenticated() ->isAuthenticated()
 $t->diag('->setAuthenticated() ->isAuthenticated()');

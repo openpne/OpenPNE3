@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTask.class.php 21875 2009-09-11 05:54:39Z fabien $
+ * @version    SVN: $Id: sfTask.class.php 23437 2009-10-29 16:12:53Z fabien $
  */
 abstract class sfTask
 {
@@ -62,6 +62,26 @@ abstract class sfTask
   }
 
   /**
+   * Returns the formatter instance.
+   *
+   * @return sfFormatter The formatter instance
+   */
+  public function getFormatter()
+  {
+    return $this->formatter;
+  }
+
+  /**
+   * Sets the formatter instance.
+   *
+   * @param sfFormatter The formatter instance
+   */
+  public function setFormatter(sfFormatter $formatter)
+  {
+    $this->formatter = $formatter;
+  }
+
+  /**
    * Runs the task from the CLI.
    *
    * @param sfCommandManager $commandManager  An sfCommandManager instance
@@ -80,8 +100,8 @@ abstract class sfTask
   /**
    * Runs the task.
    *
-   * @param array $arguments  An array of arguments
-   * @param array $options    An array of options
+   * @param array|string $arguments  An array of arguments or a string representing the CLI arguments and options
+   * @param array        $options    An array of options
    *
    * @return integer 0 if everything went fine, or an error code
    */
@@ -89,16 +109,68 @@ abstract class sfTask
   {
     $commandManager = new sfCommandManager(new sfCommandArgumentSet($this->getArguments()), new sfCommandOptionSet($this->getOptions()));
 
-    // add -- before each option if needed
-    foreach ($options as &$option)
+    if (is_array($arguments) && is_string(key($arguments)))
     {
-      if (0 !== strpos($option, '--'))
+      // index arguments by name for ordering and reference
+      $indexArguments = array();
+      foreach ($this->arguments as $argument)
       {
-        $option = '--'.$option;
+        $indexArguments[$argument->getName()] = $argument;
       }
+
+      foreach ($arguments as $name => $value)
+      {
+        if (false !== $pos = array_search($name, array_keys($indexArguments)))
+        {
+          if ($indexArguments[$name]->isArray())
+          {
+            $value = join(' ', (array) $value);
+            $arguments[$pos] = isset($arguments[$pos]) ? $arguments[$pos].' '.$value : $value;
+          }
+          else
+          {
+            $arguments[$pos] = $value;
+          }
+
+          unset($arguments[$name]);
+        }
+      }
+
+      ksort($arguments);
     }
 
-    return $this->doRun($commandManager, implode(' ', array_merge($arguments, $options)));
+    // index options by name for reference
+    $indexedOptions = array();
+    foreach ($this->options as $option)
+    {
+      $indexedOptions[$option->getName()] = $option;
+    }
+
+    foreach ($options as $name => $value)
+    {
+      if (is_string($name))
+      {
+        if (false === $value || null === $value || (isset($indexedOptions[$name]) && $indexedOptions[$name]->isArray() && !$value))
+        {
+          unset($options[$name]);
+          continue;
+        }
+
+        // convert associative array
+        $value = true === $value ? $name : sprintf('%s=%s', $name, isset($indexedOptions[$name]) && $indexedOptions[$name]->isArray() ? join(' --'.$name.'=', (array) $value) : $value);
+      }
+
+      // add -- before each option if needed
+      if (0 !== strpos($value, '--'))
+      {
+        $value = '--'.$value;
+      }
+
+      $options[] = $value;
+      unset($options[$name]);
+    }
+
+    return $this->doRun($commandManager, is_string($arguments) ? $arguments : implode(' ', array_merge($arguments, $options)));
   }
 
   /**
@@ -255,8 +327,8 @@ abstract class sfTask
     $options = array();
     foreach ($this->getOptions() as $option)
     {
-      $shortcut = $option->getShortcut() ? sprintf('|-%s', $option->getShortcut()) : '';
-      $options[] = sprintf('['.($option->isParameterRequired() ? '--%s%s="..."' : ($option->isParameterOptional() ? '--%s%s[="..."]' : '--%s%s')).']', $option->getName(), $shortcut);
+      $shortcut = $option->getShortcut() ? sprintf('-%s|', $option->getShortcut()) : '';
+      $options[] = sprintf('['.($option->isParameterRequired() ? '%s--%s="..."' : ($option->isParameterOptional() ? '%s--%s[="..."]' : '%s--%s')).']', $shortcut, $option->getName());
     }
 
     $arguments = array();
@@ -343,20 +415,26 @@ abstract class sfTask
       $messages = array($messages);
     }
 
+    $style = str_replace('_LARGE', '', $style, $count);
+    $large = (Boolean) $count;
+
     $len = 0;
     $lines = array();
     foreach ($messages as $message)
     {
-      $lines[] = sprintf('  %s  ', $message);
-      $len = max($this->strlen($message) + 4, $len);
+      $lines[] = sprintf($large ? '  %s  ' : ' %s ', $message);
+      $len = max($this->strlen($message) + ($large ? 4 : 2), $len);
     }
 
-    $messages = array(str_repeat(' ', $len));
+    $messages = $large ? array(str_repeat(' ', $len)) : array();
     foreach ($lines as $line)
     {
       $messages[] = $line.str_repeat(' ', $len - $this->strlen($line));
     }
-    $messages[] = str_repeat(' ', $len);
+    if ($large)
+    {
+      $messages[] = str_repeat(' ', $len);
+    }
 
     foreach ($messages as $message)
     {
@@ -369,10 +447,11 @@ abstract class sfTask
    *
    * @param string|array $question The question to ask
    * @param string       $style    The style to use (QUESTION by default)
+   * @param string       $default  The default answer if none is given by the user
    *
    * @param string       The user answer
    */
-  public function ask($question, $style = 'QUESTION')
+  public function ask($question, $style = 'QUESTION', $default = null)
   {
     if (false === $style)
     {
@@ -380,10 +459,12 @@ abstract class sfTask
     }
     else
     {
-      $this->logBlock($question, is_null($style) ? 'QUESTION' : $style);
+      $this->logBlock($question, null === $style ? 'QUESTION' : $style);
     }
 
-    return trim(fgets(STDIN));
+    $ret = trim(fgets(STDIN));
+
+    return $ret ? $ret : $default;
   }
 
   /**
@@ -413,6 +494,148 @@ abstract class sfTask
     {
       return !$answer || 'y' == strtolower($answer[0]);
     }
+  }
+
+  /**
+   * Asks for a value and validates the response.
+   *
+   * Available options:
+   *
+   *  * value:    A value to try against the validator before asking the user
+   *  * attempts: Max number of times to ask before giving up (false by default, which means infinite)
+   *  * style:    Style for question output (QUESTION by default)
+   *
+   * @param   string|array    $question
+   * @param   sfValidatorBase $validator
+   * @param   array           $options
+   *
+   * @return  mixed
+   */
+  public function askAndValidate($question, sfValidatorBase $validator, array $options = array())
+  {
+    if (!is_array($question))
+    {
+      $question = array($question);
+    }
+
+    $options = array_merge(array(
+      'value'    => null,
+      'attempts' => false,
+      'style'    => 'QUESTION',
+    ), $options);
+
+    // does the provided value passes the validator?
+    if ($options['value'])
+    {
+      try
+      {
+        return $validator->clean($options['value']);
+      }
+      catch (sfValidatorError $error)
+      {
+      }
+    }
+
+    // no, ask the user for a valid user
+    $error = null;
+    while (false === $options['attempts'] || $options['attempts']--)
+    {
+      if (null !== $error)
+      {
+        $this->logBlock($error->getMessage(), 'ERROR');
+      }
+
+      $value = $this->ask($question, $options['style'], null);
+
+      try
+      {
+        return $validator->clean($value);
+      }
+      catch (sfValidatorError $error)
+      {
+      }
+    }
+
+    throw $error;
+  }
+
+  /**
+   * Returns an XML representation of a task.
+   *
+   * @return string An XML string representing the task
+   */
+  public function asXml()
+  {
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $dom->formatOutput = true;
+    $dom->appendChild($taskXML = $dom->createElement('task'));
+    $taskXML->setAttribute('id', $this->getFullName());
+    $taskXML->setAttribute('namespace', $this->getNamespace() ? $this->getNamespace() : '_global');
+    $taskXML->setAttribute('name', $this->getName());
+
+    $taskXML->appendChild($usageXML = $dom->createElement('usage'));
+    $usageXML->appendChild($dom->createTextNode(sprintf($this->getSynopsis(), '')));
+
+    $taskXML->appendChild($descriptionXML = $dom->createElement('description'));
+    $descriptionXML->appendChild($dom->createTextNode(implode("\n ", explode("\n", $this->getBriefDescription()))));
+
+    $taskXML->appendChild($helpXML = $dom->createElement('help'));
+    $help = $this->detailedDescription;
+    $help = str_replace(array('|COMMENT', '|INFO'), array('|strong', '|em'), $help);
+    $help = preg_replace('/\[(.+?)\|(\w+)\]/s', '<$2>$1</$2>', $help);
+    $helpXML->appendChild($dom->createTextNode(implode("\n ", explode("\n", $help))));
+
+    $taskXML->appendChild($aliasesXML = $dom->createElement('aliases'));
+    foreach ($this->getAliases() as $alias)
+    {
+      $aliasesXML->appendChild($aliasXML = $dom->createElement('alias'));
+      $aliasXML->appendChild($dom->createTextNode($alias));
+    }
+
+    $taskXML->appendChild($argumentsXML = $dom->createElement('arguments'));
+    foreach ($this->getArguments() as $argument)
+    {
+      $argumentsXML->appendChild($argumentXML = $dom->createElement('argument'));
+      $argumentXML->setAttribute('name', $argument->getName());
+      $argumentXML->setAttribute('is_required', $argument->isRequired() ? 1 : 0);
+      $argumentXML->setAttribute('is_array', $argument->isArray() ? 1 : 0);
+      $argumentXML->appendChild($helpXML = $dom->createElement('description'));
+      $helpXML->appendChild($dom->createTextNode($argument->getHelp()));
+
+      $argumentXML->appendChild($defaultsXML = $dom->createElement('defaults'));
+      $defaults = is_array($argument->getDefault()) ? $argument->getDefault() : ($argument->getDefault() ? array($argument->getDefault()) : array());
+      foreach ($defaults as $default)
+      {
+        $defaultsXML->appendChild($defaultXML = $dom->createElement('default'));
+        $defaultXML->appendChild($dom->createTextNode($default));
+      }
+    }
+
+    $taskXML->appendChild($optionsXML = $dom->createElement('options'));
+    foreach ($this->getOptions() as $option)
+    {
+      $optionsXML->appendChild($optionXML = $dom->createElement('option'));
+      $optionXML->setAttribute('name', '--'.$option->getName());
+      $optionXML->setAttribute('shortcut', $option->getShortcut() ? '-'.$option->getShortcut() : '');
+      $optionXML->setAttribute('accept_parameter', $option->acceptParameter() ? 1 : 0);
+      $optionXML->setAttribute('is_parameter_required', $option->isParameterRequired() ? 1 : 0);
+      $optionXML->setAttribute('is_multiple', $option->isArray() ? 1 : 0);
+      $optionXML->appendChild($helpXML = $dom->createElement('description'));
+      $helpXML->appendChild($dom->createTextNode($option->getHelp()));
+
+      if ($option->acceptParameter())
+      {
+        $optionXML->appendChild($defaultsXML = $dom->createElement('defaults'));
+        $defaults = is_array($option->getDefault()) ? $option->getDefault() : ($option->getDefault() ? array($option->getDefault()) : array());
+        foreach ($defaults as $default)
+        {
+          $defaultsXML->appendChild($defaultXML = $dom->createElement('default'));
+          $defaultXML->appendChild($dom->createTextNode($default));
+        }
+      }
+    }
+
+    return $dom->saveXml();
   }
 
   /**

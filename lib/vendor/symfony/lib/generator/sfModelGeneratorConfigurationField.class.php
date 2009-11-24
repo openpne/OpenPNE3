@@ -6,7 +6,7 @@
  * @package    symfony
  * @subpackage generator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfModelGeneratorConfigurationField.class.php 17858 2009-05-01 21:22:50Z FabianLange $
+ * @version    SVN: $Id: sfModelGeneratorConfigurationField.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfModelGeneratorConfigurationField
 {
@@ -55,7 +55,7 @@ class sfModelGeneratorConfigurationField
    */
   public function getConfig($key = null, $default = null, $escaped = false)
   {
-    if (is_null($key))
+    if (null === $key)
     {
       return $this->config;
     }
@@ -208,7 +208,7 @@ class sfModelGeneratorConfigurationField
    */
   public function setFlag($flag)
   {
-    if (is_null($flag))
+    if (null === $flag)
     {
       return;
     }

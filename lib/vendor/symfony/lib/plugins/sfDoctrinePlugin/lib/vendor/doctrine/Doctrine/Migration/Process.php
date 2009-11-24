@@ -32,220 +32,166 @@
  */
 class Doctrine_Migration_Process
 {
-    /**
-     * getConnection
-     *
-     * @param string $tableName 
-     * @return void
-     */
-    public function getConnection($tableName)
+    protected
+        $_migration;
+
+    public function __construct(Doctrine_Migration $migration)
     {
-        return Doctrine::getConnectionByTableName($tableName);
+        $this->_migration = $migration;
+    }
+
+    public function getConnection()
+    {
+        return $this->_migration->getConnection();
     }
 
     /**
-     * processCreatedTables
+     * Process a created table change
      *
-     * @param string $tables 
+     * @param string $table Table definition
      * @return void
      */
-    public function processCreatedTables($tables)
+    public function processCreatedTable(array $table)
     {
-        foreach ($tables as $table) {
-            $conn = $this->getConnection($table['tableName']);
-            
-            $conn->export->createTable($table['tableName'], $table['fields'], $table['options']);
+        $this->getConnection()->export->createTable($table['tableName'], $table['fields'], $table['options']);
+    }
+
+    /**
+     * Process a dropped table change
+     *
+     * @param array $table Table definition
+     * @return void
+     */
+    public function processDroppedTable(array $table)
+    {
+        $this->getConnection()->export->dropTable($table['tableName']);
+    }
+
+    /**
+     * Process a renamed table change
+     *
+     * @param array $table Renamed table definition
+     * @return void
+     */
+    public function processRenamedTable(array $table)
+    {
+        $this->getConnection()->export->alterTable($table['oldTableName'], array('name' => $table['newTableName']));
+    }
+
+    /**
+     * Process a created column change
+     *
+     * @param array $column Column definition
+     * @return void
+     */
+    public function processCreatedColumn(array $column)
+    {
+        $this->getConnection()->export->alterTable($column['tableName'], array('add' => array($column['columnName'] => $column)));
+    }
+
+    /**
+     * Process a dropped column change
+     *
+     * @param array $column Column definition
+     * @return void
+     */
+    public function processDroppedColumn(array $column)
+    {
+        $this->getConnection()->export->alterTable($column['tableName'], array('remove' => array($column['columnName'] => array())));
+    }
+
+    /**
+     * Process a renamed column change
+     *
+     * @param array $column Column definition
+     * @return void
+     */
+    public function processRenamedColumn(array $column)
+    {
+        $columnList = $this->getConnection()->import->listTableColumns($column['tableName']);
+        if (isset($columnList[$column['oldColumnName']])) {
+            $this->getConnection()->export->alterTable($column['tableName'], array('rename' => array($column['oldColumnName'] => array('name' => $column['newColumnName'], 'definition' => $columnList[$column['oldColumnName']]))));
         }
     }
 
     /**
-     * processDroppedTables
+     * Process a changed column change
      *
-     * @param string $tables 
+     * @param array $column Changed column definition
      * @return void
      */
-    public function processDroppedTables($tables)
+    public function processChangedColumn(array $column)
     {
-        foreach ($tables as $table) {
-            $conn = $this->getConnection($table['tableName']);
-            
-            $conn->export->dropTable($table['tableName']);
-        }
+        $options = array();
+        $options = $column['options'];
+        $options['type'] = $column['type'];
+    
+        $this->getConnection()->export->alterTable($column['tableName'], array('change' => array($column['columnName'] => array('definition' => $options))));
     }
 
     /**
-     * processRenamedTables
+     * Process a created index change
      *
-     * @param string $tables 
+     * @param array $index Index definition
      * @return void
      */
-    public function processRenamedTables($tables)
+    public function processCreatedIndex(array $index)
     {
-        foreach ($tables as $table) {
-            $conn = $this->getConnection($table['newTableName']);
-            
-            $conn->export->alterTable($table['oldTableName'], array('name' => $table['newTableName']));
-        }
+        $this->getConnection()->export->createIndex($index['tableName'], $index['indexName'], $index['definition']);
     }
 
     /**
-     * processAddedColumns
+     * Process a dropped index change
      *
-     * @param string $columns 
+     * @param array $index Index definition
      * @return void
      */
-    public function processAddedColumns($columns)
+    public function processDroppedIndex(array $index)
     {
-        foreach ($columns as $column) {
-            $conn = $this->getConnection($column['tableName']);
-            
-            $options = array();
-            $options = $column['options'];
-            $options['type'] = $column['type'];
-            
-            $conn->export->alterTable($column['tableName'], array('add' => array($column['columnName'] => $options)));
-        }
+        $this->getConnection()->export->dropIndex($index['tableName'], $index['indexName']);
     }
 
     /**
-     * processRenamedColumns
+     * Process a created constraint change
      *
-     * @param string $columns 
+     * @param array $constraint Constraint definition
      * @return void
      */
-    public function processRenamedColumns($columns)
+    public function processCreatedConstraint(array $constraint)
     {
-        foreach ($columns as $column) {
-            $conn = $this->getConnection($column['tableName']);
-            
-            $columnList = $conn->import->listTableColumns($column['tableName']);
-            if (isset($columnList[$column['oldColumnName']])) {
-	            $conn->export->alterTable($column['tableName'], 
-	                                      array('rename' => array($column['oldColumnName'] => array('name' => $column['newColumnName'],
-	                                      																													'definition'=>$columnList[$column['oldColumnName']]))));
-            }
-        }
+        $this->getConnection()->export->createConstraint($constraint['tableName'], $constraint['constraintName'], $constraint['definition']);
     }
 
     /**
-     * processChangedColumns
+     * Process a dropped constraint change
      *
-     * @param string $columns 
+     * @param array $constraint Constraint definition
      * @return void
      */
-    public function processChangedColumns($columns)
+    public function processDroppedConstraint(array $constraint)
     {
-        foreach ($columns as $column) {
-            $conn = $this->getConnection($column['tableName']);
-            
-            $options = array();
-            $options = $column['options'];
-            $options['type'] = $column['type'];
-            
-            $conn->export->alterTable($column['tableName'], array('change' => array($column['columnName'] => array('definition' => $options))));
-        }  
+        $this->getConnection()->export->dropConstraint($constraint['tableName'], $constraint['constraintName'], isset($constraint['definition']['primary']) && $constraint['definition']['primary']);
     }
 
     /**
-     * processRemovedColumns
+     * Process a created foreign key change
      *
-     * @param string $columns 
+     * @param array $foreignKey Foreign key definition
      * @return void
      */
-    public function processRemovedColumns($columns)
+    public function processCreatedForeignKey(array $foreignKey)
     {
-        foreach ($columns as $column) {
-            $conn = $this->getConnection($column['tableName']);
-            
-            $conn->export->alterTable($column['tableName'], array('remove' => array($column['columnName'] => array())));
-        }
+        $this->getConnection()->export->createForeignKey($foreignKey['tableName'], $foreignKey['definition']);
     }
 
     /**
-     * processAddexIndexes
+     * Process a dropped foreign key change
      *
-     * @param string $indexes 
+     * @param array $foreignKey
      * @return void
      */
-    public function processAddedIndexes($indexes)
+    public function processDroppedForeignKey(array $foreignKey)
     {
-        foreach ($indexes as $index) {
-            $conn = $this->getConnection($index['tableName']);
-            
-            $conn->export->createIndex($index['tableName'], $index['indexName'], $index['definition']);
-        }
-    }
-
-    /**
-     * processRemovedIndexes
-     *
-     * @param string $indexes 
-     * @return void
-     */
-    public function processRemovedIndexes($indexes)
-    {
-        foreach ($indexes as $index) {
-            $conn = $this->getConnection($index['tableName']);
-            
-            $conn->export->dropIndex($index['tableName'], $index['indexName']);
-        } 
-    }
-
-    /**
-     * processCreatedConstraints
-     *
-     * @param string $constraints 
-     * @return void
-     */
-    public function processCreatedConstraints($constraints)
-    {
-        foreach ($constraints as $constraint) {
-            $conn = $this->getConnection($constraint['tableName']);
-            $conn->export->createConstraint($constraint['tableName'], $constraint['constraintName'],
-                    $constraint['definition']);
-        }
-    }
-
-    /**
-     * processDroppedConstraints
-     *
-     * @param string $constraints 
-     * @return void
-     */
-    public function processDroppedConstraints($constraints)
-    {
-        foreach ($constraints as $constraint) {
-            $conn = $this->getConnection($constraint['tableName']);
-            $conn->export->dropConstraint($constraint['tableName'], $constraint['constraintName'],
-                    $constraint['primary']);
-        }
-    }
-
-    /**
-     * processCreatedFks
-     *
-     * @param string $foreignKeys 
-     * @return void
-     */
-    public function processCreatedFks($foreignKeys)
-    {
-        foreach ($foreignKeys as $fk) {
-            $conn = $this->getConnection($fk['tableName']);
-            $conn->export->createForeignKey($fk['tableName'], $fk['definition']);
-        }
-    }
-
-    /**
-     * processDroppedFks
-     *
-     * @param string $foreignKeys 
-     * @return void
-     */
-    public function processDroppedFks($foreignKeys)
-    {
-        foreach ($foreignKeys as $fk) {
-            $conn = $this->getConnection($fk['tableName']);
-            $conn->export->dropForeignKey($fk['tableName'], $fk['fkName']);
-        }
+        $this->getConnection()->export->dropForeignKey($foreignKey['tableName'], $foreignKey['definition']['name']);
     }
 }

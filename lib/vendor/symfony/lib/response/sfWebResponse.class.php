@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage response
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWebResponse.class.php 17749 2009-04-29 11:54:22Z fabien $
+ * @version    SVN: $Id: sfWebResponse.class.php 23984 2009-11-15 19:54:59Z FabianLange $
  */
 class sfWebResponse extends sfResponse
 {
@@ -235,7 +235,7 @@ class sfWebResponse extends sfResponse
   {
     $name = $this->normalizeHeaderName($name);
 
-    if (is_null($value))
+    if (null === $value)
     {
       unset($this->headers[$name]);
 
@@ -320,8 +320,9 @@ class sfWebResponse extends sfResponse
   }
 
   /**
-   * Sends HTTP headers and cookies.
-   *
+   * Sends HTTP headers and cookies. Only the first invocation of this method will send the headers.
+   * Subsequent invocations will silently do nothing. This allows certain actions to send headers early,
+   * while still using the standard controller.
    */
   public function sendHttpHeaders()
   {
@@ -333,6 +334,13 @@ class sfWebResponse extends sfResponse
     // status
     $status = $this->options['http_protocol'].' '.$this->statusCode.' '.$this->statusText;
     header($status);
+
+    if (substr(php_sapi_name(), 0, 3) == 'cgi')
+    {
+      // fastcgi servers cannot send this status information because it was sent by them already due to the HTT/1.0 line
+      // so we can safely unset them. see ticket #3191
+      unset($this->headers['Status']);
+    }
 
     if ($this->options['logging'])
     {
@@ -364,6 +372,8 @@ class sfWebResponse extends sfResponse
         $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Send cookie "%s": "%s"', $cookie['name'], $cookie['value']))));
       }
     }
+    // prevent resending the headers
+    $this->options['send_http_headers'] = false;
   }
 
   /**
@@ -504,7 +514,7 @@ class sfWebResponse extends sfResponse
     // set HTTP header
     $this->setHttpHeader($key, $value, $replace);
 
-    if (is_null($value))
+    if (null === $value)
     {
       unset($this->httpMetas[$key]);
 
@@ -546,7 +556,7 @@ class sfWebResponse extends sfResponse
   {
     $key = strtolower($key);
 
-    if (is_null($value))
+    if (null === $value)
     {
       unset($this->metas[$key]);
 

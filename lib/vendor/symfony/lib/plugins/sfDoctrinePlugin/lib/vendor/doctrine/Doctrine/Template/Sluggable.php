@@ -39,30 +39,21 @@ class Doctrine_Template_Sluggable extends Doctrine_Template
      *
      * @var string
      */
-    protected $_options = array('name'          =>  'slug',
-                                'alias'         =>  null,
-                                'type'          =>  'string',
-                                'length'        =>  255,
-                                'unique'        =>  true,
-                                'options'       =>  array(),
-                                'fields'        =>  array(),
-                                'uniqueBy'      =>  array(),
-                                'uniqueIndex'   =>  true,
-                                'canUpdate'     =>  false,
-                                'builder'       =>  array('Doctrine_Inflector', 'urlize'),
-                                'indexName'     =>  'sluggable'
+    protected $_options = array(
+        'name'          =>  'slug',
+        'alias'         =>  null,
+        'type'          =>  'string',
+        'length'        =>  255,
+        'unique'        =>  true,
+        'options'       =>  array(),
+        'fields'        =>  array(),
+        'uniqueBy'      =>  array(),
+        'uniqueIndex'   =>  true,
+        'canUpdate'     =>  false,
+        'builder'       =>  array('Doctrine_Inflector', 'urlize'),
+        'provider'      =>  null,
+        'indexName'     =>  'sluggable'
     );
-
-    /**
-     * __construct
-     *
-     * @param string $array 
-     * @return void
-     */
-    public function __construct(array $options = array())
-    {
-        $this->_options = Doctrine_Lib::arrayDeepMerge($this->_options, $options);
-    }
 
     /**
      * Set table definition for Sluggable behavior

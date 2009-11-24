@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: DBNone.php 898 2008-01-02 00:18:44Z hans $
+ *  $Id: DBNone.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -26,7 +26,7 @@
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
  * @author     Jon S. Stevens <jon@clearink.com> (Torque)
  * @author     Brett McLaughlin <bmclaugh@algx.net> (Torque)
- * @version    $Revision: 898 $
+ * @version    $Revision: 1262 $
  * @package    propel.adapter
  */
 class DBNone extends DBAdapter {
@@ -95,5 +95,21 @@ class DBNone extends DBAdapter {
 	{
 		return strlen($s);
 	}
+	
+	/**
+	 * Modifies the passed-in SQL to add LIMIT and/or OFFSET.
+	 */
+	public function applyLimit(&$sql, $offset, $limit)
+	{		
+	}
 
+	/**
+	 * Gets the SQL string that this adapter uses for getting a random number.
+	 *
+	 * @param      mixed $seed (optional) seed value for databases that support this
+	 */
+	public function random($seed = null)
+	{
+	}
+	
 }

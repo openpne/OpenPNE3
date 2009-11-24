@@ -13,7 +13,7 @@
  * {@link http://prado.sourceforge.net/}
  *
  * @author     Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version    $Id: sfNumberFormatInfo.class.php 11700 2008-09-21 10:53:44Z fabien $
+ * @version    $Id: sfNumberFormatInfo.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  * @package    symfony
  * @subpackage i18n
  */
@@ -164,7 +164,7 @@ class sfNumberFormatInfo
   static public function getInvariantInfo($type = sfNumberFormatInfo::DECIMAL)
   {
     static $invariant;
-    if (is_null($invariant))
+    if (null === $invariant)
     {
       $culture = sfCultureInfo::getInvariantCulture();
       $invariant = $culture->NumberFormat;

@@ -16,7 +16,7 @@
  * @subpackage user
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfSecurityUser.class.php 17749 2009-04-29 11:54:22Z fabien $
+ * @version    SVN: $Id: sfSecurityUser.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 interface sfSecurityUser
 {

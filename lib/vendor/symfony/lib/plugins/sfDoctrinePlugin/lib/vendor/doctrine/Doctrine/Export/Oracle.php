@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Oracle.php 5893 2009-06-16 15:25:42Z jwage $
+ *  $Id: Oracle.php 6720 2009-11-12 20:18:24Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -29,7 +29,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5893 $
+ * @version     $Revision: 6720 $
  */
 class Doctrine_Export_Oracle extends Doctrine_Export
 {
@@ -38,12 +38,11 @@ class Doctrine_Export_Oracle extends Doctrine_Export
      *
      * @param object $db database object that is extended by this class
      * @param string $name name of the database that should be created
-     * @return mixed MDB2_OK on success, a MDB2 error on failure
-     * @access public
+     * @return boolean      success of operation
      */
     public function createDatabase($name)
     {
-        if ($this->conn->getAttribute(Doctrine::ATTR_EMULATE_DATABASE)) {
+        if ($this->conn->getAttribute(Doctrine_Core::ATTR_EMULATE_DATABASE)) {
             $username   = $name;
             $password   = $this->conn->dsn['password'] ? $this->conn->dsn['password'] : $name;
 
@@ -60,7 +59,6 @@ class Doctrine_Export_Oracle extends Doctrine_Export
                 $this->dropDatabase($username);
             }
         }
-
         return true;
     }
 
@@ -69,30 +67,30 @@ class Doctrine_Export_Oracle extends Doctrine_Export
      *
      * @param object $this->conn database object that is extended by this class
      * @param string $name name of the database that should be dropped
-     * @return mixed MDB2_OK on success, a MDB2 error on failure
+     * @return boolean      success of operation
      * @access public
      */
     public function dropDatabase($name)
     {
-        $sql[] = "BEGIN
-FOR I IN (select table_name from user_tables)
-LOOP 
-EXECUTE IMMEDIATE 'DROP TABLE '||I.table_name||' CASCADE CONSTRAINTS';
-END LOOP;
-END;";
+        $sql = <<<SQL
+BEGIN
+  -- user_tables contains also materialized views
+  FOR I IN (SELECT table_name FROM user_tables WHERE table_name NOT IN (SELECT mview_name FROM user_mviews))
+  LOOP 
+    EXECUTE IMMEDIATE 'DROP TABLE \"'||I.table_name||'\" CASCADE CONSTRAINTS';
+  END LOOP;
+  
+  FOR I IN (SELECT SEQUENCE_NAME FROM USER_SEQUENCES)
+  LOOP
+    EXECUTE IMMEDIATE 'DROP SEQUENCE \"'||I.SEQUENCE_OWNER||'\".\"'||I.SEQUENCE_NAME||'\"';
+  END LOOP;
+END;
 
-        $sql[] = "BEGIN
-FOR I IN (SELECT SEQUENCE_NAME, SEQUENCE_OWNER FROM ALL_SEQUENCES WHERE SEQUENCE_OWNER <> 'SYS')
-LOOP 
-EXECUTE IMMEDIATE 'DROP SEQUENCE '||I.SEQUENCE_OWNER||'.'||I.SEQUENCE_NAME;
-END LOOP;
-END;";
+SQL;
 
-        foreach ($sql as $query) {
-            $this->conn->exec($query);
-        }
+        $this->conn->exec($sql);
 
-        if ($this->conn->getAttribute(Doctrine::ATTR_EMULATE_DATABASE)) {
+        if ($this->conn->getAttribute(Doctrine_Core::ATTR_EMULATE_DATABASE)) {
             $username = $name;
             $this->conn->exec('DROP USER ' . $username . ' CASCADE');
         }
@@ -104,14 +102,14 @@ END;";
      * @param string $name  name of the PK field
      * @param string $table name of the table
      * @param string $start start value for the sequence
-     * @return mixed        MDB2_OK on success, a MDB2 error on failure
+     * @return string        Sql code
      * @access private
      */
     public function _makeAutoincrement($name, $table, $start = 1)
     {
         $sql   = array();
 
-        if ( ! $this->conn->getAttribute(Doctrine::ATTR_QUOTE_IDENTIFIER)) {
+        if ( ! $this->conn->getAttribute(Doctrine_Core::ATTR_QUOTE_IDENTIFIER)) {
         	$table = strtoupper($table);
         }
         $indexName  = $table . '_AI_PK';
@@ -313,6 +311,10 @@ END;';
     {
         $sql = parent::createTableSql($name, $fields, $options);
 
+        if (isset($options['comment']) && ! empty($options['comment'])) {
+     	    $sql[] = $this->_createTableCommentSql($name, $options['comment']);
+     	}
+
         foreach ($fields as $fieldName => $field) {
             if (isset($field['sequence'])) {
               $sql[] = $this->createSequenceSql($field['sequence'], 1);
@@ -321,6 +323,10 @@ END;';
             if (isset($field['autoincrement']) && $field['autoincrement'] ||
                (isset($field['autoinc']) && $fields['autoinc'])) {           
                 $sql = array_merge($sql, $this->_makeAutoincrement($fieldName, $name));
+            }
+
+            if (isset($field['comment']) && ! empty($field['comment'])){
+                $sql[] = $this->_createColumnCommentSql($name,$fieldName,$field['comment']); 
             }
         }
         
@@ -333,7 +339,35 @@ END;';
                 }
             }
         }
+        
         return $sql;
+    }
+
+    /**
+     * create a comment on a table
+     *
+     * @param string $table    Name of the table we are commenting
+     * @param string $comment  The comment for the table
+     *
+     * @return string
+     */
+    public function _createTableCommentSql($table,$comment)
+    {
+        return 'COMMENT ON TABLE '. $this->conn->quoteIdentifier($table, true). ' IS '.$this->conn->quote($comment, 'text').'';
+    }
+
+    /**
+     * create a comment on a column
+     *
+     * @param string $table    Name of the table
+     * @param string $column   Name of the column we are commenting
+     * @param string $comment  The comment for the table
+     *
+     * @return string
+     */
+    public function _createColumnCommentSql($table,$column, $comment)
+    {
+        return 'COMMENT ON COLUMN '. $this->conn->quoteIdentifier($table, true). '.'. $this->conn->quoteIdentifier($column, true). ' IS '.$this->conn->quote($comment, 'text').'';
     }
 
     /**
@@ -549,7 +583,7 @@ END;';
         
         if ( isset($definition['type']))
         {
-            if(strtolower($definition['type']) == 'unique') {
+            if (strtolower($definition['type']) == 'unique') {
                 $type = strtoupper($definition['type']);
             } else {
                 throw new Doctrine_Export_Exception(
@@ -561,7 +595,7 @@ END;';
             return null;
         }
         
-        if (!isset($definition['fields']) || !is_array($definition['fields'])) {
+        if ( !isset($definition['fields']) || !is_array($definition['fields'])) {
             throw new Doctrine_Export_Exception('No columns given for index '.$name);
         }
         

@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: BasePeer.php 1093 2009-02-02 08:20:54Z ron $
+ *  $Id: BasePeer.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -35,7 +35,7 @@
  * @author     John D. McNally <jmcnally@collab.net> (Torque)
  * @author     Brett McLaughlin <bmclaugh@algx.net> (Torque)
  * @author     Stephen Haberman <stephenh@chase3000.com> (Torque)
- * @version    $Revision: 1093 $
+ * @version    $Revision: 1262 $
  * @package    propel.util
  */
 class BasePeer
@@ -545,7 +545,7 @@ class BasePeer
 	 * @see        createSelectSql()
 	 * @see        doSelect()
 	 */
-	private static function populateStmtValues(PDOStatement $stmt, array $params, DatabaseMap $dbMap, DBAdapter $db)
+	public static function populateStmtValues(PDOStatement $stmt, array $params, DatabaseMap $dbMap, DBAdapter $db)
 	{
 		$i = 1;
 		foreach ($params as $param) {
@@ -679,8 +679,8 @@ class BasePeer
 	 * @return     string
 	 * @throws     PropelException Trouble creating the query string.
 	 */
-	public static function createSelectSql(Criteria $criteria, &$params) {
-
+	public static function createSelectSql(Criteria $criteria, &$params)
+	{
 		$db = Propel::getDB($criteria->getDbName());
 		$dbMap = Propel::getDatabaseMap($criteria->getDbName());
 
@@ -782,18 +782,13 @@ class BasePeer
 			$sb = "";
 			$criterion->appendPsTo($sb, $params);
 			$whereClause[] = $sb;
-
 		}
 
-		// handle RIGHT (straight) joins
-		// Loop through the joins,
+		// Handle joins
 		// joins with a null join type will be added to the FROM clause and the condition added to the WHERE clause.
 		// joins of a specified type: the LEFT side will be added to the fromClause and the RIGHT to the joinClause
-		// New Code.
-		foreach ((array) $criteria->getJoins() as $join) { // we'll only loop if there's actually something here
-
+		foreach ((array) $criteria->getJoins() as $join) { 
 			// The join might have been established using an alias name
-
 			$leftTable = $join->getLeftTableName();
 			$leftTableAlias = '';
 			if ($realTable = $criteria->getTableForAlias($leftTable)) {
@@ -816,28 +811,29 @@ class BasePeer
 			}
 
 			// build the condition
-			$left = $join->getLeftColumns();
-			$right = $join->getRightColumns();
-			$condition = "";
-			for ($i = 0; $i < count($left); $i++) {
+			$condition = '';
+			foreach ($join->getConditions() as $index => $conditionDesc)
+			{
 				if ($ignoreCase) {
-					$condition .= $db->ignoreCase($left[$i]) . '=' . $db->ignoreCase($right[$i]);
+					$condition .= $db->ignoreCase($conditionDesc['left']) . $conditionDesc['operator'] . $db->ignoreCase($conditionDesc['right']);
 				} else {
-					$condition .= $left[$i] . '=' . $right[$i];
+					$condition .= implode($conditionDesc);
 				}
-				if ($i + 1 < count($left) ) {
-					$condition .= " AND ";
+				if ($index + 1 < $join->countConditions()) {
+					$condition .= ' AND ';
 				}
 			}
 
 			// add 'em to the queues..
 			if ($joinType = $join->getJoinType()) {
+			  // real join
 				if (!$fromClause) {
 					$fromClause[] = $leftTable . $leftTableAlias;
 				}
 				$joinTables[] = $rightTable . $rightTableAlias;
 				$joinClause[] = $join->getJoinType() . ' ' . $rightTable . $rightTableAlias . " ON ($condition)";
 			} else {
+			  // implicit join, translates to a where
 				$fromClause[] = $leftTable . $leftTableAlias;
 				$fromClause[] = $rightTable . $rightTableAlias;
 				$whereClause[] = $condition;
@@ -959,7 +955,6 @@ class BasePeer
 		}
 
 		return $sql;
-
 	}
 
 	/**
@@ -969,7 +964,8 @@ class BasePeer
 	 * @param      Criteria $values
 	 * @return     array params array('column' => ..., 'table' => ..., 'value' => ...)
 	 */
-	private static function buildParams($columns, Criteria $values) {
+	private static function buildParams($columns, Criteria $values)
+	{
 		$params = array();
 		foreach ($columns as $key) {
 			if ($values->containsKey($key)) {

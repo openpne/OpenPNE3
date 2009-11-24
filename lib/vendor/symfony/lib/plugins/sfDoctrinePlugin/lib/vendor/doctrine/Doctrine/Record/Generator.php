@@ -37,24 +37,27 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
      *
      * @var array $_options     an array of plugin specific options
      */
-    protected $_options = array('generateFiles'  => false,
-                                'generatePath'   => false,
-                                'builderOptions' => array(),
-                                'identifier'     => false,
-                                'table'          => false,
-                                'pluginTable'    => false,
-                                'children'       => array());
+    protected $_options = array(
+        'generateFiles'  => false,
+        'generatePath'   => false,
+        'builderOptions' => array(),
+        'identifier'     => false,
+        'table'          => false,
+        'pluginTable'    => false,
+        'children'       => array(),
+        'cascadeDelete'  => true,
+        'appLevelDelete' => false
+    );
 
     /**
-     * _initialized
+     * Whether or not the generator has been initialized
      *
      * @var bool $_initialized
      */
     protected $_initialized = false;
 
     /**
-     * __get
-     * an alias for getOption
+     * An alias for getOption
      *
      * @param string $option
      */
@@ -77,7 +80,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
     }
 
     /**
-     * returns the value of an option
+     * Returns the value of an option
      *
      * @param $option       the name of the option to retrieve
      * @return mixed        the value of the option
@@ -92,7 +95,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
     }
 
     /**
-     * sets given value to an option
+     * Sets given value to an option
      *
      * @param $option       the name of the option to be changed
      * @param $value        the value of the option
@@ -106,8 +109,6 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
     }
 
     /**
-     * addChild
-     *
      * Add child record generator 
      *
      * @param  Doctrine_Record_Generator $generator 
@@ -119,9 +120,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
     }
 
     /**
-     * getOptions
-     *
-     * returns all options and their associated values
+     * Returns all options and their associated values
      *
      * @return array    all options as an associative array
      */
@@ -131,11 +130,9 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
     }
 
     /**
-     * initialize
-     *
      * Initialize the plugin. Call in Doctrine_Template setTableDefinition() in order to initiate a generator in a template
-     * SEE: Doctrine_Template_I18n for an example
      *
+     * @see Doctrine_Template_I18n
      * @param  Doctrine_Table $table 
      * @return void
      */
@@ -153,12 +150,18 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
 
         $this->_options['table'] = $table;
 
-        $this->_options['className'] = str_replace('%CLASS%',
-                                                   $this->_options['table']->getComponentName(),
-                                                   $this->_options['className']);
+        $ownerClassName = $this->_options['table']->getComponentName();
+        $className = $this->_options['className'];
+        $this->_options['className'] = str_replace('%CLASS%', $ownerClassName, $className);
+
+        if (isset($this->_options['tableName'])) {
+            $ownerTableName = $this->_options['table']->getTableName();
+            $tableName = $this->_options['tableName'];
+            $this->_options['tableName'] = str_replace('%TABLE%', $ownerTableName, $tableName);
+        }
 
         // check that class doesn't exist (otherwise we cannot create it)
-        if ($this->_options['generateFiles'] === false && class_exists($this->_options['className'], false)) {
+        if ($this->_options['generateFiles'] === false && class_exists($this->_options['className'])) {
             return false;
         }
 
@@ -173,18 +176,19 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
         $this->setTableDefinition();
         $this->setUp();
 
-        $definition = array();
-        $definition['columns'] = $this->_table->getColumns();
-        $definition['tableName'] = $this->_table->getTableName();
-        $definition['actAs'] = $this->_table->getTemplates();
-
-        $this->generateClass($definition);
+        $this->generateClassFromTable($this->_table);
 
         $this->buildChildDefinitions();
 
         $this->_table->initIdentifier();
     }
 
+    /**
+     * Create the new Doctrine_Table instance in $this->_table based on the owning
+     * table.
+     *
+     * @return void
+     */
     public function buildTable()
     {
         // Bind model 
@@ -192,7 +196,9 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
         $conn->getManager()->bindComponent($this->_options['className'], $conn->getName());
 
         // Create table
-        $this->_table = new Doctrine_Table($this->_options['className'], $conn);
+        $tableClass = $conn->getAttribute(Doctrine_Core::ATTR_TABLE_CLASS);
+        $this->_table = new $tableClass($this->_options['className'], $conn);        
+        $this->_table->setGenerator($this);
 
         // If custom table name set then lets use it
         if (isset($this->_options['tableName']) && $this->_options['tableName']) {
@@ -216,7 +222,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
     }
 
     /** 
-     * empty template method for providing the concrete plugins the ability
+     * Empty template method for providing the concrete plugins the ability
      * to initialize options before the actual definition is being built
      *
      * @return void
@@ -227,7 +233,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
     }
 
     /**
-     * buildChildDefinitions
+     * Build the child behavior definitions that are attached to this generator
      *
      * @return void
      */
@@ -257,12 +263,9 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
     }
 
     /**
-     * buildForeignKeys
-     *
-     * generates foreign keys for the plugin table based on the owner table
-     *
-     * the foreign keys generated by this method can be used for 
-     * setting the relations between the owner and the plugin classes
+     * Generates foreign keys for the plugin table based on the owner table.
+     * These columns are automatically added to the generated model so we can
+     * create foreign keys back to the table object that owns the plugin.
      *
      * @param Doctrine_Table $table     the table object that owns the plugin
      * @return array                    an array of foreign key definitions
@@ -287,34 +290,24 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
     }
 
     /**
-     * buildLocalRelation
-     *
-     * @return void
-     */
-    public function buildLocalRelation()
-    {
-        $options = array('local'      => $this->_options['table']->getIdentifier(),
-                         'foreign'    => $this->_options['table']->getIdentifier(),
-                         'type'       => Doctrine_Relation::ONE,
-                         'owningSide' => true);
-
-        $options['onDelete'] = 'CASCADE';
-        $options['onUpdate'] = 'CASCADE';
-
-        $this->_table->getRelationParser()->bind($this->_options['table']->getComponentName(), $options);
-    }
-
-    /**
-     * buildForeignRelation
+     * Build the local relationship on the generated model for this generator 
+     * instance which points to the invoking table in $this->_options['table']
      *
      * @param string $alias Alias of the foreign relation
      * @return void
      */
-    public function buildForeignRelation($alias = null)
+    public function buildLocalRelation($alias = null)
     {
-        $options = array('local'    => $this->_options['table']->getIdentifier(),
-                         'foreign'  => $this->_options['table']->getIdentifier(),
-                         'type'     => Doctrine_Relation::MANY);
+        $options = array(
+            'local'      => $this->getRelationLocalKey(),
+            'foreign'    => $this->getRelationForeignKey(),
+            'owningSide' => true
+        );
+
+        if (isset($this->_options['cascadeDelete']) && $this->_options['cascadeDelete'] && ! $this->_options['appLevelDelete']) {
+            $options['onDelete'] = 'CASCADE';
+            $options['onUpdate'] = 'CASCADE';
+        }
 
         $aliasStr = '';
 
@@ -322,14 +315,93 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
             $aliasStr = ' as ' . $alias;
         }
 
-        $this->_options['table']->getRelationParser()->bind($this->_table->getComponentName() . $aliasStr,
-                                                            $options);
+        $this->hasOne($this->_options['table']->getComponentName() . $aliasStr, $options);
     }
 
     /**
-     * buildRelation
+     * Add a Doctrine_Relation::MANY relationship to the generator owner table
      *
-     * this method can be used for generating the relation from the plugin 
+     * @param string $name 
+     * @param array $options 
+     * @return void
+     */
+    public function ownerHasMany($name, $options)
+    {
+        $this->_options['table']->hasMany($name, $options);
+    }
+
+    /**
+     * Add a Doctrine_Relation::ONE relationship to the generator owner table
+     *
+     * @param string $name 
+     * @param array $options 
+     * @return void
+     */
+    public function ownerHasOne($name, $options)
+    {
+        $this->_options['table']->hasOne($name, $options);
+    }
+
+    /**
+     * Build the foreign relationship on the invoking table in $this->_options['table']
+     * which points back to the model generated in this generator instance.
+     *
+     * @param string $alias Alias of the foreign relation
+     * @return void
+     */
+    public function buildForeignRelation($alias = null)
+    {
+        $options = array(
+            'local'    => $this->getRelationForeignKey(),
+            'foreign'  => $this->getRelationLocalKey(),
+            'localKey' => false
+        );
+
+        if (isset($this->_options['cascadeDelete']) && $this->_options['cascadeDelete'] && $this->_options['appLevelDelete']) {
+            $options['cascade'] = array('delete');
+        }
+
+        $aliasStr = '';
+
+        if ($alias !== null) {
+            $aliasStr = ' as ' . $alias;
+        }
+
+        $this->ownerHasMany($this->_table->getComponentName() . $aliasStr, $options);
+    }
+
+    /**
+     * Get the local key of the generated relationship
+     *
+     * @return string $local
+     */
+    public function getRelationLocalKey()
+    {
+        return $this->getRelationForeignKey();
+    }
+
+    /**
+     * Get the foreign key of the generated relationship
+     *
+     * @return string $foreign
+     */
+    public function getRelationForeignKey()
+    {
+        $table = $this->_options['table'];
+        $identifier = $table->getIdentifier();
+
+        foreach ((array) $identifier as $column) {
+            $def = $table->getDefinitionOf($column);
+            if (isset($def['primary']) && $def['primary'] && isset($def['autoincrement']) && $def['autoincrement']) {
+                return $column;
+            }
+        }
+        
+        return $identifier;
+    }
+
+    /**
+     * This method can be used for generating the relation from the plugin 
      * table to the owner table. By default buildForeignRelation() and buildLocalRelation() are called
      * Those methods can be overridden or this entire method can be overridden
      *
@@ -337,14 +409,28 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
      */
     public function buildRelation()
     {
-    	$this->buildForeignRelation();
+        $this->buildForeignRelation();
         $this->buildLocalRelation();
     }
 
     /**
-     * generateClass
+     * Generate a Doctrine_Record from a populated Doctrine_Table instance
      *
-     * generates the class definition for plugin class
+     * @param Doctrine_Table $table
+     * @return void
+     */
+    public function generateClassFromTable(Doctrine_Table $table)
+    {
+        $definition = array();
+        $definition['columns'] = $table->getColumns();
+        $definition['tableName'] = $table->getTableName();
+        $definition['actAs'] = $table->getTemplates();
+      
+        return $this->generateClass($definition);
+    }
+
+    /**
+     * Generates the class definition for plugin class
      *
      * @param array $definition  Definition array defining columns, relations and options
      *                           for the model

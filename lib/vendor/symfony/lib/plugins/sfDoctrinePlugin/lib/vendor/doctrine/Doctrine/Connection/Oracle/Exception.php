@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Exception.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Exception.php 6484 2009-10-12 17:40:41Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6484 $
  * @link        www.phpdoctrine.org
  */
 class Doctrine_Connection_Oracle_Exception extends Doctrine_Connection_Exception
@@ -38,24 +38,24 @@ class Doctrine_Connection_Oracle_Exception extends Doctrine_Connection_Exception
      *                                  error code from a native database error code
      */
     protected static $errorCodeMap = array(
-                                      1    => Doctrine::ERR_CONSTRAINT,
-                                      900  => Doctrine::ERR_SYNTAX,
-                                      904  => Doctrine::ERR_NOSUCHFIELD,
-                                      913  => Doctrine::ERR_VALUE_COUNT_ON_ROW,
-                                      921  => Doctrine::ERR_SYNTAX,
-                                      923  => Doctrine::ERR_SYNTAX,
-                                      942  => Doctrine::ERR_NOSUCHTABLE,
-                                      955  => Doctrine::ERR_ALREADY_EXISTS,
-                                      1400 => Doctrine::ERR_CONSTRAINT_NOT_NULL,
-                                      1401 => Doctrine::ERR_INVALID,
-                                      1407 => Doctrine::ERR_CONSTRAINT_NOT_NULL,
-                                      1418 => Doctrine::ERR_NOT_FOUND,
-                                      1476 => Doctrine::ERR_DIVZERO,
-                                      1722 => Doctrine::ERR_INVALID_NUMBER,
-                                      2289 => Doctrine::ERR_NOSUCHTABLE,
-                                      2291 => Doctrine::ERR_CONSTRAINT,
-                                      2292 => Doctrine::ERR_CONSTRAINT,
-                                      2449 => Doctrine::ERR_CONSTRAINT,
+                                      1    => Doctrine_Core::ERR_CONSTRAINT,
+                                      900  => Doctrine_Core::ERR_SYNTAX,
+                                      904  => Doctrine_Core::ERR_NOSUCHFIELD,
+                                      913  => Doctrine_Core::ERR_VALUE_COUNT_ON_ROW,
+                                      921  => Doctrine_Core::ERR_SYNTAX,
+                                      923  => Doctrine_Core::ERR_SYNTAX,
+                                      942  => Doctrine_Core::ERR_NOSUCHTABLE,
+                                      955  => Doctrine_Core::ERR_ALREADY_EXISTS,
+                                      1400 => Doctrine_Core::ERR_CONSTRAINT_NOT_NULL,
+                                      1401 => Doctrine_Core::ERR_INVALID,
+                                      1407 => Doctrine_Core::ERR_CONSTRAINT_NOT_NULL,
+                                      1418 => Doctrine_Core::ERR_NOT_FOUND,
+                                      1476 => Doctrine_Core::ERR_DIVZERO,
+                                      1722 => Doctrine_Core::ERR_INVALID_NUMBER,
+                                      2289 => Doctrine_Core::ERR_NOSUCHTABLE,
+                                      2291 => Doctrine_Core::ERR_CONSTRAINT,
+                                      2292 => Doctrine_Core::ERR_CONSTRAINT,
+                                      2449 => Doctrine_Core::ERR_CONSTRAINT,
                                       );
 
     /**

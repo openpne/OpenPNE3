@@ -40,7 +40,8 @@ class Doctrine_Template_Searchable extends Doctrine_Template
      */
     public function __construct(array $options = array())
     {
-        $this->_plugin = new Doctrine_Search($options); 
+	      parent::__construct($options);
+        $this->_plugin = new Doctrine_Search($this->_options); 
     }
 
     /**
@@ -63,9 +64,9 @@ class Doctrine_Template_Searchable extends Doctrine_Template
      * @param integer $offset 
      * @return void
      */
-    public function batchUpdateIndex($limit = null, $offset = null)
+    public function batchUpdateIndex($limit = null, $offset = null, $encoding = null)
     {
-        $this->_plugin->batchUpdateIndex($limit, $offset);
+        $this->_plugin->batchUpdateIndex($limit, $offset, $encoding);
     }
 
     /**
@@ -75,9 +76,9 @@ class Doctrine_Template_Searchable extends Doctrine_Template
      * @param integer $offset 
      * @return void
      */
-    public function batchUpdateIndexTableProxy($limit = null, $offset = null)
+    public function batchUpdateIndexTableProxy($limit = null, $offset = null, $encoding = null)
     {
-        $this->batchUpdateIndex($limit, $offset);
+        $this->batchUpdateIndex($limit, $offset, $encoding);
     }
 
     /**
@@ -85,7 +86,7 @@ class Doctrine_Template_Searchable extends Doctrine_Template
      * 
      * @param string $string Keyword string to search for
      * @param Doctrine_Query $query Query object to alter. Adds where condition to limit the results using the search index
-     * @return mixed The Doctrine_Collection or array of ids and relevancy
+     * @return array    ids and relevancy
      */
     public function searchTableProxy($string, $query = null)
     {

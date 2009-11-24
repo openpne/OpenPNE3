@@ -18,7 +18,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorPropelUnique.class.php 13249 2008-11-22 16:10:11Z fabien $
+ * @version    SVN: $Id: sfValidatorPropelUnique.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfValidatorPropelUnique extends sfValidatorSchema
 {
@@ -102,7 +102,7 @@ class sfValidatorPropelUnique extends sfValidatorSchema
     $object = call_user_func(array(constant($this->getOption('model').'::PEER'), 'doSelectOne'), $criteria, $this->getOption('connection'));
 
     // if no object or if we're updating the object, it's ok
-    if (is_null($object) || $this->isUpdate($object, $values))
+    if (null === $object || $this->isUpdate($object, $values))
     {
       return $values;
     }
@@ -150,7 +150,7 @@ class sfValidatorPropelUnique extends sfValidatorSchema
    */
   protected function getPrimaryKeys()
   {
-    if (is_null($this->getOption('primary_key')))
+    if (null === $this->getOption('primary_key'))
     {
       $primaryKeys = array();
       $tableMap = call_user_func(array(constant($this->getOption('model').'::PEER'), 'getTableMap'));

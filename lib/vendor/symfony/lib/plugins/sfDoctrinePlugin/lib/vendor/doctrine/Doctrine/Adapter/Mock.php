@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Mock.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Mock.php 6484 2009-10-12 17:40:41Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6484 $
  */
 class Doctrine_Adapter_Mock implements Doctrine_Adapter_Interface, Countable
 {
@@ -275,7 +275,7 @@ class Doctrine_Adapter_Mock implements Doctrine_Adapter_Interface, Countable
 
     public function getAttribute($attribute)
     {
-        if ($attribute == Doctrine::ATTR_DRIVER_NAME) {
+        if ($attribute == Doctrine_Core::ATTR_DRIVER_NAME) {
             return strtolower($this->_name);
         }
     }

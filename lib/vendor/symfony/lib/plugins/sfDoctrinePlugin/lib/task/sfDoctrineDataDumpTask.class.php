@@ -18,9 +18,9 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineDataDumpTask.class.php 14213 2008-12-19 21:03:13Z Jonathan.Wage $
+ * @version    SVN: $Id: sfDoctrineDataDumpTask.class.php 23922 2009-11-14 14:58:38Z fabien $
  */
-class sfDoctrineDumpDataTask extends sfDoctrineBaseTask
+class sfDoctrineDataDumpTask extends sfDoctrineBaseTask
 {
   /**
    * @see sfTask
@@ -36,7 +36,6 @@ class sfDoctrineDumpDataTask extends sfDoctrineBaseTask
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
     ));
 
-    $this->aliases = array('doctrine-dump-data');
     $this->namespace = 'doctrine';
     $this->name = 'data-dump';
     $this->briefDescription = 'Dumps data to the fixtures directory';
@@ -51,7 +50,7 @@ The task dumps the database data in [data/fixtures/%target%|COMMENT].
 The dump file is in the YML format and can be reimported by using
 the [doctrine:data-load|INFO] task.
 
-  [./symfony doctrine:data-load frontend|INFO]
+  [./symfony doctrine:data-load|INFO]
 EOF;
   }
 
@@ -61,29 +60,32 @@ EOF;
   protected function execute($arguments = array(), $options = array())
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
-
     $config = $this->getCliConfig();
-    $dir = sfConfig::get('sf_data_dir') . DIRECTORY_SEPARATOR . 'fixtures';
-    Doctrine_Lib::makeDirectories($dir);
 
-    $args = array();
-    if (isset($arguments['target']))
+    $args = array(
+      'data_fixtures_path' => $config['data_fixtures_path'][0],
+    );
+
+    if (!is_dir($args['data_fixtures_path']))
+    {
+      $this->getFilesystem()->mkdirs($args['data_fixtures_path']);
+    }
+
+    if ($arguments['target'])
     {
       $filename = $arguments['target'];
 
       if (!sfToolkit::isPathAbsolute($filename))
       {
-        $filename = $dir . DIRECTORY_SEPARATOR . $filename;
+        $filename = $args['data_fixtures_path'].'/'.$filename;
       }
 
-      Doctrine_Lib::makeDirectories(dirname($filename));
+      $this->getFilesystem()->mkdirs(dirname($filename));
 
-      $args = array('data_fixtures_path' => array($filename));
-      $this->logSection('doctrine', sprintf('dumping data to fixtures to "%s"', $filename));
-    } else {
-      $this->logSection('doctrine', sprintf('dumping data to fixtures to "%s"', $config['data_fixtures_path'][0]));
+      $args['data_fixtures_path'] = $filename;
     }
 
+    $this->logSection('doctrine', sprintf('dumping data to fixtures to "%s"', $args['data_fixtures_path']));
     $this->callDoctrineCli('dump-data', $args);
   }
 }

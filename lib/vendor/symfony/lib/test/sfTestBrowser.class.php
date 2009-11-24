@@ -19,7 +19,7 @@ require_once(dirname(__FILE__).'/../vendor/lime/lime.php');
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTestBrowser.class.php 15797 2009-02-26 09:28:12Z fabien $
+ * @version    SVN: $Id: sfTestBrowser.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfTestBrowser extends sfTestFunctional
 {
@@ -41,9 +41,9 @@ class sfTestBrowser extends sfTestFunctional
     {
       $browser = new sfBrowser($hostname, $remote, $options);
 
-      if (is_null(self::$test))
+      if (null === self::$test)
       {
-        $lime = new lime_test(null, isset($options['output']) ? $options['output'] : new lime_output_color());
+        $lime = new lime_test(null, isset($options['output']) ? $options['output'] : null);
       }
       else
       {

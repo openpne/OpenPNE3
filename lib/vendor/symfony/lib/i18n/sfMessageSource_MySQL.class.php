@@ -13,7 +13,7 @@
  * {@link http://prado.sourceforge.net/}
  *
  * @author     Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version    $Id: sfMessageSource_MySQL.class.php 9128 2008-05-21 00:58:19Z Carl.Vondrick $
+ * @version    $Id: sfMessageSource_MySQL.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  * @package    symfony
  * @subpackage i18n
  */
@@ -157,6 +157,11 @@ class sfMessageSource_MySQL extends sfMessageSource_Database
     $pw = $dsninfo['password'];
 
     $connect_function = 'mysql_connect';
+
+    if (!function_exists($connect_function))
+    {
+      throw new RuntimeException('The function mysql_connect() does not exist. Please confirm MySQL is enabled in php.ini');
+    }
 
     if ($dbhost && $user && $pw)
     {

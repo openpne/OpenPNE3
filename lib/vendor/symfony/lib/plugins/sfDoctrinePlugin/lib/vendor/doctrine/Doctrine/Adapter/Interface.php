@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Interface.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Interface.php 5942 2009-06-25 22:04:16Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  * @subpackage  Adapter
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5801 $
+ * @version     $Revision: 5942 $
  */
 interface Doctrine_Adapter_Interface
 {
@@ -42,4 +42,6 @@ interface Doctrine_Adapter_Interface
     public function rollBack();
     public function errorCode();
     public function errorInfo();
+    public function setAttribute($attribute, $value);
+    public function getAttribute($attribute);
 }

@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTesterForm.class.php 20144 2009-07-13 11:07:31Z FabianLange $
+ * @version    SVN: $Id: sfTesterForm.class.php 24217 2009-11-22 06:47:54Z fabien $
  */
 class sfTesterForm extends sfTester
 {
@@ -47,7 +47,7 @@ class sfTesterForm extends sfTester
    */
   public function initialize()
   {
-    if (is_null($this->form))
+    if (null === $this->form)
     {
       $action = $this->browser->getContext()->getActionStack()->getLastEntry()->getActionInstance();
 
@@ -81,7 +81,7 @@ class sfTesterForm extends sfTester
    */
   public function hasErrors($value = true)
   {
-    if (is_null($this->form))
+    if (null === $this->form)
     {
       throw new LogicException('no form has been submitted.');
     }
@@ -120,18 +120,18 @@ class sfTesterForm extends sfTester
    */
   public function isError($field, $value = true)
   {
-    if (is_null($this->form))
+    if (null === $this->form)
     {
       throw new LogicException('no form has been submitted.');
     }
 
-    if (is_null($field))
+    if (null === $field)
     {
       $error = new sfValidatorErrorSchema(new sfValidatorPass(), $this->form->getGlobalErrors());
     }
     else
     {
-      $error = $this->form[$field]->getError();
+      $error = $this->getFormField($field)->getError();
     }
 
     if (false === $value)
@@ -184,7 +184,7 @@ class sfTesterForm extends sfTester
    */
   public function debug()
   {
-    if (is_null($this->form))
+    if (null === $this->form)
     {
       throw new LogicException('no form has been submitted.');
     }
@@ -225,5 +225,32 @@ class sfTesterForm extends sfTester
     }
 
     return $parameters;
+  }
+
+  /**
+   * @param string $path
+   * @return sfFormField
+   */
+
+  public function getFormField($path)
+  {
+    if (false !== $pos = strpos($path, '['))
+    {
+      $field = $this->form[substr($path, 0, $pos)];
+    }
+    else
+    {
+      return $this->form[$path];
+    }
+
+    if (preg_match_all('/\[(?P<part>[^]]+)\]/', $path, $matches))
+    {
+      foreach($matches['part'] as $part)
+      {
+        $field = $field[$part];
+      }
+    }
+
+    return $field;
   }
 }

@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Pgsql.php 5801 2009-06-02 17:30:27Z piccoloprincipe $
+ *  $Id: Pgsql.php 6731 2009-11-16 18:09:27Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -26,7 +26,7 @@
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Paul Cooper <pgc@ucecom.com>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
- * @version     $Revision: 5801 $
+ * @version     $Revision: 6731 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  */
@@ -376,7 +376,7 @@ class Doctrine_DataDict_Pgsql extends Doctrine_DataDict
 
                 $fixed  = ((isset($field['fixed']) && $field['fixed']) || $field['type'] == 'char') ? true : false;
 
-                return $fixed ? ($length ? 'CHAR(' . $length . ')' : 'CHAR('.$this->conn->options['default_text_field_length'].')')
+                return $fixed ? ($length ? 'CHAR(' . $length . ')' : 'CHAR('.$this->conn->varchar_max_length.')')
                     : ($length ? 'VARCHAR(' .$length . ')' : 'TEXT');
 
             case 'clob':
@@ -405,8 +405,8 @@ class Doctrine_DataDict_Pgsql extends Doctrine_DataDict
                     }
                 }
                 return 'INT';
-	    case 'inet':
-		return 'INET';
+			case 'inet':
+				return 'INET';
             case 'bit':
             case 'varbit':
                 return 'VARBIT';		
@@ -415,18 +415,18 @@ class Doctrine_DataDict_Pgsql extends Doctrine_DataDict
             case 'date':
                 return 'DATE';
             case 'time':
-                return 'TIME without time zone';
+                return 'TIME';
             case 'timestamp':
-                return 'TIMESTAMP without time zone';
+                return 'TIMESTAMP';
             case 'float':
             case 'double':
                 return 'FLOAT';
             case 'decimal':
                 $length = !empty($field['length']) ? $field['length'] : 18;
-                $scale = !empty($field['scale']) ? $field['scale'] : $this->conn->getAttribute(Doctrine::ATTR_DECIMAL_PLACES);
+                $scale = !empty($field['scale']) ? $field['scale'] : $this->conn->getAttribute(Doctrine_Core::ATTR_DECIMAL_PLACES);
                 return 'NUMERIC('.$length.','.$scale.')';
         }
-        throw new Doctrine_DataDict_Exception('Unknown field type \'' . $field['type'] .  '\'.');
+        return $field['type'] . (isset($field['length']) ? '('.$field['length'].')':null);
     }
 
     /**
@@ -438,7 +438,6 @@ class Doctrine_DataDict_Pgsql extends Doctrine_DataDict
      */
     public function getPortableDeclaration(array $field)
     {
-
         $length = (isset($field['length'])) ? $field['length'] : null;
         if ($length == '-1' && isset($field['atttypmod'])) {
             $length = $field['atttypmod'] - 4;
@@ -574,7 +573,8 @@ class Doctrine_DataDict_Pgsql extends Doctrine_DataDict
                 $length = null;
                 break;
             default:
-                throw new Doctrine_DataDict_Exception('unknown database attribute type: '.$dbType);
+                $type[] = $field['type'];
+                $length = isset($field['length']) ? $field['length']:null;
         }
 
         return array('type'     => $type,
