@@ -321,6 +321,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
    */
   public function getConfigPaths($configPath)
   {
+    $globalConfigPath = basename(dirname($configPath)).'/'.basename($configPath);
+
     $files = array();
 
     if ($libDirs = glob(sfConfig::get('sf_lib_dir').'/config/'.$configPath)) {
@@ -328,6 +330,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     }
 
     $files = array_merge($files, $this->globEnablePlugin($configPath, false));
+    $files = array_merge($files, $this->globEnablePlugin($globalConfigPath, false));
+    $files = array_merge($files, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/'.$globalConfigPath, false));
     $files = array_merge($files, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/'.$configPath, false));
 
     $configs = array();
@@ -345,6 +349,11 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
   public function globPlugins($pattern, $force = true, $isControllerPath = false)
   {
+    if ('/' !== $pattern[0])
+    {
+      $pattern = '/'.$pattern;
+    }
+
     $method = 'getAllPluginPaths';
     if (!$force)
     {
