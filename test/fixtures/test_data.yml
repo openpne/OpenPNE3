@@ -172,9 +172,9 @@ File:
 
 MemberImage:
   first_member_image1:
+    is_primary: 1
     Member: first_member
     File: dummy_file1
-    is_primary: 1
   first_member_image2:
     Member: first_member
     File: dummy_file1
