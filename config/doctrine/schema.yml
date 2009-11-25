@@ -45,7 +45,7 @@ MemberImage:
   columns:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
     member_id: { type: integer(4), notnull: true, comment: "Member id" }
-    file_id: { type: integer(4), notnull: true, comment: "Image file id in the \'file\' table" }
+    file_id: { type: integer(4), notnull: true, comment: "Image file id in the ''file'' table" }
     is_primary: { type: boolean, comment: "This is primary" }
   relations:
     Member: { local: member_id, foreign: id, onDelete: cascade }
@@ -162,7 +162,7 @@ MemberProfile:
     type: INNODB
     collate: utf8_unicode_ci
     charset: utf8
-    comment: "Saves informations of every member\'s profile"
+    comment: "Saves informations of every member''s profile"
 
 Community:
   columns:
@@ -188,7 +188,7 @@ CommunityMember:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
     community_id: { type: integer(4), notnull: true, comment: "Community id" }
     member_id: { type: integer(4), notnull: true, comment: "Member id" }
-    position: { type: string(32), default: "", comment: "Member\'s position in this community" }
+    position: { type: string(32), default: "", comment: "Member''s position in this community" }
     is_receive_mail_pc: { type: boolean, default: false, notnull: true, comment: "Notification of posting in community by computer E-mail." }
     is_receive_mail_mobile: { type: boolean, default: false, notnull: true, comment: "Notification of posting in community by mobile E-mail." }
   relations:
@@ -203,8 +203,8 @@ CommunityMember:
 AdminUser:
   columns:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
-    username: { type: string(64), default: "", notnull: true, comment: "Administrator\'s username" }
-    password: { type: string(40), default: "", notnull: true, comment: "Administrator\'s password" }
+    username: { type: string(64), default: "", notnull: true, comment: "Administrator''s username" }
+    password: { type: string(40), default: "", notnull: true, comment: "Administrator''s password" }
   indexes:
     username_UNIQUE:
       fields: [username]
@@ -323,7 +323,7 @@ Navigation:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
     caption: { type: string, notnull: true, comment: "Description" }
     type: { type: string(64), default: "", notnull: true, comment: "Navigation type" }
-    uri: { type: string, notnull: true, comment: "Linked page\'s URI" }
+    uri: { type: string, notnull: true, comment: "Linked page''s URI" }
     sort_order: { type: integer(4), comment: "Order to sort" }
   indexes:
     type_sort_order_INDEX:
@@ -440,7 +440,7 @@ Banner:
 BannerImage:
   columns:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
-    file_id: { type: integer(4), notnull: true, comment: "An image\'s file id" }
+    file_id: { type: integer(4), notnull: true, comment: "An image''s file id" }
     url: { type: string, comment: "URL of linked Web page" }
     name: { type: string(64), comment: "Banner image name" }
   relations:
