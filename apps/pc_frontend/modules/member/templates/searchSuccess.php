@@ -9,8 +9,6 @@ $options = array(
 op_include_form('searchMember', $filters, $options);
 ?>
 
-<?php use_helper('Date'); ?>
-
 <?php if ($pager->getNbResults()): ?>
 <?php
 $list = array();
@@ -22,7 +20,7 @@ foreach ($pager->getResults() as $key => $member)
   {
     $list[$key][__('Self Introduction')] = $member->getProfile('op_preset_self_introduction');
   }
-  $list[$key][__('Last Login')] = distance_of_time_in_words($member->getLastLoginTime());
+  $list[$key][__('Last Login')] = op_format_last_login_time($member->getLastLoginTime());
 }
 
 $options = array(

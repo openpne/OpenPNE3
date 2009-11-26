@@ -677,4 +677,74 @@ function op_is_accessable_url($uri)
   }
 }
 
+function op_format_last_login_time($from_time, $to_time = null)
+{
+  $to_time = $to_time ? $to_time: time();
+  $distance_in_minutes = floor(abs($to_time - $from_time) / 60);
+  $distance_in_seconds = floor(abs($to_time - $from_time));
+
+  $string = '';
+  $parameters = array();
+
+  if (!$from_time)
+  {
+    $string = 'not login yet';
+  }
+  else if ($distance_in_minutes <= 1)
+  {
+    $string = $distance_in_minutes == 0 ? 'less than a minute' : '1 minute ago';
+  }
+  else if ($distance_in_minutes >= 2 && $distance_in_minutes <= 44)
+  {
+    $string = '%minutes% minutes ago';
+    $parameters['%minutes%'] = $distance_in_minutes;
+  }
+  else if ($distance_in_minutes >= 45 && $distance_in_minutes <= 89)
+  {
+    $string = 'about 1 hour ago';
+  }
+  else if ($distance_in_minutes >= 90 && $distance_in_minutes <= 1439)
+  {
+    $string = 'about %hours% hours ago';
+    $parameters['%hours%'] = round($distance_in_minutes / 60);
+  }
+  else if ($distance_in_minutes >= 1440 && $distance_in_minutes <= 2879)
+  {
+    $string = '1 day ago';
+  }
+  else if ($distance_in_minutes >= 2880 && $distance_in_minutes <= 43199)
+  {
+    $string = '%days% days ago';
+    $parameters['%days%'] = round($distance_in_minutes / 1440);
+  }
+  else if ($distance_in_minutes >= 43200 && $distance_in_minutes <= 86399)
+  {
+    $string = 'about 1 month ago';
+  }
+  else if ($distance_in_minutes >= 86400 && $distance_in_minutes <= 525959)
+  {
+    $string = '%months% months ago';
+    $parameters['%months%'] = round($distance_in_minutes / 43200);
+  }
+  else if ($distance_in_minutes >= 525960 && $distance_in_minutes <= 1051919)
+  {
+    $string = 'about 1 year ago';
+  }
+  else
+  {
+    $string = 'over %years% years ago';
+    $parameters['%years%'] = floor($distance_in_minutes / 525960);
+  }
+
+  if (sfConfig::get('sf_i18n'))
+  {
+    use_helper('I18N');
+
+    return __($string, $parameters);
+  }
+  else
+  {
+    return strtr($string, $parameters);
+  }
+}
 
