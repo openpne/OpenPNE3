@@ -48,7 +48,7 @@ class opDynamicAclRoute extends sfDoctrineRoute
 
   protected function getAclBuilderName()
   {
-    return 'op'.$this->options['object_model'].'AclBuilder';
+    return 'op'.$this->options['model']->getComponentName().'AclBuilder';
   }
 
   protected function getCurrentMemberId()
