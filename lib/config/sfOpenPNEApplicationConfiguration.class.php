@@ -53,19 +53,19 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
     require_once dirname(__FILE__).'/../plugin/opPluginManager.class.php';
     $pluginActivations = opPluginManager::getPluginActivationList();
-    if ($pluginActivations)
+    $pluginActivations = array_merge(array_fill_keys($this->getPlugins(), true), $pluginActivations);
+    foreach ($pluginActivations as $key => $value)
     {
-      $pluginActivations = array_merge(array_fill_keys($this->getPlugins(), true), $pluginActivations);
-      foreach ($pluginActivations as $key => $value)
+      if (!in_array($key, $this->getPlugins()))
       {
-        if (!in_array($key, $this->getPlugins()))
-        {
-          unset($pluginActivations[$key]);
-        }
+        unset($pluginActivations[$key]);
       }
-      $this->enablePlugins(array_keys($pluginActivations, true));
-      $this->disablePlugins(array_keys($pluginActivations, false));
     }
+
+    $pluginActivations = $this->filterSkinPlugins($pluginActivations);
+    $this->enablePlugins(array_keys($pluginActivations, true));
+    $this->disablePlugins(array_keys($pluginActivations, false));
+    unset($this->cache['getPluginPaths']);  // it should be rewrited
 
     // gadget
     include($this->getConfigCache()->checkConfig('config/gadget_layout_config.yml'));
@@ -88,6 +88,27 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     }
 
     return $result;
+  }
+
+  public function filterSkinPlugins($pluginList)
+  {
+    $skinPlugins = array();
+
+    foreach ($pluginList as $pluginName => $activation)
+    {
+      if (0 === strpos($pluginName, 'opSkin'))
+      {
+        $skinPlugins[$pluginName] = $activation;
+      }
+    }
+
+    if (1 !== count(array_keys($skinPlugins, true)))
+    {
+      $skinPlugins = array_fill_keys(array_keys($skinPlugins), false);
+      $skinPlugins['opSkinBasicPlugin'] = true;
+    }
+
+    return array_merge($pluginList, $skinPlugins);
   }
 
   public function getDisabledPlugins()
