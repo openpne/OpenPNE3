@@ -45,6 +45,11 @@ class memberActions extends sfOpenPNEMemberAction
   */
   public function executeLogin($request)
   {
+    if (opConfig::get('external_mobile_login_url'))
+    {
+      $this->redirect(opConfig::get('external_mobile_login_url'));
+    }
+
     $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileLogin');
     $this->mobileLoginContentsGadgets = $gadgets['mobileLoginContents'];
       

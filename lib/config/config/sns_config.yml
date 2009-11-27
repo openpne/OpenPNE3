@@ -83,6 +83,25 @@ general:
       - "土"
       - "日"
 
+external_login_page:
+  external_pc_login_url:
+    Name:     "external_pc_login_url"
+    Caption:  "PC版外部ログインページURL"
+    Help:     "PC版でログアウトした場合やログインに失敗した場合、ここで指定したURLに遷移します<br />※ここで指定するページにはログインフォームを置いておく必要があります<br />※通常のログインページを使用する場合は空欄にしておきます"
+    FormType: "input"
+    ValueType: "text"
+    Default:   ""
+    IsRequired: false
+
+  external_mobile_login_url:
+    Name:     "external_mobile_login_url"
+    Caption:  "携帯版外部ログインページURL"
+    Help:     "携帯版でログアウトした場合やログインに失敗した場合、ここで指定したURLに遷移します<br />※ここで指定するページにはログインフォームを置いておく必要があります<br />※通常のログインページを使用する場合は空欄にしておきます"
+    FormType: "input"
+    ValueType: "text"
+    Default:   ""
+    IsRequired: false
+
 authentication:
   enable_registration:
     Name:      "enable_registration"
