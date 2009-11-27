@@ -387,5 +387,6 @@ class opToolkit
   {
     $filesystem = new sfFilesystem();
     $filesystem->remove(sfFinder::type('file')->discard('.sf')->in(sfConfig::get('sf_cache_dir')));
+    @$filesystem->remove(sfFinder::type('file')->in(sfConfig::get('sf_web_dir').'/cache/'));
   }
 }

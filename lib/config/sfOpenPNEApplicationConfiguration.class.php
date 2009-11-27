@@ -26,6 +26,7 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     require sfConfig::get('sf_data_dir').'/version.php';
 
     $this->dispatcher->connect('task.cache.clear', array($this, 'clearPluginCache'));
+    $this->dispatcher->connect('task.cache.clear', array($this, 'clearWebCache'));
     $this->dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
 
     $this->dispatcher->connect('op_confirmation.list', array(__CLASS__, 'getCoreConfirmList'));
@@ -156,6 +157,17 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     {
       $filesystem = new sfFilesystem();
       $filesystem->remove(sfFinder::type('any')->discard('.sf')->in($subDir));
+    }
+  }
+
+  public function clearWebCache($params = array())
+  {
+    $dir = sfConfig::get('sf_web_dir').'/cache/';
+
+    if (is_dir($dir))
+    {
+      $filesystem = new sfFilesystem();
+      @$filesystem->remove(sfFinder::type('any')->in($dir));
     }
   }
 
