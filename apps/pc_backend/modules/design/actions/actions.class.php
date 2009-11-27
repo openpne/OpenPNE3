@@ -410,4 +410,20 @@ class designActions extends sfActions
       $this->redirect('design/banner');
     }
   }
+
+  public function executeCustomCss(sfWebRequest $request)
+  {
+    $this->form = new opCustomCssForm();
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $this->form->bind($request->getParameter('css'));
+      if ($this->form->isValid())
+      {
+        $this->form->save();
+        $this->getUser()->setFlash('notice', 'Saved.');
+
+        $this->redirect('design/customCss');
+      }
+    }
+  }
 }

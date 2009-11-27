@@ -22,6 +22,11 @@ class opSkinClassicObserver
   static public function cacheCss($event, $content)
   {
     $lastEntry = sfContext::getInstance()->getActionStack()->getLastEntry();
+    if (!$lastEntry)
+    {
+      return $content;
+    }
+
     if ('opSkinClassicPlugin' === $lastEntry->getModuleName() && 'css' === $lastEntry->getActionName())
     {
       $filesystem = new sfFilesystem();

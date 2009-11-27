@@ -80,6 +80,11 @@ confirmation_decision:
   param: { module: confirmation, action: decision }
   requirements: { id: \d+, sf_method: post }
 
+# customizing css
+customizing_css:
+  url: /cache/css/customizing.:sf_format
+  param: { module: default, action: customizingCss, sf_format: css }
+
 # for BC
 member_profile:
   url:   /member/:id
