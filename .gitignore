@@ -2,6 +2,8 @@ lib/form/doctrine/op*Plugin
 web/cache/*
 log/*
 plugins/op*
+!plugins/opSkinBasicPlugin
+!plugins/opSkinClassicPlugin
 plugins/.*
 lib/filter/doctrine/*
 cache/*
