@@ -54,7 +54,7 @@ class memberActions extends sfOpenPNEMemberAction
   */
   public function executeLogin($request)
   {
-    if (opConfig::get('external_pc_login_url'))
+    if (opConfig::get('external_pc_login_url') && $request->isMethod(sfWebRequest::GET))
     {
       $this->redirect(opConfig::get('external_pc_login_url'));
     }
