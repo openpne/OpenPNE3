@@ -54,6 +54,11 @@ class memberActions extends sfOpenPNEMemberAction
   */
   public function executeLogin($request)
   {
+    if (opConfig::get('external_pc_login_url'))
+    {
+      $this->redirect(opConfig::get('external_pc_login_url'));
+    }
+
     $this->gadgetConfig = sfConfig::get('op_login_gadget_list');
     $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('login');
     $layout = Doctrine::getTable('SnsConfig')->get('login_layout', 'layoutA');
