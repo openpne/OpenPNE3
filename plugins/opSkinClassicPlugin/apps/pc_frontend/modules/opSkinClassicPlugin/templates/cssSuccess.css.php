@@ -2260,7 +2260,7 @@ div#container_login div.header a.main_menu {
 	top: 0px;
 }
 
-div#container_login input#username {
+div#container_login input#authMailAddress_mail_address {
 	display: block;
 	position: absolute;
 	left: 504px;
@@ -2271,7 +2271,7 @@ div#container_login input#username {
 	z-index: 100;
 }
 
-div#container_login input#password {
+div#container_login input#authMailAddress_password {
 	display: block;
 	position: absolute;
 	left: 504px;

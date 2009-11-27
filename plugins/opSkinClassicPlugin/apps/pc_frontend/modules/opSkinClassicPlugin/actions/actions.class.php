@@ -21,4 +21,15 @@ class opSkinClassicPluginActions extends sfActions
   {
     opSkinClassicConfig::setCurrentTheme($request->getParameter('theme'));
   }
+
+  public function executeLogin(sfWebRequest $request)
+  {
+    if ('@opSkinClassicPlugin_login' !== opConfig::get('external_pc_login_url'))
+    {
+      $this->redirect('member/login');
+    }
+
+    $this->form = $this->getUser()->getAuthForm();
+    unset($this->form['next_uri']);
+  }
 }

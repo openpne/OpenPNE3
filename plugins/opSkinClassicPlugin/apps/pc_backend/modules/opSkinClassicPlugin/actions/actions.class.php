@@ -21,6 +21,7 @@ class opSkinClassicPluginActions extends sfActions
   {
     $this->presetForm = new opSkinClassicPresetForm();
     $this->colorForm = new opSkinClassicColorForm();
+    $this->loginForm = new opSkinClassicLoginForm();
   }
 
   public function executeSkinList(sfWebRequest $request)
@@ -77,6 +78,7 @@ class opSkinClassicPluginActions extends sfActions
     }
 
     $this->colorForm = new opSkinClassicColorForm();
+    $this->loginForm = new opSkinClassicLoginForm();
     $this->setTemplate('index');
   }
 
@@ -94,6 +96,25 @@ class opSkinClassicPluginActions extends sfActions
     }
 
     $this->presetForm = new opSkinClassicPresetForm();
+    $this->loginForm = new opSkinClassicLoginForm();
+    $this->setTemplate('index');
+  }
+
+  public function executeLogin(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod(sfWebRequest::POST));
+
+    $this->loginForm = new opSkinClassicLoginForm();
+    $this->loginForm->bind($request->getParameter('login'));
+    if ($this->loginForm->isValid())
+    {
+      $this->loginForm->save();
+      $this->getUser()->setFlash('notice', 'Saved.');
+      $this->redirect('opSkinClassicPlugin/index');
+    }
+
+    $this->presetForm = new opSkinClassicPresetForm();
+    $this->colorForm = new opSkinClassicColorForm();
     $this->setTemplate('index');
   }
 }
