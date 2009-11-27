@@ -462,14 +462,14 @@ div.operation ul.moreInfo li {
 /*==============================================================================
  * h系、f系、c系ナビメニュー（localNav）
  *----------------------------------------------------------------------------*/
-#HeaderContainer {
+body.secure_page #HeaderContainer {
 	zoom: 1;
 	position: relative;
 	width: 720px;
 	height: 96px;
 	background: url(<?php echo image_path(image_path(opSkinClassicConfig::get('skin_after_header_image'))) ?>) 0 0 no-repeat;
 }
-#globalNavBefore {
+body.insecure_page #HeaderContainer {
 	height: 125px;
 	margin-bottom: 10px;
 	background: url(<?php echo image_path(opSkinClassicConfig::get('skin_before_header_image')) ?>) 0 0 no-repeat;
@@ -510,6 +510,9 @@ div.operation ul.moreInfo li {
 }
 #localNav .community li a:hover, #localNav .community li a:active {
 	background-image: url(<?php echo image_path(opSkinClassicConfig::get('skin_navi_c_2_image')) ?>);
+}
+body.insecure_page #localNav {
+  display: none;
 }
 
 #HeaderContainer h1 {

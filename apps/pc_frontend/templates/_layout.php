@@ -8,7 +8,8 @@
     <?php include_stylesheets() ?>
     <?php include_javascripts() ?>
 </head>
-<body id="<?php printf('page_%s_%s', $view->getModuleName(), $view->getActionName()) ?>">
+<body id="<?php printf('page_%s_%s', $view->getModuleName(), $view->getActionName()) ?>" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
+
 <div id="Body">
 <div id="Container">
 
