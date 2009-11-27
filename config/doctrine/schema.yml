@@ -555,3 +555,20 @@ Plugin:
     collate: utf8_unicode_ci
     charset: utf8
     comment: "Saves informations of plugins"
+
+SkinConfig:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    plugin: { type: string(64), default: "", notnull: true, comment: "Plugin name" }
+    name: { type: string(64), default: "", notnull: true, comment: "Configuration name" }
+    value: { type: string, comment: "Configuration value" }
+  indexes:
+    plugin_name_UNIQUE:
+      fields: [plugin, name]
+      type: unique
+  options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
+    comment: "Saves configurations of this SNS"
+

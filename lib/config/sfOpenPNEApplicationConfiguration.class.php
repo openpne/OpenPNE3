@@ -26,6 +26,7 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     require sfConfig::get('sf_data_dir').'/version.php';
 
     $this->dispatcher->connect('task.cache.clear', array($this, 'clearPluginCache'));
+    $this->dispatcher->connect('task.cache.clear', array($this, 'clearWebCache'));
     $this->dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
 
     $this->dispatcher->connect('op_confirmation.list', array(__CLASS__, 'getCoreConfirmList'));
@@ -52,19 +53,19 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
     require_once dirname(__FILE__).'/../plugin/opPluginManager.class.php';
     $pluginActivations = opPluginManager::getPluginActivationList();
-    if ($pluginActivations)
+    $pluginActivations = array_merge(array_fill_keys($this->getPlugins(), true), $pluginActivations);
+    foreach ($pluginActivations as $key => $value)
     {
-      $pluginActivations = array_merge(array_fill_keys($this->getPlugins(), true), $pluginActivations);
-      foreach ($pluginActivations as $key => $value)
+      if (!in_array($key, $this->getPlugins()))
       {
-        if (!in_array($key, $this->getPlugins()))
-        {
-          unset($pluginActivations[$key]);
-        }
+        unset($pluginActivations[$key]);
       }
-      $this->enablePlugins(array_keys($pluginActivations, true));
-      $this->disablePlugins(array_keys($pluginActivations, false));
     }
+
+    $pluginActivations = $this->filterSkinPlugins($pluginActivations);
+    $this->enablePlugins(array_keys($pluginActivations, true));
+    $this->disablePlugins(array_keys($pluginActivations, false));
+    unset($this->cache['getPluginPaths']);  // it should be rewrited
 
     // gadget
     include($this->getConfigCache()->checkConfig('config/gadget_layout_config.yml'));
@@ -87,6 +88,27 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     }
 
     return $result;
+  }
+
+  public function filterSkinPlugins($pluginList)
+  {
+    $skinPlugins = array();
+
+    foreach ($pluginList as $pluginName => $activation)
+    {
+      if (0 === strpos($pluginName, 'opSkin'))
+      {
+        $skinPlugins[$pluginName] = $activation;
+      }
+    }
+
+    if (1 !== count(array_keys($skinPlugins, true)))
+    {
+      $skinPlugins = array_fill_keys(array_keys($skinPlugins), false);
+      $skinPlugins['opSkinBasicPlugin'] = true;
+    }
+
+    return array_merge($pluginList, $skinPlugins);
   }
 
   public function getDisabledPlugins()
@@ -156,6 +178,17 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     {
       $filesystem = new sfFilesystem();
       $filesystem->remove(sfFinder::type('any')->discard('.sf')->in($subDir));
+    }
+  }
+
+  public function clearWebCache($params = array())
+  {
+    $dir = sfConfig::get('sf_web_dir').'/cache/';
+
+    if (is_dir($dir))
+    {
+      $filesystem = new sfFilesystem();
+      @$filesystem->remove(sfFinder::type('any')->in($dir));
     }
   }
 
@@ -321,6 +354,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
    */
   public function getConfigPaths($configPath)
   {
+    $globalConfigPath = basename(dirname($configPath)).'/'.basename($configPath);
+
     $files = array();
 
     if ($libDirs = glob(sfConfig::get('sf_lib_dir').'/config/'.$configPath)) {
@@ -328,6 +363,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     }
 
     $files = array_merge($files, $this->globEnablePlugin($configPath, false));
+    $files = array_merge($files, $this->globEnablePlugin($globalConfigPath, false));
+    $files = array_merge($files, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/'.$globalConfigPath, false));
     $files = array_merge($files, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/'.$configPath, false));
 
     $configs = array();
@@ -345,6 +382,11 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
   public function globPlugins($pattern, $force = true, $isControllerPath = false)
   {
+    if ('/' !== $pattern[0])
+    {
+      $pattern = '/'.$pattern;
+    }
+
     $method = 'getAllPluginPaths';
     if (!$force)
     {

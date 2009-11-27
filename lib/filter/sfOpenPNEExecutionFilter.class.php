@@ -22,11 +22,14 @@ class sfOpenPNEExecutionFilter extends sfExecutionFilter
     $moduleName = $actionInstance->getModuleName();
     $actionName = $actionInstance->getActionName();
 
-    $dispatcher->notify(new sfEvent($subject, 'op_action.pre_execute_'.$moduleName.'_'.$actionName, array(
+    $params = array(
       'moduleName'     => $moduleName,
       'actionName'     => $actionName,
       'actionInstance' => $actionInstance,
-    )));
+    );
+
+    $dispatcher->notify(new sfEvent($subject, 'op_action.pre_execute_'.$moduleName.'_'.$actionName, $params));
+    $dispatcher->notify(new sfEvent($subject, 'op_action.pre_execute', $params));
   }
 
   public static function notifyPostExecuteActionEvent($subject, sfEventDispatcher $dispatcher, sfAction $actionInstance, $result)
@@ -34,12 +37,15 @@ class sfOpenPNEExecutionFilter extends sfExecutionFilter
     $moduleName = $actionInstance->getModuleName();
     $actionName = $actionInstance->getActionName();
 
-    $dispatcher->notify(new sfEvent($subject, 'op_action.post_execute_'.$moduleName.'_'.$actionName, array(
+    $params = array(
       'moduleName'     => $moduleName,
       'actionName'     => $actionName,
       'actionInstance' => $actionInstance,
       'result'         => $result,
-    )));
+    );
+
+    $dispatcher->notify(new sfEvent($subject, 'op_action.post_execute_'.$moduleName.'_'.$actionName, $params));
+    $dispatcher->notify(new sfEvent($subject, 'op_action.post_execute', $params));
   }
 
   protected function handleAction($filterChain, $actionInstance)

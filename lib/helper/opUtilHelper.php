@@ -748,3 +748,8 @@ function op_format_last_login_time($from_time, $to_time = null)
   }
 }
 
+function op_url_to_id($uri)
+{
+  return str_replace(array('/', ',', ';', '~', '?', '@', '&', '=', '+', '$', '%', '#', '!', '(', ')'), '_', $uri);
+}
+

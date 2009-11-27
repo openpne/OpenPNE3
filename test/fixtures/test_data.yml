@@ -615,3 +615,13 @@ NotificationMail:
       ja_JP:
         title: "title2"
         template: "template2"
+
+SkinConfig:
+  skin_config1:
+    plugin: "opSkinDummyPlugin"
+    name: "color_1"
+    value: "#ffffff"
+  skin_config2:
+    plugin: "opSkinDummyPlugin"
+    name: "color_2"
+    value: ""
