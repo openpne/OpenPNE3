@@ -4,7 +4,7 @@ include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 sfContext::createInstance($configuration);
 
-$t = new lime_test(20, new lime_output_color());
+$t = new lime_test(22, new lime_output_color());
 
 $table = Doctrine::getTable('Profile');
 
@@ -41,12 +41,14 @@ $t->is($result, array());
 //------------------------------------------------------------
 $t->diag('Profile::isMultipleSelect()');
 $t->ok(!$profileSex->isMultipleSelect());
+$t->ok(!$profileBirthday->isMultipleSelect());
 $t->ok(!$profileSelectItem->isMultipleSelect());
 $t->ok($profileCheckboxItem->isMultipleSelect());
 
 //------------------------------------------------------------
 $t->diag('Profile::isSingleSelect()');
 $t->ok($profileSex->isSingleSelect());
+$t->ok(!$profileBirthday->isMultipleSelect());
 $t->ok($profileSelectItem->isSingleSelect());
 $t->ok(!$profileCheckboxItem->isSingleSelect());
 
