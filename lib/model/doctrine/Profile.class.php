@@ -44,7 +44,7 @@ class Profile extends BaseProfile
 
   public function isMultipleSelect()
   {
-    return (bool)('date' === $this->getFormType() || 'checkbox' === $this->getFormType());
+    return (bool)(('date' === $this->getFormType() && !$this->isPreset()) || 'checkbox' === $this->getFormType());
   }
 
   public function isSingleSelect()
