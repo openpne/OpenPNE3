@@ -4,7 +4,7 @@ $options = array(
   'list' => $communities,
   'crownIds' => $sf_data->getRaw('crownIds'),
   'link_to' => 'community/home?id=',
-  'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $member->CommunityMember->count()), 'community/joinlist')),
+  'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $member->CommunityMember->count()), 'community/joinlist?id='.$member->id)),
   'type' => $sf_data->getRaw('gadget')->getConfig('type'),
   'row' => $row,
   'col' => $col,
