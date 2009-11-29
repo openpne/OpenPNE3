@@ -1,10 +1,10 @@
-OpenPNE3.1 セットアップ手順
+OpenPNE3.2 セットアップ手順
 ===========================
 
 はじめに
 --------
 
-このドキュメントは、 OpenPNE バージョン 3.1 を基にして書かれています。
+このドキュメントは、 OpenPNE バージョン 3.2 を基にして書かれています。
 
 OpenPNE3 は以下のようなサーバ環境で動作させることを想定しています。
 
@@ -32,12 +32,9 @@ PHP
 ダウンロード
 ~~~~~~~~~~~~
 
-以下の URL から OpenPNE3.1 のパッケージをダウンロードしてください。
+以下の URL から OpenPNE 3.2 のパッケージをダウンロードしてください。
 
-3.1.0 - 3.1.2
-  https://sourceforge.net/project/showfiles.php?group_id=174268&package_id=307735
-3.1.3 +
-  http://github.com/openpne/OpenPNE3/downloads
+http://github.com/openpne/OpenPNE3/downloads
 
 その後、 ZIP アーカイブを解凍してください。
 
@@ -112,6 +109,43 @@ web/.htaccess の RewriteBase を各自の環境にあわせて編集してく�
 
 ※RewriteBase には URL の絶対パスを指定してください。
 
+インストール
+~~~~~~~~~~~~
+
+以下のコマンドを実行（DSNなどは各自適切なものに変更）
+
+::
+
+  $ ./symfony openpne:install
+
+メールの設定
+~~~~~~~~~~~~
+
+メールを配信するための設定をおこないます。メールの配信をおこなわない場合はスキップして構いません。
+
+設定例
+++++++
+
+cron ファイルに設定権限を付加します。
+
+::
+
+  $ chmod -R 0755 bin/*.cron
+
+/etc/crontab に以下を記述します。
+
+::
+
+  # 6 時に /path/to/OpenPNE3/bin/send_daily_news.cron というスクリプトを /path/to/php で実行することで /path/to/OpenPNE3 のデイリー・ニュースを配信する
+  00   6 * * * root sh /path/to/OpenPNE3/bin/send_daily_news.cron     /path/to/OpenPNE3 /path/to/php
+  
+  # 6 時に /path/to/OpenPNE3/bin/birthday_mail.cron というスクリプトを /path/to/php で実行することで /path/to/OpenPNE3 の誕生日通知メールを配信する
+  00   6 * * * root sh /path/to/OpenPNE3/bin/birthday_mail.cron     /path/to/OpenPNE3 /path/to/php
+
+なお、デイリー・ニュースはデフォルトの状態ではコンテンツがありません。
+
+管理画面のガジェット設定から、デイリー・ニュースに対応したプラグインが提供するコンテンツを選択して使用してください。
+
 ブラウザからアクセス(PC)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -128,15 +162,22 @@ web/.htaccess の RewriteBase を各自の環境にあわせて編集してく�
 
 ※メールアドレスとパスワードはログイン後に必ず変更してください
 
-Git から入手してセットアップする (3.1.3 以降)
----------------------------------------------
+Git から入手してセットアップする
+--------------------------------
 
-OpenPNE3 をクローンする
-~~~~~~~~~~~~~~~~~~~~~~~
+OpenPNE3 をクローンし、使用したいバージョンをチェックアウトする
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OpenPNE3 のクローンはデフォルトでは master ブランチを使用する状態になっています。
+
+master ブランチは主に開発版の開発に使われるバージョンです。
+
+OpenPNE3 の特定のバージョンを使いたい場合は、以下のようにして、クローンした後にタグをチェックアウトしてください。
 
 ::
 
-  $ git clone git://github.com/openpne/OpenPNE3.git
+  $ git clone git://github.com/openpne/OpenPNE3.github
+  $ git checkout OpenPNE-3.2RC1
 
 config/ProjectConfiguration.class.php をコピー
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -165,64 +206,33 @@ HTTP プロキシを利用する場合、 config/ProjectConfiguration.class.php 
 
   $ ./symfony openpne:install
 
-ブラウザからアクセス(PC)
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-(1) http://example.com/pc_frontend_dev.php にアクセス
-(2) ログインフォームに sns@example.com / password と入力し、ログインできるかどうか確認
-
-ブラウザからアクセス(管理画面)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-(1) http://example.com/pc_backend_dev.php にアクセス
-(2) ログインフォームに admin / password と入力し、ログインできるかどうか確認 
-
-svn からチェックアウトしたものをセットアップ (3.1.0 から 3.1.2 まで)
---------------------------------------------------------------------
-
-※ symfony1.2 自体のセットアップが完了しており、 symfony コマンドによって自動生成されたプロジェクトに対してWEBブラウザからアクセスできる環境を前提として説明
-
-OpenPNE3 のチェックアウト
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-  $ svn co https://trac.openpne.jp/svn/OpenPNE3/tags/OpenPNE-3.1.0/
-
-config/ProjectConfiguration.class.php を編集
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-  $ cd OpenPNE-3.1.0
-  $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
-  $ vi config/ProjectConfiguration.class.php
-
-以下の ##SYMFONY_LIB_DIR## を symfony のライブラリ群がインストールされているディレクトリのパスに置換する。
-（例：/usr/share/php/data/symfony）
-
-::
-
-    require_once '##SYMFONY_LIB_DIR##/autoload/sfCoreAutoload.class.php';
-
-HTTP プロキシの設定
-~~~~~~~~~~~~~~~~~~~
-
-HTTP プロキシを利用する場合、 config/ProjectConfiguration.class.php の op_http_proxy の設定を以下の例を参考に変更してください。
-
-::
-
-  //HTTP proxy to use when downloading plugin packages
-  sfConfig::set('op_http_proxy', 'example.com:8080');
-
-インストール
+メールの設定
 ~~~~~~~~~~~~
 
-以下のコマンドを実行（DSNなどは各自適切なものに変更）
+メールを配信するための設定をおこないます。メールの配信をおこなわない場合はスキップして構いません。
+
+設定例
+++++++
+
+cron ファイルに設定権限を付加します。
 
 ::
 
-  $ ./symfony openpne:install
+  $ chmod -R 0755 bin/*.cron
+
+/etc/crontab に以下を記述します。
+
+::
+
+  # 6 時に /path/to/OpenPNE3/bin/send_daily_news.cron というスクリプトを /path/to/php で実行することで /path/to/OpenPNE3 のデイリー・ニュースを配信する
+  00   6 * * * root sh /path/to/OpenPNE3/bin/send_daily_news.cron     /path/to/OpenPNE3 /path/to/php
+  
+  # 6 時に /path/to/OpenPNE3/bin/birthday_mail.cron というスクリプトを /path/to/php で実行することで /path/to/OpenPNE3 の誕生日通知メールを配信する
+  00   6 * * * root sh /path/to/OpenPNE3/bin/birthday_mail.cron     /path/to/OpenPNE3 /path/to/php
+
+なお、デイリー・ニュースはデフォルトの状態ではコンテンツがありません。
+
+管理画面のガジェット設定から、デイリー・ニュースに対応したプラグインが提供するコンテンツを選択して使用してください。
 
 ブラウザからアクセス(PC)
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -235,3 +245,4 @@ HTTP プロキシを利用する場合、 config/ProjectConfiguration.class.php 
 
 (1) http://example.com/pc_backend_dev.php にアクセス
 (2) ログインフォームに admin / password と入力し、ログインできるかどうか確認 
+
