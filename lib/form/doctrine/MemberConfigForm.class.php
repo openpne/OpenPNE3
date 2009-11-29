@@ -119,6 +119,11 @@ class MemberConfigForm extends BaseForm
 
   public function isValid()
   {
+    if ($this->member)
+    {
+      return parent::isValid();
+    }
+
     opActivateBehavior::disable();
 
     foreach ($this->getValues() as $key => $value)
