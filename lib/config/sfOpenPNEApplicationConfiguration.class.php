@@ -67,6 +67,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     $this->disablePlugins(array_keys($pluginActivations, false));
     unset($this->cache['getPluginPaths']);  // it should be rewrited
 
+    $this->plugins = array_unique($this->plugins);
+
     // gadget
     include($this->getConfigCache()->checkConfig('config/gadget_layout_config.yml'));
     include($this->getConfigCache()->checkConfig('config/gadget_config.yml'));
