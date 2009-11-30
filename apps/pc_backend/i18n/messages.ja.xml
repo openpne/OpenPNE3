@@ -637,6 +637,78 @@
         <source>Input Emoji(DoCoMo)</source>
         <target>絵文字挿入(DoCoMo)</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>General Configuration</source>
+        <target>一般的な設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>External Login Page Configuration</source>
+        <target>外部ログインページ設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Authentication Configuration</source>
+        <target>認証関連設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Mobile Configuration</source>
+        <target>携帯関連設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Site Policy Configuration</source>
+        <target>サイトポリシー関連設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>HTML Insertion</source>
+        <target>HTML 挿入</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Insecure Page Footer</source>
+        <target>ログイン前ページフッター</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Secure Page Footer</source>
+        <target>ログイン後ページフッター</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>HTML Insertion Area (in HTML head)</source>
+        <target>HTML 挿入 (HTML head 内)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>HTML Insertion Area A</source>
+        <target>HTML 挿入 A</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>HTML Insertion Area B</source>
+        <target>HTML 挿入 B</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>HTML Insertion Area C</source>
+        <target>HTML 挿入 C</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>HTML Insertion Area D</source>
+        <target>HTML 挿入 D</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>HTML Insertion Area (in page header)</source>
+        <target>HTML 挿入 (ページ上部)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>HTML Insertion Area (in page footer)</source>
+        <target>HTML 挿入 (ページ下部)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Footer</source>
+        <target>フッター</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>All PC Pages</source>
+        <target>PC 版全ページ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>All Mobile Pages</source>
+        <target>携帯版全ページ</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

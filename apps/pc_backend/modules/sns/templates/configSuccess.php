@@ -2,7 +2,12 @@
 <?php include_partial('submenu'); ?>
 <?php end_slot() ?>
 
-<h2><?php echo __('SNS設定') ?> (<?php echo $category ?>)</h2>
+<?php
+$categoryAttributes = sfConfig::get('openpne_sns_category_attribute'); 
+$caption = !empty($categoryAttributes[$category]['Caption']) ? $categoryAttributes[$category]['Caption'] : $category;
+?>
+
+<h2><?php echo __('SNS設定') ?> (<?php echo __($caption) ?>)</h2>
 
 <p><?php echo __('※「設定変更」ボタンを押すと設定が反映されます。') ?></p>
 

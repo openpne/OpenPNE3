@@ -1,4 +1,7 @@
 general:
+  _attributes:
+    Caption: "General Configuration"
+
   sns_name:
     Name:     "sns_name"
     Caption:  "SNS名"
@@ -84,6 +87,9 @@ general:
       - "日"
 
 external_login_page:
+  _attributes:
+    Caption: "External Login Page Configuration"
+
   external_pc_login_url:
     Name:     "external_pc_login_url"
     Caption:  "PC版外部ログインページURL"
@@ -103,6 +109,9 @@ external_login_page:
     IsRequired: false
 
 authentication:
+  _attributes:
+    Caption: "Authentication Configuration"
+
   enable_registration:
     Name:      "enable_registration"
     Caption:   "登録の可否"
@@ -117,6 +126,9 @@ authentication:
       0: "登録一時停止"
 
 mobile:
+  _attributes:
+    Caption: "Mobile Configuration"
+
   retrieve_uid:
     Name:      "retrieve_uid"
     Caption:   "メンバー登録時の携帯個体識別番号取得設定"
@@ -151,6 +163,9 @@ mobile:
       0: "携帯電話のIP帯域をチェックしない"
 
 policy:
+  _attributes:
+    Caption: "Site Policy Configuration"
+
   user_agreement:
     Name:       "user_agreement"
     Caption:    "利用規約"
@@ -167,6 +182,9 @@ policy:
     Default:    "プライバシーポリシーはただいま準備中です。\nThe Privacy Policy is under construction."
 
 footer:
+  _attributes:
+    Hidden: true
+
   footer_before:
     Name:       "footer_before"
     Caption:    "ログイン前フッター"

@@ -426,4 +426,43 @@ class designActions extends sfActions
       }
     }
   }
+
+ /**
+  * Executes add gadget action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeHtml(sfWebRequest $request)
+  {
+    $this->type = $request->getParameter('type', opDesignHtmlForm::DEFAULT_TYPE);
+    $this->forward404Unless(in_array($this->type, opDesignHtmlForm::allowedTypeList()));
+
+    $this->typeCaptions = array(
+      'footer_before'    => 'Insecure Page Footer',
+      'footer_after'     => 'Secure Page Footer',
+      'pc_html_head'     => 'HTML Insertion Area (in HTML head)',
+      'pc_html_top2'     => 'HTML Insertion Area A',
+      'pc_html_top'      => 'HTML Insertion Area B',
+      'pc_html_bottom2'  => 'HTML Insertion Area C',
+      'pc_html_bottom'   => 'HTML Insertion Area D',
+      'mobile_html_head' => 'HTML Insertion Area (in HTML head)',
+      'mobile_header'    => 'HTML Insertion Area (in page header)',
+      'mobile_footer'    => 'HTML Insertion Area (in page footer)',
+    );
+
+    $snsConfigSettings = sfConfig::get('openpne_sns_config');
+    $default = isset($snsConfigSettings[$this->type]['Default']) ? $snsConfigSettings[$this->type]['Default'] : null;
+
+    $this->form = new opDesignHtmlForm(array('html' => Doctrine::getTable('SnsConfig')->get($this->type, $default)), array('type' => $this->type));
+    if ($request->isMethod(sfRequest::POST))
+    {
+      $this->form->bind($request->getParameter('design_html'));
+      if ($this->form->isValid())
+      {
+        $this->form->save();
+        $this->getUser()->setFlash('notice', 'Saved.');
+        $this->redirect('design/html?type='.$this->type);
+      }
+    }
+  }
 }

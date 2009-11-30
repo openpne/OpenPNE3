@@ -15,11 +15,10 @@
 *{font-size:xx-small;}
 </style>
 <?php endif; ?>
-
-    <?php include_stylesheets() ?>
-    <?php include_javascripts() ?>
+<?php echo $op_config->get('mobile_html_head') ?>
 </head>
 <body>
+<?php echo $op_config->get('mobile_header') ?>
 
 <a name="top"></a>
 
@@ -61,5 +60,6 @@
 </td></tr></tbody></table>
 <?php endif; ?>
 <?php endif; ?>
+<?php echo $op_config->get('mobile_footer') ?>
 </body>
 </html>
