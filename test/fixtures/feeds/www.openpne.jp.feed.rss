@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>OpenPNE</title>
+	<atom:link href="http://www.openpne.jp/feed/" rel="self" type="application/rss+xml" />
+	<link>http://www.openpne.jp</link>
+	<description>オープンソースのSNSエンジン OpenPNEプロジェクト</description>
+	<lastBuildDate>Sun, 29 Nov 2009 16:16:36 +0000</lastBuildDate>
+	<generator>http://wordpress.org/?v=2.8.6</generator>
+	<language>ja</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+			<item>
+		<title>OpenPNE 3.2RC1 リリースのお知らせ</title>
+		<link>http://www.openpne.jp/archives/3988/</link>
+		<comments>http://www.openpne.jp/archives/3988/#comments</comments>
+		<pubDate>Sun, 29 Nov 2009 16:16:36 +0000</pubDate>
+		<enclosure url="http://www.example.com/openpne.png" length="1000" type="image/png" />
+		<dc:creator>Kousuke Ebihara</dc:creator>
+				<category><![CDATA[OpenPNE リリース情報]]></category>
+		<category><![CDATA[OpenPNEからのおしらせ]]></category>
+
+		<guid isPermaLink="false">http://www.openpne.jp/?p=3988</guid>
+		<description><![CDATA[				OpenPNE 開発チームの海老原です。
+				本日 2009/11/30（月）、 開発版 OpenPNE 3.2RC1 をリリースしました。
+				今後の OpenPNE3 のリリーススケジュール にて発表 [...]]]></description>
+			<content:encoded><![CDATA[				<p>OpenPNE 開発チームの海老原です。</p>
+				<p>本日 2009/11/30（月）、 開発版 OpenPNE 3.2RC1 をリリースしました。</p>
+				<p><a href="http://www.openpne.jp/archives/3836/">今後の OpenPNE3 のリリーススケジュール</a> にて発表させていただいたスケジュールでは、本日が 3.2.0 のリリース予定日となっていましたが、 3.2.0 のリリースは開発の遅れにより本日より 3 日後の 2009/12/03 (木) に延期させていただきたいと思います。もうしばらくお待ちください！</p>
+			</div>
+			<div class="textBody" id="extended">
+				<h2>機能追加・機能改善</h2>
+				<ul>
+				<li>#305: Add description for sending e-mail by periodic executed script to setup document (定期実行スクリプトによるメール配信のための手段をドキュメントに追記する) (Kousuke Ebihara)</li>
+				<li>#279: ログイン最終日時の表記方法をわかりやすくする (Shogo Kawahara)</li>
+				</ul>
+				<p>詳細は、 <a href="http://redmine.openpne.jp/projects/op3/changelog#OpenPNE%203.2RC1">ChangeLog</a> をご覧ください。</p>
+				<h2>バグ修正</h2>
+				<ul>
+				<li>#278: The display of Lastlogin of the member who has not login yet is not &#8220;not login yet&#8221;. (ログインしたことのないメンバーの最終ログインの表示が&#8221;未ログイン&#8221;でない) (Shogo Kawahara)</li>
+				<li>#281: The birthday profile item don&#8217;t modify when when it is set to required item (誕生日を入力必須項目にした場合変更ができません）(Shogo Kawahara)</li>
+				<li>#302: 特定条件下にてメールアドレス設定変更するとエラー発生 (Kousuke Ebihara)</li>
+				<li>#303: 「もっと写真をみる」でエラー (Kousuke Ebihara)</li>
+				<li>#304: 他人のプロフィール画面のコミュニティリストの「もっと見る」のリンク先が自分のコミュニティリストになっている (Kousuke Ebihara)</li>
+				</ul>
+				<p>その他のバグ修正については、 <a href="http://redmine.openpne.jp/projects/op3/changelog#OpenPNE%203.2RC1">ChangeLog</a> をご覧ください。</p>
+				<h2>バージョンアップ・インストール</h2>
+				<h3>OpenPNE 3.0.5 からのアップグレード</h3>
+				<p>アップグレード方法は、<a href="http://www.openpne.jp/openpne_3_0_5_to_3_2_upgrade_guide/">OpenPNE 3.0.5 からのアップグレード手順</a> をご覧ください。</p>
+				<h3>バージョンアップ</h3>
+				<p>バージョンアップ方法は、<a href="http://www.openpne.jp/openpne_3_2_update_guide/">OpenPNE3.2 バージョンアップ手順</a> をご覧ください。</p>
+				<h3>インストール</h3>
+				<p>インストール方法は、同梱の <a href="http://www.openpne.jp/openpne_3_2_setup_guide/">OpenPNE3.2 セットアップ手順</a> をご覧ください。</p>
+				<h2>ダウンロード・チェンジログ</h2>
+				<h3>ダウンロード</h3>
+				<p><a href="http://www.openpne.jp/pne-downloads">http://www.openpne.jp/pne-downloads</a></p>
+				<h3>チェンジログ</h3>
+				<p> <a href="http://redmine.openpne.jp/projects/op3/changelog#OpenPNE%203.2RC1">ChangeLog</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://www.openpne.jp/archives/3988/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<link>http://www.openpne.jp/archives/3982/</link>
+		<comments>http://www.openpne.jp/archives/3982/#comments</comments>
+		<pubDate>Sat, 28 Nov 2009 21:00:51 +0000</pubDate>
+		<dc:creator>Kousuke Ebihara</dc:creator>
+				<category><![CDATA[OpenPNE3 プラグイン リリース情報]]></category>
+		<category><![CDATA[OpenPNEからのおしらせ]]></category>
+
+		<guid isPermaLink="false">http://www.openpne.jp/?p=3982</guid>
+		<description><![CDATA[				OpenPNE 開発チームの海老原です。
+				本日 2009/11/29 (日) 、 opMessagePlugin にクロスサイト・リクエスト・フォージュリ (CSRF) の脆弱性が発見されたため、緊急リリ [...]]]></description>
+			<content:encoded><![CDATA[				<p>OpenPNE 開発チームの海老原です。</p>
+				<p>本日 2009/11/29 (日) 、 opMessagePlugin にクロスサイト・リクエスト・フォージュリ (CSRF) の脆弱性が発見されたため、緊急リリースをおこないました。</p>
+				<p><strong>対象:</strong></p>
+				<ul>
+				<li>opMessagePlugin 0.8.2 以前 (OpenPNE 3.0.0 〜 3.0.5 に同梱されているもの)</li>
+				<li>opMessagePlugin 0.9.0 (OpenPNE 3.1.5 〜 3.2 beta1 に同梱されているもの)</li>
+				</ul>
+				<p><strong>影響を受けるシステム:</strong></p>
+				<p>対象のバージョンの opMessagePlugin を使用しているすべての OpenPNE3<br />
+				(ただし、2009/11/29 05:31 以降にセットアップをおこなった OpenPNE3 には対策版のプラグインがインストールされるため、影響を受けません)</p>
+				<p><strong>想定される影響:</strong></p>
+				<p>OpenPNE3 にログインした状態で、悪意のあるプログラムコードが含まれたページにアクセスすると、任意のメッセージを削除、またはゴミ箱から復元されてしまう恐れがあります。</p>
+				<p><strong>対策方法:</strong></p>
+				<p>OpenPNE 3.0.3 〜 3.0.5 をお使いの場合、以下のコマンドを実行してアップデートを実施してください。</p>
+				<blockquote><pre>$ symfony opPlugin:install opMessagePlugin -r 0.8.2.1
+$ symfony propel:build-model
+$ symfony propel:build-form
+$ symfony propel:build-filter
+$ symfony cc</pre>
+				</blockquote>
+				<p>OpenPNE 3.1.5 〜 OpenPNE 3.2beta1 をお使いの場合、以下のコマンドを実行してアップデートを実施してください。</p>
+				<blockquote><pre>$ symfony opPlugin:install opMessagePlugin -r 0.9.0.1
+$ symfony doctrine:build-model
+$ symfony doctrine:build-form
+$ symfony doctrine:build-filter
+$ symfony cc</pre>
+				</blockquote>
+				<p>OpenPNE 3.0.0, 3.0.1, 3.0.2 をお使いの方は、 OpenPNE 3.0.3 へのアップデートを実施してください。</p>
+]]></content:encoded>
+			<wfw:commentRss>http://www.openpne.jp/archives/3982/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>opOpenSocialPlugin 0.9.2リリースのお知らせ</title>
+		<comments>http://www.openpne.jp/archives/3966/#comments</comments>
+		<pubDate>Wed, 25 Nov 2009 08:24:38 +0000</pubDate>
+		<dc:creator>Shogo Kawahara</dc:creator>
+				<category><![CDATA[その他]]></category>
+
+		<guid isPermaLink="false">http://www.openpne.jp/?p=3966</guid>
+		<description><![CDATA[				OpenPNE開発チームの川原です。
+				昨日2009年11月24日、opOpenSocialPlugin 0.9.2-betaをリリースしました。
+				0.9.1-betaからのおもな変更点
+				
+ [...]]]></description>
+			<content:encoded><![CDATA[				<p>OpenPNE開発チームの川原です。</p>
+				<p>昨日2009年11月24日、opOpenSocialPlugin 0.9.2-betaをリリースしました。</p>
+				<h2>0.9.1-betaからのおもな変更点</h2>
+				<ul>
+				<li>バグ修正</li>
+				<li>
+				<ul>
+				<li><a href="http://redmine.openpne.jp/issues/255">#225</a> データベースの環境下によってはインストールが正常に完了しない問題の解消</li>
+				<li>コーディング規約などの修正</li>
+				</ul>
+				</li>
+				<li>改善</li>
+				<li>
+				<ul>
+				<li>モデルについてのユニットテストの同梱</li>
+				</ul>
+				</li>
+				</ul>
+				<h2>導入方法</h2>
+				<p><strong>OpenPNE3.1.3以上が必要です。 </strong><br />
+				3.1.3未満のバージョンをご利用している場合は、事前にバージョンアップを行ってください。</p>
+				<p><strong>OpenPNE3.2-beta1にはこのバージョンが自動的にインストールされます。</strong></p>
+				<p>OpenPNE本体のバージョンを上げずに、プラグインのみをバージョンアップする場合は次のように行います。<br />
+				バージョンアップ前にデータベースのバックアップを行ってください。</p>
+				<pre style="overflow: auto; margin-bottom: 1em"><code>
+$ ./symfony opPlugin:install -s beta -r 0.9.2 opOpenSocialPlugin
+$ ./symfony openpne:migrate
+$ ./symfony cc
+</code></pre>
+				<h2>今後のリリース</h2>
+				<p>OpenPNE3.3.xに同梱させるためのバージョン0.9.3-betaを今年のうちにリリースする予定です。<br />
+				おもな機能として、アルバム機能との連動や、メンバーによるアプリの追加に関する機能の強化を行うつもりです。</p>
+				<p>目標は、<del datetime="2009-11-25T08:24:40+00:00">クリスマスはどうせ暇なので</del>皆さんにクリスマスプレゼント的な12月24日としています。</p>
+				<p>また、<a href="http://redmine.openpne.jp/issues/230">OpenPNE本体側にActivityが実装される予定なので</a>、その操作に関するAPIの実装を中心としたバージョンを<br />
+				バージョンを1.0.0とする予定です。</p>
+				<h2>開発やバグ報告・要望について</h2>
+				<p>これまで、Issue TrackingをGithub上で行っていましたが、ロードマップの管理などの利便性の観点から<br />
+				<a href="http://redmine.openpne.jp/">OpenPNE Issue Tracking System</a>上で行うことにしました。</p>
+				<p><a href="http://redmine.openpne.jp/projects/plg-open-social/issues/new">こちらから、報告ができます。</a></p>
+				<p>また、このプラグインはGithub上でソースコードの管理を行っています。<br />
+				http://github.com/kawahara/opOpenSocialPlugin</p>
+				<p>forkやpull requestはお気軽に！</p>
+]]></content:encoded>
+			<wfw:commentRss>http://www.openpne.jp/archives/3966/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>OpenPNE 3.2beta1 リリースのお知らせ</title>
+		<link>http://www.openpne.jp/archives/3949/</link>
+		<pubDate>Tue, 24 Nov 2009 15:18:23 +0000</pubDate>
+		<dc:creator>Kousuke Ebihara</dc:creator>
+				<category><![CDATA[OpenPNE リリース情報]]></category>
+		<category><![CDATA[OpenPNEからのおしらせ]]></category>
+
+		<guid isPermaLink="false">http://www.openpne.jp/?p=3949</guid>
+		<description><![CDATA[				OpenPNE 開発チームの海老原です。
+				本日 2009/11/25（水）、 開発版 OpenPNE 3.2beta1 をリリースしました。
+				今回のバージョンから、 OpenPNE 3.0.5 以 [...]]]></description>
+			<content:encoded><![CDATA[				<p>OpenPNE 開発チームの海老原です。</p>
+				<p>本日 2009/11/25（水）、 開発版 OpenPNE 3.2beta1 をリリースしました。</p>
+				<p>今回のバージョンから、 OpenPNE 3.0.5 以上からのアップグレードに対応しました。大変お待たせしました。</p>
+				<p>また、新しいプラグインの同梱についてはこのバージョンで締め切りました。 OpenPNE 3.0.x で同梱されていたプラグインで、まだこのバージョンに同梱されていないものについては、 OpenPNE 3.3.x 以上で同梱をおこなう予定です。</p>
+			</div>
+			<div class="textBody" id="extended">
+				<h2>機能追加・機能改善</h2>
+				<ul>
+				<li>#237: Added support for migrating from OpenPNE 3.0.x (OpenPNE 3.0.x からの移行をサポートする) (Kousuke Ebihara)</li>
+				<li>#239: Added support for migrating from OpenPNE 3.1.x (OpenPNE 3.1.x からの移行をサポートする) (Kousuke Ebihara)</li>
+				<li>#248: add manager OpenPNE&#8217;s richtextarea (OpenPNEのリッチテキストエリアを管理する機能を実装する） (Shogo Kawahara)</li>
+				</ul>
+				<p>詳細は、 <a href="http://redmine.openpne.jp/projects/op3/changelog#OpenPNE%203.2beta1">ChangeLog</a> をご覧ください。</p>
+				<h2>バグ修正</h2>
+				<ul>
+				<li>#234: The display of the type of the date in the profile is not correct (プロフィール画面の日付型データが表示が正しくない） (Kousuke Ebihara)</li>
+				<li>#241: openpne:migrate loads only migration fixtures for last revision (openpne:migrate が最後のリビジョンの fixture ファイルしかロードしない) (Kousuke Ebihara)</li>
+				<li>#249: 3.1.5で特定のプラグインを無効にした後member/inviteの削除処理でエラー (Kousuke Ebihara)</li>
+				<li>#250: Non-logged-in member can&#8217;t access some pages that don&#8217;t need authentication (認証の不要なページに未ログインユーザがアクセスできない) (Kousuke Ebihara)</li>
+				<li>#253: 3.1.5でPCメールアドレスを変更しようとするとエラーが発生する (Kousuke Ebihara)</li>
+				</ul>
+				<p>その他のバグ修正については、 <a href="http://redmine.openpne.jp/projects/op3/changelog#OpenPNE%203.2beta1">ChangeLog</a> をご覧ください。</p>
+				<h2>バンドルされるプラグインの追加・更新情報</h2>
+				<p>以下のプラグインが更新されます。</p>
+				<ul>
+				<li>opOpenSocialPlugin 0.9.1 -> 0.9.2</li>
+				</ul>
+				<h2>注意事項</h2>
+				<p>3.0.x に同梱されていたプラグインの一部は Doctrine に未対応のため、 OpenPNE 3.2.x ではご利用いただけません。</p>
+				<p>同梱されているプラグインは以下となります。</p>
+				<ul>
+				<li>opAuthMailAddressPlugin</li>
+				<li>opAuthMobileUIDPlugin</li>
+				<li>opAuthOpenIDPlugin</li>
+				<li>opCommunityTopicPlugin</li>
+				<li>opWebAPIPlugin</li>
+				<li>opDiaryPlugin</li>
+				<li>opBlogPlugin</li>
+				<li>opOpenSocialPlugin</li>
+				<li>opAshiatoPlugin</li>
+				<li>opMessagePlugin</li>
+				<li>opAlbumPlugin</li>
+				</ul>
+				<h2>バージョンアップ・インストール</h2>
+				<h3>OpenPNE 3.0.5 からのアップグレード</h3>
+				<p>アップグレード方法は、<a href="http://www.openpne.jp/openpne_3_0_5_to_3_2_upgrade_guide/">OpenPNE 3.0.5 からのアップグレード手順</a> をご覧ください。</p>
+				<h3>バージョンアップ</h3>
+				<p>バージョンアップ方法は、<a href="http://www.openpne.jp/openpne_3_1_update_guide/">OpenPNE3.1 バージョンアップ手順</a> をご覧ください。</p>
+				<h3>インストール</h3>
+				<p>インストール方法は、同梱の <a href="http://www.openpne.jp/openpne_3_1_setup_guide/">OpenPNE3.1 セットアップ手順</a> をご覧ください。</p>
+				<h2>ダウンロード・チェンジログ</h2>
+				<h3>ダウンロード</h3>
+				<p><a href="http://www.openpne.jp/pne-downloads">http://www.openpne.jp/pne-downloads</a></p>
+				<h3>チェンジログ</h3>
+				<p> <a href="http://redmine.openpne.jp/projects/op3/changelog#OpenPNE%203.2beta1">ChangeLog</a></p>
+]]></content:encoded>
+			<wfw:commentRss>http://www.openpne.jp/archives/3949/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>OpenPNE 3.1.5 にバンドルされているプラグインを更新しました</title>
+		<link>http://www.openpne.jp/archives/3945/</link>
+		<comments>http://www.openpne.jp/archives/3945/#comments</comments>
+		<pubDate>Tue, 24 Nov 2009 04:33:46 +0000</pubDate>
+		<dc:creator>Kousuke Ebihara</dc:creator>
+				<category><![CDATA[OpenPNEからのおしらせ]]></category>
+
+		<guid isPermaLink="false">http://www.openpne.jp/?p=3945</guid>
+			<content:encoded><![CDATA[				<p>開発チームの海老原です。</p>
+				<p>11/23 に <a href="http://www.openpne.jp/archives/3931/">opAlbumPlugin のアップデート</a>が、 11/24 に <a href="http://www.openpne.jp/archives/3938/">opDiaryPlugin のアップデート</a>がありました。</p>
+				<p>どちらも重要なバグフィックスがおこなわれたリリースのため、 OpenPNE 3.1.5 にバンドルされているプラグインも、新しく更新されたバージョンに変更しました。</p>
+				<p>以下のコマンドを実行することで、更新された opAlbumPlugin と opDiaryPlugin が利用できます。<br />
+				<code>./symfony openpne:migrate</code></p>
+]]></content:encoded>
+			<wfw:commentRss>http://www.openpne.jp/archives/3945/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>opDiaryPlugin 0.9.2 をリリースしました</title>
+		<link>http://www.openpne.jp/archives/3938/</link>
+		<comments>http://www.openpne.jp/archives/3938/#comments</comments>
+		<pubDate>Mon, 23 Nov 2009 15:13:22 +0000</pubDate>
+		<dc:creator>Rimpei Ogawa</dc:creator>
+				<category><![CDATA[OpenPNE3 プラグイン リリース情報]]></category>
+
+		<guid isPermaLink="false">http://www.openpne.jp/?p=3938</guid>
+			<wfw:commentRss>http://www.openpne.jp/archives/3938/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>opAlbumPlugin 0.9.1 をリリースしました</title>
+		<link>http://www.openpne.jp/archives/3931/</link>
+		<comments>http://www.openpne.jp/archives/3931/#comments</comments>
+		<dc:creator>mogi</dc:creator>
+				<category><![CDATA[OpenPNE3 プラグイン リリース情報]]></category>
+		<category><![CDATA[opAlbumPlugin]]></category>
+
+		<guid isPermaLink="false">http://www.openpne.jp/?p=3931</guid>
+		<description><![CDATA[				
+				OpenPNE 開発チームの茂木です。
+				OpenPNE3.1.5にて、opAlbumPluginの影響で、未ログインユーザがログインを必要としないアクションにアクセスできない状態になる、というバ [...]]]></description>
+			<content:encoded><![CDATA[				<div class="textBody">
+				<p>OpenPNE 開発チームの茂木です。</p>
+				<p>OpenPNE3.1.5にて、opAlbumPluginの影響で、未ログインユーザがログインを必要としないアクションにアクセスできない状態になる、というバグが起きていたため、急遽対策をさせていただきました。<br />
+				opAlbumPluginを利用している方はアップデートをお願いします。</p>
+				<h2>インストール方法</h2>
+				<p>opPlugin:install タスクを実行することで最新リリースへのアップデートをおこなうことができます。</p>
+				<blockquote><p>$ symfony opPlugin:install -r 0.9.1 -s beta opAlbumPlugin</p></blockquote>
+				<p>完了後、以下のコマンドでプラグインが設置されているかを確かめることができます。</p>
+				<blockquote><p>$ symfony plugin:list</p></blockquote>
+				<p>以下のように表示されます。</p>
+				<blockquote><p>opAlbumPlugin 0.9.1-beta # <a href="http://plugins.openpne.jp/">plugins.openpne.jp</a> (<a href="http://plugins.openpne.jp/">plugins.openpne.jp</a>)</p></blockquote>
+				<p>プラグイン取得後、以下を実行します。</p>
+				<blockquote><p>$ symfony openpne:migrate –target=opAlbumPlugin</p></blockquote>
+				<p>キャッシュの削除をしてください。</p>
+				<blockquote><p>$ symfony cc</p></blockquote>
+				<p>これで、アップデートが完了します。</p></div>
+]]></content:encoded>
+			<wfw:commentRss>http://www.openpne.jp/archives/3931/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>opAlbumPlugin 0.9.0 をリリースしました</title>
+		<link>http://www.openpne.jp/archives/3925/</link>
+		<comments>http://www.openpne.jp/archives/3925/#comments</comments>
+		<pubDate>Fri, 20 Nov 2009 11:54:18 +0000</pubDate>
+		<dc:creator>mogi</dc:creator>
+				<category><![CDATA[OpenPNE3 プラグイン リリース情報]]></category>
+
+		<guid isPermaLink="false">http://www.openpne.jp/?p=3925</guid>
+		<description><![CDATA[				
+				初めまして！
+				OpenPNE 開発チームの茂木です。
+				告知が遅れてしまったのですが、OpenPNE3 用のアルバムプラグイン、 opAlbumPlugin の 0.9.0 をリリースしま [...]]]></description>
+			<content:encoded><![CDATA[				<div>
+				<p>初めまして！</p>
+				<p>OpenPNE 開発チームの茂木です。</p>
+				<p>告知が遅れてしまったのですが、OpenPNE3 用のアルバムプラグイン、 opAlbumPlugin の 0.9.0 をリリースしました。</p>
+				<p>既に、今週リリースされたOpenPNE 3.1.5 に同梱されています。</p>
+				<p>このプラグインは、OpenPNE2系で提供していたアルバム機能を移植したものです。</p>
+				<p>現状ではPC版の基本的なアルバム機能が実装されています。</p>
+				<p>これからのリリースで、携帯版やアルバム小窓などを追加して行きたいと考えています。</p>
+				<p>また、Doctrineにのみ対応しておりますので、OpenPNE3.1系でご利用ください。</p>
+				<h2>インストール方法</h2>
+				<p>OpenPNE3のプラグインチャネルサーバからopAlbumPluginを入手し、インストールを行ってください。<br />
+				これは以下のコマンドから行うことができます。</p>
+				<blockquote><p>$ symfony opPlugin:install -r 0.9.0 -s beta opAlbumPlugin</p></blockquote>
+				<p>完了後、以下のコマンドでプラグインが設置されているかを確かめることができます。</p>
+				<blockquote><p>$ symfony plugin:list</p></blockquote>
+				<p>以下のように表示されます。</p>
+				<blockquote><p>opAlbumPlugin 0.9.0-beta # <a href="http://plugins.openpne.jp/" target="_blank">plugins.openpne.jp</a> (<a href="http://plugins.openpne.jp/" target="_blank">plugins.openpne.jp</a>)</p></blockquote>
+				<p>プラグイン取得後、以下を実行します。</p>
+				<blockquote><p>$ symfony openpne:migrate &#8211;target=opAlbumPlugin</p></blockquote>
+				<p>キャッシュの削除をしてください。</p>
+				<blockquote><p>$ symfony cc</p></blockquote>
+				<p>これで、インストールが完了します。</p>
+				<h2>パッケージのみを入手したい場合</h2>
+				<p>パッケージ単体は、<br />
+				<a href="http://plugins.openpne.jp/get/opAlbumPlugin-0.9.0.tgz" target="_blank">http://plugins.openpne.jp/get/opAlbumPlugin-0.9.0.tgz</a><br />
+				からダウンロードすることができます。</div>
+]]></content:encoded>
+			<wfw:commentRss>http://www.openpne.jp/archives/3925/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>今週のOpenPNE3デモサイト委員会 #6</title>
+		<link>http://www.openpne.jp/archives/3891/</link>
+		<comments>http://www.openpne.jp/archives/3891/#comments</comments>
+		<pubDate>Fri, 20 Nov 2009 11:03:38 +0000</pubDate>
+		<dc:creator>imamura</dc:creator>
+				<category><![CDATA[OpenPNEからのおしらせ]]></category>
+		<category><![CDATA[その他]]></category>
+
+		<guid isPermaLink="false">http://www.openpne.jp/?p=3891</guid>
+		<description><![CDATA[				OpenPNE3デモサイト委員会、広報担当の今村です。
+				「今週のOpenPNE3デモサイト委員会」第6回です。
+				まずはデモサイトの現在のメンバー数からご報告します。
+				なんと今週も前回から1 [...]]]></description>
+			<content:encoded><![CDATA[				<p>OpenPNE3デモサイト委員会、広報担当の今村です。<br />
+				「今週のOpenPNE3デモサイト委員会」第6回です。</p>
+				<p>まずはデモサイトの現在のメンバー数からご報告します。<br />
+				なんと今週も前回から100人以上増えて現在856人になりました！<br />
+				毎週100人くらいずつ参加者が増加していますので単純にこのままいくと12月には1000人越えするかもしれません！！</p>
+			</div>
+			<div class="textBody" id="extended">
+				<h3>Web全体に公開</h3>
+				<p>今日はOpenPNE3系特有の機能についてご紹介します。<br />
+				OpenPNE3では日記の公開範囲の設定に｢Web全体に公開｣というのがあります。<br />
+				その名の通り、日記をSNS外にも公開できるという機能です。</p>
+				<h3>どうやって設定するの？</h3>
+				<p>設定方法はいたって簡単で、日記作成の公開範囲設定に｢Web全体に公開｣というラジオボタンがあるのでそれにチェックを入れるだけです。</p>
+				<p>ではさっそく画像を見ながら実際に「Web全体に公開」する日記を作成してみましょう。<br />
+				まず日記作成ページにアクセスすると↓のような画面が表示されます。</p>
+				<p><img src="http://www.openpne.jp/wp-content/uploads/2009/11/op3_diary-300x220.png" alt="op3_diary" title="op3_diary" width="300" height="220" class="alignnone size-medium wp-image-3892" /></p>
+				<p>見なれた日記作成画面だと思います。<br />
+				タイトル、本文を入力したら、次は公開権限の設定です。</p>
+				<p><img src="http://www.openpne.jp/wp-content/uploads/2009/11/e6a8a9e99990.png" alt="権限" title="権限" width="288" height="184" class="alignnone size-full wp-image-3902" /></p>
+				<p>「Web全体に公開」のラジオボタンを選択しましょう。<br />
+				ちなみに「Web全体に公開」以外の権限はOpenPNE2でもあったのでおなじみかと思います。<br />
+				公開権限について簡単に説明すると以下な感じです。</p>
+				<ul>
+				<li>・Web全体に公開　　　 SNS外でもSNS内でもネット上の誰でも閲覧可能</li>
+				<li>・全員に公開　 　 　　　  SNS内のメンバーなら閲覧可能</li>
+				<li>・マイフレンドまで公開　日記作者とフレンド状態なら閲覧可能</li>
+				<li>・公開しない　　 　　　　 日記作者のみが閲覧できる状態</li>
+				</ul>
+				<p>それではSNSにログインしないで「Web全体に公開」に設定した日記にアクセスしてみましょう。</p>
+				<p><img src="http://www.openpne.jp/wp-content/uploads/2009/11/e585a8e4bd93e585ace9968b.png" alt="web公開" title="web公開" width="505" height="321" class="aligncenter size-full wp-image-3905" /></p>
+				<p>グローバルナビ等が表示されない日記画面が表示されていると思います。<br />
+				「Web全体に公開」に設定した日記はこのような表示になります。<br />
+				皆さんもこんな感じで見られましたでしょうか？</p>
+				<h3>外部へアピール</h3>
+				<p>日記外部公開機能の利点は色々あると思いますが、例えば「このSNSではこんな活動してます！」や「このSNSに参加しませんか？」といった感じで外部にアピールすることができます。<br />
+				SNS内を紹介できるこの機能はSNSの発展に大いに力になると思っています。</p>
+				<p>■———————————————————■<br />
+				<a href="http://demo3.openpne.jp/">http://demo3.openpne.jp/</a><br />
+				“Master site”OpenPNE3デモサイト</p>
+				<p><a href="http://redmine.openpne.jp/">http://redmine.openpne.jp/</a><br />
+				OpenPNE3プロジェクトRedmine</p>
+				<p><a href="http://sns.openpne.jp/">http://sns.openpne.jp/</a><br />
+				バグ・要望報告は→OpenPNE公式SNSでもOK</p>
+				<p><a href="http://twitter.com/pnetan">http://twitter.com/pnetan/</a><br />
+				Pnetanつぶやきなう<br />
+				■———————————————————■</p>
+]]></content:encoded>
+			<wfw:commentRss>http://www.openpne.jp/archives/3891/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>安定版OpenPNE2.14.3と旧安定版OpenPNE2.12.16リリースしました</title>
+		<link>http://www.openpne.jp/archives/3884/</link>
+		<comments>http://www.openpne.jp/archives/3884/#comments</comments>
+		<pubDate>Thu, 19 Nov 2009 08:03:05 +0000</pubDate>
+		<dc:creator>imamura</dc:creator>
+				<category><![CDATA[OpenPNE リリース情報]]></category>
+		<category><![CDATA[OpenPNEからのおしらせ]]></category>
+
+		<guid isPermaLink="false">http://www.openpne.jp/?p=3884</guid>
+		<description><![CDATA[				OpenPNE開発チームの今村です。
+				本日2009/11/19（木）、安定版 OpenPNE2.14.3 , 旧安定版 OpenPNE2.12.16 をリリースしました。
+				OpenPNE2系は20 [...]]]></description>
+			<content:encoded><![CDATA[				<p>OpenPNE開発チームの今村です。<br />
+				本日2009/11/19（木）、安定版 OpenPNE2.14.3 , 旧安定版 OpenPNE2.12.16 をリリースしました。<br />
+				OpenPNE2系は2009年最後のリリースになります。</p>
+			</div>
+			<div class="textBody" id="extended">
+				<h2>バグ修正</h2>
+				<h3>2.14.3と2.12.16共通のバグ修正</h3>
+				<p>2.14.3と2.12.16共通のバグ修正は以下の6点です。</p>
+				<ul>
+				<li>・画像DBオプションと一時画像をDB保存するが有効のときに画像が本投稿時に画像用DBに保存されない不具合の修正</li>
+				<li>・GoogleMap小窓の下部に余計な空白表示されてしまう不具合の修正</li>
+				<li>・マイフレンド最新blogの表示のチューニング</li>
+				<li>・日記カテゴリが重複して登録される不具合の修正</li>
+				<li>・ポータルクリエータ管理画面のフリーエリア設定で挿入した画像の表示部にページャが適切に表示されていない不具合の修正</li>
+				<li>・ポータルクリエイター管理画面のフリーエリア設定にある画像一覧の表示のチューニング</li>
+				</ul>
+				<h3>2.14.3のみのバグ修正</h3>
+				<p>2.14.3のみのバグ修正は以下の4点です。</p>
+				<ul>
+				<li>・参加時の管理者承認制でプロフィールが登録されない不具合の修正</li>
+				<li>・コミュニティトピック編集権限にトピック作成権限が反映されていない不具合の修正</li>
+				<li>・アルバム写真一覧画面で「新しい順に並べ替える」のリンク表示バグの修正</li>
+				<li>・管理画面承認待ちリストの「全てをチェック」「全てのチェックをはずす」が機能しないバグの修正</li>
+				</ul>
+				<h2>ダウンロード</h2>
+				<dl>
+				<dt>ダウンロード</dt>
+				<dd><a href="http://www.openpne.jp/pne-downloads/">http://www.openpne.jp/pne-downloads/</a></dd>
+				<dt>安定版改定履歴</dt>
+				<dd><a href="http://trac.openpne.jp/wiki/ChangeLog/">http://trac.openpne.jp/wiki/ChangeLog/</a></dd>
+				</dl>
+				<h2>今後のリリース予定について</h2>
+				<p>2010年最初のリリースは下記を予定しています。</p>
+				<ul>
+				<li>・2010/01/21（木）　OpenPNE2.14.4とOpenPNE2.12.17</li>
+				</ul>
+				<p>また、このリリースで下記のチケットを対応予定です。</p>
+				<ul>
+				<li>・<a href="http://trac.openpne.jp/ticket/4367">#4367</a>：携帯URLに含まれるセッションパラメータをサイト内に書き込んだ際に表示しないようにする</li>
+				</ul>
+				<p>このチケットでは携帯でセッションID付きURLを書き込んでもセッションIDを表示しないように修正し、より安全なSNSになるように対応します。</p>
+				<h2>OpenPNEプロジェクト参加者募集中！</h2>
+				<p>OpenPNEプロジェクトでは参加者を募集しています！<br />
+				現在OpenPNE3の開発が活発に行われていますが、3系、2系にかかわらず人材を募集しています。<br />
+				OpenPNEの開発に興味がある場合、もっと詳しく知りたい場合はこちらまでご連絡ください。</p>
+				<p>■ OpenPNE開発者メーリングリスト<br />
+				    　　http://groups.google.co.jp/group/openpne-dev </p>
+]]></content:encoded>
+			<wfw:commentRss>http://www.openpne.jp/archives/3884/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>
