@@ -115,3 +115,23 @@ searchBox:
   description:
     ja_JP: "検索用のフォームを表示します"
   component: [default, searchBox]
+
+rssBox:
+  caption:
+    ja_JP: "RSS リーダー"
+  description:
+    ja_JP: "指定された URL の RSS フィードを表示します"
+  component: [default, rssBox]
+  config:
+    title:
+      Name:       "title"
+      Caption:    "タイトル"
+      FormType:   "input"
+      ValueType:  "text"
+      IsRequired: false
+    url:
+      Name:       "url"
+      Caption:    "URL"
+      FormType:   "input"
+      ValueType:  "text"
+      IsRequired: false
