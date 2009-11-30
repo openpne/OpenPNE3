@@ -135,3 +135,32 @@ rssBox:
       FormType:   "input"
       ValueType:  "text"
       IsRequired: false
+
+linkListBox:
+  caption:
+    ja_JP: "リンク集"
+  description:
+    ja_JP: "指定されたリンクのリストを表示します"
+  component: [default, linkListBox]
+  config:
+    title:
+      Name:       "title"
+      Caption:    "タイトル"
+      FormType:   "input"
+      ValueType:  "text"
+      IsRequired: false
+<?php for ($i = 1; $i <= 10; $i++): ?>
+    url<?php echo $i ?>:
+      Name:       "url<?php echo $i ?>"
+      Caption:    "URL<?php echo $i ?>"
+      FormType:   "input"
+      ValueType:  "text"
+      IsRequired: false
+    text<?php echo $i ?>:
+      Name:       "text<?php echo $i ?>"
+      Caption:    "リンクテキスト<?php echo $i ?>"
+      FormType:   "input"
+      ValueType:  "text"
+      IsRequired: false
+<?php endfor; ?>
+

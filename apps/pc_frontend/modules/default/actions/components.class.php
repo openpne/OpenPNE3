@@ -102,4 +102,8 @@ class defaultComponents extends sfComponents
       $this->result[1] = array_slice($this->result[1], 0, 5);
     }
   }
+
+  public function executeLinkListBox()
+  {
+  }
 }
