@@ -59,7 +59,8 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
         $relationship = Doctrine::getTable('MemberRelationship')
           ->retrieveByFromAndTo($this->member->getId(), $defaultId);
         if (!$relationship) break;
-        $relationship->delete();
+        $relationship->setIsAccessBlock(false);
+        $relationship->save();
         break;
       case $defaultId:
         // equal
