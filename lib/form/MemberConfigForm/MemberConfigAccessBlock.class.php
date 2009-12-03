@@ -60,7 +60,8 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
         if (!$defaultId) break;
         $relationship = MemberRelationshipPeer::retrieveByFromAndTo($this->member->getId(), $defaultId);
         if (!$relationship) break;
-        $relationship->delete();
+        $relationship->setIsAccessBlock(false);
+        $relationship->save();
         break;
       case $defaultId:
         // equal
