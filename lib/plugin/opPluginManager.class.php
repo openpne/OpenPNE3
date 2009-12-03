@@ -159,4 +159,42 @@ class opPluginManager extends sfSymfonyPluginManager
     return $result;
   }
 
+  /**
+   * registerSymfonyPackage
+   *
+   * Copied from sfSymfonyPluginManager::registerSymfonyPackage() and changed symfony version
+   * that is reported to PEAR installer to 1.9.9 because plugin installer tries downloading the
+   * newest stable version of symfony every-time even if the project has the own symfony.
+   * OpenPNE is distributed with the own symfony so this behavior is just cumber.
+   * For bypassing from downloading symfony, OpenPNE cheats about its symfony version.
+   * The last symfony 1.x is 1.4.x. Probably 1.9.9 will be never released.
+   */
+  protected function registerSymfonyPackage()
+  {
+    $symfony = new PEAR_PackageFile_v2_rw();
+    $symfony->setPackage('symfony');
+    $symfony->setChannel('pear.symfony-project.com');
+    $symfony->setConfig($this->environment->getConfig());
+    $symfony->setPackageType('php');
+    $symfony->setAPIVersion('1.1.0');
+    $symfony->setAPIStability('stable');
+    $symfony->setReleaseVersion('1.9.9');
+    $symfony->setReleaseStability('stable');
+    $symfony->setDate(date('Y-m-d'));
+    $symfony->setDescription('symfony');
+    $symfony->setSummary('symfony');
+    $symfony->setLicense('MIT License');
+    $symfony->clearContents();
+    $symfony->resetFilelist();
+    $symfony->addMaintainer('lead', 'fabpot', 'Fabien Potencier', 'fabien.potencier@symfony-project.com');
+    $symfony->setNotes('-');
+    $symfony->setPearinstallerDep('1.4.3');
+    $symfony->setPhpDep('5.1.0');
+
+    $this->environment->getRegistry()->deletePackage('symfony', 'pear.symfony-project.com');
+    if (!$this->environment->getRegistry()->addPackage2($symfony))
+    {
+      throw new sfPluginException('Unable to register the symfony package');
+    }
+  }
 }
