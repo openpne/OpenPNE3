@@ -66,6 +66,7 @@ config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.cla
 ::
 
   $ ./symfony openpne:migrate
+  $ ./symfony plugin:publish-assets
 
 このコマンドは OpenPNE 本体、プラグインの両方を最新の状態にバージョンアップします。
 
