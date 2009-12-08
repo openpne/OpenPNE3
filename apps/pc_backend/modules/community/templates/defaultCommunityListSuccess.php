@@ -14,11 +14,11 @@
 </table>
 </form>
 
-<?php if (count($communities)): ?>
+<?php if ($communities): ?>
 <table>
 <tr>
 <th>ID</th>
-<th>コミュニティ名</th/>
+<th>コミュニティ名</th>
 <th>管理者名</th>
 <th>操作</th>
 </tr>

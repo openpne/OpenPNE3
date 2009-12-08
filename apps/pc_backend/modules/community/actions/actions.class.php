@@ -87,7 +87,6 @@ class communityActions extends sfActions
     }
     
     $this->communities = Doctrine::getTable('Community')->getDefaultCommunities();
-    return sfView::SUCCESS;
   }
 
   /**
