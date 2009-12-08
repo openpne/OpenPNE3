@@ -190,6 +190,10 @@
         <source>This is daily news in %1%.</source>
         <target>%1% からの本日の最新情報のお知らせです。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Login</source>
+        <target>ログイン</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

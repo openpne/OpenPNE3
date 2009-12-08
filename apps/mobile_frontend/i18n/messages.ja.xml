@@ -1019,6 +1019,10 @@
         <source>You have just quitted this %community%.</source>
         <target>%community%から退会しました。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Can not access your account?</source>
+        <target>ﾛｸﾞｲﾝできない方はこちら</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

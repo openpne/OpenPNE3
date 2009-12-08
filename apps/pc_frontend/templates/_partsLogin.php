@@ -8,7 +8,12 @@
 <table>
 <?php echo $form ?>
 <tr>
-<td colspan="2"><input type="submit" class="input_submit" value="ログイン" /></td>
+<td colspan="2">
+<?php if ($form->getAuthAdapter()->getAuthConfig('help_login_error_action')) : ?>
+<p class="password_query"><?php echo link_to(__('Can not access your account?'), $form->getAuthAdapter()->getAuthConfig('help_login_error_action')); ?></p>
+<?php endif; ?>
+<input type="submit" class="input_submit" value="<?php echo __('Login') ?>" />
+</td>
 </tr>
 </table>
 </form>

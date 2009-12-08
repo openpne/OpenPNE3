@@ -1239,6 +1239,11 @@ div.operation ul.moreInfo li {
   background-color: #f8f8f8;
 }
 
+.loginForm .password_query {
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
 /*==============================================================================
  * toolbar of opWidgetFormRichTextareaOpenPNE
  *----------------------------------------------------------------------------*/
