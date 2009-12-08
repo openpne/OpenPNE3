@@ -111,8 +111,14 @@ class CommunityTable extends opAccessControlDoctrineTable
       ->andWhere('value = ?', true)
       ->execute();
 
+    if (!$communityConfigs || !count($communityConfigs))
+    {
+      return null;
+    }
+
     return $this->createQuery()
-      ->whereIn('id', array_values($communityConfigs->toKeyValueArray('id', 'community_id')));
+      ->whereIn('id', array_values($communityConfigs->toKeyValueArray('id', 'community_id')))
+      ->execute();
   }
 
   public function getChangeAdminRequestCommunitiesQuery($memberId = null)
