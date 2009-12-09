@@ -47,4 +47,9 @@ class MemberConfigPcAddressForm extends MemberConfigForm
 
     sfOpenPNEMailSend::sendTemplateMail('changeMailAddress', $to, opConfig::get('admin_mail_address'), $params);
   }
+
+  public function getCompleteMessage()
+  {
+    return 'Sent a mail for your mail address. Please click URL in the mail for completing configuration.';
+  }
 }

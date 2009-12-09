@@ -189,4 +189,9 @@ class MemberConfigForm extends BaseForm
     $memberConfig->savePre();
     $memberConfig->saveToken();
   }
+
+  public function getCompleteMessage()
+  {
+    return 'Saved configuration successfully.';
+  }
 }

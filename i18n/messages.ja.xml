@@ -194,6 +194,14 @@
         <source>Login</source>
         <target>ログイン</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Saved configuration successfully.</source>
+        <target>設定を正常に保存しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Sent a mail for your mail address. Please click URL in the mail for completing configuration.</source>
+        <target>メールを送信しました。メール内の URL をクリックして設定を完了してください。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
