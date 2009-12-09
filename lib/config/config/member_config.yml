@@ -14,6 +14,26 @@ general:
     enable_pc:     true
     enable_mobile: true 
 
+publicFlag:
+  _attributes:
+    caption: "Public Flag Configuration"
+    enable_pc:     true
+    enable_mobile: true
+  age_public_flag:
+    Name:       "age_public_flag"
+    Caption:    "Public Flag for Age"
+    FormType:   "select"
+    ValueType:  "integer"
+    IsRegist:   true
+    IsConfig:   true
+    IsRequired: true
+    IsUnique:   false
+    IsConfirm:  false
+    Choices:
+      1: "All Members"
+      2: "%my_friend%"
+      3: "Private"
+
 pcAddress:
   _attributes:
     caption: "PC E-mail Address Configuration"

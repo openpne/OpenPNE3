@@ -340,7 +340,11 @@
       </trans-unit>
       <trans-unit id="">
         <source>General Configuration</source>
-        <target>一般設定</target>
+        <target>一般的な設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Public Flag Configuration</source>
+        <target>公開範囲設定</target>
       </trans-unit>
       <trans-unit id="">
         <source>PC E-mail Address Configuration</source>
@@ -1022,6 +1026,10 @@
       <trans-unit id="">
         <source>Can not access your account?</source>
         <target>ﾛｸﾞｲﾝできない方はこちら</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Public Flag for Age</source>
+        <target>年齢の公開範囲</target>
       </trans-unit>
     </body>
   </file>

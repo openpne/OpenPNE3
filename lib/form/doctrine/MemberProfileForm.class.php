@@ -152,12 +152,15 @@ class MemberProfileForm extends BaseForm
       $this->widgetSchema[$profile->getName()] = new opWidgetFormProfile($widgetOptions);
       $this->validatorSchema[$profile->getName()] = new opValidatorProfile($validatorOptions);
 
+      $this->widgetSchema->setHelp($profile->getName(), $profileWithI18n['info']);
       if ($profile->isPreset())
       {
         $this->widgetSchema->setLabel($profile->getName(), $presetList[$profile->getRawPresetName()]['Caption']);
+        if ('op_preset_birthday' === $profile->getName())
+        {
+          $this->widgetSchema->setHelp($profile->getName(), 'The public_flag for your age can be configure at "Settings" page.');
+        }
       }
-
-      $this->widgetSchema->setHelp($profile->getName(), $profileWithI18n['info']);
     }
   }
 

@@ -3,6 +3,19 @@
 $culture = sfCultureInfo::getInstance($sf_user->getCulture());
 
 $list = array();
+if ($member->getAge(true))
+{
+  $ageValue = __('%1% years old', array('%1%' => $member->getAge()));
+  if ($member->getConfig('age_public_flag') == ProfileTable::PUBLIC_FLAG_FRIEND)
+  {
+    $ageValue .= ' ('.__('Only Open to %my_friend%', array(
+      '%my_friend%' => $op_term['my_friend']->titleize()->pluralize(),
+    )).')';
+  }
+
+  $list[__('Age')] = $ageValue;
+}
+
 foreach ($member->getProfiles(true) as $profile)
 {
   $caption = $profile->getCaption();
@@ -23,6 +36,10 @@ foreach ($member->getProfiles(true) as $profile)
     if ($profile->getFormType() === 'country_select')
     {
       $profileValue = $culture->getCountry($profileValue);
+    }
+    elseif ('op_preset_birthday' === $profile->getName())
+    {
+      $profileValue = op_format_date($profileValue, 'XShortDateJa');
     }
 
     $profileValue = __($profileValue);

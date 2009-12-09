@@ -389,4 +389,20 @@ class opToolkit
     $filesystem->remove(sfFinder::type('file')->discard('.sf')->in(sfConfig::get('sf_cache_dir')));
     @$filesystem->remove(sfFinder::type('file')->in(sfConfig::get('sf_web_dir').'/cache/'));
   }
+
+  /**
+   * calculateAge
+   */
+  public static function calculateAge($birthdayString)
+  {
+    $birthdayTime = strtotime($birthdayString);
+
+    $thisYear = intval(date('Y'));
+    $today = intval(date('nd'));
+
+    $age = $thisYear - date('Y', $birthdayTime);
+    if ($today < date('n', $birthdayTime) * 100 + date('d', $birthdayTime)) $age--;
+
+    return $age;
+  }
 }

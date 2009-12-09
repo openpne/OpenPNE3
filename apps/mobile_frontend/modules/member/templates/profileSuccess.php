@@ -33,22 +33,56 @@
 <?php endif; ?>
 </td>
 <td valign="top">
-<?php foreach ($member->getProfiles(true) as $profile) : ?>
-<?php if ($profile->getProfile()->isPreset()) : ?>
-<?php $presetConfig = $profile->getProfile()->getPresetConfig(); ?>
-<font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __($presetConfig['Caption']) ?>:</font><br>
-<?php if ($profile->getFormType() === 'country_select'): ?>
-<?php echo __($culture->getCountry((string)$profile)) ?><br>
-<?php else: ?>
-<?php echo __((string)$profile) ?><br>
-<?php endif; ?>
-<?php else: ?>
-<font color="<?php echo $op_color["core_color_19"] ?>"><?php echo $profile->getCaption() ?>:</font><br>
-<?php echo $profile ?><br>
-<?php endif; ?>
-<?php if ($member->getId() == $sf_user->getMemberId() && $profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_FRIEND): ?>
-<font color="<?php echo $op_color["core_color_22"] ?>">(<?php echo __('Only Open to %my_friend%') ?>)</font><br>
-<?php endif; ?>
+<?php
+$list = array();
+if ($member->getAge(true))
+{
+  $ageValue = __('%1% years old', array('%1%' => $member->getAge()));
+  if ($member->getConfig('age_public_flag') == ProfileTable::PUBLIC_FLAG_FRIEND)
+  {
+    $ageValue .= ' ('.__('Only Open to %my_friend%', array(
+      '%my_friend%' => $op_term['my_friend']->titleize()->pluralize(),
+    )).')';
+  }
+
+  $list[__('Age')] = $ageValue;
+}
+
+foreach ($member->getProfiles(true) as $profile)
+{
+  $caption = $profile->getCaption();
+  $value = $profile;
+  if ($profile->getProfile()->isPreset())
+  {
+    $presetConfig = $profile->getProfile()->getPresetConfig();
+    $caption = __($presetConfig['Caption']);
+    if ($profile->getFormType() === 'country_select')
+    {
+      $value = __($culture->getCountry((string)$profile));
+    }
+    elseif ('op_preset_birthday' === $profile->getName())
+    {
+      $value = op_format_date((string)$profile, 'XShortDateJa');
+    }
+    else
+    {
+      $value = __((string)$profile);
+    }
+  }
+
+  if ($member->getId() == $sf_user->getMemberId() && $profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_FRIEND)
+  {
+    $value .= '<font color="'.$op_color["core_color_22"].'">('.__('Only Open to %my_friend%').')</font><br>';
+  }
+
+  $list[$caption] = $value;
+}
+
+?>
+
+<?php foreach ($list as $caption => $value) : ?>
+<font color="<?php echo $op_color["core_color_19"] ?>"><?php echo $caption ?>:</font><br>
+<?php echo $value ?><br>
 <?php endforeach; ?>
 </td>
 </tr>
