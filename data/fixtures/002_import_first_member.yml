@@ -38,3 +38,14 @@ MemberConfig:
     name: "password"
     value: <?php echo md5('password') . "\n"; ?>
     Member: first_member
+
+  first_member_secret_question:
+    name: "secret_question"
+    value: "5"
+    Member: first_member
+
+  first_member_secret_answer:
+    name: "secret_answer"
+    value: "<?php echo md5('東京都'); ?>"
+    Member: first_member
+
