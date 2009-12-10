@@ -14,6 +14,7 @@ class pc_frontendConfiguration extends sfOpenPNEApplicationConfiguration
 {
   public function configure()
   {
+    sfConfig::set('op_is_use_captcha', true);
   }
 
   public function initialize()

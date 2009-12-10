@@ -23,7 +23,10 @@ class MemberConfigMobileAddressForm extends MemberConfigForm
   {
     parent::__construct($member, $options, $CSRFSecret);
 
-    $this->embedForm('captcha', new opCaptchaForm());
+    if (sfConfig::get('op_is_use_captcha', false))
+    {
+      $this->embedForm('captcha', new opCaptchaForm());
+    }
   }
 
   public function saveConfig($name, $value)

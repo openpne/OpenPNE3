@@ -86,6 +86,18 @@ general:
       - "土"
       - "日"
 
+  is_use_captcha:
+    Name:       "is_use_captcha"
+    Caption:    "CAPTCHA 使用設定"
+    Help:       "CAPTCHA (画像のなかの文字列をメンバーに入力させる認証方式) を使用するかどうかを設定します"
+    FormType:   "radio"
+    ValueType:  "text"
+    IsRequired: true
+    Default:    1
+    Choices:
+      - "使用しない"
+      - "使用する"
+
 external_login_page:
   _attributes:
     Caption: "External Login Page Configuration"

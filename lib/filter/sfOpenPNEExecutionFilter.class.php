@@ -63,6 +63,11 @@ class sfOpenPNEExecutionFilter extends sfExecutionFilter
 
     Doctrine::getTable('SnsTerm')->configure(sfContext::getInstance()->getUser()->getCulture(), sfConfig::get('sf_app'));
 
+    if (sfConfig::has('op_is_use_captcha'))
+    {
+      sfConfig::set('op_is_use_captcha', opConfig::get('is_use_captcha'));
+    }
+
     try
     {
       $result = parent::handleAction($filterChain, $actionInstance);
