@@ -34,6 +34,8 @@ class InviteForm extends MemberConfigPcAddressForm
     ));
     $callback->setMessage('invalid', 'invalid e-mail address');
     $this->validatorSchema->setPostValidator($callback);
+
+    $this->embedForm('captcha', new opCaptchaForm());
   }
 
   public function validate($validator, $values, $arguments = array())

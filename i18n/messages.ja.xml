@@ -214,6 +214,14 @@
         <source>%1% years old</source>
         <target>%1% 歳</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Captcha</source>
+        <target>確認キーワード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please input the below keyword.</source>
+        <target>上に表示されているキーワードを入力してください。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
