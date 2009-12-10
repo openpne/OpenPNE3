@@ -19,6 +19,13 @@ class MemberConfigPcAddressForm extends MemberConfigForm
 {
   protected $category = 'pcAddress';
 
+  public function __construct(Member $member = null, $options = array(), $CSRFSecret = null)
+  {
+    parent::__construct($member, $options, $CSRFSecret);
+
+    $this->embedForm('captcha', new opCaptchaForm());
+  }
+
   public function saveConfig($name, $value)
   {
     if ($name === 'pc_address')
