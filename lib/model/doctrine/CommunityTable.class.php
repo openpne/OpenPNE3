@@ -13,7 +13,7 @@ class CommunityTable extends opAccessControlDoctrineTable
   public function retrievesByMemberId($memberId, $limit = 5, $isRandom = false)
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
-      ->where('position <> ?', 'pre')
+      ->where(('is_pre = ? OR is_pre IS NULL'), false)
       ->andWhere('member_id = ?', $memberId)
       ->execute();
 
@@ -42,7 +42,7 @@ class CommunityTable extends opAccessControlDoctrineTable
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
       ->where('member_id = ?', $memberId)
-      ->andWhere('position <> ?', 'pre')
+      ->andWhere(('is_pre = ? OR is_pre IS NULL'), false)
       ->execute();
 
     $pager = new sfDoctrinePager('Community', $size);
@@ -66,7 +66,7 @@ class CommunityTable extends opAccessControlDoctrineTable
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
       ->where('community_id = ?', $communityId)
-      ->andWhere('position <> ?', 'pre')
+      ->andWhere(('is_pre = ? OR is_pre IS NULL'), false)
       ->execute();
 
     $pager = new sfDoctrinePager('Member', $size);
@@ -93,7 +93,7 @@ class CommunityTable extends opAccessControlDoctrineTable
     $resultSet = Doctrine::getTable('CommunityMember')->createQuery()
       ->select('community_id')
       ->where('member_id = ?', $memberId)
-      ->andWhere('position <> ?', 'pre')
+      ->andWhere(('is_pre = ? OR is_pre IS NULL'), false)
       ->execute();
 
     foreach ($resultSet as $value)
@@ -128,37 +128,27 @@ class CommunityTable extends opAccessControlDoctrineTable
       $memberId = sfContext::getInstance()->getUser()->getMemberId();
     }
 
-    return Doctrine::getTable('CommunityMember')->createQuery()
-      ->select('community_id')
-      ->where('member_id = ?', $memberId)
-      ->andWhere('position = ?', 'admin_confirm');
+    $communityMemberPositions = Doctrine::getTable('CommunityMemberPosition')->findByMemberIdAndName($memberId, 'admin_confirm');
+
+    if (!$communityMemberPositions || !count($communityMemberPositions))
+    {
+      return null;
+    }
+
+    return $this->createQuery()
+      ->whereIn('id', array_values($communityMemberPositions->toKeyValueArray('id', 'community_id')));
   }
 
   public function getChangeAdminRequestCommunities($memberId = null)
   {
     $q = $this->getChangeAdminRequestCommunitiesQuery($memberId);
-    $communityIds = $q->execute(array(), Doctrine::HYDRATE_ARRAY);
-
-    if (!$communityIds)
-    {
-      return null;
-    }
-
-    foreach ($communityIds as &$communityId)
-    {
-      $communityId = $communityId['community_id'];
-    }
-
-    return $this->createQuery()
-      ->whereIn('id', $communityIds)
-      ->execute();
+    return $q ? $q->execute() : null;
   }
 
   public function countChangeAdminRequestCommunities($memberId = null)
   {
     $q = $this->getChangeAdminRequestCommunitiesQuery($memberId);
-
-    return $q->count();
+    return $q ? $q->count() : null;
   }
 
   public function appendRoles(Zend_Acl $acl)
@@ -214,8 +204,9 @@ class CommunityTable extends opAccessControlDoctrineTable
 
   public static function processAdminConfirm(sfEvent $event)
   {
-    $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($event['member']->id, $event['id']);
-    if (!($communityMember && $communityMember->getPosition() === 'admin_confirm'))
+    $communityMemberPosition = Doctrine::getTable('CommunityMemberPosition')
+      ->findOneByMemberIdAndCommunityIdAndName($event['member']->id, $event['id'], 'admin_confirm');
+    if (!$communityMemberPosition)
     {
       return false;
     }
@@ -227,8 +218,7 @@ class CommunityTable extends opAccessControlDoctrineTable
     }
     else
     {
-      $communityMember->setPosition('');
-      $communityMember->save();
+      $communityMemberPosition->delete();
       $event->setReturnValue('You have just rejected taking over %community%');
     }
 

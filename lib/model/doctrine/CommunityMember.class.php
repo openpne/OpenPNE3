@@ -14,4 +14,33 @@ class CommunityMember extends BaseCommunityMember implements opAccessControlReco
   {
     return $this->Community->generateRoleId($member);
   }
+
+  public function hasPosition($name)
+  {
+    return Doctrine::getTable('CommunityMemberPosition')->hasPosition($this->getMemberId(), $this->getCommunityId(), $name);
+  }
+
+  public function addPosition($name)
+  {
+    $object = Doctrine::getTable('CommunityMemberPosition')->findOneByCommunityMemberIdAndName($this->getId(), $name);
+    if (!$object)
+    {
+      $object = new CommunityMemberPosition();
+      $object->setMemberId($this->getMemberId());
+      $object->setCommunityId($this->getCommunityId());
+      $object->setCommunityMember($this);
+      $object->setName($name);
+      $object->save();
+    }
+  }
+
+  public function removePosition($name)
+  {
+    $object = Doctrine::getTable('CommunityMemberPosition')->findOneByCommunityMemberIdAndName($this->getId(), $name);
+    if (!$object)
+    {
+      throw new LogicException('The role data does not exist.');
+    }
+    $object->delete();
+  }
 }

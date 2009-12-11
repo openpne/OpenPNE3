@@ -323,6 +323,37 @@ abstract class sfOpenPNECommunityAction extends sfActions
   }
 
  /**
+  * Executes changeAdminRequest action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeSubAdminRequest($request)
+  {
+    $this->forward404Unless($this->isAdmin);
+
+    $this->member = Doctrine::getTable('Member')->find($request->getParameter('member_id'));
+    $this->forward404Unless($this->member);
+
+    $this->community = Doctrine::getTable('Community')->find($this->id);
+    $this->communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($this->member->getId(), $this->id);
+
+    $this->forward404If($this->communityMember->getPosition());
+
+    $this->form = new opChangeCommunityAdminRequestForm();
+    if ($request->hasParameter('admin_request'))
+    {
+      $this->form->bind($request->getParameter('admin_request'));
+      if ($this->form->isValid())
+      {
+        Doctrine::getTable('CommunityMember')->requestSubAdmin($this->member->getId(), $this->id);
+        $this->redirect('community/memberManage?id='.$this->id);
+      }
+    }
+
+    return sfView::INPUT;
+  }
+
+ /**
   * Executes dropMember action
   *
   * @param sfRequest $request A request object
@@ -359,7 +390,7 @@ abstract class sfOpenPNECommunityAction extends sfActions
       return false;
     }
 
-    if ($communityMember->getPosition() !== 'pre')
+    if (!$communityMember->getIsPre())
     {
       $community = Doctrine::getTable('community')->find($communityId);
       $member = Doctrine::getTable('Member')->find($memberId);

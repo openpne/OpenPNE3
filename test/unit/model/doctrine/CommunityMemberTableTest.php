@@ -13,8 +13,8 @@ $member3 = Doctrine::getTable('Member')->findOneByName('C');
 $community1 = Doctrine::getTable('Community')->findOneByName('CommunityA');
 
 //------------------------------------------------------------
-$t->diag('CommunityMember');
-$t->diag('CommunityMember::retrieveByMemberIdAndCommunityId()');
+$t->diag('CommunityMemberTable');
+$t->diag('CommunityMemberTable::retrieveByMemberIdAndCommunityId()');
 $t->isa_ok($table->retrieveByMemberIdAndCommunityId(1, 1), 'CommunityMember',
   'retrieveByMemberIdAndCommunityId() returns a CommunityMember if member joins community');
 $t->cmp_ok($table->retrieveByMemberIdAndCommunityId(1, 2), '===', false,
@@ -27,7 +27,7 @@ $t->cmp_ok($table->retrieveByMemberIdAndCommunityId(999, 999), '===', false,
   'retrieveByMemberIdAndCommunityId() returns NULL if member and community do not exist');
 
 //------------------------------------------------------------
-$t->diag('CommunityMember::isMember()');
+$t->diag('CommunityMemberTable::isMember()');
 $t->cmp_ok($table->isMember(1, 1), '===', true,
   'isMember() returns true if member joins community');
 $t->cmp_ok($table->isMember(1, 2), '===', false,
@@ -40,7 +40,7 @@ $t->cmp_ok($table->isMember(999, 999), '===', false,
   'isMember() returns false if member and community do not exist');
 
 //------------------------------------------------------------
-$t->diag('CommunityMember::isAdmin()');
+$t->diag('CommunityMemberTable::isAdmin()');
 $t->cmp_ok($table->isAdmin(1, 1), '===', true,
   'isAdmin() returns true if member joins community and position is admin');
 $t->cmp_ok($table->isAdmin(2, 1), '===', false,
@@ -55,7 +55,7 @@ $t->cmp_ok($table->isAdmin(999, 999), '===', false,
   'isAdmin() returns false if member and community do not exist');
 
 //------------------------------------------------------------
-$t->diag('CommunityMember::join()');
+$t->diag('CommunityMemberTable::join()');
 
 $t->cmp_ok($table->isMember(1, 2), '===', false, 'isMember() returns false');
 $table->join(1, 2);
@@ -96,7 +96,7 @@ try {
 }
 
 //------------------------------------------------------------
-$t->diag('CommunityMember::quit()');
+$t->diag('CommunityMemberTable::quit()');
 
 $t->cmp_ok($table->isMember(2, 1), '===', true, 'isMember() returns true');
 $table->quit(2, 1);
@@ -144,7 +144,7 @@ try {
 }
 
 //------------------------------------------------------------
-$t->diag('CommunityMember::getCommunityMembersPre()');
+$t->diag('CommunityMemberTable::getCommunityMembersPre()');
 $result = $table->getCommunityMembersPre(1);
 $t->isa_ok($result, 'Doctrine_Collection', 'getCommunityMembersPre() returns Doctrine_Collection object');
 
@@ -152,22 +152,22 @@ $result = $table->getCommunityMembersPre(5);
 $t->is($result, array(), 'getCommunityMembersPre() returns empty array');
 
 //------------------------------------------------------------
-$t->diag('CommunityMember::countCommunityMembersPre()');
+$t->diag('CommunityMemberTable::countCommunityMembersPre()');
 $t->is($table->countCommunityMembersPre(1), 1, 'countCommunityMembersPre() returns 1');
 $t->is($table->countCommunityMembersPre(5), 0, 'countCommunityMembersPre() returns 0');
 
 //------------------------------------------------------------
-$t->diag('CommunityMember::getCommunityMembers()');
+$t->diag('CommunityMemberTable::getCommunityMembers()');
 $result = $table->getCommunityMembers(1);
 $t->isa_ok($result, 'Doctrine_Collection', 'getCommunityMembers() returns Doctrine_Collection object');
 
 //------------------------------------------------------------
-$t->diag('CommunityMember::requestChangeAdmin()');
+$t->diag('CommunityMemberTable::requestChangeAdmin()');
 $object = $table->retrieveByMemberIdAndCommunityId(2, 3);
-$t->cmp_ok($object->getPosition(), '===', '', 'The second_member position is "" in the community_3');
+$t->ok(!$object->hasPosition('admin_confirm'), 'The second_member position is "" in the community_3');
 $table->requestChangeAdmin(2, 3, 1);
 $object = $table->retrieveByMemberIdAndCommunityId(2, 3);
-$t->cmp_ok($object->getPosition(), '===', 'admin_confirm', 'The second_member position is "admin_confirm" in the community_3');
+$t->ok($object->hasPosition('admin_confirm'), 'The second_member position is "admin_confirm" in the community_3');
 
 $message = "requestChangeAdmin() throws exception if fromMember is not community's admin";
 try {
@@ -252,14 +252,23 @@ $t->is(count($event->getReturnValue()), 1);
 
 //------------------------------------------------------------
 $t->diag('CommunityMemberTable::processJoinConfirm()');
-$cm = $table->retrieveByMemberIdAndCommunityId(4, 5);
-$t->is($cm->getPosition(), 'pre');
+$cm = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId(4, 5);
+$t->ok($cm->getIsPre());
+
 $event = new sfEvent('subject', 'name', array('id' => $cm->id, 'is_accepted' => true));
 $t->ok(CommunityMemberTable::processJoinConfirm($event));
-$t->is($cm->getPosition(), '');
-$cm->setPosition('pre');
+
+$cm = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId(4, 5);
+$t->ok(!$cm->getIsPre());
+
+$cm->setIsPre(true);
 $cm->save();
+
+$cm = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId(4, 5);
+$t->ok($cm->getIsPre());
+
 $event = new sfEvent('subject', 'name', array('id' => $cm->id, 'is_accepted' => false));
-$t->is($cm->getPosition(), 'pre');
 $t->ok(CommunityMemberTable::processJoinConfirm($event));
-$t->is($cm->getPosition(), 'pre');
+
+$cm = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId(4, 5);
+$t->ok(!$cm);

@@ -83,7 +83,7 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
       ->where('community_id = ?', $this->id)
-      ->andWhere('position <> ?', 'pre')
+      ->andWhere('(is_pre = ? OR is_pre IS NULL)', false)
       ->execute();
 
     $q = Doctrine::getTable('Member')->createQuery()
@@ -151,15 +151,10 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
 
   public function getChangeAdminRequestMember()
   {
-    $memberId = Doctrine::getTable('CommunityMember')->createQuery()
-      ->select('member_id')
-      ->where('community_id = ?', $this->getId())
-      ->andWhere('position = ?', 'admin_confirm')
-      ->execute(array(), Doctrine::HYDRATE_SINGLE_SCALAR);
-
-    if ($memberId)
+    $communityMemberPosition = Doctrine::getTable('CommunityMemberPosition')->findOneByCommunityIdAndName($this->id, 'admin_confirm');
+    if ($communityMemberPosition)
     {
-      return Doctrine::getTable('Member')->find($memberId);
+      return $communityMemberPosition->getMember();
     }
     return null;
   }

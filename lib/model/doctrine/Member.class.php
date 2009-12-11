@@ -246,7 +246,7 @@ class Member extends BaseMember implements opAccessControlRecordInterface
         $community->delete();
         continue;
       }
-      $communityMembers[0]->setPosition('admin');
+      $communityMembers[0]->addPosition('admin');
       $communityMembers[0]->save();
 
       $adminCommunityMember = $communityMemberTable->retrieveByMemberIdAndCommunityId($this->getId(), $communityId);

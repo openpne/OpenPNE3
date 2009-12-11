@@ -60,7 +60,7 @@ $t->is(count($communities), 2, 'getDefaultCommunities() returns 2 communities');
 //------------------------------------------------------------
 $t->diag('CommunityTable::getChangeAdminRequestCommunities()');
 $communities = $table->getChangeAdminRequestCommunities();
-$t->cmp_ok($communities, '===' ,null, 'getChangeAdminRequestCommunities() returns null');
+$t->cmp_ok($communities, '===' ,null, 'getChangeAdminRequestCommunities() returns empty collection');
 
 $communities = $table->getChangeAdminRequestCommunities(2);
 $t->is(count($communities), 1, 'getChangeAdminRequestCommunities() returns a community');
@@ -97,6 +97,7 @@ $t->is(count($event->getReturnValue()), 1);
 //------------------------------------------------------------
 $t->diag('CommunityTable::processAdminConfirm()');
 $event = new sfEvent('subject', 'name', array('member' => $member2, 'id' => $community4->getId(), 'is_accepted' => true));
+
 $t->ok($community4->isAdmin($member1->getId()));
 $t->ok(!$community4->isAdmin($member2->getId()));
 $t->ok(CommunityTable::processAdminConfirm($event));
@@ -104,11 +105,11 @@ $t->ok(!$community4->isAdmin($member1->getId()));
 $t->ok($community4->isAdmin($member2->getId()));
 
 $cm1 = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($member1->getId(), $community4->getId());
-$cm1->setPosition('admin');
-$cm1->save();
+$cm1->addPosition('admin');
+
 $cm2 = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($member2->getId(), $community4->getId());
-$cm2->setPosition('admin_confirm');
-$cm2->save();
+$cm2->addPosition('admin_confirm');
+$cm2->removePosition('admin');
 
 $event = new sfEvent('subject', 'name', array('member' => $member2, 'id' => $community4->getId(), 'is_accepted' => false));
 $t->ok($community4->isAdmin($member1->getId()));
