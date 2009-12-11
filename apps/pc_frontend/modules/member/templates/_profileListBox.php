@@ -26,6 +26,11 @@ foreach ($member->getProfiles(true) as $profile)
   }
 
   $profileValue = (string)$profile;
+  if ('' === $profileValue)
+  {
+    continue;
+  }
+
   if ($profile->getFormType() === 'textarea')
   {
     $profileValue = op_auto_link_text(nl2br($profileValue));
