@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Import.php 6733 2009-11-16 18:26:01Z jwage $
+ *  $Id: Import.php 6802 2009-11-24 20:45:54Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -30,7 +30,7 @@
  * @link        www.phpdoctrine.org
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @since       1.0
- * @version     $Revision: 6733 $
+ * @version     $Revision: 6802 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Jukka Hassinen <Jukka.Hassinen@BrainAlliance.com>
  */
@@ -393,7 +393,7 @@ class Doctrine_Import extends Doctrine_Connection_Module
                   $relClasses = array();
                   foreach ($relations as $relation) {
                       $table = $relation['table'];
-                      $class = Doctrine_Inflector::classify($table);
+                      $class = Doctrine_Inflector::classify(Doctrine_Inflector::tableize($table));
                       if (in_array($class, $relClasses)) {
                           $alias = $class . '_' . (count($relClasses) + 1);
                       } else {
@@ -409,12 +409,13 @@ class Doctrine_Import extends Doctrine_Connection_Module
                   }
               } catch (Exception $e) {}
 
-              $definitions[$definition['className']] = $definition;
+              $definitions[strtolower($definition['className'])] = $definition;
               $classes[] = $definition['className'];
           }
 
           // Build opposite end of relationships
-          foreach ($definitions as $className => $definition) {
+          foreach ($definitions as $definition) {
+              $className = $definition['className'];
               $relClasses = array();
               foreach ($definition['relations'] as $alias => $relation) {
                   if (in_array($relation['class'], $relClasses) || isset($definitions[$relation['class']]['relations'][$className])) {
@@ -423,7 +424,7 @@ class Doctrine_Import extends Doctrine_Connection_Module
                       $alias = $className;
                   }
                   $relClasses[] = $relation['class'];
-                  $definitions[$relation['class']]['relations'][$alias] = array(
+                  $definitions[strtolower($relation['class'])]['relations'][$alias] = array(
                     'type' => Doctrine_Relation::MANY,
                     'alias' => $alias,
                     'class' => $className,

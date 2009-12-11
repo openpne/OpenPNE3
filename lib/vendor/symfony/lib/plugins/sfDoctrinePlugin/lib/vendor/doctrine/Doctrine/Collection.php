@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Collection.php 6734 2009-11-16 18:58:13Z jwage $
+ *  $Id: Collection.php 6799 2009-11-24 19:24:33Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6734 $
+ * @version     $Revision: 6799 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
 class Doctrine_Collection extends Doctrine_Access implements Countable, IteratorAggregate, Serializable
@@ -528,7 +528,7 @@ class Doctrine_Collection extends Doctrine_Access implements Countable, Iterator
     public function loadRelated($name = null)
     {
         $list = array();
-        $query   = new Doctrine_Query($this->_table->getConnection());
+        $query = $this->_table->createQuery();
 
         if ( ! isset($name)) {
             foreach ($this->data as $record) {
@@ -537,7 +537,6 @@ class Doctrine_Collection extends Doctrine_Access implements Countable, Iterator
                     $list[] = $value;
                 }
             }
-            $query->from($this->_table->getComponentName());
             $query->where($this->_table->getComponentName() . '.id IN (' . substr(str_repeat("?, ", count($list)),0,-2) . ')');
             if ( ! $list) {
                 $query->where($this->_table->getComponentName() . '.id IN (' . substr(str_repeat("?, ", count($list)),0,-2) . ')', $list);

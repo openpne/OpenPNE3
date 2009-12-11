@@ -6,7 +6,7 @@
  * @package    project
  * @subpackage cache
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: actions.class.php 7725 2008-03-03 14:00:44Z fabien $
+ * @version    SVN: $Id: actions.class.php 24615 2009-11-30 22:30:46Z Kris.Wallsmith $
  */
 class cacheActions extends sfActions
 {
@@ -16,6 +16,11 @@ class cacheActions extends sfActions
 
   public function executePage()
   {
+  }
+
+  public function executeList($request)
+  {
+    $this->page = $request->getParameter('page', 1);
   }
 
   public function executeForward()

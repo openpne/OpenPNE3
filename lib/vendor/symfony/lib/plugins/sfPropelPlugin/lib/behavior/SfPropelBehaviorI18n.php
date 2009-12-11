@@ -16,7 +16,7 @@
  * @package     sfPropelPlugin
  * @subpackage  behavior
  * @author      Kris Wallsmith <kris.wallsmith@symfony-project.com>
- * @version     SVN: $Id: SfPropelBehaviorI18n.php 24130 2009-11-18 11:57:33Z Kris.Wallsmith $
+ * @version     SVN: $Id: SfPropelBehaviorI18n.php 24597 2009-11-30 19:53:50Z Kris.Wallsmith $
  */
 class SfPropelBehaviorI18n extends SfPropelBehaviorBase
 {
@@ -199,6 +199,21 @@ public function set{$refPhpName}ForCulture({$this->getI18nTable()->getPhpName()}
 
 EOF;
 
+    if (!$this->hasPrimaryString($this->getTable()) && $this->hasPrimaryString($this->getI18nTable()))
+    {
+      $script .= <<<EOF
+
+/**
+ * @see {$this->getI18nTable()->getPhpName()}
+ */
+public function __toString()
+{
+  return (string) \$this->getCurrent{$refPhpName}();
+}
+
+EOF;
+    }
+
     return $script;
   }
 
@@ -258,6 +273,7 @@ static public function doSelectWithI18n(Criteria \$criteria, \$culture = null, \
   \$startcol = ({$this->getTable()->getPhpName()}Peer::NUM_COLUMNS - {$this->getTable()->getPhpName()}Peer::NUM_LAZY_LOAD_COLUMNS);
   {$this->getI18nTable()->getPhpName()}Peer::addSelectColumns(\$criteria);
   \$criteria->addJoin({$this->getLocalColumn()->getConstantName()}, {$this->getForeignColumn()->getConstantName()}, \$join_behavior);
+  \$criteria->add({$this->getCultureColumn($this->getI18nTable())->getConstantName()}, \$culture);
 {$mixerHook}
   \$stmt = BasePeer::doSelect(\$criteria, \$con);
 	\$results = array();
@@ -349,5 +365,25 @@ EOF;
   {
     $columns = $this->getI18nTable()->getBehavior('symfony_i18n_translation')->getForeignKey()->getLocalColumns();
     return $this->getI18nTable()->getColumn($columns[0]);
+  }
+
+  /**
+   * Checks whether the supplied table has a primary string defined.
+   *
+   * @param  Table $table
+   *
+   * @return boolean
+   */
+  protected function hasPrimaryString(Table $table)
+  {
+    foreach ($table->getColumns() as $column)
+    {
+      if ($column->isPrimaryString())
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

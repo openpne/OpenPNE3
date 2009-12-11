@@ -17,7 +17,7 @@
  * @subpackage filter
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfExecutionFilter.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfExecutionFilter.class.php 24615 2009-11-30 22:30:46Z Kris.Wallsmith $
  */
 class sfExecutionFilter extends sfFilter
 {
@@ -55,7 +55,7 @@ class sfExecutionFilter extends sfFilter
     }
   }
 
-  /*
+  /**
    * Handles the action.
    *
    * @param sfFilterChain $filterChain    The current filter chain
@@ -65,12 +65,14 @@ class sfExecutionFilter extends sfFilter
    */
   protected function handleAction($filterChain, $actionInstance)
   {
-    $uri = $this->context->getRouting()->getCurrentInternalUri();
-
-    if (sfConfig::get('sf_cache') && null !== $uri && $this->context->getViewCacheManager()->hasActionCache($uri))
+    if (sfConfig::get('sf_cache'))
     {
-      // action in cache, so go to the view
-      return sfView::SUCCESS;
+      $uri = $this->context->getViewCacheManager()->getCurrentCacheKey();
+      if (null !== $uri && $this->context->getViewCacheManager()->hasActionCache($uri))
+      {
+        // action in cache, so go to the view
+        return sfView::SUCCESS;
+      }
     }
 
     return $this->executeAction($actionInstance);

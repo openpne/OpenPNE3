@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineDropDbTask.class.php 24060 2009-11-16 22:17:53Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineDropDbTask.class.php 24341 2009-11-24 15:01:58Z Kris.Wallsmith $
  */
 class sfDoctrineDropDbTask extends sfDoctrineBaseTask
 {
@@ -66,11 +66,13 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $databases = $this->getDoctrineDatabases($databaseManager, count($arguments['database']) ? $arguments['database'] : null);
 
+    $environment = $this->configuration instanceof sfApplicationConfiguration ? $this->configuration->getEnvironment() : 'all';
+
     if (
       !$options['no-confirmation']
       &&
       !$this->askConfirmation(array_merge(
-        array(sprintf('This command will remove all data in the following "%s" connection(s):', $this->configuration->getEnvironment()), ''),
+        array(sprintf('This command will remove all data in the following "%s" connection(s):', $environment), ''),
         array_map(create_function('$v', 'return \' - \'.$v;'), array_keys($databases)),
         array('', 'Are you sure you want to proceed? (y/N)')
       ), 'QUESTION_LARGE', false)

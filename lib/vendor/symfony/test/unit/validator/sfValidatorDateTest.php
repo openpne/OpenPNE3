@@ -10,7 +10,7 @@
 
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(50);
+$t = new lime_test(52);
 
 $v = new sfValidatorDate();
 
@@ -88,6 +88,7 @@ catch (sfValidatorError $e)
 $t->diag('validate regex');
 $v->setOption('date_format', '~(?P<day>\d{2})/(?P<month>\d{2})/(?P<year>\d{4})~');
 $t->is($v->clean('18/10/2005'), '2005-10-18', '->clean() accepts a regular expression to match dates');
+$t->is($v->clean(array('year' => '2005', 'month' => '10', 'day' => '18')), '2005-10-18', '->clean() accepts a regular expression when cleaning an array');
 
 try
 {
@@ -224,3 +225,22 @@ catch (sfValidatorError $e)
   $t->pass('->clean() throws an exception if the date is not within the range provided by the min/max options');
   $t->is($e->getMessage(), 'The date must be before 31/12/2107 10:50:00.', '->clean() check exception message');
 }
+
+// timezones
+$defaultTimezone = new DateTimeZone(date_default_timezone_get());
+$otherTimezone = new DateTimeZone('US/Pacific');
+if ($defaultTimezone->getOffset(new DateTime()) == $otherTimezone->getOffset(new DateTime()))
+{
+  $otherTimezone = new DateTimeZone('US/Eastern');
+}
+
+$date = new DateTime('2000-01-01T00:00:00-00:00');
+$date->setTimezone($otherTimezone);
+$v->setOption('min', null);
+$v->setOption('max', null);
+$v->setOption('with_time', true);
+$clean = $v->clean($date->format(DATE_ATOM));
+
+// did it convert from the other timezone to the default timezone?
+$date->setTimezone($defaultTimezone);
+$t->is($clean, $date->format('Y-m-d H:i:s'), '->clean() respects incoming and default timezones');

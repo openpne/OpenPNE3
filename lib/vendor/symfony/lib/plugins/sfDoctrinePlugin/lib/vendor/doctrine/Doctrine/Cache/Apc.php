@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Apc.php 6559 2009-10-23 17:09:38Z jwage $
+ *  $Id: Apc.php 6821 2009-11-30 17:32:21Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6559 $
+ * @version     $Revision: 6821 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Jonathan H. Wage <jonwage@gmail.com>
  */
@@ -51,7 +51,7 @@ class Doctrine_Cache_Apc extends Doctrine_Cache_Driver
      *
      * @param string $id cache id
      * @param boolean $testCacheValidity        if set to false, the cache validity won't be tested
-     * @return string cached datas (or false)
+     * @return mixed  Returns either the cached data or false
      */
     protected function _doFetch($id, $testCacheValidity = true) 
     {

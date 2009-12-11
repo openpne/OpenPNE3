@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage routing
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfObjectRouteCollection.class.php 23077 2009-10-15 06:48:29Z fabien $
+ * @version    SVN: $Id: sfObjectRouteCollection.class.php 24591 2009-11-30 18:34:29Z FabianLange $
  */
 class sfObjectRouteCollection extends sfRouteCollection
 {
@@ -197,7 +197,7 @@ class sfObjectRouteCollection extends sfRouteCollection
     return new $this->routeClass(
       sprintf('%s/:%s.:sf_format', $this->options['prefix_path'], $this->options['column']),
       array_merge($this->options['default_params'], array('module' => $this->options['module'], 'action' => $this->getActionMethod('delete'), 'sf_format' => 'html')),
-      array('sf_method' => 'delete'),
+      array_merge($this->options['requirements'], array('sf_method' => 'delete')),
       array('model' => $this->options['model'], 'type' => 'object', 'method' => $this->options['model_methods']['object'])
     );
   }

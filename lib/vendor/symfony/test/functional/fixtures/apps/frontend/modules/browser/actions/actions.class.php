@@ -6,7 +6,7 @@
  * @package    project
  * @subpackage browser
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: actions.class.php 12215 2008-10-16 12:11:16Z fabien $
+ * @version    SVN: $Id: actions.class.php 24992 2009-12-06 20:48:52Z Kris.Wallsmith $
  */
 class browserActions extends sfActions
 {
@@ -39,5 +39,24 @@ class browserActions extends sfActions
     {
       $this->setTemplate('templateCustomCustom');
     }
+  }
+
+  public function executeRedirect1()
+  {
+    $this->redirect('browser/redirectTarget1');
+  }
+
+  public function executeRedirectTarget1()
+  {
+  }
+
+  public function executeRedirect2()
+  {
+    $this->redirect('browser/redirectTarget2');
+  }
+
+  public function executeRedirectTarget2()
+  {
+    return $this->renderText('ok');
   }
 }

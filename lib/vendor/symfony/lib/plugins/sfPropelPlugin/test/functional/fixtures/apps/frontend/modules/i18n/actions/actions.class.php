@@ -6,7 +6,7 @@
  * @package    test
  * @subpackage i18n
  * @author     Your name here
- * @version    SVN: $Id: actions.class.php 16987 2009-04-04 14:16:46Z fabien $
+ * @version    SVN: $Id: actions.class.php 24597 2009-11-30 19:53:50Z Kris.Wallsmith $
  */
 class i18nActions extends sfActions
 {
@@ -39,5 +39,10 @@ class i18nActions extends sfActions
         $this->redirect('i18n/movie?id='.$movie->getId());
       }
     }
+  }
+
+  public function executeProducts()
+  {
+    $this->products = ProductPeer::doSelect(new Criteria());
   }
 }

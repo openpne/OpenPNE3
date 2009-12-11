@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage cache
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfMemcacheCache.class.php 23925 2009-11-14 15:55:45Z fabien $
+ * @version    SVN: $Id: sfMemcacheCache.class.php 24607 2009-11-30 21:39:08Z FabianLange $
  */
 class sfMemcacheCache extends sfCache
 {
@@ -258,7 +258,10 @@ class sfMemcacheCache extends sfCache
     }
     else
     {
-      $keys[] = $this->getOption('prefix').$key;
+      if (!in_array($this->getOption('prefix').$key, $keys))
+      {
+        $keys[] = $this->getOption('prefix').$key;
+      }
     }
 
     $this->memcache->set($this->getOption('prefix').'_metadata', $keys, 0);

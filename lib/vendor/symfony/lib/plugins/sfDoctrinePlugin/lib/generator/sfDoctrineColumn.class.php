@@ -16,7 +16,7 @@
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineColumn.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineColumn.class.php 24604 2009-11-30 21:00:46Z Jonathan.Wage $
  */
 class sfDoctrineColumn implements ArrayAccess
 {
@@ -187,7 +187,9 @@ class sfDoctrineColumn implements ArrayAccess
   {
     foreach ($this->table->getRelations() as $relation)
     {
-      if (strtolower($relation['local']) == strtolower($this->name))
+      $local = (array) $relation['local'];
+      $local = array_map('strtolower', $local);
+      if (in_array(strtolower($this->name), $local))
       {
         return $relation[$key];
       }
@@ -245,7 +247,9 @@ class sfDoctrineColumn implements ArrayAccess
 
     foreach ($this->table->getRelations() as $relation)
     {
-      if (strtolower($relation['local']) == strtolower($this->name))
+      $local = (array) $relation['local'];
+      $local = array_map('strtolower', $local);
+      if (in_array(strtolower($this->name), $local))
       {
         $this->foreignClassName = $relation['class'];
         return true;

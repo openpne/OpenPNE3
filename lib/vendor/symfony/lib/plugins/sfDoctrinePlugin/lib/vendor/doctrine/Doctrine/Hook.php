@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Hook.php 5901 2009-06-22 15:44:45Z jwage $
+ *  $Id: Hook.php 6799 2009-11-24 19:24:33Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 5901 $
+ * @version     $Revision: 6799 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
 class Doctrine_Hook
@@ -79,7 +79,7 @@ class Doctrine_Hook
     public function __construct($query)
     {
         if (is_string($query)) {
-            $this->query = new Doctrine_Query();
+            $this->query = Doctrine_Query::create();
             $this->query->parseDqlQuery($query);
         } elseif ($query instanceof Doctrine_Query) {
             $this->query = $query;

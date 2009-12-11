@@ -16,7 +16,7 @@
  * @subpackage view
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfPHPView.class.php 23922 2009-11-14 14:58:38Z fabien $
+ * @version    SVN: $Id: sfPHPView.class.php 24615 2009-11-30 22:30:46Z Kris.Wallsmith $
  */
 class sfPHPView extends sfView
 {
@@ -69,7 +69,17 @@ class sfPHPView extends sfView
     // render
     ob_start();
     ob_implicit_flush(0);
-    require($_sfFile);
+
+    try
+    {
+      require($_sfFile);
+    }
+    catch (Exception $e)
+    {
+      // need to end output buffering before throwing the exception #7596
+      ob_end_clean();
+      throw $e;
+    }
 
     return ob_get_clean();
   }
@@ -145,7 +155,7 @@ class sfPHPView extends sfView
     if (sfConfig::get('sf_cache'))
     {
       $viewCache = $this->context->getViewCacheManager();
-      $uri = $this->context->getRouting()->getCurrentInternalUri();
+      $uri = $viewCache->getCurrentCacheKey();
 
       if (null !== $uri)
       {

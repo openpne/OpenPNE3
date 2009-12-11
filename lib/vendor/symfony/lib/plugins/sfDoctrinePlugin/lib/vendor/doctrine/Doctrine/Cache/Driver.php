@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Driver.php 6729 2009-11-16 17:41:40Z jwage $
+ *  $Id: Driver.php 6821 2009-11-30 17:32:21Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,7 +27,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6729 $
+ * @version     $Revision: 6821 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Jonathan H. Wage <jonwage@gmail.com>
  */
@@ -102,7 +102,7 @@ abstract class Doctrine_Cache_Driver implements Doctrine_Cache_Interface
      *
      * @param string $id cache id
      * @param boolean $testCacheValidity        if set to false, the cache validity won't be tested
-     * @return string cached datas (or false)
+     * @return mixed  Returns either the cached data or false
      */
     public function fetch($id, $testCacheValidity = true)
     {
@@ -295,7 +295,7 @@ abstract class Doctrine_Cache_Driver implements Doctrine_Cache_Interface
      *
      * @param string $id cache id
      * @param boolean $testCacheValidity        if set to false, the cache validity won't be tested
-     * @return string cached datas (or false)
+     * @return mixed  Returns either the cached data or false
      */
     abstract protected function _doFetch($id, $testCacheValidity = true);
 

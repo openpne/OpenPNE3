@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTesterViewCache.class.php 12305 2008-10-21 22:11:15Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfTesterViewCache.class.php 24615 2009-11-30 22:30:46Z Kris.Wallsmith $
  */
 class sfTesterViewCache extends sfTester
 {
@@ -50,7 +50,7 @@ class sfTesterViewCache extends sfTester
    */
   public function isCached($boolean, $with_layout = false)
   {
-    return $this->isUriCached($this->routing->getCurrentInternalUri(), $boolean, $with_layout);
+    return $this->isUriCached($this->viewCacheManager->getCurrentCacheKey(), $boolean, $with_layout);
   }
 
   /**
@@ -74,7 +74,7 @@ class sfTesterViewCache extends sfTester
       return $this->getObjectToReturn();
     }
 
-    if ($uri == $this->routing->getCurrentInternalUri())
+    if ($uri == $this->viewCacheManager->getCurrentCacheKey())
     {
       $main = true;
       $type = $with_layout ? 'page' : 'action';

@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage generator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelFormFilterGenerator.class.php 23307 2009-10-24 14:38:02Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfPropelFormFilterGenerator.class.php 24392 2009-11-25 18:35:39Z FabianLange $
  */
 class sfPropelFormFilterGenerator extends sfPropelFormGenerator
 {
@@ -78,7 +78,7 @@ class sfPropelFormFilterGenerator extends sfPropelFormGenerator
     foreach ($this->dbMap->getTables() as $tableName => $table)
     {
       $behaviors = $table->getBehaviors();
-      if (isset($behaviors['symfony']['filter']) && 'false' == $behaviors['symfony']['filter'])
+      if (isset($behaviors['symfony']['filter']) && 'false' === $behaviors['symfony']['filter'])
       {
         continue;
       }

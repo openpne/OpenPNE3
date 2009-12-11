@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage response
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWebResponse.class.php 23984 2009-11-15 19:54:59Z FabianLange $
+ * @version    SVN: $Id: sfWebResponse.class.php 24619 2009-11-30 23:14:18Z FabianLange $
  */
 class sfWebResponse extends sfResponse
 {
@@ -267,7 +267,7 @@ class sfWebResponse extends sfResponse
    * @param  string $name     HTTP header name
    * @param  string $default  Default value returned if named HTTP header is not found
    *
-   * @return array
+   * @return string
    */
   public function getHttpHeader($name, $default = null)
   {

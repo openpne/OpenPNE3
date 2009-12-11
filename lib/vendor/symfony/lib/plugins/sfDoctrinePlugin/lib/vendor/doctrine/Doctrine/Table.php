@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Table.php 6721 2009-11-12 20:47:47Z jwage $
+ *  $Id: Table.php 6799 2009-11-24 19:24:33Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  * @package     Doctrine
  * @subpackage  Table
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @version     $Revision: 6721 $
+ * @version     $Revision: 6799 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  * @method mixed findBy*(mixed $value) magic finders; @see __call()
@@ -1033,7 +1033,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable
 
         $class = $this->getAttribute(Doctrine_Core::ATTR_QUERY_CLASS);
 
-        return Doctrine_Query::create($this->_conn, $class)
+        return Doctrine_Query::create(null, $class)
             ->from($this->getComponentName() . $alias);
     }
 
@@ -1655,9 +1655,8 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable
      */
     public function findByDql($dql, $params = array(), $hydrationMode = null)
     {
-        $parser = new Doctrine_Query($this->_conn);
-        $component = $this->getComponentName();
-        $query = 'FROM ' . $component . ' dctrn_find WHERE ' . $dql;
+        $parser = $this->createQuery();
+        $query = 'FROM ' . $this->getComponentName() . ' dctrn_find WHERE ' . $dql;
 
         return $parser->query($query, $params, $hydrationMode);
     }
@@ -1940,7 +1939,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable
      */
     public function getQueryObject()
     {
-        $graph = new Doctrine_Query($this->getConnection());
+        $graph = $this->createQuery();
         $graph->load($this->getComponentName());
         return $graph;
     }

@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfBaseTask.class.php 24288 2009-11-23 19:04:12Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfBaseTask.class.php 24341 2009-11-24 15:01:58Z Kris.Wallsmith $
  */
 abstract class sfBaseTask extends sfCommandApplicationTask
 {
@@ -196,7 +196,7 @@ abstract class sfBaseTask extends sfCommandApplicationTask
    */
   protected function getFirstApplication()
   {
-    if (count($dirs = sfFinder::type('dir')->ignore_version_control()->maxdepth(0)->follow_link()->relative()->in(sfConfig::get('sf_apps_dir'))))
+    if (count($dirs = sfFinder::type('dir')->maxdepth(0)->follow_link()->relative()->in(sfConfig::get('sf_apps_dir'))))
     {
       return $dirs[0];
     }

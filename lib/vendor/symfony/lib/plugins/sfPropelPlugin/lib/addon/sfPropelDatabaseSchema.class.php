@@ -16,7 +16,7 @@
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     François Zaninotto <francois.zaninotto@symfony-project.com>
- * @version    SVN: $Id: sfPropelDatabaseSchema.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfPropelDatabaseSchema.class.php 24392 2009-11-25 18:35:39Z FabianLange $
  */
 class sfPropelDatabaseSchema
 {
@@ -389,7 +389,7 @@ class sfPropelDatabaseSchema
             $xml .= "    <behavior name=\"$behavior_name\">\n";
             foreach ($parameters as $param_name => $param_value)
             {
-              $xml .= "      <parameter name=\"$param_name\" value=\"$param_value\" />\n";
+              $xml .= "      <parameter name=\"$param_name\" value=\"{$this->fixXMLBoolean($param_value)}\" />\n";
             }
             $xml .= "    </behavior>\n";
           }

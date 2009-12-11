@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Mysql.php 6760 2009-11-18 17:24:57Z jwage $
+ *  $Id: Mysql.php 6805 2009-11-24 21:14:51Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -25,7 +25,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
- * @version     $Revision: 6760 $
+ * @version     $Revision: 6805 $
  * @link        www.phpdoctrine.org
  * @since       1.0
  */
@@ -265,7 +265,10 @@ class Doctrine_DataDict_Mysql extends Doctrine_DataDict
             $decimal = '';
         } else {
             $length = strtok('(), ');
-            $decimal = strtok('(), ') ? strtok('(), '):null;
+            $decimal = strtok('(), ');
+            if ( ! $decimal ) {
+                $decimal = null;
+            }
         }
         $type = array();
         $unsigned = $fixed = null;

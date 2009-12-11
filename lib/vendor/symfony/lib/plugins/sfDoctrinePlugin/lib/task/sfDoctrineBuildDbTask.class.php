@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineBuildDbTask.class.php 24173 2009-11-19 16:45:50Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineBuildDbTask.class.php 24341 2009-11-24 15:01:58Z Kris.Wallsmith $
  */
 class sfDoctrineBuildDbTask extends sfDoctrineBaseTask
 {
@@ -61,9 +61,11 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $databases = $this->getDoctrineDatabases($databaseManager, count($arguments['database']) ? $arguments['database'] : null);
 
+    $environment = $this->configuration instanceof sfApplicationConfiguration ? $this->configuration->getEnvironment() : 'all';
+
     foreach ($databases as $name => $database)
     {
-      $this->logSection('doctrine', sprintf('Creating "%s" environment "%s" database', $this->configuration->getEnvironment(), $name));
+      $this->logSection('doctrine', sprintf('Creating "%s" environment "%s" database', $environment, $name));
       try
       {
         $database->getDoctrineConnection()->createDatabase();

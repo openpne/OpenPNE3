@@ -18,7 +18,7 @@
  * @package    symfony
  * @subpackage view
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfViewCacheManager.class.php 23985 2009-11-15 20:09:20Z FabianLange $
+ * @version    SVN: $Id: sfViewCacheManager.class.php 24615 2009-11-30 22:30:46Z Kris.Wallsmith $
  */
 class sfViewCacheManager
 {
@@ -196,16 +196,13 @@ class sfViewCacheManager
 
       sort($varyHeaders);
       $request = $this->context->getRequest();
-      $vary = '';
+      $varys = array();
 
       foreach ($varyHeaders as $header)
       {
-        $value = $request->getHttpHeader($header);
-        $value = preg_replace('/[^a-z0-9\*]/i', '_', $value);
-        $value = preg_replace('/_+/', '_', $value);
-
-        $vary .= $value.'|';
+        $varys[] = $header . '-' . preg_replace('/\W+/', '_', $request->getHttpHeader($header));
       }
+      $vary = implode($varys, '-');
     }
 
     return $vary;
@@ -398,6 +395,10 @@ class sfViewCacheManager
 
   /**
    * Returns true if the current content is cacheable.
+   *
+   * Possible break in backward compatibility: If the sf_lazy_cache_key
+   * setting is turned on in settings.yml, this method is not used when
+   * initially checking a partial's cacheability.
    *
    * @see sfPartialView, isActionCacheable()
    *
@@ -943,6 +944,27 @@ class sfViewCacheManager
     }
 
     return true;
+  }
+
+  /**
+   * Returns the current request's cache key.
+   *
+   * This cache key is calculated based on the routing factory's current URI
+   * and any GET parameters from the current request factory.
+   *
+   * @return string The cache key for the current request
+   */
+  public function getCurrentCacheKey()
+  {
+    $cacheKey = $this->routing->getCurrentInternalUri();
+
+    if ($getParameters = $this->request->getGetParameters())
+    {
+      $cacheKey .= false === strpos($cacheKey, '?') ? '?' : '&';
+      $cacheKey .= http_build_query($getParameters, null, '&');
+    }
+
+    return $cacheKey;
   }
 
   /**

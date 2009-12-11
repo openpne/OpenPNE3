@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorDate.class.php 22381 2009-09-24 17:07:18Z fabien $
+ * @version    SVN: $Id: sfValidatorDate.class.php 24628 2009-12-01 00:19:33Z Kris.Wallsmith $
  */
 class sfValidatorDate extends sfValidatorBase
 {
@@ -65,7 +65,7 @@ class sfValidatorDate extends sfValidatorBase
   protected function doClean($value)
   {
     // check date format
-    if ($regex = $this->getOption('date_format'))
+    if (is_string($value) && $regex = $this->getOption('date_format'))
     {
       if (!preg_match($regex, $value, $match))
       {
@@ -92,7 +92,8 @@ class sfValidatorDate extends sfValidatorBase
     {
       try
       {
-        $date  = new DateTime($value);
+        $date = new DateTime($value);
+        $date->setTimezone(new DateTimeZone(date_default_timezone_get()));
         $clean = $date->format('YmdHis');
       }
       catch (Exception $e)

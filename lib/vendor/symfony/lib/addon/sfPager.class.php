@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage addon
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPager.class.php 23983 2009-11-15 17:54:02Z FabianLange $
+ * @version    SVN: $Id: sfPager.class.php 24533 2009-11-29 15:58:01Z Kris.Wallsmith $
  */
 abstract class sfPager implements Iterator, Countable
 {
@@ -576,18 +576,12 @@ abstract class sfPager implements Iterator, Countable
   }
 
   /**
-   * Returns the number of results on the current page.
+   * Returns the total number of results.
    *
    * @see Countable
    */
   public function count()
   {
-    if (null === $this->results)
-    {
-      $this->results = $this->getResults();
-      $this->resultsCounter = count($this->results);
-    }
-
-    return count($this->results);
+    return $this->getNbResults();
   }
 }

@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage filter
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCacheFilter.class.php 21908 2009-09-11 12:06:21Z fabien $
+ * @version    SVN: $Id: sfCacheFilter.class.php 24619 2009-11-30 23:14:18Z FabianLange $
  */
 class sfCacheFilter extends sfFilter
 {
@@ -70,7 +70,7 @@ class sfCacheFilter extends sfFilter
 
   public function executeBeforeExecution()
   {
-    $uri = $this->routing->getCurrentInternalUri();
+    $uri = $this->cacheManager->getCurrentCacheKey();
 
     if (null === $uri)
     {
@@ -105,7 +105,7 @@ class sfCacheFilter extends sfFilter
       return;
     }
 
-    $uri = $this->routing->getCurrentInternalUri();
+    $uri = $this->cacheManager->getCurrentCacheKey();
 
     // save page in cache
     if (isset($this->cache[$uri]) && false === $this->cache[$uri])
@@ -209,7 +209,6 @@ class sfCacheFilter extends sfFilter
     if ($this->response->hasHttpHeader('Last-Modified') && !sfConfig::get('sf_debug'))
     {
       $lastModified = $this->response->getHttpHeader('Last-Modified');
-      $lastModified = $lastModified[0];
       if ($this->request->getHttpHeader('IF_MODIFIED_SINCE') == $lastModified)
       {
         $this->response->setStatusCode(304);

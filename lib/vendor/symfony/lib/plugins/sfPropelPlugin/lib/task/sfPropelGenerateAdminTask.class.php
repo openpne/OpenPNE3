@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPropelBaseTask.class.php');
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelGenerateAdminTask.class.php 23194 2009-10-19 16:37:13Z fabien $
+ * @version    SVN: $Id: sfPropelGenerateAdminTask.class.php 24621 2009-11-30 23:42:50Z Kris.Wallsmith $
  */
 class sfPropelGenerateAdminTask extends sfPropelBaseTask
 {
@@ -101,23 +101,22 @@ EOF;
     $model = $arguments['route_or_model'];
     $name = strtolower(preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), '\\1_\\2', $model));
 
+    if (isset($options['module']))
+    {
+      $route = $this->getRouteFromName($name);
+      if ($route && !$this->checkRoute($route, $model, $options['module']))
+      {
+        $name .= '_'.$options['module'];
+      }
+    }
+
     $routing = sfConfig::get('sf_app_config_dir').'/routing.yml';
     $content = file_get_contents($routing);
     $routesArray = sfYaml::load($content);
 
     if (!isset($routesArray[$name]))
     {
-      $primaryKey = 'id';
-      $map = call_user_func(array($model.'PEER', 'getTableMap'));
-      foreach ($map->getColumns() as $column)
-      {
-        if ($column->isPrimaryKey())
-        {
-          $primaryKey = call_user_func(array(constant($model.'::PEER'), 'translateFieldName'), $column->getPhpName(), BasePeer::TYPE_PHPNAME, BasePeer::TYPE_FIELDNAME);
-          break;
-        }
-      }
-
+      $primaryKey = $this->getPrimaryKey($model);
       $module = $options['module'] ? $options['module'] : $name;
       $content = sprintf(<<<EOF
 %s:
@@ -185,5 +184,47 @@ EOF
     }
 
     return false;
+  }
+
+  /**
+   * Checks whether a route references a model and module.
+   *
+   * @param mixed  $route  A route collection
+   * @param string $model  A model name
+   * @param string $module A module name
+   *
+   * @return boolean
+   */
+  protected function checkRoute($route, $model, $module)
+  {
+    if ($route instanceof sfPropelRouteCollection)
+    {
+      $options = $route->getOptions();
+      return $model == $options['model'] && $module == $options['module'];
+    }
+
+    return false;
+  }
+
+  /**
+   * Returns the name of the model's primary key column.
+   *
+   * @param string $model A model name
+   *
+   * @return string A column name
+   */
+  protected function getPrimaryKey($model)
+  {
+    $peer = constant($model.'::PEER');
+    $map = call_user_func(array($peer, 'getTableMap'));
+
+    if (!$pks = $map->getPrimaryKeys())
+    {
+      return 'id';
+    }
+
+    $column = array_shift($pks);
+
+    return call_user_func(array($peer, 'translateFieldName'), $column->getPhpName(), BasePeer::TYPE_PHPNAME, BasePeer::TYPE_FIELDNAME);
   }
 }

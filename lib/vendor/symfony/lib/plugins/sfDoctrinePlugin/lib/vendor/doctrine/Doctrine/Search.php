@@ -137,8 +137,9 @@ class Doctrine_Search extends Doctrine_Record_Generator
         $conn   = $this->getOption('table')->getConnection();
         $identifier = $this->_options['table']->getIdentifier();
 
-        $q = Doctrine_Query::create($conn)->delete()
-                                     ->from($class);
+        $q = Doctrine_Core::getTable($class)
+            ->createQuery()
+            ->delete();
         foreach ((array) $identifier as $id) {
             $q->addWhere($id . ' = ?', array($data[$id]));
         }
@@ -297,6 +298,14 @@ class Doctrine_Search extends Doctrine_Record_Generator
             return false;
         }
 
+        // move any columns currently in the primary key to the end
+        // So that 'keyword' is the first field in the table
+        $previousIdentifier = array();
+        foreach ($this->_table->getIdentifier() as $name) {
+            $previousIdentifier[$name] = $this->_table->getColumnDefinition($name);
+            $this->_table->removeColumn($name);
+        }
+
         $columns = array('keyword'  => array('type'    => 'string',
                                              'length'  => 200,
                                              'primary' => true,
@@ -310,5 +319,6 @@ class Doctrine_Search extends Doctrine_Record_Generator
                                              ));
 
         $this->hasColumns($columns);
+        $this->hasColumns($previousIdentifier);
     }
 }

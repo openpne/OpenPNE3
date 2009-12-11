@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Connection.php 6797 2009-11-24 00:23:48Z jwage $
+ *  $Id: Connection.php 6799 2009-11-24 19:24:33Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -49,7 +49,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.phpdoctrine.org
  * @since       1.0
- * @version     $Revision: 6797 $
+ * @version     $Revision: 6799 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Lukas Smith <smith@pooteeweet.org> (MDB2 library)
  */
@@ -893,7 +893,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      */
     public function query($query, array $params = array(), $hydrationMode = null)
     {
-        $parser = new Doctrine_Query($this);
+        $parser = Doctrine_Query::create();
         $res = $parser->query($query, $params, $hydrationMode);
         $parser->free();
 
@@ -950,7 +950,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      */
     public function queryOne($query, array $params = array())
     {
-        $parser = new Doctrine_Query($this);
+        $parser = Doctrine_Query::create();
 
         $coll = $parser->query($query, $params);
         if ( ! $coll->contains(0)) {
@@ -1204,7 +1204,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      */
     public function createQuery()
     {
-        return new Doctrine_Query($this);
+        return Doctrine_Query::create();
     }
 
     /**

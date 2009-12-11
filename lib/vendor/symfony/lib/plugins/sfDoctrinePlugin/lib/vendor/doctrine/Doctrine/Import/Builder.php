@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Builder.php 6716 2009-11-12 19:26:28Z jwage $
+ *  $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -30,7 +30,7 @@
  * @link        www.phpdoctrine.org
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @since       1.0
- * @version     $Revision: 6716 $
+ * @version     $Revision: 6820 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Jukka Hassinen <Jukka.Hassinen@BrainAlliance.com>
  * @author      Nicolas Bérard-Nault <nicobn@php.net>
@@ -180,8 +180,12 @@ class Doctrine_Import_Builder extends Doctrine_Builder
      */
     public function __construct()
     {
-        if ($tableClass = Doctrine_Manager::getInstance()->getAttribute(Doctrine_Core::ATTR_TABLE_CLASS)) {
+        $manager = Doctrine_Manager::getInstance();
+        if ($tableClass = $manager->getAttribute(Doctrine_Core::ATTR_TABLE_CLASS)) {
             $this->_baseTableClassName = $tableClass;
+        }
+        if ($classPrefix = $manager->getAttribute(Doctrine_Core::ATTR_MODEL_CLASS_PREFIX)) {
+            $this->_classPrefix = $classPrefix;
         }
         $this->loadTemplate();
     }
@@ -642,7 +646,7 @@ class Doctrine_Import_Builder extends Doctrine_Builder
         $ret[] = '@package    ' . $this->_phpDocPackage;
         $ret[] = '@subpackage ' . $this->_phpDocSubpackage;
         $ret[] = '@author     ' . $this->_phpDocName . ' <' . $this->_phpDocEmail . '>';
-        $ret[] = '@version    SVN: $Id: Builder.php 6716 2009-11-12 19:26:28Z jwage $';
+        $ret[] = '@version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $';
 
         $ret = ' * ' . implode(PHP_EOL . ' * ', $ret);
         $ret = ' ' . trim($ret);

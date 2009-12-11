@@ -18,8 +18,6 @@ These products include also software developed by :
     - New BSD License
   - JanRain, Inc. (http://www.janrain.com/)
     - Apache License 2.0
-  - The Doctrine project (http://www.doctrine-project.org/)
-    - LGPL License
   - Andy Smith (http://term.ie/)
     - MIT License
   - Fabien Potencier (http://fabien.potencier.org/)
@@ -28,11 +26,10 @@ These products include also software developed by :
     - Apache License 2.0
 
 These products need the third-party softwares listed blow to run.
-  - PHP: Hypertext Preprocessor (5.2.3 +)
+  - PHP: Hypertext Preprocessor (5.2.4 +)
 
 These products include dependent libraries listed blow:
-  - symfony 1.4.0-RC2
-  - Doctrine 1.2.0-ALPHA1
+  - symfony 1.4.1
   - Zend Framework 1.7.3PL1 (partly)
   - Auth OpenID 2.1.2
   - PHP OAuth library

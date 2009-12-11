@@ -17,7 +17,7 @@
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineRecord.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineRecord.class.php 24703 2009-12-01 18:36:11Z Jonathan.Wage $
  */
 abstract class sfDoctrineRecord extends Doctrine_Record
 {
@@ -26,41 +26,42 @@ abstract class sfDoctrineRecord extends Doctrine_Record
     $_defaultCulture = 'en';
 
   /**
-   * Custom Doctrine_Record constructor.
-   * Used to initialize I18n to make sure the culture is set from symfony
+   * Initializes internationalization.
    *
-   * @return void
+   * @see Doctrine_Record
    */
   public function construct()
   {
-    self::initializeI18n();
-
     if ($this->getTable()->hasRelation('Translation'))
     {
-      $this->unshiftFilter(new sfDoctrineRecordI18nFilter());
+      self::initializeI18n();
+
+      // only add filter to each table once
+      if (!$this->getTable()->getOption('has_symfony_i18n_filter'))
+      {
+        $this->getTable()
+          ->unshiftFilter(new sfDoctrineRecordI18nFilter())
+          ->setOption('has_symfony_i18n_filter', true)
+        ;
+      }
     }
   }
 
   /**
-   * Initialize I18n culture from symfony sfUser instance
-   * Add event listener to change default culture whenever the user changes culture
-   *
-   * @return void
+   * Initializes internationalization.
    */
-  public static function initializeI18n()
+  static public function initializeI18n()
   {
     if (!self::$_initialized)
     {
-      if (!self::$_initialized && class_exists('sfProjectConfiguration', false))
-      {
-        $dispatcher = sfProjectConfiguration::getActive()->getEventDispatcher();
-        $dispatcher->connect('user.change_culture', array('sfDoctrineRecord', 'listenToChangeCultureEvent'));
-      }
+      $dispatcher = sfProjectConfiguration::getActive()->getEventDispatcher();
+      $dispatcher->connect('user.change_culture', array('sfDoctrineRecord', 'listenToChangeCultureEvent'));
 
-      if (class_exists('sfContext', false) && sfContext::hasInstance() && $user = sfContext::getInstance()->getUser())
+      if (sfContext::hasInstance() && $user = sfContext::getInstance()->getUser())
       {
         self::$_defaultCulture = $user->getCulture();
       }
+
       self::$_initialized = true;
     }
   }
@@ -70,7 +71,7 @@ abstract class sfDoctrineRecord extends Doctrine_Record
    *
    * @param sfEvent An sfEvent instance
    */
-  public static function listenToChangeCultureEvent(sfEvent $event)
+  static public function listenToChangeCultureEvent(sfEvent $event)
   {
     self::$_defaultCulture = $event['culture'];
   }
@@ -82,6 +83,8 @@ abstract class sfDoctrineRecord extends Doctrine_Record
    */
   static public function setDefaultCulture($culture)
   {
+    self::initializeI18n();
+
     self::$_defaultCulture = $culture;
   }
 
@@ -98,14 +101,17 @@ abstract class sfDoctrineRecord extends Doctrine_Record
     {
       throw new sfException('The default culture has not been set');
     }
+
     return self::$_defaultCulture;
   }
 
   /**
-   * Get the primary key of a Doctrine_Record.
-   * This a proxy method to Doctrine_Record::identifier() for Propel BC
+   * Returns the current record's primary key.
    *
-   * @return mixed $identifier Array for composite primary keys and string for single primary key
+   * This a proxy method to {@link Doctrine_Record::identifier()} for
+   * compatibility with a Propel-style API.
+   *
+   * @return mixed The value of the current model's last identifier column
    */
   public function getPrimaryKey()
   {
@@ -114,7 +120,7 @@ abstract class sfDoctrineRecord extends Doctrine_Record
   }
 
   /**
-   * Function require by symfony >= 1.2 admin generators
+   * Function require by symfony >= 1.2 admin generators.
    *
    * @return boolean
    */
@@ -126,7 +132,7 @@ abstract class sfDoctrineRecord extends Doctrine_Record
   /**
    * Returns a string representation of the record.
    *
-   * @return string A string representation of the record.
+   * @return string A string representation of the record
    */
   public function __toString()
   {
@@ -149,15 +155,17 @@ abstract class sfDoctrineRecord extends Doctrine_Record
     return sprintf('No description for object of class "%s"', $this->getTable()->getComponentName());
   }
 
-  /*
-   * Provide accessors with setters and getters to Doctrine models.
+  /**
+   * Provides getter and setter methods.
    *
-   * @param  string $method     The method name.
-   * @param  array  $arguments  The method arguments.
-   * @return mixed The returned value of the called method.
+   * @param  string $method    The method name
+   * @param  array  $arguments The method arguments
+   *
+   * @return mixed The returned value of the called method
    */
   public function __call($method, $arguments)
   {
+    $failed = false;
     try {
       if (in_array($verb = substr($method, 0, 3), array('set', 'get')))
       {
@@ -203,10 +211,24 @@ abstract class sfDoctrineRecord extends Doctrine_Record
           array_merge(array($entityName), $arguments)
         );
       } else {
-        return parent::__call($method, $arguments);
+        $failed = true;
       }
-    } catch(Exception $e) {
-      return parent::__call($method, $arguments);
+    } catch (Exception $e) {
+      $failed = true;
+    }
+    if ($failed)
+    {
+      try
+      {
+        return parent::__call($method, $arguments);
+      } catch (Doctrine_Record_UnknownPropertyException $e2) {}
+
+      if (isset($e) && $e)
+      {
+        throw $e;
+      } else if (isset($e2) && $e2) {
+        throw $e2;
+      }
     }
   }
 

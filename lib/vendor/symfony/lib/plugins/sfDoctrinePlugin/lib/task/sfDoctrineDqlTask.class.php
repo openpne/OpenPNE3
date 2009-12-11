@@ -18,7 +18,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfDoctrineDqlTask.class.php 24150 2009-11-18 19:58:57Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineDqlTask.class.php 24625 2009-12-01 00:05:40Z Kris.Wallsmith $
  */
 class sfDoctrineDqlTask extends sfDoctrineBaseTask
 {
@@ -108,7 +108,7 @@ EOF;
               $headers[$field] = 0;
             }
 
-            $headers[$field] = max($headers[$field], strlen($value));
+            $headers[$field] = max($headers[$field], strlen($this->renderValue($value)));
           }
         }
 
@@ -135,7 +135,7 @@ EOF;
           $line = '|';
           foreach ($result as $field => $value)
           {
-            $line .= ' '.str_pad($value, $headers[$field]).' |';
+            $line .= ' '.str_pad($this->renderValue($value), $headers[$field]).' |';
           }
           $this->log($line);
         }
@@ -161,5 +161,17 @@ EOF;
     {
       $this->logSection('doctrine', 'no results found');
     }
+  }
+
+  /**
+   * Renders the supplied value.
+   *
+   * @param string|null $value
+   *
+   * @return string
+   */
+  protected function renderValue($value)
+  {
+    return null === $value ? 'NULL' : $value;
   }
 }

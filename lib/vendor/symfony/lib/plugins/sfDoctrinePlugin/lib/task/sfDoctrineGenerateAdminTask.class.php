@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfDoctrineBaseTask.class.php');
  * @package    symfony
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfDoctrineGenerateAdminTask.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineGenerateAdminTask.class.php 24620 2009-11-30 23:38:19Z Kris.Wallsmith $
  */
 class sfDoctrineGenerateAdminTask extends sfDoctrineBaseTask
 {
@@ -101,6 +101,15 @@ EOF;
     $model = $arguments['route_or_model'];
     $name = strtolower(preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), '\\1_\\2', $model));
 
+    if (isset($options['module']))
+    {
+      $route = $this->getRouteFromName($name);
+      if ($route && !$this->checkRoute($route, $model, $options['module']))
+      {
+        $name .= '_'.$options['module'];
+      }
+    }
+
     $routing = sfConfig::get('sf_app_config_dir').'/routing.yml';
     $content = file_get_contents($routing);
     $routesArray = sfYaml::load($content);
@@ -173,6 +182,26 @@ EOF
     if (isset($routes[$name]))
     {
       return $routes[$name];
+    }
+
+    return false;
+  }
+
+  /**
+   * Checks whether a route references a model and module.
+   *
+   * @param mixed  $route  A route collection
+   * @param string $model  A model name
+   * @param string $module A module name
+   *
+   * @return boolean
+   */
+  protected function checkRoute($route, $model, $module)
+  {
+    if ($route instanceof sfDoctrineRouteCollection)
+    {
+      $options = $route->getOptions();
+      return $model == $options['model'] && $module == $options['module'];
     }
 
     return false;
