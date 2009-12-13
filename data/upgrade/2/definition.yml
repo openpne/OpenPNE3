@@ -90,3 +90,6 @@ gadget:
 
 message:
   strategy: SQLImport
+
+banner:
+  strategy: SQLImport
