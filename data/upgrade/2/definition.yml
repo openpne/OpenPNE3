@@ -11,3 +11,9 @@ create_tables:
 member_basic:
   strategy: SQLImport
 
+files:
+  strategy: SQLImport
+
+fix_old_image_data:
+  strategy: opUpgradeFrom2FixOldImagesStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2FixOldImagesStrategy.class.php
