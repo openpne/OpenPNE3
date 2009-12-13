@@ -51,3 +51,12 @@ diary:
 community:
   strategy: opUpgradeFrom2ImportCommunityCategoryStrategy
   file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2ImportCommunityCategoryStrategy.class.php
+
+community_member:
+  strategy: SQLImport
+
+community_config:
+  strategy: SQLImport
+
+community_topic:
+  strategy: SQLImport
