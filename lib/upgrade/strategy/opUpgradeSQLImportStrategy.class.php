@@ -29,9 +29,29 @@ class opUpgradeSQLImportStrategy extends opUpgradeAbstractStrategy
     }
 
     $db = $this->getDatabaseManager()->getDatabase('doctrine');
+    $this->conn = $db->getDoctrineConnection();
+
+    $this->conn->beginTransaction();
 
     $sql = opToolkit::unifyEOLCharacter($this->parseSql($path));
     $queries = explode("\n", $sql);
+
+    try
+    {
+      $this->executeQueries($queries);
+      $this->conn->commit();
+    }
+    catch (Exception $e)
+    {
+      $this->conn->rollback();
+
+      throw $e;
+    }
+
+  }
+
+  protected function executeQueries($queries)
+  {
     foreach ($queries as $query)
     {
       $query = trim($query);
@@ -40,7 +60,7 @@ class opUpgradeSQLImportStrategy extends opUpgradeAbstractStrategy
         continue;
       }
 
-      $db->getDoctrineConnection()->execute($query);
+      $this->conn->execute($query);
     }
   }
 
