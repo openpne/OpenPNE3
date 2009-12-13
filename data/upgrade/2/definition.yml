@@ -38,3 +38,6 @@ profile:
 
 member_image:
   strategy: SQLImport
+
+member_config:
+  strategy: SQLImport
