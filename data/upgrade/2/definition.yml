@@ -1,0 +1,10 @@
+# I think that the following 2 tasks should not be executed for performance reason.
+#sync_plugin:
+#  strategy: SyncPlugin
+#
+#build_model:
+#  strategy: BuildModel
+
+create_tables:
+  strategy: CreateTable
+
