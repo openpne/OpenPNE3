@@ -27,3 +27,7 @@ member_secure:
 member_email:
   strategy: opUpgradeFrom2ImportEmailAddressStrategy
   file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2ImportEmailAddressStrategy.class.php
+
+member_relationship:
+  strategy: opUpgradeFrom2MemberRelationshipStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2MemberRelationshipStrategy.class.php
