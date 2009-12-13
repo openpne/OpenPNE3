@@ -41,3 +41,6 @@ member_image:
 
 member_config:
   strategy: SQLImport
+
+album:
+  strategy: SQLImport
