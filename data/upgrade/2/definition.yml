@@ -47,3 +47,7 @@ album:
 
 diary:
   strategy: SQLImport
+
+community:
+  strategy: opUpgradeFrom2ImportCommunityCategoryStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2ImportCommunityCategoryStrategy.class.php
