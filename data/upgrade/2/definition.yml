@@ -21,3 +21,5 @@ fix_old_image_data:
 admin_user:
   strategy: SQLImport
 
+member_secure:
+  strategy: SQLImport
