@@ -13,6 +13,12 @@
 <?php if ($form->getAuthAdapter()->getAuthConfig('invite_mode') == 2 && opToolkit::isEnabledRegistration('pc')) : ?>
 <?php echo link_to('<img src="'.image_path('dummy.gif').'" alt="新規登録" />', $form->getAuthAdapter()->getAuthConfig('self_invite_action'), array('id' => 'button_new_regist')) ?>
 <?php endif; ?>
+<div class="msg lh_130">
+<?php if ($form->getAuthAdapter()->getAuthConfig('help_login_error_action')) : ?>
+<br />
+<span class="password_query"><?php echo link_to(__('Can not access your account?'), $form->getAuthAdapter()->getAuthConfig('help_login_error_action')); ?></span>
+<?php endif; ?>
+</div>
 </form>
 
 <div class="footer">
