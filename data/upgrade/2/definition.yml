@@ -35,3 +35,6 @@ member_relationship:
 profile:
   strategy: opUpgradeFrom2MemberProfileStrategy
   file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2MemberProfileStrategy.class.php
+
+member_image:
+  strategy: SQLImport
