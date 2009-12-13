@@ -63,3 +63,6 @@ community_topic:
 
 ashiato:
   strategy: SQLImport
+
+blacklist:
+  strategy: SQLImport
