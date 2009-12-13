@@ -8,3 +8,6 @@
 create_tables:
   strategy: CreateTable
 
+member_basic:
+  strategy: SQLImport
+
