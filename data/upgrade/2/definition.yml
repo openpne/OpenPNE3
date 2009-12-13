@@ -88,3 +88,5 @@ load_data:
 gadget:
   strategy: SQLImport
 
+message:
+  strategy: SQLImport
