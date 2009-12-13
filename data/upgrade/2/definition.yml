@@ -60,3 +60,6 @@ community_config:
 
 community_topic:
   strategy: SQLImport
+
+ashiato:
+  strategy: SQLImport
