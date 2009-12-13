@@ -85,3 +85,6 @@ load_data:
   strategy: opUpgradeFrom2DataLoadStrategy
   file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2DataLoadStrategy.class.php
 
+gadget:
+  strategy: SQLImport
+
