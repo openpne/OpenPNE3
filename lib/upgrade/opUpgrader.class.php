@@ -83,7 +83,7 @@ class opUpgrader extends sfBaseTask
         'dir'            => $this->basePath,
         'required_rules' => array(),
         'configuration'  => $this->configuration,
-        'dispatcher'     => $this->dispatcher,
+        'dispatcher'     => new sfEventDispatcher(),
         'formatter'      => $this->formatter,
       ));
 
