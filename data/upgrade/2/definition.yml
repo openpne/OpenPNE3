@@ -31,3 +31,7 @@ member_email:
 member_relationship:
   strategy: opUpgradeFrom2MemberRelationshipStrategy
   file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2MemberRelationshipStrategy.class.php
+
+profile:
+  strategy: opUpgradeFrom2MemberProfileStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2MemberProfileStrategy.class.php
