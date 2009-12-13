@@ -23,3 +23,7 @@ admin_user:
 
 member_secure:
   strategy: SQLImport
+
+member_email:
+  strategy: opUpgradeFrom2ImportEmailAddressStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2ImportEmailAddressStrategy.class.php
