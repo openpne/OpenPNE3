@@ -66,3 +66,7 @@ ashiato:
 
 blacklist:
   strategy: SQLImport
+
+admin_config:
+  strategy: opUpgradeFrom2AdminConfigStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2AdminConfigStrategy.class.php
