@@ -134,6 +134,7 @@ class opUpgrader extends sfBaseTask
     }
 
     $this->logSection('upgrade', sprintf('Completed Upgrading (%.2f sec)', $timer->getElapsedTime()));
+    $this->logSection('upgrade', sprintf('The %.2f MB memory allocated', round(memory_get_peak_usage(true) / 1048576, 2)));
   }
 }
 
