@@ -81,3 +81,7 @@ decoration:
 mobile_color_config:
   strategy: SQLImport
 
+load_data:
+  strategy: opUpgradeFrom2DataLoadStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2DataLoadStrategy.class.php
+
