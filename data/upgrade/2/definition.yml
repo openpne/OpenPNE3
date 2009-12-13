@@ -93,3 +93,6 @@ message:
 
 banner:
   strategy: SQLImport
+
+confirmation:
+  strategy: SQLImport
