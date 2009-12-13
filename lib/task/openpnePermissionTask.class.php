@@ -28,6 +28,10 @@ EOF;
     parent::execute($arguments, $options);
 
     $webCacheDir = sfConfig::get('sf_web_dir').'/cache';
+    if (!is_dir($webCacheDir))
+    {
+      @$this->getFilesystem()->mkdirs($webCacheDir);
+    }
     $this->getFilesystem()->chmod($webCacheDir, 0777);
 
     $dataDir = sfConfig::get('sf_data_dir').'/config';
