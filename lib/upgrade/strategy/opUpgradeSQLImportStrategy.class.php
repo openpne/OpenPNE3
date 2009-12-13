@@ -32,6 +32,7 @@ class opUpgradeSQLImportStrategy extends opUpgradeAbstractStrategy
     $this->conn = $db->getDoctrineConnection();
 
     $this->conn->beginTransaction();
+    $this->conn->execute('SET FOREIGN_KEY_CHECKS = 0');  // for mysql
 
     $sql = opToolkit::unifyEOLCharacter($this->parseSql($path));
     $queries = explode("\n", $sql);
@@ -44,10 +45,12 @@ class opUpgradeSQLImportStrategy extends opUpgradeAbstractStrategy
     catch (Exception $e)
     {
       $this->conn->rollback();
+      $this->conn->execute('SET FOREIGN_KEY_CHECKS = 0');  // for mysql
 
       throw $e;
     }
 
+    $this->conn->execute('SET FOREIGN_KEY_CHECKS = 0');  // for mysql
   }
 
   protected function executeQueries($queries)
@@ -77,5 +80,10 @@ class opUpgradeSQLImportStrategy extends opUpgradeAbstractStrategy
     $result = ob_get_clean();
 
     return $result;
+  }
+
+  protected function getSQLForFileId($name)
+  {
+    return '(SELECT id FROM file WHERE name = '.$name.' LIMIT 1)';
   }
 }
