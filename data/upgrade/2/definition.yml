@@ -44,3 +44,6 @@ member_config:
 
 album:
   strategy: SQLImport
+
+diary:
+  strategy: SQLImport
