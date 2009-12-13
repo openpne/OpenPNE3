@@ -77,7 +77,7 @@ function sf_image_path($filename, $options = array(), $absolute = false)
     unset($options['size']);
   }
 
-  $filepath = 'img/'.$f.'/'.$size_dir_name.'/'.$filename;
+  $filepath = 'img/'.$f.'/'.$size_dir_name.'/'.$filename.'.'.$f;
   $options['raw_name'] = true;
   return _compute_public_path($filepath, 'cache', $f, $absolute);
 }

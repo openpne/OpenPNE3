@@ -58,7 +58,7 @@ class sfImageHandler
 
   public function isValidSource()
   {
-    if (is_null($this->storage))
+    if (!$this->storage)
     {
       return false;
     }
