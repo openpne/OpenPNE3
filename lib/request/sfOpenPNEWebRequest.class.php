@@ -56,6 +56,28 @@ class sfOpenPNEWebRequest extends sfWebRequest
     $this->fixParameters();
   }
 
+ /**
+  * @see sfWebRequest
+  */
+  public function checkCSRFProtection()
+  {
+    try
+    {
+      parent::checkCSRFProtection();
+    }
+    catch (sfValidatorErrorSchema $e)
+    {
+      // retry checking for using sfForm (just for BC)
+      $form = new sfForm();
+      $form->bind($form->isCSRFProtected() ? array($form->getCSRFFieldName() => $this->getParameter($form->getCSRFFieldName())) : array());
+
+      if (!$form->isValid())
+      {
+        throw $form->getErrorSchema();
+      }
+    }
+  }
+
   public function getMobile()
   {
     return opMobileUserAgent::getInstance()->getMobile();
