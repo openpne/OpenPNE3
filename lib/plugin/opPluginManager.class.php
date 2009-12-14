@@ -159,6 +159,18 @@ class opPluginManager extends sfSymfonyPluginManager
     return $result;
   }
 
+  static public function enablePlugin($plugin, $configDir)
+  {
+    // do nothing.
+    // OpenPNE plugin don't want to rewrite config/ProjectConfiguration.class.php
+  }
+
+  static protected function disablePlugin($plugin, $configDir)
+  {
+    // do nothing.
+    // OpenPNE plugin don't want to rewrite config/ProjectConfiguration.class.php
+  }
+
   /**
    * registerSymfonyPackage
    *
