@@ -54,6 +54,10 @@ EOF;
     {
       throw new RuntimeException('You must copy the config.php in your OpenPNE2 as config/config.OpenPNE2.php. (お使いの OpenPNE2 の config.php を config/config.OpenPNE2.php としてコピーしてください。)');
     }
+    if (!defined('OPENPNE_DIR'))
+    {
+      define('OPENPNE_DIR', sfConfig::get('sf_root_dir'));
+    }
     require_once $op2config;
 
     $path = sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.'upgrade'.DIRECTORY_SEPARATOR.'2';
