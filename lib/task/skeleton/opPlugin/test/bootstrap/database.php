@@ -12,6 +12,10 @@ $configuration = ProjectConfiguration::getApplicationConfiguration('pc_frontend'
 
 new sfDatabaseManager($configuration);
 
-$task = new sfDoctrineDataLoadTask($configuration->getEventDispatcher(), new sfFormatter());
-$task->run();
-$task->run(array('--dir='.dirname(__FILE__).'/../fixtures'));
+$task = new sfDoctrineBuildTask($configuration->getEventDispatcher(), new sfFormatter());
+$task->setConfiguration($configuration);
+$task->run(array(), array(
+  'no-confirmation' => true,
+  'db'              => true,
+  'and-load'        => dirname(__FILE__).'/../fixtures',
+));
