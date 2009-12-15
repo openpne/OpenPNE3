@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class Revision33_AddIsPreColumn extends Doctrine_Migration_Base
+class Revision34_AddIsPreColumn extends Doctrine_Migration_Base
 {
   public function migrate($direction)
   {

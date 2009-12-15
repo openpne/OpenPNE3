@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class Revision34_RemovePositionColumn extends Doctrine_Migration_Base
+class Revision35_RemovePositionColumn extends Doctrine_Migration_Base
 {
   public function up()
   {

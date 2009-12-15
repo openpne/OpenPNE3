@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class Revision31_CreateTableCommunityMemberPosition extends Doctrine_Migration_Base
+class Revision32_CreateTableCommunityMemberPosition extends Doctrine_Migration_Base
 {
   public function migrate($direction)
   {
