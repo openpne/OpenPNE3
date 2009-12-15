@@ -83,7 +83,7 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
       ->where('community_id = ?', $this->id)
-      ->andWhere('position <> ?', 'pre')
+      ->andWhere('(is_pre = ? OR is_pre IS NULL)', false)
       ->execute();
 
     $q = Doctrine::getTable('Member')->createQuery()
@@ -106,6 +106,18 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
   public function getAdminMember()
   {
     return Doctrine::getTable('CommunityMember')->getCommunityAdmin($this->getId())->getMember();
+  }
+
+  public function getSubAdminMembers()
+  {
+    $communityMemberPositions = Doctrine::getTable('CommunityMember')->getCommunitySubAdmin($this->getId());
+    if (!($communityMemberPositions && count($communityMemberPositions)))
+    {
+      return array();
+    }
+    return Doctrine::getTable('Member')->createQuery()
+      ->whereIn('id', array_values($communityMemberPositions->toKeyValueArray('id', 'member_id')))
+      ->execute();
   }
 
   public function checkPrivilegeBelong($memberId)
@@ -151,15 +163,10 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
 
   public function getChangeAdminRequestMember()
   {
-    $memberId = Doctrine::getTable('CommunityMember')->createQuery()
-      ->select('member_id')
-      ->where('community_id = ?', $this->getId())
-      ->andWhere('position = ?', 'admin_confirm')
-      ->execute(array(), Doctrine::HYDRATE_SINGLE_SCALAR);
-
-    if ($memberId)
+    $communityMemberPosition = Doctrine::getTable('CommunityMemberPosition')->findOneByCommunityIdAndName($this->id, 'admin_confirm');
+    if ($communityMemberPosition)
     {
-      return Doctrine::getTable('Member')->find($memberId);
+      return $communityMemberPosition->getMember();
     }
     return null;
   }
@@ -169,6 +176,10 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
     if (Doctrine::getTable('CommunityMember')->isAdmin($member->id, $this->id))
     {
       return 'admin';
+    }
+    elseif (Doctrine::getTable('CommunityMember')->isSubAdmin($member->id, $this->id))
+    {
+      return 'sub_admin';
     }
     elseif (Doctrine::getTable('CommunityMember')->isMember($member->id, $this->id))
     {

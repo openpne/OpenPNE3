@@ -10,11 +10,11 @@ op_include_parts('memberImageBox', 'communityImageBox', $options);
 $options = array(
   'title' => __('%community% Members', array('%community%' => $op_term['community']->titleize())),
   'list' => $members,
-  'crownIds' => array($community_admin->getId()),
-  'link_to' => 'member/profile?id=',
+  'crownIds' => array($communityAdmin->getId()),
+  'link_to' => '@member_profile?id=',
   'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $community->countCommunityMembers()), 'community/memberList?id='.$community->getId())),
 );
-if ($isAdmin)
+if ($isAdmin || $isSubAdmin)
 {
   $options['moreInfo'][] = link_to(__('Management member'), 'community/memberManage?id='.$community->getId());
 }
@@ -33,9 +33,18 @@ $list = array(
   __('%community% Name', array('%community%' => $op_term['community']->titleize()))     => $community->getName(),
   __('%community% Category', array('%community%' => $op_term['community']->titleize())) => $community->getCommunityCategory(),
   __('Date Created')       => op_format_date($community->getCreatedAt(), 'D'),
-  __('Administrator')      => $community_admin->getName(),
-  __('Count of Members')   => $community->countCommunityMembers()
+  __('Administrator')      => link_to($communityAdmin->getName(), '@member_profile?id='.$communityAdmin->getId()),
 );
+$subAdminCaption = '';
+foreach ($communitySubAdmins as $m)
+{
+  $subAdminCaption .= "<li>".link_to($m->getName(), '@member_profile?id='.$m->getId())."</li>\n";
+}
+if ($subAdminCaption)
+{
+  $list[__('Sub Administrator')] = '<ul>'.$subAdminCaption.'</ul>';
+}
+$list[__('Count of Members')] = $community->countCommunityMembers();
 foreach ($community->getConfigs() as $key => $config)
 {
   if ('Description' === $key)

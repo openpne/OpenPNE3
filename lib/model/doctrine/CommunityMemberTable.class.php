@@ -18,38 +18,43 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
         ->fetchOne();
   }
 
+  protected function isPosition($memberId, $communityId, $position)
+  {
+    $object = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
+    if ($object)
+    {
+      return $object->hasPosition($position);
+    }
+    return false;
+  }
+
   public function isMember($memberId, $communityId)
   {
-    $communityMember = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
-    if (!$communityMember)
+    if ($this->retrieveByMemberIdAndCommunityId($memberId, $communityId))
     {
-      return false;
+      return !$this->isPreMember($memberId, $communityId);
     }
-    return ($communityMember->position != 'pre');
+    return false;
   }
 
   public function isPreMember($memberId, $communityId)
   {
-    $communityMember = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
-    if (!$communityMember)
+    $object = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
+    if ($object && $object->getIsPre())
     {
-      return false;
+      return true;
     }
-    return ($communityMember->position == 'pre');
+    return false;
   }
 
   public function isAdmin($memberId, $communityId)
   {
-    $communityMember = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
-    if (!$communityMember) {
-      return false;
-    }
+    return $this->isPosition($memberId, $communityId, 'admin');
+  }
 
-    if ($communityMember->position != 'admin') {
-      return false;
-    }
-
-    return true;
+  public function isSubAdmin($memberId, $communityId)
+  {
+    return $this->isPosition($memberId, $communityId, 'sub_admin');
   }
 
   public function join($memberId, $communityId, $isRegisterPoricy = 'open')
@@ -69,7 +74,7 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     $communityMember->setCommunityId($communityId);
     if ($isRegisterPoricy == 'close')
     {
-      $communityMember->position = 'pre';
+      $communityMember->setIsPre(true);
     }
     $communityMember->save();
   }
@@ -90,27 +95,24 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
 
   public function getCommunityAdmin($communityId)
   {
-    return $this->createQuery()
-        ->where('community_id = ?', $communityId)
-        ->andWhere('position = ?', 'admin')
-        ->fetchOne();
+    return Doctrine::getTable('CommunityMemberPosition')->findOneByCommunityIdAndName($communityId, 'admin');
+  }
+
+  public function getCommunitySubAdmin($communityId)
+  {
+    return Doctrine::getTable('CommunityMemberPosition')->findByCommunityIdAndName($communityId, 'sub_admin');
   }
 
   public function getCommunityIdsOfAdminByMemberId($memberId)
   {
-    $ids = array();
+    $objects = Doctrine::getTable('CommunityMemberPosition')->findByMemberIdAndName($memberId, 'admin');
 
-    $results = $this->createQuery()
-        ->select('community_id')
-        ->where('member_id = ?', $memberId)
-        ->andWhere('position = ?', 'admin')
-        ->execute();
-
-    foreach ($results as $result)
+    $results = array();
+    foreach ($objects as $obj)
     {
-      $ids[] = $result->getCommunityId();
+      $results[] = $obj->getCommunityId();
     }
-    return $ids;
+    return $results;
   }
 
   public function getCommunityMembersPreQuery($memberId)
@@ -119,9 +121,9 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
 
     if (count($adminCommunityIds))
     {
-      return $this->createQuery()
+      return Doctrine::getTable('CommunityMember')->createQuery()
         ->whereIn('community_id', $adminCommunityIds)
-        ->andWhere('position = ?', 'pre');
+        ->andWhere('is_pre = ?', true);
     }
 
     return false;
@@ -152,14 +154,25 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
 
   public function getCommunityMembers($communityId)
   {
+    $subqueryResults = Doctrine::getTable('CommunityMemberPosition')->createQuery()
+      ->where('community_id = ?', $communityId)
+      ->andWhere('name = ?','admin')
+      ->execute();
+
+    $ids = array();
+    foreach ($subqueryResults as $result)
+    {
+      $ids[] = $result->getCommunityMemberId();
+    }
+
     return $this->createQuery()
       ->where('community_id = ?', $communityId)
-      ->andWhere('position <> ?', 'admin')
-      ->andWhere('position <> ?', 'pre')
+      ->andWhere('(is_pre = ? OR is_pre IS NULL)', false)
+      ->andWhereNotIn('id', $ids)
       ->execute();
   }
 
-  public function requestChangeAdmin($memberId, $communityId, $fromMemberId = null)
+  protected function requestChangePosition($memberId, $communityId, $fromMemberId = null, $position = 'admin')
   {
     if (null === $fromMemberId)
     {
@@ -177,30 +190,41 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
       throw new Exception("Invalid community member.");
     }
 
-    if ($communityMember->getPosition())
+    if ($communityMember->getIsPre())
+    {
+      throw new Exception("This member is pre-member.");
+    }
+
+    $dennyPositions = array('admin', 'admin_confirm');
+    if ('admin' !== $position)
+    {
+      $dennyPositions[] = $position;
+      $dennyPositions[] = $position.'_confirm';
+    }
+    if ($communityMember->hasPosition($dennyPositions))
     {
       throw new Exception("This member is already position of something.");
     }
 
-    $community = $communityMember->getCommunity();
-    $nowRequestMember = $community->getChangeAdminRequestMember();
-
+    $nowRequestMember = Doctrine::getTable('CommunityMemberPosition')->findOneByCommunityIdAndName($communityId, $position.'_confirm');
     if ($nowRequestMember)
     {
-      $nowRequestCommunityMember = $this->retrieveByMemberIdAndCommunityId($nowRequestMember->getId(), $communityId);
-      $nowRequestCommunityMember->setPosition('');
-      $nowRequestCommunityMember->save();
+      $nowRequestMember->delete();
     }
 
-    $communityMember->setPosition('admin_confirm');
-    $communityMember->save();
+    $communityMember->addPosition($position.'_confirm');
   }
 
-  public function changeAdmin($memberId, $communityId)
+  public function requestAddPosition($memberId, $communityId, $fromMemberId = null, $position = 'sub_admin')
   {
-    if (null === $memberId)
+    if (null === $fromMemberId)
     {
-      $memberId = sfContext::getInstance()->getUser()->getMemberId();
+      $fromMemberId = sfContext::getInstance()->getUser()->getMemberId();
+    }
+
+    if (!$this->isAdmin($fromMemberId, $communityId))
+    {
+      throw new Exception("Requester isn't community's admin.");
     }
 
     $communityMember = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
@@ -208,7 +232,70 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     {
       throw new Exception("Invalid community member.");
     }
-    if ($communityMember->getPosition() !== 'admin_confirm')
+
+    if ($communityMember->getIsPre())
+    {
+      throw new Exception("This member is pre-member.");
+    }
+
+    $dennyPositions = array('admin', 'admin_confirm');
+    $dennyPositions[] = $position;
+    $dennyPositions[] = $position.'_confirm';
+    if ($communityMember->hasPosition($dennyPositions))
+    {
+      throw new Exception("This member is already position of something.");
+    }
+
+    $communityMember->addPosition($position.'_confirm');
+    $communityMember->save();
+  }
+
+  public function requestChangeAdmin($memberId, $communityId, $fromMemberId = null)
+  {
+    $this->requestChangePosition($memberId, $communityId, $fromMemberId, 'admin');
+  }
+
+  public function requestSubAdmin($memberId, $communityId, $fromMemberId = null)
+  {
+    $this->requestAddPosition($memberId, $communityId, $fromMemberId, 'sub_admin');
+  }
+
+  protected function addPosition($memberId, $communityId, $position = 'sub_admin')
+  {
+    $communityMember = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
+    if (!$communityMember)
+    {
+      throw new Exception("Invalid community member.");
+    }
+    if (!$communityMember->hasPosition($position.'_confirm'))
+    {
+      throw new Exception('This member position isn\'t "'.$position.'_confirm".');
+    }
+
+    try
+    {
+      $this->getConnection()->beginTransaction();
+
+      $communityMember->removePosition($position.'_confirm');
+      $communityMember->addPosition($position);
+
+      $this->getConnection()->commit();
+    }
+    catch (Exception $e)
+    {
+      $this->getConnection()->rollback();
+      throw $e;
+    }
+  }
+
+  public function changeAdmin($memberId, $communityId)
+  {
+    $communityMember = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
+    if (!$communityMember)
+    {
+      throw new Exception("Invalid community member.");
+    }
+    if (!$communityMember->hasPosition('admin_confirm'))
     {
       throw new Exception('This member position isn\'t "admin_confirm".');
     }
@@ -223,10 +310,9 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     {
       $this->getConnection()->beginTransaction();
 
-      $communityMember->setPosition('admin');
-      $communityMember->save();
-      $nowAdmin->setPosition('');
-      $nowAdmin->save();
+      $communityMember->removeAllPosition();
+      $communityMember->addPosition('admin');
+      $nowAdmin->delete();
 
       $this->getConnection()->commit();
     }
@@ -237,17 +323,25 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     }
   }
 
+  public function addSubAdmin($memberId, $communityId)
+  {
+    $this->addPosition($memberId, $communityId, 'sub_admin');
+  }
+
   public function appendRoles(Zend_Acl $acl)
   {
     return $acl
       ->addRole(new Zend_Acl_Role('everyone'))
       ->addRole(new Zend_Acl_Role('member'), 'everyone')
+      ->addRole(new Zend_Acl_Role('sub_admin'), 'member')
       ->addRole(new Zend_Acl_Role('admin'), 'member');
   }
 
   public function appendRules(Zend_Acl $acl, $resource = null)
   {
     return $acl
+      ->allow('sub_admin', $resource, 'view')
+      ->allow('sub_admin', $resource, 'edit')
       ->allow('admin', $resource, 'view')
       ->allow('admin', $resource, 'edit');
   }
@@ -285,7 +379,7 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
   public static function processJoinConfirm(sfEvent $event)
   {
     $communityMember = Doctrine::getTable('CommunityMember')->find($event['id']);
-    if ($communityMember->getPosition() !== 'pre')
+    if (!($communityMember && $communityMember->getIsPre()))
     {
       return false;
     }
@@ -293,7 +387,7 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     $i18n = sfContext::getInstance()->getI18N();
     if ($event['is_accepted'])
     {
-      $communityMember->setPosition('');
+      $communityMember->setIsPre(false);
       $communityMember->save();
 
       sfOpenPNECommunityAction::sendJoinMail($communityMember->getMember()->id, $communityMember->getCommunity()->id);

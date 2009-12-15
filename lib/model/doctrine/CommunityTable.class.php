@@ -13,7 +13,7 @@ class CommunityTable extends opAccessControlDoctrineTable
   public function retrievesByMemberId($memberId, $limit = 5, $isRandom = false)
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
-      ->where('position <> ?', 'pre')
+      ->where(('is_pre = ? OR is_pre IS NULL'), false)
       ->andWhere('member_id = ?', $memberId)
       ->execute();
 
@@ -42,7 +42,7 @@ class CommunityTable extends opAccessControlDoctrineTable
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
       ->where('member_id = ?', $memberId)
-      ->andWhere('position <> ?', 'pre')
+      ->andWhere(('is_pre = ? OR is_pre IS NULL'), false)
       ->execute();
 
     $pager = new sfDoctrinePager('Community', $size);
@@ -66,7 +66,7 @@ class CommunityTable extends opAccessControlDoctrineTable
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
       ->where('community_id = ?', $communityId)
-      ->andWhere('position <> ?', 'pre')
+      ->andWhere(('is_pre = ? OR is_pre IS NULL'), false)
       ->execute();
 
     $pager = new sfDoctrinePager('Member', $size);
@@ -93,7 +93,7 @@ class CommunityTable extends opAccessControlDoctrineTable
     $resultSet = Doctrine::getTable('CommunityMember')->createQuery()
       ->select('community_id')
       ->where('member_id = ?', $memberId)
-      ->andWhere('position <> ?', 'pre')
+      ->andWhere(('is_pre = ? OR is_pre IS NULL'), false)
       ->execute();
 
     foreach ($resultSet as $value)
@@ -121,44 +121,34 @@ class CommunityTable extends opAccessControlDoctrineTable
       ->execute();
   }
 
-  public function getChangeAdminRequestCommunitiesQuery($memberId = null)
+  public function getPositionRequestCommunitiesQuery($position = 'admin', $memberId = null)
   {
     if (null === $memberId)
     {
       $memberId = sfContext::getInstance()->getUser()->getMemberId();
     }
 
-    return Doctrine::getTable('CommunityMember')->createQuery()
-      ->select('community_id')
-      ->where('member_id = ?', $memberId)
-      ->andWhere('position = ?', 'admin_confirm');
-  }
+    $communityMemberPositions = Doctrine::getTable('CommunityMemberPosition')->findByMemberIdAndName($memberId,  $position.'_confirm');
 
-  public function getChangeAdminRequestCommunities($memberId = null)
-  {
-    $q = $this->getChangeAdminRequestCommunitiesQuery($memberId);
-    $communityIds = $q->execute(array(), Doctrine::HYDRATE_ARRAY);
-
-    if (!$communityIds)
+    if (!$communityMemberPositions || !count($communityMemberPositions))
     {
       return null;
     }
 
-    foreach ($communityIds as &$communityId)
-    {
-      $communityId = $communityId['community_id'];
-    }
-
     return $this->createQuery()
-      ->whereIn('id', $communityIds)
-      ->execute();
+      ->whereIn('id', array_values($communityMemberPositions->toKeyValueArray('id', 'community_id')));
   }
 
-  public function countChangeAdminRequestCommunities($memberId = null)
+  public function getPositionRequestCommunities($position = 'admin', $memberId = null)
   {
-    $q = $this->getChangeAdminRequestCommunitiesQuery($memberId);
+    $q = $this->getPositionRequestCommunitiesQuery($position, $memberId);
+    return $q ? $q->execute() : null;
+  }
 
-    return $q->count();
+  public function countPositionRequestCommunities($position = 'admin', $memberId = null)
+  {
+    $q = $this->getPositionRequestCommunitiesQuery($position, $memberId);
+    return $q ? $q->count() : null;
   }
 
   public function appendRoles(Zend_Acl $acl)
@@ -166,6 +156,7 @@ class CommunityTable extends opAccessControlDoctrineTable
     return $acl
       ->addRole(new Zend_Acl_Role('everyone'))
       ->addRole(new Zend_Acl_Role('member'), 'everyone')
+      ->addRole(new Zend_Acl_Role('sub_admin'), 'member')
       ->addRole(new Zend_Acl_Role('admin'), 'member');
   }
 
@@ -173,12 +164,13 @@ class CommunityTable extends opAccessControlDoctrineTable
   {
     return $acl
       ->allow('everyone', $resource, 'view')
+      ->allow('sub_admin', $resource, 'edit')
       ->allow('admin', $resource, 'edit');
   }
 
-  public static function adminConfirmList(sfEvent $event)
+  protected static function confirmList(sfEvent $event, $position = 'admin')
   {
-    $communities = Doctrine::getTable('Community')->getChangeAdminRequestCommunities($event['member']->id);
+    $communities = Doctrine::getTable('Community')->getPositionRequestCommunities($position, $event['member']->id);
 
     if (!$communities)
     {
@@ -212,10 +204,21 @@ class CommunityTable extends opAccessControlDoctrineTable
     return true;
   }
 
+  public static function adminConfirmList(sfEvent $event)
+  {
+    return self::confirmList($event, 'admin');
+  }
+
+  public static function subAdminConfirmList(sfEvent $event)
+  {
+    return self::confirmList($event, 'sub_admin');
+  }
+
   public static function processAdminConfirm(sfEvent $event)
   {
-    $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId($event['member']->id, $event['id']);
-    if (!($communityMember && $communityMember->getPosition() === 'admin_confirm'))
+    $communityMemberPosition = Doctrine::getTable('CommunityMemberPosition')
+      ->findOneByMemberIdAndCommunityIdAndName($event['member']->id, $event['id'], 'admin_confirm');
+    if (!$communityMemberPosition)
     {
       return false;
     }
@@ -227,9 +230,31 @@ class CommunityTable extends opAccessControlDoctrineTable
     }
     else
     {
-      $communityMember->setPosition('');
-      $communityMember->save();
+      $communityMemberPosition->getCommunityMember()->removePosition('admin_confirm');
       $event->setReturnValue('You have just rejected taking over %community%');
+    }
+
+    return true;
+  }
+
+  public static function processSubAdminConfirm(sfEvent $event)
+  {
+    $communityMemberPosition = Doctrine::getTable('CommunityMemberPosition')
+      ->findOneByMemberIdAndCommunityIdAndName($event['member']->id, $event['id'], 'sub_admin_confirm');
+    if (!$communityMemberPosition)
+    {
+      return false;
+    }
+
+    if ($event['is_accepted'])
+    {
+      Doctrine::getTable('CommunityMember')->addSubAdmin($event['member']->id, $event['id']);
+      $event->setReturnValue('You have just accepted request of %community% sub-administrator');
+    }
+    else
+    {
+      $communityMemberPosition->getCommunityMember()->removePosition('sub_admin_confirm');
+      $event->setReturnValue("You have just rejected request of %community% sub-administrator");
     }
 
     return true;

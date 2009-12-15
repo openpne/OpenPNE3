@@ -39,6 +39,10 @@
         <target>管理者</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Sub Administrator</source>
+        <target>副管理者</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Count of Members</source>
         <target>メンバー数</target>
       </trans-unit>
@@ -133,6 +137,26 @@
       <trans-unit id="">
         <source>Take over the administrator of "%1%"</source>
         <target>「%1%」の管理者交代依頼</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Request this %community%'s sub-administrator to this member</source>
+        <target>副管理者を依頼する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You are requesting this %community%'s sub-administrator to this member now.</source>
+        <target>副管理者依頼中</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Demotion from this %community%'s sub-administrator</source>
+        <target>副管理者から降格</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Request the sub-administrator of "%1%"</source>
+        <target>「%1%」の副管理者依頼</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you demotion %0% from this %community%'s sub-administrator?</source>
+        <target>%0%を副管理者から降格してもよろしいですか？</target>
       </trans-unit>
       <trans-unit id="">
         <source>Member</source>
@@ -1124,6 +1148,10 @@
         <target>%1% 件の%community%管理者交代依頼があります</target>
       </trans-unit>
       <trans-unit id="">
+        <source>You've gotten %1% %community% sub-administrator requests</source>
+        <target>%1% 件の%community%副管理者依頼があります</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>You have just accepted joining to %1%</source>
         <target>%1% への参加を承認しました</target>
       </trans-unit>
@@ -1146,6 +1174,18 @@
       <trans-unit id="">
         <source>Pending %community% administrator taking over requests</source>
         <target>%community%管理者交代依頼</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You have just accepted request of %community% sub-administrator</source>
+        <target>%community%副管理者依頼を承認しました</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You have just rejected request of %community% sub-administrator</source>
+        <target>%community%副管理者依頼を拒否しました</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Pending %community% sub-administrator requests</source>
+        <target>%community%副管理者依頼</target>
       </trans-unit>
       <trans-unit id="">
         <source>Join to "%1%"</source>

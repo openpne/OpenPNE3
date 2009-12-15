@@ -404,33 +404,27 @@ CommunityMember:
   community_1_first_member:
     Community: community_1
     Member: first_member
-    position: "admin"
   community_1_second_member:
     Community: community_1
     Member: second_member
   community_2_second_member:
     Community: community_2
     Member: second_member
-    position: "admin"
   community_3_first_member:
     Community: community_3
     Member: first_member
-    position: "admin"
   Community_3_second_member:
     Community: community_3
     Member: second_member
   community_4_first_member:
     Community: community_4
     Member: first_member
-    position: "admin"
   community_4_second_member:
     Community: community_4
     Member: second_member
-    position: "admin_confirm"
   community_5_first_member:
     Community: community_5
     Member: first_member
-    position: "admin"
   community_5_second_member:
     Community: community_5
     Member: second_member
@@ -440,7 +434,52 @@ CommunityMember:
   community_5_fourth_member:
     Community: community_5
     Member: fourth_member
-    position: "pre"
+    is_pre: true
+  community_5_fifth_member:
+    Community: community_5
+    Member: fifth_member
+
+CommunityMemberPosition:
+  community_1_admin:
+    Community: community_1
+    Member: first_member
+    CommunityMember: community_1_first_member
+    name: "admin"
+  community_2_admin:
+    Community: community_2
+    Member: second_member
+    CommunityMember: community_2_second_member
+    name: "admin"
+  community_3_admin:
+    Community: community_3
+    Member: first_member
+    CommunityMember: community_3_first_member
+    name: "admin"
+  community_4_admin:
+    Community: community_4
+    Member: first_member
+    CommunityMember: community_4_first_member
+    name: "admin"
+  community_4_admin_confirm:
+    Community: community_4
+    Member: second_member
+    CommunityMember: community_4_second_member
+    name: "admin_confirm"
+  community_5_admin:
+    Community: community_5
+    Member: first_member
+    CommunityMember: community_5_first_member
+    name: "admin"
+  community_5_sub_admin:
+    Community: community_5
+    Member: second_member
+    CommunityMember: community_5_second_member
+    name: "sub_admin"
+  community_5_sub_admin_confirm:
+    Community: community_5
+    Member: third_member
+    CommunityMember: community_5_third_member
+    name: "sub_admin_confirm"
 
 Gadget:
   gadget_search:

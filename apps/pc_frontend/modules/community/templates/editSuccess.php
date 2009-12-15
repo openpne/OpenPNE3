@@ -16,7 +16,7 @@ else
 
 op_include_form('formCommunity', array($communityForm, $communityConfigForm, $communityFileForm), $options);
 
-if (!$communityForm->isNew())
+if (!$communityForm->isNew() && $isDeleteCommunity)
 {
   op_include_parts('buttonBox', 'deleteForm', array(
     'title' => __('Delete this %community%'),

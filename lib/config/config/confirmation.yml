@@ -1,4 +1,4 @@
 friend_confirm: "Pending %friend% link requests"
 community_confirm: "Pending %community% joining requests"
 community_admin_request: "Pending %community% administrator taking over requests"
-
+community_sub_admin_request: "Pending %community% sub-administrator requests"

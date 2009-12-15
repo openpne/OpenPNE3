@@ -61,9 +61,9 @@ class CommunityForm extends BaseCommunityForm
     if ($this->isNew())
     {
       $member = new CommunityMember();
-      $member->setPosition('admin');
       $member->setMemberId(sfContext::getInstance()->getUser()->getMemberId());
       $member->setCommunity($community);
+      $member->addPosition('admin');
       $member->save();
     }
   }

@@ -19,7 +19,18 @@
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Date Created') ?>:</font><br>
 <?php echo op_format_date($community->getCreatedAt(), 'D') ?><br>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Administrator') ?>:</font><br>
-<?php echo link_to($community_admin->getName(), 'member/profile?id='.$community_admin->getId()) ?><br>
+<?php echo link_to($communityAdmin->getName(), '@member_profile?id='.$communityAdmin->getId()) ?><br>
+<?php  
+$subAdminCaption = array();
+foreach ($communitySubAdmins as $m)
+{
+  $subAdminCaption[] = link_to($m->getName(), '@member_profile?id='.$m->getId());
+}
+?>
+<?php if (count($subAdminCaption)): ?>
+<font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Sub Administrator') ?>:</font><br>
+<?php echo implode("<br>\n", $subAdminCaption) ?>
+<?php endif; ?>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('%community% Category', array(), 'form_community') ?>:</font><br>
 <?php echo $community->getCommunityCategory() ?><br>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Register poricy', array(), 'form_community') ?>:</font><br>
@@ -73,7 +84,7 @@
 <?php
 $list = array();
 foreach ($members as $member) {
-  $list[] = link_to($member->getName(), 'member/profile?id='.$member->getId());
+  $list[] = link_to($member->getName(), '@member_profile?id='.$member->getId());
 }
 $option = array(
   'title' => __('%Community% Members'),
@@ -82,7 +93,7 @@ $option = array(
     link_to(__('More'), 'community/memberList?id='.$community->getId()),
   ),
 );
-if ($isAdmin)
+if ($isAdmin || $isSubAdmin)
 {
   $option['moreInfo'][] = link_to(__('Manage member'), 'community/memberManage?id='.$community->getId())
 ;

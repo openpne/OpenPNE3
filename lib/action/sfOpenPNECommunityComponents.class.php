@@ -27,6 +27,12 @@ abstract class sfOpenPNECommunityComponents extends sfComponents
 
   public function executeCautionAboutChangeAdminRequest()
   {
-    $this->communityCount = Doctrine::getTable('Community')->countChangeAdminRequestCommunities();
+    $this->communityCount = Doctrine::getTable('Community')->countPositionRequestCommunities('admin');
   }
+
+  public function executeCautionAboutSubAdminRequest()
+  {
+    $this->communityCount = Doctrine::getTable('Community')->countPositionRequestCommunities('sub_admin');
+  }
+
 }
