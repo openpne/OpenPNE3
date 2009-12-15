@@ -56,4 +56,11 @@ class File extends BaseFile
     $bin->setBin(file_get_contents($obj->getTempName()));
     $this->setFileBin($bin);
   }
+
+  public function save(Doctrine_Connection $conn = null)
+  {
+    $this->setFilesize(strlen($this->FileBin->bin));
+
+    return parent::save($conn);
+  }
 }

@@ -61,6 +61,7 @@ File:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
     name: { type: string(64), default: "", notnull: true, comment: "File name" }
     type: { type: string(64), default: "", notnull: true, comment: "Type of this file" }
+    filesize: { type: integer(4), default: 0, notnull: true, comment: "File size" }
     original_filename: { type: string, comment: "Original filename" }
   relations:
     FileBin: { local: id, foreign: file_id }
