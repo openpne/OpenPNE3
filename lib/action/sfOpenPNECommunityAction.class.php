@@ -284,8 +284,6 @@ abstract class sfOpenPNECommunityAction extends sfActions
     {
       return sfView::ERROR;
     }
-
-    $this->changeAdminRequestMember = $this->community->getChangeAdminRequestMember();
   }
 
  /**

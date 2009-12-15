@@ -435,6 +435,9 @@ CommunityMember:
     Community: community_5
     Member: fourth_member
     is_pre: true
+  community_5_fifth_member:
+    Community: community_5
+    Member: fifth_member
 
 CommunityMemberPosition:
   community_1_admin:
@@ -467,6 +470,16 @@ CommunityMemberPosition:
     Member: first_member
     CommunityMember: community_5_first_member
     name: "admin"
+  community_5_sub_admin:
+    Community: community_5
+    Member: second_member
+    CommunityMember: community_5_second_member
+    name: "sub_admin"
+  community_5_sub_admin_confirm:
+    Community: community_5
+    Member: third_member
+    CommunityMember: community_5_third_member
+    name: "sub_admin_confirm"
 
 Gadget:
   gadget_search:

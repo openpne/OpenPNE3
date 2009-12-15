@@ -4,11 +4,12 @@ include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 sfContext::createInstance($configuration);
 
-$t = new lime_test(31, new lime_output_color());
+$t = new lime_test(35, new lime_output_color());
 
 $community1 = Doctrine::getTable('Community')->findOneByName('CommunityA');
 $community2 = Doctrine::getTable('Community')->findOneByName('CommunityB');
 $community4 = Doctrine::getTable('Community')->findOneByName('CommunityD');
+$community5 = Doctrine::getTable('Community')->findOneByName('CommunityE');
 
 //------------------------------------------------------------
 $t->diag('Community');
@@ -37,6 +38,13 @@ $t->isa_ok($community1->getMembers(1, true), 'Doctrine_Collection', 'getMembers(
 $t->diag('Community::getAdminMember()');
 $t->is($community1->getAdminMember()->getId(), 1, 'getAdminMember() returns right admin member');
 $t->is($community2->getAdminMember()->getId(), 2, 'getAdminMember() returns right admin member');
+
+//------------------------------------------------------------
+$t->diag('Community::getSubAdminMembers()');
+$t->is($community1->getSubAdminMembers(), array(), 'getSubAdminMembers() returns empty array');
+$result = $community5->getSubAdminMembers();
+$t->isa_ok($result, 'Doctrine_Collection', 'getSubAdminMembers() returns Doctrine_Collection object');
+$t->is($result->count(), 1, 'getSubAdminMembers() return Doctrine_Collection object that has 1 record');
 
 //------------------------------------------------------------
 $t->diag('Community::checkPrivilegeBelong()');
@@ -94,3 +102,4 @@ $t->diag('Community::generateRoleId()');
 $t->is($community1->generateRoleId(Doctrine::getTable('Member')->find(1)), 'admin', 'generateRoleId() returns "admin"');
 $t->is($community1->generateRoleId(Doctrine::getTable('Member')->find(2)), 'member', 'generateRoleId() returns "member"');
 $t->is($community1->generateRoleId(Doctrine::getTable('Member')->find(3)), 'everyone', 'generateRoleId() returns "everyone"');
+$t->is($community5->generateRoleId(Doctrine::getTable('Member')->find(2)), 'sub_admin', 'generateRoleId() returns "sub_admin"');

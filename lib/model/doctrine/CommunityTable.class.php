@@ -164,6 +164,7 @@ class CommunityTable extends opAccessControlDoctrineTable
   {
     return $acl
       ->allow('everyone', $resource, 'view')
+      ->allow('sub_admin', $resource, 'edit')
       ->allow('admin', $resource, 'edit');
   }
 
