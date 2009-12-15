@@ -14,3 +14,8 @@ homeSuccess:
       parts       : [information]
       target      : [bottom]
       is_component: true
+    cautionAboutSubAdminRequest:
+      template    : [community, cautionAboutSubAdminRequest]
+      parts       : [information]
+      target      : [bottom]
+      is_component: true

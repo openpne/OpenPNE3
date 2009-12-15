@@ -10,18 +10,37 @@ foreach ($pager->getResults() as $member) {
   $communityMember = Doctrine::getTable('communityMember')->retrieveByMemberIdAndCommunityId($member->getId(), $community->getId());
   $list_str = link_to($member->getName(), 'member/profile?id='.$member->getId());
   $operation = array();
-  if ('admin' !== $communityMember->getPosition())
+  if (!($communityMember->hasPosition(array('admin', 'sub_admin')) || $communityMember->getMemberId() === $sf_user->getMemberId()))
   {
     $operation[] = link_to(__('Drop this member'), 'community/dropMember?id='.$community->getId().'&member_id='.$member->getId());
   }
 
-  if (!$communityMember->getPosition())
+  if ($isAdmin)
   {
-    $operation[] = link_to(__("Take over this %community%'s administrator to this member"), 'community/changeAdminRequest?id='.$community->getId().'&member_id='.$member->getId());
-  }
-  elseif ('admin_confirm' === $communityMember->getPosition())
-  {
-    $operation[] = __("You are taking over this %community%'s administrator to this member now.");
+    if (!$communityMember->hasPosition(array('admin', 'admin_confirm', 'sub_admin')))
+    {
+      if ($communityMember->hasPosition('sub_admin_confirm'))
+      {
+        $operation[] = __("You are requesting this %community%'s sub-administrator to this member now.");
+      }
+      else
+      {
+        $operation[] = link_to(__("Request this %community%'s sub-administrator to this member"), 'community/subAdminRequest?id='.$community->getId().'&member_id='.$member->getId());
+      }
+    }
+    elseif ($communityMember->hasPosition('sub_admin'))
+    {
+      $operation[] = link_to(__("Demotion from this %community%'s sub-administrator"), 'community/removeSubAdmin?id='.$community->getId().'&member_id='.$member->getId());
+    }
+
+    if (!$communityMember->hasPosition('admin'))
+    {
+      $operation[] = link_to(__("Take over this %community%'s administrator to this member"), 'community/changeAdminRequest?id='.$community->getId().'&member_id='.$member->getId());
+    }
+    elseif ($communityMember->hasPosition('admin_confirm'))
+    {
+      $operation[] = __("You are taking over this %community%'s administrator to this member now.");
+    }
   }
 
   $list[] = $list_str.(count($operation) ? '<br><br>'.implode('<br>', $operation) : '');

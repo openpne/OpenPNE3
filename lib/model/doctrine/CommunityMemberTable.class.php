@@ -20,7 +20,12 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
 
   protected function isPosition($memberId, $communityId, $position)
   {
-    return Doctrine::getTable('CommunityMemberPosition')->hasPosition($memberId, $communityId, $position);
+    $object = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
+    if ($object)
+    {
+      return $object->hasPosition($position);
+    }
+    return false;
   }
 
   public function isMember($memberId, $communityId)
@@ -91,6 +96,11 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
   public function getCommunityAdmin($communityId)
   {
     return Doctrine::getTable('CommunityMemberPosition')->findOneByCommunityIdAndName($communityId, 'admin');
+  }
+
+  public function getCommunitySubAdmin($communityId)
+  {
+    return Doctrine::getTable('CommunityMemberPosition')->findByCommunityIdAndName($communityId, 'sub_admin');
   }
 
   public function getCommunityIdsOfAdminByMemberId($memberId)
@@ -250,13 +260,36 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     $this->requestAddPosition($memberId, $communityId, $fromMemberId, 'sub_admin');
   }
 
-  public function changeAdmin($memberId, $communityId)
+  protected function addPosition($memberId, $communityId, $position = 'sub_admin')
   {
-    if (null === $memberId)
+    $communityMember = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
+    if (!$communityMember)
     {
-      $memberId = sfContext::getInstance()->getUser()->getMemberId();
+      throw new Exception("Invalid community member.");
+    }
+    if (!$communityMember->hasPosition($position.'_confirm'))
+    {
+      throw new Exception('This member position isn\'t "'.$position.'_confirm".');
     }
 
+    try
+    {
+      $this->getConnection()->beginTransaction();
+
+      $communityMember->removePosition($position.'_confirm');
+      $communityMember->addPosition($position);
+
+      $this->getConnection()->commit();
+    }
+    catch (Exception $e)
+    {
+      $this->getConnection()->rollback();
+      throw $e;
+    }
+  }
+
+  public function changeAdmin($memberId, $communityId)
+  {
     $communityMember = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
     if (!$communityMember)
     {
@@ -277,6 +310,7 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     {
       $this->getConnection()->beginTransaction();
 
+      $communityMember->removeAllPosition();
       $communityMember->addPosition('admin');
       $nowAdmin->delete();
 
@@ -289,17 +323,25 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     }
   }
 
+  public function addSubAdmin($memberId, $communityId)
+  {
+    $this->addPosition($memberId, $communityId, 'sub_admin');
+  }
+
   public function appendRoles(Zend_Acl $acl)
   {
     return $acl
       ->addRole(new Zend_Acl_Role('everyone'))
       ->addRole(new Zend_Acl_Role('member'), 'everyone')
+      ->addRole(new Zend_Acl_Role('sub_admin'), 'member')
       ->addRole(new Zend_Acl_Role('admin'), 'member');
   }
 
   public function appendRules(Zend_Acl $acl, $resource = null)
   {
     return $acl
+      ->allow('sub_admin', $resource, 'view')
+      ->allow('sub_admin', $resource, 'edit')
       ->allow('admin', $resource, 'view')
       ->allow('admin', $resource, 'edit');
   }

@@ -234,9 +234,10 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   public static function getCoreConfirmList(sfEvent $event)
   {
     $list = array(
-      'friend_confirm'          => array('MemberRelationshipTable', 'friendConfirmList'),
-      'community_confirm'       => array('CommunityMemberTable', 'joinConfirmList'),
-      'community_admin_request' => array('CommunityTable', 'adminConfirmList'),
+      'friend_confirm'              => array('MemberRelationshipTable', 'friendConfirmList'),
+      'community_confirm'           => array('CommunityMemberTable', 'joinConfirmList'),
+      'community_admin_request'     => array('CommunityTable', 'adminConfirmList'),
+      'community_sub_admin_request' => array('CommunityTable', 'subAdminConfirmList'),
     );
 
     return self::processConfirmationEvent($list, $event);
@@ -245,9 +246,10 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
   public static function processCoreConfirm(sfEvent $event)
   {
     $list = array(
-      'friend_confirm'          => array('MemberRelationshipTable', 'processFriendConfirm'),
-      'community_confirm'       => array('CommunityMemberTable', 'processJoinConfirm'),
-      'community_admin_request' => array('CommunityTable', 'processAdminConfirm'),
+      'friend_confirm'              => array('MemberRelationshipTable', 'processFriendConfirm'),
+      'community_confirm'           => array('CommunityMemberTable', 'processJoinConfirm'),
+      'community_admin_request'     => array('CommunityTable', 'processAdminConfirm'),
+      'community_sub_admin_request' => array('CommunityTable', 'processSubAdminConfirm'),
     );
 
     return self::processConfirmationEvent($list, $event);

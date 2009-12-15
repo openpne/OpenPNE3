@@ -58,25 +58,25 @@ $communities = $table->getDefaultCommunities();
 $t->is(count($communities), 2, 'getDefaultCommunities() returns 2 communities');
 
 //------------------------------------------------------------
-$t->diag('CommunityTable::getChangeAdminRequestCommunities()');
-$communities = $table->getChangeAdminRequestCommunities();
-$t->cmp_ok($communities, '===' ,null, 'getChangeAdminRequestCommunities() returns empty collection');
+$t->diag('CommunityTable::getPositionRequestCommunities()');
+$communities = $table->getPositionRequestCommunities();
+$t->cmp_ok($communities, '===' ,null, 'getPositionRequestCommunities() returns empty collection');
 
-$communities = $table->getChangeAdminRequestCommunities(2);
-$t->is(count($communities), 1, 'getChangeAdminRequestCommunities() returns a community');
+$communities = $table->getPositionRequestCommunities('admin', 2);
+$t->is(count($communities), 1, 'getPositionRequestCommunities() returns a community');
 
-$communities = $table->getChangeAdminRequestCommunities(1);
-$t->cmp_ok($communities, '===' ,null, 'getChangeAdminRequestCommunities() returns null');
+$communities = $table->getPositionRequestCommunities('admin', 1);
+$t->cmp_ok($communities, '===' ,null, 'getPositionRequestCommunities() returns null');
 
-$communities = $table->getChangeAdminRequestCommunities(999);
-$t->cmp_ok($communities, '===' ,null, 'getChangeAdminRequestCommunities() returns null');
+$communities = $table->getPositionRequestCommunities('admin', 999);
+$t->cmp_ok($communities, '===' ,null, 'getPositionRequestCommunities() returns null');
 
 //------------------------------------------------------------
-$t->diag('CommunityTable::countChangeAdminRequestCommunities()');
-$t->is($table->countChangeAdminRequestCommunities(), 0, 'countChangeAdminRequestCommunities() returns 0');
-$t->is($table->countChangeAdminRequestCommunities(1), 0, 'countChangeAdminRequestCommunities() returns 0');
-$t->is($table->countChangeAdminRequestCommunities(2), 1, 'countChangeAdminRequestCommunities() returns 1');
-$t->is($table->countChangeAdminRequestCommunities(999), 0, 'countChangeAdminRequestCommunities() returns 0');
+$t->diag('CommunityTable::countPositionRequestCommunities()');
+$t->is($table->countPositionRequestCommunities(), 0, 'countChangeAdminRequestCommunities() returns 0');
+$t->is($table->countPositionRequestCommunities('admin', 1), 0, 'countChangeAdminRequestCommunities() returns 0');
+$t->is($table->countPositionRequestCommunities('admin', 2), 1, 'countChangeAdminRequestCommunities() returns 1');
+$t->is($table->countPositionRequestCommunities('admin', 999), 0, 'countChangeAdminRequestCommunities() returns 0');
 
 //------------------------------------------------------------
 $t->diag('ACL Test');

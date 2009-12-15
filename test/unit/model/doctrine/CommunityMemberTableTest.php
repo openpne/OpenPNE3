@@ -4,7 +4,7 @@ include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 sfContext::createInstance($configuration);
 
-$t = new lime_test(null, new lime_output_color());
+$t = new lime_test(64, new lime_output_color());
 
 $table = Doctrine::getTable('CommunityMember');
 $member1 = Doctrine::getTable('Member')->findOneByName('A');

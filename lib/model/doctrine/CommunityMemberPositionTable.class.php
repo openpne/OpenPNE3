@@ -31,29 +31,4 @@ class CommunityMemberPositionTable extends Doctrine_Table
     }
     return $results;
   }
-
-  /**
-   * has position
-   * 
-   * @param integer $memberId
-   * @param integer $communityId
-   * @param mixed   $name          string or array
-   * @return boolean
-   */
-  public function hasPosition($memberId, $communityId, $name)
-  {
-    $positions = $this->getPositionsByMemberIdAndCommunityId($memberId, $communityId);
-    if (!is_array($name))
-    {
-      $name = array($name);
-    }
-    foreach ($name as $n)
-    {
-      if (in_array($n, $positions))
-      {
-        return true;
-      }
-    }
-    return false;
-  }
 }

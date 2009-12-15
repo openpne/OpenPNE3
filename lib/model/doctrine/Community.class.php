@@ -108,6 +108,18 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
     return Doctrine::getTable('CommunityMember')->getCommunityAdmin($this->getId())->getMember();
   }
 
+  public function getSubAdminMembers()
+  {
+    $communityMemberPositions = Doctrine::getTable('CommunityMember')->getCommunitySubAdmin($this->getId());
+    if (!($communityMemberPositions && count($communityMemberPositions)))
+    {
+      return array();
+    }
+    return Doctrine::getTable('Member')->createQuery()
+      ->whereIn('id', array_values($communityMemberPositions->toKeyValueArray('id', 'member_id')))
+      ->execute();
+  }
+
   public function checkPrivilegeBelong($memberId)
   {
     if (!$this->isPrivilegeBelong($memberId))
@@ -164,6 +176,10 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
     if (Doctrine::getTable('CommunityMember')->isAdmin($member->id, $this->id))
     {
       return 'admin';
+    }
+    elseif (Doctrine::getTable('CommunityMember')->isSubAdmin($member->id, $this->id))
+    {
+      return 'sub_admin';
     }
     elseif (Doctrine::getTable('CommunityMember')->isMember($member->id, $this->id))
     {
