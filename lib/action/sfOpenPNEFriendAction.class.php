@@ -101,14 +101,23 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeUnlink($request)
   {
+    $this->redirectToHomeIfIdIsNotValid();
     if (!$this->relation->isFriend())
     {
       $this->getUser()->setFlash('error', 'This member is not your %friend%.');
       $this->redirect('friend/manage');
     }
-    $this->redirectToHomeIfIdIsNotValid();
-    $this->relation->removeFriend();
-    $this->redirect('friend/manage');
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $request->checkCSRFProtection();
+
+      $this->relation->removeFriend();
+      $this->redirect('friend/manage');
+    }
+
+    $this->member = Doctrine::getTable('Member')->find($this->id);
+    return sfView::INPUT;
   }
 
  /**
