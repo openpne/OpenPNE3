@@ -10,7 +10,7 @@
 
 abstract class opBaseSendMailTask extends sfDoctrineBaseTask
 {
-  public function configure()
+  protected function configure()
   {
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
