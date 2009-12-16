@@ -101,6 +101,7 @@ class opUpgradeFrom2FixOldImagesStrategy extends opUpgradeAbstractStrategy
       $fileBin = $this->conn->fetchOne('SELECT bin FROM file_bin WHERE file_id = ?', array($id));
       $fileBin = base64_decode($fileBin);
       $this->conn->execute('UPDATE file_bin SET bin = ? WHERE file_id = ?', array($fileBin, $id));
+      $this->conn->execute('UPDATE file SET filesize = ? WHERE id = ?', array(strlen($fileBin), $v['id']));
     }
   }
 }
