@@ -183,6 +183,10 @@
         <target>%my_friend%から外す</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Do you delete %0% from %my_friend%?</source>
+        <target>本当に%0%を%my_friend%から外しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Add %my_friend%</source>
         <target>%my_friend%に追加</target>
       </trans-unit>
