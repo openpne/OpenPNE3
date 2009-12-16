@@ -451,4 +451,29 @@ class opToolkit
 
     return $result;
   }
+
+  public static function calculateUsableMemorySize()
+  {
+    $limit = trim(ini_get('memory_limit'));
+    if ('-1' === $limit)
+    {
+      return null;
+    }
+
+    $unit = strtolower($limit[strlen($limit)-1]);
+    $units = array(
+      'k' => 1,
+      'm' => 2,
+      'g' => 3,
+    );
+
+    if (isset($units[$unit]))
+    {
+      $limit *= pow(1024, $units[$unit]);
+    }
+
+    $usage = memory_get_usage();
+
+    return ($limit - $usage);
+  }
 }

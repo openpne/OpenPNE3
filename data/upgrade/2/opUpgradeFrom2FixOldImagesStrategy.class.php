@@ -38,11 +38,18 @@ class opUpgradeFrom2FixOldImagesStrategy extends opUpgradeAbstractStrategy
     $this->getDatabaseManager();
     $this->conn = Doctrine_Manager::connection();
 
+    $convertingCount = 100;
+    $imageSize = IMAGE_MAX_FILESIZE * 2 * 1024;
+    if (opToolkit::calculateUsableMemorySize())
+    {
+      $convertingCount = (int)(opToolkit::calculateUsableMemorySize() / $imageSize);
+    }
+
     $this->conn->beginTransaction();
     try
     {
       $this->fixMimeType();
-      $this->fixBinary();
+      $this->fixBinary($convertingCount);
 
       $this->conn->commit();
     }
@@ -82,10 +89,9 @@ class opUpgradeFrom2FixOldImagesStrategy extends opUpgradeAbstractStrategy
     }
   }
 
-  protected function fixBinary()
+  protected function fixBinary($size)
   {
     $count = $this->conn->fetchOne('SELECT COUNT(id) FROM file');
-    $size = 100;
 
     for ($i = 0; $i < ($count / $size); $i++)
     {
