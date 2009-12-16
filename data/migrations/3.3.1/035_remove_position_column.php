@@ -26,10 +26,10 @@ class Revision35_RemovePositionColumn extends Doctrine_Migration_Base
   public function preUp()
   {
     $conn = Doctrine_Manager::getInstance()->getConnectionForComponent('CommunityeMember');
-    $results = $conn->fetchAll('SELECT id, member_id, community_id, position from community_member where (position <> ? OR position IS NOT NULL)', array(''));
+    $results = $conn->fetchAll('SELECT id, member_id, community_id, position from community_member where position <> ? AND position IS NOT NULL', array(''));
     foreach ($results as $result)
     {
-      if (isset($result['position']) && $result['position'] !== 'pre')
+      if (isset($result['position']) && $result['position'] && $result['position'] !== 'pre')
       {
         $communityMemberPosition = new CommunityMemberPosition();
         $communityMemberPosition->setMemberId($result['member_id']);
