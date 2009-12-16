@@ -405,4 +405,50 @@ class opToolkit
 
     return $age;
   }
+
+  public static function createStringDsnFromArray($arrayDsn)
+  {
+    $result = '';
+
+    if (!empty($arrayDsn['phptype']))
+    {
+      $result .= $arrayDsn['phptype'];
+      if (!empty($arrayDsn['dbsyntax']))
+      {
+        $result .= '('.$arrayDsn['dbsyntax'].')';
+      }
+      $result .= '://';
+    }
+
+    if (!empty($arrayDsn['username']))
+    {
+      $result .= $arrayDsn['username'];
+      if (!empty($arrayDsn['password']))
+      {
+        $result .= ':'.$arrayDsn['password'];
+      }
+    }
+
+    if (!empty($arrayDsn['hostspec']))
+    {
+      if (!empty($arrayDsn['username']))
+      {
+        $result .= '@';
+      }
+
+      if (!empty($arrayDsn['protocol']))
+      {
+        $result .= $arrayDsn['protocol'].'+';
+      }
+
+      $result .= $arrayDsn['hostspec'];
+    }
+
+    if (!empty($arrayDsn['database']))
+    {
+      $result .= '/'.$arrayDsn['database'];
+    }
+
+    return $result;
+  }
 }

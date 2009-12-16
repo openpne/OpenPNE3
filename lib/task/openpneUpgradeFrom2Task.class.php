@@ -23,8 +23,6 @@ class openpneUpgradeFrom2Task extends sfBaseTask
     $this->name             = 'upgrade-from-2';
 
     $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('origin', null, sfCommandOption::PARAMETER_REQUIRED, 'The base 2.x version (2.12 or 2.14)'),
       new sfCommandOption('rules', null, sfCommandOption::PARAMETER_REQUIRED | sfCommandOption::IS_ARRAY, 'The rules that you want to do'),
     ));
@@ -61,6 +59,10 @@ EOF;
       define('OPENPNE_DIR', sfConfig::get('sf_root_dir'));
     }
     require_once $op2config;
+
+    $this->runTask('configure:database', array(
+      opToolkit::createStringDsnFromArray($GLOBALS['_OPENPNE_DSN_LIST']['main']['dsn']),
+    ));
 
     $path = sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.'upgrade'.DIRECTORY_SEPARATOR.'2';
     $upgrader = new opUpgrader($this->dispatcher, $this->formatter, $path, $this->configuration);
