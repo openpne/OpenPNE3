@@ -3,6 +3,15 @@
 <tr><th><?php echo __('コミュニティ名') ?></th><td><?php echo $community->getName() ?></td></tr>
 <tr><th><?php echo __('カテゴリ') ?></th><td><?php echo $community->getCommunityCategory() ?></td></tr>
 <tr><th><?php echo __('管理者名') ?></th><td><?php echo $community->getAdminMember()->getName() ?></td></tr>
+<?php
+$subAdminCaption = '';
+foreach ($community->getSubAdminMembers() as $m)
+{
+  $subAdminCaption .= "<li>".$m->getName()."</li>\n";
+}?>
+<?php if ($subAdminCaption): ?>
+<tr><th><?php echo __('副管理者名') ?></th><td><ul><?php echo $subAdminCaption ?></ul></td></tr>
+<?php endif; ?>
 <tr><th><?php echo __('メンバー数') ?></th><td><?php echo $community->countCommunityMembers() ?></td></tr>
 <tr><th><?php echo __('作成日') ?></th><td><?php echo $community->getCreatedAt() ?></td></tr>
 <?php foreach ($community->getConfigs() as $name => $config): ?>
