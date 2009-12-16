@@ -12,6 +12,7 @@ class openpneSendBirthDayMailTask extends opBaseSendMailTask
 {
   protected function configure()
   {
+    parent::configure();
     $this->namespace        = 'openpne';
     $this->name             = 'send-birthday-mail';
     $this->briefDescription = '';
