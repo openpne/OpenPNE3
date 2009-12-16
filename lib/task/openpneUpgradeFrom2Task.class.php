@@ -60,6 +60,10 @@ EOF;
     }
     require_once $op2config;
 
+    $this->runTask('configure:database', array(
+      opToolkit::createStringDsnFromArray($GLOBALS['_OPENPNE_DSN_LIST']['main']['dsn']),
+    ));
+
     $path = sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.'upgrade'.DIRECTORY_SEPARATOR.'2';
     $upgrader = new opUpgrader($this->dispatcher, $this->formatter, $path, $this->configuration);
     if ($options['rules'])
