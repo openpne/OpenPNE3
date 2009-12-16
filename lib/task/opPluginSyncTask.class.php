@@ -54,7 +54,7 @@ EOF;
         continue;
       }
 
-      $option = array('--application='.$options['application'], '--env='.$options['evn']);
+      $option = array('--application='.$this->configuration->getApplication(), '--env='.$this->configuration->getEnvironment());
       if (isset($info['version']))
       {
         $option[] = '--release='.$info['version'];
