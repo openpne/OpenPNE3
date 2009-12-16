@@ -1,12 +1,10 @@
-How to Update OpenPNE3.1
+How to Update OpenPNE3.3
 ========================
 
 Getting Started
 ---------------
 
-This document is for updating OpenPNE 3.1.x to OpenPNE 3.1.y.
-
-This document is for OpenPNE 3.1 so the way for other version may be changed.
+This document is for updating OpenPNE 3.2.0 + to OpenPNE 3.3.x.
 
 You should backup database before your updating.
 
@@ -25,7 +23,7 @@ The Way to Work
 Setting Files
 ~~~~~~~~~~~~~
 
-Set the OpenPNE 3.1 files to your web server.
+Set the OpenPNE 3.3 files to your web server.
 
 You must change the files from the old to avoid troubles by mixing the new with the old.
 
@@ -65,8 +63,8 @@ Execute the following command in the project root directory.
 
 ::
 
-  $ ./symfony openpne:migrate --target=OpenPNE
   $ ./symfony openpne:migrate
+  $ ./symfony plugin:publish-assets
 
 
 This command will update OpenPNE and plugins to newer version.
