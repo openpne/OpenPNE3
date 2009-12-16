@@ -62,6 +62,8 @@ EOF;
 
     $this->runTask('configure:database', array(
       opToolkit::createStringDsnFromArray($GLOBALS['_OPENPNE_DSN_LIST']['main']['dsn']),
+      $GLOBALS['_OPENPNE_DSN_LIST']['main']['dsn']['username'],
+      empty($GLOBALS['_OPENPNE_DSN_LIST']['main']['dsn']['password']) ? null: $GLOBALS['_OPENPNE_DSN_LIST']['main']['dsn']['password']
     ));
 
     $path = sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.'upgrade'.DIRECTORY_SEPARATOR.'2';

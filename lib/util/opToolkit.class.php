@@ -408,48 +408,43 @@ class opToolkit
 
   public static function createStringDsnFromArray($arrayDsn)
   {
-    $result = '';
+    $result = array();
 
-    if (!empty($arrayDsn['phptype']))
-    {
-      $result .= $arrayDsn['phptype'];
-      if (!empty($arrayDsn['dbsyntax']))
-      {
-        $result .= '('.$arrayDsn['dbsyntax'].')';
-      }
-      $result .= '://';
-    }
-
-    if (!empty($arrayDsn['username']))
-    {
-      $result .= $arrayDsn['username'];
-      if (!empty($arrayDsn['password']))
-      {
-        $result .= ':'.$arrayDsn['password'];
-      }
-    }
+    $table = array(
+      'host'        => 'hostspec',
+      'port'        => 'port',
+      'dbname'      => 'database',
+      'unix_socket' => 'unix_socket',
+    );
 
     if (!empty($arrayDsn['hostspec']))
     {
-      if (!empty($arrayDsn['username']))
-      {
-        $result .= '@';
-      }
+      $pieces = explode(':', $arrayDsn['hostspec']);
 
-      if (!empty($arrayDsn['protocol']))
+      $arrayDsn['hostspec'] = $pieces[0];
+      if (isset($pieces[1]))
       {
-        $result .= $arrayDsn['protocol'].'+';
+        $arrayDsn['port'] = $pieces[1];
       }
-
-      $result .= $arrayDsn['hostspec'];
     }
 
-    if (!empty($arrayDsn['database']))
+    if (!empty($arrayDsn['protocol']) && !empty($arrayDsn['proto_opts']))
     {
-      $result .= '/'.$arrayDsn['database'];
+      if ('unix' === $arrayDsn['protocol'])
+      {
+        $arrayDsn['unix_socket'] = $arrayDsn['proto_opts'];
+      }
     }
 
-    return $result;
+    foreach ($table as $k => $v)
+    {
+      if (isset($arrayDsn[$v]))
+      {
+        $result[] = $k.'='.$arrayDsn[$v];
+      }
+    }
+
+    return $arrayDsn['phptype'].':'.implode(';', $result);
   }
 
   public static function calculateUsableMemorySize()
