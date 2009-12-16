@@ -10,8 +10,9 @@
 
 class openpneSendDailyNewsTask extends opBaseSendMailTask
 {
-  protected function configure()
+  public function configure()
   {
+    parent::configure();
     $this->namespace        = 'openpne';
     $this->name             = 'send-daily-news';
     $this->briefDescription = '';

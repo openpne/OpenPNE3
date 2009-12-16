@@ -23,6 +23,8 @@ class openpneUpgradeFrom2Task extends sfBaseTask
     $this->name             = 'upgrade-from-2';
 
     $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('origin', null, sfCommandOption::PARAMETER_REQUIRED, 'The base 2.x version (2.12 or 2.14)'),
       new sfCommandOption('rules', null, sfCommandOption::PARAMETER_REQUIRED | sfCommandOption::IS_ARRAY, 'The rules that you want to do'),
     ));
