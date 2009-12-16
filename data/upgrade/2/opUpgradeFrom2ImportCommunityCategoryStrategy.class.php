@@ -69,8 +69,17 @@ class opUpgradeFrom2ImportCommunityCategoryStrategy extends opUpgradeSQLImportSt
         $lft = ($i + 1) * 2;
         $rgt = $lft + 1;
 
+        if ('2.12' == sfConfig::get('op_upgrade2_version'))
+        {
+          $isAllowMemberCommunityValue = 1;
+        }
+        else
+        {
+          $isAllowMemberCommunityValue = 'is_create_commu';
+        }
+
         $newChildSQL = 'INSERT INTO community_category (name, is_allow_member_community, sort_order, lft, rgt, level, tree_key)';
-        $oldChildSQL = '(SELECT name, 1, sort_order, '.$lft.','.$rgt.', 1, '.$treeKey.' FROM c_commu_category WHERE c_commu_category_id = ?)';
+        $oldChildSQL = '(SELECT name, '.$isAllowMemberCommunityValue.', sort_order, '.$lft.','.$rgt.', 1, '.$treeKey.' FROM c_commu_category WHERE c_commu_category_id = ?)';
 
         $this->conn->execute($newChildSQL.' '.$oldChildSQL, array($child['c_commu_category_id']));
         $categoryId = $this->conn->lastInsertId();
