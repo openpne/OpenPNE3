@@ -43,6 +43,8 @@ class opTestFunctional extends sfTestFunctional
 
   public function setCulture($culture)
   {
+    sfDoctrineRecord::setDefaultCulture($culture);
+
     return $this->get('/', array('sf_culture' => $culture));
   }
 }
