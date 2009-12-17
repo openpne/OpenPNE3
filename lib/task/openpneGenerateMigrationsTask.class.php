@@ -15,11 +15,6 @@ class openpneGenerateMigrationsTask extends sfDoctrineBaseTask
     $this->namespace        = 'openpne';
     $this->name             = 'generate-migrations';
 
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
-    ));
-
     $this->briefDescription = 'generates migration scripts automatically';
     $this->detailedDescription = <<<EOF
 The [./symfony openpne:generate-migrations|INFO] task generates migration scripts automatically.

@@ -16,8 +16,6 @@ class opPluginSyncTask extends sfBaseTask
     $this->name             = 'sync';
 
     $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('target', null, sfCommandOption::PARAMETER_OPTIONAL, 'The target of sync'),
     ));
 
@@ -54,7 +52,7 @@ EOF;
         continue;
       }
 
-      $option = array('--application='.$this->configuration->getApplication(), '--env='.$this->configuration->getEnvironment());
+      $option = array();
       if (isset($info['version']))
       {
         $option[] = '--release='.$info['version'];

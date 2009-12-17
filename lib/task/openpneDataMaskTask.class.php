@@ -16,8 +16,6 @@ class openpneDataMaskTask extends sfDoctrineBaseTask
     $this->name             = 'data-mask';
 
     $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('file', 'f', sfCommandOption::PARAMETER_OPTIONAL, 'The path to masking rule definition file.', sfConfig::get('sf_config_dir').'/mask.yml'),
     ));
 
