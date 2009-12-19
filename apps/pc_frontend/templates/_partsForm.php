@@ -94,20 +94,8 @@ if ($options['mark_required_field']
   $labelSuffix = ' <strong>*</strong>';
   $hasRequiredField = true;
 }
-
 ?>
-<tr>
-  <th><?php echo $field->renderLabel().$labelSuffix ?></th>
-  <td>
-    <?php if ($field->hasError()): ?>
-    <div class="error"><?php echo $field->renderError() ?></div>
-    <?php endif; ?>
-    <?php echo $field->render($attributes) ?>
-    <?php if ($field->renderHelp()): ?>
-    <div class="help"><?php echo $field->renderHelp() ?></div>
-    <?php endif; ?>
-  </td>
-</tr>
+<?php echo $field->renderRow($attributes, $field->renderLabel().$labelSuffix) ?>
 <?php endforeach; ?>
 <?php endforeach; ?>
 <?php echo $options->getRaw('lastRow') ?>

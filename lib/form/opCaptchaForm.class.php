@@ -24,6 +24,7 @@ class opCaptchaForm extends BaseForm
 
     $formatter = new sfWidgetFormSchemaFormatterList($this->widgetSchema);
     $formatter->setRowFormat("<li>%field%%help%\n%hidden_fields%</li>\n");
+    $formatter->setHelpFormat('<div class="help">%help%</div>');
 
     $this->widgetSchema->addFormFormatter('opCaptchaFormFormatter', $formatter);
     $this->widgetSchema->setFormFormatterName('opCaptchaFormFormatter');

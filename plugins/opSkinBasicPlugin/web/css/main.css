@@ -756,7 +756,8 @@ div.operation ul.moreInfo li {
   font-weight: normal;
 }
 
-.form td .error {
+.form td .error,
+.form td ul.error_list li {
   color: #FF0000;
 }
 
