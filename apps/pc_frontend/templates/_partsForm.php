@@ -95,7 +95,7 @@ if ($options['mark_required_field']
   $hasRequiredField = true;
 }
 ?>
-<?php echo $field->renderRow($attributes, $field->renderLabel().$labelSuffix) ?>
+<?php echo $field->renderRow($attributes, $field->renderLabelName().$labelSuffix) ?>
 <?php endforeach; ?>
 <?php endforeach; ?>
 <?php echo $options->getRaw('lastRow') ?>
