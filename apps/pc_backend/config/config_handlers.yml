@@ -1,0 +1,3 @@
+config/routing.yml:
+  class:    opRoutingConfigHandler
+  file:     %SF_LIB_DIR%/config/opRoutingConfigHandler.class.php

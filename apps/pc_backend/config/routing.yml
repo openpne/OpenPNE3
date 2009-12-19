@@ -1,3 +1,8 @@
+# openpne rules
+homepage:
+  url:   /
+  param: { module: default, action: top }
+
 # mail rules
 mail_config:
   url:  /mail
@@ -34,15 +39,3 @@ connection:
 connection_list:
   url:     /connection
   param:   { module: connection, action: list }
-
-# default rules
-homepage:
-  url:   /
-  param: { module: default, action: top }
-
-default_index:
-  url:   /:module
-  param: { action: index }
-
-default:
-  url:   /:module/:action/*
