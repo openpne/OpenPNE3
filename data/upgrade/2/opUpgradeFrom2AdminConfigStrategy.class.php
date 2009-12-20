@@ -59,7 +59,7 @@ class opUpgradeFrom2AdminConfigStrategy extends opUpgradeAbstractStrategy
     {
       if ('external_pc_login_url' === $k)
       {
-        if ((bool)$this->conn->fetchOne('SELECT value FROM portal_config WHERE name = ?', array('USE_PORTAL')));
+        if ((bool)$this->conn->fetchOne('SELECT value FROM portal_config WHERE name = ?', array('USE_PORTAL')))
         {
           continue;
         }
@@ -67,7 +67,7 @@ class opUpgradeFrom2AdminConfigStrategy extends opUpgradeAbstractStrategy
 
       if ('external_mobile_login_url' === $k)
       {
-        if ((bool)$this->conn->fetchOne('SELECT value FROM portal_config WHERE name = ?', array('USE_PORTAL_KTAI')));
+        if ((bool)$this->conn->fetchOne('SELECT value FROM portal_config WHERE name = ?', array('USE_PORTAL_KTAI')))
         {
           continue;
         }
