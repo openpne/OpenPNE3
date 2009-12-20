@@ -19,7 +19,6 @@ class opUpgradeFrom2DataLoadStrategy extends opUpgradeDataLoadStrategy
 {
   public function run()
   {
-    sfOpenPNEApplicationConfiguration::unregisterZend();
     $this->getDatabaseManager();
 
     $coreFixtureDir = sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.'fixtures'.DIRECTORY_SEPARATOR;
@@ -42,9 +41,7 @@ class opUpgradeFrom2DataLoadStrategy extends opUpgradeDataLoadStrategy
     $paths = array_merge($paths, $pluginFixtures);
     foreach ($paths as $path)
     {
-      Doctrine::loadData($path, true);
+      $this->dataLoad($path);
     }
-
-    sfOpenPNEApplicationConfiguration::registerZend();
   }
 }

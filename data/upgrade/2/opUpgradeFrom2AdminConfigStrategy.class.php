@@ -27,7 +27,6 @@ class opUpgradeFrom2AdminConfigStrategy extends opUpgradeAbstractStrategy
     try
     {
       $this->importSnsConfig();
-      $this->importSnsTerm();
       $this->importSiteAdmin();
 
       $this->conn->commit();
@@ -98,28 +97,6 @@ class opUpgradeFrom2AdminConfigStrategy extends opUpgradeAbstractStrategy
     foreach ($list as $k => $v)
     {
       $this->conn->execute('INSERT INTO sns_config (id, name, value) (SELECT NULL, ?, body FROM c_siteadmin WHERE target = ? LIMIT 1)', array($k, $v));
-    }
-  }
-
-  protected function importSnsTerm()
-  {
-    $list = array(
-      'friend'    => 'WORD_FRIEND',
-      'my_friend' => 'WORD_MY_FRIEND',
-      'diary'     => 'WORD_DIARY',
-      'community' => 'WORD_COMMUNITY',
-      'nickname'  => 'WORD_NICKNAME',
-    );
-
-    foreach ($list as $key => $value)
-    {
-      $this->conn->execute('INSERT INTO sns_term (id, name, application) VALUES (NULL, "'.$key.'", "pc_frontend")');
-      $id = $this->conn->lastInsertId();
-      $this->conn->execute('INSERT INTO sns_term_translation (id, value, lang) (SELECT '.$id.', value, "ja_JP" FROM c_admin_config WHERE name = "'.$value.'")');
-
-      $this->conn->execute('INSERT INTO sns_term (id, name, application) VALUES (NULL, "'.$key.'", "mobile_frontend")');
-      $id = $this->conn->lastInsertId();
-      $this->conn->execute('INSERT INTO sns_term_translation (id, value, lang) (SELECT '.$id.', value, "ja_JP" FROM c_admin_config WHERE name = "'.$value.'_HALF")');
     }
   }
 }

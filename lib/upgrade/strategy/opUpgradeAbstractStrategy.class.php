@@ -52,5 +52,12 @@ abstract class opUpgradeAbstractStrategy
 
     return $this->options[$name];
   }
+
+  protected function dataLoad($path)
+  {
+    sfOpenPNEApplicationConfiguration::unregisterZend();
+    Doctrine::loadData($path, true);
+    sfOpenPNEApplicationConfiguration::registerZend();
+  }
 }
 

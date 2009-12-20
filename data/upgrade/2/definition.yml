@@ -67,6 +67,10 @@ admin_config:
   strategy: opUpgradeFrom2AdminConfigStrategy
   file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2AdminConfigStrategy.class.php
 
+sns_term:
+  strategy: opUpgradeFrom2SnsTermStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2SnsTermStrategy.class.php
+
 skin_config:
   strategy: opUpgradeFrom2SkinConfigStrategy
   file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2SkinConfigStrategy.class.php
