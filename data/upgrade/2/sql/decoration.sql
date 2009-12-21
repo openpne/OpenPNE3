@@ -7,4 +7,4 @@ foreach ($this->conn->fetchColumn('SELECT tagname FROM c_config_decoration WHERE
 }
 ?>
 
-INSERT INTO sns_config (id, name, value) VALUES (NULL, "richtextarea_unenable_buttons", "<?php echo serialize($result) ?>");
+INSERT INTO sns_config (id, name, value) VALUES (NULL, "richtextarea_unenable_buttons", <?php echo $this->conn->quote(serialize($result)) ?>);
