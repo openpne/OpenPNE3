@@ -78,7 +78,7 @@ class opUpgradeFrom2FixOldImagesStrategy extends opUpgradeAbstractStrategy
 
       if ($ext)
       {
-        if ('jpg' === $ext)
+        if (!in_array($ext, array('jpeg', 'png', 'gif')))
         {
           $ext = 'jpeg';
         }
@@ -107,7 +107,7 @@ class opUpgradeFrom2FixOldImagesStrategy extends opUpgradeAbstractStrategy
       $fileBin = $this->conn->fetchOne('SELECT bin FROM file_bin WHERE file_id = ?', array($id));
       $fileBin = base64_decode($fileBin);
       $this->conn->execute('UPDATE file_bin SET bin = ? WHERE file_id = ?', array($fileBin, $id));
-      $this->conn->execute('UPDATE file SET filesize = ? WHERE id = ?', array(strlen($fileBin), $v['id']));
+      $this->conn->execute('UPDATE file SET filesize = ? WHERE id = ?', array(strlen($fileBin), $id));
     }
   }
 }
