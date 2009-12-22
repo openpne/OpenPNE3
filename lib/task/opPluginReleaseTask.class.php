@@ -71,7 +71,7 @@ EOF;
     $defineTask = new opPluginDefineTask($this->dispatcher, $this->formatter);
     $defineTask->run(array('name' => $name, 'version' => $version, 'stability' => $stability, 'note' => '"'.$note.'"'));
     $archiveTask = new opPluginArchiveTask($this->dispatcher, $this->formatter);
-    $archiveTask->run(array('name' => $name, $dir));
+    $archiveTask->run(array('name' => $name, 'dir' => $dir));
   }
 
   protected function clearCache()
