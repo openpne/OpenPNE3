@@ -91,7 +91,7 @@ class memberActions extends sfOpenPNEMemberAction
     $option = array('member' => $this->getUser()->getMember());
     $this->passwordForm = new sfOpenPNEPasswordForm(array(), $option);
     $mobileUid = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('mobile_uid', $this->getUser()->getMemberId());
-    $this->isSetMobileUid = !is_null($mobileUid);
+    $this->isSetMobileUid = $mobileUid && $mobileUid->getValue();
     $this->isDeletableUid = ((int)opConfig::get('retrieve_uid') < 2) && $this->isSetMobileUid;
 
     if ($request->isMethod('post')) {
@@ -100,6 +100,12 @@ class memberActions extends sfOpenPNEMemberAction
       {
         if ($request->hasParameter('update'))
         {
+          if (!$request->getMobileUID())
+          {
+            $this->getUser()->setFlash('error', 'Your mobile UID was not registered.');
+            $this->redirect('member/configUID');
+          }
+
           $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('mobile_uid', $this->getUser()->getMemberId());
           if (!$memberConfig)
           {
