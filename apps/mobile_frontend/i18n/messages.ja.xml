@@ -275,6 +275,10 @@
         <target>携帯個体識別番号を登録します。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Your mobile UID was not registered.</source>
+        <target>個体識別番号を登録できませんでした。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Your mobile UID was set successfully.</source>
         <target>個体識別番号が登録されました。</target> 
       </trans-unit>
