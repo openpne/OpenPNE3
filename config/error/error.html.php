@@ -11,6 +11,8 @@ else
     $charset = 'Shift_JIS';
   }
   header('Content-Type: text/html; charset='.$charset);
+
+  ob_start();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -35,5 +37,13 @@ We're sorry and please retry accessing later.
 </body>
 </html>
 <?php
+  $html = ob_get_clean();
+
+  if ('mobile_frontend' === sfConfig::get('sf_app'))
+  {
+    $html = mb_convert_encoding($html, 'Shift_JIS', 'utf-8');
+  }
+
+  echo $html;
 }
 ?>
