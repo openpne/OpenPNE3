@@ -396,6 +396,10 @@ class opToolkit
   public static function calculateAge($birthdayString)
   {
     $birthdayTime = strtotime($birthdayString);
+    if (false === $birthdayTime)
+    {
+      return false;
+    }
 
     $thisYear = intval(date('Y'));
     $today = intval(date('nd'));

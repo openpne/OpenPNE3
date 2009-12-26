@@ -35,7 +35,7 @@ class Member extends BaseMember implements opAccessControlRecordInterface
     }
 
     $birthday = $this->getProfile('op_preset_birthday');
-    if (!$birthday)
+    if (!(string)$birthday)
     {
       return false;
     }
