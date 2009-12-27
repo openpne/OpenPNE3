@@ -1246,6 +1246,52 @@ div.operation ul.moreInfo li {
 }
 
 /*==============================================================================
+ * Activity
+ *----------------------------------------------------------------------------*/
+
+div.activityBox form textarea {
+  width: 98%;
+  height: 50px;
+}
+
+div.activityBox form .submit {
+  width: 98%;
+}
+
+div.activityBox .count {
+  font-size: 24px;
+  color: #888888;
+}
+
+ol.activities li.activity:after {
+  clear: both;
+  height: 0;
+  visibility: hidden;
+  content: ".";
+  display: block;
+}
+
+ol.activities li.activity {
+  border-bottom: 1px solid #888888;
+  min-height: 80px;
+}
+
+ol.activities li.activity .memberImage {
+  padding: 2px;
+  position: absolute;
+}
+
+ol.activities li.activity .body {
+  padding: 5px;
+  margin-left: 80px;
+}
+
+ol.activities li.activity .info {
+  padding: 5px;
+  color: #888888;
+}
+
+/*==============================================================================
  * toolbar of opWidgetFormRichTextareaOpenPNE
  *----------------------------------------------------------------------------*/
 div.parts table.mceToolbar {

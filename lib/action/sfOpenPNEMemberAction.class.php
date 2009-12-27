@@ -469,4 +469,80 @@ abstract class sfOpenPNEMemberAction extends sfActions
 
     return array('category' => $categories, 'captions' => $categoryCaptions);
   }
+
+  public function executeShowActivity($request)
+  {
+    $this->forward404Unless($this->id);
+    $this->forward404If($this->relation->isAccessBlocked());
+
+    if (!isset($this->size))
+    {
+      $this->size = 20;
+    }
+
+    $this->member = Doctrine::getTable('Member')->find($this->id);
+    $this->pager = Doctrine::getTable('ActivityData')->getActivityListPager($this->id, null, $request->getParameter('page', 1), $this->size);
+  }
+
+  public function executeDeleteActivity($request)
+  {
+    $this->forward404Unless($request->hasParameter('id'));
+
+    $this->activity = Doctrine::getTable('ActivityData')->find($this->id);
+    $this->forward404Unless($this->activity instanceof ActivityData);
+    $this->forward404Unless($this->activity->getMemberId() == $this->getUser()->getMemberId());
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $request->checkCSRFProtection();
+      $this->activity->delete();
+      $this->getUser()->setFlash('notice', 'An activity was deleted.');
+      $this->redirect('friend/showActivity');
+    }
+
+    return sfView::INPUT;
+  }
+
+  public function executeUpdateActivity($request)
+  {
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $this->forward404Unless(opConfig::get('is_allow_post_activity'));
+      $newObject = new ActivityData();
+      $newObject->setMemberId($this->getUser()->getMemberId());
+      $this->form = new ActivityDataForm($newObject);
+      $params = $request->getParameter('activity_data');
+      $this->form->bind($params);
+      if ($this->form->isValid())
+      {
+        $this->form->save();
+        if ($request->isXmlHttpRequest())
+        {
+          $activities = Doctrine::getTable('ActivityData')->getFriendActivityList();
+          $this->getContext()->getConfiguration()->loadHelpers('Partial');
+          return $this->renderText(get_partial('default/activityRecord', array('activity' => $this->form->getObject())));
+        }
+        else
+        {
+          $this->redirect($params['next_uri']);
+        }
+      }
+      else
+      {
+        if ($request->isXmlHttpRequest())
+        {
+          $this->getResponse()->setStatusCode(500);
+        }
+        else
+        {
+          if (isset($params['next_uri']))
+          {
+            $this->redirect($params['next_uri']);
+          }
+          $this->redirect('@homepage');
+        }
+      }
+    }
+    return sfView::NONE;
+  }
 }

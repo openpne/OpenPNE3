@@ -28,4 +28,16 @@ class friendActions extends sfOpenPNEFriendAction
 
     return parent::executeList($request);
   }
+
+ /**
+  * Execute show activities action
+  *
+  * @param sfWebRequest $request a request object
+  */
+  public function executeShowActivity(sfWebRequest $request)
+  {
+    $this->size = 10;
+
+    return parent::executeShowActivity($request);
+  }
 }

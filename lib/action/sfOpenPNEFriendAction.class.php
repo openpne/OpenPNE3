@@ -149,4 +149,25 @@ abstract class sfOpenPNEFriendAction extends sfActions
   {
     $this->forward404Unless($this->member, 'Undefined member.');
   }
+
+ /**
+  * Executes show friend activities action
+  * 
+  * @param sfWebRequest $request A request object
+  */
+  public function executeShowActivity($request)
+  {
+    if (!isset($this->size))
+    {
+      $this->size = 20;
+    }
+
+    $page = $request->getParameter('page', 1);
+    if ($page == 1 && opConfig::get('is_allow_post_activity'))
+    {
+      $this->form = new ActivityDataForm();
+    }
+
+    $this->pager = Doctrine::getTable('ActivityData')->getFriendActivityListPager(null, $page, $this->size);
+  }
 }

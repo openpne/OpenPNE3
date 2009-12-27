@@ -1079,6 +1079,98 @@
         <source>Public Flag for Age</source>
         <target>年齢の公開範囲</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>less than 5 seconds ago</source>
+        <target>5秒以内</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>less than 10 seconds ago</source>
+        <target>10秒以内</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>less than 20 seconds ago</source>
+        <target>20秒以内</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>half a minute ago</source>
+        <target>30秒以内</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>less than a minute ago</source>
+        <target>1分以内</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>1 minute ago</source>
+        <target>1分前</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%minutes% minutes ago</source>
+        <target>%minutes%分前</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>about 1 hour ago</source>
+        <target>1時間前</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>about %hours% hours ago</source>
+        <target>%hours%時間前</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>1 day ago</source>
+        <target>1日前</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%days% days ago</source>
+        <target>%days%日前</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>about 1 month ago</source>
+        <target>1ヶ月前</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%months% months ago</source>
+        <target>%months%ヶ月前</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>about 1 year ago</source>
+        <target>1年前</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>over %years% years ago</source>
+        <target>%years%年以上前</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Activity</source>
+        <target>ｱｸﾃｨﾋﾞﾃｨ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>My Activities</source>
+        <target>自分のｱｸﾃｨﾋﾞﾃｨ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Activities of %my_friend%</source>
+        <target>%my_friend%のｱｸﾃｨﾋﾞﾃｨ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Activities of %0%</source>
+        <target>%0%のｱｸﾃｨﾋﾞﾃｨ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Post Activity</source>
+        <target>投稿</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>There is no activity.</source>
+        <target>ｱｸﾃｨﾋﾞﾃｨがありません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you delete this activity?</source>
+        <target>このｱｸﾃｨﾋﾞﾃｨを削除してもよろしいですか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>An activity was deleted.</source>
+        <target>ｱｸﾃｨﾋﾞﾃｨを削除しました。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
