@@ -29,28 +29,119 @@ class ActivityDataTable extends Doctrine_Table
     self::PUBLIC_FLAG_PRIVATE => 'Private',
   );
 
+  public function updateActivity($memberId, $body, $options = array())
+  {
+    $object = new ActivityData();
+    $object->setMemberId($memberId);
+    $object->setBody($body);
+
+    if (isset($options['public_flag']))
+    {
+      $publicFlagKeys = array_keys($this->getPublicFlags(false));
+      if (!in_array($options['public_flag'], $publicFlagKeys))
+      {
+        throw new LogicException('Invalid public flag');
+      }
+      $object->setPublicFlag($options['public_flag']);
+    }
+
+    if (isset($options['in_reply_to']))
+    {
+      $object->setInReplyTo($options['in_reply_to']);
+    }
+
+    if (isset($options['is_pc']) && !$options['is_pc'])
+    {
+      $object->setIsPc(false);
+    }
+    if (isset($options['is_mobile']) && !$options['is_mobile'])
+    {
+      $object->setIsMobile(false);
+    }
+
+    if (isset($options['source']))
+    {
+      $object->setSource($options['source']);
+      if (isset($options['source_uri']))
+      {
+        $object->setSourceUri($options['source_uri']);
+      }
+    }
+
+    $activityImages = array();
+    if (isset($options['images']))
+    {
+      if (!is_array($options['images']))
+      {
+        $options['images'] = array($options['images']);
+      }
+
+      foreach ($options['images'] as $image)
+      {
+        $activityImage = new ActivityImage();
+        if (isset($image['file_id']))
+        {
+          $activityImage->setFileId($image['file_id']);
+        }
+        elseif (isset($image['uri']) && isset($image['mime_type']))
+        {
+          $activityImage->setUri($image['uri']);
+          $activityImage->setMimeType($image['mime_type']);
+        }
+        else
+        {
+          throw new LogicException('Invalid image data');
+        }
+        $activityImages[] = $activityImage;
+      }
+    }
+
+    if (isset($options['foreign_table']) && isset($options['foreign_id']))
+    {
+      $object->setForeignTable($options['foreign_table']);
+      $object->setForeignId($options['foreign_id']);
+    }
+
+    $object->save();
+
+    foreach ($activityImages as $activityImage)
+    {
+      $activityImage->setActivityData($object);
+      $activityImage->save();
+    }
+
+    return $object;
+  }
+
   public function publicFlagToCaption($flag)
   {
     $i18n = sfContext::getInstance()->getI18N();
     return $i18n->__(self::$publicFlags[$flag]);
   }
 
-  public function getPublicFlags()
+  public function getPublicFlags($isI18n = true)
   {
-    if (!sfConfig::get('op_activity_is_open', false))
+    if (!sfConfig::get('op_activity_is_open', false) && isset(self::$publicFlags[self::PUBLIC_FLAG_OPEN]))
     {
       unset(self::$publicFlags[self::PUBLIC_FLAG_OPEN]);
     }
 
     $publicFlags = array();
 
-    $i18n = sfContext::getInstance()->getI18N();
-    $termMyFriend = Doctrine::getTable('SnsTerm')->get('my_friend');
-
-    foreach (self::$publicFlags as $key => $publicFlag)
+    if ($isI18n)
     {
-      $terms = array('%my_friend%' => $termMyFriend->pluralize()->titleize());
-      $publicFlags[$key] = $i18n->__($publicFlag, $terms, 'publicFlags');
+      $i18n = sfContext::getInstance()->getI18N();
+      $termMyFriend = Doctrine::getTable('SnsTerm')->get('my_friend');
+
+      foreach (self::$publicFlags as $key => $publicFlag)
+      {
+        $terms = array('%my_friend%' => $termMyFriend->pluralize()->titleize());
+        $publicFlags[$key] = $i18n->__($publicFlag, $terms, 'publicFlags');
+      }
+    }
+    else
+    {
+      $publicFlags = self::$publicFlags;
     }
 
     return $publicFlags;
