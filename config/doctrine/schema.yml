@@ -18,6 +18,7 @@ Member:
     comment: "Saves informations of members"
 
 MemberRelationship:
+  actAs: [Timestampable, opActivityCascadingBehavior]
   columns:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
     member_id_to: { type: integer(4), notnull: true, comment: "Target member id" }

@@ -742,5 +742,15 @@ ActivityData:
     public_flag: 2
   dummy_activity4:
     Member: first_member
-    body: "dummy3"
+    body: "dummy4"
     public_flag: 3
+  dummy_activity5:
+    Member: first_member
+    body: "dummy5"
+    foreign_table: "member_relationship"
+    foreign_id: 1
+  dummy_activity6:
+    Member: first_member
+    body: "dummy6"
+    foreign_table: "member_relationship"
+    foreign_id: 2

@@ -27,12 +27,14 @@ class opActivityCascadingListener extends Doctrine_Record_Listener
     $query = $event->getQuery();
     $table = $params['component']['table'];
     $identifier = $table->getIdentifier();
-    $records = $query->execute();
+    $tmpQuery = clone $event->getQuery();
+    $subQuery = $tmpQuery->select($params['alias'].'.'.$identifier);
+    $records = $subQuery->execute();
     if ($records instanceof Doctrine_Collection && $records->count())
     {
-      $q = Doctrine::getTable('ActivityData')->createTable()
+      $q = Doctrine::getTable('ActivityData')->createQuery()
         ->where('foreign_table = ?', $table->getTableName())
-        ->andWhereIn('foreign_id', array_values($records->toKeyValueArray($records->$identifier, $records->$identifier)))
+        ->andWhereIn('foreign_id', array_values($records->toKeyValueArray($identifier, $identifier)))
         ->delete()
         ->execute();
     }
