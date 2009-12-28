@@ -21,10 +21,6 @@ abstract class sfOpenPNEFriendAction extends sfActions
   public function preExecute()
   {
     $this->id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
-    if ($this->id)
-    {
-      $this->member = Doctrine::getTable('Member')->find($this->id);
-    }
 
     $this->relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($this->getUser()->getMemberId(), $this->id);
     if (!$this->relation) {
@@ -32,7 +28,6 @@ abstract class sfOpenPNEFriendAction extends sfActions
       $this->relation->setMemberIdFrom($this->getUser()->getMemberId());
       $this->relation->setMemberIdTo($this->id);
     }
-    $this->forward404If($this->relation->isAccessBlocked());
   }
 
  /**
@@ -42,7 +37,8 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeList($request)
   {
-    $this->forward404Unless($this->member);
+    $this->redirectIf($this->relation->isAccessBlocked(), '@error');
+
     if (!$this->size)
     {
       $this->size = 20;
@@ -53,6 +49,8 @@ abstract class sfOpenPNEFriendAction extends sfActions
     {
       return sfView::ERROR;
     }
+
+    return sfView::SUCCESS;
   }
 
  /**
@@ -62,9 +60,8 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   public function executeLink($request)
   {
-    $this->redirectToHomeIfIdIsNotValid();
-    $this->forward404Unless(opConfig::get('enable_friend_link'));
-    $this->forward404Unless($this->member);
+    $this->redirectUnless(opConfig::get('enable_friend_link'), '@error');
+    $this->redirectIf($this->relation->isAccessBlocked(), '@error');
 
     if ($this->relation->isFriend())
     {
@@ -86,10 +83,13 @@ abstract class sfOpenPNEFriendAction extends sfActions
       if ($this->form->isValid())
       {
         $this->getUser()->setFlash('notice', 'You have requested %friend% link.');
+        $this->redirectToHomeIfIdIsNotValid();
         $this->relation->setFriendPre();
         $this->redirect('member/profile?id='.$this->id);
       }
     }
+
+    $this->member = Doctrine::getTable('Member')->find($this->id);
 
     return sfView::INPUT;
   }
@@ -116,6 +116,7 @@ abstract class sfOpenPNEFriendAction extends sfActions
       $this->redirect('friend/manage');
     }
 
+    $this->member = Doctrine::getTable('Member')->find($this->id);
     return sfView::INPUT;
   }
 
@@ -124,8 +125,8 @@ abstract class sfOpenPNEFriendAction extends sfActions
   */
   protected function redirectToHomeIfIdIsNotValid()
   {
-    $this->redirectUnless($this->id, '@homepage');
-    $this->redirectIf(($this->id == $this->getUser()->getMemberId()), '@homepage');
+    $this->redirectUnless($this->id, 'member/home');
+    $this->redirectIf(($this->id == $this->getUser()->getMemberId()), 'member/home');
   }
 
  /**
@@ -138,6 +139,8 @@ abstract class sfOpenPNEFriendAction extends sfActions
     if (!$this->pager->getNbResults()) {
       return sfView::ERROR;
     }
+
+    return sfView::SUCCESS;
   }
 
   /**
@@ -147,7 +150,12 @@ abstract class sfOpenPNEFriendAction extends sfActions
    */
   public function executeShowImage($request)
   {
+    $this->forward404Unless($this->id);
+
+    $this->member = Doctrine::getTable('Member')->find($this->id);
     $this->forward404Unless($this->member, 'Undefined member.');
+
+    return sfView::SUCCESS;
   }
 
  /**
