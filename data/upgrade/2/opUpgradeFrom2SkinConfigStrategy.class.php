@@ -62,7 +62,7 @@ class opUpgradeFrom2SkinConfigStrategy extends opUpgradeSQLImportStrategy
 
     $images = array(
       'skin_after_header', 'skin_after_header_2', 'skin_before_header', 'skin_footer',
-      'skin_login', 'skin_login_open', 'skin_before_header', 'skin_navi_c', 'skin_navi_c_2',
+      'skin_login', 'skin_login_open', 'skin_before_header_2', 'skin_navi_c', 'skin_navi_c_2',
       'skin_navi_f', 'skin_navi_f_2', 'skin_navi_h', 'skin_navi_h_2',
       'icon_arrow_1', 'bg_button', 'content_header_1', 'icon_title_1', 'icon_arrow_2',
       'colon', 'icon_information', 'marker', 'articleList_marker', 'icon_3', 'icon_1', 'icon_2',
