@@ -39,7 +39,6 @@ class opUpgradeFrom2MemberProfileStrategy extends opUpgradeAbstractStrategy
 
   public function doRun()
   {
-
     $ids = $this->conn->fetchColumn('SELECT c_profile_id FROM c_profile WHERE name NOT IN (?, ?, ?, ?)', array('self_intro', 'PNE_POINT', 'PNE_MY_NEWS', 'PNE_MY_NEWS_DATETIME'));
     $idStr = implode(',', array_fill(0, count($ids), '?'));
 
@@ -65,7 +64,7 @@ class opUpgradeFrom2MemberProfileStrategy extends opUpgradeAbstractStrategy
     $birthdayId = $this->conn->lastInsertId();
 
     $date = $this->conn->expression->concat('birth_year', '"-"', 'birth_month', '"-"' , 'birth_day');
-    $this->conn->execute('INSERT INTO member_profile (id, member_id, profile_id, profile_option_id, value, value_datetime, public_flag, tree_key, lft, rgt, level, created_at, updated_at) (SELECT NULL, c_member_id, ?, NULL, '.$date.', '.$date.', 1, NULL, 1, 2, 0, NOW(), NOW() FROM c_member WHERE birth_year <> 0 AND birth_month <> 0 AND birth_day <> 0)', array($birthdayId));
+    $this->conn->execute('INSERT INTO member_profile (id, member_id, profile_id, profile_option_id, value, value_datetime, public_flag, tree_key, lft, rgt, level, created_at, updated_at) (SELECT NULL, c_member_id, ?, NULL, '.$date.', '.$date.', public_flag_birth_month_day, NULL, 1, 2, 0, NOW(), NOW() FROM c_member WHERE birth_year <> 0 AND birth_month <> 0 AND birth_day <> 0)', array($birthdayId));
     $this->conn->execute('UPDATE member_profile SET tree_key = id WHERE profile_id = ?', array($birthdayId));
   }
 }
