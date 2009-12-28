@@ -59,7 +59,7 @@ class opUpgradeFrom2MemberRelationshipStrategy extends opUpgradeAbstractStrategy
 
     foreach ($accessBlocks as $accessBlock)
     {
-      $relations[$accessBlock['c_member_id']][$friendConfirm['c_member_id_block']]['access_block'] = true;
+      $relations[$accessBlock['c_member_id']][$accessBlock['c_member_id_block']]['access_block'] = true;
     }
     unset($accessBlocks);
 
