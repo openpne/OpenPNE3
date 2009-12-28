@@ -9,20 +9,12 @@
  */
 
 /**
- * sfOpenPNEFriendComponents
+ * member components
  *
  * @package    OpenPNE
  * @subpackage action
  * @author     Shogo Kawahara <kawahara@tejimaya.net>
  */
-abstract class sfOpenPNEFriendComponents extends sfComponents
+class memberComponents extends sfOpenPNEMemberComponents
 {
-  public function executeActivityBox()
-  {
-    $this->activities = Doctrine::getTable('ActivityData')->getFriendActivityList(null, $this->gadget->getConfig('row'));
-    if (opConfig::get('is_allow_post_activity'))
-    {
-      $this->form = new ActivityDataForm();
-    }
-  }
 }

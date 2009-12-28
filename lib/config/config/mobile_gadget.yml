@@ -31,3 +31,19 @@ freeArea:
       FormType:   "rich_textarea"
       ValueType:  "text"
       IsRequired: false
+
+activityBox:
+  caption:
+    ja_JP: "アクティビティ"
+  description:
+    ja_JP: "利用者本人とそのフレンドのSNS上での活動記録を表示します"
+  component: [friend, activityBox]
+  config:
+    row:
+      Name:     "row"
+      Caption:  "表示する行"
+      FormType: "select"
+      ValueType: "int"
+      IsRequired: true
+      Default:    2
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}

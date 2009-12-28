@@ -18,6 +18,7 @@ Member:
     comment: "Saves informations of members"
 
 MemberRelationship:
+  actAs: [Timestampable, opActivityCascadingBehavior]
   columns:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
     member_id_to: { type: integer(4), notnull: true, comment: "Target member id" }
@@ -594,3 +595,41 @@ SkinConfig:
     charset: utf8
     comment: "Saves configurations of this SNS"
 
+ActivityData:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    member_id: { type: integer(4), notnull: true, comment: "Member id" }
+    in_reply_to_activity_id: { type: integer(4), comment: "Activity data id is in reply to" }
+    body: { type: string(140), notnull: true, comment: "Activity body" }
+    uri: { type:string, comment: "Activity URI" }
+    public_flag: { type: integer(1), notnull: true, default: 1, comment: "Public flag of activity" }
+    is_pc: { type: boolean, notnull: true, default: 1, comment: "Display this in PC?" }
+    is_mobile: { type: boolean, notnull: true, default: 1, comment: "Display this in Mobile?"} 
+    source: { type: string(64), comment: "The source caption" }
+    source_uri: { type: string , comment: "The source URI" }
+    foreign_table: { type: string, comment: "Reference table name" }
+    foreign_id: { type: integer, comment: "The id of reference table" }
+  relations:
+    Member: { foreignAlias: Activities, local: member_id, foreign: id, onDelete: cascade }
+    InReplyTo: { class: ActivityData, local: in_reply_to_activity_id, foreign: id, onDelete: cascade }
+  options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
+    comment: "Saves activities"
+
+ActivityImage:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
+    activity_data_id: { type: integer(4), notnull: true, comment: "Activity data id" }
+    mime_type: { type: string(64), notnull: true, comment: "MIME type" }
+    uri: { type: string, comment: "Image URI" }
+    file_id: { type: integer(4), comment: "File id" }
+  relations:
+    ActivityData: { foreignAlias: Images, local: activity_data_id, foreign: id, onDelete: cascade }
+    File: { local: file_id, foreign: id, onDelete: cascade }
+  options:
+    type: INNODB
+    collate: utf8_unicode_ci
+    charset: utf8
+    comment: "Saves image information of activity"

@@ -164,3 +164,18 @@ linkListBox:
       IsRequired: false
 <?php endfor; ?>
 
+activityBox:
+  caption:
+    ja_JP: "アクティビティ"
+  description:
+    ja_JP: "利用者本人とそのフレンドのSNS上での活動記録を表示します"
+  component: [friend, activityBox]
+  config:
+    row:
+      Name:     "row"
+      Caption:  "表示する行"
+      FormType: "select"
+      ValueType: "int"
+      IsRequired: true
+      Default:    5
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 10: 10}

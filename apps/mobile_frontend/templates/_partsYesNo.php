@@ -11,7 +11,7 @@ $options->setDefault('align', '');
 ?>
 <?php if(isset($options['body'])): ?>
 <div class="block">
-<?php echo $options['body'] ?>
+<?php echo $options->getRaw('body') ?>
 </div>
 <?php endif ?>
 <div<?php if ($options['align']): ?> align="<?php echo $options['align'] ?>"<?php endif;?>>

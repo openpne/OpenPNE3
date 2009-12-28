@@ -185,4 +185,11 @@ class memberActions extends sfOpenPNEMemberAction
       $this->redirect('member/configImage');
     }
   }
+
+  public function executeShowActivity($request)
+  {
+    $this->size = 10;
+
+    parent::executeShowActivity($request);
+  }
 }

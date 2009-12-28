@@ -98,6 +98,18 @@ general:
       - "使用しない"
       - "使用する"
 
+  is_allow_post_activity:
+    Name:       "is_allow_post_activity"
+    Caption:    "アクティビティ投稿設定"
+    Help:       "メンバーからのアクティビティ投稿の可否を設定します"
+    FormType:   "radio"
+    ValueType:  "text"
+    IsRequired: true
+    Default:    1
+    Choices:
+      - "許可しない"
+      - "許可する"
+
 external_login_page:
   _attributes:
     Caption: "External Login Page Configuration"

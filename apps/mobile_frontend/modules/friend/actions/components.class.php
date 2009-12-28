@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class friendComponents extends sfOpenPNECommunityComponents
+class friendComponents extends sfOpenPNEFriendComponents
 {
   public function executeFriendListBox($request)
   {

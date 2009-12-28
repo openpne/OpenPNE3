@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class memberComponents extends sfComponents
+class memberComponents extends sfOpenPNEMemberComponents
 {
   public function executeProfileListBox($request)
   {

@@ -1,0 +1,20 @@
+Gadget:
+  gadget_friend_activity:
+    type: "contents"
+    name: "activityBox"
+    sort_order: 10
+
+  mobile_gadget_activity:
+    type: "mobileContents"
+    name: "activityBox"
+    sort_order: 10
+
+  gadget_member_activity:
+    type: "profileContents"
+    name: "activityBox"
+    sort_order: 20
+
+  mobile_profile_member_activity:
+    type: "mobileProfileContents"
+    name: "activityBox"
+    sort_order: 10

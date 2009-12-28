@@ -49,3 +49,19 @@ communityJoinListBox:
       IsRequired: true
       Default:    3
       Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
+
+activityBox:
+  caption:
+    ja_JP: "アクティビティ"
+  description:
+    ja_JP: "SNS上での活動記録を表示します"
+  component: [member, activityBox]
+  config:
+    row:
+      Name:     "row"
+      Caption:  "表示する行"
+      FormType: "select"
+      ValueType: "int"
+      IsRequired: true
+      Default:    3
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
