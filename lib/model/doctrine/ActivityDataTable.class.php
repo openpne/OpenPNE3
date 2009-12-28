@@ -45,9 +45,9 @@ class ActivityDataTable extends Doctrine_Table
       $object->setPublicFlag($options['public_flag']);
     }
 
-    if (isset($options['in_reply_to']))
+    if (isset($options['in_reply_to_activity_id']))
     {
-      $object->setInReplyTo($options['in_reply_to']);
+      $object->setInReplyToActivityId($options['in_reply_to_activity_id']);
     }
 
     if (isset($options['is_pc']) && !$options['is_pc'])
