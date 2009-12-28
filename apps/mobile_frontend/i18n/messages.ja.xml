@@ -1171,6 +1171,10 @@
         <source>An activity was deleted.</source>
         <target>ｱｸﾃｨﾋﾞﾃｨを削除しました。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Failed to post activity.</source>
+        <target>ｱｸﾃｨﾋﾞﾃｨの投稿に失敗しました。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

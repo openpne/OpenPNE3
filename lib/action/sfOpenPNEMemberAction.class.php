@@ -535,6 +535,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
         }
         else
         {
+          $this->getUser()->setFlash('error', 'Failed to post activity.');
           if (isset($params['next_uri']))
           {
             $this->redirect($params['next_uri']);
