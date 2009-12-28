@@ -49,9 +49,44 @@ class opUpgradeFrom2MemberProfileStrategy extends opUpgradeAbstractStrategy
     $this->conn->execute('INSERT INTO profile_option_translation (id, value, lang) (SELECT c_profile_option_id, value, "ja_JP" FROM c_profile_option WHERE c_profile_id IN ('.implode(',', array_fill(0, count($ids), '?')).'))', $ids);
 
     $this->conn->execute('INSERT INTO member_profile (id, member_id, profile_id, profile_option_id, value, value_datetime, public_flag, tree_key, lft, rgt, level, created_at, updated_at) (SELECT c_member_profile_id, c_member_id, c_profile_id, NULL, value, NULL, public_flag, c_member_profile_id, 1, 2, 0, NOW(), NOW() FROM c_member_profile WHERE c_profile_id IN ('.$idStr.') AND c_profile_option_id = 0)', $ids);
-    $this->conn->execute('INSERT INTO member_profile (id, member_id, profile_id, profile_option_id, value, value_datetime, public_flag, tree_key, lft, rgt, level, created_at, updated_at) (SELECT c_member_profile_id, c_member_id, c_profile_id, c_profile_option_id, NULL, NULL, public_flag, c_member_profile_id, 1, 2, 0, NOW(), NOW() FROM c_member_profile WHERE c_profile_id IN ('.$idStr.') AND c_profile_option_id <> 0)', $ids);
 
+    $this->importTreeMemberProfile($ids, $idStr);
     $this->setPresetMemberProfiles();
+  }
+
+  protected function importTreeMemberProfile($ids, $idStr)
+  {
+    $list = $this->conn->fetchColumn('SELECT c_profile_id FROM c_member_profile WHERE c_profile_id IN ('.$idStr.') AND c_profile_option_id <> 0', $ids);
+    $list = array_unique($list);
+
+    $baseSql = 'INSERT IGNORE INTO member_profile (id, member_id, profile_id, profile_option_id, value, value_datetime, public_flag, tree_key, lft, rgt, level, created_at, updated_at)';
+    $rootId = $this->conn->fetchOne('SELECT MAX(c_member_profile_id) FROM c_member_profile') + 1;
+
+    foreach ($list as $id)
+    {
+      $profileType = $this->conn->fetchOne('SELECT form_type FROM c_profile WHERE c_profile_id = ?', array($id));
+      if ('checkbox' !== $profileType)
+      {
+        $this->conn->execute($baseSql.' (SELECT c_member_profile_id, c_member_id, c_profile_id, c_profile_option_id, NULL, NULL, public_flag, c_member_profile_id, 1, 2, 0, NOW(), NOW() FROM c_member_profile WHERE c_profile_id = ?)', array($id));
+        continue;
+      }
+
+      $members = $this->conn->fetchColumn('SELECT c_member_id FROM c_member_profile WHERE c_profile_id = ?', array($id));
+      $members = array_unique($members);
+      foreach ($members as $i => $memberId)
+      {
+        $rootId++;
+        $childs = $this->conn->fetchColumn('SELECT c_member_profile_id FROM c_member_profile WHERE c_profile_id = ? AND c_member_id = ?', array($id, $memberId));
+        $this->conn->execute($baseSql.' (SELECT ?, c_member_id, c_profile_id, NULL, NULL, NULL, public_flag, ?, 1, ?, 0, NOW(), NOW() FROM c_member_profile WHERE c_profile_id = ? AND c_member_id = ? LIMIT 1)', array($rootId, $rootId, count($childs) * 2 + 2, $id, $memberId));
+
+        foreach ($childs as $i => $child)
+        {
+          $num = $i + 1;
+
+          $this->conn->execute($baseSql.' (SELECT c_member_profile_id, c_member_id, c_profile_id, c_profile_option_id, NULL, NULL, public_flag, ?, ?, ?, 1, NOW(), NOW() FROM c_member_profile WHERE c_member_profile_id = ? LIMIT 1)', array($rootId, $num * 2, $num * 2 + 1, $child));
+        }
+      }
+    }
   }
 
   protected function setPresetMemberProfiles()
