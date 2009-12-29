@@ -1,15 +1,15 @@
-function url2cmd(url) {
-	var www_google_co_jp_maps = url.match(/^http:\/\/www\.google\.co\.jp\/maps\?(.+)/);
-		
-	if (www_google_co_jp_maps) {
-	   var id = RegExp.$1;
-	   main(id);
+function url2cmd(url, googlemapsUrl) {
+  var www_google_co_jp_maps = url.match(/^http:\/\/www\.google\.co\.jp\/maps\?(.+)/);
+
+  if (www_google_co_jp_maps) {
+     var id = RegExp.$1;
+     main(id, googlemapsUrl);
     } else {
        pne_url2a(url);
     }
 }
 
-function main(id) {
+function main(id, googlemapsUrl) {
     var cmd = id.split("&amp;");
     var param = new Array();
     param["z"] = "15";
@@ -26,9 +26,9 @@ function main(id) {
     var q = param["q"];
 
     var html = ''
-	+ '<iframe MARGINWIDTH="0" MARGINHEIGHT="0" HSPACE="0" VSPACE="0" FRAMEBORDER="0" SCROLLING="no" BORDERCOLOR="#000000" src="?m=pc&a=page_h_googlemap'+'&x='+ll[0]+'&y='+ll[1]+'&z='+z+'&t='+t+'&q='+q+'" name="sample" width="425" height="350">'
-	+ 'この部分はインラインフレームを使用しています。'
-	+ '</iframe>';
-	
+    + '<iframe marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" bordercolor="#000000" src="'+googlemapsUrl+'?x='+ll[0]+'&y='+ll[1]+'&z='+z+'&t='+t+'&q='+q+'" name="sample" height="350">'
+    + 'この部分はインラインフレームを使用しています。'
+    + '</iframe>';
+
     document.write(html);
 }
