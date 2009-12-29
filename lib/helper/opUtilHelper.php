@@ -386,13 +386,14 @@ function _op_url_cmd($matches)
   }
 
   sfContext::getInstance()->getResponse()->addJavascript('util');
+  $googlemapsUrl = url_for('@google_maps');
 
   $public_path = _compute_public_path($file, 'cmd', 'js');
   $result = <<<EOD
 <script type="text/javascript" src="{$public_path}"></script>
 <script type="text/javascript">
 <!--
-url2cmd('{$url}');
+url2cmd('{$url}', '{$googlemapsUrl}');
 //-->
 </script>
 EOD;

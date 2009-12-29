@@ -164,3 +164,19 @@ footer:
     Default:    "Powered by <a href=\"http://www.openpne.jp/\" target=\"_blank\">OpenPNE</a>"
 
 permit_member_config:
+
+api_keys:
+  google_maps_api_key:
+    Name:       "google maps api key"
+    Caption:    "google maps api key"
+    FormType:   "text"
+    ValueType:  "string"
+    IsRequired: false
+    Default:    ""
+  google_AJAX_search_api_key:
+    Name:       "google AJAX search api key"
+    Caption:    "google AJAX search api key"
+    FormType:   "text"
+    ValueType:  "string"
+    IsRequired: false
+    Default:    ""
