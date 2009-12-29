@@ -95,3 +95,8 @@ community_home:
   url:   /community/:id
   param: { module: community, action: home }
   requirements: { id: \d+ }
+
+# for cmd
+google_maps:
+  url:  /googlemaps
+  param: { module: googlemaps, action: index }
