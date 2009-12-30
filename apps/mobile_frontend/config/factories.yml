@@ -88,7 +88,7 @@ all:
   i18n:
     class: opI18N
     param:
-      source:               XLIFF
+      source:               OpenPNE
       debug:                false
       untranslated_prefix:  "[T]"
       untranslated_suffix:  "[/T]"
