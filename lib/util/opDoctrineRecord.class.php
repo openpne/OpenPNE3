@@ -39,7 +39,16 @@ abstract class opDoctrineRecord extends sfDoctrineRecord implements Zend_Acl_Res
   */
   const UNDEFINED_DATETIME_BC = '0000-00-00 00:00:00';
 
-  protected $roleList = array();
+  const MAX_NESTING_LEVEL = 50;
+
+  protected
+    $roleList = array(),
+
+    $nestingLevelCheckClasses = array(
+      'Album',
+    ),
+
+    $nested = array();
 
   public function save(Doctrine_Connection $conn = null)
   {
@@ -78,6 +87,27 @@ abstract class opDoctrineRecord extends sfDoctrineRecord implements Zend_Acl_Res
     }
 
     return parent::_set($fieldName, $value, $load);
+  }
+
+  public function get($fieldName, $load = true)
+  {
+    if (!in_array(get_class($this), $this->nestingLevelCheckClasses))
+    {
+      return parent::get($fieldName, $load);
+    }
+
+    if (empty($this->nested[$fieldName]))
+    {
+      $this->nested[$fieldName] = 0;
+    }
+    $this->nested[$fieldName]++;
+
+    if ($this->nested[$fieldName] > self::MAX_NESTING_LEVEL)
+    {
+      return $this->_get($fieldName, $load);
+    }
+
+    return parent::get($fieldName, $load);
   }
 
   public function _get($fieldName, $load = true)
