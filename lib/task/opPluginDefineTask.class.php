@@ -34,8 +34,8 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
-    // Remove E_STRICT from error_reporting
-    error_reporting(error_reporting() & ~E_STRICT);
+    // Remove E_STRICT AND E_DEPRECATED from error_reporting
+    error_reporting(error_reporting() & ~(E_STRICT | E_DEPRECATED));
 
     require_once 'PEAR/PackageFileManager2.php';
 
