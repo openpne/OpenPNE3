@@ -8,7 +8,7 @@ $file1 = Doctrine::getTable('File')->find(1);
 $file2 = Doctrine::getTable('File')->find(2);
 $file3 = Doctrine::getTable('File')->find(3);
 
-$tmpDir = sfToolkit::getTmpDir();
+$tmpDir = sys_get_temp_dir();
 $content = 'This is an ASCII file.';
 file_put_contents($tmpDir.'/test.txt', $content);
 
