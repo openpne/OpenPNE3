@@ -83,7 +83,7 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
       ->where('community_id = ?', $this->id)
-      ->andWhere('(is_pre = ? OR is_pre IS NULL)', false)
+      ->andWhere('is_pre = ?', false)
       ->execute();
 
     $q = Doctrine::getTable('Member')->createQuery()

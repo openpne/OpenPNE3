@@ -167,7 +167,7 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
 
     return $this->createQuery()
       ->where('community_id = ?', $communityId)
-      ->andWhere('(is_pre = ? OR is_pre IS NULL)', false)
+      ->andWhere('is_pre = ?', false)
       ->andWhereNotIn('id', $ids)
       ->execute();
   }

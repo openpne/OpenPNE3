@@ -13,7 +13,7 @@ class CommunityTable extends opAccessControlDoctrineTable
   public function retrievesByMemberId($memberId, $limit = 5, $isRandom = false)
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
-      ->where(('is_pre = ? OR is_pre IS NULL'), false)
+      ->where('is_pre = ?', false)
       ->andWhere('member_id = ?', $memberId)
       ->execute();
 
@@ -42,7 +42,7 @@ class CommunityTable extends opAccessControlDoctrineTable
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
       ->where('member_id = ?', $memberId)
-      ->andWhere(('is_pre = ? OR is_pre IS NULL'), false)
+      ->andWhere('is_pre = ?', false)
       ->execute();
 
     $pager = new sfDoctrinePager('Community', $size);
@@ -66,7 +66,7 @@ class CommunityTable extends opAccessControlDoctrineTable
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
       ->where('community_id = ?', $communityId)
-      ->andWhere(('is_pre = ? OR is_pre IS NULL'), false)
+      ->andWhere('is_pre = ?', false)
       ->execute();
 
     $pager = new sfDoctrinePager('Member', $size);
@@ -93,7 +93,7 @@ class CommunityTable extends opAccessControlDoctrineTable
     $resultSet = Doctrine::getTable('CommunityMember')->createQuery()
       ->select('community_id')
       ->where('member_id = ?', $memberId)
-      ->andWhere(('is_pre = ? OR is_pre IS NULL'), false)
+      ->andWhere('is_pre = ?', false)
       ->execute();
 
     foreach ($resultSet as $value)
