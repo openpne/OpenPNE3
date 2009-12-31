@@ -3,7 +3,7 @@
 include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 
-$t = new lime_test(52, new lime_output_color());
+$t = new lime_test(50, new lime_output_color());
 $table = Doctrine::getTable('Member');
 $member1 = $table->findOneByName('A');
 $member2 = $table->findOneByName('B');
@@ -23,10 +23,6 @@ $t->isa_ok($result, 'array');
 $t->is(count($result), 6);
 
 $result = $member1->getProfiles(true, $member3->getId());
-$t->isa_ok($result, 'array');
-$t->is(count($result), 5);
-
-$result = $member1->getProfiles(true, $member4->getId());
 $t->isa_ok($result, 'array');
 $t->is(count($result), 5);
 
@@ -58,11 +54,11 @@ $t->isa_ok($member1->getFriends(null, true), 'Doctrine_Collection');
 
 //------------------------------------------------------------
 $t->diag('Member::countFriends()');
-$t->is($member1->countFriends(), 1);
+$t->is($member1->countFriends(), 4);
 
 //------------------------------------------------------------
 $t->diag('Member::getNameAndCount()');
-$t->is($member1->getNameAndCount(), 'A (1)');
+$t->is($member1->getNameAndCount(), 'A (4)');
 Doctrine::getTable('SnsConfig')->set('enable_friend_link', false);
 $t->is($member1->getNameAndCount(), 'A');
 Doctrine::getTable('SnsConfig')->set('enable_friend_link', true);

@@ -149,6 +149,15 @@ Member:
   fifth_member:
     name: "E"
     is_active: 1
+  sixth_member:
+    name: "F"
+    is_active: 1
+  seventh_member:
+    name: "G"
+    is_active: 1
+  eighth_member:
+    name: "H"
+    is_active: 1
 
 File:
   dummy_file1:
@@ -344,6 +353,21 @@ MemberRelationship:
     is_friend: 1
   second_member_first_member:
     Member: second_member
+    MemberRelatedByMemberIdFrom: first_member
+    is_friend: 1
+  fourth_member_first_member:
+    Member: fourth_member
+    MemberRelatedByMemberIdFrom: first_member
+    is_friend: 1
+  sixth_member_first_member:
+    Member: sixth_member
+    MemberRelatedByMemberIdFrom: first_member
+  seventh_member_first_member:
+    Member: seventh_member
+    MemberRelatedByMemberIdFrom: first_member
+    is_friend: 1
+  eighth_member_first_member:
+    Member: eighth_member
     MemberRelatedByMemberIdFrom: first_member
     is_friend: 1
   first_member_fourth_member:
