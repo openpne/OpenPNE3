@@ -19,6 +19,14 @@ abstract class sfOpenPNEMemberAction extends sfActions
 {
   public function preExecute()
   {
+    if ('homepage' === sfContext::getInstance()->getRouting()->getCurrentRouteName())
+    {
+      if (isset($this->request['a']))
+      {
+        $this->handleOpenPNE2FormatUrl();
+      }
+    }
+
     $this->id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
 
     $this->relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($this->getUser()->getMemberId(), $this->id);
@@ -26,6 +34,42 @@ abstract class sfOpenPNEMemberAction extends sfActions
       $this->relation = new MemberRelationship();
       $this->relation->setMemberIdFrom($this->getUser()->getMemberId());
       $this->relation->setMemberIdTo($this->id);
+    }
+  }
+
+  protected function handleOpenPNE2FormatUrl()
+  {
+    $path = sfConfig::get('sf_app_config_dir').'/op2urls.php';
+    if (!is_file($path))
+    {
+      return null;
+    }
+
+    $list = include_once($path);
+    if (array_key_exists($this->request['a'], $list))
+    {
+      $table = $list[$this->request['a']];
+      $this->forward404Unless($table);
+
+      unset($this->request['m'], $this->request['a']);
+      foreach ($table['params'] as $k => $v)
+      {
+        if (isset($this->request[$k]))
+        {
+          $this->request[$v] = $this->request[$k];
+          unset($this->request[$k]);
+        }
+      }
+
+      if (isset($table['route']))
+      {
+        $this->redirect($table['route'], $this->request->getParameterHolder()->getAll());
+      }
+      else
+      {
+        unset($this->request['module'], $this->request['action']);
+        $this->redirect($table['url'].'?'.http_build_query($this->request->getParameterHolder()->getAll()));
+      }
     }
   }
 
