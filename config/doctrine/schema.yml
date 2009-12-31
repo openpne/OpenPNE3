@@ -261,11 +261,14 @@ MemberConfig:
     name: { type: string(64), default: "", notnull: true, comment: "Configuration name" }
     value: { type: string, default: "", notnull: true, comment: "Configuration value" }
     value_datetime: { type: datetime, comment: "Configuration datetime value" }
+    name_value_hash: { type: string(32), notnull: true, comment: "Hash value for searching name & value" }
   relations:
     Member: { local: member_id, foreign: id, onDelete: cascade }
   indexes:
     name_INDEX:
       fields: [name]
+    name_value_hash_INDEX:
+      fields: [name_value_hash]
   options:
     type: INNODB
     collate: utf8_unicode_ci

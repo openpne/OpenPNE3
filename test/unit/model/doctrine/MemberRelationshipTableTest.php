@@ -4,7 +4,7 @@ include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 sfContext::createInstance($configuration);
 
-$t = new lime_test(12, new lime_output_color());
+$t = new lime_test(16, new lime_output_color());
 $table = Doctrine::getTable('MemberRelationship');
 
 //------------------------------------------------------------
@@ -17,7 +17,7 @@ $t->is($table->retrieveByFromAndTo(1, 999), null);
 $t->diag('MemberRelationshipTable::retrievesByMemberIdFrom()');
 $result = $table->retrievesByMemberIdFrom(1);
 $t->isa_ok($result, 'Doctrine_Collection');
-$t->is($result->count(), 2);
+$t->is($result->count(), 6);
 
 //------------------------------------------------------------
 $t->diag('MemberRelationshipTable::getFriendListPager()');
@@ -25,7 +25,41 @@ $t->isa_ok($table->getFriendListPager(1), 'sfDoctrinePager');
 
 //------------------------------------------------------------
 $t->diag('MemberRelationshipTable::getFriendMemberIds()');
-$t->is($table->getFriendMemberIds(1), array(2));
+$t->is($table->getFriendMemberIds(1), array(2, 4, 7, 8));
+
+//------------------------------------------------------------
+$t->diag('MemberRelationship::getFriends()');
+$t->isa_ok($table->getFriends(1, 1, false), 'Doctrine_Collection', 'getFriends() returns Doctrine_Collection');
+$randomFriend1 = $table->getFriends(1, 3, true)->toArray();
+$randomFriend2 = $table->getFriends(1, 3, true)->toArray();
+$randomFriendNames1 = array();
+$randomFriendNames2 = array();
+
+$t->cmp_ok(count($randomFriend1), '<=', 3, 'getFriends() returns 3 records at most');
+if (1 < count($randomFriend1))
+{
+  $isRandom = false;
+  while ($randomFriend1)
+  {
+    $rf1 = array_shift($randomFriend1);
+    $rf2 = array_shift($randomFriend2);
+    if ($rf1['name'] !== $rf2['name'])
+    {
+      $isRandom = true;
+    }
+
+    $randomFriendNames1[] = $rf1['name'];
+    $randomFriendNames2[] = $rf2['name'];
+  }
+  sort($randomFriendNames1);
+  sort($randomFriendNames2);
+  $t->isnt(count(array_diff($randomFriendNames1, $randomFriendNames2)), 0, 'getFriends() returns random in limitation');
+  $t->is($isRandom, true, 'getFriends() returns random order');
+}
+else
+{
+  $t->skip('getFriends() returns random order (too few friends)');
+}
 
 //------------------------------------------------------------
 $t->diag('MemberRelationshipTable::friendConfirmList()');

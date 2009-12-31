@@ -75,32 +75,12 @@ class Member extends BaseMember implements opAccessControlRecordInterface
 
   public function getFriends($limit = null, $isRandom = false)
   {
-    $subQuery = Doctrine::getTable('MemberRelationship')->createQuery()
-        ->select('mr.member_id_to')
-        ->from('MemberRelationship mr')
-        ->where('member_id_from = ?')
-        ->andWhere('is_friend = ?');
-
-    $q = Doctrine::getTable('Member')->createQuery()
-        ->where('id IN ('.$subQuery->getDql().')', array($this->getId(), true));
-
-    if (!is_null($limit))
-    {
-      $q->limit($limit);
-    }
-
-    if ($isRandom)
-    {
-      $expr = new Doctrine_Expression('RANDOM()');
-      $q->orderBy($expr);
-    }
-
-    return $q->execute();
+    return Doctrine::getTable('MemberRelationship')->getFriends($this->getId(), $limit, $isRandom);
   }
 
   public function countFriends()
   {
-    return $this->getFriends()->count();
+    return count(Doctrine::getTable('MemberRelationship')->getFriendMemberIds($this->getId()));
   }
 
   public function getNameAndCount($format = '%s (%d)')

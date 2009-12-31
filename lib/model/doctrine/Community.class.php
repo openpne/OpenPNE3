@@ -140,7 +140,13 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
 
   public function countCommunityMembers()
   {
-    return $this->getMembers()->count();
+    $inactiveMemberIds = Doctrine::getTable('Member')->getInactiveMemberIds();
+
+    return Doctrine::getTable('CommunityMember')->createQuery()
+      ->whereNotIn('member_id', $inactiveMemberIds)
+      ->andWhere('community_id = ?', $this->id)
+      ->andWhere('position <> ?', 'pre')
+      ->count();
   }
 
   public function getNameAndCount($format = '%s (%d)')
