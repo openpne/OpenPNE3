@@ -82,7 +82,10 @@ class sfOpenPNEMailSend
 
   public static function sendTemplateMail($template, $to, $from, $params = array(), $context = null)
   {
-    if (!$to) return false;
+    if (!$to)
+    {
+      return false;
+    }
 
     if (empty($params['target']))
     {
@@ -110,7 +113,10 @@ class sfOpenPNEMailSend
 
   public static function execute($subject, $to, $from, $body)
   {
-    if (!$to) return false;
+    if (!$to)
+    {
+      return false;
+    }
 
     sfOpenPNEApplicationConfiguration::registerZend();
 
