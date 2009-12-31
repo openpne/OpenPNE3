@@ -59,6 +59,11 @@ class ActivityDataTable extends Doctrine_Table
       $object->setIsMobile(false);
     }
 
+    if (isset($options['uri']))
+    {
+      $object->setUri($options['uri']);
+    }
+
     if (isset($options['source']))
     {
       $object->setSource($options['source']);
