@@ -26,76 +26,85 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
-    while (
-      !($dbms = $this->ask('Choose DBMS (mysql, pgsql or sqlite)'))
-      || !in_array($dbms, array('mysql', 'pgsql', 'sqlite'))
-    );
-
     $username = '';
     $password = '';
     $hostname = '';
     $port = '';
-    if ($dbms !== 'sqlite') {
-      while (
-        !($username = $this->ask('Type database username'))
-      );
+    $sock = '';
+    $maskedPassword = '******';
 
-      $password = $this->ask('Type database password (optional)');
+    $validator = new sfValidatorCallback(array('required' => true, 'callback' => array($this, 'validateDBMS')));
+    $dbms = $this->askAndValidate(array('Choose DBMS:', '- mysql', '- pgsql (unsupported)', '- sqlite (unsupported)'), $validator, array('style' => 'QUESTION_LARGE'));
+    if (!$dbms)
+    {
+      $this->logSection('installer', 'task aborted');
 
-      while (
-        !($hostname = $this->ask('Type database hostname'))
-      );
-      $port = $this->ask('Type database port number (optional)');
+      return 1;
     }
 
-    while (
-      !($dbname = $this->ask('Type database name'))
-    );
+    if ($dbms !== 'sqlite')
+    {
+      $username = $this->askAndValidate(array('Type database username'), new opValidatorString(), array('style' => 'QUESTION_LARGE'));
+      $password = $this->askAndValidate(array('Type database password (optional)'), new opValidatorString(array('required' => false)), array('style' => 'QUESTION_LARGE'));
+      $hostname = $this->askAndValidate(array('Type database hostname'), new opValidatorString(), array('style' => 'QUESTION_LARGE'));
+      $port = $this->askAndValidate(array('Type database port number (optional)'), new sfValidatorInteger(array('required' => false)), array('style' => 'QUESTION_LARGE'));
+    }
 
+    $dbname = $this->askAndValidate(array('Type database name'), new opValidatorString(), array('style' => 'QUESTION_LARGE'));
     if ($dbms == 'sqlite')
     {
       $dbname = realpath(dirname($dbname)).DIRECTORY_SEPARATOR.basename($dbname);
     }
 
-    $sock = '';
-    if ($dbms == 'mysql' && ($hostname == 'localhost' || $hostname == '127.0.0.1')) {
-      $sock = $this->ask('Type database socket path (optional)');
+    if ($dbms == 'mysql' && ($hostname == 'localhost' || $hostname == '127.0.0.1'))
+    {
+      $sock = $this->askAndValidate(array('Type database socket path (optional)'), new opValidatorString(array('required' => false)), array('style' => 'QUESTION_LARGE'));
     }
 
-    $maskedPassword = '******';
     if (!$password)
     {
       $maskedPassword = '';
     }
 
-    $this->log($this->formatList(array(
-      'The DBMS                 ' => $dbms,
-      'The Database Username    ' => $username,
-      'The Database Password    ' => $maskedPassword,
-      'The Database Hostname    ' => $hostname,
-      'The Database Port Number ' => $port,
-      'The Database Name        ' => $dbname,
-      'The Database Socket      ' => $sock,
-    )));
+    $list = array(
+      'The DBMS                 : '.$dbms,
+      'The Database Username    : '.$username,
+      'The Database Password    : '.$maskedPassword,
+      'The Database Hostname    : '.$hostname,
+      'The Database Port Number : '.$port,
+      'The Database Name        : '.$dbname,
+      'The Database Socket      : '.$sock,
+    );
 
-    if ($this->askConfirmation('Is it OK to start this task? (y/n)'))
+    if (!$this->askConfirmation(array_merge($list, array('', 'Is it OK to start this task? (Y/n)')), 'QUESTION_LARGE'))
     {
-      $this->installPlugins();
-      @$this->fixPerms();
-      @$this->clearCache();
-      $this->configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock);
-      $this->buildDb();
+      $this->logSection('installer', 'task aborted');
 
-      if ($dbms === 'sqlite')
-      {
-        $this->getFilesystem()->chmod($dbname, 0666);
-      }
-
-      $this->publishAssets();
-
-      // _PEAR_call_destructors() causes an E_STRICT error
-      error_reporting(error_reporting() & ~E_STRICT);
+      return 1;
     }
+
+    $this->doInstall($dbms, $username, $password, $hostname, $port, $dbname, $sock);
+
+    if ($dbms === 'sqlite')
+    {
+      $this->getFilesystem()->chmod($dbname, 0666);
+    }
+
+    $this->publishAssets();
+
+    // _PEAR_call_destructors() causes an E_STRICT error
+    error_reporting(error_reporting() & ~E_STRICT);
+
+    $this->logSection('installer', 'installation is completed!');
+  }
+
+  protected function doInstall($dbms, $username, $password, $hostname, $port, $dbname, $sock)
+  {
+    $this->installPlugins();
+    @$this->fixPerms();
+    @$this->clearCache();
+    $this->configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock);
+    $this->buildDb();
   }
 
   protected function createDSN($dbms, $hostname, $port, $dbname, $sock)
@@ -232,16 +241,33 @@ EOF;
     $permissions->run();
   }
 
-  protected function formatList($list)
+  public function validateDBMS($validator, $value, $arguments = array())
   {
-    $result = '';
-
-    foreach ($list as $key => $value)
+    $list = array('mysql', 'pgsql', 'sqlite');
+    if (!in_array($value, $list))
     {
-      $result .= $this->formatter->format($key, 'INFO')."\t";
-      $result .= $value."\n";
+      throw new sfValidatorError($validator, 'You must specify "mysql", "pgsql" or "sqlite"');
     }
 
-    return $result;
+    if ('mysql' !== $value)
+    {
+      if ($this->askConfirmation(array(
+        '===================',
+        ' WARNING',
+        '===================',
+        $value.' is UNSUPPORTED by this version of OpenPNE!',
+        '',
+        'DO NOT use this DBMS, unless you are expert at this DBMS and you can cope some troubles.',
+        'If you want to give us some feedback about this DBMS, please visit: http://redmine.openpne.jp/',
+        '',
+        'Do you give up using this DBMS? (Y/n)',
+        ), 'ERROR_LARGE', true)
+      )
+      {
+        return false;
+      }
+    }
+
+    return $value;
   }
 }
