@@ -51,7 +51,7 @@ class Member extends BaseMember implements opAccessControlRecordInterface
 
   public function countFriends()
   {
-    return $this->getFriends()->count();
+    return count(Doctrine::getTable('MemberRelationship')->getFriendMemberIds($this->getId()));
   }
 
   public function getNameAndCount($format = '%s (%d)')
