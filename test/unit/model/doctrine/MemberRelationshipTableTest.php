@@ -30,35 +30,63 @@ $t->is($table->getFriendMemberIds(1), array(2, 4, 7, 8));
 //------------------------------------------------------------
 $t->diag('MemberRelationship::getFriends()');
 $t->isa_ok($table->getFriends(1, 1, false), 'Doctrine_Collection', 'getFriends() returns Doctrine_Collection');
-$randomFriend1 = $table->getFriends(1, 3, true)->toArray();
-$randomFriend2 = $table->getFriends(1, 3, true)->toArray();
-$randomFriendNames1 = array();
-$randomFriendNames2 = array();
 
-$t->cmp_ok(count($randomFriend1), '<=', 3, 'getFriends() returns 3 records at most');
-if (1 < count($randomFriend1))
+$randomFriend = $table->getFriends(1, 3, true)->toArray();
+$t->cmp_ok(count($randomFriend), '<=', 3, 'getFriends() returns 3 records at most');
+
+if (1 < count($randomFriend))
 {
   $isRandom = false;
-  while ($randomFriend1)
+  for ($i = 0; $i < 10; $i++)
   {
-    $rf1 = array_shift($randomFriend1);
-    $rf2 = array_shift($randomFriend2);
-    if ($rf1['name'] !== $rf2['name'])
+    $current = $table->getFriends(1, 3, true)->toArray();
+
+    if ($current !== $randomFriend)
     {
       $isRandom = true;
+      break;
     }
-
-    $randomFriendNames1[] = $rf1['name'];
-    $randomFriendNames2[] = $rf2['name'];
   }
-  sort($randomFriendNames1);
-  sort($randomFriendNames2);
-  $t->isnt(count(array_diff($randomFriendNames1, $randomFriendNames2)), 0, 'getFriends() returns random in limitation');
   $t->is($isRandom, true, 'getFriends() returns random order');
 }
 else
 {
   $t->skip('getFriends() returns random order (too few friends)');
+}
+
+if (3 < count($randomFriend))
+{
+  $randomFriend = $table->getFriends(1, 3, true)->toArray();
+  $randomFriendIds = array();
+  foreach ($randomFriend as $f)
+  {
+    $randomFriendIds[] = $f['id'];
+  }
+  sort($randomFriendIds);
+
+  $isRandom = false;
+  for ($i = 0; $i < 10; $i++)
+  {
+    $current = $table->getFriends(1, 3, true)->toArray();
+
+    $currentIds = array();
+    foreach ($current as $f)
+    {
+      $currentIds[] = $f['id'];
+    }
+    sort($currentIds);
+
+    if (count(array_diff($randomFriendIds, $currentIds)) > 0)
+    {
+      $isRandom = true;
+      break;
+    }
+  }
+  $t->is($isRandom, true, 'getFriends() returns random in limitation');
+}
+else
+{
+  $t->skip('getFriends() returns random in limitation (too few friends)');
 }
 
 //------------------------------------------------------------
