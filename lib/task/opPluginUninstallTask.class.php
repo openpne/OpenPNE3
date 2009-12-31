@@ -34,6 +34,9 @@ EOF;
 
   public function getPluginManager()
   {
+    // Remove E_STRICT and E_DEPRECATED from error_reporting
+    error_reporting(error_reporting() & ~(E_STRICT | E_DEPRECATED));
+
     $oldPluginManager = parent::getPluginManager();
     $pluginManager = new opPluginManager($this->dispatcher, $oldPluginManager->getEnvironment());
 
