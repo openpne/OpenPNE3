@@ -10,5 +10,5 @@
 
 if (!defined('OPENPNE_VERSION'))
 {
-  define('OPENPNE_VERSION', '3.3.2');
+  define('OPENPNE_VERSION', '3.4beta1-dev');
 }
