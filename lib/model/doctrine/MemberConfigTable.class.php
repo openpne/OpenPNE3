@@ -12,6 +12,11 @@ class MemberConfigTable extends opAccessControlDoctrineTable
 {
   public $results;
 
+  public function generateNameValueHash($name, $value)
+  {
+    return md5($name.','.$value);
+  }
+
   public function retrieveByNameAndMemberId($name, $memberId, $force = false)
   {
     $results = $this->getResultsByMemberId($memberId, $force);
@@ -21,8 +26,7 @@ class MemberConfigTable extends opAccessControlDoctrineTable
   public function retrieveByNameAndValue($name, $value)
   {
     return $this->createQuery()
-      ->where('name = ?', $name)
-      ->andWhere('value = ?', $value)
+      ->where('name_value_hash = ?', $this->generateNameValueHash($name, $value))
       ->fetchOne();
   }
 

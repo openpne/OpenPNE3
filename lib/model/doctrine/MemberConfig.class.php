@@ -62,6 +62,8 @@ class MemberConfig extends BaseMemberConfig implements opAccessControlRecordInte
     {
       $this->_set('value_datetime', $this->_get('value'));
     }
+
+    $this->_set('name_value_hash', $this->getTable()->generateNameValueHash($this->_get('name'), $this->_get('value')));
   }
 
   public function saveToken()
