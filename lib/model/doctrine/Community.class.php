@@ -145,7 +145,7 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
     return Doctrine::getTable('CommunityMember')->createQuery()
       ->whereNotIn('member_id', $inactiveMemberIds)
       ->andWhere('community_id = ?', $this->id)
-      ->andWhere('position <> ?', 'pre')
+      ->andWhere('is_pre = ?', false)
       ->count();
   }
 
