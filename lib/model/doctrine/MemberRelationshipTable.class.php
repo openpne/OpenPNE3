@@ -48,18 +48,43 @@ class MemberRelationshipTable extends Doctrine_Table
   {
     $result = array();
 
-    $collection = $this->createQuery()
+    $friendMemberIds = $this->createQuery()
       ->select('member_id_to')
       ->where('member_id_from = ?', $memberId)
       ->andWhere('is_friend = ?', true)
-      ->execute();
+      ->execute(array(), Doctrine::HYDRATE_ARRAY);
 
-    foreach ($collection as $record)
+    $inactiveMemberIds = Doctrine::getTable('Member')->getInactiveMemberIds();
+
+    foreach ($friendMemberIds as $friend)
     {
-      $result[] = $record->member_id_to;
+      if (!in_array($friend['member_id_to'], $inactiveMemberIds))
+      {
+        $result[] = $friend['member_id_to'];
+      }
     }
 
     return $result;
+  }
+
+  public function getFriends($memberId, $limit = null, $isRandom = false)
+  {
+    $collection = Doctrine_Collection::create('Member');
+    $friendIds = $this->getFriendMemberIds($memberId);
+
+    if ($isRandom)
+    {
+      shuffle($friendIds);
+    }
+
+    $limitedFriendIds = is_null($limit) ? $friendIds : array_slice($friendIds, 0, $limit);
+
+    foreach ($limitedFriendIds as $friendId)
+    {
+      $collection[] = Doctrine::getTable('Member')->find($friendId);
+    }
+
+    return $collection;
   }
 
   public static function friendConfirmList(sfEvent $event)

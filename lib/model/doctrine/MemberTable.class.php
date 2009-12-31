@@ -46,6 +46,30 @@ class MemberTable extends opAccessControlDoctrineTable
 
     return $ids;
   }
+ 
+  public function getInactiveMemberIds()
+  {
+    $e = opActivateBehavior::getEnabled();
+    opActivateBehavior::disable();
+
+    $members = $this->createQuery()
+      ->select('id')
+      ->andWhere('is_active = ?', false)
+      ->execute(array(), Doctrine::HYDRATE_ARRAY);
+
+    if ($e)
+    {
+      opActivateBehavior::enable();
+    }
+
+    $memberIds = array();
+    foreach ($members as $member)
+    {
+      $memberIds[] = $member['id'];
+    }
+
+    return $memberIds;
+  }
 
   public function retrivesByInviteMemberId($memberId)
   {
