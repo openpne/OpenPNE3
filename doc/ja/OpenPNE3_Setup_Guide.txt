@@ -1,8 +1,9 @@
+===========================
 OpenPNE3.2 セットアップ手順
 ===========================
 
 はじめに
---------
+========
 
 このドキュメントは、 OpenPNE バージョン 3.2 を基にして書かれています。
 
@@ -26,20 +27,18 @@ PHP
   
   PostgreSQL, SQLite は現時点で未サポート（将来的にサポート予定）
 
-パッケージをダウンロードして利用する
-------------------------------------
+セットアップ
+============
 
-ダウンロード
-~~~~~~~~~~~~
+OpenPNE3 のソースコードを入手する
+---------------------------------
 
-以下の URL から OpenPNE 3.2 のパッケージをダウンロードしてください。
+以下の URL に記載されている情報に従って、 OpenPNE 3 のソースコードをダウンロードしてください。
 
-http://github.com/openpne/OpenPNE3/downloads
-
-その後、 ZIP アーカイブを解凍してください。
+http://www.openpne.jp/pne-downloads/
 
 ファイルの設置
-~~~~~~~~~~~~~~
+--------------
 
 以下のような構造になるようにサーバ上にファイルを設置してください。
 
@@ -49,7 +48,6 @@ http://github.com/openpne/OpenPNE3/downloads
   +-- LICENSE
   +-- NOTICE
   +-- apps/
-  +-- cache/
   +-- config/
   +-- data/
   +-- doc/
@@ -67,18 +65,21 @@ http://github.com/openpne/OpenPNE3/downloads
       +-- pc_backend.php
         :
 
-HTTP プロキシの設定
-~~~~~~~~~~~~~~~~~~~
+設定ファイルをコピー
+--------------------
 
-HTTP プロキシを利用する場合、 config/ProjectConfiguration.class.php の op_http_proxy の設定を以下の例を参考に変更してください。
+以下のようにして設定ファイルをコピーしてください。
 
 ::
 
-  //HTTP proxy to use when downloading plugin packages
-  sfConfig::set('op_http_proxy', 'example.com:8080');
+  $ cd OpenPNE3
+  $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
+  $ cp config/OpenPNE.yml.sample config/OpenPNE.yml
+
+その後、 OpenPNE.yml の設定値を環境に合わせて変更してください。特に base_url と mail_domain はメール投稿、メール配信の際に利用されるので必ず設定をおこなってください。
 
 インストールコマンドの実行
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 以下のコマンドを実行し、インストール作業をおこなってください。
 
@@ -99,7 +100,7 @@ HTTP プロキシを利用する場合、 config/ProjectConfiguration.class.php 
 以上の事項について入力をおこなうと、インストール作業が自動でおこなわれます。
 
 mod_rewrite の設定
-~~~~~~~~~~~~~~~~~~
+------------------
 
 web/.htaccess の RewriteBase を各自の環境にあわせて編集してください（必要でない場合もあります）。
 
@@ -109,17 +110,8 @@ web/.htaccess の RewriteBase を各自の環境にあわせて編集してく�
 
 ※RewriteBase には URL の絶対パスを指定してください。
 
-インストール
-~~~~~~~~~~~~
-
-以下のコマンドを実行（DSNなどは各自適切なものに変更）
-
-::
-
-  $ ./symfony openpne:install
-
-メールの設定
-~~~~~~~~~~~~
+メール配信設定
+--------------
 
 メールを配信するための設定をおこないます。メールの配信をおこなわない場合はスキップして構いません。
 
@@ -146,8 +138,25 @@ cron ファイルに設定権限を付加します。
 
 管理画面のガジェット設定から、デイリー・ニュースに対応したプラグインが提供するコンテンツを選択して使用してください。
 
+メール投稿設定
+--------------
+
+メール投稿のための設定をおこないます。メール投稿をおこなわない場合はスキップして構いません。
+
+設定例 (Postfix を使用する場合)
++++++++++++++++++++++++++++++++
+
+/etc/postfix/virtual を以下のように設定します::
+
+  example.com anything
+  @example.com openpne_user
+
+/etc/aliases を以下のように設定します::
+
+  openpne_user "| php /path/to/openpne/symfony openpne:execute-mail-action"
+
 ブラウザからアクセス(PC)
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 (1) http://example.com/index.php にアクセス
 (2) ログインフォームに sns@example.com / password と入力し、ログインできるかどうか確認
@@ -155,94 +164,10 @@ cron ファイルに設定権限を付加します。
 ※メールアドレスとパスワードはログイン後に必ず変更してください
 
 ブラウザからアクセス(管理画面)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 (1) http://example.com/pc_backend.php にアクセス
 (2) ログインフォームに admin / password と入力し、ログインできるかどうか確認 
 
 ※メールアドレスとパスワードはログイン後に必ず変更してください
-
-Git から入手してセットアップする
---------------------------------
-
-OpenPNE3 をクローンし、使用したいバージョンをチェックアウトする
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-OpenPNE3 のクローンはデフォルトでは master ブランチを使用する状態になっています。
-
-master ブランチは主に開発版の開発に使われるバージョンです。
-
-OpenPNE3 の特定のバージョンを使いたい場合は、以下のようにして、クローンした後にタグをチェックアウトしてください。
-
-::
-
-  $ git clone git://github.com/openpne/OpenPNE3.github
-  $ git checkout OpenPNE-3.2RC1
-
-config/ProjectConfiguration.class.php をコピー
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-  $ cd OpenPNE3
-  $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
-
-HTTP プロキシの設定
-~~~~~~~~~~~~~~~~~~~
-
-HTTP プロキシを利用する場合、 config/ProjectConfiguration.class.php の op_http_proxy の設定を以下の例を参考に変更してください。
-
-::
-
-  //HTTP proxy to use when downloading plugin packages
-  sfConfig::set('op_http_proxy', 'example.com:8080');
-
-インストール
-~~~~~~~~~~~~
-
-以下のコマンドを実行（DSNなどは各自適切なものに変更）
-
-::
-
-  $ ./symfony openpne:install
-
-メールの設定
-~~~~~~~~~~~~
-
-メールを配信するための設定をおこないます。メールの配信をおこなわない場合はスキップして構いません。
-
-設定例
-++++++
-
-cron ファイルに設定権限を付加します。
-
-::
-
-  $ chmod -R 0755 bin/*.cron
-
-/etc/crontab に以下を記述します。
-
-::
-
-  # 6 時に /path/to/OpenPNE3/bin/send_daily_news.cron というスクリプトを /path/to/php で実行することで /path/to/OpenPNE3 のデイリー・ニュースを配信する
-  00   6 * * * root sh /path/to/OpenPNE3/bin/send_daily_news.cron     /path/to/OpenPNE3 /path/to/php
-  
-  # 6 時に /path/to/OpenPNE3/bin/birthday_mail.cron というスクリプトを /path/to/php で実行することで /path/to/OpenPNE3 の誕生日通知メールを配信する
-  00   6 * * * root sh /path/to/OpenPNE3/bin/birthday_mail.cron     /path/to/OpenPNE3 /path/to/php
-
-なお、デイリー・ニュースはデフォルトの状態ではコンテンツがありません。
-
-管理画面のガジェット設定から、デイリー・ニュースに対応したプラグインが提供するコンテンツを選択して使用してください。
-
-ブラウザからアクセス(PC)
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-(1) http://example.com/pc_frontend_dev.php にアクセス
-(2) ログインフォームに sns@example.com / password と入力し、ログインできるかどうか確認
-
-ブラウザからアクセス(管理画面)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-(1) http://example.com/pc_backend_dev.php にアクセス
-(2) ログインフォームに admin / password と入力し、ログインできるかどうか確認 
 

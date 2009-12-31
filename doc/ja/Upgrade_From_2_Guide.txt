@@ -107,7 +107,7 @@ config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.cla
 
 アップグレードに際していくつか注意事項があります。
 
-* 3.3.1 の実装では、旧データは (コンバートの都合上 ALTER TABLE をする場面はあるものの) すべて残します。アップグレードをおこなう場合はディスクに充分な空き容量があることを確認してからおこなってください。最終的には OpenPNE3 側で未実装であるなどの理由がある場合を除き、データは適切なタイミングで削除する予定です
+* 3.3.2 の実装では、旧データは (コンバートの都合上 ALTER TABLE をする場面はあるものの) すべて残します。アップグレードをおこなう場合はディスクに充分な空き容量があることを確認してからおこなってください。最終的には OpenPNE3 側で未実装であるなどの理由がある場合を除き、データは適切なタイミングで削除する予定です
 
 * fix_old_image_data のコンバートで「Allowed memory size of xxxx bytes exhausted ... 」というようなエラーメッセージとともに失敗する場合、 php.ini の memory_limit ディレクティブの設定を見直すか、それが難しい場合は config/config.OpenPNE2.php の IMAGE_MAX_FILESIZE の設定値を大きな値に設定してください
 
@@ -142,8 +142,6 @@ config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.cla
 * 管理ユーザ(admin_user)は「全権限」が与えられているアカウントのみコンバートします
 
 * ナビメニューの設定はコンバートしません
-
-* OpenPNE2 形式の古い URL にアクセスした場合の措置がまだおこなわれていません
 
 * OpenPNE2 のナビメニューにないメニュー項目、 OpenPNE3 にない機能のメニュー項目はナビメニューからクリックできないようになっています。対応するにはナビメニューの設定を調節し、 CSS に記述を加えるか、 OpenPNE2 互換スキンを使わないように管理画面から opSkinClassicPlugin を無効にしてください
 
