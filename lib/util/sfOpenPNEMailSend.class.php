@@ -82,6 +82,8 @@ class sfOpenPNEMailSend
 
   public static function sendTemplateMail($template, $to, $from, $params = array(), $context = null)
   {
+    if (!$to) return false;
+
     if (empty($params['target']))
     {
       $target = opToolkit::isMobileEmailAddress($to) ? 'mobile' : 'pc';
@@ -108,6 +110,8 @@ class sfOpenPNEMailSend
 
   public static function execute($subject, $to, $from, $body)
   {
+    if (!$to) return false;
+
     sfOpenPNEApplicationConfiguration::registerZend();
 
     $subject = mb_convert_kana($subject, 'KV');
