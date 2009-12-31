@@ -2,7 +2,7 @@
 
 
 <div id="globalNav">
-<?php include_component('default', 'globalNav', array(sfContext::getInstance()->getUser()->getCulture())) ?>
+<?php include_component('default', 'globalNav') ?>
 </div><!-- globalNav -->
 
 <div id="topBanner">

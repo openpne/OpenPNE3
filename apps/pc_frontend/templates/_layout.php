@@ -27,7 +27,7 @@
 <div id="ContentsContainer">
 
 <div id="localNav">
-<?php include_component('default', 'localNav', array(sfContext::getInstance()->getUser()->getCulture())) ?>
+<?php include_component('default', 'localNav') ?>
 </div><!-- localNav -->
 
 <div id="Layout<?php echo $layout ?>" class="Layout">
