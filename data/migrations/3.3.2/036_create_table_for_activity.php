@@ -75,8 +75,24 @@ class Revision36_CreateTableForActivity extends Doctrine_Migration_Base
       ),
       'foreign_id' => array(
         'type' => 'integer',
-        'comment' => 'The is of reference table',
-      )
+        'comment' => 'The id of reference table',
+        'length' => 8,
+      ),
+      'created_at' => array(
+        'type' => 'timestamp',
+        'length' => 25,
+        'notnull' => true,
+      ),
+      'updated_at' => array(
+        'type' => 'timestamp',
+        'length' => 25,
+        'notnull' => true,
+      ),
+    ), array(
+      'type' => 'INNODB',
+      'collate' => 'utf8_unicode_ci',
+      'charset' => 'utf8',
+      'comment' => 'Saves activities',
     ));
 
     $this->table($direction, 'activity_image', array(
@@ -93,7 +109,7 @@ class Revision36_CreateTableForActivity extends Doctrine_Migration_Base
         'comment' => 'Activity data id',
         'length' => 4
       ),
-      'mine_type' => array(
+      'mime_type' => array(
         'type' => 'string',
         'notnull' => true,
         'comment' => 'MIME type',
@@ -107,7 +123,22 @@ class Revision36_CreateTableForActivity extends Doctrine_Migration_Base
         'type' => 'integer',
         'comment' => 'File id',
         'length' => 4
-      )
+      ),
+      'created_at' => array(
+        'type' => 'timestamp',
+        'length' => 25,
+        'notnull' => true,
+      ),
+      'updated_at' => array(
+        'type' => 'timestamp',
+        'length' => 25,
+        'notnull' => true,
+      ),
+    ), array(
+      'type' => 'INNODB',
+      'collate' => 'utf8_unicode_ci',
+      'charset' => 'utf8',
+      'comment' => 'Saves image information of activity',
     ));
   }
 }

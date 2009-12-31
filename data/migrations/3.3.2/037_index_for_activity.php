@@ -48,19 +48,19 @@ class Revision37_IndexForActivity extends Doctrine_Migration_Base
       'onDelete' => 'CASCADE'
     ));
 
-    $this->foreignKey($direction, 'activity_image', 'activity_image_activity_data_id_activity_data_id', array(
-      'name' => 'activity_image_activity_data_id_activity_data_id',
-      'local' => 'activity_data_id',
-      'foreign' => 'id',
-      'foreignTable' => 'activity_data',
-      'onDelete' => 'CASCADE'
-    ));
-
     $this->foreignKey($direction, 'activity_image', 'activity_image_file_id_file_id', array(
       'name' => 'activity_image_file_id_file_id',
       'local' => 'file_id',
       'foreign' => 'id',
       'foreignTable' => 'file',
+      'onDelete' => 'CASCADE'
+    ));
+
+    $this->foreignKey($direction, 'activity_image', 'activity_image_activity_data_id_activity_data_id', array(
+      'name' => 'activity_image_activity_data_id_activity_data_id',
+      'local' => 'activity_data_id',
+      'foreign' => 'id',
+      'foreignTable' => 'activity_data',
       'onDelete' => 'CASCADE'
     ));
   }
