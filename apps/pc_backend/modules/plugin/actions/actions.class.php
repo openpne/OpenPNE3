@@ -33,17 +33,39 @@ class pluginActions extends sfActions
   */
   public function executeList(sfWebRequest $request)
   {
+    $this->type = $request->getParameter('type', 'application');
+
     $pluginManager = new opInstalledPluginManager();
 
-    $this->plugins = $pluginManager->getInstalledPlugins();
+    if ('skin' === $this->type)
+    {
+      $this->plugins = $pluginManager->getInstalledSkinPlugins();
+    }
+    elseif ('auth' === $this->type)
+    {
+      $this->plugins = $pluginManager->getInstalledAuthPlugins();
+    }
+    else
+    {
+      $this->plugins = $pluginManager->getInstalledApplicationPlugins();
+    }
 
-    $this->form = new PluginActivationForm(array(), array('plugins' => $this->plugins));
+    $this->form = new PluginActivationForm(array(), array('plugins' => $this->plugins, 'type' => $this->type));
 
     if ($request->isMethod(sfRequest::POST))
     {
       $this->form->bind($this->request->getParameter('plugin_activation'));
-      $this->getUser()->setFlash('notice', 'Saved.');
-      $this->redirectIf($this->form->save(), 'plugin/list');
+      if ($this->form->isValid())
+      {
+        $this->getUser()->setFlash('notice', 'Saved.');
+        $this->form->save();
+      }
+      else
+      {
+        $this->getUser()->setFlash('error', $this->form->getErrorSchema()->getMessage());
+      }
+
+      $this->redirect('plugin/list?type='.$this->type);
     }
 
     return sfView::SUCCESS;

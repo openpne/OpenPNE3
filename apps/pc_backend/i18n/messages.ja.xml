@@ -709,6 +709,14 @@
         <source>All Mobile Pages</source>
         <target>携帯版全ページ</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>You must activate at least an authentication plugin.</source>
+        <target>少なくともどれか一つ、認証プラグインを有効にしてください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You must activate only an skin plugin.</source>
+        <target>スキンプラグインは必ずどれか一つだけを有効にしてください。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

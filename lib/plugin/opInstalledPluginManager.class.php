@@ -17,6 +17,51 @@
  */
 class opInstalledPluginManager
 {
+  public function getInstalledApplicationPlugins()
+  {
+    $result = $this->getInstalledPlugins();
+
+    foreach ($result as $k => $v)
+    {
+      if (!$v->isApplicationPlugin())
+      {
+        unset($result[$k]);
+      }
+    }
+
+    return $result;
+  }
+
+  public function getInstalledAuthPlugins()
+  {
+    $result = $this->getInstalledPlugins();
+
+    foreach ($result as $k => $v)
+    {
+      if (!$v->isAuthPlugin())
+      {
+        unset($result[$k]);
+      }
+    }
+
+    return $result;
+  }
+
+  public function getInstalledSkinPlugins()
+  {
+    $result = $this->getInstalledPlugins();
+
+    foreach ($result as $k => $v)
+    {
+      if (!$v->isSkinPlugin())
+      {
+        unset($result[$k]);
+      }
+    }
+
+    return $result;
+  }
+
   public function getInstalledPlugins()
   {
     $result = array();

@@ -114,4 +114,19 @@ class opPlugin
     $plugin->is_enabled = $isActive;
     $plugin->save();
   }
+
+  public function isAuthPlugin()
+  {
+    return (0 === strpos($this->name, 'opAuth'));
+  }
+
+  public function isSkinPlugin()
+  {
+    return (0 === strpos($this->name, 'opSkin'));
+  }
+
+  public function isApplicationPlugin()
+  {
+    return (!$this->isAuthPlugin() && !$this->isSkinPlugin());
+  }
 }

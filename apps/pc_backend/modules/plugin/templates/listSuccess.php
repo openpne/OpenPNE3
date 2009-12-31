@@ -1,7 +1,23 @@
-<h2><?php echo __('プラグイン設定') ?></h2>
+<?php slot('submenu') ?>
+<?php include_partial('submenu') ?>
+<?php end_slot(); ?>
+
+<?php if ('auth' === $type): ?>
+<h2><?php echo __('認証プラグイン設定') ?></h2>
+
+<p><?php echo __('認証プラグインは少なくともどれか一つが「有効」になっている必要があります。') ?></p>
+
+<?php elseif ('skin' === $type): ?>
+<h2><?php echo __('スキンプラグイン設定') ?></h2>
+
+<p><?php echo __('スキンプラグインはどれか一つのみが「有効」になっている必要があります。') ?></p>
+
+<?php else: ?>
+<h2><?php echo __('アプリケーションプラグイン設定') ?></h2>
+<?php endif; ?>
 
 <?php if ($plugins) : ?>
-<?php echo $form->renderFormTag(url_for('plugin/list')); ?>
+<?php echo $form->renderFormTag(url_for('plugin/list?type='.$type)); ?>
 <table>
 <tr>
 <th><?php echo __('有効/無効') ?></th>
