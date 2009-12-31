@@ -48,13 +48,13 @@ class opUpgradeFrom2ImportEmailAddressStrategy extends opUpgradeAbstractStrategy
       if ($result['pc_address'])
       {
         $address = OpenPNE2Util::t_decrypt($result['pc_address']);
-        $this->conn->execute('INSERT INTO member_config (name, value, member_id) VALUES ("pc_address", ?, ?)', array($address, $result['c_member_id']));
+        $this->conn->execute('INSERT INTO member_config (name, value, name_value_hash, member_id) VALUES ("pc_address", ?, ?, ?)', array($address, md5('pc_address,'.$address), $result['c_member_id']));
       }
 
       if ($result['ktai_address'])
       {
         $address = OpenPNE2Util::t_decrypt($result['ktai_address']);
-        $this->conn->execute('INSERT INTO member_config (name, value, member_id) VALUES ("mobile_address", ?, ?)', array($address, $result['c_member_id']));
+        $this->conn->execute('INSERT INTO member_config (name, value, name_value_hash, member_id) VALUES ("mobile_address", ?, ?, ?)', array($address, md5('mobile_address,'.$address), $result['c_member_id']));
       }
     }
   }
