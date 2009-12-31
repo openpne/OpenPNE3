@@ -9,11 +9,6 @@ Gadget:
     name: "informationBox"
     sort_order: 20
 
-  gadget_friend_activity:
-    type: "contents"
-    name: "activityBox"
-    sort_order: 10
-
   gadget_member_image:
     type: "sideMenu"
     name: "memberImageBox"
@@ -44,12 +39,6 @@ Gadget:
     name: "informationBox"
     sort_order: 10
 
-  mobile_gadget_activity:
-    type: "mobileContents"
-    name: "activityBox"
-    sort_order: 10
-
-
   login_gadget_login_form_box:
     type: "loginTop"
     name: "loginForm"
@@ -78,16 +67,6 @@ Gadget:
   profile_gadget_profile:
     type: "profileContents"
     name: "profileListBox"
-    sort_order: 10
-
-  gadget_member_activity:
-    type: "profileContents"
-    name: "activityBox"
-    sort_order: 20
-
-  mobile_profile_member_activity:
-    type: "mobileProfileContents"
-    name: "activityBox"
     sort_order: 10
 
   mobile_profile_gadget_friend_table:
