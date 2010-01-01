@@ -59,14 +59,19 @@ function sf_image_path($filename, $options = array(), $absolute = false)
     $f = $options['f'];
     unset($options['f']);
   }
+ elseif (is_callable(array($filename, 'getType')))
+  {
+    $f = str_replace('image/', '', $filename->getType());
+  }
   else
   {
-    $parts = explode('.', $filename);
+    $parts = explode('_', $filename);
     $f = array_pop($parts);
-    if ($f !== 'jpg' || $f !== 'png' || $f !== 'gif')
-    {
-      $f = 'jpg';
-    }
+  }
+
+  if ($f !== 'jpg' && $f !== 'png' && $f !== 'gif')
+  {
+    $f = 'jpg';
   }
 
   $size_dir_name = 'w_h';

@@ -48,6 +48,8 @@ class sfImageGeneratorGD
     {
       $this->format = $options['format'];
     }
+
+    $this->allowedSize = array_merge($this->allowedSize, sfConfig::get('sf_image_handler_allowed_size', array()));
   }
 
   public function configure()
