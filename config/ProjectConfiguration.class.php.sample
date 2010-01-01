@@ -3,111 +3,29 @@
 require_once dirname(__FILE__).'/../lib/vendor/symfony/lib/autoload/sfCoreAutoload.class.php';
 sfCoreAutoload::register();
 
-define('OPENPNE_CONFIGURAIOTN_SAMPLE_HASH', '7b73a69b5efd2d390bead8135e8a6335');
+require_once dirname(__FILE__).'/../lib/config/opProjectConfiguration.class.php';
 
-if (!defined('E_DEPRECATED'))
+define('OPENPNE3_CONFIG_DIR', dirname(__FILE__));
+
+class ProjectConfiguration extends opProjectConfiguration
 {
-  define('E_DEPRECATED', 8192);
-}
-
-class ProjectConfiguration extends sfProjectConfiguration
-{
-  static public function listenToPreCommandEvent(sfEvent $event)
+  public function setupProjectOpenPNE()
   {
-    require_once dirname(__FILE__).'/../lib/behavior/opActivateBehavior.class.php';
-    opActivateBehavior::disable();
+    // You can write your own configurations
   }
 
-  public function setup()
+  public function setupProjectOpenPNEDoctrine($manager)
   {
-    $this->enableAllPluginsExcept(array('sfPropelPlugin'));
-    $this->setIncludePath();
-
-    $this->setOpenPNEConfiguration();
-
-    sfConfig::set('doctrine_model_builder_options', array(
-      'baseClassName' => 'opDoctrineRecord',
-    ));
-
-    $this->dispatcher->connect('command.pre_command', array(__CLASS__, 'listenToPreCommandEvent'));
-  }
-
-  protected function configureSessionStorage($name, $options = array())
-  {
-    $sessionName = 'OpenPNE_'.sfConfig::get('sf_app', 'default');
-    $params = array('session_name' => $sessionName);
-
-    if ('memcache' === $name)
-    {
-      sfConfig::set('sf_factory_storage', 'opMemcacheSessionStorage');
-      sfConfig::set('sf_factory_storage_parameters', array_merge((array)$options, $params));
-    }
-    elseif ('database' === $name)
-    {
-      sfConfig::set('sf_factory_storage', 'opPDODatabaseSessionStorage');
-      sfConfig::set('sf_factory_storage_parameters', array_merge(array(
-        'db_table'    => 'session',
-        'database'    => 'doctrine',
-        'db_id_col'   => 'id',
-        'db_data_col' => 'data',
-        'db_time_col' => 'time',
-      ), (array)$options, $params));
-    }
-    elseif ('file' !== $name)
-    {
-      sfConfig::set('sf_factory_storage', $name);
-      sfConfig::set('sf_factory_storage_parameters', array_merge((array)$options, $params));
-    }
-  }
-
-  public function setIncludePath()
-  {
-    sfToolkit::addIncludePath(array(
-      //PEAR
-      dirname(__FILE__).'/../lib/vendor/PEAR/',
-      dirname(__FILE__).'/../lib/vendor/OAuth/',
-      dirname(__FILE__).'/../lib/vendor/simplepie/',
-    ));
-  }
-
-  public function configureDoctrine($manager)
-  {
-    $manager->setAttribute(Doctrine::ATTR_AUTOLOAD_TABLE_CLASSES, true);
-    $manager->setAttribute(Doctrine::ATTR_RECURSIVE_MERGE_FIXTURES, true);
-    $manager->setAttribute(Doctrine::ATTR_QUERY_CLASS, 'opDoctrineQuery');
+    // You can write your own configurations.
 
     // In default, OpenPNE uses foreign key.
     // If you want not to use foreign key, comment out the following configuration:
     // $manager->setAttribute(Doctrine::ATTR_EXPORT, Doctrine::EXPORT_ALL ^ Doctrine::EXPORT_CONSTRAINTS);
-
-    if (extension_loaded('apc'))
-    {
-      $cacheDriver = new Doctrine_Cache_Apc();
-      $manager->setAttribute(Doctrine::ATTR_QUERY_CACHE, $cacheDriver);
-    }
   }
 
-  protected function setOpenPNEConfiguration()
+  public function setup()
   {
-    $path = dirname(__FILE__).'/OpenPNE.yml';
-
-    if (md5_file($path.'.sample') !== OPENPNE_CONFIGURAIOTN_SAMPLE_HASH)
-    {
-      die('You must use original '.dirname(__FILE__).DIRECTORY_SEPARATOR.'OpenPNE.yml.sample or you must use new '.dirname(__FILE__).DIRECTORY_SEPARATOR.'ProjectConfiguration.class.php'.PHP_EOL);
-    }
-
-    $config = sfYaml::load($path.'.sample');
-    if (is_readable($path))
-    {
-      $config = array_merge($config, sfYaml::load($path));
-    }
-
-    $this->configureSessionStorage($config['session_storage']['name'], (array)$config['session_storage']['options']);
-    unset($config['session_storage']);
-
-    foreach ($config as $key => $value)
-    {
-      sfConfig::set('op_'.$key, $value);
-    }
+    // Do not edit this method if unsure
+    parent::setup();
   }
 }
