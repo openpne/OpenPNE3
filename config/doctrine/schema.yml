@@ -151,7 +151,7 @@ MemberProfile:
     profile_id: { type: integer(4), notnull: true, comment: "Profile id" }
     profile_option_id: { type: integer(4), comment: "Profile option id" }
     value: { type: string, default: "", notnull: true, comment: "Text content for this profile item" }
-    value_datetime: { type: datetime, comment: "Profile datetime value" }
+    value_datetime: { type: timestamp, comment: "Profile datetime value" }
     public_flag: { type: integer(1), comment: "Public flag" }
   relations:
     Member: { local: member_id, foreign: id, onDelete: cascade }
@@ -260,7 +260,7 @@ MemberConfig:
     member_id: { type: integer(4), notnull: true, comment: "Member id" }
     name: { type: string(64), default: "", notnull: true, comment: "Configuration name" }
     value: { type: string, default: "", notnull: true, comment: "Configuration value" }
-    value_datetime: { type: datetime, comment: "Configuration datetime value" }
+    value_datetime: { type: timestamp, comment: "Configuration datetime value" }
     name_value_hash: { type: string(32), notnull: true, comment: "Hash value for searching name & value" }
   relations:
     Member: { local: member_id, foreign: id, onDelete: cascade }
