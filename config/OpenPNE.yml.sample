@@ -23,6 +23,19 @@ is_mail_address_contain_hash: true
 # Length of hash for an e-mail address for posting
 mail_address_hash_length: 12
 
+# SNS から SMTP 経由でメールを送信する場合の SMTP サーバのホスト名
+# Hostname of the SMTP server for sending e-mail via SMTP
+#mail_smtp_host: "smtp.example.com"
+
+# SNS から SMTP 経由でメールを送信する場合の SMTP の設定
+# Config of the SMTP for sending e-mail via SMTP
+#mail_smtp_config:
+#  auth:     "login"
+#  username: "myusername"
+#  password: "password"
+#  ssl:      "tls"
+#  port:     587
+
 
 ######################################
 # セッション (Session)

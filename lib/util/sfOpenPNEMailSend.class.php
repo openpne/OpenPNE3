@@ -19,6 +19,25 @@ class sfOpenPNEMailSend
 {
   public $subject = '';
   public $body = '';
+  static protected $initialized = false;
+
+  public static function initialize()
+  {
+    if (!self::$initialized)
+    {
+      sfOpenPNEApplicationConfiguration::registerZend();
+
+      if ($host = sfConfig::get('op_mail_smtp_host'))
+      {
+        $tr = new Zend_Mail_Transport_Smtp($host, sfConfig::get('op_mail_smtp_config', array()));
+        Zend_Mail::setDefaultTransport($tr);
+      }
+
+      sfOpenPNEApplicationConfiguration::unregisterZend();
+
+      self::$initialized = true;
+    }
+  }
 
   public function setSubject($subject)
   {
@@ -117,6 +136,8 @@ class sfOpenPNEMailSend
     {
       return false;
     }
+
+    self::initialize();
 
     sfOpenPNEApplicationConfiguration::registerZend();
 
