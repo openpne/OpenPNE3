@@ -13,7 +13,7 @@ class Banner extends BaseBanner
   {
     $bannerUseImage = Doctrine::getTable('BannerUseImage')->createQuery($this->getId())
       ->where('banner_id = ?', $this->getId())
-      ->orderBy('random()')
+      ->orderBy(Doctrine_Manager::connection()->expression->random())
       ->limit(1)
       ->fetchOne();
 
