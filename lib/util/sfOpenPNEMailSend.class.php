@@ -32,6 +32,11 @@ class sfOpenPNEMailSend
         $tr = new Zend_Mail_Transport_Smtp($host, sfConfig::get('op_mail_smtp_config', array()));
         Zend_Mail::setDefaultTransport($tr);
       }
+      elseif ($envelopeFrom = sfConfig::get('op_mail_envelope_from'))
+      {
+        $tr = new Zend_Mail_Transport_Sendmail('-f'.$envelopeFrom);
+        Zend_Mail::setDefaultTransport($tr);
+      }
 
       sfOpenPNEApplicationConfiguration::unregisterZend();
 
@@ -149,6 +154,11 @@ class sfOpenPNEMailSend
       ->addTo($to)
       ->setSubject(mb_encode_mimeheader($subject, 'iso-2022-jp'))
       ->setBodyText(mb_convert_encoding($body, 'JIS', 'UTF-8'), 'iso-2022-jp', Zend_Mime::ENCODING_7BIT);
+
+    if ($envelopeFrom = sfConfig::get('op_mail_envelope_from'))
+    {
+      $mailer->setReturnPath($envelopeFrom);
+    }
 
     $result = $mailer->send();
 
