@@ -62,6 +62,7 @@ class navigationActions extends sfActions
     $nav = $request->getParameter('nav');
     $this->forward404Unless(isset($nav['id']));
     $model = Doctrine::getTable('Navigation')->find($nav['id']);
+    $app = $request->getParameter('app', 'pc');
 
     $this->form = new NavigationForm($model);
     if ($request->isMethod(sfWebRequest::POST))
@@ -69,13 +70,18 @@ class navigationActions extends sfActions
       $this->form->bind($nav);
       if ($this->form->isValid())
       {
-        $types = Doctrine::getTable('Navigation')->getTypesByAppName($request->getParameter('app', 'pc'));
+        $types = Doctrine::getTable('Navigation')->getTypesByAppName($app);
         $this->forward404Unless(in_array($nav['type'], $types));
         $this->form->save();
       }
+
+      if ('pc' === $app)
+      {
+        $this->removeNavCaches();
+      }
     }
 
-    $this->redirect('navigation/list?app='.$request->getParameter('app', 'pc'));
+    $this->redirect('navigation/list?app='.$app);
   }
 
  /**
@@ -85,17 +91,24 @@ class navigationActions extends sfActions
   */
   public function executeDelete(sfWebRequest $request)
   {
+    $app = $request->getParameter('app', 'pc');
+
     if ($request->isMethod(sfWebRequest::POST))
     {
       $model = Doctrine::getTable('Navigation')->find($request->getParameter('id'));
       $this->forward404Unless($model);
-      $types = Doctrine::getTable('Navigation')->getTypesByAppName($request->getParameter('app', 'pc'));
+      $types = Doctrine::getTable('Navigation')->getTypesByAppName($app);
       $this->forward404Unless(in_array($model->getType(), $types));
 
       $model->delete();
+
+      if ('pc' === $app)
+      {
+        $this->removeNavCaches();
+      }
     }
 
-    $this->redirect('navigation/list?app='.$request->getParameter('app', 'pc'));
+    $this->redirect('navigation/list?app='.$app);
   }
 
  /**
@@ -130,5 +143,33 @@ class navigationActions extends sfActions
       }
     }
     return sfView::NONE;
+  }
+
+  /**
+   *
+   */
+  private function removeNavCaches()
+  {
+    $currentApp = sfContext::getInstance()->getConfiguration()->getApplication();
+    $cacheApp = 'pc_frontend';
+
+    if (!sfContext::hasInstance($cacheApp))
+    {
+      sfContext::createInstance(
+        ProjectConfiguration::getApplicationConfiguration(
+          $cacheApp,
+          $this->getContext()->getConfiguration()->getEnvironment(),
+          $this->getContext()->getConfiguration()->isDebug()
+        )
+      );
+    }
+
+    sfContext::switchTo($cacheApp);
+    if ($cache = sfContext::getInstance($cacheApp)->getViewCacheManager())
+    {
+      $cache->remove('@sf_cache_partial?module=default&action=_globalNav&sf_cache_key=*');
+      $cache->remove('@sf_cache_partial?module=default&action=_localNav&sf_cache_key=*');
+    }
+    sfContext::switchTo($currentApp);
   }
 }
