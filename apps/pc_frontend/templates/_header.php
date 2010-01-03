@@ -2,7 +2,13 @@
 
 
 <div id="globalNav">
-<?php include_component('default', 'globalNav') ?>
+<?php
+$globalNavOptions = array(
+  'is_secure' => opToolkit::isSecurePage(),
+  'culture'   => sfContext::getInstance()->getUser()->getCulture(),
+);
+include_component('default', 'globalNav', $globalNavOptions);
+?>
 </div><!-- globalNav -->
 
 <div id="topBanner">
