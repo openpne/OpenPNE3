@@ -14,9 +14,9 @@ pc:
     configurable: false
     sample:
       ja_JP: |
-        こんにちは！MySNS からのお知らせです。
+        こんにちは！{{ op_config.sns_name }} からのお知らせです。
         {% if name %}
-        {{ name }} があなたをMySNS へ招待しています。
+        {{ name }} があなたを{{ op_config.sns_name }} へ招待しています。
         
         {% if message %}
         ---------- < {{ name }} > からあなたへのメッセージ ----------
@@ -195,9 +195,9 @@ mobile:
     configurable: false
     sample:
       ja_JP: |
-        こんにちは！MySNS からのお知らせです。
+        こんにちは！{{ op_config.sns_name }} からのお知らせです。
         {% if name %}
-        {{ name }} があなたをMySNS へ招待しています。
+        {{ name }} があなたを{{ op_config.sns_name }} へ招待しています。
         
         {% if message %}
         ---------- < {{ name }} > からあなたへのメッセージ ----------
