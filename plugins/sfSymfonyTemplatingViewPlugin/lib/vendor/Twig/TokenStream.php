@@ -69,10 +69,10 @@ class Twig_TokenStream
       Twig_Token::BLOCK_END_TYPE === $this->current->getType() &&
       Twig_Token::TEXT_TYPE === $token->getType() &&
       $token->getValue() &&
-      '\n' === substr($token->getValue(), 0, 2)
+      "\n" === substr($token->getValue(), 0, 1)
     )
     {
-      $value = substr($token->getValue(), 2);
+      $value = substr($token->getValue(), 1);
 
       if (!$value)
       {
@@ -127,7 +127,11 @@ class Twig_TokenStream
     $token = $this->current;
     if (!$token->test($primary, $secondary))
     {
-      throw new Twig_SyntaxError(sprintf('Unexpected token %s (%s expected, value: %s)', Twig_Token::getTypeAsString($token->getType()), Twig_Token::getTypeAsString($primary), $token->getValue()), $this->current->getLine());
+      throw new Twig_SyntaxError(sprintf('Unexpected token "%s" of value "%s" ("%s" expected%s)',
+        Twig_Token::getTypeAsString($token->getType()), $token->getValue(),
+        Twig_Token::getTypeAsString($primary), $secondary ? sprintf(' with value "%s"', $secondary) : ''),
+        $this->current->getLine()
+      );
     }
     $this->next();
 

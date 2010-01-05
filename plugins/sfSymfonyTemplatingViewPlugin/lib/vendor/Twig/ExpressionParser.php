@@ -84,7 +84,11 @@ class Twig_ExpressionParser
     $lineno = $this->parser->getCurrentToken()->getLine();
     $expr = $this->parseAddExpression();
     $ops = array();
-    while ($this->parser->getStream()->test(Twig_Token::OPERATOR_TYPE, $operators))
+    while (
+      $this->parser->getStream()->test(Twig_Token::OPERATOR_TYPE, $operators)
+      ||
+      $this->parser->getStream()->test(Twig_Token::NAME_TYPE, 'in')
+    )
     {
       $ops[] = array($this->parser->getStream()->next()->getValue(), $this->parseAddExpression());
     }
@@ -265,7 +269,13 @@ class Twig_ExpressionParser
         break;
 
       default:
-        if ($token->test(Twig_Token::OPERATOR_TYPE, '('))
+        if ($token->test(Twig_Token::OPERATOR_TYPE, '['))
+        {
+          $this->parser->getStream()->next();
+          $node = $this->parseArrayExpression();
+          $this->parser->getStream()->expect(Twig_Token::OPERATOR_TYPE, ']');
+        }
+        elseif ($token->test(Twig_Token::OPERATOR_TYPE, '('))
         {
           $this->parser->getStream()->next();
           $node = $this->parseExpression();
@@ -273,7 +283,7 @@ class Twig_ExpressionParser
         }
         else
         {
-          throw new Twig_SyntaxError('Unexpected token', $token->getLine());
+          throw new Twig_SyntaxError(sprintf('Unexpected token "%s"', $token->getValue()), $token->getLine());
         }
     }
     if (!$assignment)
@@ -284,6 +294,48 @@ class Twig_ExpressionParser
     return $node;
   }
 
+  public function parseArrayExpression()
+  {
+    $elements = array();
+    while (!$this->parser->getStream()->test(Twig_Token::OPERATOR_TYPE, ']'))
+    {
+      if (!empty($elements))
+      {
+        $this->parser->getStream()->expect(Twig_Token::OPERATOR_TYPE, ',');
+
+        // trailing ,?
+        if ($this->parser->getStream()->test(Twig_Token::OPERATOR_TYPE, ']'))
+        {
+          return new Twig_Node_Expression_Array($elements, $this->parser->getCurrentToken()->getLine());
+        }
+      }
+
+      // hash or array element?
+      if (
+        $this->parser->getStream()->test(Twig_Token::STRING_TYPE)
+        ||
+        $this->parser->getStream()->test(Twig_Token::NUMBER_TYPE)
+      )
+      {
+        if ($this->parser->getStream()->look()->test(Twig_Token::OPERATOR_TYPE, ':'))
+        {
+          // hash
+          $key = $this->parser->getStream()->next()->getValue();
+          $this->parser->getStream()->next();
+
+          $elements[$key] = $this->parseExpression();
+
+          continue;
+        }
+        $this->parser->getStream()->rewind();
+      }
+
+      $elements[] = $this->parseExpression();
+    }
+
+    return new Twig_Node_Expression_Array($elements, $this->parser->getCurrentToken()->getLine());
+  }
+
   public function parsePostfixExpression($node)
   {
     $stop = false;
@@ -291,6 +343,10 @@ class Twig_ExpressionParser
     {
       switch ($this->parser->getCurrentToken()->getValue())
       {
+        case '..':
+          $node = $this->parseRangeExpression($node);
+          break;
+
         case '.':
         case '[':
           $node = $this->parseSubscriptExpression($node);
@@ -307,6 +363,16 @@ class Twig_ExpressionParser
     }
 
     return $node;
+  }
+
+  public function parseRangeExpression($node)
+  {
+    $token = $this->parser->getStream()->next();
+    $lineno = $token->getLine();
+
+    $end = $this->parseExpression();
+
+    return new Twig_Node_Expression_Filter($node, array(array('range', array($end))), $lineno);
   }
 
   public function parseSubscriptExpression($node)
@@ -407,6 +473,38 @@ class Twig_ExpressionParser
         break;
       }
       $targets[] = $this->parsePrimaryExpression(true);
+      if (!$this->parser->getStream()->test(Twig_Token::OPERATOR_TYPE, ','))
+      {
+        break;
+      }
+      $is_multitarget = true;
+    }
+    if (!$is_multitarget && count($targets) == 1)
+    {
+      return array(false, $targets[0]);
+    }
+
+    return array(true, $targets);
+  }
+
+  public function parseMultitargetExpression()
+  {
+    $lineno = $this->parser->getCurrentToken()->getLine();
+    $targets = array();
+    $is_multitarget = false;
+    while (true)
+    {
+      if (!empty($targets))
+      {
+        $this->parser->getStream()->expect(Twig_Token::OPERATOR_TYPE, ',');
+      }
+      if ($this->parser->getStream()->test(Twig_Token::OPERATOR_TYPE, ')') ||
+          $this->parser->getStream()->test(Twig_Token::VAR_END_TYPE) ||
+          $this->parser->getStream()->test(Twig_Token::BLOCK_END_TYPE))
+      {
+        break;
+      }
+      $targets[] = $this->parseExpression();
       if (!$this->parser->getStream()->test(Twig_Token::OPERATOR_TYPE, ','))
       {
         break;

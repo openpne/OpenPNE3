@@ -18,16 +18,6 @@ class Twig_Extension_Escaper extends Twig_Extension
   }
 
   /**
-   * Initializes the runtime environment.
-   *
-   * This is where you can load some file that contains filter functions for instance.
-   */
-  public function initRuntime()
-  {
-    require_once dirname(__FILE__).'/../runtime_escaper.php';
-  }
-
-  /**
    * Returns the token parser instance to add to the existing list.
    *
    * @return array An array of Twig_TokenParser instances
@@ -38,13 +28,13 @@ class Twig_Extension_Escaper extends Twig_Extension
   }
 
   /**
-   * Returns the node transformer instances to add to the existing list.
+   * Returns the node visitor instances to add to the existing list.
    *
-   * @return array An array of Twig_NodeTransformer instances
+   * @return array An array of Twig_NodeVisitorInterface instances
    */
-  public function getNodeTransformers()
+  public function getNodeVisitors()
   {
-    return array(new Twig_NodeTransformer_Escaper());
+    return array(new Twig_NodeVisitor_Escaper());
   }
 
   /**
@@ -55,7 +45,7 @@ class Twig_Extension_Escaper extends Twig_Extension
   public function getFilters()
   {
     return array(
-      'safe' => array('twig_safe_filter', false),
+      'safe' => new Twig_Filter_Function('twig_safe_filter', array('is_escaper' => true)),
     );
   }
 
@@ -73,4 +63,10 @@ class Twig_Extension_Escaper extends Twig_Extension
   {
     return 'escaper';
   }
+}
+
+// tells the escaper node visitor that the string is safe
+function twig_safe_filter($string)
+{
+  return $string;
 }

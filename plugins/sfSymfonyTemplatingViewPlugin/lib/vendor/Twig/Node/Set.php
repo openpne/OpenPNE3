@@ -3,16 +3,31 @@
 class Twig_Node_Set extends Twig_Node
 {
   protected $names;
-  protected $value;
+  protected $values;
   protected $isMultitarget;
 
-  public function __construct($isMultitarget, $names, Twig_Node_Expression $value, $lineno)
+  public function __construct($isMultitarget, $names, $values, $lineno, $tag = null)
   {
-    parent::__construct($lineno);
+    parent::__construct($lineno, $tag);
 
     $this->isMultitarget = $isMultitarget;
     $this->names = $names;
-    $this->value = $value;
+    $this->values = $values;
+  }
+
+  public function __toString()
+  {
+    $repr = array(get_class($this).'('.($this->isMultitarget ? implode(', ', $this->names) : $this->names).',');
+    foreach ($this->isMultitarget ? $this->values : array($this->values) as $node)
+    {
+      foreach (explode("\n", $node->__toString()) as $line)
+      {
+        $repr[] = '  '.$line;
+      }
+    }
+    $repr[] = ')';
+
+    return implode("\n", $repr);
   }
 
   public function compile($compiler)
@@ -46,10 +61,27 @@ class Twig_Node_Set extends Twig_Node
       ;
     }
 
-    $compiler
-      ->raw(' = ')
-      ->subcompile($this->value)
-      ->raw(";\n")
-    ;
+    $compiler->raw(' = ');
+
+    if ($this->isMultitarget)
+    {
+      $compiler->write('array(');
+      foreach ($this->values as $idx => $value)
+      {
+        if ($idx)
+        {
+          $compiler->raw(', ');
+        }
+
+        $compiler->subcompile($value);
+      }
+      $compiler->raw(')');
+    }
+    else
+    {
+      $compiler->subcompile($this->values);
+    }
+
+    $compiler->raw(";\n");
   }
 }

@@ -10,17 +10,25 @@
  */
 
 /**
- * Interfaces that all security policy classes must implements.
+ * Represents a function template filter.
  *
  * @package    twig
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @version    SVN: $Id$
  */
-interface Twig_Sandbox_SecurityPolicyInterface
+class Twig_Filter_Function extends Twig_Filter
 {
-  public function checkSecurity($tags, $filters);
+  protected $function;
 
-  public function checkMethodAllowed($obj, $method);
+  public function __construct($function, array $options = array())
+  {
+    parent::__construct($options);
 
-  public function checkPropertyAllowed($obj, $method);
+    $this->function = $function;
+  }
+
+  public function compile()
+  {
+    return $this->function;
+  }
 }

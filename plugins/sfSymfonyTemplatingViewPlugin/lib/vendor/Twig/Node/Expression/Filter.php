@@ -71,7 +71,7 @@ class Twig_Node_Expression_Filter extends Twig_Node_Expression implements Twig_N
       }
       else
       {
-        $compiler->raw($filterMap[$name][0].($filterMap[$name][1] ? '($this->getEnvironment(), ' : '('));
+        $compiler->raw($filterMap[$name]->compile().($filterMap[$name]->needsEnvironment() ? '($this->getEnvironment(), ' : '('));
       }
       $postponed[] = $attrs;
     }
@@ -92,6 +92,16 @@ class Twig_Node_Expression_Filter extends Twig_Node_Expression implements Twig_N
   public function getFilters()
   {
     return $this->filters;
+  }
+
+  public function setFilters(array $filters)
+  {
+    $this->filters = $filters;
+  }
+
+  public function prependFilter($filter)
+  {
+    $this->filters = array_merge(array($filter), $this->filters);
   }
 
   public function appendFilter($filter)
