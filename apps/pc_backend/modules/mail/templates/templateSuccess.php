@@ -72,6 +72,22 @@
 
 <p>テンプレートの書式については<?php echo link_to('こちら', '@default_template_help', array('popup' => true)) ?>を参照してください。</p>
 
+<?php if (!empty($config[$_currentTarget][$_currentKey]['variables'])): ?>
+<h4 style="margin-top: 10px">このテンプレートで使用可能な変数</h4>
+<table>
+<tr>
+  <th>変数名</th>
+  <th>説明</th>
+</tr>
+<?php foreach ($config[$_currentTarget][$_currentKey]['variables'] as $variable => $description): ?>
+<tr>
+  <td><?php echo $variable ?></td>
+  <td><?php echo $description ?></td>
+</tr>
+<?php endforeach; ?>
+</table>
+<?php endif; ?>
+
 <?php endif; ?>
 </td>
 </tr>
