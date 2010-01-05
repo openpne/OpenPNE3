@@ -48,6 +48,9 @@ class opFilterTemplateParameterIterator extends FilterIterator
         $member['profile'][$v->name] = $v->getValue();
       }
 
+      // for BC
+      $member['getRawValue'] = new opTwigDummyMemberProfile($member['id']);
+
       $member['config'] = array();
       foreach ($current->getMemberConfig() as $v)
       {
@@ -108,5 +111,22 @@ class opFilteredParameter extends ArrayObject
     }
 
     return $data;
+  }
+}
+
+class opTwigDummyMemberProfile
+{
+  protected $id;
+
+  public function __construct($id)
+  {
+    $this->id = $id;
+  }
+
+  public function getProfile($name)
+  {
+    $member = Doctrine::getTable('Member')->find($this->id);
+
+    return (string)$member->getProfile($name);
   }
 }
