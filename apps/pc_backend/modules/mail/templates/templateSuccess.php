@@ -69,6 +69,9 @@
 <?php echo $form['template']->render(array('rows' => 30, 'cols' => 72)) ?>
 
 <input type="submit" value="<?php echo __('Save') ?>">
+
+<p>テンプレートの書式については<?php echo link_to('こちら', '@default_template_help', array('popup' => true)) ?>を参照してください。</p>
+
 <?php endif; ?>
 </td>
 </tr>

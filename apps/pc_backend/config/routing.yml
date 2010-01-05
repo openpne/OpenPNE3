@@ -39,3 +39,10 @@ connection:
 connection_list:
   url:     /connection
   param:   { module: connection, action: list }
+
+default_template_help:
+  url:  /help_template_format
+  param: { module: default, action: templateHelp }
+  requirements:
+    sf_method: [get]
+
