@@ -28,6 +28,7 @@ EOF;
   {
     parent::execute($arguments, $options);
 
+    sfOpenPNEApplicationConfiguration::unregisterZend();
     $birthday = Doctrine::getTable('Profile')->retrieveByName('op_preset_birthday');
     if (!$birthday)
     {
@@ -38,6 +39,7 @@ EOF;
       ->where('profile_id = ?', $birthday->id)
       ->andWhere('DATE_FORMAT(value_datetime, ?) = ?', array('%m-%d', date('m-d', strtotime('+ 1 week'))))
       ->execute();
+    sfOpenPNEApplicationConfiguration::registerZend();
 
     $context = sfContext::createInstance($this->createConfiguration('pc_frontend', 'prod'));
     $i18n = $context->getI18N();
