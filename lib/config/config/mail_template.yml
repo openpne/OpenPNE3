@@ -100,7 +100,7 @@ pc:
         {{ member.name }} さんの {{ op_term.my_friend }} に誕生日の近い方がいます！
         日ごろの感謝をこめて、誕生日の日にお祝いのメッセージを送ってみてはいかがですか。
         
-        誕生日 : {{ birthMember.getRawValue.getProfile("op_preset_birthday") }}
+        誕生日 : {{ birthMember.profile.op_preset_birthday|date("m 月 d 日") }}
         {{ op_term.nickname }} : {{ birthMember.name }}
         URL : {{ sf_config.op_base_url }}{% app_url_for("pc_frontend", "member/profile?id="~birthMember.id) %}
         
@@ -115,7 +115,7 @@ pc:
         
         {{ op_config.sns_name }}
         
-        本日の最新情報  [{{ today|date('Y. m. d/D') }}]
+        本日の最新情報  [{{ 'now'|date('Y. m. d/D') }}]
         
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         
@@ -248,7 +248,7 @@ mobile:
         {{ member.name }} さんの {{ op_term.my_friend }} に誕生日の近い方がいます！
         日ごろの感謝をこめて、誕生日の日にお祝いのメッセージを送ってみてはいかがですか。
         
-        誕生日 : {{ birthMember.getRawValue.getProfile("op_preset_birthday") }}
+        誕生日 : {{ birthMember.profile.op_preset_birthday|date("m 月 d 日") }}
         {{ op_term.nickname }} : {{ birthMember.name }}
         URL : {{ sf_config.op_base_url }}{% app_url_for("mobile_frontend", "member/profile?id="~birthMember.id) %}
         
@@ -263,7 +263,7 @@ mobile:
         
         {{ op_config.sns_name }}
         
-        本日の最新情報  [{{ today|date('Y. m. d/D') }}]
+        本日の最新情報  [{{ 'now'|date('Y. m. d/D') }}]
         
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         
