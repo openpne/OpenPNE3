@@ -70,7 +70,7 @@ EOF;
 
     if (!$options['no-build-model'])
     {
-      $this->buildModel();
+      $this->buildModel($options);
     }
 
     foreach ($installedPlugins as $v)
@@ -192,7 +192,7 @@ EOF;
     }
   }
 
-  protected function buildModel()
+  protected function buildModel($options)
   {
     $task = new sfDoctrineBuildTask($this->dispatcher, $this->formatter);
     $task->setCommandApplication($this->commandApplication);
@@ -202,6 +202,8 @@ EOF;
       'model'           => true,
       'forms'           => true,
       'filters'         => true,
+      'application'     => $options['application'],
+      'env'             => $options['env'],
     ));
 
     $task = new sfCacheClearTask($this->dispatcher, $this->formatter);

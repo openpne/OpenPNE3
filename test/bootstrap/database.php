@@ -12,4 +12,6 @@ $task->run(array(), array(
   'no-confirmation' => true,
   'db'              => true,
   'and-load'        => dirname(__FILE__).'/../fixtures',
+  'application'     => $_app,
+  'env'             => $_env,
 ));

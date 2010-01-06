@@ -88,7 +88,7 @@ EOF;
       return 1;
     }
 
-    $this->doInstall($dbms, $username, $password, $hostname, $port, $dbname, $sock);
+    $this->doInstall($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options);
 
     if ($dbms === 'sqlite')
     {
@@ -103,13 +103,13 @@ EOF;
     $this->logSection('installer', 'installation is completed!');
   }
 
-  protected function doInstall($dbms, $username, $password, $hostname, $port, $dbname, $sock)
+  protected function doInstall($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options)
   {
     $this->installPlugins();
     @$this->fixPerms();
     @$this->clearCache();
-    $this->configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock);
-    $this->buildDb();
+    $this->configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options);
+    $this->buildDb($options);
   }
 
   protected function createDSN($dbms, $hostname, $port, $dbname, $sock)
@@ -149,21 +149,25 @@ EOF;
     return $result;
   }
 
-  protected function configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock)
+  protected function configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options)
   {
     $dsn = $this->createDSN($dbms, $hostname, $port, $dbname, $sock);
 
     $file = sfConfig::get('sf_config_dir').'/databases.yml';
-    $config = array('dev' => array('doctrine' => array('param' => array(
-      'classname' => 'DebugPDO',
-    ))));
+    $config = array();
 
     if (file_exists($file))
     {
       $config = sfYaml::load($file);
     }
 
-    $config['all']['doctrine'] = array(
+    $env = 'all';
+    if ('prod' !== $options['env'])
+    {
+      $env = $options['env'];
+    }
+
+    $config[$env]['doctrine'] = array(
       'class' => 'sfDoctrineDatabase',
       'param' => array(
         'dsn'        => $dsn,
@@ -177,7 +181,7 @@ EOF;
 
     if ($password)
     {
-      $config['all']['doctrine']['param']['password'] = $password;
+      $config[$env]['doctrine']['param']['password'] = $password;
     }
 
     file_put_contents($file, sfYaml::dump($config, 4));
@@ -195,7 +199,7 @@ EOF;
     $publishAssets->run();
   }
 
-  protected function buildDb()
+  protected function buildDb($options)
   {
     $tmpdir = sfConfig::get('sf_data_dir').'/fixtures_tmp';
     $this->getFilesystem()->mkdirs($tmpdir);
@@ -228,6 +232,8 @@ EOF;
       'filters'         => true,
       'sql'             => true,
       'and-load'        => $tmpdir,
+      'application'     => $options['application'],
+      'env'             => $options['env'],
     ));
 
     $this->getFilesystem()->remove(sfFinder::type('file')->in(array($tmpdir)));
