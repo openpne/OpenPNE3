@@ -21,6 +21,11 @@ class opPluginDefineTask extends sfBaseTask
       new sfCommandArgument('note', sfCommandArgument::REQUIRED, 'The plugin release note'),
     ));
 
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
+    ));
+
     $this->namespace        = 'opPlugin';
     $this->name             = 'define';
     $this->briefDescription = 'Creates the plugin definition file "package.xml"';

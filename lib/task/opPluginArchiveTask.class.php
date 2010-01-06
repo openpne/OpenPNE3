@@ -17,6 +17,11 @@ class opPluginArchiveTask extends sfBaseTask
       new sfCommandArgument('dir', sfCommandArgument::OPTIONAL, 'The output dir', sfConfig::get('sf_cache_dir')),
     ));
 
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
+    ));
+
     $this->namespace        = 'opPlugin';
     $this->name             = 'archive';
     $this->briefDescription = 'Creates the OpenPNE plugin archive.';

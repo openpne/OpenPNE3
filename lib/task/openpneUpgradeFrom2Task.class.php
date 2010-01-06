@@ -25,6 +25,8 @@ class openpneUpgradeFrom2Task extends sfBaseTask
     $this->addOptions(array(
       new sfCommandOption('origin', null, sfCommandOption::PARAMETER_REQUIRED, 'The base 2.x version (2.12 or 2.14)'),
       new sfCommandOption('rules', null, sfCommandOption::PARAMETER_REQUIRED | sfCommandOption::IS_ARRAY, 'The rules that you want to do'),
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'prod'),
     ));
 
     $this->briefDescription = 'Upgrading from 2.12.x or 2.14.x to current version';

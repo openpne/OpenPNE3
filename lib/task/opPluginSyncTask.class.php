@@ -17,6 +17,8 @@ class opPluginSyncTask extends sfBaseTask
 
     $this->addOptions(array(
       new sfCommandOption('target', null, sfCommandOption::PARAMETER_OPTIONAL, 'The target of sync'),
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'prod'),
     ));
 
     $this->briefDescription = 'Synchronize bandled plugins';

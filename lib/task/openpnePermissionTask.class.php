@@ -14,6 +14,12 @@ class openpnePermissionTask extends sfProjectPermissionsTask
   {
     $this->namespace        = 'openpne';
     $this->name             = 'permission';
+
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'prod'),
+    ));
+
     $this->briefDescription = 'Fixes directory permissions for OpenPNE';
     $this->detailedDescription = <<<EOF
 The [openpne:permission|INFO] task fixes directory permissions for OpenPNE.

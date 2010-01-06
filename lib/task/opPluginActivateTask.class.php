@@ -16,6 +16,11 @@ class opPluginActivateTask extends sfBaseTask
       new sfCommandArgument('name', sfCommandArgument::REQUIRED, 'The plugin name'),
     ));
 
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'prod'),
+    ));
+
     $this->namespace        = 'opPlugin';
     $this->name             = 'activate';
     $this->briefDescription = 'Activates the installed plugin.';
