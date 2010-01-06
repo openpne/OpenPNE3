@@ -8,6 +8,8 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
+error_reporting(error_reporting() & ~(E_STRICT | E_DEPRECATED));
+
 /**
  * opInstalledPluginManager allows you to manage installed OpenPNE plugins.
  *
