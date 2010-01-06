@@ -75,7 +75,14 @@ class opPlugin
 
   public function getIsActive()
   {
-    return $this->isActive;
+    if (sfContext::hasInstance())
+    {
+      return sfContext::getInstance()->getConfiguration()->isEnabledPlugin($this->name);
+    }
+    else
+    {
+      return $this->isActive;
+    }
   }
 
   public function getVersion()
