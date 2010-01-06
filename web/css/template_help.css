@@ -1,0 +1,46 @@
+body {
+  padding: 10px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+h3 {
+  font-weight: bold;
+}
+
+div.example {
+  background-color:#FAFAFA;
+  border: 1px solid #DADADA;
+  margin: 1em 1em 1em 1.6em;
+  padding: 2px;
+  width: 95%;
+}
+
+p code, dd code {
+  color: #f13902;
+}
+
+dl {
+  margin: 10px;
+}
+
+dt {
+  background-color: #F5F5F5;
+  width: 95%;
+  margin-top: 10px;
+  font-weight: bold;
+  padding: 3px;
+}
+

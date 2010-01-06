@@ -40,6 +40,9 @@ mail_address_hash_length: 12
 #  ssl:      "tls"
 #  port:     587
 
+# メールテンプレートに機能制限をおこなうかどうか
+# Add restriction to mail templates
+is_restrict_mail_template: true
 
 ######################################
 # セッション (Session)

@@ -1,2 +1,7 @@
 topSuccess:
   javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
+
+templateHelpSuccess:
+  layout: plain
+  stylesheets: [main, -backend, template_help]
+

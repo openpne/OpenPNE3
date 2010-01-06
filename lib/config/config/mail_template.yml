@@ -8,15 +8,19 @@ pc:
         メールアドレスが登録されている場合、新しいメールアドレスに変更されます。
         
         {% app_url_for('pc_frontend', 'member/configComplete?token='~token~'&id='~id~'&type='~type, true) %}
+    variables:
+      token:  "PC メールアドレス変更完了 URL の token パラメータの値"
+      id: "PC メールアドレス変更完了 URL の id パラメータの値"
+      type: "PC メールアドレス変更完了 URL の type パラメータの値"
 
   requestRegisterURL:
     caption: "Notification of Registration URL"
     configurable: false
     sample:
       ja_JP: |
-        こんにちは！MySNS からのお知らせです。
+        こんにちは！{{ op_config.sns_name }} からのお知らせです。
         {% if name %}
-        {{ name }} があなたをMySNS へ招待しています。
+        {{ name }} があなたを{{ op_config.sns_name }} へ招待しています。
         
         {% if message %}
         ---------- < {{ name }} > からあなたへのメッセージ ----------
@@ -30,6 +34,12 @@ pc:
         
         ■ {{ op_config.sns_name }} に参加する
         {% app_url_for('pc_frontend', 'opAuthMailAddress/register?token='~token~'&authMode='~authMode, true) %}
+    variables:
+      "op_config.sns_name": "SNS 名"
+      name: "招待者のニックネーム"
+      message: "招待者が記入したメッセージ"
+      token: "登録用 URL の token パラメータの値"
+      authMode: "登録用 URL の authMode パラメータの値"
 
   reissuedPassword:
     caption: "Notification of Confirmation of Changing Password"
@@ -40,6 +50,9 @@ pc:
         
         メールアドレス: {{ mailAddress }}
         新しいパスワード: {{ newPassword }}
+    variables:
+      mailAddress: "メールアドレス"
+      newPassword: "パスワード"
 
   joinCommunity:
     caption: "Notification of Someone's Joining Your Community"
@@ -50,10 +63,17 @@ pc:
         
         {{ new_member.name }} さんが {{ community.name }}{{ op_term.community }} に参加しました。
         
-        ◆{{ communit.name }}{{ op_term.community }}のページ
+        ◆{{ community.name }}{{ op_term.community }}のページ
         {% app_url_for('pc_frontend', 'community/home?id='~community.id, true) %}
         ◇{{ new_member.name }}さんのページ
         {% app_url_for('pc_frontend', 'member/profile?id='~new_member.id, true) %}
+    variables:
+      "op_config.sns_name": "SNS 名"
+      "new_member.name": "新しいメンバーのニックネーム"
+      "new_member.id": "新しいメンバーの ID"
+      "community.name": "コミュニティ名"
+      "community.id": "コミュニティの ID"
+      "op_term.community": "「コミュニティ」の SNS 内の名称"
 
   friendLinkComplete:
     caption: "Notification of Completion of Friend Link"
@@ -63,6 +83,9 @@ pc:
         こんにちは！{{ op_config.sns_name }} からのお知らせです。
         
         {{ member.name }} さんがあなたの{{ op_term.sns_name }}リンクリクエストを承諾しました。
+    variables:
+      "op_config.sns_name": "SNS 名"
+      "member.name": "メンバーのニックネーム"
 
   registerEnd:
     caption: "Notification of Completion of Your Registration"
@@ -81,6 +104,10 @@ pc:
         お預かりしている情報は責任を持って削除させていただきます。
         
         {{ op_config.admin_mail_address }}
+    variables:
+      "op_config.sns_name": "SNS 名"
+      "url": "ログインページへの URL"
+      "op_config.admin_mail_address": "管理者のメールアドレス"
 
   leave:
     caption: "Notification of Completion of Leaving From the SNS"
@@ -91,6 +118,9 @@ pc:
         
         {{ member.name }} さんの退会手続きが完了しました。
         ご利用いただきありがとうございます。
+    variables:
+      "op_config.sns_name": "SNS 名"
+      "member.name": "退会者のニックネーム"
 
   birthday:
     caption: "Notification of Friend Birthday"
@@ -100,11 +130,18 @@ pc:
         {{ member.name }} さんの {{ op_term.my_friend }} に誕生日の近い方がいます！
         日ごろの感謝をこめて、誕生日の日にお祝いのメッセージを送ってみてはいかがですか。
         
-        誕生日 : {{ birthMember.getRawValue.getProfile("op_preset_birthday") }}
+        誕生日 : {{ birthMember.profile.op_preset_birthday|date("m 月 d 日") }}
         {{ op_term.nickname }} : {{ birthMember.name }}
         URL : {{ sf_config.op_base_url }}{% app_url_for("pc_frontend", "member/profile?id="~birthMember.id) %}
         
         {{ op_config.sns_name }} が、あなたの今後に役立ちますように、是非、ご活用いただければと思います。
+    variables:
+      "member.name": "メンバーのニックネーム"
+      "op_term.my_friend": "「マイフレンド」の SNS 名称"
+      "op_term.nickname": "「ニックネーム」の SNS 名称"
+      "birthMember.profile.op_preset_birthday": "誕生日を迎えたメンバーの誕生日"
+      "birthMember.name": "誕生日を迎えたメンバーのニックネーム"
+      "sf_config.op_base_url": "ベースの URL"
 
   dailyNews:
     caption: "Daily News"
@@ -115,7 +152,7 @@ pc:
         
         {{ op_config.sns_name }}
         
-        本日の最新情報  [{{ today|date('Y. m. d/D') }}]
+        本日の最新情報  [{{ 'now'|date('Y. m. d/D') }}]
         
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         
@@ -128,6 +165,11 @@ pc:
         {% include_component(item.component.module, item.component.action, item) %}
         
         {% endfor %}
+    variables:
+      "sf_config.op_base_url": "ベースの URL"
+      "op_config.sns_name": "SNS 名"
+      "member.name": "メンバーのニックネーム"
+      "gadgets": "デイリー・ニュースのガジェットの配列"
 
   signature:
     caption: "Signature"
@@ -145,6 +187,10 @@ pc:
         このメールに書かれた内容の無断転載、無断複製を禁じます。
         
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━□■
+    variables:
+      "op_config.sns_name": "SNS 名"
+      "sf_config.op_base_url": "ベースの URL"
+      "op_config.admin_mail_address": "管理者のメールアドレス"
 
 mobile:
   changeMailAddress:
@@ -156,6 +202,10 @@ mobile:
         メールアドレスが登録されている場合、新しいメールアドレスに変更されます。
         
         {% app_url_for('mobile_frontend', 'member/configComplete?token='~token~'&id='~id~'&type='~type, true) %}
+    variables:
+      token:  "PC メールアドレス変更完了 URL の token パラメータの値"
+      id: "PC メールアドレス変更完了 URL の id パラメータの値"
+      type: "PC メールアドレス変更完了 URL の type パラメータの値"
 
   joinCommunity:
     caption: "Notification of Someone's Joining Your Community"
@@ -170,6 +220,13 @@ mobile:
         {% app_url_for('mobile_frontend', 'community/home?id='~community.id, true) %}
         ◇{{ new_member.name }}さんのページ
         {% app_url_for('mobile_frontend', 'member/profile?id='~new_member.id, true) %}
+    variables:
+      "op_config.sns_name": "SNS 名"
+      "new_member.name": "新しいメンバーのニックネーム"
+      "new_member.id": "新しいメンバーの ID"
+      "community.name": "コミュニティ名"
+      "community.id": "コミュニティの ID"
+      "op_term.community": "「コミュニティ」の SNS 内の名称"
 
   friendLinkComplete:
     caption: "Notification of Completion of Friend Link"
@@ -179,6 +236,9 @@ mobile:
         こんにちは！{{ op_config.sns_name }} からのお知らせです。
         
         {{ member.name }} さんがあなたの{{ op_term.sns_name }}リンクリクエストを承諾しました。
+    variables:
+      "op_config.sns_name": "SNS 名"
+      "member.name": "メンバーのニックネーム"
 
   reissuedPassword:
     caption: "Notification of Confirmation of Changing Password"
@@ -189,15 +249,18 @@ mobile:
         
         メールアドレス: {{ mailAddress }}
         新しいパスワード: {{ newPassword }}
+    variables:
+      mailAddress: "メールアドレス"
+      newPassword: "パスワード"
 
   requestRegisterURL:
     caption: "Notification of Registration URL"
     configurable: false
     sample:
       ja_JP: |
-        こんにちは！MySNS からのお知らせです。
+        こんにちは！{{ op_config.sns_name }} からのお知らせです。
         {% if name %}
-        {{ name }} があなたをMySNS へ招待しています。
+        {{ name }} があなたを{{ op_config.sns_name }} へ招待しています。
         
         {% if message %}
         ---------- < {{ name }} > からあなたへのメッセージ ----------
@@ -211,6 +274,12 @@ mobile:
         
         ■ {{ op_config.sns_name }} に参加する
         {% app_url_for('pc_frontend', 'opAuthMailAddress/register?token='~token~'&authMode='~authMode, true) %}
+    variables:
+      "op_config.sns_name": "SNS 名"
+      name: "招待者のニックネーム"
+      message: "招待者が記入したメッセージ"
+      token: "登録用 URL の token パラメータの値"
+      authMode: "登録用 URL の authMode パラメータの値"
 
   registerEnd:
     caption: "Notification of Completion of Your Registration"
@@ -229,6 +298,10 @@ mobile:
         お預かりしている情報は責任を持って削除させていただきます。
         
         {{ op_config.admin_mail_address }}
+    variables:
+      "op_config.sns_name": "SNS 名"
+      "url": "ログインページへの URL"
+      "op_config.admin_mail_address": "管理者のメールアドレス"
 
   leave:
     caption: "Notification of Completion of Leaving From the SNS"
@@ -239,6 +312,9 @@ mobile:
         
         {{ member.name }} さんの退会手続きが完了しました。
         ご利用いただきありがとうございます。
+    variables:
+      "op_config.sns_name": "SNS 名"
+      "member.name": "退会者のニックネーム"
 
   birthday:
     caption: "Notification of Friend Birthday"
@@ -248,11 +324,18 @@ mobile:
         {{ member.name }} さんの {{ op_term.my_friend }} に誕生日の近い方がいます！
         日ごろの感謝をこめて、誕生日の日にお祝いのメッセージを送ってみてはいかがですか。
         
-        誕生日 : {{ birthMember.getRawValue.getProfile("op_preset_birthday") }}
+        誕生日 : {{ birthMember.profile.op_preset_birthday|date("m 月 d 日") }}
         {{ op_term.nickname }} : {{ birthMember.name }}
         URL : {{ sf_config.op_base_url }}{% app_url_for("mobile_frontend", "member/profile?id="~birthMember.id) %}
         
         {{ op_config.sns_name }} が、あなたの今後に役立ちますように、是非、ご活用いただければと思います。
+    variables:
+      "member.name": "メンバーのニックネーム"
+      "op_term.my_friend": "「マイフレンド」の SNS 名称"
+      "op_term.nickname": "「ニックネーム」の SNS 名称"
+      "birthMember.profile.op_preset_birthday": "誕生日を迎えたメンバーの誕生日"
+      "birthMember.name": "誕生日を迎えたメンバーのニックネーム"
+      "sf_config.op_base_url": "ベースの URL"
 
   dailyNews:
     caption: "Daily News"
@@ -263,7 +346,7 @@ mobile:
         
         {{ op_config.sns_name }}
         
-        本日の最新情報  [{{ today|date('Y. m. d/D') }}]
+        本日の最新情報  [{{ 'now'|date('Y. m. d/D') }}]
         
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         
@@ -276,6 +359,11 @@ mobile:
         {% include_component(item.component.module, item.component.action, item) %}
         
         {% endfor %}
+    variables:
+      "sf_config.op_base_url": "ベースの URL"
+      "op_config.sns_name": "SNS 名"
+      "member.name": "メンバーのニックネーム"
+      "gadgets": "デイリー・ニュースのガジェットの配列"
 
   signature:
     caption: "Signature"
@@ -293,4 +381,8 @@ mobile:
         このメールに書かれた内容の無断転載、無断複製を禁じます。
         
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━□■
+    variables:
+      "op_config.sns_name": "SNS 名"
+      "sf_config.op_base_url": "ベースの URL"
+      "op_config.admin_mail_address": "管理者のメールアドレス"
 
