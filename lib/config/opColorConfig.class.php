@@ -60,6 +60,15 @@ class opColorConfig extends opConfig
     return sfOutputEscaper::escape(sfConfig::get('sf_escaping_method'), $result);
   }
 
+  public static function set($name, $value, $app = null)
+  {
+    if (is_null($app))
+    {
+      $app = sfConfig::get('sf_app');
+    }
+    Doctrine::getTable('SnsConfig')->set($app.'_'.$name, $value);
+  }
+
   public function offsetExists($offset)
   {
     return(is_null(self::get($offset)));

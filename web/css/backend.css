@@ -208,3 +208,63 @@ div.imageListTable div.cell dl dd.fileName {
   font-size: 1px;
   line-height: 1px;
 }
+
+dl.presetBox {
+  border: 1px solid #5F6067;
+  float: left;
+  margin: 5px 5px 0 0;
+  width: 200px;
+}
+
+dl.presetBox dt {
+  background-color: #58585C;
+  color: #FFFFFF;
+  font-weight: bold;
+  padding: 5px;
+}
+
+dl.presetBox dd {
+  padding: 5px;
+}
+
+dl.colorBox {
+  border: 1px solid #5F6067;
+  float: left;
+  margin: 5px 5px 0 0;
+  width: 150px;
+}
+
+dl.colorBox dt {
+  height: 2.5em;
+  padding: 0 5px;
+  background-color: #58585C;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+dl.colorBox dd div {
+  background: #D5D5D7 none repeat scroll 0 0;
+  border-bottom: 1px solid #5F6067;
+  border-right: 5px solid #58585C;
+  font-size: 8pt;
+  height: 13px;
+  overflow: hidden;
+  padding: 3px 5px;
+  text-align: center;
+  width: 90px;
+}
+
+dl.colorBox dd input {
+  width: 8em;
+  margin: 5px;
+}
+
+dl.colorBox dd.color {
+  border-top:1px solid #5F6067;
+  font-size:1px;
+  height:35px;
+  padding:0;
+  text-align:left;
+}
+
+

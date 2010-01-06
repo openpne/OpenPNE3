@@ -33,3 +33,6 @@ config/monitoring.yml:
 modules/*/config/security.yml:
   class:    opSecurityConfigHandler
 
+config/mobile_preset_color.yml:
+  class: sfSimpleYamlConfigHandler
+

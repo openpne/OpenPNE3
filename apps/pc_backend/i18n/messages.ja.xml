@@ -717,6 +717,150 @@
         <source>You must activate only an skin plugin.</source>
         <target>スキンプラグインは必ずどれか一つだけを有効にしてください。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Red</source>
+        <target>レッド</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Yello</source>
+        <target>イエロー</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Blue</source>
+        <target>ブルー</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Navy</source>
+        <target>ネイビー</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Green</source>
+        <target>グリーン</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Purple</source>
+        <target>パープル</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Beige</source>
+        <target>ベージュ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Page Background</source>
+        <target>ページ背景</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Title Background</source>
+        <target>タイトル背景</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Subtitle Background</source>
+        <target>サブタイトル背景</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Home Description Background</source>
+        <target>ホーム説明部分背景</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>List A Head Background</source>
+        <target>リストA見出し背景</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>List A Background1</source>
+        <target>リストA背景1</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>List A Background2</source>
+        <target>リストA背景2</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>List B Head Background</source>
+        <target>リストB見出し背景</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>List B Background1</source>
+        <target>リストB背景1</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>List B Background2</source>
+        <target>リストB背景2</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Break Border</source>
+        <target>区切り罫線</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>List A Border</source>
+        <target>リストA罫線</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>List B Border</source>
+        <target>リストB罫線</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Page Text</source>
+        <target>ページ文字</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Link Text</source>
+        <target>リンク文字</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Link Text (Active)</source>
+        <target>リンク文字 (アクティブ)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Link Text (Visited)</source>
+        <target>リンク文字 (訪問済み)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Title Text</source>
+        <target>タイトル文字</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Date / Item Text</source>
+        <target>日付・項目文字</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>⇒ Text</source>
+        <target>「⇒」 文字</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>▼ Text</source>
+        <target>「▼」 文字</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Error Text</source>
+        <target>エラーメッセージ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Subtitle Text</source>
+        <target>サブタイトル文字</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>List A Head Text</source>
+        <target>リストA見出し文字</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>List B Head Text</source>
+        <target>リストB見出し文字</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Search Head Text</source>
+        <target>検索見出し文字</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Search Head Background</source>
+        <target>検索見出し背景</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>After Change</source>
+        <target>変更後</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Before Change</source>
+        <target>変更前</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

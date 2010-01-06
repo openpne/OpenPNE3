@@ -465,4 +465,21 @@ class designActions extends sfActions
       }
     }
   }
+
+  public function executeMobileColorConfig(sfWebRequest $request)
+  {
+    $this->presetList = (array)include(sfContext::getInstance()->getConfigCache()->checkConfig('config/mobile_preset_color.yml'));
+
+    $this->form = new opMobileColorConfigForm();
+    if ($request->isMethod(sfRequest::POST))
+    {
+      $this->form->bind($request->getParameter('color'));
+      if ($this->form->isValid())
+      {
+        $this->form->save();
+        $this->getUser()->setFlash('notice', 'Saved.');
+        $this->redirect('design/mobileColorConfig');
+      }
+    }
+  }
 }
