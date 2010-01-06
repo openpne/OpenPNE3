@@ -267,4 +267,23 @@ dl.colorBox dd.color {
   text-align:left;
 }
 
+table.skin {
+  float: left;
+  margin: 5px;
+}
 
+table.skin th {
+  width: 200px;
+  height: 3.5em;
+}
+
+table.skin td {
+  height: 220px;
+  width: 200px;
+  overflow: hidden;
+}
+
+table.skin td.submit {
+  height: 30px;
+  width: 200px;
+}

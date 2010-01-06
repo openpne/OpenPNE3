@@ -24,7 +24,7 @@ class opSkinClassicImageForm extends sfForm
     sfContext::getInstance()->getConfiguration()->loadHelpers('Partial');
     $options['template'] = get_partial('opSkinClassicPlugin/formEditImage', array('target' => $target));
 
-    $this->setWidget('image', new sfWidgetFormInputFileEditable($options, array('size' => 40)));
+    $this->setWidget('image', new sfWidgetFormInputFileEditable($options, array('size' => 10)));
     $this->setValidator('image', new opValidatorImageFile(array('required' => true)));
 
     $this->widgetSchema->setNameFormat('image['.$target.'][%s]');
