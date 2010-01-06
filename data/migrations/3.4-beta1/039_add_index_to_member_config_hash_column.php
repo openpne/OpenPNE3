@@ -10,9 +10,13 @@
 
 class Revision39_AddIndexToMemberConfigHashColumn extends Doctrine_Migration_Base
 {
-  public function migrate($direction)
+  public function up()
   {
-    $options = array('fields' => array('name_value_hash'));
-    $this->index($direction, 'member_config', 'name_value_hash_INDEX_idx', $options);
+    $conn = Doctrine_Manager::connection();
+    if (!$conn->import->tableIndexExists('name_value_hash_INDEX_idx', 'member_config'))
+    {
+      $options = array('fields' => array('name_value_hash'));
+      $this->addIndex('member_config', 'name_value_hash_INDEX_idx', $options);
+    }
   }
 }
