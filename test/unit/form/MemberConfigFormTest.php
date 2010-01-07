@@ -16,6 +16,7 @@ $configuration = ProjectConfiguration::getApplicationConfiguration('pc_frontend'
 sfContext::createInstance($configuration);
 sfContext::getInstance()->getController()->getActionStack()->addEntry('member', 'home', new dummyActions(sfContext::getInstance(), 'member', 'home'));
 
+sfConfig::set('op_is_use_captcha', false);
 $member = Doctrine::getTable('Member')->find(1);
 $form = new MemberConfigMobileAddressForm($member, array(), false);
 

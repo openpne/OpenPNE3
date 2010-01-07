@@ -3,7 +3,7 @@
 include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 
-$t = new lime_test(8, new lime_output_color());
+$t = new lime_test(10, new lime_output_color());
 $file1 = Doctrine::getTable('File')->find(1);
 $file2 = Doctrine::getTable('File')->find(2);
 $file3 = Doctrine::getTable('File')->find(3);
@@ -37,3 +37,10 @@ $validated = new sfValidatedFile('test.txt', 'text/plain', $tmpDir.'/test.txt', 
 $newFile = new file();
 $newFile->setFromValidatedFile($validated);
 $t->is((string)$newFile->getOriginalFilename(), 'test.txt');
+
+//-----------------------------------------------------------
+$t->diag('->delete()');
+$file3->delete();
+$t->ok(!Doctrine::getTable('File')->find(3), 'The parent "File" record is removed.');
+$t->ok(!Doctrine::getTable('FileBin')->find(3), 'The related "FileBin" record is removed.');
+

@@ -79,7 +79,7 @@ FileBin:
     file_id: { type: integer(4), primary: true, comment: "File id" }
     bin: { type: blob, comment: "Content of file" }
   relations:
-    File: { local: file_id, foreign: id, onDelete: cascade, foreignType: one }
+    File: { local: file_id, foreign: id, onDelete: cascade, foreignType: one, owningSide: true }
   options:
     type: INNODB
     collate: utf8_unicode_ci

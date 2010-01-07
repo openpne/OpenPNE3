@@ -14,11 +14,11 @@ $t->is(cycle_vars('test', 'item1,item2'), 'item1');
 //------------------------------------------------------------
 $t->diag('op_format_last_login_time()');
 $now = time();
-$t->is(op_format_last_login_time($now - 2, $now), 'less than a minute');
-$t->is(op_format_last_login_time($now - 8, $now), 'less than a minute');
-$t->is(op_format_last_login_time($now - 13, $now), 'less than a minute');
-$t->is(op_format_last_login_time($now - 25, $now), 'less than a minute');
-$t->is(op_format_last_login_time($now - 49, $now), 'less than a minute');
+$t->is(op_format_last_login_time($now - 2, $now), 'less than a minute ago');
+$t->is(op_format_last_login_time($now - 8, $now), 'less than a minute ago');
+$t->is(op_format_last_login_time($now - 13, $now), 'less than a minute ago');
+$t->is(op_format_last_login_time($now - 25, $now), 'less than a minute ago');
+$t->is(op_format_last_login_time($now - 49, $now), 'less than a minute ago');
 $t->is(op_format_last_login_time($now - 60, $now), '1 minute ago');
 
 $t->is(op_format_last_login_time($now - 10 * 60, $now), '10 minutes ago');
