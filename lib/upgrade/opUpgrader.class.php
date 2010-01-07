@@ -119,6 +119,9 @@ class opUpgrader extends sfBaseTask
       sfOpenPNEApplicationConfiguration::registerZend();
       try
       {
+        // disable Doctrine profiling
+        sfConfig::set('sf_debug', false);
+
         $strategy = new $className($v['options']);
         $strategy->run();
 
