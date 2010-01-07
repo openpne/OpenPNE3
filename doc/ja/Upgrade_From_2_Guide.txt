@@ -5,7 +5,7 @@ OpenPNE 2 からのアップグレード手順
 はじめに
 ========
 
-このドキュメントは、 OpenPNE 2.12.x もしくは OpenPNE 2.14.x から OpenPNE 3.3.x へのバージョンアップ作業の手順を示したものです。
+このドキュメントは、 OpenPNE 2.12.x もしくは OpenPNE 2.14.x から OpenPNE 3.4.x へのバージョンアップ作業の手順を示したものです。
 
 ※アップグレードをおこなう前に、データベースのバックアップを取っておくことを強くお勧めします。
 
@@ -40,14 +40,14 @@ OpenPNE 3 の設置
 
 まず OpenPNE を入手してください。
 
-ZIP アーカイブを入手する場合、以下の URL にアクセスし、 OpenPNE 3.3.x の最新バージョンのパッケージをダウンロードしてください。
+ZIP アーカイブを入手する場合、以下の URL にアクセスし、 OpenPNE 3.4.x の最新バージョンのパッケージをダウンロードしてください。
 
 http://github.com/openpne/OpenPNE3/downloads
 
 Git リポジトリを利用する場合、以下のコマンドを実行してください (バージョン番号は適切なものに変更してください)::
 
   $ git clone git://github.com/openpne/OpenPNE3.github
-  $ git checkout OpenPNE-3.3.x
+  $ git checkout OpenPNE-3.4.x
 
 その後、 OpenPNE3 のソースコード内にある web ディレクトリが、ウェブサーバの公開領域となるように設置してください (セットアップガイドも参照してください)。
 
@@ -69,11 +69,6 @@ config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.cla
 以下のコマンドを実行し、プラグインをインストールします::
 
   $ ./symfony opPlugin:sync
-  $ ./symfony plugin:publish-assets
-
-その後、モデルに関するクラスファイルを構築します::
-
-  $ ./symfony doctrine:build --all-classes
 
 各ディレクトリのパーミッションを適切なものに設定します::
 
@@ -106,8 +101,6 @@ config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.cla
 ========
 
 アップグレードに際していくつか注意事項があります。
-
-* 3.3.2 の実装では、旧データは (コンバートの都合上 ALTER TABLE をする場面はあるものの) すべて残します。アップグレードをおこなう場合はディスクに充分な空き容量があることを確認してからおこなってください。最終的には OpenPNE3 側で未実装であるなどの理由がある場合を除き、データは適切なタイミングで削除する予定です
 
 * fix_old_image_data のコンバートで「Allowed memory size of xxxx bytes exhausted ... 」というようなエラーメッセージとともに失敗する場合、 php.ini の memory_limit ディレクティブの設定を見直すか、それが難しい場合は config/config.OpenPNE2.php の IMAGE_MAX_FILESIZE の設定値を大きな値に設定してください
 
