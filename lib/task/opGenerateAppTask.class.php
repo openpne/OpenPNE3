@@ -53,7 +53,7 @@ EOF;
     $finder = sfFinder::type('any')->discard('.sf');
     $this->getFilesystem()->mirror(dirname(__FILE__).'/skeleton/app/app', $appDir, $finder);
 
-    $fixPerms = new sfProjectPermissionsTask($this->dispatcher, $this->formatter);
+    $fixPerms = new openpnePermissionTask($this->dispatcher, $this->formatter);
     $fixPerms->setCommandApplication($this->commandApplication);
     $fixPerms->run();
   }
