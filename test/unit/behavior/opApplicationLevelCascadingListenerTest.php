@@ -174,10 +174,10 @@ $t->ok(in_array('UPDATE test_child_b SET test_parent_id = ? WHERE id = ?', $adap
 initAdapter($adapter);
 $record->getTable()->createQuery()->delete()->execute();
 $t->ok(in_array('DELETE FROM test_parent', $adapter->getAll()), 'TestParents are removed by DELETE query.');
-$t->ok(in_array('DELETE FROM test_child_a WHERE test_parent_id IN (SELECT t2.id AS t2__id FROM test_parent t2)', $adapter->getAll()), 'TestChlildrenA are removed.');
-$t->ok(in_array('UPDATE test_child_b SET test_parent_id = ? WHERE test_parent_id IN (SELECT t2.id AS t2__id FROM test_parent t2)', $adapter->getAll()), 'TestChlildrenB unlink to parent.');
-$t->ok(in_array('DELETE FROM test_child_c WHERE test_parent_id IN (SELECT t2.id AS t2__id FROM test_parent t2)', $adapter->getAll()), 'TestChlildrenC are removed.');
-$t->ok(in_array('UPDATE test_child_d SET test_parent_id = ? WHERE test_parent_id IN (SELECT t2.id AS t2__id FROM test_parent t2)', $adapter->getAll()), 'TestChlildrenD unlink to parent.');
+$t->ok(in_array('DELETE FROM test_child_a WHERE (test_parent_id IN (SELECT t2.id AS t2__id FROM test_parent t2))', $adapter->getAll()), 'TestChlildrenA are removed.');
+$t->ok(in_array('UPDATE test_child_b SET test_parent_id = ? WHERE (test_parent_id IN (SELECT t2.id AS t2__id FROM test_parent t2))', $adapter->getAll()), 'TestChlildrenB unlink to parent.');
+$t->ok(in_array('DELETE FROM test_child_c WHERE (test_parent_id IN (SELECT t2.id AS t2__id FROM test_parent t2))', $adapter->getAll()), 'TestChlildrenC are removed.');
+$t->ok(in_array('UPDATE test_child_d SET test_parent_id = ? WHERE (test_parent_id IN (SELECT t2.id AS t2__id FROM test_parent t2))', $adapter->getAll()), 'TestChlildrenD unlink to parent.');
 
 Doctrine_Manager::getInstance()->closeConnection($conn);
 // ---------------

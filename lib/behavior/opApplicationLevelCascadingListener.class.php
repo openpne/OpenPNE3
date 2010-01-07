@@ -50,6 +50,11 @@ class opApplicationLevelCascadingListener extends Doctrine_Record_Listener
     $tmpQuery = clone $event->getQuery();
     $subQuery = $tmpQuery->select($params['alias'].'.'.$params['component']['table']->getIdentifier())->getDql();
 
+    if (!in_array($params['alias'], $tmpQuery->getDqlPart('from')))
+    {
+      return false;
+    }
+
     $targets = $this->detectCascadingTargets($params['component']['table']);
     foreach ($targets as $target)
     {
