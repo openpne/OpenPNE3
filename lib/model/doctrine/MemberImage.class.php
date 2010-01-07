@@ -25,4 +25,9 @@ class MemberImage extends BaseMemberImage
 
     return false;
   }
+
+  public function postDelete($event)
+  {
+    $this->File->delete();
+  }
 }
