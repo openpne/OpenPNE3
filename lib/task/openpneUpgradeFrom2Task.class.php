@@ -77,5 +77,8 @@ EOF;
 
     $this->logSection('upgrade', 'Begin upgrading from 2.x');
     $upgrader->execute();
+
+    $task = new sfPluginPublishAssetsTask($this->dispatcher, $this->formatter);
+    $task->run(array(), array());
   }
 }

@@ -135,6 +135,9 @@ EOF;
     {
       throw $this->migrationException;
     }
+
+    $task = new sfPluginPublishAssetsTask($this->dispatcher, $this->formatter);
+    $task->run(array(), array());
   }
 
   protected function migrateFromScript($target, $databaseManager)
