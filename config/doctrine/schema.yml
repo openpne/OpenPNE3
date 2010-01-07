@@ -64,8 +64,6 @@ File:
     type: { type: string(64), default: "", notnull: true, comment: "Type of this file" }
     filesize: { type: integer(4), default: 0, notnull: true, comment: "File size" }
     original_filename: { type: string, comment: "Original filename" }
-  relations:
-    FileBin: { local: id, foreign: file_id }
   indexes:
     name_UNIQUE:
       fields: [name]
@@ -80,6 +78,8 @@ FileBin:
   columns:
     file_id: { type: integer(4), primary: true, comment: "File id" }
     bin: { type: blob, comment: "Content of file" }
+  relations:
+    File: { local: file_id, foreign: id, onDelete: cascade, foreignType: one }
   options:
     type: INNODB
     collate: utf8_unicode_ci
