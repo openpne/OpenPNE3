@@ -8,3 +8,5 @@ $nums = array(
 <?php foreach ($nums as $num): ?>
 INSERT INTO sns_config (id, name, value) (SELECT NULL, "mobile_frontend_core_color_<?php echo $num ?>", CONCAT("#", color_<?php echo $num ?>) FROM c_config_color_ktai LIMIT 1);
 <?php endforeach; ?>
+
+DROP TABLE c_config_color_ktai;

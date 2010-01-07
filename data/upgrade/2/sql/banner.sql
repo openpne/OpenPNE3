@@ -27,3 +27,5 @@ INSERT INTO banner_use_image (id, banner_id, banner_image_id, created_at, update
 <?php endforeach; ?>
 UPDATE banner SET is_use_html = 0 WHERE html = "";
 
+DROP TABLE c_banner;
+

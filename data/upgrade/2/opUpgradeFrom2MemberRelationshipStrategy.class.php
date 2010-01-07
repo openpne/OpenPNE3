@@ -72,5 +72,9 @@ class opUpgradeFrom2MemberRelationshipStrategy extends opUpgradeAbstractStrategy
         ));
       }
     }
+
+    $this->conn->execute('DROP TABLE c_access_block');
+    $this->conn->execute('DROP TABLE c_friend');
+    $this->conn->execute('DROP TABLE c_friend_confirm');
   }
 }

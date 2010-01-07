@@ -8,3 +8,6 @@ INSERT INTO deleted_message (id, member_id, message_id, message_send_list_id, is
 ALTER TABLE c_message CHANGE <?php echo $v ?> <?php echo $v ?> text CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 INSERT INTO message_file (id, message_id, file_id, created_at, updated_at) (SELECT NULL, c_message_id, <?php echo $this->getSQLForFileId($v) ?>, NOW(), NOW() FROM c_message WHERE <?php echo $v ?> <> '');
 <?php endforeach; ?>
+
+DROP TABLE c_message;
+

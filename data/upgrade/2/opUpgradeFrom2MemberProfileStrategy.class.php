@@ -52,6 +52,10 @@ class opUpgradeFrom2MemberProfileStrategy extends opUpgradeAbstractStrategy
 
     $this->importTreeMemberProfile($ids, $idStr);
     $this->setPresetMemberProfiles();
+
+    $this->conn->execute('DROP TABLE c_member_profile');
+    $this->conn->execute('DROP TABLE c_profile');
+    $this->conn->execute('DROP TABLE c_profile_option');
   }
 
   protected function importTreeMemberProfile($ids, $idStr)

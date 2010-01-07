@@ -72,5 +72,7 @@ class opUpgradeFrom2SkinConfigStrategy extends opUpgradeSQLImportStrategy
     {
       $this->conn->execute('INSERT INTO skin_config (plugin, name, value, created_at, updated_at) (SELECT "opSkinClassicPlugin", "'.$image.'_image", filename, NOW(), NOW() FROM c_skin_filename WHERE skinname = ?)', array($image));
     }
+
+    $this->conn->execute('DROP TABLE c_config_color');
   }
 }

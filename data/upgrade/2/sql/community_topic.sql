@@ -12,3 +12,6 @@ INSERT INTO community_event_comment (id, community_event_id, member_id, number, 
 
 INSERT INTO community_event_member (id, community_event_id, member_id, created_at, updated_at) (SELECT c_event_member_id, c_commu_topic_id, c_member_id, r_datetime, r_datetime FROM c_event_member);
 
+DROP TABLE c_commu_topic;
+DROP TABLE c_commu_topic_comment;
+DROP TABLE c_profile_pref;
