@@ -25,4 +25,4 @@ $t->is($snsConfig1->getValue(), 'test1');
 $t->diag('SnsConfig::setValue()');
 $snsConfig2->setValue(array('0', '1'));
 $t->is($snsConfig2->getValue(), array('0', '1'));
-$t->is($snsConfig2->value, serialize($snsConfig2->getValue()));
+$t->is($snsConfig2->rawGet('value'), serialize($snsConfig2->getValue()));
