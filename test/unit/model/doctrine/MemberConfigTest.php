@@ -9,19 +9,13 @@ $pcAddressConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId
 $passwordConfig  = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('password', 1, true);
 $member1 = Doctrine::getTable('Member')->findOneByName('A');
 $member2 = Doctrine::getTable('Member')->findOneByName('B');
-function createModel($memberId, $name, $value = null, $isDatetime = false)
+function createModel($memberId, $name, $value = null)
 {
   $memberConfig = new MemberConfig();
   $memberConfig->setMemberId($memberId);
   $memberConfig->setName($name);
-  if ($isDatetime)
-  {
-    $memberConfig->setValue($value);
-  }
-  else
-  {
-    $memberConfig->setValueDatetime($value);
-  }
+  $memberConfig->setValue($value);
+
   return $memberConfig;
 }
 
@@ -37,7 +31,7 @@ $t->isa_ok($result, 'MemberConfig');
 $t->diag('MemberConfig::getValue()');
 $memberConfig = createModel(1, 'test2', 1);
 $t->is($memberConfig->getValue(), 1);
-$memberConfig = createModel(1, 'test3', '1989-01-08', true);
+$memberConfig = createModel(1, 'test3', '1989-01-08');
 $t->is($memberConfig->getValue(), '1989-01-08');
 
 //------------------------------------------------------------
