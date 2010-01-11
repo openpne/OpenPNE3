@@ -13,7 +13,7 @@ $t->diag('ProfileTable');
 $t->diag('ProfileTable::getPublicFlags()');
 $data = array(
   1 => '全員に公開',
-  2 => '%my_friend%まで公開',
+  2 => 'マイフレンドまで公開',
   3 => '公開しない'
 );
 $t->is($table->getPublicFlags(), $data);
@@ -21,7 +21,7 @@ $t->is($table->getPublicFlags(), $data);
 //------------------------------------------------------------
 $t->diag('ProfileTable::getPublicFlag()');
 $t->is($table->getPublicFlag(ProfileTable::PUBLIC_FLAG_SNS), '全員に公開');
-$t->is($table->getPublicFlag(ProfileTable::PUBLIC_FLAG_FRIEND), '%my_friend%まで公開');
+$t->is($table->getPublicFlag(ProfileTable::PUBLIC_FLAG_FRIEND), 'マイフレンドまで公開');
 $t->is($table->getPublicFlag(ProfileTable::PUBLIC_FLAG_PRIVATE), '公開しない');
 
 //------------------------------------------------------------
