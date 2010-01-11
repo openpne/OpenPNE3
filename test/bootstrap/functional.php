@@ -22,11 +22,19 @@ require_once dirname(__FILE__).'/../../config/ProjectConfiguration.class.php';
 $configuration = ProjectConfiguration::getApplicationConfiguration($app, 'test', isset($debug) ? $debug : true);
 sfContext::createInstance($configuration);
 
+new sfDatabaseManager($configuration);
+
 if (!isset($executeLoader) || $executeLoader)
 {
-  $loader = new sfPropelData();
-  $loader->setDeleteCurrentData(true);
-  $loader->loadData(dirname(__FILE__).'/../fixtures');
+  $task = new sfDoctrineBuildTask($configuration->getEventDispatcher(), new sfFormatter());
+  $task->setConfiguration($configuration);
+  $task->run(array(), array(
+    'no-confirmation' => true,
+    'db'              => true,
+    'and-load'        => dirname(__FILE__).'/../fixtures',
+    'application'     => $app,
+    'env'             => 'test',
+  ));
 }
 
 // remove all cache
