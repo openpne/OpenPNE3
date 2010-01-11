@@ -94,7 +94,7 @@ $t->isa_ok($member1->getImage(), 'MemberImage');
 //------------------------------------------------------------
 $t->diag('Member::getImageFileName()');
 $t->isa_ok($member1->getImageFileName(), 'File');
-$t->is((string)$member1->getImageFileName(), 'dummy_file');
+$t->is((string)$member1->getImageFileName(), 'dummy_file3');
 $t->is($member3->getImageFileName(), false);
 
 //------------------------------------------------------------
