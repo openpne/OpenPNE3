@@ -3,7 +3,7 @@
 include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 
-$t = new lime_test(10, new lime_output_color());
+$t = new lime_test(11, new lime_output_color());
 
 $pcAddressConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('pc_address', 1, true);
 $passwordConfig  = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('password', 1, true);
@@ -61,3 +61,10 @@ $t->isa_ok($result3, 'MemberConfig');
 $t->diag('MemberConfig::generateRoleId()');
 $t->is($pcAddressConfig->generateRoleId($member1), 'self');
 $t->is($pcAddressConfig->generateRoleId($member2), 'everyone');
+
+//------------------------------------------------------------
+
+$t->diag('MemberConfig::getNameValueHash()');
+$memberConfig = createModel(1, 'test7', 'test7');
+$memberConfig->save();
+$t->is($memberConfig->getNameValueHash(), '767f31fc467e7879989b52aa54d8f60d', 'The "member_config.name_value_hash" is calculated by the given "test7,test7" string');
