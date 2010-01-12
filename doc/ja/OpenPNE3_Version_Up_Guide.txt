@@ -1,15 +1,16 @@
+================================
 OpenPNE 3.4 バージョンアップ手順
 ================================
 
 はじめに
---------
+========
 
 このドキュメントは、 OpenPNE 3.2.0 + から OpenPNE 3.4.x へのバージョンアップ作業の手順を示したものです。
 
 ※バージョンアップをおこなう前に、データベースのバックアップを取っておくことを強くお勧めします。
 
 手順
-----
+====
 
 バージョンアップは以下の手順でおこないます。
 
@@ -18,24 +19,34 @@ OpenPNE 3.4 バージョンアップ手順
 (3) バージョンアップコマンドの実行
 
 作業方法
---------
+========
 
 ファイルの設置
-~~~~~~~~~~~~~~
+--------------
 
 Web サーバ上に OpenPNE 3.4 のソースファイルを設置します。（※新旧ソースファイル混在によるトラブルを防ぐため、上書きではなくファイルすべてを交換してください。）
 
-設定ファイルの上書き
-~~~~~~~~~~~~~~~~~~~~
-
-config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.class.php にコピーします。
-
-※config/ProjectConfiguration.class.php に独自の設定を記述している場合は、古いファイルを参考に新しいファイルを変更してください。
+設定ファイルをコピー
+--------------------
 
 古いバージョンの config/databases.yml を新しいバージョンの config/databases.yml としてコピーします。
 
+その後、以下のようにして OpenPNE 3.4 付属の設定ファイルをコピーしてください。
+
+::
+
+  $ cd OpenPNE3
+  $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
+  $ cp config/OpenPNE.yml.sample config/OpenPNE.yml
+
+config/ProjectConfiguration.class.php に独自の設定を記述している場合は、古いファイルを参考に新しいファイルを変更してください。
+
+OpenPNE.yml の設定値を環境に合わせて変更してください。特に base_url と mail_domain はメール投稿、メール配信の際に利用されるので必ず設定をおこなってください。
+
+OpenPNE 3.2 で管理画面からメールテンプレートを変更し、 OpenPNE 3.4 にアップデートした際に問題が生じた場合、 OpenPNE.yml の is_restrict_mail_template を false に設定してください。
+
 プラグインディレクトリのコピー
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 古いバージョンの plugins ディレクトリの中身をコピーします。
 
@@ -45,7 +56,7 @@ config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.cla
   $ cp -aur /path/to/old/OpenPNE3/plugins/.* /path/to/new/OpenPNE3/plugins
 
 モデルの再構築
-~~~~~~~~~~~~~~
+--------------
 
 プロジェクトルートディレクトリで、以下のコマンドを実行します。
 
@@ -57,7 +68,7 @@ config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.cla
 この手順は、次の「バージョンアップコマンドの実行」に必要となります。
 
 バージョンアップコマンドの実行
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 プロジェクトルートディレクトリで、以下のバージョンアップコマンドを実行します。
 
