@@ -26,9 +26,9 @@ op_include_parts('pageNav', 'pageNav', array('list' => $categoryList, 'current' 
 <tr>
 <th><?php echo __($k) ?></th><td>
 <?php if (isset($v['link'])): ?>
-<?php echo link_to($v['text'], $v['link']) ?>
+<?php echo link_to(nl2br($v['text']), $v['link']) ?>
 <?php else: ?>
-<?php echo $v['text'] ?>
+<?php echo nl2br($v['text']) ?>
 <?php endif; ?>
 </td>
 </tr>
