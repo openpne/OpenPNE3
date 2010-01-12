@@ -20,23 +20,25 @@ class opTemplateRendererTwig extends sfTemplateRendererTwig
   {
     if (sfConfig::get('op_is_restrict_mail_template', true))
     {
-      $parameters = new opFilteredParameter($parameters);
+      $parameters = $this->filterParameters($parameters);
     }
 
     return parent::evaluate($template, $parameters);
   }
-}
 
-class opFilterTemplateParameterIterator extends FilterIterator
-{
-  protected $allowedClasses = array('opConfig', 'opColorConfig', 'SnsTermTable');
-
-  public function accept()
+  protected function filterParameters($parameters)
   {
-    $current = $this->current();
+    $filtered = array_map(array($this, 'normalizeParametersCallback'), $parameters);
+    $filtered = $this->filterIgoredParameters($parameters);
+
+    return $filtered;
+  }
+
+  protected function normalizeParametersCallback($current)
+  {
     if ($current instanceof sfOutputEscaper)
     {
-      $current = $this->current()->getRawValue();
+      $current = $current->getRawValue();
     }
 
     if ($current instanceof Member)
@@ -57,60 +59,45 @@ class opFilterTemplateParameterIterator extends FilterIterator
         $member['config'][$v->name] = $v->getValue();
       }
 
-      $this->offsetSet($this->key(), $member);
+      return array_map(array($this, 'normalizeParametersCallback'), $member);
     }
     elseif ($current instanceof Doctrine_Record)
     {
-      $this->offsetSet($this->key(), $current->toArray());
+      return array_map(array($this, 'normalizeParametersCallback'), $current->toArray());
     }
-    elseif (empty($current))
+
+    if (is_array($current))
+    {
+      return array_map(array($this, 'normalizeParametersCallback'), $current);
+    }
+
+    return $current;
+  }
+
+  protected function filterIgoredParameters($current)
+  {
+    foreach ($current as $k => $v)
+    {
+      if (is_array($v))
+      {
+        $v = $this->filterParameters($v);
+        $current[$k] = $v;
+      }
+    }
+
+    return array_filter($current, array($this, 'filterIgoredParametersCallback'));
+  }
+
+  protected function filterIgoredParametersCallback($current)
+  {
+    $allowedClasses = array('opConfig', 'opColorConfig', 'SnsTermTable');
+
+    if (is_scalar($current) || is_array($current) || in_array(get_class($current), $allowedClasses) || empty($current))
     {
       return true;
     }
-    elseif (is_scalar($current) || is_array($current) || in_array(get_class($current), $this->allowedClasses))
-    {
-      $this->offsetSet($this->key(), $current);
-    }
-    else
-    {
-      return false;
-    }
 
-    return true;
-  }
-}
-
-class opFilteredParameter extends ArrayObject
-{
-  protected $filter = null;
-
-  public function __construct($params)
-  {
-    $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($params), RecursiveIteratorIterator::SELF_FIRST);
-    $this->filter = new opFilterTemplateParameterIterator($iterator);
-
-    parent::__construct($this->doFilter());
-  }
-
-  public function doFilter()
-  {
-    $data = array();
-    $pos = array();
-    foreach ($this->filter as $k => $v)
-    {
-      $depth = $this->filter->getInnerIterator()->getDepth();
-      $pos[$depth] = $k;
-
-      $_current =& $data;
-      for ($i = 0; $i < $depth; $i++)
-      {
-        $_current =& $_current[$pos[$i]];
-      }
-
-      $_current[$k] = $this->filter->offsetGet($k);
-    }
-
-    return $data;
+    return false;
   }
 }
 
