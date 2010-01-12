@@ -29,7 +29,7 @@ class opTemplateRendererTwig extends sfTemplateRendererTwig
   protected function filterParameters($parameters)
   {
     $filtered = array_map(array($this, 'normalizeParametersCallback'), $parameters);
-    $filtered = $this->filterIgoredParameters($parameters);
+    $filtered = $this->filterIgoredParameters($filtered);
 
     return $filtered;
   }
