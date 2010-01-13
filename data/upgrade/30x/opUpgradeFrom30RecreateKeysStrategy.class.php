@@ -76,11 +76,13 @@ class opUpgradeFrom30RecreateKeysStrategy extends opUpgradeAbstractStrategy
 
       foreach ($newIndexes as $name => $definition)
       {
+        $definition['fields'] = (array)$definition['fields'];
         $conn->export->createIndex($table, $name, $definition);
       }
 
       foreach ($newForeignKeys as $name => $definition)
       {
+        $definition['fields'] = (array)$definition['fields'];
         $conn->export->createForeignKey($table, $definition);
       }
     }

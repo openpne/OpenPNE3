@@ -6,6 +6,9 @@ remove_blog_plugin:
   strategy: opUpgradeFrom30RemoveBlogPluginStrategy
   file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30RemoveBlogPluginStrategy.class.php
 
+build_model_pre:
+  strategy: BuildModel
+
 sync_plugin:
   strategy: SyncPlugin
 
@@ -41,7 +44,6 @@ create_translation_table_for_opensocial:
   file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30CreateTranslationTableStrategy.class.php
   options:
     models: [Application]
-    required_rules: [normalize_opensocial]
 
 create_translation_table:
   strategy: opUpgradeFrom30CreateTranslationTableStrategy
@@ -54,7 +56,6 @@ import_translation:
   file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30ConvertTranslationTableStrategy.class.php
   options:
     tables: [application, banner, message_type, navigation, profile, profile_option]
-    required_rules: [create_translation_table_for_opensocial, create_translation_table]
 
 append_member_application_setting_column:
   strategy: SQLImport
@@ -64,25 +65,18 @@ recreate_keys:
   file: %SF_DATA_DIR%/upgrade/30x/opUpgradeFrom30RecreateKeysStrategy.class.php
   options:
     ignores: [favorite, intro_friend]
-    required_rules: [import_translation]
 
 convert_application:
   strategy: SQLImport
-  options:
-    required_rules: [normalize_opensocial]
 
 convert_application_persistent_data:
   strategy: SQLImport
-  options:
-    required_rules: [normalize_opensocial]
 
 convert_banner:
   strategy: SQLImport
 
 convert_member_application:
   strategy: SQLImport
-  options:
-    required_rules: [normalize_opensocial]
 
 convert_member_image:
   strategy: SQLImport
