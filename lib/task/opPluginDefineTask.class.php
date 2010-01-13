@@ -8,8 +8,6 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-require_once 'PEAR/PackageFileManager2.php';
-
 class opPluginDefineTask extends sfBaseTask
 {
   protected $pluginManager = null;
@@ -36,6 +34,11 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
+    // Remove E_STRICT from error_reporting
+    error_reporting(error_reporting() & ~E_STRICT);
+
+    require_once 'PEAR/PackageFileManager2.php';
+
     $pluginName = $arguments['name'];
 
     $info = $this->getPluginManager()->getPluginInfo($pluginName);
