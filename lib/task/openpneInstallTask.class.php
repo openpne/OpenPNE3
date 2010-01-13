@@ -93,6 +93,9 @@ EOF;
 
       $this->publishAssets();
       $this->clearCache();
+
+      // _PEAR_call_destructors() causes an E_STRICT error
+      error_reporting(error_reporting() & ~E_STRICT);
     }
   }
 

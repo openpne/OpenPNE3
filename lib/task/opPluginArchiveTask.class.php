@@ -8,8 +8,6 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-require_once 'Archive/Tar.php';
-
 class opPluginArchiveTask extends sfBaseTask
 {
   protected function configure()
@@ -32,6 +30,11 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
+    // Remove E_STRICT from error_reporting
+    error_reporting(error_reporting() & ~E_STRICT);
+
+    require_once 'Archive/Tar.php';
+
     $pluginName = $arguments['name'];
     $packagePath = sfConfig::get('sf_plugins_dir').'/'.$pluginName;
     if (!is_readable($packagePath.'/package.xml'))
