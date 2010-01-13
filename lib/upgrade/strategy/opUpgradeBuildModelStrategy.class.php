@@ -22,7 +22,7 @@ class opUpgradeBuildModelStrategy extends opUpgradeAbstractStrategy
     sfOpenPNEApplicationConfiguration::unregisterZend();
 
     $task = new sfDoctrineBuildModelTask($this->options['dispatcher'], $this->options['formatter']);
-    $task->run();
+    $task->run(array(), array('--env=prod'));
 
     $task = new sfCacheClearTask($this->options['dispatcher'], $this->options['formatter']);
     $task->run();
