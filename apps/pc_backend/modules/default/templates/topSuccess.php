@@ -25,4 +25,4 @@ function getDashboard(str)
 <script type="text/javascript" src="http://update.openpne.jp/?callback=getVersion&version=<?php echo OPENPNE_VERSION ?>"></script>
 
 <div id="dashboard" style="display: none;"></div>
-<script type="text/javascript" src="http://sandbox.ebihara.dazai.pne.jp/OpenPNE3Develop/dashboard.php?callback=getDashboard"></script>
+<script type="text/javascript" src="http://www.openpne.jp/dashboard/json?callback=getDashboard"></script>
