@@ -4,7 +4,7 @@
 <div id="globalNav">
 <?php
 $globalNavOptions = array(
-  'type'      => opToolkit::isSecurePage() ? 'secure_global' : 'insecure_global',
+  'is_secure' => opToolkit::isSecurePage(),
   'culture'   => sfContext::getInstance()->getUser()->getCulture(),
 );
 include_component('default', 'globalNav', $globalNavOptions);
