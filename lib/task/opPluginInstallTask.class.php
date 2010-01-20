@@ -91,6 +91,10 @@ EOF;
       $this->logBlock($e->getMessage(), 'ERROR');
       return false;
     }
+    catch (Doctrine_Connection_Exception $e)
+    {
+      $this->logBlock($e->getMessage(), 'COMMENT');
+    }
   }
 
   public function getPluginManager()
