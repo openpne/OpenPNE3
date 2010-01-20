@@ -3,7 +3,6 @@ prod:
     no_script_name:         true
     logging_enabled:        false
     check_lock:             true
-    cache:                  on
   .actions:
     error_404_action:       error
     module_disabled_action: error

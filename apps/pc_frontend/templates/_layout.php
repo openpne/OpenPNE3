@@ -27,17 +27,7 @@
 <div id="ContentsContainer">
 
 <div id="localNav">
-<?php
-$context = sfContext::getInstance();
-$module = $context->getActionStack()->getLastEntry()->getModuleName();
-$localNavOptions = array(
-  'is_secure' => opToolkit::isSecurePage(),
-  'id'        => $context->getRequest()->getParameter('id'),
-  'type'      => sfConfig::get('sf_nav_type', sfConfig::get('mod_'.$module.'_default_nav', 'default')),
-  'culture'   => $context->getUser()->getCulture(),
-);
-include_component('default', 'localNav', $localNavOptions);
-?>
+<?php include_component('default', 'localNav') ?>
 </div><!-- localNav -->
 
 <div id="Layout<?php echo $layout ?>" class="Layout">
