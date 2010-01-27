@@ -72,9 +72,15 @@ class monitoringActions extends sfActions
 
     if ($request->isMethod(sfWebRequest::POST))
     {
-      $this->form->bindAndSave ($request->getParameter('image'), $request->getFiles('image'));
-      $this->getUser()->setFlash('notice', '画像の追加が完了しました');
-      $this->redirect('monitoring/imageList');
+      if ($this->form->bindAndSave(
+        $request->getParameter($this->form->getName()),
+        $request->getFiles($this->form->getName())
+      ))
+      {
+        $this->getUser()->setFlash('notice', '画像の追加が完了しました');
+
+        $this->redirect('monitoring/imageList');
+      }
     }
   }
 
