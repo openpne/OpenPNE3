@@ -4,20 +4,14 @@
  *
  * PHP versions 4 and 5
  *
- * LICENSE: This source file is subject to version 3.0 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
  * @category   pear
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2008 The PHP Group
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Test.php,v 1.27 2008/01/03 20:26:36 cellog Exp $
+ * @copyright  1997-2009 The Authors
+ * @license    http://opensource.org/licenses/bsd-license.php New BSD License
+ * @version    CVS: $Id: Test.php 279072 2009-04-20 19:57:41Z cellog $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -35,17 +29,15 @@ require_once 'PEAR/Command/Common.php';
  * @author     Stig Bakken <ssb@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2008 The PHP Group
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.2
+ * @copyright  1997-2009 The Authors
+ * @license    http://opensource.org/licenses/bsd-license.php New BSD License
+ * @version    Release: 1.9.0
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
 
 class PEAR_Command_Test extends PEAR_Command_Common
 {
-    // {{{ properties
-
     var $commands = array(
         'run-tests' => array(
             'summary' => 'Run Regression Tests',
@@ -103,9 +95,6 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
 
     var $output;
 
-    // }}}
-    // {{{ constructor
-
     /**
      * PEAR_Command_Test constructor.
      *
@@ -116,24 +105,23 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
         parent::PEAR_Command_Common($ui, $config);
     }
 
-    // }}}
-    // {{{ doRunTests()
-
     function doRunTests($command, $options, $params)
     {
         if (isset($options['phpunit']) && isset($options['tapoutput'])) {
             return $this->raiseError('ERROR: cannot use both --phpunit and --tapoutput at the same time');
         }
+
         require_once 'PEAR/Common.php';
         require_once 'System.php';
         $log = new PEAR_Common;
         $log->ui = &$this->ui; // slightly hacky, but it will work
         $tests = array();
-        $depth = isset($options['recur']) ? 4 : 1;
+        $depth = isset($options['recur']) ? 14 : 1;
 
         if (!count($params)) {
             $params[] = '.';
         }
+
         if (isset($options['package'])) {
             $oldparams = $params;
             $params = array();
@@ -185,10 +173,8 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
                     }
                     continue;
                 }
-                $dir = System::find(array($p, '-type', 'f',
-                                            '-maxdepth', $depth,
-                                            '-name', '*.phpt'));
-                $tests = array_merge($tests, $dir);
+
+                $args  = array($p, '-type', 'f', '-name', '*.phpt');
             } else {
                 if (isset($options['phpunit'])) {
                     if (preg_match('/AllTests\.php\\z/i', $p)) {
@@ -210,11 +196,17 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
                 if (!preg_match('/\.phpt\\z/', $p)) {
                     $p .= '.phpt';
                 }
-                $dir = System::find(array(dirname($p), '-type', 'f',
-                                            '-maxdepth', $depth,
-                                            '-name', $p));
-                $tests = array_merge($tests, $dir);
+
+                $args  = array(dirname($p), '-type', 'f', '-name', $p);
             }
+
+            if (!isset($options['recur'])) {
+                $args[] = '-maxdepth';
+                $args[] = 1;
+            }
+
+            $dir   = System::find($args);
+            $tests = array_merge($tests, $dir);
         }
 
         $ini_settings = '';
@@ -229,6 +221,7 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
         if ($ini_settings) {
             $this->ui->outputData('Using INI settings: "' . $ini_settings . '"');
         }
+
         $skipped = $passed = $failed = array();
         $tests_count = count($tests);
         $this->ui->outputData('Running ' . $tests_count . ' tests', $command);
@@ -284,17 +277,17 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
                     fclose($fp);
                 }
             }
-            
+
             if ($result == 'FAILED') {
-            	$failed[] = $t;
+                $failed[] = $t;
             }
             if ($result == 'PASSED') {
-            	$passed[] = $t;
+                $passed[] = $t;
             }
             if ($result == 'SKIPPED') {
-            	$skipped[] = $t;
+                $skipped[] = $t;
             }
-            
+
             $j++;
         }
 
@@ -312,11 +305,11 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
                 $output = "TOTAL TIME: $total\n";
                 $output .= count($passed) . " PASSED TESTS\n";
                 $output .= count($skipped) . " SKIPPED TESTS\n";
-        		$output .= count($failed) . " FAILED TESTS:\n";
-            	foreach ($failed as $failure) {
-            		$output .= $failure . "\n";
-            	}
-                
+                $output .= count($failed) . " FAILED TESTS:\n";
+                foreach ($failed as $failure) {
+                    $output .= $failure . "\n";
+                }
+
                 $mode = isset($options['realtimelog']) ? 'a' : 'w';
                 $fp   = @fopen('run-tests.log', $mode);
 
@@ -333,13 +326,12 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
         $this->ui->outputData(count($passed) . ' PASSED TESTS', $command);
         $this->ui->outputData(count($skipped) . ' SKIPPED TESTS', $command);
         if (count($failed)) {
-    		$this->ui->outputData(count($failed) . ' FAILED TESTS:', $command);
-        	foreach ($failed as $failure) {
-        		$this->ui->outputData($failure, $command);
-        	}
+            $this->ui->outputData(count($failed) . ' FAILED TESTS:', $command);
+            foreach ($failed as $failure) {
+                $this->ui->outputData($failure, $command);
+            }
         }
 
         return true;
     }
-    // }}}
 }

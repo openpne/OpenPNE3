@@ -4,22 +4,16 @@
  *
  * PHP versions 4 and 5
  *
- * LICENSE: This source file is subject to version 3.0 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
  * @category   pear
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2008 The PHP Group
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Builder.php,v 1.34 2008/05/12 23:43:21 cellog Exp $
+ * @copyright  1997-2009 The Authors
+ * @license    http://opensource.org/licenses/bsd-license.php New BSD License
+ * @version    CVS: $Id: Builder.php 276383 2009-02-24 23:39:37Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
- * 
+ *
  * TODO: log output parameters in PECL command line
  * TODO: msdev path in configuration
  */
@@ -29,6 +23,7 @@
  */
 require_once 'PEAR/Common.php';
 require_once 'PEAR/PackageFile.php';
+
 /**
  * Class to handle building (compiling) extensions.
  *
@@ -36,17 +31,15 @@ require_once 'PEAR/PackageFile.php';
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2008 The PHP Group
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.2
+ * @copyright  1997-2009 The Authors
+ * @license    http://opensource.org/licenses/bsd-license.php New BSD License
+ * @version    Release: 1.9.0
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since PHP 4.0.2
  * @see        http://pear.php.net/manual/en/core.ppm.pear-builder.php
  */
 class PEAR_Builder extends PEAR_Common
 {
-    // {{{ properties
-
     var $php_api_version = 0;
     var $zend_module_api_no = 0;
     var $zend_extension_api_no = 0;
@@ -62,8 +55,6 @@ class PEAR_Builder extends PEAR_Common
     // used for msdev builds
     var $_lastline = null;
     var $_firstline = null;
-    // }}}
-    // {{{ constructor
 
     /**
      * PEAR_Builder constructor.
@@ -77,10 +68,6 @@ class PEAR_Builder extends PEAR_Common
         parent::PEAR_Common();
         $this->setFrontendObject($ui);
     }
-
-    // }}}
-
-    // {{{ _build_win32()
 
     /**
      * Build an extension from source on windows.
@@ -104,14 +91,15 @@ class PEAR_Builder extends PEAR_Common
         if (!file_exists($dir) || !is_dir($dir) || !chdir($dir)) {
             return $this->raiseError("could not chdir to $dir");
         }
+
         // packages that were in a .tar have the packagefile in this directory
         $vdir = $pkg->getPackage() . '-' . $pkg->getVersion();
         if (file_exists($dir) && is_dir($vdir)) {
-            if (chdir($vdir)) {
-                $dir = getcwd();
-            } else {
+            if (!chdir($vdir)) {
                 return $this->raiseError("could not chdir to " . realpath($vdir));
             }
+
+            $dir = getcwd();
         }
 
         $this->log(2, "building in $dir");
@@ -136,7 +124,7 @@ class PEAR_Builder extends PEAR_Common
             $buildtype = $matches[2];
         }
 
-        if (preg_match('/(.*)?\s-\s(\d+).*?(\d+)/',$this->_lastline,$matches)) {
+        if (preg_match('/(.*)?\s-\s(\d+).*?(\d+)/', $this->_lastline, $matches)) {
             if ($matches[2]) {
                 // there were errors in the build
                 return $this->raiseError("There were errors during compilation.");
@@ -158,7 +146,7 @@ class PEAR_Builder extends PEAR_Common
                     $buildtype.'").*?'.
                     '\/out:"(.*?)"/is';
 
-        if ($dsptext && preg_match($regex,$dsptext,$matches)) {
+        if ($dsptext && preg_match($regex, $dsptext, $matches)) {
             // what we get back is a relative path to the output file itself.
             $outfile = realpath($matches[2]);
         } else {
@@ -188,9 +176,7 @@ class PEAR_Builder extends PEAR_Common
         $this->_lastline = $data;
         call_user_func($this->current_callback, $what, $data);
     }
-    // }}}
 
-    // {{{ _harventInstDir
     /**
      * @param string
      * @param string
@@ -231,10 +217,6 @@ class PEAR_Builder extends PEAR_Common
         return $ret;
     }
 
-    // }}}
-
-    // {{{ build()
-
     /**
      * Build an extension from source.  Runs "phpize" in the source
      * directory, but compiles in a temporary directory
@@ -260,9 +242,26 @@ class PEAR_Builder extends PEAR_Common
      */
     function build($descfile, $callback = null)
     {
+        if (preg_match('/(\\/|\\\\|^)([^\\/\\\\]+)?php(.+)?$/',
+                       $this->config->get('php_bin'), $matches)) {
+            if (isset($matches[2]) && strlen($matches[2]) &&
+                trim($matches[2]) != trim($this->config->get('php_prefix'))) {
+                $this->log(0, 'WARNING: php_bin ' . $this->config->get('php_bin') .
+                           ' appears to have a prefix ' . $matches[2] . ', but' .
+                           ' config variable php_prefix does not match');
+            }
+            if (isset($matches[3]) && strlen($matches[3]) &&
+                trim($matches[3]) != trim($this->config->get('php_suffix'))) {
+                $this->log(0, 'WARNING: php_bin ' . $this->config->get('php_bin') .
+                           ' appears to have a suffix ' . $matches[3] . ', but' .
+                           ' config variable php_suffix does not match');
+            }
+        }
+
+
         $this->current_callback = $callback;
         if (PEAR_OS == "Windows") {
-            return $this->_build_win32($descfile,$callback);
+            return $this->_build_win32($descfile, $callback);
         }
         if (PEAR_OS != 'Unix') {
             return $this->raiseError("building extensions not supported on this platform");
@@ -296,7 +295,10 @@ class PEAR_Builder extends PEAR_Common
         $dir = getcwd();
         $this->log(2, "building in $dir");
         putenv('PATH=' . $this->config->get('bin_dir') . ':' . getenv('PATH'));
-        $err = $this->_runCommand("phpize", array(&$this, 'phpizeCallback'));
+        $err = $this->_runCommand($this->config->get('php_prefix')
+                                . "phpize" .
+                                $this->config->get('php_suffix'),
+                                array(&$this, 'phpizeCallback'));
         if (PEAR::isError($err)) {
             return $err;
         }
@@ -358,7 +360,7 @@ class PEAR_Builder extends PEAR_Common
         if (!file_exists($build_dir) || !is_dir($build_dir) || !chdir($build_dir)) {
             return $this->raiseError("could not chdir to $build_dir");
         }
-        putenv('PHP_PEAR_VERSION=1.7.2');
+        putenv('PHP_PEAR_VERSION=1.9.0');
         foreach ($to_run as $cmd) {
             $err = $this->_runCommand($cmd, $callback);
             if (PEAR::isError($err)) {
@@ -375,14 +377,13 @@ class PEAR_Builder extends PEAR_Common
             return $this->raiseError("no `modules' directory found");
         }
         $built_files = array();
-        $prefix = exec("php-config --prefix");
+        $prefix = exec($this->config->get('php_prefix')
+                        . "php-config" .
+                       $this->config->get('php_suffix') . " --prefix");
         $this->_harvestInstDir($prefix, $inst_dir . DIRECTORY_SEPARATOR . $prefix, $built_files);
         chdir($old_cwd);
         return $built_files;
     }
-
-    // }}}
-    // {{{ phpizeCallback()
 
     /**
      * Message callback function used when running the "phpize"
@@ -416,9 +417,6 @@ class PEAR_Builder extends PEAR_Common
             }
         }
     }
-
-    // }}}
-    // {{{ _runCommand()
 
     /**
      * Run an external command, using a message callback to report
@@ -458,16 +456,10 @@ class PEAR_Builder extends PEAR_Common
         if ($callback && isset($olddbg)) {
             $callback[0]->debug = $olddbg;
         }
-        if (is_resource($pp)) {
-            $exitcode = pclose($pp);
-        } else {
-            $exitcode = -1;
-        }
+
+        $exitcode = is_resource($pp) ? pclose($pp) : -1;
         return ($exitcode == 0);
     }
-
-    // }}}
-    // {{{ log()
 
     function log($level, $msg)
     {
@@ -479,8 +471,4 @@ class PEAR_Builder extends PEAR_Common
         }
         return PEAR_Common::log($level, $msg);
     }
-
-    // }}}
 }
-
-?>

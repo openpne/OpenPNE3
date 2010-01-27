@@ -31,7 +31,7 @@
    </package>
    <phpunit>
     <shortopt>u</shortopt>
-    <doc>Search parameters for AllTests.php, and use that to run phpunit-based tests.
+    <doc>Search parameters for AllTests.php, and use that to run phpunit-based tests
 If none is found, all .phpt tests will be tried instead.</doc>
    </phpunit>
    <tapoutput>
@@ -49,6 +49,6 @@ If none is found, all .phpt tests will be tried instead.</doc>
    </coverage>
   </options>
   <doc>[testfile|dir ...]
-Run regression tests with PHP&apos;s regression testing script (run-tests.php).</doc>
+Run regression tests with PHP&#039;s regression testing script (run-tests.php).</doc>
  </run-tests>
 </commands>

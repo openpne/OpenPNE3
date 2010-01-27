@@ -4,18 +4,12 @@
  *
  * PHP versions 4 and 5
  *
- * LICENSE: This source file is subject to version 3.0 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2008 The PHP Group
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: 13.php,v 1.6 2008/04/11 01:16:40 dufuz Exp $
+ * @copyright  1997-2009 The Authors
+ * @license    http://opensource.org/licenses/bsd-license.php New BSD License
+ * @version    CVS: $Id: 13.php 287110 2009-08-11 18:51:15Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a12
  */
@@ -32,9 +26,9 @@ require_once 'PEAR/REST/10.php';
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2008 The PHP Group
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.2
+ * @copyright  1997-2009 The Authors
+ * @license    http://opensource.org/licenses/bsd-license.php New BSD License
+ * @version    Release: 1.9.0
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a12
  */
@@ -60,33 +54,39 @@ class PEAR_REST_13 extends PEAR_REST_10
      */
     function getDownloadURL($base, $packageinfo, $prefstate, $installed, $channel = false)
     {
-        $channel = $packageinfo['channel'];
-        $package = $packageinfo['package'];
         $states = $this->betterStates($prefstate, true);
         if (!$states) {
             return PEAR::raiseError('"' . $prefstate . '" is not a valid state');
         }
-        $state   = isset($packageinfo['state'])   ? $packageinfo['state']   : null;
-        $version = isset($packageinfo['version']) ? $packageinfo['version'] : null;
-        $info = $this->_rest->retrieveData($base . 'r/' . strtolower($package) .
-            '/allreleases2.xml');
+
+        $channel  = $packageinfo['channel'];
+        $package  = $packageinfo['package'];
+        $state    = isset($packageinfo['state'])   ? $packageinfo['state']   : null;
+        $version  = isset($packageinfo['version']) ? $packageinfo['version'] : null;
+        $restFile = $base . 'r/' . strtolower($package) . '/allreleases2.xml';
+
+        $info = $this->_rest->retrieveData($restFile, false, false, $channel);
         if (PEAR::isError($info)) {
             return PEAR::raiseError('No releases available for package "' .
                 $channel . '/' . $package . '"');
         }
+
         if (!isset($info['r'])) {
             return false;
         }
+
         $release = $found = false;
         if (!is_array($info['r']) || !isset($info['r'][0])) {
             $info['r'] = array($info['r']);
         }
+
         $skippedphp = false;
         foreach ($info['r'] as $release) {
             if (!isset($this->_rest->_options['force']) && ($installed &&
                   version_compare($release['v'], $installed, '<'))) {
                 continue;
             }
+
             if (isset($state)) {
                 // try our preferred state first
                 if ($release['s'] == $state) {
@@ -98,6 +98,7 @@ class PEAR_REST_13 extends PEAR_REST_10
                     $found = true;
                     break;
                 }
+
                 // see if there is something newer and more stable
                 // bug #7221
                 if (in_array($release['s'], $this->betterStates($state), true)) {
@@ -133,32 +134,38 @@ class PEAR_REST_13 extends PEAR_REST_10
                 }
             }
         }
+
         if (!$found && $skippedphp) {
             $found = null;
         }
+
         return $this->_returnDownloadURL($base, $package, $release, $info, $found, $skippedphp, $channel);
     }
 
     function getDepDownloadURL($base, $xsdversion, $dependency, $deppackage,
                                $prefstate = 'stable', $installed = false, $channel = false)
     {
-        $channel = $dependency['channel'];
-        $package = $dependency['name'];
         $states = $this->betterStates($prefstate, true);
         if (!$states) {
             return PEAR::raiseError('"' . $prefstate . '" is not a valid state');
         }
-        $state   = isset($dependency['state'])   ? $dependency['state']   : null;
-        $version = isset($dependency['version']) ? $dependency['version'] : null;
-        $info = $this->_rest->retrieveData($base . 'r/' . strtolower($package) .
-            '/allreleases2.xml');
+
+        $channel  = $dependency['channel'];
+        $package  = $dependency['name'];
+        $state    = isset($dependency['state'])   ? $dependency['state']   : null;
+        $version  = isset($dependency['version']) ? $dependency['version'] : null;
+        $restFile = $base . 'r/' . strtolower($package) .'/allreleases2.xml';
+
+        $info = $this->_rest->retrieveData($restFile, false, false, $channel);
         if (PEAR::isError($info)) {
             return PEAR::raiseError('Package "' . $deppackage['channel'] . '/' . $deppackage['package']
                 . '" dependency "' . $channel . '/' . $package . '" has no releases');
         }
+
         if (!is_array($info) || !isset($info['r'])) {
             return false;
         }
+
         $exclude = array();
         $min = $max = $recommended = false;
         if ($xsdversion == '1.0') {
@@ -198,31 +205,35 @@ class PEAR_REST_13 extends PEAR_REST_10
                 }
             }
         }
-        $found = false;
-        $release = false;
-        $skippedphp = false;
+
+        $skippedphp = $found = $release = false;
         if (!is_array($info['r']) || !isset($info['r'][0])) {
             $info['r'] = array($info['r']);
         }
+
         foreach ($info['r'] as $release) {
             if (!isset($this->_rest->_options['force']) && ($installed &&
                   version_compare($release['v'], $installed, '<'))) {
                 continue;
             }
+
             if (in_array($release['v'], $exclude)) { // skip excluded versions
                 continue;
             }
+
             // allow newer releases to say "I'm OK with the dependent package"
             if ($xsdversion == '2.0' && isset($release['co'])) {
                 if (!is_array($release['co']) || !isset($release['co'][0])) {
                     $release['co'] = array($release['co']);
                 }
+
                 foreach ($release['co'] as $entry) {
                     if (isset($entry['x']) && !is_array($entry['x'])) {
                         $entry['x'] = array($entry['x']);
                     } elseif (!isset($entry['x'])) {
                         $entry['x'] = array();
                     }
+
                     if ($entry['c'] == $deppackage['channel'] &&
                           strtolower($entry['p']) == strtolower($deppackage['package']) &&
                           version_compare($deppackage['version'], $entry['min'], '>=') &&
@@ -234,32 +245,38 @@ class PEAR_REST_13 extends PEAR_REST_10
                             $skippedphp = $release;
                             continue;
                         }
+
                         $recommended = $release['v'];
                         break;
                     }
                 }
             }
+
             if ($recommended) {
                 if ($release['v'] != $recommended) { // if we want a specific
                     // version, then skip all others
                     continue;
-                } else {
-                    if (!in_array($release['s'], $states)) {
-                        // the stability is too low, but we must return the
-                        // recommended version if possible
-                        return $this->_returnDownloadURL($base, $package, $release, $info, true, false, $channel);
-                    }
+                }
+
+                if (!in_array($release['s'], $states)) {
+                    // the stability is too low, but we must return the
+                    // recommended version if possible
+                    return $this->_returnDownloadURL($base, $package, $release, $info, true, false, $channel);
                 }
             }
+
             if ($min && version_compare($release['v'], $min, 'lt')) { // skip too old versions
                 continue;
             }
+
             if ($max && version_compare($release['v'], $max, 'gt')) { // skip too new versions
                 continue;
             }
+
             if ($installed && version_compare($release['v'], $installed, '<')) {
                 continue;
             }
+
             if (in_array($release['s'], $states)) { // if in the preferred state...
                 if (version_compare($release['m'], phpversion(), '>')) {
                     // skip dependency releases that require a PHP version
@@ -267,14 +284,16 @@ class PEAR_REST_13 extends PEAR_REST_10
                     $skippedphp = $release;
                     continue;
                 }
+
                 $found = true; // ... then use it
                 break;
             }
         }
+
         if (!$found && $skippedphp) {
             $found = null;
         }
+
         return $this->_returnDownloadURL($base, $package, $release, $info, $found, $skippedphp, $channel);
     }
 }
-?>

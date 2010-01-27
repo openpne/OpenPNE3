@@ -4,18 +4,12 @@
  *
  * PHP versions 4 and 5
  *
- * LICENSE: This source file is subject to version 3.0 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2008 The PHP Group
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: rw.php,v 1.22 2008/01/18 22:47:49 cellog Exp $
+ * @copyright  1997-2009 The Authors
+ * @license    http://opensource.org/licenses/bsd-license.php New BSD License
+ * @version    CVS: $Id: rw.php 276385 2009-02-24 23:46:03Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a8
  */
@@ -27,9 +21,9 @@ require_once 'PEAR/PackageFile/v2.php';
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2008 The PHP Group
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.2
+ * @copyright  1997-2009 The Authors
+ * @license    http://opensource.org/licenses/bsd-license.php New BSD License
+ * @version    Release: 1.9.0
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a8
  */
@@ -108,7 +102,7 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
         $this->_isValid = 0;
         if (!isset($this->_packageInfo['uri'])) {
             // ensure that the uri tag is set up in the right location
-            $this->_packageInfo = $this->_insertBefore($this->_packageInfo, 
+            $this->_packageInfo = $this->_insertBefore($this->_packageInfo,
                 array('extends', 'summary', 'description', 'lead',
                 'developer', 'contributor', 'helper', 'date', 'time', 'version',
                 'stability', 'license', 'notes', 'contents', 'compatible',
@@ -458,7 +452,7 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
                     'bundle', 'changelog'), array(), 'contents');
         }
         if ($this->getPackageType() != 'bundle') {
-            $this->_packageInfo['contents'] = 
+            $this->_packageInfo['contents'] =
                 array('dir' => array('attribs' => array('name' => '/')));
             if ($baseinstall) {
                 $this->_packageInfo['contents']['dir']['attribs']['baseinstalldir'] = $baseinstall;
@@ -1227,21 +1221,26 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
                                    'zendextbin', 'bundle'))) {
             return false;
         }
+
         if (in_array($type, array('zendextsrc', 'zendextbin'))) {
             $this->_setPackageVersion2_1();
         }
+
         if ($type != 'bundle') {
             $type .= 'release';
         }
+
         foreach (array('phprelease', 'extbinrelease', 'extsrcrelease',
                        'zendextsrcrelease', 'zendextbinrelease', 'bundle') as $test) {
             unset($this->_packageInfo[$test]);
         }
+
         if (!isset($this->_packageInfo[$type])) {
             // ensure that the release tag is set up
             $this->_packageInfo = $this->_insertBefore($this->_packageInfo, array('changelog'),
                 array(), $type);
         }
+
         $this->_packageInfo[$type] = array();
         return true;
     }
@@ -1361,14 +1360,17 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
         if ($this->getPackageType() != 'extsrc' && $this->getPackageType() != 'zendextsrc') {
             return false;
         }
+
         $r = &$this->_getCurrentRelease(false);
         if ($r === null) {
             return false;
         }
+
         $opt = array('attribs' => array('name' => $name, 'prompt' => $prompt));
         if ($default !== null) {
             $opt['attribs']['default'] = $default;
         }
+
         $this->_isValid = 0;
         $r = $this->_mergeTag($r, $opt,
             array(
@@ -1546,7 +1548,7 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
     function generateChangeLogEntry($notes = false)
     {
         return array(
-            'version' => 
+            'version' =>
                 array(
                     'release' => $this->getVersion('release'),
                     'api' => $this->getVersion('api'),
@@ -1600,4 +1602,3 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
         unset($this->_packageInfo['changelog']);
     }
 }
-?>
