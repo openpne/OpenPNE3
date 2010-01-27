@@ -1,3 +1,24 @@
+html, body, #wrap {
+  height: 100%;
+}
+
+body > #wrap {
+  height: auto; min-height: 100%;
+}
+
+#contents {
+  padding-bottom: 40px; /* must be same height as the footer */
+}
+
+#footer {
+  position: relative;
+  background: #FFFFFF;
+  border-top: #CCCCCC solid 1px;
+  margin-top: -40px; /* negative value of footer height */
+  height: 40px;
+  clear: both;
+}
+
 body {
   background: #FFFFFF url(../images/test.png) repeat-y scroll 0 0;
 }
@@ -287,3 +308,27 @@ table.skin td.submit {
   height: 30px;
   width: 200px;
 }
+
+#openpne_version {
+  padding: 5px;
+}
+
+/* CLEAR FIX*/
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.clearfix {
+  display: inline-block;
+}
+/* Hides from IE-mac \*/
+* html .clearfix {
+  height: 1%;
+}
+.clearfix {
+  display: block;
+}
+/* End hide from IE-mac */

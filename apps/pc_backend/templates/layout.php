@@ -12,6 +12,8 @@
     <?php include_javascripts() ?>
 </head>
 <body id="<?php echo $sf_request->getParameter('module').'_'.$sf_request->getParameter('action') ?>"<?php if (!$sf_user->isAuthenticated()) : ?> class="insecure"<?php endif; ?>>
+<div id="wrap">
+<div id="contents" class="clearfix">
 
 <div id="header">
 <h1><?php echo $op_config['sns_name'] ?>管理画面</h1>
@@ -47,6 +49,14 @@
 
 <?php echo $sf_content ?>
 </div>
+</div>
 
+</div>
+
+<?php if ($sf_user->isAuthenticated()) : ?>
+<div id="footer" style="width: 100%; background: #FFFFFF;">
+<p id="openpne_version">Powered by OpenPNE <?php echo OPENPNE_VERSION ?></p>
+</div>
+<?php endif; ?>
 </body>
 </html>
