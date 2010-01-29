@@ -17,7 +17,7 @@ class opPluginUninstallTask extends sfPluginUninstallTask
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('channel', 'c', sfCommandOption::PARAMETER_REQUIRED, 'The PEAR channel name', 'plugins.openpne.jp'),
+      new sfCommandOption('channel', 'c', sfCommandOption::PARAMETER_REQUIRED, 'The PEAR channel name', null),
       new sfCommandOption('install_deps', 'd', sfCommandOption::PARAMETER_NONE, 'Whether to force installation of dependencies', null),
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'prod'),
@@ -43,5 +43,15 @@ EOF;
     $pluginManager = new opPluginManager($this->dispatcher, $oldPluginManager->getEnvironment());
 
     return $pluginManager;
+  }
+
+  protected function execute($arguments = array(), $options = array())
+  {
+    if (empty($opitons['channel']))
+    {
+      $options['channel'] = opPluginManager::getDefaultPluginChannelServerName();
+    }
+
+    return parent::execute($arguments, $options);
   }
 }

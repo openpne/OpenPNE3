@@ -6,7 +6,6 @@
 # URL of the SNS
 base_url: "http://example.com/"
 
-
 ######################################
 # メール (Mail)
 ######################################
@@ -69,4 +68,14 @@ http_proxy: ""
 
 # 対応言語
 supported_languages: ['en', 'ja_JP']
+
+####################################
+# プラグインチャンネルサーバ設定
+####################################
+
+# デフォルトで使用するチャンネルサーバ
+# default_plugin_channel_server: "plugins.openpne.jp"
+
+# プラグインリストのベース URL
+# plugin_list_base_url: "http://plugins.openpne.jp/packages/"
 

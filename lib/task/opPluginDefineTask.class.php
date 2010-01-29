@@ -51,7 +51,7 @@ EOF;
     {
       $info = array(
         'n' => $pluginName,
-        'c' => opPluginManager::OPENPNE_PLUGIN_CHANNEL,
+        'c' => opPluginManager::getDefaultPluginChannelServerName(),
         'l' => 'Apache',
         's' => $pluginName,
         'd' => $pluginName,
@@ -81,7 +81,7 @@ EOF;
     }
 
     $packageXml->setPackage($pluginName);
-    $packageXml->setChannel(opPluginManager::OPENPNE_PLUGIN_CHANNEL);
+    $packageXml->setChannel(opPluginManager::getDefaultPluginChannelServerName());
     $packageXml->setReleaseVersion($arguments['version']);
     $packageXml->setReleaseStability($arguments['stability']);
     $packageXml->setApiVersion($arguments['version']);

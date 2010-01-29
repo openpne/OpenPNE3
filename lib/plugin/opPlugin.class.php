@@ -44,7 +44,7 @@ class opPlugin
     else
     {
       $manager = new opPluginManager($dispatcher);
-      $package = $manager->getEnvironment()->getRegistry()->getPackage($pluginName, opPluginManager::OPENPNE_PLUGIN_CHANNEL);
+      $package = $manager->getEnvironment()->getRegistry()->getPackage($pluginName, opPluginManager::getDefaultPluginChannelServerName());
       if ($package)
       {
         $this->version = $package->getVersion();

@@ -109,7 +109,7 @@ EOF;
 
     try
     {
-      $client = new Zend_Http_Client('http://'.opPluginManager::OPENPNE_PLUGIN_CHANNEL.'/packages/'.OPENPNE_VERSION.'.yml', $config);
+      $client = new Zend_Http_Client(opPluginManager::getPluginListBaseUrl().OPENPNE_VERSION.'.yml', $config);
       $response = $client->request();
 
       if ($response->isSuccessful())

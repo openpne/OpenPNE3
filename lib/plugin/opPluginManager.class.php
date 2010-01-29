@@ -21,6 +21,7 @@ error_reporting(error_reporting() & ~(E_STRICT | E_DEPRECATED));
 class opPluginManager extends sfSymfonyPluginManager
 {
   const OPENPNE_PLUGIN_CHANNEL = 'plugins.openpne.jp';
+  const OPENPNE_PLUGIN_LIST_BASE_URL = 'http://plugins.openpne.jp/packages/';
 
   public function __construct(sfEventDispatcher $dispatcher, sfPearEnvironment $environment = null)
   {
@@ -39,7 +40,7 @@ class opPluginManager extends sfSymfonyPluginManager
 
       try
       {
-        $environment->registerChannel(self::OPENPNE_PLUGIN_CHANNEL, true);
+        $environment->registerChannel(self::getDefaultPluginChannelServerName(), true);
       }
       catch (sfPluginException $e) {}
     }
@@ -49,7 +50,7 @@ class opPluginManager extends sfSymfonyPluginManager
 
   public function getChannel()
   {
-    return $this->getEnvironment()->getRegistry()->getChannel(self::OPENPNE_PLUGIN_CHANNEL);
+    return $this->getEnvironment()->getRegistry()->getChannel(self::getDefaultPluginChannelServerName());
   }
 
   public function getBaseURL()
@@ -68,7 +69,7 @@ class opPluginManager extends sfSymfonyPluginManager
     $data = $this->retrieveChannelXml('p/'.strtolower($plugin).'/info.xml');
     $result = array_merge(array(
         'n' => $plugin,
-        'c' => opPluginManager::OPENPNE_PLUGIN_CHANNEL,
+        'c' => self::getDefaultPluginChannelServerName(),
         'l' => 'Apache',
         's' => $plugin,
         'd' => $plugin,
@@ -176,6 +177,16 @@ class opPluginManager extends sfSymfonyPluginManager
   {
     // do nothing.
     // OpenPNE plugin don't want to rewrite config/ProjectConfiguration.class.php
+  }
+
+  static public function getDefaultPluginChannelServerName()
+  {
+    return sfConfig::get('op_default_plugin_channel_server', self::OPENPNE_PLUGIN_CHANNEL);
+  }
+
+  static public function getPluginListBaseUrl()
+  {
+    return sfConfig::get('op_plugin_list_base_url', self::OPENPNE_PLUGIN_LIST_BASE_URL);
   }
 
   /**
