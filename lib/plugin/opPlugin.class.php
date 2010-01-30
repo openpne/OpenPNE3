@@ -8,6 +8,9 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
+// Remove E_STRICT and E_DEPRECATED from error_reporting
+error_reporting(error_reporting() & ~(E_STRICT | E_DEPRECATED));
+
 /**
  * opPlugin allows you to touch OpenPNE plugin.
  *
