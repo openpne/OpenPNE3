@@ -161,6 +161,11 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
   public function getMember()
   {
+    if (!$this->getMemberId())
+    {
+      return new opAnonymousMember();
+    }
+
     return Doctrine::getTable('Member')->find($this->getMemberId());
   }
 
