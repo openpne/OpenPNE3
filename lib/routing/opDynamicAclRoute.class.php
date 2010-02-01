@@ -29,7 +29,14 @@ class opDynamicAclRoute extends sfDoctrineRoute
   {
     $result = parent::getObject();
 
-    if (!$this->acl->isAllowed($this->getCurrentMemberId(), null, $this->options['privilege']))
+    if ($result instanceof opAccessControlRecordInterface)
+    {
+      if (!$result->isAllowed($this->getCurrentMember(), $this->options['privilege']))
+      {
+        throw new sfError404Exception('You are not allowed access to this resource.');
+      }
+    }
+    elseif (!$this->acl->isAllowed($this->getCurrentMemberId(), null, $this->options['privilege']))
     {
       throw new sfError404Exception('You are not allowed access to this resource.');
     }
@@ -41,7 +48,10 @@ class opDynamicAclRoute extends sfDoctrineRoute
   {
     $result = parent::getObjectForParameters($parameters);
 
-    $this->acl = call_user_func($this->getAclBuilderName().'::buildResource', $result, $this->getTargetMemberList());
+    if (!$result instanceof opAccessControlRecordInterface)
+    {
+      $this->acl = call_user_func($this->getAclBuilderName().'::buildResource', $result, $this->getTargetMemberList());
+    }
 
     return $result;
   }
@@ -49,6 +59,18 @@ class opDynamicAclRoute extends sfDoctrineRoute
   protected function getAclBuilderName()
   {
     return 'op'.$this->options['model'].'AclBuilder';
+  }
+
+  protected function getCurrentMember()
+  {
+    $user = sfContext::getInstance()->getUser();
+
+    if (!is_null($user) && $user instanceof sfOpenPNESecurityUser)
+    {
+      return $user->getMember();
+    }
+
+    return new opAnonymousMember();
   }
 
   protected function getCurrentMemberId()
