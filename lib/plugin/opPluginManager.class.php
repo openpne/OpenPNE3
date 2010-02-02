@@ -23,7 +23,9 @@ class opPluginManager extends sfSymfonyPluginManager
   const OPENPNE_PLUGIN_CHANNEL = 'plugins.openpne.jp';
   const OPENPNE_PLUGIN_LIST_BASE_URL = 'http://plugins.openpne.jp/packages/';
 
-  public function __construct(sfEventDispatcher $dispatcher, sfPearEnvironment $environment = null)
+  protected $channel = null;
+
+  public function __construct(sfEventDispatcher $dispatcher, sfPearEnvironment $environment = null, $channel = null)
   {
     if (!$environment)
     {
@@ -38,9 +40,15 @@ class opPluginManager extends sfSymfonyPluginManager
 
       date_default_timezone_set($tz);
 
+      $this->channel = $channel;
+      if (!$this->channel)
+      {
+        $this->channel = self::getDefaultPluginChannelServerName();
+      }
+
       try
       {
-        $environment->registerChannel(self::getDefaultPluginChannelServerName(), true);
+        $environment->registerChannel($this->channel, true);
       }
       catch (sfPluginException $e) {}
     }
@@ -50,7 +58,7 @@ class opPluginManager extends sfSymfonyPluginManager
 
   public function getChannel()
   {
-    return $this->getEnvironment()->getRegistry()->getChannel(self::getDefaultPluginChannelServerName());
+    return $this->getEnvironment()->getRegistry()->getChannel($this->channel);
   }
 
   public function getBaseURL()
@@ -69,7 +77,7 @@ class opPluginManager extends sfSymfonyPluginManager
     $data = $this->retrieveChannelXml('p/'.strtolower($plugin).'/info.xml');
     $result = array_merge(array(
         'n' => $plugin,
-        'c' => self::getDefaultPluginChannelServerName(),
+        'c' => $this->channel,
         'l' => 'Apache',
         's' => $plugin,
         'd' => $plugin,

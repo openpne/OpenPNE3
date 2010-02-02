@@ -24,6 +24,7 @@ class opPluginDefineTask extends sfBaseTask
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
+      new sfCommandOption('channel', 'c', sfCommandOption::PARAMETER_REQUIRED, 'The PEAR channel name', null),
     ));
 
     $this->namespace        = 'opPlugin';
@@ -42,16 +43,21 @@ EOF;
     // Remove E_STRICT and E_DEPRECATED from error_reporting
     error_reporting(error_reporting() & ~(E_STRICT | E_DEPRECATED));
 
+    if (empty($options['channel']))
+    {
+      $options['channel'] = opPluginManager::getDefaultPluginChannelServerName();
+    }
+
     require_once 'PEAR/PackageFileManager2.php';
 
     $pluginName = $arguments['name'];
 
-    $info = $this->getPluginManager()->getPluginInfo($pluginName);
+    $info = $this->getPluginManager($options['channel'])->getPluginInfo($pluginName);
     if (!$info)
     {
       $info = array(
         'n' => $pluginName,
-        'c' => opPluginManager::getDefaultPluginChannelServerName(),
+        'c' => $options['channel'],
         'l' => 'Apache',
         's' => $pluginName,
         'd' => $pluginName,
@@ -59,13 +65,13 @@ EOF;
     }
 
     $packageXml = new PEAR_PackageFileManager2();
-    $options = array(
+    $packageOptions = array(
       'packagedirectory'  => sfConfig::get('sf_plugins_dir').'/'.$pluginName.'/',
       'filelistgenerator' => 'file',
       'baseinstalldir'    => '/',
     );
 
-    $e = $packageXml->setOptions($options);
+    $e = $packageXml->setOptions($packageOptions);
     if (PEAR::isError($e))
     {
       echo $e->getMessage();
@@ -81,7 +87,7 @@ EOF;
     }
 
     $packageXml->setPackage($pluginName);
-    $packageXml->setChannel(opPluginManager::getDefaultPluginChannelServerName());
+    $packageXml->setChannel($options['channel']);
     $packageXml->setReleaseVersion($arguments['version']);
     $packageXml->setReleaseStability($arguments['stability']);
     $packageXml->setApiVersion($arguments['version']);
@@ -114,11 +120,11 @@ EOF;
     }
   }
 
-  public function getPluginManager()
+  public function getPluginManager($channel = null)
   {
     if (is_null($this->pluginManager))
     {
-      $this->pluginManager = new opPluginManager($this->dispatcher);
+      $this->pluginManager = new opPluginManager($this->dispatcher, null, $channel);
     }
 
     return $this->pluginManager;

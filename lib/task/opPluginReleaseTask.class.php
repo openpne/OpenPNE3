@@ -20,6 +20,7 @@ class opPluginReleaseTask extends sfBaseTask
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
+      new sfCommandOption('channel', 'c', sfCommandOption::PARAMETER_REQUIRED, 'The PEAR channel name', null),
     ));
 
     $this->namespace        = 'opPlugin';
@@ -37,6 +38,11 @@ EOF;
   {
     $name = $arguments['name'];
     $dir = $arguments['dir'];
+
+    if (empty($options['channel']))
+    {
+      $options['channel'] = opPluginManager::getDefaultPluginChannelServerName();
+    }
 
     while (
       !($version = $this->ask('Type plugin version'))
@@ -66,15 +72,15 @@ EOF;
 
     if ($this->askConfirmation('Is it OK to start this task? (y/n)'))
     {
-      $this->doRelease($name, $version, $stability, $note, $dir);
+      $this->doRelease($name, $version, $stability, $note, $dir, $options['channel']);
       $this->clearCache();
     }
   }
 
-  protected function doRelease($name, $version, $stability, $note, $dir)
+  protected function doRelease($name, $version, $stability, $note, $dir, $channel)
   {
     $defineTask = new opPluginDefineTask($this->dispatcher, $this->formatter);
-    $defineTask->run(array('name' => $name, 'version' => $version, 'stability' => $stability, 'note' => '"'.$note.'"'));
+    $defineTask->run(array('name' => $name, 'version' => $version, 'stability' => $stability, 'note' => '"'.$note.'"'), array('channel' => $channel));
     $archiveTask = new opPluginArchiveTask($this->dispatcher, $this->formatter);
     $archiveTask->run(array('name' => $name, 'dir' => $dir));
   }
