@@ -61,10 +61,11 @@ EOF;
     // Remove E_STRICT and E_DEPRECATED from error_reporting
     error_reporting(error_reporting() & ~(E_STRICT | E_DEPRECATED));
 
-    if (empty($opitons['channel']))
+    if (empty($options['channel']))
     {
       $options['channel'] = opPluginManager::getDefaultPluginChannelServerName();
     }
+    $manager = $this->getPluginManager($options['channel']);
 
     if (sfConfig::get('op_http_proxy'))
     {
@@ -98,11 +99,11 @@ EOF;
     }
   }
 
-  public function getPluginManager()
+  public function getPluginManager($channel = null)
   {
     if (is_null($this->pluginManager))
     {
-      $this->pluginManager = new opPluginManager($this->dispatcher);
+      $this->pluginManager = new opPluginManager($this->dispatcher, null, $channel);
     }
 
     return $this->pluginManager;
