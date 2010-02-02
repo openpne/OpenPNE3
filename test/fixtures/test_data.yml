@@ -409,7 +409,7 @@ CommunityConfig:
     value: "IDが1番のコミュニティ"
   community_1_register_policy:
     Community: community_1
-    name: "register_poricy"
+    name: "register_policy"
     value: "open"
   community_1_is_default:
     Community: community_1
@@ -417,7 +417,7 @@ CommunityConfig:
     value: true
   community_2_register_policy:
     Community: community_2
-    name: "register_poricy"
+    name: "register_policy"
     value: "close"
   community_3_is_default:
     Community: community_3
