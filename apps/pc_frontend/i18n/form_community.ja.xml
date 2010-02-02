@@ -11,7 +11,7 @@
         <target>%community%カテゴリ</target>
       </trans-unit>
       <trans-unit id="3">
-        <source>Register poricy</source>
+        <source>Register policy</source>
         <target>参加条件</target>
       </trans-unit>
       <trans-unit id="4">
