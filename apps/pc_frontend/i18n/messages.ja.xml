@@ -1008,8 +1008,8 @@
         <target>ボタンをクリックして続行してください。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Please login</source>
-        <target>ログインしてください</target>
+        <source>Please login to visit this page</source>
+        <target>このページを見るにはログインが必要です</target>
       </trans-unit>
       <trans-unit id="">
         <source>Add new application</source>

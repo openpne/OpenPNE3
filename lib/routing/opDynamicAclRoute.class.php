@@ -33,15 +33,29 @@ class opDynamicAclRoute extends sfDoctrineRoute
     {
       if (!$result->isAllowed($this->getCurrentMember(), $this->options['privilege']))
       {
-        throw new sfError404Exception('You are not allowed access to this resource.');
+        $this->handleRestriction();
       }
     }
     elseif (!$this->acl->isAllowed($this->getCurrentMemberId(), null, $this->options['privilege']))
     {
-      throw new sfError404Exception('You are not allowed access to this resource.');
+      $this->handleRestriction();
     }
 
     return $result;
+  }
+
+  protected function handleRestriction()
+  {
+    if ($this->getCurrentMember() instanceof opAnonymousMember)
+    {
+      sfContext::getInstance()->getController()->forward('member', 'login');
+
+      throw new sfStopException();
+    }
+    else
+    {
+      throw new sfError404Exception('You are not allowed access to this resource.');
+    }
   }
 
   protected function getObjectForParameters($parameters)

@@ -704,8 +704,8 @@
         <target>もうすぐ誕生日です</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Please login</source>
-        <target>ﾛｸﾞｲﾝしてください</target>
+        <source>Please login to visit this page</source>
+        <target>このﾍﾟｰｼﾞを見るにはﾛｸﾞｲﾝが必要です</target>
       </trans-unit>
       <trans-unit id="">
         <source>Man</source>
