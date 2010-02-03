@@ -4,6 +4,7 @@ freeArea:
   description:
     ja_JP: "フリーエリアを設置できます"
   component: [default, freeAreaBox]
+  viewable_privilege: 4
   config:
     title:
       Name:       "title"
@@ -23,6 +24,7 @@ memberImageBox:
     ja_JP: "プロフィール写真"
   description:
     ja_JP: "メンバーの登録した写真をホームに表示します"
+  viewable_privilege: 4
   component: [default, memberImageBox]
 
 friendListBox:
@@ -100,6 +102,7 @@ profileListBox:
     ja_JP: "プロフィール"
   description:
     ja_JP: "プロフィール情報のリストを表示します"
+  viewable_privilege: 4
   component: [member, profileListBox]
 
 activityBox:

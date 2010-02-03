@@ -3,6 +3,7 @@ loginForm:
     ja_JP: "ログインフォーム"
   description:
     ja_JP: "ログイン用のフォームが設置できます。利用可能なすべての認証モード用のログインフォームがすべて含まれています。"
+  viewable_privilege: 4
   component: [default, loginFormBox]
 
 freeArea:
@@ -10,6 +11,7 @@ freeArea:
     ja_JP: "フリーエリア"
   description:
     ja_JP: "フリーエリアを設置できます"
+  viewable_privilege: 4
   component: [default, freeAreaBox]
   config:
     title:

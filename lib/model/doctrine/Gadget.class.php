@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class Gadget extends BaseGadget
+class Gadget extends BaseGadget implements opAccessControlRecordInterface
 {
   public function preSave($event)
   {
@@ -66,6 +66,11 @@ class Gadget extends BaseGadget
       return false;
     }
 
+    if (!$this->isAllowed(sfContext::getInstance()->getUser()->getMember(), 'view'))
+    {
+      return false;
+    }
+
     return true;
   }
 
@@ -85,5 +90,15 @@ class Gadget extends BaseGadget
     }
 
     return $result;
+  }
+
+  public function generateRoleId(Member $member)
+  {
+    if ($member instanceof opAnonymousMember)
+    {
+      return 'anonymous';
+    }
+
+    return 'everyone';
   }
 }

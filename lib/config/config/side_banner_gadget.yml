@@ -3,6 +3,7 @@ informationBox:
     ja_JP: "インフォメーションボックス"
   description:
     ja_JP: "お知らせなどの通知が可能なインフォメーションボックスを設置できます。"
+  viewable_privilege: 4
   component: [default, informationBox]
   config:
     value:
@@ -17,6 +18,7 @@ languageSelecterBox:
     ja_JP: "言語切り替えボックス"
   description:
     ja_JP: "他の言語に切り替えるために必要なボックスを設置できます。"
+  viewable_privilege: 4
   component: [default, languageSelecterBox]
 
 sideBanner:
@@ -31,6 +33,7 @@ rssBox:
     ja_JP: "RSS リーダー"
   description:
     ja_JP: "指定された URL の RSS フィードを表示します"
+  viewable_privilege: 4
   component: [default, rssBox]
   config:
     title:
@@ -51,6 +54,7 @@ linkListBox:
     ja_JP: "リンク集"
   description:
     ja_JP: "指定されたリンクのリストを表示します"
+  viewable_privilege: 4
   component: [default, linkListBox]
   config:
     title:

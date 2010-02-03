@@ -3,6 +3,7 @@ loginForm:
     ja_JP: "ログインフォーム"
   description:
     ja_JP: "ログイン用のフォームを設置できます。利用可能なすべての認証モード用のログインフォームがすべて含まれています。"
+  viewable_privilege: 4
   component: [default, loginFormBox]
 
 freeArea:
@@ -10,6 +11,7 @@ freeArea:
     ja_JP: "フリーエリア"
   description:
     ja_JP: "フリーエリアを設置できます"
+  viewable_privilege: 4
   component: [default, freeAreaBox]
   config:
     title:
@@ -30,6 +32,7 @@ rssBox:
     ja_JP: "RSS リーダー"
   description:
     ja_JP: "指定された URL の RSS フィードを表示します"
+  viewable_privilege: 4
   component: [default, rssBox]
   config:
     title:
@@ -50,6 +53,7 @@ linkListBox:
     ja_JP: "リンク集"
   description:
     ja_JP: "指定されたリンクのリストを表示します"
+  viewable_privilege: 4
   component: [default, linkListBox]
   config:
     title:

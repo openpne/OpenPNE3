@@ -3,6 +3,7 @@ freeArea:
     ja_JP: "フリーエリア"
   description:
     ja_JP: "フリーエリアを設置できます"
+  viewable_privilege: 4
   component: [default, freeAreaBox]
   config:
     title:

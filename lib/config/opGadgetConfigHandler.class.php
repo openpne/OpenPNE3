@@ -23,6 +23,31 @@ class opGadgetConfigHandler extends sfYamlConfigHandler
     $prefix = strtolower($this->getParameterHolder()->get('prefix', ''));
 
     $config = $this->parseYamls($configFiles);
+    foreach ($config as $k => $v)
+    {
+      if (!isset($v['config']))
+      {
+        $config[$k]['config'] = array();
+      }
+
+      $config[$k]['config']['viewable_privilege'] = array(
+        'Name'       => 'viewable_privilege',
+        'Caption'    => '公開範囲',
+        'FormType'   => 'select',
+        'ValueType'  => 'int',
+        'IsRequired' => true,
+        'Default'    => 1,
+        'Choices'    => array(
+          4 => 'All Users on the Web',
+          1 => 'All Members',
+        ),
+      );
+
+      if (isset($v['viewable_privilege']))
+      {
+        $config[$k]['config']['viewable_privilege']['Default'] = $v['viewable_privilege'];
+      }
+    }
 
     $format = "<?php\n"
             . "sfConfig::add(array('%s' => %s));";

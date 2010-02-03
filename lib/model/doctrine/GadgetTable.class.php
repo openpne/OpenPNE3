@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class GadgetTable extends Doctrine_Table
+class GadgetTable extends opAccessControlDoctrineTable
 {
   protected $results;
 
@@ -113,5 +113,24 @@ class GadgetTable extends Doctrine_Table
     }
 
     return array();
+  }
+
+  public function appendRoles(Zend_Acl $acl)
+  {
+    return $acl
+      ->addRole(new Zend_Acl_Role('anonymous'))
+      ->addRole(new Zend_Acl_Role('everyone'), 'anonymous');
+  }
+
+  public function appendRules(Zend_Acl $acl, $resource = null)
+  {
+    $acl->allow('everyone', $resource, 'view');
+
+    if (4 == $resource->getConfig('viewable_privilege'))
+    {
+      $acl->allow('anonymous', $resource, 'view');
+    }
+
+    return $acl;
   }
 }
