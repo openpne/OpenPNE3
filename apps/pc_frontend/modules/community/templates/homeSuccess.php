@@ -47,7 +47,7 @@ foreach ($community->getConfigs() as $key => $config)
     $list[__($key, array(), 'form_community')] = $config;
   }
 }
-$list[__('Register poricy', array(), 'form_community')] = __($community->getRawValue()->getRegisterPolicy());
+$list[__('Register policy', array(), 'form_community')] = __($community->getRawValue()->getRegisterPolicy());
 
 $options = array(
   'title' => __('%community%', array('%community%' => $op_term['community']->titleize())),
