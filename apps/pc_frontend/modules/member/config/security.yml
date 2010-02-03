@@ -15,4 +15,4 @@ registerMobileToRegisterEnd:
   credentials: SNSRegisterFinish
 
 profile:
-  is_secure: false
+  is_secure: both
