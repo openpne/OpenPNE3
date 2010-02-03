@@ -22,7 +22,7 @@
 <?php echo link_to($community_admin->getName(), 'member/profile?id='.$community_admin->getId()) ?><br>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('%community% Category', array(), 'form_community') ?>:</font><br>
 <?php echo $community->getCommunityCategory() ?><br>
-<font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Register poricy', array(), 'form_community') ?>:</font><br>
+<font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Register policy', array(), 'form_community') ?>:</font><br>
 <?php echo __($sf_data->getRaw('community')->getRegisterPolicy()) ?><br>
 </td>
 </tr>
