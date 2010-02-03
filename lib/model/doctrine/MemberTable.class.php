@@ -104,7 +104,15 @@ class MemberTable extends opAccessControlDoctrineTable
       ->allow('self', $resource, 'edit')
       ->deny('blocked');
 
-    $config = $resource->getConfig('profile_page_public_flag');
+    if (Doctrine::getTable('SnsConfig')->get('is_allow_config_public_flag_profile_page'))
+    {
+      $config = Doctrine::getTable('SnsConfig')->get('is_allow_config_public_flag_profile_page');
+    }
+    else
+    {
+      $config = $resource->getConfig('profile_page_public_flag');
+    }
+
     if ($config && 4 == $config)
     {
       $acl->allow('anonymous', $resource, 'view');

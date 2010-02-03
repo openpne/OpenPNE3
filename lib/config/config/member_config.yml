@@ -33,8 +33,6 @@ publicFlag:
     Choices:
       4: "All Users on the Web"
       1: "All Members"
-      2: "%my_friend%"
-      3: "Private"
   age_public_flag:
     Name:       "age_public_flag"
     Caption:    "Public Flag for Age"

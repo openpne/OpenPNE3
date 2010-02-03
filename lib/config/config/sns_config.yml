@@ -110,6 +110,19 @@ general:
       - "許可しない"
       - "許可する"
 
+  is_allow_config_public_flag_profile_page:
+    Name:       "is_allow_config_public_flag_profile_page"
+    Caption:    "メンバーのプロフィールページ公開範囲設定"
+    Help:       "メンバーがプロフィールページの公開範囲を変更できるようにするどうかを設定します"
+    FormType:   "radio"
+    ValueType:  "text"
+    IsRequired: true
+    Default:    1
+    Choices:
+      0: "メンバーの設定を許可する"
+      1: "メンバーの設定を許可しない（全員に公開）"
+      4: "メンバーの設定を許可しない（Web全体に公開）"
+
 external_login_page:
   _attributes:
     Caption: "External Login Page Configuration"

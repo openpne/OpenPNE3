@@ -18,4 +18,14 @@
 class MemberConfigPublicFlagForm extends MemberConfigForm
 {
   protected $category = 'publicFlag';
+
+  public function __construct(Member $member = null, $options = array(), $CSRFSecret = null)
+  {
+    parent::__construct($member, $options, $CSRFSecret);
+
+    if (Doctrine::getTable('SnsConfig')->get('is_allow_config_public_flag_profile_page'))
+    {
+      unset($this['profile_page_public_flag']);
+    }
+  }
 }
