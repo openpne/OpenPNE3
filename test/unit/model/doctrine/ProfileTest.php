@@ -19,52 +19,52 @@ $profileCheckboxItem = $table->findOneByName('checkbox_item');
 $t->diag('Profile');
 $t->diag('Profile::getOptionsArray()');
 $result = $profileSex->getOptionsArray();
-$t->is($result, array('Female' => 'Female', 'Man' => 'Man'));
+$t->is($result, array('Female' => 'Female', 'Man' => 'Man'), 'getOptionsArray() returns array of genders');
 
 $result = $profileSelfIntro->getOptionsArray();
-$t->is($result, array());
+$t->is($result, array(), 'getOptionsArray() returns empty array');
 
 $result = $profileSelectItem->getOptionsArray();
-$t->is($result, array(1 => 'あ', 7 => 'い'));
+$t->is($result, array(7 => 'い', 1 => 'あ'), 'getOptionsArray() returns array of the set of user');
 
 //------------------------------------------------------------
 $t->diag('Profile::getPresetOptionsArray()');
 $result = $profileSex->getPresetOptionsArray();
-$t->is($result, array('Female' => 'Female', 'Man' => 'Man'));
+$t->is($result, array('Female' => 'Female', 'Man' => 'Man'), 'getPresetOptionsArray() returns array of genders');
 
 $result = $profileBirthday->getPresetOptionsArray();
-$t->is($result, array());
+$t->is($result, array(), 'getPresetOptionsArray() returns empty array');
 
 $result = $profileSelectItem->getPresetOptionsArray();
-$t->is($result, array());
+$t->is($result, array(), 'getPresetOptionsArray() returns empty array');
 
 //------------------------------------------------------------
 $t->diag('Profile::isMultipleSelect()');
-$t->ok(!$profileSex->isMultipleSelect());
-$t->ok(!$profileBirthday->isMultipleSelect());
-$t->ok(!$profileSelectItem->isMultipleSelect());
-$t->ok($profileCheckboxItem->isMultipleSelect());
+$t->ok(!$profileSex->isMultipleSelect(), 'isMultipleSelect() returns false');
+$t->ok(!$profileBirthday->isMultipleSelect(), 'isMultipleSelect() returns false');
+$t->ok(!$profileSelectItem->isMultipleSelect(), 'isMultipleSelect() returns ture');
+$t->ok($profileCheckboxItem->isMultipleSelect(), 'isMultipleSelect() returns true');
 
 //------------------------------------------------------------
 $t->diag('Profile::isSingleSelect()');
-$t->ok($profileSex->isSingleSelect());
-$t->ok(!$profileBirthday->isMultipleSelect());
-$t->ok($profileSelectItem->isSingleSelect());
-$t->ok(!$profileCheckboxItem->isSingleSelect());
+$t->ok($profileSex->isSingleSelect(), 'isSingleSelect() returns true');
+$t->ok(!$profileBirthday->isMultipleSelect(), 'isSingleSelect() returns false');
+$t->ok($profileSelectItem->isSingleSelect(), 'isSingleSelect() returns true');
+$t->ok(!$profileCheckboxItem->isSingleSelect(), 'isSingleSelect() returns false');
 
 //------------------------------------------------------------
 $t->diag('Profile::isPreset()');
-$t->ok($profileSex->isPreset());
-$t->ok(!$profileSelectItem->isPreset());
-$t->ok(!$profileCheckboxItem->isPreset());
+$t->ok($profileSex->isPreset(), 'isPreset() returns true');
+$t->ok(!$profileSelectItem->isPreset(), 'isPreset() returns false');
+$t->ok(!$profileCheckboxItem->isPreset(), 'isPreset() returns false');
 
 //------------------------------------------------------------
 $t->diag('Profile::getRawPresetName()');
-$t->is($profileSex->getRawPresetName(), 'sex');
-$t->is($profileRegion->getRawPresetName(), 'region_JP');
-$t->is($profileSelectItem->getRawPresetName(), false);
+$t->is($profileSex->getRawPresetName(), 'sex', 'getRawPresetName() returns "sex"');
+$t->is($profileRegion->getRawPresetName(), 'region_JP', 'getRawPresetName() returns "region_JP"');
+$t->is($profileSelectItem->getRawPresetName(), false, 'getRawPresetName() returns false');
 
 //------------------------------------------------------------
 $t->diag('Profile::getPresetConfig()');
-$t->isa_ok($profileSex->getPresetConfig(), 'array');
-$t->is($profileSelectItem->getPresetConfig(), array());
+$t->isa_ok($profileSex->getPresetConfig(), 'array', 'getPresetConfig() returns array');
+$t->is($profileSelectItem->getPresetConfig(), array(), 'getPresetConfig() returns empty array');

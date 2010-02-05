@@ -10,6 +10,11 @@
 
 class Profile extends BaseProfile
 {
+ /**
+  * get options array
+  *
+  * @return array
+  */
   public function getOptionsArray()
   {
     if ($this->isPreset())
@@ -29,6 +34,11 @@ class Profile extends BaseProfile
     return $result;
   }
 
+ /**
+  * get present options array
+  *
+  * @return array
+  */
   public function getPresetOptionsArray()
   {
     $result = array();
@@ -42,21 +52,41 @@ class Profile extends BaseProfile
     return $result;
   }
 
+ /**
+  * Checks if the profile is multiple select.
+  *
+  * @return boolean
+  */
   public function isMultipleSelect()
   {
     return (bool)(('date' === $this->getFormType() && !$this->isPreset()) || 'checkbox' === $this->getFormType());
   }
 
+ /**
+  * Checks if the profile is single select.
+  *
+  * @return boolean
+  */
   public function isSingleSelect()
   {
     return (bool)('radio' === $this->getFormType() || 'select' === $this->getFormType());
   }
 
+ /**
+  * Checks if the profile is preset.
+  *
+  * @return boolean
+  */
   public function isPreset()
   {
     return (0 === strpos($this->getName(), 'op_preset_'));
   }
 
+ /**
+  * get raw preset name
+  *
+  * @return string
+  */
   public function getRawPresetName()
   {
     if (!$this->isPreset())
@@ -75,6 +105,11 @@ class Profile extends BaseProfile
     return $name;
   }
 
+ /**
+  * get preset config
+  *
+  * @return array
+  */
   public function getPresetConfig()
   {
     $list = opToolkit::getPresetProfileList();
@@ -84,5 +119,18 @@ class Profile extends BaseProfile
     }
 
     return array();
+  }
+
+ /**
+  * get profile options
+  *
+  * @return Doctrine_Collection
+  */
+  public function getProfileOption()
+  {
+    return Doctrine::getTable('ProfileOption')->createQuery()
+      ->where('profile_id = ?', $this->id)
+      ->orderBy('sort_order')
+      ->execute();
   }
 }
