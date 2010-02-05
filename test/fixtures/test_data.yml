@@ -85,7 +85,7 @@ Profile:
 
 ProfileOption:
   profile_option_select_item1:
-    sort_order: 0
+    sort_order: 10
     Profile: profile_select_item
     Translation:
       ja_JP:
@@ -94,7 +94,7 @@ ProfileOption:
         value: "A"
 
   profile_option_select_item2:
-    sort_order: 1
+    sort_order: 0
     Profile: profile_select_item
     Translation:
       ja_JP:
