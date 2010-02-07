@@ -1275,6 +1275,10 @@
         <source>Failed to post activity.</source>
         <target>アクティビティの投稿に失敗しました。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Remember me</source>
+        <target>次回から自動的にログイン</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
