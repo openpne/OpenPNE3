@@ -174,14 +174,99 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     return $this->getAuthAdapter()->getRegisterEndAction();
   }
 
+
+ /**
+  * get remember login cookie
+  *
+  * @return array
+  */
+  protected function getRememberLoginCookie()
+  {
+    $key = md5(sfContext::getInstance()->getRequest()->getHost());
+    if ($value = sfContext::getInstance()->getRequest()->getCookie($key))
+    {
+      $value = unserialize(base64_decode($value));
+      return $value;
+    }
+    return null;
+  }
+
+ /**
+  * set remember login cookie
+  */
+  protected function setRememberLoginCookie($isDeleteCookie = false)
+  {
+    $key = md5(sfContext::getInstance()->getRequest()->getHost());
+    $path = sfContext::getInstance()->getRequest()->getRelativeUrlRoot();
+    if (!$path)
+    {
+      $path = '/';
+    }
+
+    if ($isDeleteCookie)
+    {
+      if (!sfContext::getInstance()->getRequest()->getCookie($key))
+      {
+        return;
+      }
+
+      $value = null;
+      $expire = time() - 3600;
+    }
+    else
+    {
+      $rememberKey = opToolkit::generatePasswordString();
+      if (!$this->getMemberId())
+      {
+        throw new LogicException('No login');
+      }
+      $this->getMember()->setConfig('remember_key', $rememberKey);
+
+      $value = base64_encode(serialize(array($this->getMemberId(), $rememberKey)));
+      $expire = time() + sfConfig::get('op_remember_login_limit', 60*60*24*30);
+    }
+    sfContext::getInstance()->getResponse()->setCookie($key, $value, $expire, $path, '', false, true);
+  }
+
+ /**
+  * get memberd member id
+  *
+  * @return integer the member id  
+  */
+  public function getRememberedMemberId()
+  {
+    $key = md5(sfContext::getInstance()->getRequest()->getHost());
+    if (($value = $this->getRememberLoginCookie()) && 2 == count($value))
+    {
+      try
+      {
+        $memberConfig = Doctrine::getTable('MemberConfig')->findOneByMemberIdAndValue($value[0], $value[1]);
+      }
+      catch (Doctrine_Table_Exception $e)
+      {
+        return null;
+      }
+
+      if ($memberConfig)
+      {
+        return $value[0];
+      }
+    }
+    return null;
+  }
+
  /**
   * Login
   *
+  * @param integer $memberId the member id
   * @return bool   returns true if the current user is authenticated, false otherwise
   */
-  public function login()
+  public function login($memberId = null)
   {
-    $memberId = $this->getAuthAdapter()->authenticate();
+    if (null === $memberId)
+    {
+      $memberId = $this->getAuthAdapter()->authenticate();
+    }
 
     if ($memberId)
     {
@@ -202,6 +287,11 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
 
     $this->initializeCredentials();
 
+    if ($this->getAuthAdapter()->getAuthForm()->getValue('is_remember_me'))
+    {
+      $this->setRememberLoginCookie();
+    }
+
     if ($this->isAuthenticated())
     {
       $this->setCurrentAuthMode($this->getAuthAdapter()->getAuthModeName());
@@ -218,6 +308,8 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   public function logout()
   {
     $authMode = $this->getCurrentAuthMode();
+
+    $this->setRememberLoginCookie(true);
 
     $this->setAuthenticated(false);
     $this->getAttributeHolder()->removeNamespace('sfOpenPNESecurityUser');
