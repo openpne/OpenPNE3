@@ -156,7 +156,7 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
 
   public function getRegisterPolicy()
   {
-    $register_policy = $this->getConfig('register_policy');
+    $register_policy = $this->getConfig('register_poricy');
     if ('open' === $register_policy)
     {
       return 'Everyone can join';
