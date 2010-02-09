@@ -23,7 +23,7 @@
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('%community% Category', array(), 'form_community') ?>:</font><br>
 <?php echo $community->getCommunityCategory() ?><br>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Register poricy', array(), 'form_community') ?>:</font><br>
-<?php echo __($sf_data->getRaw('community')->getRegisterPolicy()) ?><br>
+<?php echo __($sf_data->getRaw('community')->getRegisterPoricy()) ?><br>
 </td>
 </tr>
 

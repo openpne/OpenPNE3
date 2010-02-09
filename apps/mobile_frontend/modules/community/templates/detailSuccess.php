@@ -18,7 +18,7 @@ foreach ($community->getConfigs() as $key => $config)
 {
   $list[__($key, array(), 'form_community')] = $config;
 }
-$list[__('Register poricy', array(), 'form_community')] = __($sf_data->getRaw('community')->getRegisterPolicy());
+$list[__('Register poricy', array(), 'form_community')] = __($sf_data->getRaw('community')->getRegisterPoricy());
 $list[__('Description', array(), 'form_community')] = op_auto_link_text(nl2br($community->getConfig('description')));
 ?>
 <?php foreach ($list as $key => $value): ?>
