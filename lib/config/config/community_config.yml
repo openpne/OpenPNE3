@@ -1,7 +1,7 @@
 general:
-  register_policy:
-    Name:       "register_policy"
-    Caption:    "Register policy"
+  register_poricy:
+    Name:       "register_poricy"
+    Caption:    "Register poricy"
     FormType:   "radio"
     Default:    "open"
     Choices:

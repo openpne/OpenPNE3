@@ -230,10 +230,10 @@ abstract class sfOpenPNECommunityAction extends sfActions
       $this->form->bind($request->getParameter('community_join'));
       if ($this->form->isValid())
       {
-        Doctrine::getTable('CommunityMember')->join($this->getUser()->getMemberId(), $this->id, $this->community->getConfig('register_policy'));
+        Doctrine::getTable('CommunityMember')->join($this->getUser()->getMemberId(), $this->id, $this->community->getConfig('register_poricy'));
         self::sendJoinMail($this->getUser()->getMemberId(), $this->id);
 
-        if ('close' !== $this->community->getConfig('register_policy'))
+        if ('close' !== $this->community->getConfig('register_poricy'))
         {
           $this->getUser()->setFlash('notice', 'You have just joined to this %community%.');
         }
