@@ -87,9 +87,9 @@ $t->is($community1->getNameAndCount(), 'CommunityA (2)', 'getNameAndCount() retu
 $t->is($community1->getNameAndCount('[%s] - %d'), '[CommunityA] - 2', 'getNameAndCount() returns a string formated "[%s] - %d"');
 
 //------------------------------------------------------------
-$t->diag('Community::getRegisterPolicy()');
-$t->is($community1->getRegisterPolicy(), 'Everyone can join', 'getRegisterPolicy() returns "Everyone can join" for opened community');
-$t->is($community2->getRegisterPolicy(), '%Community%\'s admin authorization needed', 'getRegisterPolicy() returns "Community\'s admin authorization needed" for closed community');
+$t->diag('Community::getRegisterPoricy()');
+$t->is($community1->getRegisterPoricy(), 'Everyone can join', 'getRegisterPoricy() returns "Everyone can join" for opened community');
+$t->is($community2->getRegisterPoricy(), '%Community%\'s admin authorization needed', 'getRegisterPoricy() returns "Community\'s admin authorization needed" for closed community');
 
 //------------------------------------------------------------
 $t->diag('Community::getChangeAdminRequestMember()');

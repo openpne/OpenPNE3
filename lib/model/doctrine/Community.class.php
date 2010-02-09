@@ -154,7 +154,7 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
     return sprintf($format, $this->getName(), $this->countCommunityMembers());
   }
 
-  public function getRegisterPolicy()
+  public function getRegisterPoricy()
   {
     $register_policy = $this->getConfig('register_poricy');
     if ('open' === $register_policy)
