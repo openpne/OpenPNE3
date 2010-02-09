@@ -52,7 +52,7 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     return true;
   }
 
-  public function join($memberId, $communityId, $isRegisterPoricy = 'open')
+  public function join($memberId, $communityId, $isRegisterPolicy = 'open')
   {
     if ($this->isPreMember($memberId, $communityId))
     {
@@ -67,7 +67,7 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     $communityMember = new CommunityMember();
     $communityMember->setMemberId($memberId);
     $communityMember->setCommunityId($communityId);
-    if ($isRegisterPoricy == 'close')
+    if ($isRegisterPolicy == 'close')
     {
       $communityMember->position = 'pre';
     }
