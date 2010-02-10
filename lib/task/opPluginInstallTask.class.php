@@ -56,6 +56,22 @@ EOF;
     return $configuration;
   }
 
+  protected function isSnsConfigTableExists()
+  {
+    try
+    {
+      if (class_exists('SnsConfigTable'))
+      {
+        return Doctrine_Manager::connection()
+          ->import
+          ->tableExists(Doctrine::getTable('SnsConfig')->getTableName());
+      }
+    }
+    catch (Doctrine_Connection_Exception $e) { }
+
+    return false;
+  }
+
   protected function execute($arguments = array(), $options = array())
   {
     // Remove E_STRICT and E_DEPRECATED from error_reporting
@@ -83,17 +99,16 @@ EOF;
       if (count(sfFinder::type('file')->name('databases.yml')->in(sfConfig::get('sf_config_dir'))) && !$isExists)
       {
         $databaseManager = new sfDatabaseManager($this->configuration);
-        Doctrine::getTable('SnsConfig')->set($arguments['name'].'_needs_data_load', '1');
+        if ($this->isSnsConfigTableExists())
+        {
+          Doctrine::getTable('SnsConfig')->set($arguments['name'].'_needs_data_load', '1');
+        }
       }
     }
     catch (sfPluginException $e)
     {
       $this->logBlock($e->getMessage(), 'ERROR');
       return false;
-    }
-    catch (Doctrine_Connection_Exception $e)
-    {
-      $this->logBlock($e->getMessage(), 'COMMENT');
     }
   }
 
