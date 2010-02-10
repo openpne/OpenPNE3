@@ -29,21 +29,10 @@ class ImageForm extends BaseFileForm
     ));
     $this->setValidators(array(
       'file'      => new opValidatorImageFile(),
-      'imageName' => new sfValidatorRegex(array('pattern' => '/^[\w\d_\-]+$/')),
+      'imageName' => new sfValidatorRegex(array('pattern' => '/^[\w\-]+$/')),
     ));
 
     $this->widgetSchema->setNameFormat('image[%s]');
-  }
-
-  public function bindAndSave(array $taintedValues = null, array $taintedFiles = null)
-  {
-    $this->bind($taintedValues, $taintedFiles);
-    if ($this->isValid())
-    {
-      return $this->save();
-    }
-
-    return false;
   }
 
   public function save()
@@ -51,8 +40,7 @@ class ImageForm extends BaseFileForm
     $file = new File();
     $file->setFromValidatedFile($this->getValue('file'));
     $file->setName(sprintf('admin_%s_%d', $this->getValue('imageName'), time()));
-    $file->save();
 
-    return true;
+    return $file->save();
   }
 }
