@@ -119,8 +119,11 @@ class opValidatorDate extends sfValidatorDate
 
       $clean = new DateTime();
       $clean->setDate(intval($value['year']), intval($value['month']), intval($value['day']));
-      $clean->modify('+'.(isset($value['hour']) ? intval($value['hour']) : 0).'hour');
-      $clean->modify('+'.(isset($value['second']) ? intval($value['second']) : 0).'second');
+      $clean->setTime(
+        isset($value['hour']) ? intval($value['hour']) : 0,
+        isset($value['minute']) ? intval($value['minute']): 0,
+        isset($value['second']) ? intval($value['second']): 0
+      );
     }
     else
     {
