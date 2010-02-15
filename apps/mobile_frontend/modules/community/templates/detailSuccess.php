@@ -9,7 +9,7 @@
 <?php
 $list = array(
   __('%community% Name')     => $community->getName(),
-  __('Community Category', array(), 'form_community') => $community->getCommunityCategory(),
+  __('%community% Category', array(), 'form_community') => $community->getCommunityCategory(),
   __('Date Created')       => op_format_date($community->getCreatedAt(), 'D'),
   __('Administrator')      => link_to($community_admin->getName(), 'member/profile?id='.$community_admin->getId()),
   __('Count of Members')   => $community->countCommunityMembers()
@@ -19,7 +19,7 @@ foreach ($community->getConfigs() as $key => $config)
   $list[__($key, array(), 'form_community')] = $config;
 }
 $list[__('Register policy', array(), 'form_community')] = __($sf_data->getRaw('community')->getRegisterPolicy());
-$list[__('Description', array(), 'form_community')] = op_auto_link_text(nl2br($community->getConfig('description')));
+$list[__('%community% Description', array(), 'form_community')] = nl2br($community->getConfig('description'));
 ?>
 <?php foreach ($list as $key => $value): ?>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo $key ?>:</font><br>

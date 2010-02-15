@@ -40,8 +40,8 @@ foreach ($communitySubAdmins as $m)
 
 <tr>
 <td colspan="2">
-<font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Description') ?>:</font><br>
-<?php echo op_auto_link_text(nl2br(mb_substr($community->getConfig('description'), 0, 54))) ?><br>
+<font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('%community% Description', array(), 'form_community') ?>:</font><br>
+<?php echo nl2br(mb_substr($community->getConfig('description'), 0, 54)) ?><br>
 </td>
 <tr>
 <td align="right" colspan="2">
