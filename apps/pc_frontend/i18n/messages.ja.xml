@@ -171,6 +171,10 @@
         <target>マイフレンドに追加</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Do you delete %0% from my friend?</source>
+        <target>本当に%0%をマイフレンドから外しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>This member is not your friend.</source>
         <target>フレンドではありません。</target>
       </trans-unit>

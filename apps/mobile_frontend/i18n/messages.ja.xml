@@ -79,6 +79,10 @@
         <target>参加ｺﾐｭﾆﾃｨﾘｽﾄ</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Do you delete %0% from my friend?</source>
+        <target>本当に%0%をﾏｲﾌﾚﾝﾄﾞから外しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Profile</source>
         <target>ﾌﾟﾛﾌｨｰﾙ</target>
       </trans-unit>
