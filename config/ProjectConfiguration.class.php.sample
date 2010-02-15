@@ -3,6 +3,11 @@
 require_once '##SYMFONY_LIB_DIR##/autoload/sfCoreAutoload.class.php';
 sfCoreAutoload::register();
 
+if (!defined('E_DEPRECATED'))
+{
+  define('E_DEPRECATED', 8192);
+}
+
 class ProjectConfiguration extends sfProjectConfiguration
 {
   public function setup()
