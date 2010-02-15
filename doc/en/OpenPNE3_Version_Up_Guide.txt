@@ -1,0 +1,52 @@
+How to Update OpenPNE3.0
+========================
+
+Getting Started
+---------------
+
+This document is for updating OpenPNE 3.0.x to OpenPNE 3.0.y.
+
+This document is for OpenPNE 3.0 so the way for other version may be changed.
+
+(If you use 3.0.0 or 3.0.1, follow the way of download page)
+
+You should backup database before your updating.
+
+Plan
+----
+
+The updating plan is the following:
+
+(1) Setting files
+(2) Update the configuration file
+(3) Execute the updating command
+
+The Way to Work
+---------------
+
+Setting Files
+~~~~~~~~~~~~~
+
+Set the OpenPNE 3.0 files to your web server.
+
+You must change the files from the old to avoid troubles by mixing the new with the old.
+
+Update the Configuration File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Copy config/ProjectConfiguration.class.php.sample to config/ProjectConfiguration.class.php.
+
+If you write your original configuration to your old config/ProjectConfiguration.class.php, you should change the new file.
+
+Execute the Updating Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Execute the following command in the project root directory.
+
+::
+
+  $ ./symfony openpne:migrate
+
+This command will update OpenPNE and plugins to newer version.
+
+Now, updating has been done.
