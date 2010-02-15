@@ -38,9 +38,9 @@ $list = array(
 );
 foreach ($community->getConfigs() as $key => $config)
 {
-  if ('Description' === $key)
+  if ('%community% Description' === $key)
   {
-    $list[__('%community% Description', array('%community%' => $op_term['community']->titleize()), 'form_community')] = op_auto_link_text(nl2br($community->getConfig('description')));
+    $list[__('%community% Description', array('%community%' => $op_term['community']->titleize()), 'form_community')] = op_url_cmd(nl2br($community->getConfig('description')));
   }
   else
   {
