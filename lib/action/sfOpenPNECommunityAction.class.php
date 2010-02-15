@@ -191,36 +191,35 @@ abstract class sfOpenPNECommunityAction extends sfActions
   */
   public function executeJoin($request)
   {
-    $community = CommunityPeer::retrieveByPk($this->id);
-    $this->forward404Unless($community);
+    $this->community = CommunityPeer::retrieveByPk($this->id);
+    $this->forward404Unless($this->community);
 
     if ($this->isCommunityMember || $this->isCommunityPreMember)
     {
       return sfView::ERROR;
     }
 
-    CommunityMemberPeer::join($this->getUser()->getMemberId(), $this->id, $community->getConfig('register_poricy'));
-    $this->redirect('community/home?id='.$this->id);
-  }
-
-  /**
-   * Executes joinAccept action
-   *
-   * @param sfRequest $request A request object
-   */
-  public function executeJoinAccept($request)
-  {
-    $this->forward404Unless($this->isAdmin);
-    
-    $communityMember = CommunityMemberPeer::retrieveByMemberIdAndCommunityId($request->getParameter('member_id'), $this->id);
-    $this->forward404Unless($communityMember);
-
-    if ($communityMember->getPosition() == 'pre')
+    $this->form = new opCommunityJoiningForm();
+    if ('close' !== $this->community->getConfig('register_poricy'))
     {
-      $communityMember->setPosition('');
-      $communityMember->save();
+      unset($this->form['message']);
     }
-    $this->redirect('community/home?id='.$this->id);
+
+    if ($request->hasParameter('community_join'))
+    {
+      $this->form->bind($request->getParameter('community_join'));
+      if ($this->form->isValid())
+      {
+        CommunityMemberPeer::join($this->getUser()->getMemberId(), $this->id, $this->community->getConfig('register_poricy'));
+
+        if ('close' !== $this->community->getConfig('register_poricy'))
+        {
+          $this->getUser()->setFlash('notice', 'You have just joined to this community.');
+        }
+
+        $this->redirect('community/home?id='.$this->id);
+      }
+    }
   }
 
   /**
@@ -254,8 +253,16 @@ abstract class sfOpenPNECommunityAction extends sfActions
       return sfView::ERROR;
     }
 
-    CommunityMemberPeer::quit($this->getUser()->getMemberId(), $this->id);
-    $this->redirect('community/home?id=' . $this->id);
+    $this->community = CommunityPeer::retrieveByPk($this->id);
+    $this->form = new sfForm();
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $request->checkCSRFProtection();
+
+      CommunityMemberPeer::quit($this->getUser()->getMemberId(), $this->id);
+      $this->getUser()->setFlash('notice', 'You have just quitted this community.');
+      $this->redirect('community/home?id='.$this->id);
+    }
   }
 
  /**

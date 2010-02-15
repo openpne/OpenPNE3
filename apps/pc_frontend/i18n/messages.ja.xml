@@ -683,6 +683,30 @@
         <source>invalid e-mail address</source>
         <target>メールアドレスが無効です</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Join to "%1%"</source>
+        <target>「%1%」に参加する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you really join to the following community?</source>
+        <target>本当に以下のコミュニティに参加しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You have just joined to this community.</source>
+        <target>コミュニティに参加しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Quit "%1%"</source>
+        <target>「%1%」から退会する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you really quit the following community?</source>
+        <target>本当に以下のコミュニティから退会しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You have just quitted this community.</source>
+        <target>コミュニティから退会しました。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
