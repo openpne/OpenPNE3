@@ -50,6 +50,8 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
+    @$this->createCacheDirectory();
+
     if (!in_array('sfDoctrinePlugin', $this->configuration->getPlugins()))
     {
       throw new sfCommandException("This task requires sfDoctrinePlugin.\nPlease enable the plugin by your config/ProjectConfiguration.class.php");
@@ -143,5 +145,10 @@ EOF;
     }
 
     return $result;
+  }
+
+  protected function createCacheDirectory()
+  {
+    $this->getFilesystem()->mkdirs(sfConfig::get('sf_cache_dir'), 0777);
   }
 }
