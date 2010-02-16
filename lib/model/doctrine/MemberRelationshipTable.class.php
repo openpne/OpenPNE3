@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class MemberRelationshipTable extends Doctrine_Table
+class MemberRelationshipTable extends opAccessControlDoctrineTable
 {
   public function retrieveByFromAndTo($memberIdFrom, $memberIdTo)
   {
@@ -145,5 +145,19 @@ class MemberRelationshipTable extends Doctrine_Table
     }
 
     return true;
+  }
+
+  public function appendRoles(Zend_Acl $acl)
+  {
+    return $acl
+      ->addRole(new Zend_Acl_Role('anonymous'))
+      ->addRole(new Zend_Acl_Role('everyone'), 'anonymous');
+  }
+
+  public function appendRules(Zend_Acl $acl, $resource = null)
+  {
+    $acl->allow('everyone', $resource, 'friend_link');
+
+    return $acl;
   }
 }

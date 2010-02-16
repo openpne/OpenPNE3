@@ -103,6 +103,14 @@
         <target>ﾌﾟﾛﾌｨｰﾙ変更</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Public Flag for Profile Page</source>
+        <target>ﾌﾟﾛﾌｨｰﾙﾍﾟｰｼﾞの公開範囲</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>All Users on the Web</source>
+        <target>Web全体に公開</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>All Members</source>
         <target>全員に公開</target>
       </trans-unit>

@@ -13,3 +13,6 @@ changeLanguage:
 
 registerMobileToRegisterEnd:
   credentials: SNSRegisterFinish
+
+profile:
+  is_secure: false

@@ -303,6 +303,10 @@ class Member extends BaseMember implements opAccessControlRecordInterface
     {
       return 'blocked';
     }
+    elseif ($member instanceof opAnonymousMember)
+    {
+      return 'anonymous';
+    }
 
     return 'everyone';
   }

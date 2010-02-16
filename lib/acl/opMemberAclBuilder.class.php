@@ -23,7 +23,8 @@ class opMemberAclBuilder extends opAclBuilder
   static public function getAcl()
   {
     $acl = new Zend_Acl();
-    $acl->addRole(new Zend_Acl_Role('everyone'));
+    $acl->addRole(new Zend_Acl_Role('anonymous'));
+    $acl->addRole(new Zend_Acl_Role('everyone'), 'anonymous');
     $acl->addRole(new Zend_Acl_Role('blocked'), 'everyone');
     $acl->addRole(new Zend_Acl_Role('self'), 'everyone');
 
@@ -53,6 +54,10 @@ class opMemberAclBuilder extends opAclBuilder
       {
         $acl->addRole($role, 'blocked');
       }
+      elseif (!$member->id)
+      {
+        $acl->addRole($role, 'anonymous');
+      }
       else
       {
         $acl->addRole($role, 'everyone');
@@ -61,6 +66,8 @@ class opMemberAclBuilder extends opAclBuilder
 
     $acl->deny('blocked', null, 'view');
     $acl->allow('everyone', null, 'view');
+
+    $acl->allow('anonymous', null, 'view');
 
     return $acl;
   }

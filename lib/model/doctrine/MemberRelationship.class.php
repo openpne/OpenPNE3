@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class MemberRelationship extends BaseMemberRelationship
+class MemberRelationship extends BaseMemberRelationship implements opAccessControlRecordInterface
 {
   private $toInstance;
 
@@ -102,5 +102,15 @@ class MemberRelationship extends BaseMemberRelationship
 
     $this->toInstance = $relation;
     return $this->toInstance;
+  }
+
+  public function generateRoleId(Member $member)
+  {
+    if ($member instanceof opAnonymousMember)
+    {
+      return 'anonymous';
+    }
+
+    return 'everyone';
   }
 }

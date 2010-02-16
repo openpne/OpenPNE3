@@ -92,16 +92,24 @@ class MemberTable extends opAccessControlDoctrineTable
   public function appendRoles(Zend_Acl $acl)
   {
     return $acl
-      ->addRole(new Zend_Acl_Role('everyone'))
+      ->addRole(new Zend_Acl_Role('anonymous'))
+      ->addRole(new Zend_Acl_Role('everyone'), 'anonymous')
       ->addRole(new Zend_Acl_Role('self'), 'everyone')
       ->addRole(new Zend_Acl_Role('blocked'));
   }
 
   public function appendRules(Zend_Acl $acl, $resource = null)
   {
-    return $acl
-      ->allow('everyone', $resource, 'view')
+    $acl->allow('everyone', $resource, 'view')
       ->allow('self', $resource, 'edit')
       ->deny('blocked');
+
+    $config = $resource->getConfig('profile_page_public_flag');
+    if ($config && 4 == $config)
+    {
+      $acl->allow('anonymous', $resource, 'view');
+    }
+
+    return $acl;
   }
 }

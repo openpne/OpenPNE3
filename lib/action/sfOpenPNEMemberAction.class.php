@@ -30,7 +30,8 @@ abstract class sfOpenPNEMemberAction extends sfActions
     $this->id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
 
     $this->relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($this->getUser()->getMemberId(), $this->id);
-    if (!$this->relation) {
+    if (!$this->relation)
+    {
       $this->relation = new MemberRelationship();
       $this->relation->setMemberIdFrom($this->getUser()->getMemberId());
       $this->relation->setMemberIdTo($this->id);
@@ -193,13 +194,17 @@ abstract class sfOpenPNEMemberAction extends sfActions
   */
   public function executeProfile($request)
   {
-    $this->redirectIf($this->relation->isAccessBlocked(), '@error');
-
     $id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
-    $this->member = Doctrine::getTable('Member')->find($id);
+    if ('member_profile_mine' === sfContext::getInstance()->getRouting()->getCurrentRouteName())
+    {
+      $this->forward404Unless($id);
+      $this->member = $this->getUser()->getMember();
+    }
+    else
+    {
+      $this->member = $this->getRoute()->getObject();
+    }
     
-    $this->forward404Unless($this->member, 'Undefined member.');
-
     if (!$this->friendsSize)
     {
       $this->friendsSize = 9;
