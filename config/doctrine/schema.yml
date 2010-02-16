@@ -104,6 +104,7 @@ Profile:
     is_disp_regist: { type: boolean, default: false, notnull: true, comment: "Shows when registeration" }
     is_disp_config: { type: boolean, default: false, notnull: true, comment: "Shows when edit" }
     is_disp_search: { type: boolean, default: false, notnull: true, comment: "Shows when searching" }
+    is_public_web: { type: boolean, notnull: true, default: false, comment: "Flag for adding public_flag for publishing to web" }
     value_regexp: { type: string, comment: "Regular expression" }
     value_min: { type: string(32), comment: "Minimum value" }
     value_max: { type: string(32), comment: "Maximum value" }

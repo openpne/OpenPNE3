@@ -1,3 +1,42 @@
+# openpne rules
+homepage:
+  url:   /
+  param: { module: member, action: home }
+
+obj_member_profile:
+  url:     /member/:id
+  class:   opDynamicAclRoute
+  options: { model: Member, type: object, privilege: view }
+  param:   { module: member, action: profile }
+  requirements:
+    id:        \d+
+    sf_method: [get]
+
+member_profile_mine:
+  url:     /member/profile
+  param:   { module: member, action: profile }
+
+obj_friend_unlink:
+  url:     /friend/unlink/:id
+  class:   sfDoctrineRoute
+  options: { model: Member, type: object }
+  param:   { module: friend, action: unlink }
+  requirements:
+    id: \d+
+    sf_method: [get, post]
+
+member_index:
+  url:   /member
+  param: { module: member, action: home }
+
+login:
+  url: /member/login/*
+  param: { module: member, action: login }
+
+error:
+  url: /default/error
+  param: { module: default, action: error }
+
 # confirmation rules
 confirmation_list:
   url:   /confirmation
@@ -9,30 +48,36 @@ confirmation_decision:
   param: { module: confirmation, action: decision }
   requirements: { id: \d+, sf_method: post }
 
-# openpne rules
-homepage:
-  url:   /
-  param: { module: member, action: home }
+# for BC
+member_profile:
+  url:   /member/:id
+  class:   opDynamicAclRoute
+  options: { model: Member, type: object, privilege: view }
+  param:   { module: member, action: profile }
+  requirements:
+    id:        \d+
+    sf_method: [get]
+
+member_profile_raw:
+  url:     /member/profile/id/:id/*
+  class:   opDynamicAclRoute
+  options: { model: Member, type: object, privilege: view }
+  param:   { module: member, action: profile }
+  requirements:
+    id:        \d+
+    sf_method: [get]
+
+member_profile_no_default:
+  url: /member/profile/*
+  param: { module: default, action: error }
 
 friend_show_image:
   url:   /friend/showImage/:id
   param: { module: friend, action: showImage }
   requirements: { id: \d+ }
 
-login:
-  url: /member/login/*
-  param: { module: member, action: login }
-
-error:
-  url: /default/error
-  param: { module: default, action: error }
-
-member_profile:
-  url:   /member/:id
-  param: { module: member, action: profile }
-  requirements: { id: \d+ }
-
 community_home:
   url:   /community/:id
   param: { module: community, action: home }
   requirements: { id: \d+ }
+

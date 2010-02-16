@@ -24,6 +24,7 @@ class ProfileForm extends BaseProfileForm
     $isDispOption = array('choices' => array('1' => '表示する', '0' => '表示しない'));
     $this->setWidgets(array(
       'name' => new sfWidgetFormInputText(),
+      'is_public_web' => new sfWidgetFormSelectRadio(array('choices' => array('0' => '許可しない', '1' => '許可する'))),
       'is_edit_public_flag' => new sfWidgetFormSelectRadio(array('choices' => array('0' => '固定', '1' => 'メンバー選択'))),
       'default_public_flag' => new sfWidgetFormSelect(array('choices' => Doctrine::getTable('Profile')->getPublicFlags())),
       'is_disp_regist' => new sfWidgetFormSelectRadio($isDispOption),
@@ -74,7 +75,8 @@ class ProfileForm extends BaseProfileForm
       'value_max' => '最大値',
       'is_disp_regist' => '新規登録',
       'is_disp_config' => 'プロフィール変更',
-      'is_disp_search' => 'メンバー検索'
+      'is_disp_search' => 'メンバー検索',
+      'is_public_web' => 'Web への公開の許可',
    ));
 
     $this->setDefaults($this->getDefaults() + array(
@@ -85,6 +87,8 @@ class ProfileForm extends BaseProfileForm
     ));
 
     $this->embedI18n(array('ja_JP'));
+
+    $this->widgetSchema->setHelp('is_public_web', '公開範囲設定で「Web 全体に公開」の選択を許可するかどうかを設定します。ここで許可されていない場合は、既に設定済みの「Web 全体に公開」は「全員に公開」と同等のものとして扱われます');
   }
 
   static public function advancedValidator($validator, $values)

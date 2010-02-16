@@ -3,7 +3,7 @@
 include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 
-$t = new lime_test(50, new lime_output_color());
+$t = new lime_test(54, new lime_output_color());
 $table = Doctrine::getTable('Member');
 $member1 = $table->findOneByName('A');
 $member2 = $table->findOneByName('B');
@@ -15,16 +15,24 @@ $member5 = $table->findOneByName('E');
 $t->diag('Member');
 $t->diag('Member::getProfiles()');
 $result = $member1->getProfiles();
-$t->isa_ok($result, 'array');
-$t->is(count($result), 7);
+$t->isa_ok($result, 'array', '->getProfiles() returns array');
+$t->is(count($result), 9, '->getProfiles() on the member1 returns 9 results');
 
 $result = $member1->getProfiles(true, $member2->getId());
-$t->isa_ok($result, 'array');
-$t->is(count($result), 6);
+$t->isa_ok($result, 'array', '->getProfiles() returns array');
+$t->is(count($result), 8, '->getProfiles() on the member1 returns 8 results to member2');
 
 $result = $member1->getProfiles(true, $member3->getId());
-$t->isa_ok($result, 'array');
-$t->is(count($result), 5);
+$t->isa_ok($result, 'array', '->getProfiles() returns array');
+$t->is(count($result), 7, '->getProfiles() on the member1 returns 7 results to member3');
+
+$result = $member1->getProfiles(true, 0);
+$t->isa_ok($result, 'array', '->getProfiles() returns array');
+$t->is(count($result), 1, '->getProfiles() on the member1 returns 1 result to anonymous member');
+
+$result = $member2->getProfiles(true, 0);
+$t->isa_ok($result, 'array', '->getProfiles() retruns array');
+$t->is(count($result), 0, '->getProfiles() on the member1 returns no results to anonymous member');
 
 //------------------------------------------------------------
 $t->diag('Member::getProfile()');

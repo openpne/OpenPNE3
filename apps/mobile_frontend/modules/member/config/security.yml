@@ -10,3 +10,6 @@ configComplete:
 
 registerMobileToRegisterEnd:
   is_secure: false
+
+profile:
+  is_secure: both

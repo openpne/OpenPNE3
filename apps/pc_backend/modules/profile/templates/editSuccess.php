@@ -21,7 +21,7 @@
 <?php else : ?>
 <form action="<?php echo url_for('profile/edit?type=preset&id='.$profile->getId()) ?>" method="post">
 <?php endif; ?>
-<table>
+<table style="width: 50%;">
 <?php echo $presetForm ?>
 </table>
 <input type="submit" value="<?php echo $form->isNew() ? __('Add') : __('Modify') ?>" />
@@ -47,10 +47,11 @@
 <?php echo $form['ja_JP']['info']->renderRow() ?>
 </table>
 
-<table id="common">
+<table id="common" style="width: 50%;">
 <tr><th colspan="2">共通設定</th></tr>
 <?php echo $form['name']->renderRow() ?>
 <?php echo $form['is_required']->renderRow() ?>
+<?php echo $form['is_public_web']->renderRow() ?>
 <?php echo $form['is_edit_public_flag']->renderRow() ?>
 <?php echo $form['default_public_flag']->renderRow() ?>
 <?php echo $form['is_unique']->renderRow() ?>

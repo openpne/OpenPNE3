@@ -56,6 +56,10 @@ foreach ($member->getProfiles(true) as $profile)
       '%my_friend%' => $op_term['my_friend']->titleize()->pluralize(),
     )).')';
   }
+  elseif ($member->getId() == $sf_user->getMemberId() && $profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_WEB)
+  {
+    $profileValue .= ' ('.__('All Users on the Web').')';
+  }
   $list[$caption] = $profileValue;
 }
 $options = array(

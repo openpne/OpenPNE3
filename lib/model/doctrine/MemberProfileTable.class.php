@@ -163,15 +163,21 @@ class MemberProfileTable extends opAccessControlDoctrineTable
 
     if (is_integer($publicFlag))
     {
+      $publicFlags = (array)$publicFlag;
+      if (1 == $publicFlag)
+      {
+        $publicFlags[] = 4;
+      }
+
       if ($item->isMultipleSelect() && $item->getFormType() !== 'date')
       {
         $q->addFrom('MemberProfile pm')
           ->andWhere('m.tree_key = pm.id')
-          ->andWhere('pm.public_flag <= ?', $publicFlag);
+          ->andWhereIn('pm.public_flag', $publicFlags);
       }
       else
       {
-        $q->andWhere('m.public_flag <= ?', $publicFlag);
+        $q->andWhereIn('m.public_flag', $publicFlags);
       }
     }
 

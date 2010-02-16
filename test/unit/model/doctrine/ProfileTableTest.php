@@ -12,6 +12,7 @@ $table = Doctrine::getTable('Profile');
 $t->diag('ProfileTable');
 $t->diag('ProfileTable::getPublicFlags()');
 $data = array(
+  4 => 'Web全体に公開',
   1 => '全員に公開',
   2 => 'マイフレンドまで公開',
   3 => '公開しない'
@@ -51,6 +52,6 @@ $t->isa_ok($result, 'Profile');
 
 //------------------------------------------------------------
 $t->diag('ProfileTable::getMaxSortOrder()');
-$t->is($table->getMaxSortOrder(), 1020);
+$t->is($table->getMaxSortOrder(), 1040);
 
 

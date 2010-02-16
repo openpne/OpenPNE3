@@ -123,6 +123,18 @@ general:
       1: "メンバーの設定を許可しない（全員に公開）"
       4: "メンバーの設定を許可しない（Web全体に公開）"
 
+  is_allow_web_public_flag_age:
+    Name:       "is_allow_web_public_flag_age"
+    Caption:    "Web 全体への年齢公開許可設定"
+    Help:       "メンバーが年齢を Web 全体に公開できるようにするかどうかを設定します"
+    FormType:   "radio"
+    ValueType:  "text"
+    IsRequired: true
+    Default:    0
+    Choices:
+      0: "メンバーの設定を許可しない"
+      1: "メンバーの設定を許可する"
+
 external_login_page:
   _attributes:
     Caption: "External Login Page Configuration"

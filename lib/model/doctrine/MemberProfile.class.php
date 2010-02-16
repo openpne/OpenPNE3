@@ -178,7 +178,10 @@ class MemberProfile extends BaseMemberProfile implements opAccessControlRecordIn
         return false;
 
       case ProfileTable::PUBLIC_FLAG_SNS:
-        return true;
+        return (bool)$memberId;
+
+      case ProfileTable::PUBLIC_FLAG_WEB:
+        return ($this->Profile->is_public_web) ? true : (bool)$memberId;
     }
   }
 

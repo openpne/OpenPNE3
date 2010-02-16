@@ -83,6 +83,32 @@ Profile:
     default_public_flag: 1
     sort_order: 1020
 
+  web_item:
+    name: "web_item"
+    is_required: 0
+    form_type: "input"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    is_edit_public_flag: 1
+    is_public_web: 1
+    default_public_flag: 4
+    sort_order: 1030
+
+  not_web_item:
+    name: "not_web_item"
+    is_required: 0
+    form_type: "input"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    is_edit_public_flag: 1
+    is_public_web: 0
+    default_public_flag: 4
+    sort_order: 1040
+
 ProfileOption:
   profile_option_select_item1:
     sort_order: 10
@@ -263,6 +289,20 @@ MemberProfile:
         ProfileOption: profile_option_date_year
         value: 1989
 
+  first_member_profile_web_item:
+    value: "Web に公開します"
+    public_flag: 4
+    Member: first_member
+    Profile: web_item
+    children: []
+
+  first_member_profile_not_web_item:
+    value: "Web に公開できません"
+    public_flag: 4
+    Member: first_member
+    Profile: not_web_item
+    children: []
+
   second_member_profile_option_item:
     public_flag: 1
     Profile: profile_checkbox_item
@@ -272,6 +312,20 @@ MemberProfile:
         Member: second_member
         Profile: profile_checkbox_item
         ProfileOption: profile_option_checkbox_item1
+
+  second_member_profile_web_item:
+    value: "Web に公開しません"
+    public_flag: 1
+    Member: second_member
+    Profile: web_item
+    children: []
+
+  second_member_profile_not_web_item:
+    value: "Web に公開できません"
+    public_flag: 1
+    Member: second_member
+    Profile: not_web_item
+    children: []
 
 MemberConfig:
   first_member_pc_address:

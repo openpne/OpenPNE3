@@ -74,6 +74,10 @@ foreach ($member->getProfiles(true) as $profile)
   {
     $value .= '<font color="'.$op_color["core_color_22"].'">('.__('Only Open to %my_friend%').')</font><br>';
   }
+  elseif ($member->getId() == $sf_user->getMemberId() && $profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_WEB)
+  {
+    $value .= '<font color="'.$op_color["core_color_22"].'">('.__('All Users on the Web').')</font><br>';
+  }
 
   $list[$caption] = $value;
 }
@@ -93,7 +97,7 @@ foreach ($member->getProfiles(true) as $profile)
 
 <tr><td colspan="2">
 
-<?php if (opConfig::get('enable_friend_link') && !$relation->isFriend() && !$relation->isSelf()) : ?>
+<?php if (opConfig::get('enable_friend_link') && !$relation->isFriend() && !$relation->isSelf() && $relation->isAllowed($sf_user->getRawValue()->getMember(), 'friend_link')) : ?>
 <?php echo link_to(__('Makes %friend%', array('%friend%' => $op_term['friend']->pluralize())), 'friend/link?id='.$member->getId()) ?><br>
 <?php endif; ?>
 
