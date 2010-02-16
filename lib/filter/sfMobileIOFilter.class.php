@@ -38,6 +38,10 @@ class sfMobileIOFilter extends sfFilter
     $filterChain->execute();
 
     $this->convertEmptyElementsForHTML4();
+    if ($this->getContext()->getRequest()->getMobile()->isDoCoMo() && opConfig::get('font_size'))
+    {
+      $this->convertAddFont4Docomo();
+    }
     $this->convertEncodingForOutput();
     $this->outputContentTypeHeader();
   }
@@ -131,5 +135,19 @@ class sfMobileIOFilter extends sfFilter
   {
     $response = $this->getContext()->getResponse();
     $response->setContent(str_replace('/>', '>', $response->getContent()));
+  }
+
+  private function convertAddFont4Docomo()
+  {
+    $response = $this->getContext()->getResponse();
+    $content = $response->getContent();
+    $pattern_start_tag = array('/(<body.*?>)/', '/(<td.*?>)/');
+    $replacement_start_tag = '$1<font size="2">';
+    $pattern_end_tag = array('</body>', '</td>');
+    $replacement_end_tag = array('</font></body>', '</font></td>');
+
+    $content = preg_replace($pattern_start_tag, $replacement_start_tag, $content);
+    $content = str_replace($pattern_end_tag, $replacement_end_tag, $content);
+    $response->setContent($content);
   }
 }
