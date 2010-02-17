@@ -31,11 +31,8 @@ class imageActions extends sfActions
     $image = new sfImageHandler($params);
     $this->forward404Unless($image->isValidSource(), 'Invalid URL.');
 
+    $this->getResponse()->setContentType($image->getContentType());
     $binary = $image->createImage();
-
-    header('Content-Type:'.$image->getContentType());
-    echo $binary;
-
-    exit;
+    return $this->renderText($binary);
   }
 }

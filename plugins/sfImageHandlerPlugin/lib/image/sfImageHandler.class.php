@@ -39,7 +39,7 @@ class sfImageHandler
   {
     if (isset($options['filename']))
     {
-      $this->storage = Doctrine::getTable('File')->retrieveByFilename($options['filename']);
+      $this->storage = FilePeer::retrieveByFilename($options['filename']);
     }
 
     $this->generator = new sfImageGeneratorGD($options);
@@ -48,7 +48,8 @@ class sfImageHandler
 
   public function createImage()
   {
-    $contents = $this->storage->getFileBin()->getBin();
+    $fp = $this->storage->getFileBin()->getBin();
+    $contents = stream_get_contents($fp);
 
     $info = $this->generator->resize($contents, $this->storage->getImageFormat());
 
