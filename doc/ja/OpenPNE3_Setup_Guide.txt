@@ -27,7 +27,7 @@ PHP
 ダウンロード
 ~~~~~~~~~~~~
 
-以下の URL から OpenPNE3.0 のパッケージをダウンロードしてください。
+以下の URL から OpenPNE3.0 のパッケージをダウンロードしてください。(この手順では、 GitHub から入手できる OpenPNE 3.0 のアーカイブでのセットアップはおこなえないのでご注意ください）
 
 https://sourceforge.net/project/showfiles.php?group_id=174268&package_id=307735
 
@@ -128,24 +128,26 @@ web/.htaccess の RewriteBase を各自の環境にあわせて編集してく�
 
 ※メールアドレスとパスワードはログイン後に必ず変更してください
 
-svn からチェックアウトしたものをセットアップ
---------------------------------------------
+Git から入手したものをセットアップ
+----------------------------------
 
 ※ symfony1.2 自体のセットアップが完了しており、 symfony コマンドによって自動生成されたプロジェクトに対してWEBブラウザからアクセスできる環境を前提として説明
 
-OpenPNE3 のチェックアウト
-~~~~~~~~~~~~~~~~~~~~~~~~~
+OpenPNE3 の設置
+~~~~~~~~~~~~~~~
 
 ::
 
-  $ svn co https://trac.openpne.jp/svn/OpenPNE3/tags/OpenPNE-3.0.0/
+  $ git clone git://github.com/openpne/OpenPNE3.git
+  $ cd OpenPNE3
+  $ git checkout origin/OpenPNE-3.0.6
+  $ git checkout -b OpenPNE-3.0.6
 
 config/ProjectConfiguration.class.php を編集
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-  $ cd OpenPNE-3.0.0
   $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
   $ vi config/ProjectConfiguration.class.php
 

@@ -35,6 +35,17 @@ config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.cla
 
 ※config/ProjectConfiguration.class.php に独自の設定を記述している場合は、古いファイルを参考に新しいファイルを変更してください。
 
+プラグインディレクトリのコピー
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+古いバージョンの plugins ディレクトリの中身をコピーします。
+
+::
+
+  $ cp -aur /path/to/old/OpenPNE3/plugins/* /path/to/new/OpenPNE3/plugins
+  $ cp -aur /path/to/old/OpenPNE3/plugins/.* /path/to/new/OpenPNE3/plugins
+
+
 バージョンアップコマンドの実行
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -43,6 +54,7 @@ config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.cla
 ::
 
   $ ./symfony openpne:migrate
+  $ ./symfony plugin:publish-assets
 
 このコマンドは OpenPNE 本体、プラグインの両方を最新の状態にバージョンアップします。
 
