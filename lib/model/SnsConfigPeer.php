@@ -40,7 +40,7 @@ class SnsConfigPeer extends BaseSnsConfigPeer
       $config->setName($name);
     }
     $config->setValue($value);
-    $this->configs[$name] = $config;
+    self::$configs[$name] = $config;
     return $config->save();
   }
 
