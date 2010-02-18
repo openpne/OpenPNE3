@@ -109,11 +109,10 @@ var opCookie = {
       var cookies = _cookie.split(';');
       for (var i = 0; i < cookies.length; i++)
       {
-        var _cookie = cookies[i];
-        var valuePos = name.length + 1;
-        if (_cookie.substr(0, valuePos + 1).strip() == (name + '='))
+        var _cookie = cookies[i].strip();
+        if (_cookie.startsWith(name + '='))
         {
-          value = decodeURIComponent(_cookie.substr(valuePos + 1)).strip();
+          value = decodeURIComponent(_cookie.substr(name.length + 1)).strip();
           break;
         }
       }
