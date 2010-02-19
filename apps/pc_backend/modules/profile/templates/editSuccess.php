@@ -10,12 +10,12 @@
 
 <div style="margin-bottom: 1em;">
 <select id="original_preset">
-  <option name="presetting"<?php if (!$form->isNew() && $profile->isPreset()) : ?> selected="selected"<?php endif; ?>>プリセットから選ぶ</option>
-  <option name="original"<?php if (!$form->isNew() && !$profile->isPreset()) : ?> selected="selected"<?php endif; ?>>自分で入力する</option>
+  <option name="presetting"<?php if ($isPreset) : ?> selected="selected"<?php endif; ?>>プリセットから選ぶ</option>
+  <option name="original"<?php if (!$isPreset) : ?> selected="selected"<?php endif; ?>>自分で入力する</option>
 </select>
 </div>
 
-<div id="preset">
+<div id="preset"<?php if (!$isPreset): ?> style="display: none;"<?php endif ?>>
 <?php if ($presetForm->isNew()): ?>
 <form action="<?php echo url_for('profile/edit?type=preset') ?>" method="post">
 <?php else : ?>
@@ -29,7 +29,7 @@
 </div>
 
 
-<div id="original" style="display: none;">
+<div id="original"<?php if ($isPreset): ?> style="display: none;"<?php endif ?>>
 <?php if ($form->hasGlobalErrors()) : ?>
 <ul>
 <?php echo $form->renderGlobalErrors() ?>
@@ -85,14 +85,10 @@
 </table>
 <?php end_slot() ?>
 
-<?php if ($form->isNew()) : ?>
+<?php if ($formType === 'input' || $formType === 'textarea'): ?>
 <?php include_slot('advanced_settings_text') ?>
-<?php else: ?>
-<?php if ($profile->getFormType() === 'input' || $profile->getFormType() == 'textarea'): ?>
-<?php include_slot('advanced_settings_text') ?>
-<?php elseif ($profile->getFormType() === 'date'): ?>
+<?php elseif ($formType === 'date'): ?>
 <?php include_slot('advanced_settings_date') ?>
-<?php endif; ?>
 <?php endif; ?>
 
 <?php echo $form->renderHiddenFields() ?>
@@ -137,11 +133,6 @@ function changeOriginalAndPreset()
     Element.hide(document.getElementById("preset"));
   }
 }
-
-Event.observe(window, "load", function(e){
-  changeAdvancedFormByFormType();
-  changeOriginalAndPreset();
-});
 
 Event.observe("profile_form_type", "change", function(e){
   changeAdvancedFormByFormType();

@@ -49,6 +49,7 @@ class profileActions extends sfActions
     $this->profile = Doctrine::getTable('Profile')->find($request->getParameter('id'));
     $this->form = new ProfileForm($this->profile);
     $this->presetForm = new opPresetProfileForm($this->profile);
+    $this->isPreset = false;
 
     if ($request->isMethod('post'))
     {
@@ -56,9 +57,10 @@ class profileActions extends sfActions
       if ('preset' === $request->getParameter('type'))
       {
         $form = $this->presetForm;
+        $this->isPreset = true;
       }
 
-      $parameter = $request->getParameter('profile');
+      $parameter = $request->getParameter($form->getName());
       if ($form->getObject()->isNew())
       {
         $parameter['sort_order'] = Doctrine::getTable('Profile')->getMaxSortOrder();
@@ -70,8 +72,24 @@ class profileActions extends sfActions
         $form->save();
         $this->redirect('profile/list');
       }
+
+      $values = $this->form->getFormFieldSchema()->getValue();
+      $this->formType = $values['form_type'];
     }
-  }
+    else
+    {
+      $this->formType = $this->form->getDefault('form_type');
+      if ($this->profile)
+      {
+        $this->isPreset = $this->profile->isPreset();
+      }
+    }
+
+    if (!$this->formType)
+    {
+      $this->formType = 'input';
+    }
+}
 
  /**
   * Executes editOption action
