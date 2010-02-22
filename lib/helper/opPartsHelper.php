@@ -219,6 +219,9 @@ function include_login_parts($id, $form, $link_to)
  */
 function include_page_title($title, $subtitle = '')
 {
+  use_helper('Debug');
+  log_message('include_page_title() is deprecated.', 'err');
+
   $params = array(
     'title' => $title,
     'subtitle' => $subtitle,
@@ -231,6 +234,9 @@ function include_page_title($title, $subtitle = '')
  */
 function include_list_box($id, $list, $options = array())
 {
+  use_helper('Debug');
+  log_message('include_list_box() is deprecated.', 'err');
+
   $options['list'] = $list;
 
   op_include_parts('listBox', $id, $options);
@@ -241,6 +247,9 @@ function include_list_box($id, $list, $options = array())
  */
 function include_simple_box($id, $title = '', $block = '', $options = array())
 {
+  use_helper('Debug');
+  log_message('include_simple_box() is deprecated.', 'err');
+
   if(!isset($options['border']))
   {
     $options['border'] = true;
@@ -265,6 +274,9 @@ function include_simple_box($id, $title = '', $block = '', $options = array())
  */
 function include_box($id, $title = '', $body = '', $options = array())
 {
+  use_helper('Debug');
+  log_message('include_box() is deprecated.', 'err');
+
   $options['title'] = $title;
 
   if (!empty($options['form']))
@@ -302,6 +314,9 @@ function include_box($id, $title = '', $body = '', $options = array())
  */
 function include_parts($parts_name, $id, $option = array())
 {
+  use_helper('Debug');
+  log_message('include_parts() is deprecated.', 'err');
+
   $params = array(
     'id'      => $id,
     'options' => $option,
@@ -316,6 +331,9 @@ function include_parts($parts_name, $id, $option = array())
  */
 function include_news_pager($id, $title = '', $pager, $list, $link_to_detail)
 {
+  use_helper('Debug');
+  log_message('include_news_pager() is deprecated.', 'err');
+
   $params = array(
     'id' => $id,
     'title' => $title,

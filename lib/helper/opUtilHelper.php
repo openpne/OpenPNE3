@@ -126,6 +126,9 @@ function op_include_pager_total($pager)
  */
 function pager_navigation($pager, $link_to, $is_total = true, $query_string = '')
 {
+  use_helper('Debug');
+  log_message('pager_navigation() is deprecated.', 'err');
+
   $params = array(
     'pager' => $pager,
     'link_to' => $link_to,
@@ -146,6 +149,9 @@ function pager_navigation($pager, $link_to, $is_total = true, $query_string = ''
  */
 function pager_total($pager)
 {
+  use_helper('Debug');
+  log_message('pager_total() is deprecated.', 'err');
+
   return get_partial('global/pagerTotal', array('pager' => $pager));
 }
 
