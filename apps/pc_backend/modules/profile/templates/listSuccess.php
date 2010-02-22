@@ -69,12 +69,12 @@
 <th colspan="2">操作</th>
 </tr></thead>
 <?php foreach ($option_form[$value->getId()] as $form) : ?>
-<form action="<?php echo url_for('profile/editOption?id=' . $form->getObject()->getId()) ?>" method="post">
 <?php if (!$form->getObject()->isNew()) : ?>
 <tbody id="profile_option_<?php echo $form->getObject()->getId() ?>" class="sortable">
 <?php else: ?>
 <tbody>
 <?php endif; ?>
+<form action="<?php echo url_for('profile/editOption?id=' . $form->getObject()->getId()) ?>" method="post">
 <tr>
 <td><?php echo ($form->getObject()->isNew() ? '-' : $form->getObject()->getId()) ?></td>
 <td>
