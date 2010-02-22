@@ -78,6 +78,7 @@
 <tr>
 <td><?php echo ($form->getObject()->isNew() ? '-' : $form->getObject()->getId()) ?></td>
 <td>
+<?php echo $form['ja_JP']['value']->renderError() ?>
 <?php echo $form['ja_JP']['value']->render() ?>
 </td>
 <?php if ($form->getObject()->isNew()) : ?>
