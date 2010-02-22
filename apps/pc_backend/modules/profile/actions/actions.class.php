@@ -28,15 +28,28 @@ class profileActions extends sfActions
     $this->profiles = Doctrine::getTable('Profile')->retrievesAll();
     $this->option_form = array();
 
-    foreach ($this->profiles as $value) {
+    foreach ($this->profiles as $value)
+    {
       $this->option_form[$value->getId()] = array();
-      foreach ($value->getProfileOption() as $option) {
+      foreach ($value->getProfileOption() as $option)
+      {
         $this->option_form[$value->getId()][$option->getId()] = new ProfileOptionForm(Doctrine::getTable('ProfileOption')->find($option->getId()));
       }
       $newProfileOption = new ProfileOption();
       $newProfileOption->setProfileId($value->getId());
-      $this->option_form[$value->getId()][] = new ProfileOptionForm($newProfileOption);
+      $this->option_form[$value->getId()][0] = new ProfileOptionForm($newProfileOption);
     }
+
+    if ($request->isMethod('post'))
+    {
+      $parameter = $request->getParameter('profile_option');
+      $profileId = $parameter['profile_id'];
+      $profileOptionId = $parameter['id'] ? $parameter['id'] : 0;
+      if (isset($this->option_form[$profileId][$profileOptionId]))
+      {
+        $this->option_form[$profileId][$profileOptionId]->bind($parameter);
+      }
+  }
   }
 
  /**
@@ -110,9 +123,11 @@ class profileActions extends sfActions
       $this->form->bind($parameter);
       if ($this->form->isValid()) {
         $this->form->save();
+        $this->redirect('profile/list');
       }
     }
-    $this->redirect('profile/list');
+
+    $this->forward('profile', 'list');
   }
 
  /**
