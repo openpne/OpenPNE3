@@ -206,7 +206,7 @@ mobile:
     FormType:  "radio"
     ValueType: "integer"
     IsRequired: true
-    Default:    0
+    Default:    1
     Choices:
       1: "携帯電話のIP帯域をチェックする"
       0: "携帯電話のIP帯域をチェックしない"
