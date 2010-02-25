@@ -47,4 +47,18 @@ class opTestFunctional extends sfTestFunctional
 
     return $this->get('/', array('sf_culture' => $culture));
   }
+
+  public function checkDispatch($module, $action)
+  {
+    return
+      $this->with('request')->begin()
+        ->isParameter('module', $module)
+        ->isParameter('action', $action)
+      ->end();
+  }
+
+  public function isStatusCode($code)
+  {
+    return $this->with('response')->isStatusCode($code);
+  }
 }
