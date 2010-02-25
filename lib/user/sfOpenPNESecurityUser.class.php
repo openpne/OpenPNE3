@@ -382,6 +382,16 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     }
   }
 
+  public function isMember()
+  {
+    return $this->isSNSMember();
+  }
+
+  public function isSNSMember()
+  {
+    return $this->hasCredential('SNSMember');
+  }
+
   public function setIsSNSMember($isSNSMember)
   {
     if ($isSNSMember) {
