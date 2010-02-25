@@ -2,7 +2,7 @@
 
 include_once dirname(__FILE__) . '/../../bootstrap/unit.php';
 
-$t = new lime_test(41, new lime_output_color());
+$t = new lime_test(42, new lime_output_color());
 
 $v = new opValidatorDate();
 
@@ -45,6 +45,11 @@ $t->diag('validate date array');
 $t->is($v->clean(array('year' => 2005, 'month' => 10, 'day' => 15)), '2005-10-15', '->clean() accepts an array as an input');
 $t->is($v->clean(array('year' => '2005', 'month' => '10', 'day' => '15')), '2005-10-15', '->clean() accepts an array as an input');
 $t->is($v->clean(array('year' => 2008, 'month' => 02, 'day' => 29)), '2008-02-29', '->clean() recognises a leapyear');
+
+$v->setOption('required', false);
+$v->setOption('empty_value', new DateTime('1989-01-08')); 
+$t->is($v->clean(array('year' => '', 'month' => '', 'day' => '', 'hour' => '10')), '1989-01-08', '->clean() accepts an array as empty');
+$v->setOption('required', true);
 
 try
 {
