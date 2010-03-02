@@ -108,7 +108,7 @@ class MemberTable extends opAccessControlDoctrineTable
     {
       $config = Doctrine::getTable('SnsConfig')->get('is_allow_config_public_flag_profile_page');
     }
-    else
+    elseif ($resource)
     {
       $config = $resource->getConfig('profile_page_public_flag');
     }

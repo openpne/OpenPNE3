@@ -23,51 +23,27 @@ class opMemberAclBuilder extends opAclBuilder
   static public function getAcl()
   {
     $acl = new Zend_Acl();
-    $acl->addRole(new Zend_Acl_Role('anonymous'));
-    $acl->addRole(new Zend_Acl_Role('everyone'), 'anonymous');
-    $acl->addRole(new Zend_Acl_Role('blocked'), 'everyone');
-    $acl->addRole(new Zend_Acl_Role('self'), 'everyone');
+    $acl = Doctrine::getTable('Member')->appendRoles($acl);
 
     return $acl;
   }
 
   static public function buildResource($resource, $targetMembers)
   {
-    if (isset(self::$resource[$resource->getId()]))
-    {
-      return self::$resource[$resource->getId()];
-    }
-
     $acl = self::getAcl();
 
     foreach ($targetMembers as $member)
     {
-      $relation = Doctrine::getTable('MemberRelationship')
-        ->retrieveByFromAndTo($resource->id, $member->id);
+      $roleString = $resource->generateRoleId($member);
 
-      $role = new Zend_Acl_Role($member->getId());
-      if ($resource->getId() === $member->getId())
-      {
-        $acl->addRole($role, 'self');
-      }
-      elseif ($relation && $relation->getIsAccessBlock())
-      {
-        $acl->addRole($role, 'blocked');
-      }
-      elseif (!$member->id)
-      {
-        $acl->addRole($role, 'anonymous');
-      }
-      else
-      {
-        $acl->addRole($role, 'everyone');
-      }
+      $role = new Zend_Acl_Role($member);
+      $acl->addRole($role, $roleString);
+
+      $role = new Zend_Acl_Role($member->id);
+      $acl->addRole($role, $roleString);
     }
 
-    $acl->deny('blocked', null, 'view');
-    $acl->allow('everyone', null, 'view');
-
-    $acl->allow('anonymous', null, 'view');
+    $acl = Doctrine::getTable('Member')->appendRules($acl);
 
     return $acl;
   }
