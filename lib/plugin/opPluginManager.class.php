@@ -181,7 +181,7 @@ class opPluginManager extends sfSymfonyPluginManager
     // OpenPNE plugin don't want to rewrite config/ProjectConfiguration.class.php
   }
 
-  static protected function disablePlugin($plugin, $configDir)
+  static public function disablePlugin($plugin, $configDir)
   {
     // do nothing.
     // OpenPNE plugin don't want to rewrite config/ProjectConfiguration.class.php
