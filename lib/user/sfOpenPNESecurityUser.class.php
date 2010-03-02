@@ -239,12 +239,11 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
   */
   public function getRememberedMemberId()
   {
-    $key = md5(sfContext::getInstance()->getRequest()->getHost());
     if (($value = $this->getRememberLoginCookie()) && 2 == count($value))
     {
       try
       {
-        $memberConfig = Doctrine::getTable('MemberConfig')->findOneByMemberIdAndValue($value[0], $value[1]);
+        $memberConfig = Doctrine::getTable('MemberConfig')->findOneByMemberIdAndNameAndValue($value[0], 'remember_key', $value[1]);
       }
       catch (Doctrine_Table_Exception $e)
       {
