@@ -861,6 +861,10 @@
         <source>Before Change</source>
         <target>変更前</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Already exist.</source>
+        <target>すでに存在します。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

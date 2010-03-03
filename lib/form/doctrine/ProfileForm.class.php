@@ -51,7 +51,7 @@ class ProfileForm extends BaseProfileForm
     $this->widgetSchema->setNameFormat('profile[%s]');
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorDoctrineUnique(array('model' => 'Profile', 'column' => array('name')))
+      new sfValidatorDoctrineUnique(array('model' => 'Profile', 'column' => array('name')), array('invalid' => 'Already exist.'))
     );
 
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'advancedValidator'))));
