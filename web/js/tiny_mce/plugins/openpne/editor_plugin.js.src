@@ -62,7 +62,9 @@
 
                     n = DOM.add(n, 'img', {
                         src : op_get_relative_uri_root() + "/images/emoji/" + s.carrier + "/" + s.carrier + i + ".gif",
-                        alt : "[" + s.carrier + ":" + i + "]"
+                        alt : "[" + s.carrier + ":" + i + "]",
+                        width: 12,
+                        height: 12
                     });
 
                     Event.add(n, 'mousedown', function(e) {
