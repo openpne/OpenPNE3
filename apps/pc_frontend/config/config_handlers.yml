@@ -1,6 +1,6 @@
 modules/*/config/view.yml:
-  class:    sfOpenPNEViewConfigHandler
-  file:     %SF_LIB_DIR%/config/sfOpenPNEViewConfigHandler.class.php
+  class:    opViewConfigHandler
+  file:     %SF_LIB_DIR%/config/opViewConfigHandler.class.php
 
 config/routing.yml:
   class:    opRoutingConfigHandler

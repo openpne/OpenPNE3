@@ -9,31 +9,17 @@
  */
 
 /**
- * sfOpenPNEPluginConfigHandler
+ * This class is for keeping backward compatibility.
  *
+ * If you want to add new feature to this class, please add this to
+ * the opPluginConfigHandler class, a parent class of this class.
+ * And of course using this class is deprecated. You should not begin to
+ * use this class, and you have to replace the code that is using this class.
+ * 
  * @package    OpenPNE
  * @subpackage config
- * @author     Kousuke Ebihara <ebihara@tejimaya.com>
+ * @author     Kousuke Ebihara <ebihara@php.net>
  */
-class sfOpenPNEPluginConfigHandler extends sfYamlConfigHandler
+class sfOpenPNEPluginConfigHandler extends opPluginConfigHandler
 {
-  public function execute($configFiles)
-  {
-    $prefix = 'op_plugin_';
-    $config = $this->parseYamls($configFiles);
-
-    $data = "array(\n";
-
-    foreach ($config as $key => $value)
-    {
-      $data .= sprintf("'%s%s' => %s\n", $prefix, $key, var_export($value, true));
-    }
-
-    $data .= ")\n";
-
-    $format = "<?php\n"
-            . "sfConfig::add(%s);\n";
-
-    return sprintf($format, $data);
-  }
 }

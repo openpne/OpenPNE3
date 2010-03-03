@@ -9,20 +9,17 @@
  */
 
 /**
- * sfOpenPNEFriendComponents
+ * This class is for keeping backward compatibility.
  *
+ * If you want to add new feature to this class, please add this to
+ * the opFriendComponents class, a parent class of this class.
+ * And of course using this class is deprecated. You should not begin to
+ * use this class, and you have to replace the code that is using this class.
+ * 
  * @package    OpenPNE
  * @subpackage action
- * @author     Shogo Kawahara <kawahara@tejimaya.net>
+ * @author     Kousuke Ebihara <ebihara@php.net>
  */
-abstract class sfOpenPNEFriendComponents extends sfComponents
+abstract class sfOpenPNEFriendComponents extends opFriendComponents
 {
-  public function executeActivityBox()
-  {
-    $this->activities = Doctrine::getTable('ActivityData')->getFriendActivityList(null, $this->gadget->getConfig('row'));
-    if (opConfig::get('is_allow_post_activity'))
-    {
-      $this->form = new ActivityDataForm();
-    }
-  }
 }

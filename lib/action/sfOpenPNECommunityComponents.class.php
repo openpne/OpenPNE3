@@ -9,30 +9,17 @@
  */
 
 /**
- * sfOpenPNECommunityComponents
+ * This class is for keeping backward compatibility.
  *
+ * If you want to add new feature to this class, please add this to
+ * the opCommunityComponents class, a parent class of this class.
+ * And of course using this class is deprecated. You should not begin to
+ * use this class, and you have to replace the code that is using this class.
+ * 
  * @package    OpenPNE
  * @subpackage action
- * @author     Shogo Kawahara <kawahara@tejimaya.net>
- * @author     Kousuke Ebihara <ebihara@tejimaya.com>
+ * @author     Kousuke Ebihara <ebihara@php.net>
  */
-abstract class sfOpenPNECommunityComponents extends sfComponents
+abstract class sfOpenPNECommunityComponents extends opCommunityComponents
 {
-  public function executeCautionAboutCommunityMemberPre()
-  {
-    $memberId = sfContext::getInstance()->getUser()->getMemberId();
-
-    $this->communityMembersCount = Doctrine::getTable('CommunityMember')->countCommunityMembersPre($memberId);
-  }
-
-  public function executeCautionAboutChangeAdminRequest()
-  {
-    $this->communityCount = Doctrine::getTable('Community')->countPositionRequestCommunities('admin');
-  }
-
-  public function executeCautionAboutSubAdminRequest()
-  {
-    $this->communityCount = Doctrine::getTable('Community')->countPositionRequestCommunities('sub_admin');
-  }
-
 }

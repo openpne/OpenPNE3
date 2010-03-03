@@ -9,19 +9,17 @@
  */
 
 /**
- * sfOpenPNEMemberComponents
+ * This class is for keeping backward compatibility.
  *
+ * If you want to add new feature to this class, please add this to
+ * the opMemberComponents class, a parent class of this class.
+ * And of course using this class is deprecated. You should not begin to
+ * use this class, and you have to replace the code that is using this class.
+ * 
  * @package    OpenPNE
  * @subpackage action
- * @author     Shogo Kawahara <kawahara@tejimaya.net>
+ * @author     Kousuke Ebihara <ebihara@php.net>
  */
-abstract class sfOpenPNEMemberComponents extends sfComponents
+abstract class sfOpenPNEMemberComponents extends opMemberComponents
 {
-  public function executeActivityBox(sfWebRequest $request)
-  {
-    $id = $request->getParameter('id', $this->getUser()->getMemberId());
-    $this->activities = Doctrine::getTable('ActivityData')->getActivityList($id, null, $this->gadget->getConfig('row'));
-    $this->member = Doctrine::getTable('Member')->find($id);
-    $this->isMine = ($id == $this->getUser()->getMemberId());
-  }
 }

@@ -9,38 +9,17 @@
  */
 
 /**
- * sfOpenPNEPassword form.
+ * This class is for keeping backward compatibility.
  *
+ * If you want to add new feature to this class, please add this to
+ * the opPasswordForm class, a parent class of this class.
+ * And of course using this class is deprecated. You should not begin to
+ * use this class, and you have to replace the code that is using this class.
+ * 
  * @package    OpenPNE
  * @subpackage form
- * @author     Kousuke Ebihara <ebihara@tejimaya.com>
+ * @author     Kousuke Ebihara <ebihara@php.net>
  */
-class sfOpenPNEPasswordForm extends BaseForm
+class sfOpenPNEPasswordForm extends opPasswordForm
 {
-  public function configure()
-  {
-    $this->setWidgets(array(
-      'password' => new sfWidgetFormInputPassword(),
-    ));
-
-    $this->setValidators(array(
-      'password' => new sfValidatorAnd(array(
-        new sfValidatorString(),
-        new sfValidatorCallback(array('callback' => array($this, 'isValidPassword')))
-      ))
-    ));
-
-    $this->widgetSchema->setNameFormat('password[%s]');
-  }
-
-  public function isValidPassword($validator, $value)
-  {
-    $member = $this->options['member'];
-    if (md5($value) !== Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('password', $member->getId())->getValue())
-    {
-      throw new sfValidatorError(new sfValidatorPass(), 'invalid', array('value' => $value));
-    }
-
-    return $value;
-  }
 }

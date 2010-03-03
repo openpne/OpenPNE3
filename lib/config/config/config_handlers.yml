@@ -1,6 +1,6 @@
 data/config/plugin.yml:
-  class: sfOpenPNEPluginConfigHandler
-  file:  %SF_LIB_DIR%/config/sfOpenPNEPluginConfigHandler.class.php
+  class: opPluginConfigHandler
+  file:  %SF_LIB_DIR%/config/opPluginConfigHandler.class.php
 
 config/gadget_config.yml:
   class: opGadgetConfigConfigHandler

@@ -8,9 +8,9 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-require_once dirname(__FILE__).'/../../../lib/config/sfOpenPNEApplicationConfiguration.class.php';
+require_once dirname(__FILE__).'/../../../lib/config/opApplicationConfiguration.class.php';
 
-class mobile_frontendConfiguration extends sfOpenPNEApplicationConfiguration
+class mobile_frontendConfiguration extends opApplicationConfiguration
 {
   public function initialize()
   {
