@@ -28,7 +28,7 @@ EOF;
   {
     parent::execute($arguments, $options);
 
-    sfOpenPNEApplicationConfiguration::unregisterZend();
+    opApplicationConfiguration::unregisterZend();
     $birthday = Doctrine::getTable('Profile')->retrieveByName('op_preset_birthday');
     if (!$birthday)
     {
@@ -39,7 +39,7 @@ EOF;
       ->where('profile_id = ?', $birthday->id)
       ->andWhere('DATE_FORMAT(value_datetime, ?) = ?', array('%m-%d', date('m-d', strtotime('+ 1 week'))))
       ->execute();
-    sfOpenPNEApplicationConfiguration::registerZend();
+    opApplicationConfiguration::registerZend();
 
     $context = sfContext::createInstance($this->createConfiguration('pc_frontend', 'prod'));
     $i18n = $context->getI18N();
@@ -54,7 +54,7 @@ EOF;
           'birthMember' => $birthMember,
           'subject'     => $i18n->__('There is your %my_friend% that its birthday is coming soon'),
         );
-        sfOpenPNEMailSend::sendTemplateMail('birthday', $member->getEmailAddress(), opConfig::get('admin_mail_address'), $params, $context);
+        opMailSend::sendTemplateMail('birthday', $member->getEmailAddress(), opConfig::get('admin_mail_address'), $params, $context);
       }
     }
   }

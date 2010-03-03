@@ -34,13 +34,13 @@ EOF;
   {
     sfConfig::set('sf_test', true);
 
-    sfOpenPNEApplicationConfiguration::registerZend();
+    opApplicationConfiguration::registerZend();
 
     $stdin = file_get_contents('php://stdin');
     $message = new opMailMessage(array('raw' => $stdin));
     opMailRequest::setMailMessage($message);
 
-    sfOpenPNEApplicationConfiguration::unregisterZend();
+    opApplicationConfiguration::unregisterZend();
 
     $configuration = ProjectConfiguration::getApplicationConfiguration('mobile_mail_frontend', 'prod', false);
     $context = sfContext::createInstance($configuration);
@@ -55,7 +55,7 @@ EOF;
       $subject = $context->getResponse()->getTitle();
       $to = $message->from;
       $from = $message->to;
-      sfOpenPNEMailSend::execute($subject, $to, $from, $retval);
+      opMailSend::execute($subject, $to, $from, $retval);
     }
   }
 }

@@ -9,7 +9,7 @@
  */
 
 /**
- * sfOpenPNEFriendComponents
+ * opFriendComponents
  *
  * @package    OpenPNE
  * @subpackage action

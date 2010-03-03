@@ -9,7 +9,7 @@
  */
 
 /**
- * sfOpenPNEMailSend
+ * opMailSend
  *
  * @package    OpenPNE
  * @subpackage util
@@ -25,7 +25,7 @@ class opMailSend
   {
     if (!self::$initialized)
     {
-      sfOpenPNEApplicationConfiguration::registerZend();
+      opApplicationConfiguration::registerZend();
 
       if ($host = sfConfig::get('op_mail_smtp_host'))
       {
@@ -38,7 +38,7 @@ class opMailSend
         Zend_Mail::setDefaultTransport($tr);
       }
 
-      sfOpenPNEApplicationConfiguration::unregisterZend();
+      opApplicationConfiguration::unregisterZend();
 
       self::$initialized = true;
     }
@@ -144,7 +144,7 @@ class opMailSend
 
     self::initialize();
 
-    sfOpenPNEApplicationConfiguration::registerZend();
+    opApplicationConfiguration::registerZend();
 
     $subject = mb_convert_kana($subject, 'KV');
 

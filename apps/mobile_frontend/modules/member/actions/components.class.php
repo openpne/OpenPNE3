@@ -15,6 +15,6 @@
  * @subpackage action
  * @author     Shogo Kawahara <kawahara@tejimaya.net>
  */
-class memberComponents extends sfOpenPNEMemberComponents
+class memberComponents extends opMemberComponents
 {
 }

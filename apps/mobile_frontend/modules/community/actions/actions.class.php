@@ -16,7 +16,7 @@
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  * @author     Eitarow Fukamachi <fukamachi@tejimaya.net>
  */
-class communityActions extends sfOpenPNECommunityAction
+class communityActions extends opCommunityAction
 {
   /**
    * Executes home action

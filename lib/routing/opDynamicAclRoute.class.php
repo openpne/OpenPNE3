@@ -79,7 +79,7 @@ class opDynamicAclRoute extends sfDoctrineRoute
   {
     $user = sfContext::getInstance()->getUser();
 
-    if (!is_null($user) && $user instanceof sfOpenPNESecurityUser)
+    if (!is_null($user) && $user instanceof opSecurityUser)
     {
       return $user->getMember();
     }
@@ -92,7 +92,7 @@ class opDynamicAclRoute extends sfDoctrineRoute
     $result = 0;
     $user = sfContext::getInstance()->getUser();
 
-    if (!is_null($user) && $user instanceof sfOpenPNESecurityUser)
+    if (!is_null($user) && $user instanceof opSecurityUser)
     {
       $result = $user->getMemberId();
     }
@@ -105,7 +105,7 @@ class opDynamicAclRoute extends sfDoctrineRoute
     $result = array();
     $user = sfContext::getInstance()->getUser();
 
-    if (!is_null($user) && $user instanceof sfOpenPNESecurityUser)
+    if (!is_null($user) && $user instanceof opSecurityUser)
     {
       $result[] = $user->getMember();
     }

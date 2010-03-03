@@ -9,7 +9,7 @@
  */
 
 /**
- * sfOpenPNEMemberAction
+ * opMemberAction
  *
  * @package    OpenPNE
  * @subpackage action
@@ -269,7 +269,7 @@ abstract class opMemberAction extends sfActions
     $this->forward404Unless((bool)$request->getParameter('token') !== $memberConfig->getValue());
 
     $option = array('member' => $memberConfig->getMember());
-    $this->form = new sfOpenPNEPasswordForm(array(), $option);
+    $this->form = new opPasswordForm(array(), $option);
 
     if ($request->isMethod('post'))
     {
@@ -395,7 +395,7 @@ abstract class opMemberAction extends sfActions
       return sfView::ERROR;
     }
 
-    $this->form = new sfOpenPNEPasswordForm(array(), array('member' => $this->getUser()->getMember()));
+    $this->form = new opPasswordForm(array(), array('member' => $this->getUser()->getMember()));
     if ($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('password'));
@@ -451,14 +451,14 @@ abstract class opMemberAction extends sfActions
     );
 
     // to admin
-    $mail = new sfOpenPNEMailSend();
+    $mail = new opMailSend();
     $mail->setSubject(opConfig::get('sns_name') . '退会者情報');
     $mail->setGlobalTemplate('deleteAccountMail', $param);
     $mail->send(opConfig::get('admin_mail_address'), opConfig::get('admin_mail_address'));
 
     // to member
     $param['subject'] = sfContext::getInstance()->getI18N()->__('Leaving from this site is finished');
-    sfOpenPNEMailSend::sendTemplateMail('leave', $member->getEmailAddress(), opConfig::get('admin_mail_address'), $param);
+    opMailSend::sendTemplateMail('leave', $member->getEmailAddress(), opConfig::get('admin_mail_address'), $param);
   }
 
   protected function filterConfigCategory()

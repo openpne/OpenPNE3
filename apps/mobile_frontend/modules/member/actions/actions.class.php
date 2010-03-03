@@ -15,7 +15,7 @@
  * @subpackage member
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class memberActions extends sfOpenPNEMemberAction
+class memberActions extends opMemberAction
 {
  /**
   * Executes home action
@@ -94,7 +94,7 @@ class memberActions extends sfOpenPNEMemberAction
   public function executeConfigUID($request)
   {
     $option = array('member' => $this->getUser()->getMember());
-    $this->passwordForm = new sfOpenPNEPasswordForm(array(), $option);
+    $this->passwordForm = new opPasswordForm(array(), $option);
     $mobileUid = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('mobile_uid', $this->getUser()->getMemberId());
     $this->isSetMobileUid = $mobileUid && $mobileUid->getValue();
     $this->isDeletableUid = ((int)opConfig::get('retrieve_uid') < 2) && $this->isSetMobileUid;
@@ -151,7 +151,7 @@ class memberActions extends sfOpenPNEMemberAction
     $this->forward404Unless($memberConfig && $token === $memberConfig->getValue());
 
     opActivateBehavior::disable();
-    $this->form = new sfOpenPNEPasswordForm(null, array('member' => $memberConfig->getMember()));
+    $this->form = new opPasswordForm(null, array('member' => $memberConfig->getMember()));
     opActivateBehavior::enable();
 
     if ($request->isMethod(sfWebRequest::POST))

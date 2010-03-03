@@ -15,7 +15,7 @@
  * @subpackage community
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class communityActions extends sfOpenPNECommunityAction
+class communityActions extends opCommunityAction
 {
  /**
   * Executes edit action

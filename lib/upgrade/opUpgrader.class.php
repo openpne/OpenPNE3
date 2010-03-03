@@ -116,7 +116,7 @@ class opUpgrader extends sfBaseTask
         $className = 'opUpgrade'.$v['strategy'].'Strategy';
       }
 
-      sfOpenPNEApplicationConfiguration::registerZend();
+      opApplicationConfiguration::registerZend();
       try
       {
         // disable Doctrine profiling
@@ -131,7 +131,7 @@ class opUpgrader extends sfBaseTask
       {
         $this->logBlock($e->getMessage(), 'ERROR');
       }
-      sfOpenPNEApplicationConfiguration::unregisterZend();
+      opApplicationConfiguration::unregisterZend();
 
       $this->logSection('upgrade', sprintf('Processed %s (%.2f sec)', $k, $timer->addTime()));
     }

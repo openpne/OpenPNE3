@@ -9,7 +9,7 @@
  */
 
 /**
- * sfOpenPNECommunityComponents
+ * opCommunityComponents
  *
  * @package    OpenPNE
  * @subpackage action

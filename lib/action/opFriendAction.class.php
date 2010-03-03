@@ -9,7 +9,7 @@
  */
 
 /**
- * sfOpenPNEFriendAction
+ * opFriendAction
  *
  * @package    OpenPNE
  * @subpackage action

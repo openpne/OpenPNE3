@@ -76,7 +76,7 @@ EOF;
         'subject' => $context->getI18N()->__('デイリーニュース'),
         'today'   => time(),
       );
-      sfOpenPNEMailSend::sendTemplateMail('dailyNews', $address, opConfig::get('admin_mail_address'), $params, $context);
+      opMailSend::sendTemplateMail('dailyNews', $address, opConfig::get('admin_mail_address'), $params, $context);
     }
   }
 

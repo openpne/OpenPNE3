@@ -136,7 +136,7 @@ class MemberRelationshipTable extends opAccessControlDoctrineTable
         'subject' => sfContext::getInstance()->getI18N()->__('%1% accepted your %friend% link request', array('%1%' => $event['member']->getName())),
         'member'  => $event['member'],
       );
-      sfOpenPNEMailSend::sendTemplateMail('friendLinkComplete', $toMember->getEmailAddress(), opConfig::get('admin_mail_address'), $params);
+      opMailSend::sendTemplateMail('friendLinkComplete', $toMember->getEmailAddress(), opConfig::get('admin_mail_address'), $params);
     }
     else
     {

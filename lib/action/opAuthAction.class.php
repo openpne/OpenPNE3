@@ -43,7 +43,7 @@ class opAuthAction extends sfActions
         'subject' => $i18n->__('Notify of Your Registering'),
         'url'     => $this->getController()->genUrl(array('sf_route' => 'homepage'), true),
       );
-      sfOpenPNEMailSend::sendTemplateMail('registerEnd', $member->getEmailAddress(), opConfig::get('admin_mail_address'), $params);
+      opMailSend::sendTemplateMail('registerEnd', $member->getEmailAddress(), opConfig::get('admin_mail_address'), $params);
     }
 
     $this->redirect('member/home');

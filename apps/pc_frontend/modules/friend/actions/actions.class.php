@@ -15,7 +15,7 @@
  * @subpackage friend
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class friendActions extends sfOpenPNEFriendAction
+class friendActions extends opFriendAction
 {
   public function preExecute()
   {

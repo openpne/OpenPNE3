@@ -15,7 +15,7 @@
  * @subpackage request
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class opMailRequest extends sfOpenPNEWebRequest
+class opMailRequest extends opWebRequest
 {
   static protected
     $mailMessage = null;

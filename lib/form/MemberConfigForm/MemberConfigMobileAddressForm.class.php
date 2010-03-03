@@ -55,7 +55,7 @@ class MemberConfigMobileAddressForm extends MemberConfigForm
       'subject' => 'メールアドレス変更ページのお知らせ',
     ), $params);
 
-    sfOpenPNEMailSend::sendTemplateMail('changeMailAddress', $to, opConfig::get('admin_mail_address'), $params);
+    opMailSend::sendTemplateMail('changeMailAddress', $to, opConfig::get('admin_mail_address'), $params);
   }
 
   public function getCompleteMessage()

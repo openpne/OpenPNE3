@@ -24,13 +24,13 @@ class opUpgradeCreateTableStrategy extends opUpgradeAbstractStrategy
     // build all tables for models
     if (!$this->getOption('models'))
     {
-      sfOpenPNEApplicationConfiguration::unregisterZend();
+      opApplicationConfiguration::unregisterZend();
 
       $path = sfConfig::get('sf_lib_dir').'/model/doctrine';
       Doctrine_Core::loadModels($path, Doctrine_Core::MODEL_LOADING_CONSERVATIVE);
       Doctrine_Core::createTablesFromArray(Doctrine_Core::getLoadedModels());
 
-      sfOpenPNEApplicationConfiguration::registerZend();
+      opApplicationConfiguration::registerZend();
 
       return true;
     }

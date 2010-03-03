@@ -19,7 +19,7 @@ class opUpgradeBuildModelStrategy extends opUpgradeAbstractStrategy
 {
   public function run()
   {
-    sfOpenPNEApplicationConfiguration::unregisterZend();
+    opApplicationConfiguration::unregisterZend();
 
     $task = new sfDoctrineBuildModelTask(clone $this->options['dispatcher'], clone $this->options['formatter']);
     $task->run(array(), array('application' => 'pc_frontend', 'env' => sfConfig::get('sf_environment', 'prod')));
@@ -27,7 +27,7 @@ class opUpgradeBuildModelStrategy extends opUpgradeAbstractStrategy
     $task = new sfCacheClearTask(clone $this->options['dispatcher'], clone $this->options['formatter']);
     $task->run(array(), array('application' => null, 'env' => sfConfig::get('sf_environment', 'prod')));
 
-    sfOpenPNEApplicationConfiguration::registerZend();
+    opApplicationConfiguration::registerZend();
   }
 }
 

@@ -9,7 +9,7 @@
  */
 
 /**
- * sfOpenPNEAuthForm represents a form to login.
+ * opAuthForm represents a form to login.
  *
  * @package    OpenPNE
  * @subpackage form

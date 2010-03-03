@@ -24,7 +24,7 @@ class OpenIDActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    sfOpenPNEApplicationConfiguration::registerJanRainOpenID();
+    opApplicationConfiguration::registerJanRainOpenID();
     require_once 'Auth/OpenID/Server.php';
     require_once 'Auth/OpenID/FileStore.php';
 
@@ -105,7 +105,7 @@ class OpenIDActions extends sfActions
 
   public function executeTrust(sfWebRequest $request)
   {
-    sfOpenPNEApplicationConfiguration::registerJanRainOpenID();
+    opApplicationConfiguration::registerJanRainOpenID();
     require_once 'Auth/OpenID/Server.php';
     require_once 'Auth/OpenID/FileStore.php';
     require_once 'Auth/OpenID/SReg.php';

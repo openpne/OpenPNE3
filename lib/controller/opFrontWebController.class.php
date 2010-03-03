@@ -26,7 +26,7 @@ abstract class opFrontWebController extends sfFrontWebController
       $result = sfView::ERROR;
     }
 
-    sfOpenPNEExecutionFilter::notifyPostExecuteActionEvent($this, $this->dispatcher, $actionInstance, $result);
+    opExecutionFilter::notifyPostExecuteActionEvent($this, $this->dispatcher, $actionInstance, $result);
 
     parent::redirect($url, $delay, $statusCode);
   }

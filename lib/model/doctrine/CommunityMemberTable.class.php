@@ -390,7 +390,7 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
       $communityMember->setIsPre(false);
       $communityMember->save();
 
-      sfOpenPNECommunityAction::sendJoinMail($communityMember->getMember()->id, $communityMember->getCommunity()->id);
+      opCommunityAction::sendJoinMail($communityMember->getMember()->id, $communityMember->getCommunity()->id);
 
       $event->setReturnValue($i18n->__('You have just accepted joining to %1%', array('%1%' => $communityMember->getCommunity()->getName())));
     }

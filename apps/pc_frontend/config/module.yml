@@ -1,2 +1,2 @@
 default:
-  view_class: sfOpenPNE
+  view_class: op

@@ -55,9 +55,9 @@ abstract class opUpgradeAbstractStrategy
 
   protected function dataLoad($path)
   {
-    sfOpenPNEApplicationConfiguration::unregisterZend();
+    opApplicationConfiguration::unregisterZend();
     Doctrine::loadData($path, true);
-    sfOpenPNEApplicationConfiguration::registerZend();
+    opApplicationConfiguration::registerZend();
   }
 }
 

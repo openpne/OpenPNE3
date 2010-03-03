@@ -9,7 +9,7 @@
  */
 
 /**
- * sfOpenPNEPluginConfigHandler
+ * opPluginConfigHandler
  *
  * @package    OpenPNE
  * @subpackage config

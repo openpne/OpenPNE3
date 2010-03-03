@@ -210,7 +210,7 @@ abstract class opAuthAdapter
   */
   public static function getAuthFormClassName($authMode)
   {
-    return 'sfOpenPNEAuthForm_'.$authMode;
+    return 'opAuthForm_'.$authMode;
   }
 
  /**

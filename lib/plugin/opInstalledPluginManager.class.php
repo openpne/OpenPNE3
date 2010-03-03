@@ -93,7 +93,7 @@ class opInstalledPluginManager
       $endPoint = strlen($pluginName) - strlen('opAuth') - strlen('Plugin');
       $authMode = substr($pluginName, strlen('opAuth'), $endPoint);
 
-      $adapterClass = sfOpenPNESecurityUser::getAuthAdapterClassName($authMode);
+      $adapterClass = opSecurityUser::getAuthAdapterClassName($authMode);
       $adapter = new $adapterClass($authMode);
       if (!$adapter->getAuthConfig('admin_invite'))
       {

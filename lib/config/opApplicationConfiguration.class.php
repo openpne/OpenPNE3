@@ -9,7 +9,7 @@
  */
 
 /**
- * sfOpenPNEApplicationConfiguration represents a configuration for OpenPNE application.
+ * opApplicationConfiguration represents a configuration for OpenPNE application.
  *
  * @package    OpenPNE
  * @subpackage config

@@ -9,7 +9,7 @@
  */
 
 /**
- * sfOpenPNEPassword form.
+ * opPassword form.
  *
  * @package    OpenPNE
  * @subpackage form

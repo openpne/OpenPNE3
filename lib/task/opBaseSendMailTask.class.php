@@ -30,8 +30,8 @@ abstract class opBaseSendMailTask extends sfDoctrineBaseTask
   {
     $this->openDatabaseConnection();
 
-    // sfOpenPNEMailSend requires Zend
-    sfOpenPNEApplicationConfiguration::registerZend();
+    // opMailSend requires Zend
+    opApplicationConfiguration::registerZend();
 
     opDoctrineRecord::setDefaultCulture(sfConfig::get('default_culture', 'ja_JP'));
   }

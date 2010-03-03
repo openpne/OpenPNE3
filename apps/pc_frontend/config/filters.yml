@@ -20,6 +20,6 @@ emoji:
 cache:     ~
 
 execution:
-  class: sfOpenPNEExecutionFilter
+  class: opExecutionFilter
   param:
     type: execution

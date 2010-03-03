@@ -133,7 +133,7 @@ class InviteForm extends MemberConfigPcAddressForm
       'message'  => $this->getOption('invited') ? $this->getValue('message') : null,
       'subject' => opConfig::get('sns_name').'招待状',
     );
-    sfOpenPNEMailSend::sendTemplateMail('requestRegisterURL', $to, opConfig::get('admin_mail_address'), $params);
+    opMailSend::sendTemplateMail('requestRegisterURL', $to, opConfig::get('admin_mail_address'), $params);
   }
 
   public function save()

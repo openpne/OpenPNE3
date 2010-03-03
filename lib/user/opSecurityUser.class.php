@@ -9,7 +9,7 @@
  */
 
 /**
- * sfOpenPNESecurityUser will handle credential for OpenPNE.
+ * opSecurityUser will handle credential for OpenPNE.
  *
  * @package    OpenPNE
  * @subpackage user
@@ -30,7 +30,7 @@ class opSecurityUser extends sfBasicSecurityUser
     parent::initialize($dispatcher, $storage, $options);
     if ($this->getMemberId() && $this->isTimedOut())
     {
-      $this->getAttributeHolder()->removeNamespace('sfOpenPNESecurityUser');
+      $this->getAttributeHolder()->removeNamespace('opSecurityUser');
     }
 
     $request = sfContext::getInstance()->getRequest();
@@ -129,23 +129,23 @@ class opSecurityUser extends sfBasicSecurityUser
 
   public function getMemberId()
   {
-    return $this->getAttribute('member_id', null, 'sfOpenPNESecurityUser');
+    return $this->getAttribute('member_id', null, 'opSecurityUser');
   }
 
   public function setMemberId($memberId)
   {
-    return $this->setAttribute('member_id', $memberId, 'sfOpenPNESecurityUser');
+    return $this->setAttribute('member_id', $memberId, 'opSecurityUser');
   }
 
   public function setCurrentAuthMode($authMode)
   {
-    $this->setAttribute('auth_mode', $authMode, 'sfOpenPNESecurityUser');
+    $this->setAttribute('auth_mode', $authMode, 'opSecurityUser');
     $this->createAuthAdapter($this->getCurrentAuthMode());
   }
 
   public function getCurrentAuthMode($allowGuess = true)
   {
-    $authMode = $this->getAttribute('auth_mode', null, 'sfOpenPNESecurityUser');
+    $authMode = $this->getAttribute('auth_mode', null, 'opSecurityUser');
 
     $authModes = $this->getAuthModes();
     if (!in_array($authMode, $authModes))
@@ -315,7 +315,7 @@ class opSecurityUser extends sfBasicSecurityUser
     $this->setRememberLoginCookie(true);
 
     $this->setAuthenticated(false);
-    $this->getAttributeHolder()->removeNamespace('sfOpenPNESecurityUser');
+    $this->getAttributeHolder()->removeNamespace('opSecurityUser');
     $this->clearCredentials();
 
     $this->setCurrentAuthMode($authMode);
@@ -332,7 +332,7 @@ class opSecurityUser extends sfBasicSecurityUser
     $result = $this->getAuthAdapter()->register($form);
     if ($result) {
       $this->setAuthenticated(true);
-      $this->setAttribute('member_id', $result, 'sfOpenPNESecurityUser');
+      $this->setAttribute('member_id', $result, 'opSecurityUser');
       return true;
     }
 

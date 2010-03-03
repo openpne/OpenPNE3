@@ -9,7 +9,7 @@
  */
 
 /**
- * sfOpenPNEExecutionFilter
+ * opExecutionFilter
  *
  * @package    OpenPNE
  * @subpackage filter

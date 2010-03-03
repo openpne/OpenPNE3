@@ -15,7 +15,7 @@
  * @subpackage member
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class memberActions extends sfOpenPNEMemberAction
+class memberActions extends opMemberAction
 {
  /**
   * Executes home action

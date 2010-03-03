@@ -9,7 +9,7 @@
  */
 
 /**
- * sfOpenPNECommunityAction
+ * opCommunityAction
  *
  * @package    OpenPNE
  * @subpackage action
@@ -422,7 +422,7 @@ abstract class opCommunityAction extends sfActions
         'community'  => $community,
         'new_member' => $member,
       );
-      sfOpenPNEMailSend::sendTemplateMail('joinCommunity', $community->getAdminMember()->getEmailAddress(), opConfig::get('admin_mail_address'), $params);
+      opMailSend::sendTemplateMail('joinCommunity', $community->getAdminMember()->getEmailAddress(), opConfig::get('admin_mail_address'), $params);
     }
   }
 }

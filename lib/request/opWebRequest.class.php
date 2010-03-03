@@ -9,7 +9,7 @@
  */
 
 /**
- * sfOpenPNEWebRequest class manages web requests.
+ * opWebRequest class manages web requests.
  *
  * @package    OpenPNE
  * @subpackage request

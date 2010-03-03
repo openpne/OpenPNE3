@@ -21,7 +21,7 @@ class opSearchTextAnalyzer extends Doctrine_Search_Analyzer_Standard implements 
   {
     $result = parent::analyze($text);
 
-    sfOpenPNEApplicationConfiguration::registerZend();
+    opApplicationConfiguration::registerZend();
 
     Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());
     $analyzer = Zend_Search_Lucene_Analysis_Analyzer::getDefault();

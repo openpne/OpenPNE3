@@ -29,7 +29,7 @@ all:
 #    class: sfFrontWebController
 #
   request:
-    class: sfOpenPNEWebRequest
+    class: opWebRequest
     param:
       formats:
         txt:  text/plain
