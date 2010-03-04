@@ -214,6 +214,11 @@ class opSecurityUser extends sfBasicSecurityUser
         return;
       }
 
+      if ($this->getMemberId())
+      {
+        $this->getMember()->setConfig('remember_key', '');
+      }
+
       $value = null;
       $expire = time() - 3600;
     }
@@ -241,11 +246,16 @@ class opSecurityUser extends sfBasicSecurityUser
   {
     if (($value = $this->getRememberLoginCookie()) && 2 == count($value))
     {
-      try
+      if ($value[0] && $value[1])
       {
         $memberConfig = Doctrine::getTable('MemberConfig')->findOneByMemberIdAndNameAndValue($value[0], 'remember_key', $value[1]);
+        $expire = strtotime($memberConfig->getUpdatedAt()) + sfConfig::get('op_remember_login_limit', 60*60*24*30);
+        if ($expire < time())
+        {
+          return null;
+        }
       }
-      catch (Doctrine_Table_Exception $e)
+      else
       {
         return null;
       }
