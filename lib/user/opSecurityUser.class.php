@@ -249,20 +249,14 @@ class opSecurityUser extends sfBasicSecurityUser
       if ($value[0] && $value[1])
       {
         $memberConfig = Doctrine::getTable('MemberConfig')->findOneByMemberIdAndNameAndValue($value[0], 'remember_key', $value[1]);
-        $expire = strtotime($memberConfig->getUpdatedAt()) + sfConfig::get('op_remember_login_limit', 60*60*24*30);
-        if ($expire < time())
+        if ($memberConfig)
         {
-          return null;
+          $expire = strtotime($memberConfig->getUpdatedAt()) + sfConfig::get('op_remember_login_limit', 60*60*24*30);
+          if ($expire > time())
+          {
+            return $value[0];
+          }
         }
-      }
-      else
-      {
-        return null;
-      }
-
-      if ($memberConfig)
-      {
-        return $value[0];
       }
     }
     return null;
