@@ -209,6 +209,8 @@ class opToolkit
 
     $widget->setAttribute('istyle', $modes[$mode]);
     $widget->setAttribute('mode', $mode);
+
+    return $widget;
   }
 
 /**
