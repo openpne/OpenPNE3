@@ -238,7 +238,7 @@ class opFormItemGenerator
         $obj = new sfValidatorPass($option);
         break;
       default:
-        $obj = new sfValidatorString($option);
+        $obj = new opValidatorString($option);
     }
 
     return $obj;
