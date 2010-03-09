@@ -24,7 +24,7 @@ class MemberForm extends BaseMemberForm
     ));
 
     $this->setValidators(array(
-      'name' => new sfValidatorString(array('max_length' => 64, 'trim' => true)),
+      'name' => new opValidatorString(array('max_length' => 64, 'trim' => true)),
     ));
 
     $this->widgetSchema->setLabel('name', '%nickname%');

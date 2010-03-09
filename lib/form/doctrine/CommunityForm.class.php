@@ -25,7 +25,7 @@ class CommunityForm extends BaseCommunityForm
     unset($this->widgetSchema['id']);
 
     $this->widgetSchema->setLabel('name', '%community% Name');
-    $this->setValidator('name', new sfValidatorString(array('max_length' => 64, 'trim' => true)));
+    $this->setValidator('name', new opValidatorString(array('max_length' => 64, 'trim' => true)));
 
     $q = Doctrine::getTable('CommunityCategory')->createQuery()->where('lft > 1');
     if (1 != sfContext::getInstance()->getUser()->getMemberId())
