@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+        <source>%community% Name</source>
+        <target>Community Name</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>%community% Category</source>
+        <target>Community Category</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>%community% Description</source>
+        <target>Community Description</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
