@@ -89,7 +89,7 @@ EOF;
       $config->set('http_proxy', sfConfig::get('op_http_proxy'), 'user', 'pear.php.net');
     }
 
-    if ($this->isSelfInstalledPlugins($arguments['name']))
+    if ($this->isSelfInstalledPlugins($arguments['name'], $options['channel']))
     {
       $str = "\"%s\" is already installed manually, so it will not be reinstalled.\n"
            . "If you want to manage it automatically, delete it manually and retry this command.";
@@ -128,15 +128,20 @@ EOF;
     return $this->pluginManager;
   }
 
-  public function isSelfInstalledPlugins($pluginName)
+  public function isSelfInstalledPlugins($pluginName, $channel = null)
   {
     if (!$this->isPluginExists($pluginName))
     {
       return false;
     }
 
+    if (is_null($channel))
+    {
+      $channel = opPluginManager::getDefaultPluginChannelServerName();
+    }
+
     $registry = $this->getPluginManager()->getEnvironment()->getRegistry();
-    return !(bool)$registry->getPackage($pluginName, opPluginManager::getDefaultPluginChannelServerName());
+    return !(bool)$registry->getPackage($pluginName, $channel);
   }
 
   public function isPluginExists($pluginName)
