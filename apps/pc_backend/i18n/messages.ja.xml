@@ -634,8 +634,12 @@
         <target>文字色変更</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Input Emoji(DoCoMo)</source>
-        <target>絵文字挿入(DoCoMo)</target>
+        <source>input emoji(docomo)</source>
+        <target>絵文字挿入(docomo)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Already exist.</source>
+        <target>すでに存在します。</target>
       </trans-unit>
     </body>
   </file>
