@@ -49,7 +49,7 @@ class profileActions extends sfActions
       {
         $this->option_form[$profileId][$profileOptionId]->bind($parameter);
       }
-  }
+    }
   }
 
  /**
