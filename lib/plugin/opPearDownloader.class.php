@@ -17,10 +17,32 @@
  */
 class opPluginDownloader extends sfPearDownloader
 {
+  protected static $cachedDependency = array();
+
   public function getDependency2Object(&$c, $i, $p, $s)
   {
     require_once 'PEAR/Dependency2.php';
 
-    return new opPluginDependency($c, $i, $p, $s);
+    if ($this->getCachedDependency($p['channel'], $p['package']))
+    {
+      return $this->getCachedDependency($p['channel'], $p['package']);
+    }
+
+    $obj = new opPluginDependency($c, $i, $p, $s);
+    self::$cachedDependency[$p['channel'].'-'.$p['package']] = $obj;
+
+    return $obj;
+  }
+
+  public static function getCachedDependency($channel, $package)
+  {
+    $key = $channel.'-'.$package;
+
+    if (isset(self::$cachedDependency[$key]))
+    {
+      return self::$cachedDependency[$key];
+    }
+
+    return null;
   }
 }

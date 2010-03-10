@@ -17,6 +17,13 @@
  */
 class opPluginDependency extends PEAR_Dependency2
 {
+  public $failedDependency = array(
+    'php' => array(),
+    'pearinstaller' => array(),
+    'extension' => array(),
+    'package' => array(),
+  );
+
   public function validatePackageDependency($dep, $required, $params, $depv1 = false)
   {
     if ('symfony' === strtolower($dep['name']))
@@ -52,7 +59,47 @@ class opPluginDependency extends PEAR_Dependency2
       return true;
     }
 
-    return parent::validatePackageDependency($dep, $required, $params, $depv1);
+    $result = parent::validatePackageDependency($dep, $required, $params, $depv1);
+    if (PEAR::isError($result))
+    {
+      $dep['package'] = $dep['name'];
+      $this->failedDependency['package'][] = $dep;
+    }
+
+    return $result;
+  }
+
+  public function validateExtensionDependency($dep, $required = true)
+  {
+    $result = parent::validateExtensionDependency($dep, $required);
+    if (PEAR::isError($result))
+    {
+      $this->failedDependency['extension'][] = $dep;
+    }
+
+    return $result;
+  }
+
+  public function validatePhpDependency($dep)
+  {
+    $result = parent::validatePhpDependency($dep);
+    if (PEAR::isError($result))
+    {
+      $this->failedDependency['php'] = $dep;
+    }
+
+    return $result;
+  }
+
+  public function validatePearinstallerDependency($dep)
+  {
+    $result = parent::validatePearinstallerDependency($dep);
+    if (PEAR::isError($result))
+    {
+      $this->failedDependency['pearinstaller'] = $dep;
+    }
+
+    return $result;
   }
 
   protected function handleOpenPNEDependencyError($message)
@@ -87,5 +134,18 @@ class opPluginDependency extends PEAR_Dependency2
     }
 
     return new sfFormatter();
+  }
+
+  public function hasFailedDependency()
+  {
+    return (
+      $this->failedDependency['php'] ||
+      $this->failedDependency['pearinstaller'] ||
+      $this->failedDependency['extension'] ||
+      $this->failedDependency['arch'] ||
+      $this->failedDependency['os'] ||
+      $this->failedDependency['subpackage'] ||
+      $this->failedDependency['package']
+    );
   }
 }

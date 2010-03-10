@@ -114,6 +114,55 @@ EOF;
     catch (sfPluginException $e)
     {
       $this->logBlock($e->getMessage(), 'ERROR');
+
+      $registry = $this->getPluginManager()->getEnvironment()->getRegistry();
+      $dependency = opPluginDownloader::getCachedDependency($options['channel'], $arguments['name']);
+      if ($dependency && $dependency->hasFailedDependency())
+      {
+        $message = array(
+          '',
+          $this->formatter->format('You must resolve the following failed dependency to install this plugin:', 'INFO'),
+          '',
+        );
+
+        foreach ($dependency->failedDependency['package'] as $dep)
+        {
+          $message['package'] = $this->formatter->format('Packages and plugins:', 'COMMENT');
+
+          $depname = $dependency->_getExtraString($dep);
+          if (array_key_exists('conflicts', $dep))
+          {
+            $depname = ' '.$this->formatter->format('(conflicts - please uninstall this)', 'ERROR');
+          }
+
+          $message[] = '  '.$registry->parsedPackageNameToString($dep, true)
+                     . $depname;
+        }
+
+        foreach ($dependency->failedDependency['extension'] as $dep)
+        {
+          $message['extension'] = $this->formatter->format('Extensions:', 'COMMENT');
+
+          $message[] = '  '.$dep['name'].$dependency->_getExtraString($dep);
+        }
+
+        if ($dependency->failedDependency['php'])
+        {
+          $dep = $dependency->failedDependency['php'];
+          $message[] = $this->formatter->format('PHP:', 'COMMENT');
+          $message[] = $dependency->_getExtraString($dep);
+        }
+
+        if ($dependency->failedDependency['pearinstaller'])
+        {
+          $dep = $dependency->failedDependency['pearinstaller'];
+          $message[] = $this->formatter->format('PEAR:', 'COMMENT');
+          $message[] = $dependency->_getExtraString($dep);
+        }
+
+        $this->log($message);
+      }
+
       return false;
     }
   }

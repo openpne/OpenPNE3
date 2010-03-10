@@ -51,6 +51,7 @@ EOF;
     require_once 'PEAR/PackageFileManager2.php';
 
     $pluginName = $arguments['name'];
+    $pluginDirectory = sfConfig::get('sf_plugins_dir').'/'.$pluginName.'/';
 
     $info = $this->getPluginManager($options['channel'])->getPluginInfo($pluginName);
     if (!$info)
@@ -66,7 +67,7 @@ EOF;
 
     $packageXml = new PEAR_PackageFileManager2();
     $packageOptions = array(
-      'packagedirectory'  => sfConfig::get('sf_plugins_dir').'/'.$pluginName.'/',
+      'packagedirectory'  => $pluginDirectory,
       'filelistgenerator' => 'file',
       'baseinstalldir'    => '/',
     );
@@ -93,11 +94,10 @@ EOF;
     $packageXml->setApiVersion($arguments['version']);
     $packageXml->setApiStability($arguments['stability']);
     $packageXml->setNotes($arguments['note']);
-    $packageXml->setPhpDep('5.2.3');
-    $packageXml->setPearinstallerDep('1.4.0');
-    $packageXml->addPackageDepWithChannel('package', 'symfony', 'pear.symfony-project.com', '1.2.0');
     $packageXml->generateContents();
     $packageXml->setPackageType('php');
+
+    $packageXml = $this->setDpendencies($packageXml, $pluginDirectory);
 
     if (isset($info['l']))
     {
@@ -118,6 +118,54 @@ EOF;
       echo $e->getMessage();
       exit;
     }
+  }
+
+  public function setDpendencies($package, $dir)
+  {
+    $file = $dir.'dependencies.yml';
+    if (!is_file($file))
+    {
+      $package->setPhpDep('5.2.3');
+      $package->setPearinstallerDep('1.4.0');
+
+      return $package;
+    }
+
+    $list = sfYaml::load($file);
+    foreach ($list as $type => $v)
+    {
+      if ('php' === $type)
+      {
+        $v = array_merge(array('min' => false, 'max' => false, 'exclude' => false), $v);
+        $package->setPhpDep($v['min'], $v['max'], $v['exclude']);
+      }
+      if ('pearinstaller' === $type)
+      {
+        $v = array_merge(array('min' => false, 'max' => false, 'recommended' => false, 'exclude' => false), $v);
+        $package->setPearinstallerDep($v['min'], $v['max'], $v['recommended'], $v['exclude']);
+      }
+      elseif ('package' === $type || 'extension' === $type)
+      {
+        foreach ($v as $name => $dep)
+        {
+          $dep = array_merge(array('min' => false, 'max' => false, 'recommended' => false, 'exclude' => false, 'conflicts' => false, 'channel' => false), $dep);
+          if ('extension' === $type)
+          {
+            $package->addExtensionDep('required', $name, $dep['min'], $dep['max'], $dep['recommended'], $dep['exclude']);
+          }
+          elseif ($dep['conflicts'])
+          {
+            $package->addConflictingPackageDepWithChannel($name, $dep['channel'], false, $dep['min'], $dep['max'], $dep['exclude']);
+          }
+          else
+          {
+            $package->addPackageDepWithChannel('required', $name, $dep['channel'], $dep['min'], $dep['max'], $dep['recommended'], $dep['exclude']);
+          }
+        }
+      }
+    }
+
+    return $package;
   }
 
   public function getPluginManager($channel = null)

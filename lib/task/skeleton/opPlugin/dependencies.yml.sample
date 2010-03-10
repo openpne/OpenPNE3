@@ -1,0 +1,47 @@
+# dependencies.yml
+#
+# Definition of the dependency on this plugin (プラグインの依存性を定義します)
+#
+# Note: Dependency with OpenPNE is supported from OpenPNE 3.5.1. Before 3.5.1, OpenPNE can't install a plugin that defines such a dependency.
+# (注意: OpenPNE との依存性は 3.5.1 からサポートされました。 3.5.1 以前のバージョンでは、 OpenPNE はそのような依存性が定義されたプラグインをインストールできません)
+#
+# See:  http://pear.php.net/manual/en/guide.developers.package2.dependencies.php
+
+# PEAR installer dependency (PEAR インストーラの依存性)
+pearinstaller:
+  min: 1.4.0
+#  max:
+#  exclude:
+
+# PHP dependency (PHP の依存性)
+php:
+  min: 5.2.3
+#  max:
+#  exclude:
+
+# Package dependency (パッケージの依存性)
+package:
+  openpne: # The dependency with OpenPNE. (OpenPNE との依存性)
+    channel: plugins.openpne.jp
+    min: 3.5.1
+#    max:
+#    exclude:
+#    conflicts: false
+
+#  opSamplePlugin: # Example of the dependency with opSamplePlugin. (opSamplePlugin との依存性の例)
+#    channel: plugins.openpne.jp  # This plugin is managed on plugins.openpen.jp (このプラグインは plugins.openpne.jp で管理されている)
+#    min: 1.0.0  # The opSamplePlugin 1.0.0 or later is needed (opSamplePlugin の 1.0.0 以上が必要)
+#    max: 1.9.9  # The opSamplePlugin 1.9.9 or earlier is needed (opSamplePlugin の 1.9.9 以下が必要)
+#    exclude: [1.0.8, 1.3.1, 1.6.0]  # opSamplePlugin 1.0.8, 1.3.1 and 1.6.0 are not supported (opSamplePlugin の 1.0.8、 1.3.1 と 1.6.0 はサポートしない)
+
+#  opConflictedPlugin: # Example of the conflicted dependency (依存関係の衝突の例)
+#    channel: another.plugins.openpne.jp
+#    conflicts: true  # If the opConflictedPlugin is installed, installation will fail (opConflictedPlugin がインストールされていた場合はインストールを失敗させる)
+
+# Extension dependency (拡張モジュールの依存性)
+extension:
+#  APC:  # The dependency with APC (APC 拡張モジュールとの依存性)
+#    min:
+#    max:
+#    exclude:
+#    conflicts:
