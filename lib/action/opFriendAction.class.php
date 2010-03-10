@@ -45,7 +45,7 @@ abstract class opFriendAction extends sfActions
     }
     $this->pager = Doctrine::getTable('MemberRelationship')->getFriendListPager($this->id, $request->getParameter('page', 1), $this->size);
 
-    if (!$this->pager->getNbResults())
+    if (!$this->pager)
     {
       return sfView::ERROR;
     }
@@ -136,7 +136,7 @@ abstract class opFriendAction extends sfActions
   {
     $this->pager = Doctrine::getTable('MemberRelationship')->getFriendListPager($this->getUser()->getMemberId(), $request->getParameter('page', 1));
 
-    if (!$this->pager->getNbResults()) {
+    if (!$this->pager) {
       return sfView::ERROR;
     }
 

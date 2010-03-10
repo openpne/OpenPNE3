@@ -27,14 +27,15 @@ class MemberRelationshipTable extends opAccessControlDoctrineTable
 
   public function getFriendListPager($memberId, $page = 1, $size = 20)
   {
-    $subQuery = Doctrine::getTable('MemberRelationship')->createQuery()
-        ->select('mr.member_id_to')
-        ->from('MemberRelationship mr')
-        ->where('member_id_from = ?')
-        ->andWhere('is_friend = ?');
+    $friendMemberIds = $this->getFriendMemberIds($memberId);
+
+    if (!count($friendMemberIds))
+    {
+      return null;
+    }
 
     $q = Doctrine::getTable('Member')->createQuery()
-        ->where('id IN ('.$subQuery->getDql().')', array($memberId, true));
+      ->whereIn('id', $friendMemberIds);
 
     $pager = new opNonCountQueryPager('Member', $size);
     $pager->setQuery($q);
