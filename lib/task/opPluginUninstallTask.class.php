@@ -47,7 +47,7 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
-    if (empty($opitons['channel']))
+    if (empty($options['channel']))
     {
       $options['channel'] = opPluginManager::getDefaultPluginChannelServerName();
     }
