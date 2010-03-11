@@ -328,6 +328,15 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     $this->addPosition($memberId, $communityId, 'sub_admin');
   }
 
+  public function getMemberIdsByCommunityId($communityId)
+  {
+    return Doctrine::getTable('CommunityMember')->createQuery()
+      ->select('id', 'member_id')
+      ->where('community_id = ?', $communityId)
+      ->execute()
+      ->toKeyValueArray('id', 'member_id');
+  }
+
   public function appendRoles(Zend_Acl $acl)
   {
     return $acl

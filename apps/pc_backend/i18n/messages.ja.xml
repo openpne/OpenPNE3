@@ -56,6 +56,18 @@
         <source>Private</source>
         <target>公開しない</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Make all members join in this community</source>
+        <target>全メンバーをコミュニティに参加させる</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you make all members join in this community?</source>
+        <target>全メンバーをこのコミュニティに参加させますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>All member joined the community.</source>
+        <target>全メンバーが指定したコミュニティに加入しました。</target>
+      </trans-unit>
 
       <trans-unit id="">
         <source>Text Mode</source>
@@ -872,6 +884,14 @@
       <trans-unit id="">
         <source>Already exist.</source>
         <target>すでに存在します。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Yes</source>
+        <target>はい</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>No</source>
+        <target>いいえ</target>
       </trans-unit>
     </body>
   </file>

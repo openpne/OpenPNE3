@@ -90,6 +90,37 @@ class communityActions extends sfActions
   }
 
   /**
+   * Execute add all member to community action
+   *
+   * @param sfWebRequest $request
+   */
+  public function executeAddAllMember(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->hasParameter('id'));
+    $this->community = Doctrine::getTable('Community')->find($request->getParameter('id'));
+    $this->forward404Unless($this->community);
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $request->checkCSRFProtection();
+      $ids = Doctrine::getTable('CommunityMember')->getMemberIdsByCommunityId($this->community->getId());
+      $query = Doctrine::getTable('Member')->createQuery()->select('id');
+      if (count($ids))
+      {
+        $query->whereNotIn('id', $ids);
+      }
+      foreach ($query->execute()->getPrimaryKeys() as $id)
+      {
+        Doctrine::getTable('CommunityMember')->join($id, $this->community->getId());
+      }
+      $this->getUser()->setFlash('notice', 'All member joined the community.');
+      $this->redirect('community/list');
+    }
+
+    return sfView::INPUT;
+  }
+
+  /**
    * Executes removeDefaultCommunity
    *
    * @param sfWebRequest $request A request object 

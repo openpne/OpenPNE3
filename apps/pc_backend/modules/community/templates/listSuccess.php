@@ -23,7 +23,8 @@
 <?php include_partial('community/communityInfo', array(
   'community' => $community, 
   'moreInfo' => array(
-    button_to(__('削除'), 'community/delete?id='.$community->getId())
+    link_to(__('Delete'), 'community/delete?id='.$community->getId()),
+    link_to(__('Make all members join in this community'), 'community/addAllMember?id='.$community->getId())
   )
 )); ?>
 <?php endforeach; ?>

@@ -4,7 +4,7 @@ include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 sfContext::createInstance($configuration);
 
-$t = new lime_test(81, new lime_output_color());
+$t = new lime_test(82, new lime_output_color());
 $table = Doctrine::getTable('CommunityMember');
 $member1 = Doctrine::getTable('Member')->findOneByName('A');
 $member2 = Doctrine::getTable('Member')->findOneByName('B');
@@ -303,40 +303,44 @@ $table->addSubAdmin(3, 5);
 $t->cmp_ok($table->isSubAdmin(3, 5), '===', true, 'isSubAdmin() returns true');
 
 //------------------------------------------------------------
+$t->diag('CommunityMemberTable::getMemberIdsByCommunityId()');
+$t->cmp_ok($table->getMemberIdsByCommunityId($community1->id), '===', array(1 => '1'), 'getMemberIdsByCommunityId() returns array of memberId');
+
+//------------------------------------------------------------
 $t->diag('ACL Test');
 $cm = $table->retrieveByMemberIdAndCommunityId($member1->id, $community1->id);
-$t->ok($cm->isAllowed($member1, 'view'));
-$t->ok(!$cm->isAllowed($member2, 'view'));
-$t->ok(!$cm->isAllowed($member3, 'view'));
-$t->ok($cm->isAllowed($member1, 'edit'));
-$t->ok(!$cm->isAllowed($member2, 'edit'));
-$t->ok(!$cm->isAllowed($member3, 'edit'));
+$t->ok($cm->isAllowed($member1, 'view'), 'isAllowed() returns true');
+$t->ok(!$cm->isAllowed($member2, 'view'), 'isAllowed() returns false');
+$t->ok(!$cm->isAllowed($member3, 'view'), 'isAllowed() returns false');
+$t->ok($cm->isAllowed($member1, 'edit'), 'isAllowed() return true');
+$t->ok(!$cm->isAllowed($member2, 'edit'), 'isAllowed() return false');
+$t->ok(!$cm->isAllowed($member3, 'edit'), 'isAllowed() returns false');
 
 //------------------------------------------------------------
 $t->diag('CommunityMemberTable::joinConfirmList()');
 $event = new sfEvent('subject', 'name', array('member' => $member1));
-$t->ok(CommunityMemberTable::joinConfirmList($event));
-$t->is(count($event->getReturnValue()), 1);
+$t->ok(CommunityMemberTable::joinConfirmList($event), 'joinConfirmList() returns true');
+$t->is(count($event->getReturnValue()), 1, 'return value of event is 1');
 
 //------------------------------------------------------------
 $t->diag('CommunityMemberTable::processJoinConfirm()');
 $cm = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId(4, 5);
-$t->ok($cm->getIsPre());
+$t->ok($cm->getIsPre(), 'the CommunityMember is pre');
 
 $event = new sfEvent('subject', 'name', array('id' => $cm->id, 'is_accepted' => true));
-$t->ok(CommunityMemberTable::processJoinConfirm($event));
+$t->ok(CommunityMemberTable::processJoinConfirm($event), 'processJoinConfirm() returns true');
 
 $cm = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId(4, 5);
-$t->ok(!$cm->getIsPre());
+$t->ok(!$cm->getIsPre(), 'the CommunityMember is not pre');
 
 $cm->setIsPre(true);
 $cm->save();
 
 $cm = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId(4, 5);
-$t->ok($cm->getIsPre());
+$t->ok($cm->getIsPre(), 'the CommunityMember is pre');
 
 $event = new sfEvent('subject', 'name', array('id' => $cm->id, 'is_accepted' => false));
-$t->ok(CommunityMemberTable::processJoinConfirm($event));
+$t->ok(CommunityMemberTable::processJoinConfirm($event), 'processJoinConfirm() returns true');
 
 $cm = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndCommunityId(4, 5);
-$t->ok(!$cm);
+$t->ok(!$cm, 'the CommunityMember is deleted');
