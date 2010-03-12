@@ -42,8 +42,8 @@ $t->is($results, array(1));
 //------------------------------------------------------------
 $t->diag('GadgetTable::getGadgetConfigListByType()');
 $results = $table->getGadgetConfigListByType('top');
-$t->is(count($results), 20);
+$t->is(count($results), 21);
 $results = $table->getGadgetConfigListByType('profileTop');
-$t->is(count($results), 9);
+$t->is(count($results), 10);
 $results = $table->getGadgetConfigListByType('xxxxxxxxxx');
 $t->is($results, array());
