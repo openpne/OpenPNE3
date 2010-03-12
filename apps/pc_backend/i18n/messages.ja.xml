@@ -68,6 +68,30 @@
         <source>All member joined the community.</source>
         <target>全メンバーが指定したコミュニティに加入しました。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Add this community as a default</source>
+        <target>初期コミュニティとして追加</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Add default community</source>
+        <target>初期コミュニティ追加</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you add this community as a default?</source>
+        <target>このコミュニティを初期コミュニティとして追加してよろしいですか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Remove this community from the default</source>
+        <target>初期コミュニティから取り除く</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Remove default community</source>
+        <target>初期コミュニティから取り除く</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you remove this community from default?</source>
+        <target>このコミュニティを初期コミュニティから取り除いてよろしいですか？</target>
+      </trans-unit>
 
       <trans-unit id="">
         <source>Text Mode</source>
@@ -547,6 +571,10 @@
       <trans-unit id="">
         <source>Saved.</source>
         <target>保存しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Deleted.</source>
+        <target>削除しました。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Configuration of E-mail Notifications</source>

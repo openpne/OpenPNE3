@@ -23,33 +23,31 @@ class DefaultCommunityForm extends sfForm
       'id'  => new sfWidgetFormInput(),
     ));
 
+    $validatorCallback = new sfValidatorCallback(array('callback' => array($this, 'checkCommunityId')));
+    $validatorCallback->addMessage('already_default', 'This community is already the default.');
+    $validator = new sfValidatorAnd(array(new sfValidatorInteger(), $validatorCallback));
+
     $this->setValidators(array(
-      'id' => new sfValidatorInteger(),
+      'id' => $validator,
     ));
 
     $this->widgetSchema->setNameFormat('community[%s]');
   }
 
-  public function save()
+  public function checkCommunityId(sfValidatorBase $validator, $value, $arguments)
   {
-    $community = Doctrine::getTable('Community')->find($this->getValue('id'));
+    $community = Doctrine::getTable('Community')->find($value);
 
     if (!$community)
     {
-      return false;
+      throw new sfValidatorError($validator, 'invalid');
     }
 
-    $communityConfig = Doctrine::getTable('CommunityConfig')->retrieveByNameAndCommunityId('is_default', $community->getId());
-
-    if (!$communityConfig)
+    if ((bool)$community->getConfig('is_default'))
     {
-      $communityConfig = new CommunityConfig();
+      throw new sfValidatorError($validator, 'already_default');
     }
-    $communityConfig->setCommunity($community);
-    $communityConfig->setName('is_default');
-    $communityConfig->setValue(1);
-    $communityConfig->save();
 
-    return true;
+    return $value;
   }
 }

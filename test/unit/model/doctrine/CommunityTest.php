@@ -4,7 +4,7 @@ include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 sfContext::createInstance($configuration);
 
-$t = new lime_test(35, new lime_output_color());
+$t = new lime_test(36, new lime_output_color());
 
 $community1 = Doctrine::getTable('Community')->findOneByName('CommunityA');
 $community2 = Doctrine::getTable('Community')->findOneByName('CommunityB');
@@ -27,6 +27,12 @@ $t->diag('Community::getConfig()');
 $t->is($community1->getConfig('description'), 'IDが1番のコミュニティ', 'getConfig(\'description\') returns right description');
 $t->is($community1->getConfig('is_default'), true, 'getConfig(\'is_default\') returns true');
 $t->is($community1->getConfig('xxxxxxxxxx'), null, 'getConfig(\'xxxxxxxxxx\') returns null');
+
+
+//------------------------------------------------------------
+$t->diag('Community::setConfig()');
+$community1->setConfig('foo', 'bar');
+$t->is($community1->getConfig('foo'), 'bar', 'setConfig() set value of config');
 
 //------------------------------------------------------------
 $t->diag('Community::getMembers()');

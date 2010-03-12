@@ -24,7 +24,7 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
   {
     $configs = sfConfig::get('openpne_community_config');
 
-    $myConfigs = Doctrine::getTable('CommunityConfig')->retrievesByCommunityId($this->id);
+    $myConfigs = Doctrine::getTable('CommunityConfig')->findByCommunityId($this->id);
 
     $result = array();
 
@@ -69,7 +69,7 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
 
   public function getConfig($configName)
   {
-    $config = Doctrine::getTable('CommunityConfig')->retrieveByNameAndCommunityId($configName, $this->getId());
+    $config = Doctrine::getTable('CommunityConfig')->findOneByNameAndCommunityId($configName, $this->getId());
 
     if (!$config)
     {
@@ -77,6 +77,21 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
     }
 
     return $config->value;
+  }
+
+  public function setConfig($name, $value)
+  {
+    $config = Doctrine::getTable('CommunityConfig')->findOneByNameAndCommunityId($name, $this->getId());
+
+    if (!$config)
+    {
+      $config = new CommunityConfig();
+      $config->setCommunity($this);
+      $config->setName($name);
+    }
+
+    $config->setValue($value);
+    $config->save();
   }
 
   public function getMembers($limit = null, $isRandom = false)

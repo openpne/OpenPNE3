@@ -74,19 +74,62 @@ class communityActions extends sfActions
   public function executeDefaultCommunityList(sfWebRequest $request)
   {
     $this->form = new DefaultCommunityForm();
-    if ($request->hasParameter('community'))
+    if ($request->isMethod(sfWebRequest::POST))
     {
       $this->form->bind($request->getParameter('community'));
       if ($this->form->isValid())
       {
-        if ($this->form->save())
-        {
-          $this->getUser()->setFlash('notice', 'Saved.');
-        }
+        $this->redirect('community/addDefaultCommunity?id='.$this->form->getValue('id'));
       }
     }
     
     $this->communities = Doctrine::getTable('Community')->getDefaultCommunities();
+  }
+
+  /**
+   * Executes add default community
+   *
+   * @param sfWebRequest A request object
+   */
+  public function executeAddDefaultCommunity(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->hasParameter('id'));
+    $this->community = Doctrine::getTable('Community')->find($request->getParameter('id'));
+    $this->forward404Unless($this->community);
+    $this->forward404If((bool)$this->community->getConfig('is_default'));
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $request->checkCSRFProtection();
+      $this->community->setConfig('is_default', 1);
+      $this->getUser()->setFlash('notice', 'Saved.');
+
+      $this->redirect('community/defaultCommunityList');
+    }
+    return sfView::INPUT;
+  }
+
+  /**
+   * Executes removeDefaultCommunity
+   *
+   * @param sfWebRequest $request A request object
+   */
+  public function executeRemoveDefaultCommunity(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->hasParameter('id'));
+    $this->community = Doctrine::getTable('Community')->find($request->getParameter('id'));
+    $this->forward404Unless($this->community);
+    $this->forward404Unless((bool)$this->community->getConfig('is_default'));
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $request->checkCSRFProtection();
+      $this->community->setConfig('is_default', 0);
+      $this->getUser()->setFlash('notice', 'Deleted.');
+
+      $this->redirect('community/defaultCommunityList');
+    }
+    return sfView::INPUT;
   }
 
   /**
@@ -118,22 +161,6 @@ class communityActions extends sfActions
     }
 
     return sfView::INPUT;
-  }
-
-  /**
-   * Executes removeDefaultCommunity
-   *
-   * @param sfWebRequest $request A request object 
-   */
-  public function executeRemoveDefaultCommunity(sfWebRequest $request)
-  {
-    $communityConfig = Doctrine::getTable('CommunityConfig')->retrieveByNameAndCommunityId('is_default', $request->getParameter('id'));
-    $this->forward404Unless($communityConfig);
-    
-    $communityConfig->delete();
-    $this->getUser()->setFlash('notice', 'Deleted.');
-    
-    $this->redirect('community/defaultCommunityList');
   }
 
   /**
