@@ -95,12 +95,19 @@ class opWebRequest extends sfWebRequest
 
   public function isMobileIPAddress()
   {
-    $ipList = (array)include(sfContext::getInstance()->getConfigCache()->checkConfig('config/mobile_ip_address.yml'));
-
     require_once 'Net/IPv4.php';
 
+    $ipList = (array)include(sfContext::getInstance()->getConfigCache()->checkConfig('config/mobile_ip_address.yml'));
+    $carrier = strtolower($this->getMobile()->getCarrierLongName());
+
+    $list = array();
+    if (isset($ipList[$carrier]))
+    {
+      $list = $ipList[$carrier];
+    }
+
     $result = false;
-    foreach ($ipList as $mobileIp)
+    foreach ($list as $mobileIp)
     {
       if (Net_IPv4::ipInNetwork($_SERVER['REMOTE_ADDR'], $mobileIp))
       {
