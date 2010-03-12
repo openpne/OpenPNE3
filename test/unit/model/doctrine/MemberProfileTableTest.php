@@ -14,18 +14,18 @@ $table = Doctrine::getTable('MemberProfile');
 $t->diag('MemberProfileTable');
 $t->diag('MemberProfileTable::getProfileListByMemberId()');
 $memberProfiles = $table->getProfileListByMemberId(1);
-$t->is(count($memberProfiles), 7, 'getProfileListByMemberId() returns 6 profiles for member ID:1');
+$t->is(count($memberProfiles), 9, 'getProfileListByMemberId() returns 6 profiles for member ID:1');
 
 //------------------------------------------------------------
 $t->diag('MemberProfileTable::getViewableProfileListByMemberId()');
 $memberProfiles = $table->getViewableProfileListByMemberId(1);
-$t->is(count($memberProfiles), 6);
+$t->is(count($memberProfiles), 8);
 $memberProfiles = $table->getViewableProfileListByMemberId(1, 1);
-$t->is(count($memberProfiles), 6);
+$t->is(count($memberProfiles), 8);
 $memberProfiles = $table->getViewableProfileListByMemberId(1, 2);
-$t->is(count($memberProfiles), 6);
+$t->is(count($memberProfiles), 8);
 $memberProfiles = $table->getViewableProfileListByMemberId(1, 3);
-$t->is(count($memberProfiles), 5);
+$t->is(count($memberProfiles), 7);
 
 //------------------------------------------------------------
 $t->diag('MemberProfileTable::getViewableProfileByMemberIdAndProfileName()');
