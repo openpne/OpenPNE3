@@ -41,7 +41,7 @@ EOF;
         continue;
       }
 
-      if (1 === $dailyNewsConfig && !$this->isDailyNewsDay())
+      if (1 === (int)$dailyNewsConfig && !$this->isDailyNewsDay())
       {
         continue;
       }
