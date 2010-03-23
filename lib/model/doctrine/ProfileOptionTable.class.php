@@ -24,9 +24,10 @@ class ProfileOptionTable extends Doctrine_Table
       ->execute();
   }
 
-  public function getMaxSortOrder()
+  public function getMaxSortOrder($profileId)
   {
     $result = $this->createQuery()
+      ->where('profile_id = ?', $profileId)
       ->orderBy('sort_order DESC')
       ->fetchOne();
 
@@ -35,7 +36,7 @@ class ProfileOptionTable extends Doctrine_Table
       return (int)$result->getSortOrder();
     }
 
-    return 0;
+    return false;
   }
 
   public function generatePresetProfileOption($profileId)
