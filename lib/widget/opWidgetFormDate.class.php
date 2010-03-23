@@ -87,6 +87,10 @@ class opWidgetFormDate extends sfWidgetFormI18nDate
     // years
     $attributes['size'] = '5';
     $widget = new sfWidgetFormInput(array(), array_merge(array('class' => 'input_text'), $this->attributes, $attributes));
+    if ('mobile_frontend' === sfConfig::get('sf_app'))
+    {
+      opToolkit::appendMobileInputModeAttributesForFormWidget($widget, 'numeric');
+    }
     $date['%input_year%'] = $widget->render($name.'[year]', $year);
 
     return strtr($this->getOption('format'), $date);
