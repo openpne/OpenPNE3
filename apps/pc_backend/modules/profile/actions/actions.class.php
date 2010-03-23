@@ -118,7 +118,8 @@ class profileActions extends sfActions
       $parameter = $request->getParameter('profile_option');
       if ($this->form->getObject()->isNew())
       {
-        $parameter['sort_order'] = Doctrine::getTable('ProfileOption')->getMaxSortOrder();
+        $profileId = Doctrine::getTable('ProfileOption')->getMaxSortOrder($parameter['profile_id']);
+        $parameter['sort_order'] = $profileId === false ? 0 : $profileId + 10;
       }
       $this->form->bind($parameter);
       if ($this->form->isValid()) {
