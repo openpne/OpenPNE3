@@ -32,6 +32,11 @@
   width: 100%;
 }
 
+#mail_template_edit td.edit input.title
+{
+  width: 90%;
+}
+
 </style>
 
 <table id="mail_template_edit">
@@ -66,6 +71,9 @@
 
 <?php echo $form->renderFormTag(url_for('@mail_template_specified?name='.$name), array('method' => 'post')); ?>
 <?php echo $form->renderHiddenFields(); ?>
+<?php if (isset($form['title'])): ?>
+<?php echo $form['title']->renderLabel() ?> <?php echo $form['title']->render(array('class' => 'title')) ?>
+<?php endif; ?>
 <?php echo $form['template']->render(array('rows' => 30, 'cols' => 72)) ?>
 
 <input type="submit" value="<?php echo __('Save') ?>">

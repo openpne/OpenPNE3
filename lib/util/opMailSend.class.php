@@ -84,8 +84,8 @@ class opMailSend
     $view->setPartialVars($params);
     $view->setAttribute('renderer_config', array('twig' => 'opTemplateRendererTwig'));
     $view->setAttribute('rule_config', array('notify_mail' => array(
-        array('loader' => 'sfTemplateSwitchableLoaderDoctrine', 'renderer' => 'twig', 'model' => 'NotificationMail'),
-        array('loader' => 'opNotificationMailTemplateLoaderFilesystem', 'renderer' => 'php'),
+      array('loader' => 'sfTemplateSwitchableLoaderDoctrine', 'renderer' => 'twig', 'model' => 'NotificationMail'),
+      array('loader' => 'opNotificationMailTemplateLoaderFilesystem', 'renderer' => 'php'),
     )));
     $view->execute();
 
@@ -125,6 +125,11 @@ class opMailSend
       return false;
     }
 
+    if (null === $context)
+    {
+      $context = sfContext::getInstance();
+    }
+
     $body = self::getMailTemplate($template, $target, $params, false, $context);
     $signature = self::getMailTemplate('signature', $target, array(), true, $context);
     if ($signature)
@@ -132,7 +137,20 @@ class opMailSend
       $signature = "\n".$signature;
     }
 
-    return self::execute($params['subject'], $to, $from, $body.$signature);
+    $subject = $params['subject'];
+    $notificationMail = Doctrine::getTable('NotificationMail')->findOneByName($target.'_'.$template);
+    if (($notificationMail instanceof NotificationMail) && $notificationMail->getTitle())
+    {
+      $subject = $notificationMail->getTitle();
+      $templateStorage = new sfTemplateStorageString($subject);
+      $renderer = new opTemplateRendererTwig();
+      $params['sf_type'] = null;
+      $parameterHolder = new sfViewParameterHolder($context->getEventDispatcher(), $params);
+      $subject = $renderer->evaluate($templateStorage, $parameterHolder->toArray());
+      $notificationMail->free(true);
+    }
+
+    return self::execute($subject, $to, $from, $body.$signature);
   }
 
   public static function execute($subject, $to, $from, $body)

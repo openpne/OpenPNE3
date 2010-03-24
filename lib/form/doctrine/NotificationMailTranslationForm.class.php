@@ -21,9 +21,26 @@ class NotificationMailTranslationForm extends BaseNotificationMailTranslationFor
   {
     $culture = sfContext::getInstance()->getUser()->getCulture();
 
-    if (!$this->getDefault('template') && isset($config['sample'][$culture]))
+    if (isset($config['title_configurable']) && !$config['title_configurable'])
     {
-      $this->setDefault('template', $config['sample'][$culture]);
+      unset($this['title']);
+    }
+
+    $sample = isset($config['sample'][$culture]) ? $config['sample'][$culture] : null;
+    if (is_array($sample) && count($sample) >= 2)
+    {
+      if (!$this->getDefault('title'))
+      {
+        $this->setDefault('title', $sample[0]);
+      }
+      if (!$this->getDefault('template'))
+      {
+        $this->setDefault('template', $sample[1]);
+      }
+    }
+    else if (!$this->getDefault('template') && $sample)
+    {
+      $this->setDefault('template', $sample);
     }
   }
 }
