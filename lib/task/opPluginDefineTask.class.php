@@ -134,6 +134,11 @@ EOF;
     $list = sfYaml::load($file);
     foreach ($list as $type => $v)
     {
+      if (empty($v))
+      {
+        continue;
+      }
+
       if ('php' === $type)
       {
         $v = array_merge(array('min' => false, 'max' => false, 'exclude' => false), $v);
