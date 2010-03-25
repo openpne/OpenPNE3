@@ -34,6 +34,14 @@
         <source>An object with the same "name" already exist in other %community%.</source>
         <target>その%community%名は既に使われています。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Community Category</source>
+        <target>ｺﾐｭﾆﾃｨｶﾃｺﾞﾘ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Description</source>
+        <target>ｺﾐｭﾆﾃｨ説明文</target>
+      </trans-unit> 
     </body>
   </file>
 </xliff>
