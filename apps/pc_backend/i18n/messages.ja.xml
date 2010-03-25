@@ -94,6 +94,31 @@
       </trans-unit>
 
       <trans-unit id="">
+        <source>Community Name</source>
+        <target>コミュニティ名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Community Category</source>
+        <target>コミュニティカテゴリ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Administrator</source>
+        <target>コミュニティ管理者</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Date Created</source>
+        <target>作成日</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Community Members</source>
+        <target>メンバー数</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%community% Description</source>
+        <target>コミュニティ説明</target>
+      </trans-unit>
+
+      <trans-unit id="">
         <source>Text Mode</source>
         <target>テキストモード</target>
       </trans-unit>
