@@ -11,22 +11,26 @@
         <target>写真</target>
       </trans-unit>
       <trans-unit id="3">
-        <source>Community Category</source>
-        <target>コミュニティカテゴリ</target>
+        <source>%community% Name</source>
+        <target>コミュニティ名</target>
       </trans-unit>
       <trans-unit id="4">
+        <source>%community% Category</source>
+        <target>コミュニティカテゴリ</target>
+      </trans-unit>
+      <trans-unit id="5">
         <source>Register policy</source>
         <target>参加条件</target>
       </trans-unit>
-      <trans-unit id="5">
-        <source>Description</source>
+      <trans-unit id="6">
+        <source>Community Description</source>
         <target>コミュニティ説明文</target>
       </trans-unit>
-      <trans-unit id="6">
+      <trans-unit id="7">
         <source>All categories</source>
         <target>すべてのカテゴリ</target>
       </trans-unit>
-      <trans-unit id="7">
+      <trans-unit id="8">
         <source>Is allow member community</source>
         <target>メンバーのコミュニティ作成を許可</target>
       </trans-unit>

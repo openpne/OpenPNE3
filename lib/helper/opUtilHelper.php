@@ -821,3 +821,12 @@ function op_url_to_id($uri)
   return str_replace(array('/', ',', ';', '~', '?', '@', '&', '=', '+', '$', '%', '#', '!', '(', ')'), '_', $uri);
 }
 
+function op_replace_sns_term($string)
+{
+  $config = (array)include(sfContext::getInstance()->getConfigCache()->checkConfig('config/sns_term.yml'));
+  foreach ($config as $k => $v)
+  {
+    $string = str_replace('%'.$k.'%', $v['caption']['en'], $string);
+  }
+  return $string;
+}
