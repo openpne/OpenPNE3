@@ -48,6 +48,7 @@ class CommunityFormFilter extends BaseCommunityFormFilter
     $this->setWidgets($widgets);
     $this->setValidators($validators);
 
+    $this->widgetSchema->setLabel('id','ID');
     $this->widgetSchema->setLabel('name', '%community% Name');
     $this->widgetSchema->setLabel('community_category_id', '%community% Category');
 
