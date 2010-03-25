@@ -15,7 +15,7 @@
  * @subpackage filter
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class opAppendXRDSHeaderFilter extends sfBasicSecurityFilter
+class opAppendXRDSHeaderFilter extends sfFilter
 {
   public function execute($filterChain)
   {
