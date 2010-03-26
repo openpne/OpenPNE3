@@ -1,7 +1,7 @@
 <?php
 
 $list = array();
-if(is_array($communities))
+if (count($communities))
 {
   foreach ($communities as $community)
   {
