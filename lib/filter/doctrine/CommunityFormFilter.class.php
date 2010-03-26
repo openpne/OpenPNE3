@@ -41,14 +41,13 @@ class CommunityFormFilter extends BaseCommunityFormFilter
 
     if ($this->getOption('use_id'))
     {
-      $widgets = array('id' => new sfWidgetFormFilterInput(array('with_empty' => false))) + $widgets;
+      $widgets = array('id' => new sfWidgetFormFilterInput(array('with_empty' => false, 'label' => 'ID'))) + $widgets;
       $validators = array('id' => new sfValidatorPass()) + $validators;
     }
 
     $this->setWidgets($widgets);
     $this->setValidators($validators);
 
-    $this->widgetSchema->setLabel('id','ID');
     $this->widgetSchema->setLabel('name', '%community% Name');
     $this->widgetSchema->setLabel('community_category_id', '%community% Category');
 
