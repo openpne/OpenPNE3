@@ -61,6 +61,7 @@ class ProfileForm extends BaseProfileForm
     $this->setValidator('value_min', new sfValidatorPass());
     $this->setValidator('value_max', new sfValidatorPass());
     $this->setValidator('value_type', new sfValidatorString(array('required' => false, 'empty_value' => 'string')));
+    $this->setValidator('name', new opValidatorString(array('required' => true, 'trim' => true)));
 
     $this->widgetSchema->setLabels(array(
       'name' => '識別名',
