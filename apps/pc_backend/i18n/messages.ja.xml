@@ -114,7 +114,7 @@
         <target>メンバー数</target>
       </trans-unit>
       <trans-unit id="">
-        <source>%community% Description</source>
+        <source>Community Description</source>
         <target>コミュニティ説明</target>
       </trans-unit>
 
