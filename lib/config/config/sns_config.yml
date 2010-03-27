@@ -135,6 +135,15 @@ general:
       0: "メンバーの設定を許可しない"
       1: "メンバーの設定を許可する"
 
+  nickname_of_member_who_does_not_have_credentials:
+    Name:       "nickname_of_member_who_does_not_have_credentials"
+    Caption:    "非SNSユーザー表示名設定"
+    Help:       "非SNSユーザー（退会したユーザーなど）の表示名を設定します"
+    FormType:   "text"
+    ValueType:  "string"
+    IsRequired: false
+    Default:    "-"
+
 external_login_page:
   _attributes:
     Caption: "External Login Page Configuration"

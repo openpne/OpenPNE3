@@ -836,3 +836,22 @@ function op_replace_sns_term($string)
   }
   return $string;
 }
+
+/**
+ * Creates a <a> link tag for the member nickname
+ *
+ * @param string  $member_id
+ * @param string  $routeName
+ * @param string  $options
+ * @return string
+ */
+function op_link_to_member($member_id, $routeName = '@obj_member_profile', $options = array())
+{
+  $member = $member_id ? Doctrine::getTable('Member')->find($member_id) : null;
+  if ($member)
+  {
+    return link_to(isset($options['link_target']) ? $member->$options['link_target'] : $member->name, sprintf('%s?id=%d', $routeName, $member_id), $options);
+  }
+
+  return Doctrine::getTable('SnsConfig')->get('nickname_of_member_who_does_not_have_credentials', '-');
+}
