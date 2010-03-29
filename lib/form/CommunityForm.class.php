@@ -24,7 +24,7 @@ class CommunityForm extends BaseCommunityForm
     unset($this['created_at'], $this['updated_at'], $this['file_id']);
     unset($this->widgetSchema['id']);
 
-    $this->setValidator('name', new sfValidatorString(array('max_length' => 64, 'trim' => true)));
+    $this->setValidator('name', new opValidatorString(array('max_length' => 64, 'trim' => true)));
 
     $c = new Criteria();
     if (1 != sfContext::getInstance()->getUser()->getMemberId())
