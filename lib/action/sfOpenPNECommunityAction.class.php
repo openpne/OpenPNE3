@@ -224,6 +224,27 @@ abstract class sfOpenPNECommunityAction extends sfActions
     return sfView::INPUT;
   }
 
+ /**
+  * Executes joinAccept action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeJoinAccept($request)
+  {
+    $this->redirectUnless($this->isAdmin, '@error');
+
+    $communityMember = CommunityMemberPeer::retrieveByMemberIdAndCommunityId($request->getParameter('member_id'), $this->id);
+    $this->forward404Unless($communityMember);
+
+    if ($communityMember->getPosition() == 'pre')
+    {
+      $communityMember->setPosition('');
+      $communityMember->save();
+    }
+
+    $this->redirect('@member_index');
+  }
+
   /**
    * Executes joinReject action
    *
