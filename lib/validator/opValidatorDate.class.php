@@ -45,7 +45,6 @@ class opValidatorDate extends sfValidatorDate
     if ($obj instanceof DateTime)
     {
       $clean = $obj;
-      throw new sfValidatorError($this, 'invalid', array('value' => $value));
     }
     else
     {
