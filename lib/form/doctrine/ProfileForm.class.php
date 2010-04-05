@@ -55,7 +55,6 @@ class ProfileForm extends BaseProfileForm
       new sfValidatorDoctrineUnique(array('model' => 'Profile', 'column' => array('name')), array('invalid' => 'Already exist.'))
     );
 
-    $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'advancedValidator'))));
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateName'))));
     $this->setValidator('default_public_flag', new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('Profile')->getPublicFlags()))));
     $this->setValidator('value_min', new sfValidatorPass());
@@ -92,26 +91,28 @@ class ProfileForm extends BaseProfileForm
     $this->widgetSchema->setHelp('is_public_web', '公開範囲設定で「Web 全体に公開」の選択を許可するかどうかを設定します。ここで許可されていない場合は、既に設定済みの「Web 全体に公開」は「全員に公開」と同等のものとして扱われます');
   }
 
-  static public function advancedValidator($validator, $values)
+  public function bind($params)
   {
-    if ($values['form_type'] === 'input' || $values['form_type'] === 'textarea')
+    if ($params['form_type'] === 'input' || $params['form_type'] === 'textarea')
     {
       $validator = new sfValidatorInteger(array('required' => false));
-      $values['value_min'] = $validator->clean($values['value_min']);
-      $values['value_max'] = $validator->clean($values['value_max']);
+      $this->setValidator('value_min', $validator);
+      $validator = new sfValidatorInteger(array('required' => false));
+      $this->setValidator('value_max', $validator);
     }
-    elseif ($values['form_type'] === 'date')
+    elseif ($params['form_type'] === 'date')
     {
       $validator = new opValidatorDate(array('required' => false));
-      $validator->clean($values['value_min']);
-      $validator->clean($values['value_max']);
+      $this->setValidator('value_min', $validator);
+      $validator = new opValidatorDate(array('required' => false));
+      $this->setValidator('value_max', $validator);
     }
-    elseif ($values['value_min'] || $values['value_max'])
+    elseif ($params['value_min'] || $params['value_max'])
     {
       throw new sfValidatorError($validator, 'invalid');
     }
 
-    return $values;
+    return parent::bind($params);
   }
 
   static public function validateName($validator, $values)
