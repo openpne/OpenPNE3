@@ -40,6 +40,7 @@ class opProjectConfiguration extends sfProjectConfiguration
     ));
 
     $this->dispatcher->connect('command.pre_command', array(__CLASS__, 'listenToPreCommandEvent'));
+    $this->dispatcher->connect('doctrine.filter_cli_config', array(__CLASS__, 'filterDoctrineCliConfig'));
 
     $this->setupProjectOpenPNE();
   }
@@ -112,5 +113,12 @@ class opProjectConfiguration extends sfProjectConfiguration
     {
       sfConfig::set('op_'.$key, $value);
     }
+  }
+
+  static public function filterDoctrineCliConfig($event, $config)
+  {
+    $config['migrations_path'] = sfConfig::get('sf_data_dir').'/migrations/generated';
+
+    return $config;
   }
 }
