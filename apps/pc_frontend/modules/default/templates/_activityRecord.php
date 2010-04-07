@@ -14,7 +14,7 @@
 <?php endfor; ?>
 <br />
 <?php endif; ?>
-<?php echo link_to($activity->getMember()->getName(), '@obj_member_profile?id='.$activity->getMemberId()) ?>&nbsp;
+<?php echo op_link_to_member($activity->getMemberId()) ?>&nbsp;
 <?php if ($activity->getUri()): ?>
 <?php echo link_to($activity->getBody(), $activity->getUri()) ?>
 <?php else: ?>

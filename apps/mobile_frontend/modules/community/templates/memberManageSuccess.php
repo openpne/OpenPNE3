@@ -8,7 +8,7 @@
 $list = array();
 foreach ($pager->getResults() as $member) {
   $communityMember = Doctrine::getTable('communityMember')->retrieveByMemberIdAndCommunityId($member->getId(), $community->getId());
-  $list_str = link_to($member->getName(), 'member/profile?id='.$member->getId());
+  $list_str = op_link_to_member($member->getId());
   $operation = array();
   if (!($communityMember->hasPosition(array('admin', 'sub_admin')) || $communityMember->getMemberId() === $sf_user->getMemberId()))
   {

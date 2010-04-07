@@ -1,4 +1,4 @@
-<?php echo link_to($activity->getMember()->getName(), 'member/profile?id='.$activity->getMemberId()) ?> 
+<?php echo op_link_to_member($activity->getMemberId()) ?> 
 <?php if ($activity->getUri()): ?>
 <?php echo link_to($activity->getBody(), $activity->getUri()) ?>
 <?php else: ?>

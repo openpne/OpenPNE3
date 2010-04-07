@@ -8,5 +8,5 @@
 <?php endfor; ?>
 </center>
 <?php slot('op_mobile_footer_menu') ?>
-<?php echo link_to(__("%1%'s Profile", array('%1%' => $member->getName())), 'member/profile?id='.$member->getId()); ?>
+<?php echo op_link_to_member($member->getId(), '@obj_member_profile', array('link_target' => __("%1%'s Profile", array('%1%' => $member->getName())))); ?>
 <?php end_slot(); ?>

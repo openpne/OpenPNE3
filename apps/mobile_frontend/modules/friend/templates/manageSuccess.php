@@ -10,7 +10,7 @@ foreach ($pager->getResults() as $member)
 {
   $vars = array('id' => $member->getId());
   $list[] = get_customizes('id_name', 'before', $vars)
-          . link_to(sprintf('%s(%d)', $member->getName(), $member->countFriends()), 'member/profile?id='.$member->getId()).'<br>'
+          . op_link_to_member($member->getId(), '@obj_member_profile', array('link_target' => sprintf('%s(%d)', $member->getName(), $member->countFriends()))).'<br>'
           . get_customizes('id_name', 'after', $vars)
           . get_customizes('id_friend', 'before', $vars)
           . ' ['.link_to(__('Removes this %friend%'), 'friend/unlink?id='.$member->getId()).']'
