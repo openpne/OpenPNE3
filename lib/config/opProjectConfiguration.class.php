@@ -61,7 +61,7 @@ class opProjectConfiguration extends sfProjectConfiguration
         'db_table'    => 'session',
         'database'    => 'doctrine',
         'db_id_col'   => 'id',
-        'db_data_col' => 'data',
+        'db_data_col' => 'session_data',
         'db_time_col' => 'time',
       ), (array)$options, $params));
     }

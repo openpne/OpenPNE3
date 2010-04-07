@@ -496,7 +496,7 @@ Session:
   actAs: []
   columns:
     id: { type: integer(4), primary: true, comment: "Serial number" }
-    data: { type: string, comment: "Session information" }
+    session_data: { type: string, comment: "Session information" }
     time: { type: string, comment: "Timestamp of generated time" }
   options:
     type: INNODB
