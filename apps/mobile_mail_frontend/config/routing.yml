@@ -8,15 +8,3 @@ community_add_image:
   class: opMailRoute
   param: { module: community, action: image }
   required: { id: \d+ }
-
-# default rules
-homepage:
-  url:   /
-  param: { module: member, action: index }
-
-#default_index:
-#  url:   /:module
-#  param: { action: index }
-#
-#default:
-#  url:   /:module/:action/*
