@@ -39,7 +39,7 @@ class opValidatorDate extends sfValidatorDate
     }
     else if (!ctype_digit($value))
     {
-      $obj = date_create($value);
+      $obj = new DateTime($value);
     }
 
     if ($obj instanceof DateTime)
