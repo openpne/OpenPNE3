@@ -7,7 +7,7 @@
 <p><?php echo __('特定のページや領域に対して、あらかじめ用意された部品（ガジェット）を自由に配置、設定することができます。') ?></p>
 
 <ul>
-<?php foreach (sfConfig::get('op_gadget_config', array()) as $key => $config): ?>
+<?php foreach (Doctrine::getTable('Gadget')->getConfig() as $key => $config): ?>
 <li><?php echo link_to($config['name'].'ガジェット設定', 'design/gadget?type='.$key) ?></li>
 <?php endforeach; ?>
 </ul>
@@ -39,8 +39,7 @@ function adjustByIframeContens(obj)
 ");
 ?>
 
-<iframe src="<?php echo url_for($plotAction[0].'/'.$plotAction[1]) ?>" width="600" height="410" onload="adjustByIframeContens(this)" scrolling="no" frameborder="0">
+<iframe src="<?php echo url_for('design/gadgetPlot?type='.$type) ?>" width="600" height="410" onload="adjustByIframeContens(this)" scrolling="no" frameborder="0">
 </iframe>
 
 <?php echo make_modal_box('modal', '<iframe width="400" height="400"></iframe>', 400, 400) ?>
-

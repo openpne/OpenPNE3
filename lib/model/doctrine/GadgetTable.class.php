@@ -10,25 +10,71 @@
 
 class GadgetTable extends opAccessControlDoctrineTable
 {
-  protected $results;
+  protected
+    $results,
+    $configs = array(),
+    $gadgets = array(),
+    $gadgetConfigList = array();
 
-  static protected function getTypes($typesName)
-  { 
+  public function getConfig()
+  {
+    if (!isset($this->configs['config']))
+    {
+      $this->configs['config'] = include(sfContext::getInstance()
+        ->getConfiguration()
+        ->getConfigCache()
+        ->checkConfig('config/gadget_config.yml'));
+    }
+    return $this->configs['config'];
+  }
+
+  public function getGadgetLayoutConfig()
+  {
+    if (!isset($this->configs['layout']))
+    {
+      $this->configs['layout'] = include(sfContext::getInstance()
+        ->getConfiguration()
+        ->getConfigCache()
+        ->checkConfig('config/gadget_layout_config.yml'));
+    }
+    return $this->configs['layout'];
+  }
+
+  public function getGadgetConfig($typesName)
+  {
+    if (!isset($this->configs['gadget'][$typesName]))
+    {
+      $filename = 'config/'.sfinflector::underscore($typesName);
+      if ($typesName != 'gadget')
+      {
+        $filename .= '_gadget';
+      }
+      $filename .= '.yml';
+
+      $configCache = sfContext::getInstance()->getConfiguration()->getConfigCache();
+      $configCache->registerConfigHandler($filename, 'opGadgetConfigHandler');
+      $this->configs['gadget'][$typesName] = include($configCache->checkConfig($filename));
+    }
+    return $this->configs['gadget'][$typesName];
+  }
+
+  protected function getTypes($typesName)
+  {
     $types = array();
-    $configs = sfConfig::get('op_gadget_config', array());
-    $layoutConfigs = sfConfig::get('op_gadget_layout_config', array());
+    $configs = $this->getConfig();
+    $layoutConfigs = $this->getGadgetLayoutConfig();
 
     if (!isset($configs[$typesName]))
-    { 
+    {
       throw new Doctrine_Exception('Invalid types name');
-    } 
+    }
     if (isset($configs[$typesName]['layout']['choices']))
-    { 
+    {
       foreach ($configs[$typesName]['layout']['choices'] as $choice)
-      { 
+      {
         $types = array_merge($types, $layoutConfigs[$choice]);
-      } 
-    } 
+      }
+    }
     $types = array_merge($types, $layoutConfigs[$configs[$typesName]['layout']['default']]);
     $types = array_unique($types);
 
@@ -43,14 +89,55 @@ class GadgetTable extends opAccessControlDoctrineTable
     return $types;
   }
 
+  public function clearGadgetsCache()
+  {
+    $files = sfFinder::type('file')
+      ->name('*_gadgets.php')
+      ->in(sfConfig::get('sf_root_dir').'/cache');
+    foreach ($files as $file)
+    {
+      @unlink($file);
+    }
+    $this->gadgets = array();
+    $this->gadgetConfigList = array();
+  }
+
   public function retrieveGadgetsByTypesName($typesName)
   {
+    if (isset($this->gadgets[$typesName]))
+    {
+      return $this->gadgets[$typesName];
+    }
+
+    if (sfConfig::get('op_is_enable_gadget_cache', true))
+    {
+      $dir = sfConfig::get('sf_app_cache_dir').'/config';
+      $file = $dir.'/'.sfInflector::underscore($typesName)."_gadgets.php";
+      if (is_readable($file))
+      {
+        $results = unserialize(file_get_contents($file));
+        $this->gadgets[$typesName] = $results;
+        return $results;
+      }
+    }
+
     $types = $this->getTypes($typesName);
 
     foreach($types as $type)
     {
       $results[$type] = $this->retrieveByType($type);
     }
+
+    if (sfConfig::get('op_is_enable_gadget_cache', true))
+    {
+      if (!is_dir($dir))
+      {
+        @mkdir($dir, 0777, true);
+      }
+      file_put_contents($file, serialize($results));
+    }
+
+    $this->gadgets[$typesName] = $results;
 
     return $results;
   }
@@ -69,7 +156,7 @@ class GadgetTable extends opAccessControlDoctrineTable
       ->where('type = ?', $type)
       ->orderBy('sort_order')
       ->execute();
-    
+
     $result = array();
 
     foreach ($_result as $value)
@@ -93,25 +180,26 @@ class GadgetTable extends opAccessControlDoctrineTable
     }
     return $this->results;
   }
-  
+
   public function getGadgetConfigListByType($type)
   {
-    $configs = sfConfig::get('op_gadget_config');
+    if (isset($this->gadgetConfigList[$type]))
+    {
+      return $this->gadgetConfigList[$type];
+    }
+
+    $configs = $this->getConfig();
     foreach ($configs as $key => $config)
     {
-      if (in_array($type, self::getTypes($key)))
+      if (in_array($type, $this->getTypes($key)))
       {
-        $configName = 'op_'.sfInflector::underscore($key);
-        if ('gadget' !== $key)
-        {
-          $configName .= '_gadget';
-        }
-        $configName .= '_list';
-
-        return sfConfig::get($configName, array());
+        $resultConfig = $this->getGadgetConfig($key);
+        $this->gadgetConfigList[$type] = $resultConfig;
+        return $resultConfig;
       }
     }
 
+    $this->gadgetConfigList[$type] = array();
     return array();
   }
 

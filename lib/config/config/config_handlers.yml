@@ -3,14 +3,10 @@ data/config/plugin.yml:
   file:  %SF_LIB_DIR%/config/opPluginConfigHandler.class.php
 
 config/gadget_config.yml:
-  class: opGadgetConfigConfigHandler
-  file:  %SF_LIB_DIR%/config/opGadgetConfigConfigHandler.class.php
+  class: sfSimpleYamlConfigHandler
 
 config/gadget_layout_config.yml:
-  class: opGadgetConfigConfigHandler
-  file:  %SF_LIB_DIR%/config/opGadgetConfigConfigHandler.class.php
-  param:
-    prefix: layout_
+  class: sfSimpleYamlConfigHandler
 
 config/mobile_mail_domain.yml:
   class: sfSimpleYamlConfigHandler

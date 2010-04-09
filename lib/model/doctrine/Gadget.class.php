@@ -10,6 +10,8 @@
 
 class Gadget extends BaseGadget implements opAccessControlRecordInterface
 {
+  protected $list = null;
+
   public function preSave($event)
   {
     if (!$this->getSortOrder())
@@ -30,9 +32,18 @@ class Gadget extends BaseGadget implements opAccessControlRecordInterface
     }
   }
 
+  protected function getGadgetConfigList()
+  {
+    if (null === $this->list)
+    {
+      $this->list = Doctrine::getTable('Gadget')->getGadgetConfigListByType($this->type);
+    }
+    return $this->list;
+  }
+
   public function getComponentModule()
   {
-    $list = Doctrine::getTable('Gadget')->getGadgetConfigListByType($this->type);
+    $list = $this->getGadgetConfigList();
     if (empty($list[$this->name]))
     {
       return false;
@@ -43,7 +54,7 @@ class Gadget extends BaseGadget implements opAccessControlRecordInterface
 
   public function getComponentAction()
   {
-    $list = Doctrine::getTable('Gadget')->getGadgetConfigListByType($this->type);
+    $list = $this->getGadgetConfigList();
     if (empty($list[$this->name]))
     {
       return false;
@@ -54,7 +65,7 @@ class Gadget extends BaseGadget implements opAccessControlRecordInterface
 
   public function isEnabled()
   {
-    $list = Doctrine::getTable('Gadget')->getGadgetConfigListByType($this->type);
+    $list = $this->getGadgetConfigList();
     if (empty($list[$this->name]))
     {
       return false;
@@ -77,7 +88,7 @@ class Gadget extends BaseGadget implements opAccessControlRecordInterface
   public function getConfig($name)
   {
     $result = null;
-    $list = Doctrine::getTable('Gadget')->getGadgetConfigListByType($this->getType());
+    $list = $this->getGadgetConfigList();
 
     $config = Doctrine::getTable('GadgetConfig')->retrieveByGadgetIdAndName($this->getId(), $name);
     if ($config)

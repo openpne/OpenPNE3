@@ -862,3 +862,21 @@ function op_link_to_member($member_id, $routeName = '@obj_member_profile', $opti
 
   return Doctrine::getTable('SnsConfig')->get('nickname_of_member_who_does_not_have_credentials', '-');
 }
+
+/**
+ * Generate a gadget type name
+ *
+ * @param string $type1
+ * @param string $type2
+ * @return string
+ */
+function op_get_gadget_type($type1, $type2)
+{
+  if ('gadget' == $type1)
+  {
+    return $type2;
+  }
+  $type = sfInflector::camelize($type1.'_'.$type2);
+  $type = strtolower(substr($type, 0, 1)).substr($type, 1);
+  return $type;
+}

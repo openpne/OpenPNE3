@@ -68,27 +68,6 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
     unset($this->cache['getPluginPaths']);  // it should be rewrited
 
     $this->plugins = array_unique($this->plugins);
-
-    // gadget
-    include($this->getConfigCache()->checkConfig('config/gadget_layout_config.yml'));
-    include($this->getConfigCache()->checkConfig('config/gadget_config.yml'));
-
-    require_once sfConfig::get('sf_lib_dir').'/config/opGadgetConfigHandler.class.php';
-    $gadgetConfigs = sfConfig::get('op_gadget_config', array());
-    foreach ($gadgetConfigs as $key => $config)
-    {
-      $filename = 'config/'.sfInflector::underscore($key);
-      $params = array();
-      if ($key != 'gadget')
-      {
-        $filename .= '_gadget';
-        $params['prefix'] = sfInflector::underscore($key).'_';
-      }
-      $filename .= '.yml';
-      $this->getConfigCache()->registerConfigHandler($filename, 'opGadgetConfigHandler', $params);
-      include($this->getConfigCache()->checkConfig($filename));
-    }
-
     return $result;
   }
 

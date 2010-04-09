@@ -22,7 +22,7 @@ class PickHomeLayoutForm extends sfForm
 
   public function configure()
   {
-    $gadgetConfigs = sfConfig::get('op_gadget_config', array());
+    $gadgetConfigs = Doctrine::getTable('Gadget')->getConfig();
 
     $layoutName = $this->getOption('layout_name', 'gadget');
     $this->choices = $gadgetConfigs[$layoutName]['layout']['choices'];

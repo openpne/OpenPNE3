@@ -37,7 +37,7 @@ class designActions extends sfActions
     $option = array();
 
     $this->configs = array();
-    $gadgetConfigs = sfConfig::get('op_gadget_config', array());
+    $gadgetConfigs = Doctrine::getTable('Gadget')->getConfig();
     foreach ($gadgetConfigs as $key => $config)
     {
       if (isset($config['layout']['choices']))
@@ -51,7 +51,7 @@ class designActions extends sfActions
     $this->subtitle = $this->configs[$type]['name'];
 
     $option['layout_name'] = $type;
-    
+
     $this->form = new PickHomeLayoutForm(array(), $option);
 
     if ($request->isMethod(sfRequest::POST))
@@ -70,15 +70,14 @@ class designActions extends sfActions
   */
   public function executeGadget(sfWebRequest $request)
   {
-    $this->configs = sfConfig::get('op_gadget_config', array());
-    $layouts = sfConfig::get('op_gadget_layout_config', array());
+    $this->configs = Doctrine::getTable('Gadget')->getConfig();
+    $layouts = Doctrine::getTable('Gadget')->getGadgetLayoutConfig();
     $this->type = $request->getParameter('type', 'gadget');
-    
+
     $this->forward404Unless(isset($this->configs[$this->type]));
-    
+
     $this->subtitle = $this->configs[$this->type]['name'];
     $this->plotAction = $this->configs[$this->type]['plot_action'];
-    
 
     $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName($this->type);
 
@@ -92,168 +91,37 @@ class designActions extends sfActions
       {
         $this->sortForm->save();
         $this->addForm->save();
+        Doctrine::getTable('Gadget')->clearGadgetsCache();
         $this->redirect('design/gadget?type='.$this->type);
       }
     }
   }
 
  /**
-  * Executes home gadget plot action
+  * Executes gadget plot action
   *
-  * @param sfRequest $request A request object
+  * @param sfWebRequest $request A request object
   */
-  public function executeHomeGadgetPlot(sfWebRequest $request)
+  public function executeGadgetPlot(sfWebRequest $request)
   {
-    $configs = sfConfig::get('op_gadget_config');
-    $this->layoutPattern = $configs['gadget']['layout']['default'];
-    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('gadget');
-    $this->gadgetConfig = sfConfig::get('op_gadget_list');
+    $this->type = $request->getParameter('type', 'gadget');
+    $configs = Doctrine::getTable('Gadget')->getConfig();
+    $this->forward404Unless(isset($configs[$this->type]));
 
-    $layout = Doctrine::getTable('SnsConfig')->get('home_layout');
+    $this->layoutPattern = $configs[$this->type]['layout']['default'];
+    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName($this->type);
+    $this->gadgetConfig = Doctrine::getTable('Gadget')->getGadgetConfig($this->type);
+    $layoutName = $this->type;
+    if ('gadget' === $layoutName)
+    {
+      $layoutName = 'home';
+    }
+    $layoutName .= '_layout';
+    $layout = Doctrine::getTable('SnsConfig')->get($layoutName);
     if ($layout)
     {
       $this->layoutPattern = $layout;
     }
-
-    return sfView::SUCCESS;
-  }
-
-  /**
-  * Executes profile gadget plot action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeProfileGadgetPlot(sfWebRequest $request)
-  {
-    $configs = sfConfig::get('op_gadget_config');
-    $this->layoutPattern = $configs['profile']['layout']['default'];
-    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('profile');
-    $this->gadgetConfig = sfConfig::get('op_profile_gadget_list');
-
-    $layout = Doctrine::getTable('SnsConfig')->get('profile_layout');
-    if ($layout)
-    {
-      $this->layoutPattern = $layout;
-    }
-
-    return sfView::SUCCESS;
-  }
-
- /**
-  * Executes login gadget plot action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeLoginGadgetPlot(sfWebRequest $request)
-  {
-    $configs = sfConfig::get('op_gadget_config');
-    $this->layoutPattern = $configs['login']['layout']['default'];
-    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('login');
-
-    $this->gadgetConfig = sfConfig::get('op_login_gadget_list');
-
-    $layout = Doctrine::getTable('SnsConfig')->get('login_layout');
-    if ($layout)
-    {
-      $this->layoutPattern = $layout;
-    }
-    return sfView::SUCCESS;
-  }
- 
- /**
-  * Executes mobile home gadget plot action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeMobileHomeGadgetPlot(sfWebRequest $request)
-  {
-    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobile');
-    $this->gadgetConfig = sfConfig::get('op_mobile_gadget_list');
-
-    return sfView::SUCCESS;
-  }
-
- /**
-  * Executes mobile profile gadget plot action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeMobileProfileGadgetPlot(sfWebRequest $request)
-  {
-    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileProfile');
-    $this->gadgetConfig = sfConfig::get('op_mobile_profile_gadget_list');
-
-    return sfView::SUCCESS;
-  }
-
-  /**
-   * Executes mobile login gadget plot action
-   *
-   * @param sfWebRequest $request A request object
-   */
-  public function executeMobileLoginGadgetPlot(sfWebRequest $request)
-  {
-    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileLogin');
-    $this->gadgetConfig = sfConfig::get('op_mobile_login_gadget_list');
-    
-    return sfView::SUCCESS;
-  }
-
- /**
-  * Executes side banner home gadget plot action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeSideBannerGadgetPlot(sfWebRequest $request)
-  {
-    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('sideBanner');
-    $this->gadgetConfig = sfConfig::get('op_side_banner_gadget_list');
-
-    return sfView::SUCCESS;
-  }
-
- /**
-  * Executes mobile header gadget plot action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeMobileHeaderGadgetPlot(sfWebRequest $request)
-  {
-    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileHeader');
-    $this->gadgetConfig = sfConfig::get('op_mobile_header_gadget_list');
-  }
-
- /**
-  * Executes mobile footer gadget plot action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeMobileFooterGadgetPlot(sfWebRequest $request)
-  {
-    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileFooter');
-    $this->gadgetConfig = sfConfig::get('op_mobile_footer_gadget_list');
-  }
-
- /**
-  * Executes daily news gadget plot action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeDailyNewsGadgetPlot(sfWebRequest $request)
-  {
-    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('dailyNews');
-    $this->gadgetConfig = sfConfig::get('op_daily_news_gadget_list');
-  }
-
- /**
-  * Executes mobile daily news gadget plot action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeMobileDailyNewsGadgetPlot(sfWebRequest $request)
-  {
-    $this->gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileDailyNews');
-    $this->gadgetConfig = sfConfig::get('op_mobile_daily_news_gadget_list');
   }
 
  /**

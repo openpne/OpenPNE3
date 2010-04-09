@@ -70,7 +70,7 @@ class GadgetSortForm extends sfForm
     foreach ($value as $id)
     {
       $gadget = Doctrine::getTable('Gadget')->find($id);
-      if ($gadget) 
+      if ($gadget)
       {
         $item = $gadget->getName();
         if (array_key_exists($item, $gadgetList))

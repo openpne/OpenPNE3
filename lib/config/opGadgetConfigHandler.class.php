@@ -19,9 +19,6 @@ class opGadgetConfigHandler extends sfYamlConfigHandler
 {
   public function execute($configFiles)
   {
-    // get our prefix
-    $prefix = strtolower($this->getParameterHolder()->get('prefix', ''));
-
     $config = $this->parseYamls($configFiles);
     foreach ($config as $k => $v)
     {
@@ -50,8 +47,8 @@ class opGadgetConfigHandler extends sfYamlConfigHandler
     }
 
     $format = "<?php\n"
-            . "sfConfig::add(array('%s' => %s));";
-    $result = sprintf($format, 'op_'.$prefix.'gadget_list', var_export($config, true));
+            . "return %s;";
+    $result = sprintf($format, var_export($config, true));
     return $result;
   }
 }
