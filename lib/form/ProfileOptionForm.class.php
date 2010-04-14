@@ -40,4 +40,14 @@ class ProfileOptionForm extends BaseProfileOptionForm
 
     $this->embedI18n(array('ja_JP'));
   }
+
+  public function updateObject()
+  {
+    if (!$this->isNew())
+    {
+      unset($this->values['sort_order']);
+    }
+
+    return parent::updateObject();
+  }
 }
