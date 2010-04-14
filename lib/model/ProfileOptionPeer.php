@@ -27,9 +27,10 @@ class ProfileOptionPeer extends BaseProfileOptionPeer
     return $result;
   }
 
-  public static function getMaxSortOrder()
+  public static function getMaxSortOrder($profileId)
   {
     $c = new Criteria();
+    $c->add(self::PROFILE_ID, $profileId);
     $c->addDescendingOrderByColumn(self::SORT_ORDER);
 
     $result = self::doSelectOne($c);
@@ -37,6 +38,6 @@ class ProfileOptionPeer extends BaseProfileOptionPeer
     {
       return $result->getSortOrder();
     }
-    return 0;
+    return false;
   }
 }
