@@ -17,8 +17,9 @@ $t->is(cycle_vars('test', 'item1,item2'), 'item2');
 $t->is(cycle_vars('test', 'item1,item2'), 'item1');
 
 //------------------------------------------------------------
-$t->diag('op_format_last_login_time()');
+$t->diag('op_format_last_login_time() setCulture en');
 $now = time();
+sfContext::getInstance()->getUser()->setCulture('en');
 $t->is(op_format_last_login_time($now - 2, $now), 'less than a minute ago');
 $t->is(op_format_last_login_time($now - 8, $now), 'less than a minute ago');
 $t->is(op_format_last_login_time($now - 13, $now), 'less than a minute ago');
@@ -40,6 +41,28 @@ $t->is(op_format_last_login_time($now - 370 * 86400, $now), 'about 1 year ago');
 $t->is(op_format_last_login_time($now - 4 * 370 * 86400, $now), 'over 4 years ago');
 $t->is(op_format_last_login_time($now - 1000 * 86400, $now), 'over 2 years ago');
 
+$t->diag('op_format_last_login_time() setCulture ja_JP');
+sfContext::getInstance()->getUser()->setCulture('ja_JP');
+$t->is(op_format_last_login_time($now - 2, $now), '1分以内');
+$t->is(op_format_last_login_time($now - 8, $now), '1分以内');
+$t->is(op_format_last_login_time($now - 13, $now), '1分以内');
+$t->is(op_format_last_login_time($now - 25, $now), '1分以内');
+$t->is(op_format_last_login_time($now - 49, $now), '1分以内');
+$t->is(op_format_last_login_time($now - 60, $now), '1分前');
+
+$t->is(op_format_last_login_time($now - 10 * 60, $now), '10分前');
+$t->is(op_format_last_login_time($now - 50 * 60, $now), '1時間前');
+
+$t->is(op_format_last_login_time($now - 3 * 3600, $now), '3時間前');
+$t->is(op_format_last_login_time($now - 25 * 3600, $now), '1日前');
+
+$t->is(op_format_last_login_time($now - 4 * 86400, $now), '4日前');
+$t->is(op_format_last_login_time($now - 35 * 86400, $now), '1ヶ月前');
+$t->is(op_format_last_login_time($now - 75 * 86400, $now), '3ヶ月前');
+
+$t->is(op_format_last_login_time($now - 370 * 86400, $now), '1年前');
+$t->is(op_format_last_login_time($now - 4 * 370 * 86400, $now), '4年以上前');
+$t->is(op_format_last_login_time($now - 1000 * 86400, $now), '2年以上前');
 //------------------------------------------------------------
 $t->diag('op_link_to_member()');
 $t->is(op_link_to_member(1), link_to('A', '@obj_member_profile?id=1'), 'link to member 1');
