@@ -382,6 +382,7 @@ class opSecurityUser extends sfBasicSecurityUser
     elseif ($memberId)
     {
       $this->setIsSNSMember(true);
+      $this->getMember()->updateLastLoginTime();
     }
   }
 
