@@ -15,6 +15,10 @@ class openpneInstallTask extends sfDoctrineBaseTask
     $this->namespace        = 'openpne';
     $this->name             = 'install';
 
+    $this->addArguments(array(
+      new sfCommandArgument('type', sfCommandArgument::OPTIONAL, 'The plugin name', 'do'),
+    ));
+
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'prod'),
@@ -31,57 +35,78 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
+    $this->type = $arguments['type'];
+    $dbms = '';
     $username = '';
     $password = '';
     $hostname = '';
     $port = '';
+    $dbname = '';
     $sock = '';
     $maskedPassword = '******';
 
-    $validator = new sfValidatorCallback(array('required' => true, 'callback' => array($this, 'validateDBMS')));
-    $dbms = $this->askAndValidate(array('Choose DBMS:', '- mysql', '- pgsql (unsupported)', '- sqlite (unsupported)'), $validator, array('style' => 'QUESTION_LARGE'));
-    if (!$dbms)
+    if ('redo' == $this->type)
     {
-      $this->logSection('installer', 'task aborted');
-
-      return 1;
+      try
+      {
+        $this->configuration = parent::createConfiguration($options['application'], $options['env']);
+        new sfDatabaseManager($this->configuration);
+      }
+      catch (Exception $e)
+      {
+        $this->type = 'do';
+      }
     }
 
-    if ($dbms !== 'sqlite')
+    if ('do' == $this->type)
     {
-      $username = $this->askAndValidate(array('Type database username'), new opValidatorString(), array('style' => 'QUESTION_LARGE'));
-      $password = $this->askAndValidate(array('Type database password (optional)'), new opValidatorString(array('required' => false)), array('style' => 'QUESTION_LARGE'));
-      $hostname = $this->askAndValidate(array('Type database hostname'), new opValidatorString(), array('style' => 'QUESTION_LARGE'));
-      $port = $this->askAndValidate(array('Type database port number (optional)'), new sfValidatorInteger(array('required' => false)), array('style' => 'QUESTION_LARGE'));
+      $validator = new sfValidatorCallback(array('required' => true, 'callback' => array($this, 'validateDBMS')));
+      $dbms = $this->askAndValidate(array('Choose DBMS:', '- mysql', '- pgsql (unsupported)', '- sqlite (unsupported)'), $validator, array('style' => 'QUESTION_LARGE'));
+      if (!$dbms)
+      {
+        $this->logSection('installer', 'task aborted');
+
+        return 1;
+      }
+
+      if ($dbms !== 'sqlite')
+      {
+        $username = $this->askAndValidate(array('Type database username'), new opValidatorString(), array('style' => 'QUESTION_LARGE'));
+        $password = $this->askAndValidate(array('Type database password (optional)'), new opValidatorString(array('required' => false)), array('style' => 'QUESTION_LARGE'));
+        $hostname = $this->askAndValidate(array('Type database hostname'), new opValidatorString(), array('style' => 'QUESTION_LARGE'));
+        $port = $this->askAndValidate(array('Type database port number (optional)'), new sfValidatorInteger(array('required' => false)), array('style' => 'QUESTION_LARGE'));
+      }
+
+      $dbname = $this->askAndValidate(array('Type database name'), new opValidatorString(), array('style' => 'QUESTION_LARGE'));
+      if ($dbms == 'sqlite')
+      {
+        $dbname = realpath(dirname($dbname)).DIRECTORY_SEPARATOR.basename($dbname);
+      }
+
+      if ($dbms == 'mysql' && ($hostname == 'localhost' || $hostname == '127.0.0.1'))
+      {
+        $sock = $this->askAndValidate(array('Type database socket path (optional)'), new opValidatorString(array('required' => false)), array('style' => 'QUESTION_LARGE'));
+      }
+
+      if (!$password)
+      {
+        $maskedPassword = '';
+      }
+
+      $list = array(
+        'The DBMS                 : '.$dbms,
+        'The Database Username    : '.$username,
+        'The Database Password    : '.$maskedPassword,
+        'The Database Hostname    : '.$hostname,
+        'The Database Port Number : '.$port,
+        'The Database Name        : '.$dbname,
+        'The Database Socket      : '.$sock,
+      );
     }
 
-    $dbname = $this->askAndValidate(array('Type database name'), new opValidatorString(), array('style' => 'QUESTION_LARGE'));
-    if ($dbms == 'sqlite')
-    {
-      $dbname = realpath(dirname($dbname)).DIRECTORY_SEPARATOR.basename($dbname);
-    }
-
-    if ($dbms == 'mysql' && ($hostname == 'localhost' || $hostname == '127.0.0.1'))
-    {
-      $sock = $this->askAndValidate(array('Type database socket path (optional)'), new opValidatorString(array('required' => false)), array('style' => 'QUESTION_LARGE'));
-    }
-
-    if (!$password)
-    {
-      $maskedPassword = '';
-    }
-
-    $list = array(
-      'The DBMS                 : '.$dbms,
-      'The Database Username    : '.$username,
-      'The Database Password    : '.$maskedPassword,
-      'The Database Hostname    : '.$hostname,
-      'The Database Port Number : '.$port,
-      'The Database Name        : '.$dbname,
-      'The Database Socket      : '.$sock,
-    );
-
-    if (!$this->askConfirmation(array_merge($list, array('', 'Is it OK to start this task? (Y/n)')), 'QUESTION_LARGE'))
+    $confirmAsk = 'Is it OK to start this task? (Y/n)';
+    $confirmAsks = isset($list) ? array_merge($list, array('', $confirmAsk)) : array($confirmAsk);
+    if (!$this->askConfirmation($confirmAsks, 'QUESTION_LARGE'))
     {
       $this->logSection('installer', 'task aborted');
 
@@ -105,10 +130,21 @@ EOF;
 
   protected function doInstall($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options)
   {
+    if ('do' == $this->type)
+    {
+      $this->logSection('installer', 'start clean install');
+    }
+    else
+    {
+      $this->logSection('installer', 'start reinstall');
+    }
     $this->installPlugins();
     @$this->fixPerms();
     @$this->clearCache();
-    $this->configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options);
+    if ('do' == $this->type)
+    {
+      $this->configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options);
+    }
     $this->buildDb($options);
   }
 
