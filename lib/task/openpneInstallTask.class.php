@@ -15,13 +15,10 @@ class openpneInstallTask extends sfDoctrineBaseTask
     $this->namespace        = 'openpne';
     $this->name             = 'install';
 
-    $this->addArguments(array(
-      new sfCommandArgument('type', sfCommandArgument::OPTIONAL, 'The plugin name', 'do'),
-    ));
-
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'prod'),
+      new sfCommandOption('redo', null, sfCommandOption::PARAMETER_NONE, 'Executes a reinstall'),
     ));
 
     $this->briefDescription = 'Install OpenPNE';
@@ -35,7 +32,6 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
-    $this->type = $arguments['type'];
     $dbms = '';
     $username = '';
     $password = '';
@@ -45,7 +41,7 @@ EOF;
     $sock = '';
     $maskedPassword = '******';
 
-    if ('redo' == $this->type)
+    if ($options['redo'])
     {
       try
       {
@@ -54,11 +50,12 @@ EOF;
       }
       catch (Exception $e)
       {
-        $this->type = 'do';
+        $this->logSection('installer', $e->getMessage(), null, 'ERROR');
+        $options['redo'] = false;
       }
     }
 
-    if ('do' == $this->type)
+    if (!$options['redo'])
     {
       $validator = new sfValidatorCallback(array('required' => true, 'callback' => array($this, 'validateDBMS')));
       $dbms = $this->askAndValidate(array('Choose DBMS:', '- mysql', '- pgsql (unsupported)', '- sqlite (unsupported)'), $validator, array('style' => 'QUESTION_LARGE'));
@@ -130,18 +127,18 @@ EOF;
 
   protected function doInstall($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options)
   {
-    if ('do' == $this->type)
+    if ($options['redo'])
     {
-      $this->logSection('installer', 'start clean install');
+      $this->logSection('installer', 'start reinstall');
     }
     else
     {
-      $this->logSection('installer', 'start reinstall');
+      $this->logSection('installer', 'start clean install');
     }
     $this->installPlugins();
     @$this->fixPerms();
     @$this->clearCache();
-    if ('do' == $this->type)
+    if (!$options['redo'])
     {
       $this->configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options);
     }
