@@ -53,6 +53,32 @@ session_storage:
   name: "file"
   options:
 
+# セッション存続時間設定
+# Configure session lifetimes
+session_life_time:
+  # PC 版設定
+  # for pc_frontend
+  pc_frontend:
+    # セッションの有効期限(秒)
+    # The maximum idle time
+    idletime: 432000 # 5 days
+
+  # 携帯版設定
+  # for mobile_frontend
+  mobile_frontend:
+    # セッションの有効期限(秒)
+    # The maximum idle time
+    idletime: 3600 # 1 hour
+
+  # 管理画面設定
+  # for pc_backend
+  pc_backend:
+    # セッションの有効期限(秒)
+    # The maximum idle time
+    idletime: 86400 # 1 day
+
+# 「自動的にログイン」の持続時間
+remember_login_limit: 2592000 # 30 days
 
 ######################################
 # プロキシ (Proxy)
