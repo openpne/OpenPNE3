@@ -71,6 +71,11 @@ class CommunityForm extends BaseCommunityForm
   public function checkCreatable($validator, $value)
   {
     $category = Doctrine::getTable('CommunityCategory')->find($value['community_category_id']);
+    if (!$category)
+    {
+      throw new sfValidatorError($validator, 'invalid');
+    }
+
     if ($category->getIsAllowMemberCommunity())
     {
       return $value;
