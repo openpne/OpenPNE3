@@ -122,6 +122,14 @@ community_home:
   param: { module: community, action: home }
   requirements: { id: \d+ }
 
+privacy_policy:
+  url:  /default/privacyPolicy
+  param: { module: default, action: privacyPolicy }
+
+user_agreement:
+  url:  /default/userAgreement
+  param: { module: default, action: userAgreement }
+
 # for cmd
 google_maps:
   url:  /googlemaps
