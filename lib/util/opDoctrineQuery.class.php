@@ -141,6 +141,13 @@ class opDoctrineQuery extends Doctrine_Query
     }
   }
 
+  public function fetchOne($params = array(), $hydrationMode = null)
+  {
+    $this->limit(1);
+
+    return parent::fetchOne($params, $hydrationMode);
+  }
+
   public function andWhereIn($expr, $params = array(), $not = false)
   {
     if (isset($params) && (count($params) == 0))
