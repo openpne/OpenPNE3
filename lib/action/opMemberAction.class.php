@@ -177,7 +177,7 @@ abstract class opMemberAction extends sfActions
       $this->size = 20;
     }
 
-    $this->pager = new sfDoctrinePager('Member', $this->size);
+    $this->pager = new opNonCountQueryPager('Member', $this->size);
     $q = $this->filters->getQuery()->orderBy('id desc');
     $this->pager->setQuery($q);
     $this->pager->setPage($request->getParameter('page', 1));
