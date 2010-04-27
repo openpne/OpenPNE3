@@ -23,7 +23,8 @@ class opDoctrineQuery extends Doctrine_Query
   protected
     $shouldGoToMaster = false,
     $isFoundRows = false,
-    $specifiedConnection = null;
+    $specifiedConnection = null,
+    $whereInCount = '';
 
   public function connectToMaster($isMaster = false)
   {
@@ -142,17 +143,42 @@ class opDoctrineQuery extends Doctrine_Query
 
   public function andWhereIn($expr, $params = array(), $not = false)
   {
-    if (!$not && isset($params) && (count($params) == 0))
+    if (isset($params) && (count($params) == 0))
     {
-      return $this->andWhere('0 = 1');
+      if (!$not)
+      {
+        return $this->andWhere('0 = 1');
+      }
+      else
+      {
+        return parent::andWhereIn($expr, $params, $not);
+      }
     }
 
-    return parent::andWhereIn($expr, $params, $not);
+    $this->addWhereInCount(count($params));
+
+    if ($not)
+    {
+      $this->andWhere($expr.' NOT IN ?', array($params));
+    }
+    else
+    {
+      $this->andWhere($expr.' IN ?', array($params));
+    }
+
+    return $this;
   }
 
   public function setIsFoundRows($isFoundRows)
   {
     $this->isFoundRows = (bool)$isFoundRows;
+
+    return $this;
+  }
+
+  public function addWhereInCount($count)
+  {
+    $this->whereInCount .= '-'.$count;
 
     return $this;
   }
@@ -164,6 +190,11 @@ class opDoctrineQuery extends Doctrine_Query
     if ($this->isFoundRows)
     {
       $result .= ':fr';
+    }
+
+    if ($this->whereInCount)
+    {
+      $result .= ':count'.$this->whereInCount;
     }
 
     return $result;
