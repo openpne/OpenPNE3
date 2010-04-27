@@ -123,4 +123,14 @@ class opDoctrineQuery extends Doctrine_Query
   {
     $this->_conn = self::chooseConnection($this->shouldGoToMaster, $this->getType());
   }
+
+  public function andWhereIn($expr, $params = array(), $not = false)
+  {
+    if (!$not && isset($params) && (count($params) == 0))
+    {
+      return $this->andWhere('0 = 1');
+    }
+
+    return parent::andWhereIn($expr, $params, $not);
+  }
 }
