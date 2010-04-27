@@ -21,11 +21,20 @@ class opDoctrineQuery extends Doctrine_Query
     $detectedSlave = null;
 
   protected
-    $shouldGoToMaster = false;
+    $shouldGoToMaster = false,
+    $isFoundRows = false,
+    $specifiedConnection = null;
 
   public function connectToMaster($isMaster = false)
   {
     $shouldGoToMaster = (bool)$isMaster;
+
+    return $this;
+  }
+
+  public function specifyConnection($conn)
+  {
+    $this->specifiedConnection = $conn;
 
     return $this;
   }
@@ -121,7 +130,14 @@ class opDoctrineQuery extends Doctrine_Query
 
   public function preQuery()
   {
-    $this->_conn = self::chooseConnection($this->shouldGoToMaster, $this->getType());
+    if ($this->specifiedConnection)
+    {
+      $this->conn = $this->specifiedConnection;
+    }
+    else
+    {
+      $this->_conn = self::chooseConnection($this->shouldGoToMaster, $this->getType());
+    }
   }
 
   public function andWhereIn($expr, $params = array(), $not = false)
@@ -132,5 +148,44 @@ class opDoctrineQuery extends Doctrine_Query
     }
 
     return parent::andWhereIn($expr, $params, $not);
+  }
+
+  public function setIsFoundRows($isFoundRows)
+  {
+    $this->isFoundRows = (bool)$isFoundRows;
+
+    return $this;
+  }
+
+  public function calculateQueryCacheHash()
+  {
+    $result = parent::calculateQueryCacheHash();
+
+    if ($this->isFoundRows)
+    {
+      $result .= ':fr';
+    }
+
+    return $result;
+  }
+
+  protected function _buildSqlQueryBase()
+  {
+    switch ($this->_type)
+    {
+      case self::DELETE:
+        $q = 'DELETE FROM ';
+        break;
+      case self::UPDATE:
+        $q = 'UPDATE ';
+        break;
+      case self::SELECT:
+        $distinct = ($this->_sqlParts['distinct']) ? 'DISTINCT ' : '';
+        $foundRows = ($this->isFoundRows) ? 'SQL_CALC_FOUND_ROWS ' : '';
+        $q = 'SELECT '.$foundRows.$distinct.implode(', ', $this->_sqlParts['select']).' FROM ';
+        break;
+    }
+
+    return $q;
   }
 }
