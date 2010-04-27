@@ -24,6 +24,80 @@ class opI18N extends sfI18N
     $this->terms->configure($this->culture, sfConfig::get('sf_app'));
   }
 
+  public function generateApplicationMessages($dirs)
+  {
+    $catalogues = array();
+
+    $files = sfFinder::type('file')
+      ->follow_link()
+      ->name('*.xml')
+      ->maxdepth(1)
+      ->in($dirs);
+
+    foreach ($files as $file)
+    {
+      $name = basename($file);
+      if (empty($catalogues[$name]))
+      {
+        $catalogues[$name] = array();
+      }
+
+      $messageSource = sfMessageSource::factory('OpenPNE', array());
+      $data = $messageSource->loadData($file);
+
+      $catalogues[$name] = array_merge($catalogues[$name], $data);
+    }
+
+    $cacheDir = sfConfig::get('sf_app_cache_dir').DIRECTORY_SEPARATOR.'i18n';
+
+    $filesystem = new sfFilesystem();
+    $filesystem->mkdirs($cacheDir);
+
+    foreach ($catalogues as $filename => $catalogue)
+    {
+      file_put_contents($cacheDir.DIRECTORY_SEPARATOR.$filename.'.php', '<?php return '.var_export($catalogue, true).';');
+    }
+  }
+
+  public function setMessageSource($dirs, $culture = null)
+  {
+    $cachedDir = sfConfig::get('sf_app_cache_dir').DIRECTORY_SEPARATOR.'i18n';
+    if (is_file($cachedDir.DIRECTORY_SEPARATOR.'messages.ja.xml.php'))
+    {
+      $this->messageSource = sfMessageSource::factory('OpenPNECached', $cachedDir);
+    }
+    else
+    {
+      $this->generateApplicationMessages($dirs);
+
+      if (null === $dirs)
+      {
+        $this->messageSource = $this->createMessageSource();
+      }
+      else
+      {
+        $this->messageSource = sfMessageSource::factory('Aggregate', array_map(array($this, 'createMessageSource'), $dirs));
+      }
+    }
+
+    if (null !== $this->cache)
+    {
+      $this->messageSource->setCache($this->cache);
+    }
+
+    if (null !== $culture)
+    {
+      $this->setCulture($culture);
+    }
+    else
+    {
+      $this->messageSource->setCulture($this->culture);
+    }
+
+    $this->messageFormat = null;
+  }
+
+
   public function __($string, $args = array(), $catalogue = 'messages')
   {
     foreach ($args as $k => $v)
