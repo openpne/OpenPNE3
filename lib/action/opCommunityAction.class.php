@@ -118,7 +118,7 @@ abstract class opCommunityAction extends sfActions
       $this->size = 20;
     }
 
-    $this->pager = new sfDoctrinePager('Community', $this->size);
+    $this->pager = new opNonCountQueryPager('Community', $this->size);
     $this->pager->setQuery($this->filters->getQuery());
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();

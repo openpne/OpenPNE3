@@ -69,7 +69,7 @@ class CommunityTable extends opAccessControlDoctrineTable
       ->andWhere('is_pre = ?', false)
       ->execute();
 
-    $pager = new sfDoctrinePager('Member', $size);
+    $pager = new opNonCountQueryPager('Member', $size);
 
     if (0 === $communityMembers->count())
     {

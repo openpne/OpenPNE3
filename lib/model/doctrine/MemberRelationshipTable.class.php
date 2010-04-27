@@ -36,7 +36,7 @@ class MemberRelationshipTable extends opAccessControlDoctrineTable
     $q = Doctrine::getTable('Member')->createQuery()
         ->where('id IN ('.$subQuery->getDql().')', array($memberId, true));
 
-    $pager = new sfDoctrinePager('Member', $size);
+    $pager = new opNonCountQueryPager('Member', $size);
     $pager->setQuery($q);
     $pager->setPage($page);
     $pager->init();
