@@ -12,11 +12,11 @@ $options = array(
   'list' => $members,
   'crownIds' => array($communityAdmin->getId()),
   'link_to' => '@member_profile?id=',
-  'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $community->countCommunityMembers()), 'community/memberList?id='.$community->getId())),
+  'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $community->countCommunityMembers()), '@community_memberList?id='.$community->getId())),
 );
 if ($isAdmin || $isSubAdmin)
 {
-  $options['moreInfo'][] = link_to(__('Management member'), 'community/memberManage?id='.$community->getId());
+  $options['moreInfo'][] = link_to(__('Management member'), '@community_memberManage?id='.$community->getId());
 }
 op_include_parts('nineTable', 'frendList', $options);
 ?>
@@ -67,14 +67,14 @@ op_include_parts('listBox', 'communityHome', $options);
 
 <ul>
 <?php if ($isEditCommunity): ?>
-<li><?php echo link_to(__('Edit this %community%'), 'community/edit?id=' . $community->getId()) ?></li>
+<li><?php echo link_to(__('Edit this %community%'), '@community_edit?id=' . $community->getId()) ?></li>
 <?php endif; ?>
 
 <?php if (!$isAdmin): ?>
 <?php if ($isCommunityMember): ?>
-<li><?php echo link_to(__('Leave this %community%'), 'community/quit?id=' . $community->getId()) ?></li>
+<li><?php echo link_to(__('Leave this %community%'), '@community_quit?id=' . $community->getId()) ?></li>
 <?php else : ?>
-<li><?php echo link_to(__('Join this %community%'), 'community/join?id=' . $community->getId()) ?></li>
+<li><?php echo link_to(__('Join this %community%'), '@community_join?id=' . $community->getId()) ?></li>
 <?php endif; ?>
 <?php endif; ?>
 </ul>

@@ -6,12 +6,12 @@ $options = array(
 if ($communityForm->isNew())
 {
   $options['title'] = __('Create a new %community%');
-  $options['url'] = url_for('community/edit');
+  $options['url'] = url_for('@community_edit');
 }
 else
 {
   $options['title'] = __('Edit the %community%');
-  $options['url'] = url_for('community/edit?id='.$community->getId());
+  $options['url'] = url_for('@community_edit?id='.$community->getId());
 }
 
 op_include_form('formCommunity', array($communityForm, $communityConfigForm, $communityFileForm), $options);
@@ -23,7 +23,7 @@ if (!$communityForm->isNew() && $isDeleteCommunity)
     'body' => __('delete this %community%.if you delete this %community% please to report in advance for all this %community% members.'),
     'button' => __('Delete'),
     'method' => 'get',
-    'url' => url_for('community/delete?id=' . $community->getId()),
+    'url' => url_for('@community_delete?id=' . $community->getId()),
   ));
 }
 

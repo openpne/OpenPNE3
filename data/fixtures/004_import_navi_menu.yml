@@ -11,7 +11,7 @@ Navigation:
 
   secure_global_navigation_member_search:
     type: "secure_global"
-    uri: "member/search"
+    uri: "@member_search"
     sort_order: 10
     Translation:
       ja_JP:
@@ -21,7 +21,7 @@ Navigation:
 
   secure_global_navigation_community_search:
     type: "secure_global"
-    uri: "community/search"
+    uri: "@community_search"
     sort_order: 20
     Translation:
       ja_JP:
@@ -31,7 +31,7 @@ Navigation:
 
   secure_global_navigation_config:
     type: "secure_global"
-    uri: "member/config"
+    uri: "@member_config"
     sort_order: 30
     Translation:
       ja_JP:
@@ -41,7 +41,7 @@ Navigation:
 
   secure_global_navigation_invite:
     type: "secure_global"
-    uri: "member/invite"
+    uri: "@member_invite"
     sort_order: 40
     Translation:
       ja_JP:
@@ -51,7 +51,7 @@ Navigation:
 
   secure_global_navigation_logout:
     type: "secure_global"
-    uri: "member/logout"
+    uri: "@member_logout"
     sort_order: 50
     Translation:
       ja_JP:
@@ -71,7 +71,7 @@ Navigation:
 
   default_navigation_friend_list:
     type: "default"
-    uri: "friend/list"
+    uri: "@friend_list"
     sort_order: 10
     Translation:
       ja_JP:
@@ -81,7 +81,7 @@ Navigation:
 
   default_navigation_profile_confirm:
     type: "default"
-    uri: "member/profile"
+    uri: "@member_profile_mine"
     sort_order: 20
     Translation:
       ja_JP:
@@ -91,7 +91,7 @@ Navigation:
 
   default_navigation_profile_edit:
     type: "default"
-    uri: "member/editProfile"
+    uri: "@member_editProfile"
     sort_order: 30
     Translation:
       ja_JP:
@@ -101,7 +101,7 @@ Navigation:
 
   friend_navigation_home:
     type: "friend"
-    uri: "member/profile"
+    uri: "@member_profile"
     sort_order: 10
     Translation:
       ja_JP:
@@ -111,7 +111,7 @@ Navigation:
 
   friend_navigation_friend_list:
     type: "friend"
-    uri: "friend/list"
+    uri: "@friend_list"
     sort_order: 20
     Translation:
       ja_JP:
@@ -121,7 +121,7 @@ Navigation:
 
   community_navigation_home:
     type: "community"
-    uri: "community/home"
+    uri: "@community_home"
     sort_order: 0
     Translation:
       ja_JP:
@@ -131,7 +131,7 @@ Navigation:
 
   community_navigation_join:
     type: "community"
-    uri: "community/join"
+    uri: "@community_join"
     sort_order: 10
     Translation:
       ja_JP:
@@ -141,7 +141,7 @@ Navigation:
 
   community_navigation_quit:
     type: "community"
-    uri: "community/quit"
+    uri: "@community_quit"
     sort_order: 20
     Translation:
       ja_JP:

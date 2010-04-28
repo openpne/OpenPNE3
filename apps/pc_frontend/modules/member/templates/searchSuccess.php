@@ -1,7 +1,7 @@
 <?php
 $options = array(
   'title'  => __('メンバー検索'),
-  'url'    => url_for('member/search'),
+  'url'    => url_for('@member_search'),
   'button' => __('Search'),
   'method' => 'get'
 );
@@ -26,8 +26,8 @@ foreach ($pager->getResults() as $key => $member)
 $options = array(
   'title'          =>  __('Search Results'),
   'pager'          => $pager,
-  'link_to_page'   => 'member/search?page=%d',
-  'link_to_detail' => 'member/profile?id=%d',
+  'link_to_page'   => '@member_search?page=%d',
+  'link_to_detail' => '@member_profile?id=%d',
   'list'           => $list,
 );
 

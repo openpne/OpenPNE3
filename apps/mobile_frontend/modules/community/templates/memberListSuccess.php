@@ -15,8 +15,8 @@ $option = array(
 op_include_list('memberList', $list, $option);
 ?>
 
-<?php op_include_pager_navigation($pager, 'community/memberList?page=%d&id='.$id, array('is_total' => false)); ?>
+<?php op_include_pager_navigation($pager, '@community_memberList?page=%d&id='.$id, array('is_total' => false)); ?>
 
 <hr color="<?php echo $op_color['core_color_11'] ?>">
 
-<?php echo link_to(__('Community Top'), 'community/home?id='.$community->getId()) ?>
+<?php echo link_to(__('Community Top'), '@community_home?id='.$community->getId()) ?>

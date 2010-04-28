@@ -1,5 +1,5 @@
 <?php slot('pager') ?>
-<?php op_include_pager_navigation($pager, 'community/memberManage?page=%d&id='.$sf_params->get('id')); ?>
+<?php op_include_pager_navigation($pager, '@community_memberManage?page=%d&id='.$sf_params->get('id')); ?>
 <?php end_slot(); ?>
 
 <div class="parts">

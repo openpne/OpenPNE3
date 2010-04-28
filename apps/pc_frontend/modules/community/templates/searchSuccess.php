@@ -1,9 +1,9 @@
 <?php
 $options = array(
   'title'    => __('Search %community%', array('%community%' => $op_term['community']->titleize()->pluralize())),
-  'url'      => url_for('community/search'),
+  'url'      => url_for('@community_search'),
   'button'   => __('Search'),
-  'moreInfo' => array(link_to(__('Create a new %community%'), 'community/edit')),
+  'moreInfo' => array(link_to(__('Create a new %community%'), '@community_edit')),
   'method'   => 'get'
 );
 
@@ -25,8 +25,8 @@ foreach ($pager->getResults() as $key => $community)
 $options = array(
   'title'          => __('Search Results'),
   'pager'          => $pager,
-  'link_to_page'   => 'community/search?page=%d',
-  'link_to_detail' => 'community/home?id=%d',
+  'link_to_page'   => '@community_search?page=%d',
+  'link_to_detail' => '@community_home?id=%d',
   'list'           => $list,
 );
 

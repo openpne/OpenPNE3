@@ -9,7 +9,7 @@
 $list = array();
 foreach ($pager->getResults() as $community)
 {
-  $list[] = link_to(sprintf('%s(%d)', $community->getName(), $community->countCommunityMembers()), 'community/home?id='.$community->getId());
+  $list[] = link_to(sprintf('%s(%d)', $community->getName(), $community->countCommunityMembers()), '@community_home?id='.$community->getId());
 }
 $option = array(
   'border' => true,
@@ -31,7 +31,7 @@ $options = array(
 );
 if (!$isResult)
 {
-  $options['moreInfo'] = array(link_to(__('Create a new %community%'), 'community/edit'));
+  $options['moreInfo'] = array(link_to(__('Create a new %community%'), '@community_edit'));
 }
 
 op_include_form('searchCommunity', $filters, $options);

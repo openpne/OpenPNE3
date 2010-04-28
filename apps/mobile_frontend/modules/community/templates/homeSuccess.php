@@ -55,16 +55,16 @@ foreach ($communitySubAdmins as $m)
 
 <tr><td colspan="2">
 <?php if ($isEditCommunity) : ?>
-<?php echo link_to(__('Edit %community%'), 'community/edit?id=' . $community->getId()) ?><br>
+<?php echo link_to(__('Edit %community%'), '@community_edit?id=' . $community->getId()) ?><br>
 <?php endif; ?>
 <?php if (!$isAdmin) : ?>
 <?php if ($isCommunityMember) : ?>
-<?php echo link_to(__('Quit %community%'), 'community/quit?id=' . $community->getId()) ?><br>
+<?php echo link_to(__('Quit %community%'), '@community_quit?id=' . $community->getId()) ?><br>
 <?php else : ?>
 <?php if ($isCommunityPreMember) : ?>
 <?php echo __('You are waiting for the participation approval by %community%\'s administrator.') ?>
 <?php else: ?>
-<?php echo link_to(__('Join %community%'), 'community/join?id=' . $community->getId()) ?><br>
+<?php echo link_to(__('Join %community%'), '@community_join?id=' . $community->getId()) ?><br>
 <?php endif; ?>
 <?php endif; ?>
 <?php endif; ?>
@@ -90,12 +90,12 @@ $option = array(
   'title' => __('%Community% Members'),
   'border' => true,
   'moreInfo' => array(
-    link_to(__('More'), 'community/memberList?id='.$community->getId()),
+    link_to(__('More'), '@community_memberList?id='.$community->getId()),
   ),
 );
 if ($isAdmin || $isSubAdmin)
 {
-  $option['moreInfo'][] = link_to(__('Manage member'), 'community/memberManage?id='.$community->getId())
+  $option['moreInfo'][] = link_to(__('Manage member'), '@community_memberManage?id='.$community->getId())
 ;
 }
 op_include_list('communityMember', $list, $option);
@@ -104,6 +104,6 @@ op_include_list('communityMember', $list, $option);
 <?php slot('op_mobile_footer') ?>
 <table width="100%">
 <tbody><tr><td align="center" bgcolor="<?php echo $op_color["core_color_2"] ?>">
-<font color="<?php echo $op_color["core_color_18"] ?>"><a href="<?php echo url_for('member/home') ?>" accesskey="0"><font color="<?php echo $op_color["core_color_18"] ?>">0. <?php echo __('home') ?></font></a> / <a href="#top"><font color="<?php echo $op_color["core_color_18"] ?>"><?php echo __('top') ?></font></a> / <a href="#bottom" accesskey="8"><font color="<?php echo $op_color["core_color_18"] ?>">8. <?php echo __('bottom') ?></font></a></font><br>
+<font color="<?php echo $op_color["core_color_18"] ?>"><a href="<?php echo url_for('@homepage') ?>" accesskey="0"><font color="<?php echo $op_color["core_color_18"] ?>">0. <?php echo __('home') ?></font></a> / <a href="#top"><font color="<?php echo $op_color["core_color_18"] ?>"><?php echo __('top') ?></font></a> / <a href="#bottom" accesskey="8"><font color="<?php echo $op_color["core_color_18"] ?>">8. <?php echo __('bottom') ?></font></a></font><br>
 </td></tr></tbody></table>
 <?php end_slot(); ?>

@@ -9,7 +9,7 @@ $option = array(
   'title' => __('%Friend% list'),
   'border' => true,
   'moreInfo' => array(
-    link_to(__('More'), 'friend/list?id='.$member->getId())
+    link_to(__('More'), '@friend_list?id='.$member->getId())
   ),
 );
 op_include_list('friendList', $list, $option);

@@ -25,6 +25,14 @@ class MemberRelationshipTable extends opAccessControlDoctrineTable
       ->execute();
   }
 
+  public function retrievesAccessBlockByMemberIdFrom($memberId)
+  {
+    return $this->createQuery()
+      ->where('member_id_from = ?', $memberId)
+      ->andWhere('is_access_block = ?', true)
+      ->execute(array(), Doctrine::HYDRATE_ARRAY);
+  }
+
   public function getFriendListPager($memberId, $page = 1, $size = 20)
   {
     $friendMemberIds = $this->getFriendMemberIds($memberId);
@@ -53,15 +61,15 @@ class MemberRelationshipTable extends opAccessControlDoctrineTable
       ->select('member_id_to')
       ->where('member_id_from = ?', $memberId)
       ->andWhere('is_friend = ?', true)
-      ->execute(array(), Doctrine::HYDRATE_ARRAY);
+      ->execute(array(), Doctrine::HYDRATE_NONE);
 
     $inactiveMemberIds = Doctrine::getTable('Member')->getInactiveMemberIds();
 
     foreach ($friendMemberIds as $friend)
     {
-      if (!in_array($friend['member_id_to'], $inactiveMemberIds))
+      if (!in_array($friend[0], $inactiveMemberIds))
       {
-        $result[] = $friend['member_id_to'];
+        $result[] = $friend[0];
       }
     }
 

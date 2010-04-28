@@ -15,14 +15,14 @@ $option = array(
 );
 op_include_list('memberList', $list, $option);
 ?>
-<?php op_include_pager_navigation($pager, 'member/search?page=%d', array('is_total' => false, 'use_current_query_string' => true)) ?>
+<?php op_include_pager_navigation($pager, '@member_search?page=%d', array('is_total' => false, 'use_current_query_string' => true)) ?>
 <?php else: ?>
 <?php echo __('Your search queries did not match any members.') ?>
 <?php endif ?>
 
 <?php
 $options = array(
-  'url'    => url_for('member/search'),
+  'url'    => url_for('@member_search'),
   'button' => __('Search'),
   'method' => 'get',
   'align'  => 'center'

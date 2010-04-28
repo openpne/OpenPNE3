@@ -4,7 +4,7 @@
 <?php if ($member == $sf_user->getMember()) : ?>
 <font color="<?php echo $op_color["core_color_22"] ?>">
 <?php echo __('This is your page other member see.') ?><br>
-<?php echo __('If you edit profile, access %1%.', array('%1%' => link_to('「'. __('Edit profile') .'」', 'member/editProfile'))) ?>
+<?php echo __('If you edit profile, access %1%.', array('%1%' => link_to('「'. __('Edit profile') .'」', '@member_editProfile'))) ?>
 </font>
 <?php else: ?>
 <?php include_partial('member/birthdayBox', array('targetDay' => $targetDay)); ?>
@@ -134,6 +134,6 @@ foreach ($member->getProfiles(true) as $profile)
 <?php slot('op_mobile_footer') ?>
 <table width="100%">
 <tbody><tr><td align="center" bgcolor="<?php echo $op_color["core_color_2"] ?>">
-<font color="<?php echo $op_color["core_color_18"] ?>"><a href="<?php echo url_for('member/home') ?>" accesskey="0"><font color="<?php echo $op_color["core_color_18"] ?>">0. <?php echo __('home') ?></font></a> / <a href="#top"><font color="<?php echo $op_color["core_color_18"] ?>"><?php echo __('top') ?></font></a> / <a href="#bottom" accesskey="8"><font color="<?php echo $op_color["core_color_18"] ?>">8. <?php echo __('bottom') ?></font></a></font><br>
+<font color="<?php echo $op_color["core_color_18"] ?>"><a href="<?php echo url_for('@homepage') ?>" accesskey="0"><font color="<?php echo $op_color["core_color_18"] ?>">0. <?php echo __('home') ?></font></a> / <a href="#top"><font color="<?php echo $op_color["core_color_18"] ?>"><?php echo __('top') ?></font></a> / <a href="#bottom" accesskey="8"><font color="<?php echo $op_color["core_color_18"] ?>">8. <?php echo __('bottom') ?></font></a></font><br>
 </td></tr></tbody></table>
 <?php end_slot(); ?>

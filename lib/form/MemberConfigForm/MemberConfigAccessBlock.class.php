@@ -24,14 +24,11 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
 
   public function configure()
   {
-    $relations = Doctrine::getTable('MemberRelationship')->retrievesByMemberIdFrom($this->member->getId());
+    $relations = Doctrine::getTable('MemberRelationship')->retrievesAccessBlockByMemberIdFrom($this->member->getId());
     foreach ($relations as $relation)
     {
-      if ($relation->getIsAccessBlock())
-      {
-        $this->blockedId[] = $relation->getMemberIdTo();
-        $this->blockedRelationshipId[] = $relation->getId();
-      }
+      $this->blockedId[] = $relation['member_id_to'];
+      $this->blockedRelationshipId[] = $relation['id'];
     }
   }
 

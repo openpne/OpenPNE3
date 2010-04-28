@@ -3,7 +3,7 @@
 <?php end_slot() ?>
 
 <h2><?php echo __('パスワード再発行') ?></h2>
-<p><?php echo __('%1%さんのパスワードを変更します。', array('%1%' => link_to($member->getName(), app_url_for('pc_frontend', 'member/profile?id='.$member->getId())))) ?></p>
+<p><?php echo __('%1%さんのパスワードを変更します。', array('%1%' => link_to($member->getName(), app_url_for('pc_frontend', '@member_profile?id='.$member->getId())))) ?></p>
 
 <?php echo $form->renderFormTag(url_for('member/reissuePassword?id='.$member->getId())) ?>
 <table>

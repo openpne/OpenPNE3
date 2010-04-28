@@ -72,9 +72,9 @@ pc:
           {{ new_member.name }} さんが {{ community.name }}{{ op_term.community }} に参加しました。
           
           ◆{{ community.name }}{{ op_term.community }}のページ
-          {% app_url_for('pc_frontend', 'community/home?id='~community.id, true) %}
+          {% app_url_for('pc_frontend', '@community_home?id='~community.id, true) %}
           ◇{{ new_member.name }}さんのページ
-          {% app_url_for('pc_frontend', 'member/profile?id='~new_member.id, true) %}
+          {% app_url_for('pc_frontend', '@member_profile?id='~new_member.id, true) %}
     variables:
       "op_config.sns_name": "SNS 名"
       "new_member.name": "新しいメンバーのニックネーム"
@@ -149,7 +149,7 @@ pc:
           
           誕生日 : {{ birthMember.profile.op_preset_birthday|date("m 月 d 日") }}
           {{ op_term.nickname }} : {{ birthMember.name }}
-          URL : {{ sf_config.op_base_url }}{% app_url_for("pc_frontend", "member/profile?id="~birthMember.id) %}
+          URL : {{ sf_config.op_base_url }}{% app_url_for("pc_frontend", "@member_profile?id="~birthMember.id) %}
           
           {{ op_config.sns_name }} が、あなたの今後に役立ちますように、是非、ご活用いただければと思います。
     variables:
@@ -241,9 +241,9 @@ mobile:
           {{ new_member.name }} さんが {{ community.name }}{{ op_term.community }} に参加しました。
           
           ◆{{ communit.name }}{{ op_term.community }}のページ
-          {% app_url_for('mobile_frontend', 'community/home?id='~community.id, true) %}
+          {% app_url_for('mobile_frontend', '@community_home?id='~community.id, true) %}
           ◇{{ new_member.name }}さんのページ
-          {% app_url_for('mobile_frontend', 'member/profile?id='~new_member.id, true) %}
+          {% app_url_for('mobile_frontend', '@member_profile?id='~new_member.id, true) %}
     variables:
       "op_config.sns_name": "SNS 名"
       "new_member.name": "新しいメンバーのニックネーム"
@@ -362,7 +362,7 @@ mobile:
           
           誕生日 : {{ birthMember.profile.op_preset_birthday|date("m 月 d 日") }}
           {{ op_term.nickname }} : {{ birthMember.name }}
-          URL : {{ sf_config.op_base_url }}{% app_url_for("mobile_frontend", "member/profile?id="~birthMember.id) %}
+          URL : {{ sf_config.op_base_url }}{% app_url_for("mobile_frontend", "@member_profile?id="~birthMember.id) %}
           
           {{ op_config.sns_name }} が、あなたの今後に役立ちますように、是非、ご活用いただければと思います。
     variables:

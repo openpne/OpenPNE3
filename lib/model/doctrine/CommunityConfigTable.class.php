@@ -17,11 +17,32 @@ class CommunityConfigTable extends Doctrine_Table
       ->execute();
   }
 
-  public function retrieveByNameAndCommunityId($name, $communityId)
+  public function retrieveByNameAndCommunityIdQuery($name, $communityId)
   {
     return $this->createQuery()
       ->where('name = ?', $name)
-      ->andWhere('community_id = ?', $communityId)
-      ->fetchOne();
+      ->andWhere('community_id = ?', $communityId);
+  }
+
+  public function retrieveByNameAndCommunityId($name, $communityId)
+  {
+    $q = $this->retrieveByNameAndCommunityIdQuery($name, $communityId);
+
+    return $q->fetchOne();
+  }
+
+  public function retrieveValueByNameAndCommunityId($name, $communityId)
+  {
+    $q = $this->retrieveByNameAndCommunityIdQuery($name, $communityId);
+
+    $result = $q->select('value')
+      ->fetchOne(array(), Doctrine::HYDRATE_NONE);
+
+    if (!$result)
+    {
+      return null;
+    }
+
+    return $result[0];
   }
 }

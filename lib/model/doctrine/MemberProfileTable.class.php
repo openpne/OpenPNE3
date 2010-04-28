@@ -15,14 +15,14 @@ class MemberProfileTable extends opAccessControlDoctrineTable
     $profiles = Doctrine::getTable('Profile')->createQuery()
       ->select('id')
       ->orderBy('sort_order')
-      ->execute();
+      ->execute(array(), Doctrine::HYDRATE_NONE);
 
     $memberProfiles = array();
     foreach ($profiles as $profile)
     {
       $memberProfile = $this->createQuery()
         ->where('member_id = ?', $memberId)
-        ->andWhere('profile_id = ?', $profile->getId())
+        ->andWhere('profile_id = ?', $profile[0])
         ->fetchOne();
 
       if ($memberProfile)

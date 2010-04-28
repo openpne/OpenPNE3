@@ -7,7 +7,7 @@
 <?php
 $list = array();
 foreach ($pager->getResults() as $community) {
-  $list[] = link_to(sprintf('%s(%d)', $community->getName(), $community->countCommunityMembers()), 'community/home?id='.$community->getId());
+  $list[] = link_to(sprintf('%s(%d)', $community->getName(), $community->countCommunityMembers()), '@community_home?id='.$community->getId());
 }
 $option = array(
   'border' => true,
@@ -15,4 +15,4 @@ $option = array(
 op_include_list('communityList', $list, $option);
 ?>
 
-<?php op_include_pager_navigation($pager, 'community/joinlist?page=%d&id='.$member->getId(), array('is_total' => false)); ?>
+<?php op_include_pager_navigation($pager, '@community_joinlist?page=%d&id='.$member->getId(), array('is_total' => false)); ?>

@@ -13,16 +13,23 @@ class CommunityTable extends opAccessControlDoctrineTable
   public function retrievesByMemberId($memberId, $limit = 5, $isRandom = false)
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
+      ->select('community_id')
       ->where('is_pre = ?', false)
       ->andWhere('member_id = ?', $memberId)
-      ->execute();
+      ->execute(array(), Doctrine::HYDRATE_NONE);
 
-    if (0 === $communityMembers->count())
+    $ids = array();
+    foreach ($communityMembers as $communityMember)
+    {
+      $ids[] = $communityMember[0];
+    }
+
+    if (empty($ids))
     {
       return;
     }
 
-    $q = $this->createQuery()->whereIn('id', array_values($communityMembers->toKeyValueArray('id', 'community_id')));
+    $q = $this->createQuery()->whereIn('id', $ids);
 
     if (!is_null($limit))
     {
@@ -41,19 +48,26 @@ class CommunityTable extends opAccessControlDoctrineTable
   public function getJoinCommunityListPager($memberId, $page = 1, $size = 20)
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
+      ->select('community_id')
       ->where('member_id = ?', $memberId)
       ->andWhere('is_pre = ?', false)
-      ->execute();
+      ->execute(array(), Doctrine::HYDRATE_NONE);
+
+    $ids = array();
+    foreach ($communityMembers as $communityMember)
+    {
+      $ids[] = $communityMember[0];
+    }
 
     $pager = new sfDoctrinePager('Community', $size);
 
-    if (0 === $communityMembers->count())
+    if (empty($ids))
     {
       return $pager;
     }
 
     $q = $this->createQuery()
-      ->whereIn('id', array_values($communityMembers->toKeyValueArray('id', 'community_id')));
+      ->whereIn('id', $ids);
  
     $pager->setQuery($q);
     $pager->setPage($page);
@@ -65,19 +79,26 @@ class CommunityTable extends opAccessControlDoctrineTable
   public function getCommunityMemberListPager($communityId, $page = 1, $size = 20)
   {
     $communityMembers = Doctrine::getTable('CommunityMember')->createQuery()
+      ->select('member_id')
       ->where('community_id = ?', $communityId)
       ->andWhere('is_pre = ?', false)
-      ->execute();
+      ->execute(array(), Doctrine::HYDRATE_NONE);
+
+    $ids = array();
+    foreach ($communityMembers as $communityMember)
+    {
+      $ids[] = $communityMember[0];
+    }
 
     $pager = new opNonCountQueryPager('Member', $size);
 
-    if (0 === $communityMembers->count())
+    if (empty($ids))
     {
       return $pager;
     }
 
     $q = Doctrine::getTable('Member')->createQuery()
-      ->whereIn('id', array_values($communityMembers->toKeyValueArray('id', 'member_id')));
+      ->whereIn('id', $ids);
 
     $pager->setQuery($q);
     $pager->setPage($page);
@@ -94,11 +115,11 @@ class CommunityTable extends opAccessControlDoctrineTable
       ->select('community_id')
       ->where('member_id = ?', $memberId)
       ->andWhere('is_pre = ?', false)
-      ->execute();
+      ->execute(array(), Doctrine::HYDRATE_NONE);
 
     foreach ($resultSet as $value)
     {
-      $result[] = $value->getCommunityId();
+      $result[] = $value[0];
     }
 
     return $result;
@@ -107,17 +128,23 @@ class CommunityTable extends opAccessControlDoctrineTable
   public function getDefaultCommunities()
   {
     $communityConfigs = Doctrine::getTable('CommunityConfig')->createQuery()
+      ->select('community_id')
       ->where('name = ?', 'is_default')
       ->andWhere('value = ?', true)
-      ->execute();
+      ->execute(array(), Doctrine::HYDRATE_NONE);
 
-    if (!$communityConfigs || !count($communityConfigs))
+    $ids = array();
+    foreach ($communityConfigs as $communityConfig)
+    {
+      $ids[] = $communityConfig[0];
+    }
+    if (empty($ids))
     {
       return null;
     }
 
     return $this->createQuery()
-      ->whereIn('id', array_values($communityConfigs->toKeyValueArray('id', 'community_id')))
+      ->whereIn('id', $ids)
       ->execute();
   }
 

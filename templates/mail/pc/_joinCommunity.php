@@ -6,9 +6,9 @@
 
 <?php echo __('"%1%" %community% page:', array('%1%' => $community->name)) ?>
 
-<?php echo app_url_for('pc_frontend', 'community/home?id='.$community->id, true) ?>
+<?php echo app_url_for('pc_frontend', '@community_home?id='.$community->id, true) ?>
 
 
 <?php echo __('"%1%"\'s profile page:', array('%1%' => $new_member->name)) ?>
 
-<?php echo app_url_for('pc_frontend', 'member/profile?id='.$new_member->id, true) ?>
+<?php echo app_url_for('pc_frontend', '@member_profile?id='.$new_member->id, true) ?>

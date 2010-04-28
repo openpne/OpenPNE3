@@ -15,7 +15,7 @@ $option = array(
 op_include_list('friendList', $list, $option);
 ?>
 
-<?php op_include_pager_navigation($pager, 'friend/list?page=%d&id='.$id , array('is_total' => false)); ?><br>
+<?php op_include_pager_navigation($pager, '@friend_list?page=%d&id='.$id , array('is_total' => false)); ?><br>
 
 <?php if ($relation->isSelf()): ?>
 <?php slot('op_mobile_footer_menu') ?>
