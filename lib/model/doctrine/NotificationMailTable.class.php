@@ -10,11 +10,11 @@ class NotificationMailTable extends Doctrine_Table
     $list = $this->createQuery()
       ->select('name')
       ->where('is_enabled = ?', false)
-      ->fetchArray();
+      ->execute(array(), Doctrine::HYDRATE_NONE);
 
     foreach ($list as $v)
     {
-      $result[] = $v['name'];
+      $result[] = $v[0];
     }
 
     return $result;

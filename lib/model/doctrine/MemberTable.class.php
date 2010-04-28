@@ -55,7 +55,7 @@ class MemberTable extends opAccessControlDoctrineTable
     $members = $this->createQuery()
       ->select('id')
       ->andWhere('is_active = ?', false)
-      ->execute(array(), Doctrine::HYDRATE_ARRAY);
+      ->execute(array(), Doctrine::HYDRATE_NONE);
 
     if ($e)
     {
@@ -65,7 +65,7 @@ class MemberTable extends opAccessControlDoctrineTable
     $memberIds = array();
     foreach ($members as $member)
     {
-      $memberIds[] = $member['id'];
+      $memberIds[] = $member[0];
     }
 
     return $memberIds;
