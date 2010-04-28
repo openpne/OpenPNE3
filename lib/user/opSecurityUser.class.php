@@ -18,7 +18,8 @@
 class opSecurityUser extends sfBasicSecurityUser
 {
   protected
-    $authAdapters = array();
+    $authAdapters = array(),
+    $serializedMember = '';
 
   /**
    * Initializes the current user.
@@ -170,7 +171,16 @@ class opSecurityUser extends sfBasicSecurityUser
       return new opAnonymousMember();
     }
 
-    return Doctrine::getTable('Member')->find($this->getMemberId());
+    if ($this->serializedMember)
+    {
+      return unserialize($this->serializedMember);
+    }
+
+    $result = Doctrine::getTable('Member')->find($this->getMemberId());
+
+    $this->serializedMember = serialize($result);
+
+    return $result;
   }
 
   public function getRegisterEndAction()
