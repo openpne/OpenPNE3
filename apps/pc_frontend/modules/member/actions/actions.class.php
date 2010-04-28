@@ -139,7 +139,7 @@ class memberActions extends opMemberAction
       {
         $this->getUser()->setFlash('error', $e->getMessage());
       }
-      $this->redirect('member/configImage');
+      $this->redirect('@member_config_image');
     }
   }
 

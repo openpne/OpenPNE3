@@ -67,7 +67,7 @@ abstract class opCommunityAction extends sfActions
     {
       if ($request->isMethod('post') && $request->hasParameter('is_delete'))
       {
-        $this->redirect('community/delete');
+        $this->redirect('@community_delete');
       }
     }
 
@@ -90,7 +90,7 @@ abstract class opCommunityAction extends sfActions
         $this->communityConfigForm->save();
         $this->communityFileForm->save();
 
-        $this->redirect('community/home?id='.$this->community->getId());
+        $this->redirect('@community_home?id='.$this->community->getId());
       }
     }
   }
@@ -146,7 +146,7 @@ abstract class opCommunityAction extends sfActions
       }
       else
       {
-        $this->redirect('community/home?id=' . $this->id);
+        $this->redirect('@community_home?id=' . $this->id);
       }
     }
     $this->community = Doctrine::getTable('Community')->find($this->id);
@@ -235,7 +235,7 @@ abstract class opCommunityAction extends sfActions
           $this->getUser()->setFlash('notice', 'You have just joined to this %community%.');
         }
 
-        $this->redirect('community/home?id='.$this->id);
+        $this->redirect('@community_home?id='.$this->id);
       }
     }
 
@@ -263,7 +263,7 @@ abstract class opCommunityAction extends sfActions
       {
         Doctrine::getTable('CommunityMember')->quit($this->getUser()->getMemberId(), $this->id);
         $this->getUser()->setFlash('notice', 'You have just quitted this %community%.');
-        $this->redirect('community/home?id='.$this->id);
+        $this->redirect('@community_home?id='.$this->id);
       }
     }
   }
@@ -311,7 +311,7 @@ abstract class opCommunityAction extends sfActions
       if ($this->form->isValid())
       {
         Doctrine::getTable('CommunityMember')->requestChangeAdmin($this->member->getId(), $this->id);
-        $this->redirect('community/memberManage?id='.$this->id);
+        $this->redirect('@community_memberManage?id='.$this->id);
       }
     }
 
@@ -343,7 +343,7 @@ abstract class opCommunityAction extends sfActions
       if ($this->form->isValid())
       {
         Doctrine::getTable('CommunityMember')->requestSubAdmin($this->member->getId(), $this->id);
-        $this->redirect('community/memberManage?id='.$this->id);
+        $this->redirect('@community_memberManage?id='.$this->id);
       }
     }
 
@@ -368,7 +368,7 @@ abstract class opCommunityAction extends sfActions
       $request->checkCSRFProtection();
 
       $this->communityMember->removePosition('sub_admin');
-      $this->redirect('community/memberManage?id='.$this->id);
+      $this->redirect('@community_memberManage?id='.$this->id);
     }
 
     return sfView::INPUT;
@@ -396,7 +396,7 @@ abstract class opCommunityAction extends sfActions
       $request->checkCSRFProtection();
 
       Doctrine::getTable('CommunityMember')->quit($member->getId(), $this->id);
-      $this->redirect('community/memberManage?id='.$this->id);
+      $this->redirect('@community_memberManage?id='.$this->id);
     }
 
     $this->member    = $member;

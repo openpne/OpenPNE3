@@ -1,7 +1,7 @@
 Navigation:
   mobile_home_side_navigation_invite:
     type: "mobile_home_side"
-    uri: "member/invite"
+    uri: "@member_invite"
     sort_order: 0
     Translation:
       ja_JP:
@@ -11,7 +11,7 @@ Navigation:
 
   mobile_home_navigation_friend:
     type: "mobile_home"
-    uri: "friend/list"
+    uri: "@friend_list"
     sort_order: 0
     Translation:
       ja_JP:
@@ -21,7 +21,7 @@ Navigation:
 
   mobile_home_navigation_community:
     type: "mobile_home"
-    uri: "community/joinlist"
+    uri: "@community_joinlist"
     sort_order: 10
     Translation:
       ja_JP:
@@ -31,7 +31,7 @@ Navigation:
 
   mobile_home_center_navigation_profile:
     type: "mobile_home_center"
-    uri: "member/profile"
+    uri: "@member_profile_mine"
     sort_order: 0
     Translation:
       ja_JP:

@@ -7,7 +7,7 @@
 </center>
 <hr color="<?php echo $op_color["core_color_12"] ?>">
 <?php op_include_form('deleteForm', $form, array(
-  'url'    => url_for('community/deleteImage?id='.$id),
+  'url'    => url_for('@community_deleteImage?id='.$id),
   'button' => __('Delete'),
   'align'  => 'center'
 )) ?>

@@ -67,12 +67,12 @@ abstract class opFriendAction extends sfActions
     {
       $this->getUser()->setFlash('error', 'This member already belongs to %my_friend%.');
       $this->getUser()->setFlash('error_params', array('%my_friend%' => Doctrine::getTable('SnsTerm')->get('my_friend')->pluralize()));
-      $this->redirect('member/profile?id='.$this->id);
+      $this->redirect('@member_profile?id='.$this->id);
     }
     if ($this->relation->isFriendPreFrom())
     {
       $this->getUser()->setFlash('error', '%Friend% request is already sent.');
-      $this->redirect('member/profile?id='.$this->id);
+      $this->redirect('@member_profile?id='.$this->id);
     }
 
     $this->form = new FriendLinkForm();
@@ -85,7 +85,7 @@ abstract class opFriendAction extends sfActions
         $this->getUser()->setFlash('notice', 'You have requested %friend% link.');
         $this->redirectToHomeIfIdIsNotValid();
         $this->relation->setFriendPre();
-        $this->redirect('member/profile?id='.$this->id);
+        $this->redirect('@member_profile?id='.$this->id);
       }
     }
 
@@ -125,8 +125,8 @@ abstract class opFriendAction extends sfActions
   */
   protected function redirectToHomeIfIdIsNotValid()
   {
-    $this->redirectUnless($this->id, 'member/home');
-    $this->redirectIf(($this->id == $this->getUser()->getMemberId()), 'member/home');
+    $this->redirectUnless($this->id, '@homepage');
+    $this->redirectIf(($this->id == $this->getUser()->getMemberId()), '@homepage');
   }
 
  /**

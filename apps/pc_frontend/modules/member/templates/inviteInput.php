@@ -2,7 +2,7 @@
 
 $options = array(
   'title' => __('Invite a friend to %1%', array('%1%' => $op_config['sns_name'])),
-  'url' => url_for('member/invite'),
+  'url' => url_for('@member_invite'),
   'button' => __('Send'),
 );
 op_include_form('inviteForm', $form, $options);
@@ -16,7 +16,7 @@ op_include_form('inviteForm', $form, $options);
 <h3><?php echo __('Mail address list during invitation') ?></h3>
 </div>
 
-<?php echo $listform->renderFormTag(url_for('member/invite')) ?>
+<?php echo $listform->renderFormTag(url_for('@member_invite')) ?>
 <?php $i = 0 ?>
 <?php foreach ($listform as $field): ?>
 <?php if ($field->isHidden()) continue; ?>

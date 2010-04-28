@@ -1,6 +1,6 @@
 <p>
-<?php echo link_to('プライバシーポリシー', 'default/privacyPolicy', array('target' => '_blank')); ?> 
-<?php echo link_to('利用規約', 'default/userAgreement', array('target' => '_blank')); ?> 
+<?php echo link_to('プライバシーポリシー', '@global_privacy_policy', array('target' => '_blank')); ?> 
+<?php echo link_to('利用規約', '@global_user_agreement', array('target' => '_blank')); ?> 
 <?php $snsConfigSettings = sfConfig::get('openpne_sns_config'); ?>
 <?php if (opToolkit::isSecurePage()) : ?>
 <?php echo Doctrine::getTable('SnsConfig')->get('footer_after', $snsConfigSettings['footer_after']['Default']); ?>

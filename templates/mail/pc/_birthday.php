@@ -7,7 +7,7 @@
 
 <?php echo __('%nickname%', array('%nickname%' => $op_term['nickname']->titleize())) ?> : <?php echo $birthMember->name ?>
 
-<?php echo __('URL') ?> : <?php echo sfConfig::get('op_base_url').app_url_for('pc_frontend', 'member/profile?id='.$birthMember->id) ?>
+<?php echo __('URL') ?> : <?php echo sfConfig::get('op_base_url').app_url_for('pc_frontend', '@member_profile?id='.$birthMember->id) ?>
 
 
 <?php echo __('We hope that using %1% is useful for your future.', array('%1%' => $op_config['sns_name'])) ?>
