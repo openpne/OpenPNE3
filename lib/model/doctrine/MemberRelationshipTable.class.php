@@ -25,6 +25,14 @@ class MemberRelationshipTable extends opAccessControlDoctrineTable
       ->execute();
   }
 
+  public function retrievesAccessBlockByMemberIdFrom($memberId)
+  {
+    return $this->createQuery()
+      ->where('member_id_from = ?', $memberId)
+      ->andWhere('is_access_block = ?', true)
+      ->execute(array(), Doctrine::HYDRATE_ARRAY);
+  }
+
   public function getFriendListPager($memberId, $page = 1, $size = 20)
   {
     $friendMemberIds = $this->getFriendMemberIds($memberId);
