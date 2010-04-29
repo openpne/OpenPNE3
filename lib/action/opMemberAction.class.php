@@ -88,6 +88,7 @@ abstract class opMemberAction extends sfActions
         $this->redirectIf($this->getUser()->isRegisterFinish(), $this->getUser()->getRegisterEndAction());
         $this->redirectIf($this->getUser()->isMember(), $uri);
       }
+
       return sfView::ERROR;
     }
 
@@ -106,6 +107,13 @@ abstract class opMemberAction extends sfActions
   {
     $this->getUser()->logout();
     $this->redirect('member/login');
+  }
+
+  public function executeRegister($request)
+  {
+    $member = $this->getUser()->setRegisterToken($request['token']);
+
+    $this->forward404Unless($member && !$this->getUser()->isSNSMember() && $this->getUser()->isInvited());
   }
 
   public function executeRegisterInput($request)

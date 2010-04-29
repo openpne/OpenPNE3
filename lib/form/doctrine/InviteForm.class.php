@@ -144,8 +144,6 @@ class InviteForm extends MemberConfigPcAddressForm
 
     parent::save();
 
-    $this->member->setConfig('register_auth_mode', $this->getOption('authMode', $user->getCurrentAuthMode()));
-
     if ($this->getOption('is_link'))
     {
       $fromMemberId = $user->getMemberId();

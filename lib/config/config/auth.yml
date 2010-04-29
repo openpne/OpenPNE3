@@ -37,7 +37,7 @@ enable_mobile:
 
 self_invite_action:
   IsConfig: false
-  Default:  "@homepage"
+  Default:  ""
 
 admin_invite:
   IsConfig: false
