@@ -21,7 +21,7 @@
 <?php include_slot('pager') ?>
 <?php foreach ($pager->getResults() as $community): ?>
 <?php $moreInfo = array(
-  link_to(__('Delete'), '@community_delete?id='.$community->getId()),
+  link_to(__('Delete'), 'community/delete?id='.$community->getId()),
   link_to(__('Make all members join in this community'), 'community/addAllMember?id='.$community->getId())
 ) ?>
 <?php if (!(bool)$community->getConfig('is_default')): ?>

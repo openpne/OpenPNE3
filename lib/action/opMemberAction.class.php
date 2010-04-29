@@ -244,7 +244,7 @@ abstract class opMemberAction extends sfActions
       {
         $this->memberForm->save();
         $this->profileForm->save($this->getUser()->getMemberId());
-        $this->redirect('@member_profile');
+        $this->redirect('@member_profile_mine');
       }
     }
 
