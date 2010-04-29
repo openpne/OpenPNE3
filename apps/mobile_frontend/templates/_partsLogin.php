@@ -1,7 +1,7 @@
 <?php include_customizes($id, 'before') ?>
 
 <table id="<?php echo $id ?>" width="100%">
-<tr><td bgcolor="<?php echo $op_color["core_color_11"] ?>"><font color="<?php echo $op_color["core_color_18"] ?>"><?php echo $form->getAuthMode() ?></font></td></tr>
+<tr><td bgcolor="<?php echo $op_color["core_color_11"] ?>"><font color="<?php echo $op_color["core_color_18"] ?>"><?php echo $form->getAuthAdapter()->getAuthConfig('auth_mode_caption') ? __($form->getAuthAdapter()->getAuthConfig('auth_mode_caption')) : $form->getAuthMode() ?></font></td></tr>
 
 <tr><td bgcolor="<?php echo $op_color["core_color_4"] ?>">
 <form action="<?php echo $link_to ?><?php if ($form->isUtn()) echo '?guid=on' ?>" method="post"<?php if ($form->isUtn()) echo ' utn' ?>>
