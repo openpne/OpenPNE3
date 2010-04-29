@@ -321,12 +321,27 @@ abstract class opAuthAdapter
   abstract public function isRegisterFinish($member_id = null);
 
   /**
+   * Gets an action path to begin registration
+   *
+   * @return string
+   */
+  public function getRegisterInputAction($token)
+  {
+    return 'member/registerInput?token='.$token;
+  }
+
+  /**
    * Gets an action path to register
    *
    * @return string
    */
-  public function getRegisterEndAction()
+  public function getRegisterEndAction($token)
   {
-    return $this->authModuleName.'/registerEnd';
+    return $this->authModuleName.'/registerEnd?token='.$token;
+  }
+
+  public function getAuthModuleName()
+  {
+    return $this->authModuleName;
   }
 }

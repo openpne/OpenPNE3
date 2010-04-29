@@ -2,8 +2,11 @@ all:
   is_secure: true
   credentials: SNSMember
 
+register:
+  is_secure: false
+
 registerInput:
-  credentials: [[SNSRegisterBegin, SNSRegisterFinish]]
+  is_secure: false
 
 configComplete:
   is_secure: false
@@ -12,7 +15,7 @@ changeLanguage:
   is_secure: false
 
 registerMobileToRegisterEnd:
-  credentials: SNSRegisterFinish
+  is_secure: false
 
 profile:
   is_secure: both

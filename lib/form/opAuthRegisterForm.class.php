@@ -45,12 +45,12 @@ abstract class opAuthRegisterForm extends BaseForm
       $this->setMember(Doctrine::getTable('Member')->createPre());
     }
 
-    $this->memberForm = new MemberForm($this->getMember());
-    $this->profileForm = new MemberProfileForm($this->getMember()->getProfiles());
+    $this->memberForm = new MemberForm($this->getMember(), array(), false);
+    $this->profileForm = new MemberProfileForm($this->getMember()->getProfiles(), array(), false);
     $this->profileForm->setRegisterWidgets();
-    $this->configForm = new MemberConfigForm($this->getMember());
+    $this->configForm = new MemberConfigForm($this->getMember(), array(), false);
 
-    parent::__construct($defaults, $options, $CSRFSecret);
+    parent::__construct($defaults, $options, false);
 
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array($this, 'validateMobileUID'))));
 

@@ -120,4 +120,24 @@ class MemberTable extends opAccessControlDoctrineTable
 
     return $acl;
   }
+
+  public function findInactive($id)
+  {
+    return $this->createQuery('m')
+      ->where('m.id = ?', $id)
+      ->andWhere('m.is_active = ?', false)
+      ->fetchOne();
+  }
+
+  public function findByRegisterToken($token)
+  {
+    $config = Doctrine::getTable('MemberConfig')
+      ->retrieveByNameAndValue('register_token', $token);
+    if (!$config)
+    {
+      return false;
+    }
+
+    return $this->findInactive($config->getMemberId());
+  }
 }

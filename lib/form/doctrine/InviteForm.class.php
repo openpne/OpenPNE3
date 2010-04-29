@@ -108,8 +108,9 @@ class InviteForm extends MemberConfigPcAddressForm
     if ('pc_address' === $name || 'mobile_address' === $name)
     {
       $this->savePreConfig($name, $value);
-      $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($name.'_token', $this->member->getId(), true);
-      $token = $memberConfig->getValue();
+
+      $token = $this->member->generateRegisterToken();
+
       $this->sendConfirmMail($token, $value, array(
         'id'   => $this->member->getId(),
         'type' => $name,

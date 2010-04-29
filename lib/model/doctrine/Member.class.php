@@ -315,4 +315,17 @@ class Member extends BaseMember implements opAccessControlRecordInterface
 
     return 'everyone';
   }
+
+  public function generateRegisterToken()
+  {
+    $token = $this->getId().md5(uniqid(mt_rand(), true));
+    $this->setConfig('register_token', $token);
+
+    return $token;
+  }
+
+  public function getRegisterToken()
+  {
+    return $this->getConfig('register_token');
+  }
 }

@@ -19,10 +19,9 @@ class opAuthAction extends sfActions
 {
   public function executeRegisterEnd(sfWebRequest $request)
   {
-    opActivateBehavior::disable();
-    $member = $this->getUser()->getMember();
-    opActivateBehavior::enable();
-    $this->forward404Unless($member);
+    $this->forward404Unless($this->getUser()->setRegisterToken($request['token']));
+
+    $member = $this->getUser()->getMember(true);
 
     if (opConfig::get('retrieve_uid') == 3
       && !sfConfig::get('app_is_mobile', false)

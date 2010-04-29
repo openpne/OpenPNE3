@@ -74,11 +74,6 @@ abstract class opMemberAction extends sfActions
     }
   }
 
- /**
-  * Executes login action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeLogin($request)
   {
     $this->getUser()->logout();
@@ -89,9 +84,9 @@ abstract class opMemberAction extends sfActions
     {
       if ($uri = $this->getUser()->login())
       {
-        $this->redirectIf($this->getUser()->hasCredential('SNSRegisterBegin'), 'member/registerInput');
-        $this->redirectIf($this->getUser()->hasCredential('SNSRegisterFinish'), $this->getUser()->getRegisterEndAction());
-        $this->redirectIf($this->getUser()->hasCredential('SNSMember'), $uri);
+        $this->redirectIf($this->getUser()->isRegisterBegin(), $this->getUser()->getRegisterInputAction());
+        $this->redirectIf($this->getUser()->isRegisterFinish(), $this->getUser()->getRegisterEndAction());
+        $this->redirectIf($this->getUser()->isMember(), $uri);
       }
       return sfView::ERROR;
     }
@@ -107,60 +102,44 @@ abstract class opMemberAction extends sfActions
     return sfView::SUCCESS;
   }
 
- /**
-  * Executes logout action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeLogout($request)
   {
     $this->getUser()->logout();
     $this->redirect('member/login');
   }
 
- /**
-  * Executes register action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeRegisterInput($request)
   {
-    opActivateBehavior::disable();
-    $mode = (sfConfig::get('app_is_mobile') ? 'mobile' : 'pc');
-    $this->forward404Unless(opToolkit::isEnabledRegistration($mode));
+    $this->forward404Unless(opToolkit::isEnabledRegistration((sfConfig::get('app_is_mobile') ? 'mobile' : 'pc')));
 
+    $this->token = $request['token'];
+    $member = $this->getUser()->setRegisterToken($this->token);
+
+    $this->forward404Unless($member && $this->getUser()->isRegisterBegin());
+
+    opActivateBehavior::disable();
     $this->form = $this->getUser()->getAuthAdapter()->getAuthRegisterForm();
+    opActivateBehavior::enable();
 
     if ($request->isMethod('post'))
     {
       $this->form->bindAll($request);
+
       if ($this->form->isValidAll())
       {
         $result = $this->getUser()->register($this->form);
-        opActivateBehavior::enable();
-        $this->redirectIf($result, $this->getUser()->getRegisterEndAction());
+        $this->redirectIf($result, $this->getUser()->getRegisterEndAction($this->token));
       }
     }
 
-    opActivateBehavior::enable();
     return sfView::SUCCESS;
   }
 
- /**
-  * Executes home action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeHome($request)
   {
     return sfView::SUCCESS;
   }
 
- /**
-  * Executes search action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeSearch($request)
   {
     $params = $request->getParameter('member', array());
@@ -186,11 +165,6 @@ abstract class opMemberAction extends sfActions
     return sfView::SUCCESS;
   }
 
- /**
-  * Executes profile action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeProfile($request)
   {
     $id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
@@ -223,11 +197,6 @@ abstract class opMemberAction extends sfActions
     return sfView::SUCCESS;
   }
 
- /**
-  * Executes editProfile action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeEditProfile($request)
   {
     $this->memberForm = new MemberForm($this->getUser()->getMember());
@@ -251,11 +220,6 @@ abstract class opMemberAction extends sfActions
     return sfView::SUCCESS;
   }
 
- /**
-  * Executes config complete action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeConfigComplete($request)
   {
     $type = $request->getParameter('type');
@@ -300,11 +264,6 @@ abstract class opMemberAction extends sfActions
     return sfView::SUCCESS;
   }
 
- /**
-  * Executes config action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeConfig($request)
   {
     $filteredCategory = $this->filterConfigCategory();
@@ -334,11 +293,6 @@ abstract class opMemberAction extends sfActions
     return sfView::SUCCESS;
   }
 
- /**
-  * Executes invite action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeInvite($request)
   {
     if (
@@ -382,11 +336,6 @@ abstract class opMemberAction extends sfActions
     return sfView::INPUT;
   }
 
- /**
-  * Executes delete action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeDelete($request)
   {
     if (1 == $this->getUser()->getMemberId())
