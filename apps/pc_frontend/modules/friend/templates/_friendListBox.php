@@ -3,7 +3,7 @@ $options = array(
   'title' => __('%friend% List', array('%friend%' => $op_term['friend']->titleize())),
   'list' => $friends,
   'link_to' => '@obj_member_profile?id=',
-  'moreInfo' => array(op_link_to_member($member->getId(), '@obj_member_profile', array('link_target' => sprintf('%s(%d)', __('Show all'), $member->countFriends())))),
+  'moreInfo' => array(op_link_to_member($member->getId(), '@friend_list', array('link_target' => sprintf('%s(%d)', __('Show all'), $member->countFriends())))),
   'type' => $sf_data->getRaw('gadget')->getConfig('type'),
   'row' => $row,
   'col' => $col,
