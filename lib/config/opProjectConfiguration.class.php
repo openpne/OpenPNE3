@@ -25,7 +25,7 @@ class opProjectConfiguration extends sfProjectConfiguration
   static public function listenToPreCommandEvent(sfEvent $event)
   {
     $subject = $event->getSubject();
-    if (preg_match('/Task$/', get_class($subject)))
+    if ($subject instanceof sfTask)
     {
       sfConfig::set('sf_task_name', get_class($subject));
     }

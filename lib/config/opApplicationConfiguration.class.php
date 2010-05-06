@@ -44,7 +44,7 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
     set_include_path($OpenPNE2Path.PATH_SEPARATOR.get_include_path());
     $result = parent::setup();
 
-    if (!preg_match('/^sfDoctrineBuild.*Task$/', sfConfig::get('sf_task_name')))
+    if (0 !== strpos(sfConfig::get('sf_task_name'), 'sfDoctrineBuild'))
     {
       $configCache = $this->getConfigCache();
       $file = $configCache->checkConfig('data/config/plugin.yml', true);
