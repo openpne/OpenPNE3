@@ -15,7 +15,7 @@ $old_error_level = error_reporting();
 
 error_reporting($old_error_level & ~(E_STRICT | E_DEPRECATED));
 
-set_include_path(get_include_path().PATH_SEPARATOR.dirname(__FILE__).'/../lib/vendor/PEAR/');
+set_include_path(dirname(__FILE__).'/../lib/vendor/PEAR/'.PATH_SEPARATOR.get_include_path());
 require_once(dirname(__FILE__).'/../lib/util/opMobileUserAgent.class.php');
 
 $is_mobile = !opMobileUserAgent::getInstance()->getMobile()->isNonMobile();
