@@ -840,14 +840,23 @@ function op_replace_sns_term($string)
 /**
  * Creates a <a> link tag for the member nickname
  *
- * @param string  $member_id
- * @param string  $routeName
- * @param string  $options
+ * @value  mixed   $value (string or Member object)
+ * @param  string  $options
+ * @param  string  $routeName
  * @return string
  */
-function op_link_to_member($member_id, $routeName = '@obj_member_profile', $options = array())
+function op_link_to_member($value, $options = array(), $routeName = '@obj_member_profile')
 {
-  $member = $member_id ? Doctrine::getTable('Member')->find($member_id) : null;
+  $member = null;
+  if ($value instanceof Member)
+  {
+    $member = $value;
+  }
+  elseif ($value)
+  {
+    $member = Doctrine::getTable('Member')->find($value);
+  }
+
   if ($member)
   {
     $link_target = $member->name;
@@ -857,7 +866,7 @@ function op_link_to_member($member_id, $routeName = '@obj_member_profile', $opti
       unset($options['link_target']);
     }
 
-    return link_to($link_target, sprintf('%s?id=%d', $routeName, $member_id), $options);
+    return link_to($link_target, sprintf('%s?id=%d', $routeName, $member->id), $options);
   }
 
   return Doctrine::getTable('SnsConfig')->get('nickname_of_member_who_does_not_have_credentials', '-');

@@ -12,6 +12,7 @@ $options = array(
   'list' => $members,
   'crownIds' => array($communityAdmin->getId()),
   'link_to' => '@member_profile?id=',
+  'use_op_link_to_member' => true,
   'moreInfo' => array(link_to(sprintf('%s(%d)', __('Show all'), $community->countCommunityMembers()), '@community_memberList?id='.$community->getId())),
 );
 if ($isAdmin || $isSubAdmin)
