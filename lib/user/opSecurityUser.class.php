@@ -68,8 +68,10 @@ class opSecurityUser extends opAdaptableUser
     }
 
     $result = Doctrine::getTable('Member')->find($this->getMemberId());
-
-    $this->serializedMember = serialize($result);
+    if ($result)
+    {
+      $this->serializedMember = serialize($result);
+    }
 
     return $result;
   }
@@ -143,7 +145,7 @@ class opSecurityUser extends opAdaptableUser
         return;
       }
 
-      if ($this->getMemberId())
+      if ($this->getMember())
       {
         $this->getMember()->setConfig('remember_key', '');
       }
