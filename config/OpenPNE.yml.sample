@@ -137,7 +137,7 @@ ssl_selectable_actions:
 
 # テーブル名のプレフィックス (例: table_prefix: "op_")
 # Table name prefix (e.g: table_prefix: "op_")
-  table_prefix: ""
+table_prefix: ""
 
 ######################################
 # プロキシ (Proxy)
