@@ -848,6 +848,7 @@ function op_replace_sns_term($string)
 function op_link_to_member($value, $options = array(), $routeName = '@obj_member_profile')
 {
   $member = null;
+  $value = $value instanceof sfOutputEscaper ? $value->getRawValue() : $value;
   if ($value instanceof Member)
   {
     $member = $value;
