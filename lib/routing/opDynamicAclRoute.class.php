@@ -61,6 +61,10 @@ class opDynamicAclRoute extends sfDoctrineRoute
   protected function getObjectForParameters($parameters)
   {
     $result = parent::getObjectForParameters($parameters);
+    if (!$result)
+    {
+      return $result;
+    }
 
     if (!$result instanceof opAccessControlRecordInterface)
     {
