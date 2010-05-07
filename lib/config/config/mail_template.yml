@@ -37,7 +37,7 @@ pc:
           {{ op_config.sns_name }} に参加できます。
           
           ■ {{ op_config.sns_name }} に参加する
-          {% app_url_for('pc_frontend', 'opAuthMailAddress/register?token='~token~'&authMode='~authMode, true) %}
+          {% app_url_for('pc_frontend', 'member/register?token='~token, true) %}
     variables:
       "op_config.sns_name": "SNS 名"
       name: "招待者のニックネーム"
@@ -303,7 +303,7 @@ mobile:
           {{ op_config.sns_name }} に参加できます。
           
           ■ {{ op_config.sns_name }} に参加する
-          {% app_url_for('pc_frontend', 'opAuthMailAddress/register?token='~token~'&authMode='~authMode, true) %}
+          {% app_url_for('mobile_frontend', 'member/register?token='~token, true) %}
     variables:
       "op_config.sns_name": "SNS 名"
       name: "招待者のニックネーム"
