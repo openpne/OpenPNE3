@@ -40,6 +40,10 @@ class opDynamicAclRoute extends sfDoctrineRoute
   protected function getObjectForParameters($parameters)
   {
     $result = parent::getObjectForParameters($parameters);
+    if (!$result)
+    {
+      return $result;
+    }
 
     $this->acl = call_user_func($this->getAclBuilderName().'::buildResource', $result, $this->getTargetMemberList());
 
