@@ -48,6 +48,8 @@ class snsActions extends sfActions
         $this->getUser()->setFlash('notice', 'Saved.');
         $this->redirect('sns/config?category='.$this->category);
       }
+
+      $this->getUser()->setFlash('error', 'Failed to save.');
     }
   }
 

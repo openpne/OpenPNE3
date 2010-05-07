@@ -313,6 +313,10 @@ table.skin td.submit {
   padding: 5px;
 }
 
+.error_list {
+  color: #ff0000;
+}
+
 /* CLEAR FIX*/
 .clearfix:after {
   content: ".";

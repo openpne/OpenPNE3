@@ -598,6 +598,10 @@
         <target>保存しました。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Failed to save.</source>
+        <target>失敗しました。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Deleted.</source>
         <target>削除しました。</target>
       </trans-unit>
