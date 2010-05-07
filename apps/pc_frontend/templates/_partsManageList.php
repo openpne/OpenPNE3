@@ -23,8 +23,8 @@ $getImageFilename = $options->image_filename_method;
 <?php include_customizes('id_photo', 'before', $customizeOption) ?>
 <td class="photo">
 <?php if ($options->use_op_link_to_member): ?>
-<?php echo op_link_to_member($item->getId(), array('link_target' => image_tag_sf_image($item->$getImageFilename(), array('size' => '76x76'))), '@'.$options->item_url) ?>
-<?php echo op_link_to_member($item->getId(), array('link_target' => (string)$item), '@'.$options->item_url) ?>
+<?php echo op_link_to_member($item, array('link_target' => image_tag_sf_image($item->$getImageFilename(), array('size' => '76x76'))), '@'.$options->item_url) ?>
+<?php echo op_link_to_member($item, array('link_target' => (string)$item), '@'.$options->item_url) ?>
 <?php else: ?>
 <?php echo link_to(image_tag_sf_image($item->$getImageFilename(), array('size' => '76x76')), $options->item_url, $item); ?><br />
 <?php echo link_to((string)$item, $options->item_url, $item) ?>
@@ -39,7 +39,7 @@ $getImageFilename = $options->image_filename_method;
 <?php if (op_have_privilege_by_uri($menu['url'], $item)): ?>
 <td<?php echo !empty($menu['class']) ? ' class="'.$menu['class'].'"' : ''; ?>>
 <?php if ($options->use_op_link_to_member): ?>
-<?php echo op_link_to_member($item->getId(), array('link_target' => $menu['text']), '@'.$menu['url']) ?>
+<?php echo op_link_to_member($item, array('link_target' => $menu['text']), '@'.$menu['url']) ?>
 <?php else: ?>
 <?php echo link_to($menu['text'], $menu['url'], $item) ?>
 <?php endif; ?>
