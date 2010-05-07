@@ -29,6 +29,7 @@ $options = array(
   'link_to_page'   => '@member_search?page=%d',
   'link_to_detail' => '@member_profile?id=%d',
   'list'           => $list,
+  'use_op_link_to_member' => true,
 );
 
 op_include_parts('searchResultList', 'searchCommunityResult', $options);

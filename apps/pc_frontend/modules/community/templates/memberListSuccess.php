@@ -6,6 +6,7 @@ $options = array(
   'link_to' => '@member_profile?id=',
   'pager' => $pager,
   'link_to_pager' => '@community_memberList?page=%d&id='.$community->getId(),
+  'use_op_link_to_member' => true,
 );
 op_include_parts('photoTable', 'communityMembersList', $options)
 ?>

@@ -66,8 +66,10 @@ $t->is(op_format_last_login_time($now - 1000 * 86400, $now), '2年以上前');
 //------------------------------------------------------------
 $t->diag('op_link_to_member()');
 $t->is(op_link_to_member(1), link_to('A', '@obj_member_profile?id=1'), 'link to member 1');
-$t->is(op_link_to_member(1, '@obj_friend_unlink'), link_to('A', '@obj_friend_unlink?id=1'), 'link to unlink member 1');
-$t->is(op_link_to_member(1, '@obj_member_profile', array('link_target' => 'tetetete')), link_to('tetetete', '@obj_member_profile?id=1'), 'link to member 1 (free text)');
+$t->is(op_link_to_member(1, array(), '@obj_friend_unlink'), link_to('A', '@obj_friend_unlink?id=1'), 'link to unlink member 1');
+$t->is(op_link_to_member(1, array('link_target' => 'tetetete'), '@obj_member_profile'), link_to('tetetete', '@obj_member_profile?id=1'), 'link to member 1 (free text)');
+$member2 = Doctrine::getTable('Member')->find(2);
+$t->is(op_link_to_member($member2), link_to($member2->getName(), 'obj_member_profile', $member2), 'set Member object');
 $t->is(op_link_to_member(9999), '-', 'set undefine member');
 $t->is(op_link_to_member(null), '-', 'set null member');
 

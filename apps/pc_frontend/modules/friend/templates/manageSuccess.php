@@ -11,4 +11,5 @@
       '%my_friend%' => $op_term['my_friend']->pluralize(),
     )), 'url' => 'obj_friend_unlink', 'class' => 'delete'),
   ),
+  'use_op_link_to_member' => true,
 )); ?>

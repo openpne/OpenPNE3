@@ -7,7 +7,7 @@
 <?php
 $list = array();
 foreach ($pager->getResults() as $member) {
-  $list[] = op_link_to_member($member->getId(), '@obj_member_profil', array('link_target' => sprintf('%s(%d)', $member->getName(), $member->countFriends())));
+  $list[] = op_link_to_member($member, array('link_target' => sprintf('%s(%d)', $member->getName(), $member->countFriends())));
 }
 $option = array(
   'border' => true,

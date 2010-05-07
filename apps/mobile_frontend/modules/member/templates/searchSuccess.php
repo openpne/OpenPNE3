@@ -8,7 +8,7 @@
 $list = array();
 foreach ($pager->getResults() as $member)
 {
-  $list[] = op_link_to_member($member->getId());
+  $list[] = op_link_to_member($member);
 }
 $option = array(
   'border' => true,
