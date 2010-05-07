@@ -16,7 +16,7 @@ $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndC
 
 <tr>
 <?php include_customizes('id_member', 'before', $customizeOption) ?>
-<td class="member"><?php echo op_link_to_member($member->getId()); ?></td>
+<td class="member"><?php echo op_link_to_member($member); ?></td>
 
 <td class="drop">
 <?php if (!($communityMember->hasPosition(array('admin', 'sub_admin')) || $communityMember->getMemberId() === $sf_user->getMemberId())) : ?>

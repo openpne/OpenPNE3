@@ -18,7 +18,7 @@ $options->setDefault('use_op_link_to_member', false);
 <p class="crown"><?php echo image_tag('icon_crown.gif', array('alt' => 'admin')) ?></p>
 <?php endif; ?>
 <?php if ($options->use_op_link_to_member): ?>
-<?php echo op_link_to_member($options->list[$j]->getId(), array('link_target' => image_tag_sf_image($options->list[$j]->getImageFileName(), array('size' => '76x76')))) ?>
+<?php echo op_link_to_member($options->list[$j], array('link_target' => image_tag_sf_image($options->list[$j]->getImageFileName(), array('size' => '76x76')))) ?>
 <?php else: ?>
 <?php echo link_to(image_tag_sf_image($options->list[$j]->getImageFileName(), array('size' => '76x76')), $options->link_to.$options->list[$j]->getId()) ?>
 <?php endif; ?>
@@ -31,7 +31,7 @@ $options->setDefault('use_op_link_to_member', false);
 <?php for ($j = ($i * $options->col) - $options->col; ($i * $options->col) > $j; $j++): ?>
 <td><?php if (!empty($options->list[$j])): ?>
 <?php if ($options->use_op_link_to_member): ?>
-<?php echo op_link_to_member($options->list[$j]->getId(), array('link_target' => $options->list[$j]->getNameAndCount())) ?>
+<?php echo op_link_to_member($options->list[$j], array('link_target' => $options->list[$j]->getNameAndCount())) ?>
 <?php else: ?>
 <?php echo link_to($options->list[$j]->getNameAndCount(), $options->link_to.$options->list[$j]->getId()) ?>
 <?php endif; ?>
