@@ -91,9 +91,9 @@ use_ssl: false
 # SSL用URL (Cookie の値を引き継ぐため、 base_url と同一ドメイン・パスである必要があります)
 # Base URL for SSL (Set same domain and same path with "base_url" configuration to take over a value of Cookie)
 ssl_base_url:
-  pc_frontend: "http://example.com"
-  mobile_frontend: "http://example.com"
-  pc_backend: "http://example.com"
+  pc_frontend: "https://example.com"
+  mobile_frontend: "https://example.com"
+  pc_backend: "https://example.com"
 
 # SSL が必須なアプリケーション
 # Applications that are SSL required
