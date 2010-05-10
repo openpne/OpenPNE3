@@ -46,18 +46,12 @@ EOF;
       $birthMember = $profile->getMember();
       foreach ($birthMember->getFriends() as $member)
       {
-        $address = $member->getConfig('pc_address');
-        if (!$address)
-        {
-          continue;
-        }
-
         $params = array(
           'member'      => $member,
           'birthMember' => $birthMember,
           'subject'     => $i18n->__('There is your %my_friend% that its birthday is coming soon'),
         );
-        sfOpenPNEMailSend::sendTemplateMail('birthday', $address, opConfig::get('admin_mail_address'), $params, $context);
+        sfOpenPNEMailSend::sendTemplateMail('birthday', $member->getEmailAddress(), opConfig::get('admin_mail_address'), $params, $context);
       }
     }
   }
