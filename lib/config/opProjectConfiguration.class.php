@@ -99,6 +99,8 @@ class opProjectConfiguration extends sfProjectConfiguration
       $manager->setAttribute(Doctrine::ATTR_QUERY_CACHE, $cacheDriver);
     }
 
+    $manager->registerConnectionDriver('mysql', 'opDoctrineConnectionMysql');
+
     $this->setupProjectOpenPNEDoctrine($manager);
   }
 
