@@ -284,8 +284,13 @@ class opSecurityUser extends opAdaptableUser
   {
     $memberId = $this->getMemberId();
 
+    $isSNSMember = $this->isSNSMember();
     // for BC
-    $this->setIsSNSMember($this->isSNSMember());
+    $this->setIsSNSMember($isSNSMember);
+    if ($isSNSMember)
+    {
+      $this->getMember()->updateLastLoginTime();
+    }
   }
 
   public function isMember()
