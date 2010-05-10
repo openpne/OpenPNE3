@@ -21,7 +21,7 @@ class opDoctrineConnectionMysql extends Doctrine_Connection_Mysql
   {
     if ('formatter' === $name && !isset($this->properties[$name]))
     {
-      $this->properties[$name] = new opDoctrineFormatter($this);
+      $this->properties[$name] = new opDoctrineModule_Formatter($this);
     }
 
     return parent::__get($name);

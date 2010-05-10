@@ -15,7 +15,7 @@
  * @subpackage util
  * @author     Kousuke Ebihara <ebihara@php.net>
  */
-class opDoctrineFormatter extends Doctrine_Formatter
+class opDoctrineModule_Formatter extends Doctrine_Formatter
 {
   public function getForeignKeyName($fkey)
   {
