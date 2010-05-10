@@ -33,6 +33,14 @@ error:
   url: /default/error
   param: { module: default, action: error }
 
+privacy_policy:
+  url: /privacyPolicy
+  param: { module: default, action: privacyPolicy }
+
+terms_of_service:
+  url: /termsOfService
+  param: { module: default, action: userAgreement }
+    
 # oauth rules
 oauth_request_token:
   url:   /oauth/request_token
