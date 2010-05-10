@@ -230,7 +230,7 @@ privacy_policy:
   url:  /privacyPolicy
   param: { module: default, action: privacyPolicy }
 
-term_of_service:
+terms_of_service:
   url:  /termsOfService
   param: { module: default, action: userAgreement }
 
