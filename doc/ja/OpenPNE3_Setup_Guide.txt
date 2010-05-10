@@ -155,7 +155,7 @@ cron ファイルに設定権限を付加します。
 
 /etc/aliases を以下のように設定します::
 
-  openpne_user "| php /path/to/openpne/symfony openpne:execute-mail-action"
+  openpne_user: "| php /path/to/openpne/symfony openpne:execute-mail-action"
 
 ブラウザからアクセス(PC)
 ------------------------
