@@ -4,10 +4,7 @@ $options->setDefault('method','post');
 $options->setDefault('firstRow', '');
 $options->setDefault('lastRow', '');
 $options->setDefault('mark_required_field', true);
-if (!isset($options['url']))
-{
-  $options->setDefault('url', url_for(sfContext::getInstance()->getRouting()->getCurrentInternalUri()));
-}
+$options->setDefault('url', $sf_request->getCurrentUri());
 ?>
 <?php if ($options['form'] instanceof opAuthRegisterForm): ?>
 <?php echo $options['form']->renderFormTag($options['url'], array('method' => $options['method'])) ?>
