@@ -33,13 +33,6 @@ error:
   url: /default/error
   param: { module: default, action: error }
 
-privacy_policy:
-  url: /privacyPolicy
-  param: { module: default, action: privacyPolicy }
-
-terms_of_service:
-  url: /termsOfService
-  param: { module: default, action: userAgreement }
     
 # oauth rules
 oauth_request_token:
@@ -108,6 +101,14 @@ community_home:
   url:   /community/:id
   param: { module: community, action: home }
   requirements: { id: \d+ }
+
+privacy_policy:
+  url: /default/privacyPolicy
+  param: { module: default, action: privacyPolicy }
+
+user_agreement:
+  url: /default/userAgreement
+  param: { module: default, action: userAgreement }
 
 # for cmd
 google_maps:
