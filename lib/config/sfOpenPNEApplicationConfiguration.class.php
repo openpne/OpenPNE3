@@ -42,32 +42,36 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     $DS = DIRECTORY_SEPARATOR;
     $OpenPNE2Path = sfConfig::get('sf_lib_dir').$DS.'vendor'.$DS;  // ##PROJECT_LIB_DIR##/vendor/
     set_include_path($OpenPNE2Path.PATH_SEPARATOR.get_include_path());
-
     $result = parent::setup();
-    $configCache = $this->getConfigCache();
-    $file = $configCache->checkConfig('data/config/plugin.yml', true);
-    if ($file)
-    {
-      include($file);
-    }
 
-    require_once dirname(__FILE__).'/../plugin/opPluginManager.class.php';
-    $pluginActivations = opPluginManager::getPluginActivationList();
-    $pluginActivations = array_merge(array_fill_keys($this->getPlugins(), true), $pluginActivations);
-    foreach ($pluginActivations as $key => $value)
+    if (0 !== strpos(sfConfig::get('sf_task_name'), 'sfDoctrineBuild'))
     {
-      if (!in_array($key, $this->getPlugins()))
+      $configCache = $this->getConfigCache();
+      $file = $configCache->checkConfig('data/config/plugin.yml', true);
+      if ($file)
       {
-        unset($pluginActivations[$key]);
+        include($file);
       }
+
+      require_once dirname(__FILE__).'/../plugin/opPluginManager.class.php';
+      $pluginActivations = opPluginManager::getPluginActivationList();
+      $pluginActivations = array_merge(array_fill_keys($this->getPlugins(), true), $pluginActivations);
+      foreach ($pluginActivations as $key => $value)
+      {
+        if (!in_array($key, $this->getPlugins()))
+        {
+          unset($pluginActivations[$key]);
+        }
+      }
+
+      $pluginActivations = $this->filterSkinPlugins($pluginActivations);
+      $this->enablePlugins(array_keys($pluginActivations, true));
+      $this->disablePlugins(array_keys($pluginActivations, false));
+      unset($this->cache['getPluginPaths']);  // it should be rewrited
+
+      $this->plugins = array_unique($this->plugins);
     }
 
-    $pluginActivations = $this->filterSkinPlugins($pluginActivations);
-    $this->enablePlugins(array_keys($pluginActivations, true));
-    $this->disablePlugins(array_keys($pluginActivations, false));
-    unset($this->cache['getPluginPaths']);  // it should be rewrited
-
-    $this->plugins = array_unique($this->plugins);
 
     // gadget
     include($this->getConfigCache()->checkConfig('config/gadget_layout_config.yml'));
@@ -497,7 +501,16 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
   public function setCacheDir($cacheDir)
   {
-    $newCacheDir = $cacheDir.DIRECTORY_SEPARATOR.php_sapi_name();
+    $newCacheDir = $cacheDir.DIRECTORY_SEPARATOR;
+    if (is_callable('posix_getuid'))
+    {
+      $userinfo = posix_getpwuid(posix_getuid());
+      $newCacheDir .= $userinfo['name'];
+    }
+    else
+    {
+      $newCacheDir .= php_sapi_name();
+    }
 
     sfConfig::set('sf_cache_dir', $newCacheDir);
 
