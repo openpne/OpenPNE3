@@ -24,6 +24,11 @@ class opProjectConfiguration extends sfProjectConfiguration
 {
   static public function listenToPreCommandEvent(sfEvent $event)
   {
+    $subject = $event->getSubject();
+    if ($subject instanceof sfTask)
+    {
+      sfConfig::set('sf_task_name', get_class($subject));
+    }
     require_once dirname(__FILE__).'/../behavior/opActivateBehavior.class.php';
     opActivateBehavior::disable();
   }
