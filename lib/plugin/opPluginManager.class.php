@@ -162,7 +162,7 @@ class opPluginManager extends sfSymfonyPluginManager
     try
     {
       $conn = new PDO($connConfig['dsn'], $connConfig['username'], $connConfig['password']);
-      $state = $conn->query('SELECT name, is_enabled FROM plugin');
+      $state = $conn->query('SELECT name, is_enabled FROM '.sfConfig::get('op_table_prefix', '').'plugin');
       if ($state)
       {
         foreach ($state as $row)
