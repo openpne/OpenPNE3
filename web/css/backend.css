@@ -287,3 +287,7 @@ table.skin td.submit {
   height: 30px;
   width: 200px;
 }
+
+.error_list {
+  color: #ff0000;
+}
