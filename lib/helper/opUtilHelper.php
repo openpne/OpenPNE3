@@ -749,3 +749,12 @@ function op_format_last_login_time($from_time, $to_time = null)
   }
 }
 
+function op_replace_sns_term($string)
+{
+  $config = (array)include(sfContext::getInstance()->getConfigCache()->checkConfig('config/sns_term.yml'));
+  foreach ($config as $k => $v) 
+  {
+    $string = str_replace('%'.$k.'%', $v['caption']['en'], $string);
+  }
+  return $string;
+}

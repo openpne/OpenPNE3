@@ -33,7 +33,7 @@
         <target>誰でも参加可能</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Community's admin authorization needed</source>
+        <source>%Community%'s admin authorization needed</source>
         <target>コミュニティ参加者の承認が必要</target>
       </trans-unit>
       <trans-unit id="">
@@ -47,6 +47,31 @@
       <trans-unit id="">
         <source>Private</source>
         <target>公開しない</target>
+      </trans-unit>
+
+      <trans-unit id="">
+        <source>Community Name</source>
+        <target>コミュニティ名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Community Category</source>
+        <target>コミュニティカテゴリ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Administrator</source>
+        <target>コミュニティ管理者</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Date Created</source>
+        <target>作成日</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Community Members</source>
+        <target>メンバー数</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Community Description</source>
+        <target>コミュニティ説明</target>
       </trans-unit>
 
       <trans-unit id="">

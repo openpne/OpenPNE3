@@ -41,7 +41,7 @@ class CommunityFormFilter extends BaseCommunityFormFilter
 
     if ($this->getOption('use_id'))
     {
-      $widgets = array('id' => new sfWidgetFormFilterInput(array('with_empty' => false))) + $widgets;
+      $widgets = array('id' => new sfWidgetFormFilterInput(array('with_empty' => false, 'label' => 'ID'))) + $widgets;
       $validators = array('id' => new sfValidatorPass()) + $validators;
     }
 
