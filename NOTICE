@@ -11,7 +11,7 @@ OpenPNE Project (http://www.openpne.jp/).
   - Apache License 2.0
   - PHP License 3.01 (OpenPNE2)
 
-These products include also software developed by :
+This product includes also softwares developed by :
   - the symfony project (http://www.symfony-project.org/)
     - MIT License
   - Zend Technologies USA Inc. (http://www.zend.com/)
@@ -24,14 +24,17 @@ These products include also software developed by :
     - MIT License
   - Kousuke Ebihara (http://co3k.org/)
     - Apache License 2.0
+  - Vincent Oostindie, Alan Knowles, Peter Bowyer, Philippe Jausions
+    - PHP License 3.0 (PEAR::Image_Transform)
 
-These products need the third-party softwares listed blow to run.
+This product needs the third-party softwares listed blow to run.
   - PHP: Hypertext Preprocessor (5.2.4 +)
 
-These products include dependent libraries listed blow:
+This product includes dependent libraries listed blow:
   - symfony 1.4.1
   - Zend Framework 1.7.3PL1 (partly)
   - Auth OpenID 2.1.2
   - PHP OAuth library
   - sfFormExtraPlugin 1.0.12
   - sfImageHandlerPlugin 1.0.0
+  - PEAR::Image_Transform 0.9.3
