@@ -208,3 +208,7 @@ div.imageListTable div.cell dl dd.fileName {
   font-size: 1px;
   line-height: 1px;
 }
+
+.error_list {
+  color: #ff0000;
+}
