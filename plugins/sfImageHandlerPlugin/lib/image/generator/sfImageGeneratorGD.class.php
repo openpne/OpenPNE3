@@ -13,11 +13,13 @@
  *
  * @package    sfImageHandlerPlugin
  * @subpackage image
- * @author     Kousuke Ebihara <ebihara@tejimaya.com>
+ * @author     Kousuke Ebihara <ebihara@php.net>
  */
 class sfImageGeneratorGD
 {
   protected
+    $transform = null,
+
     $quality     = 75,
     $width       = 0,
     $height      = 0,
@@ -36,6 +38,10 @@ class sfImageGeneratorGD
   */
   public function initialize($options)
   {
+    require_once 'Image/Transform.php';
+
+    $this->transform = Image_Transform::factory('GD');
+
     $options = array_merge(array('width' => $this->width, 'height' => $this->height), $options);
     $this->setImageSize($options['width'], $options['height']);
 
@@ -74,8 +80,6 @@ class sfImageGeneratorGD
 
   public function output($outputFilename)
   {
-    $result = false;
-
     if (!is_dir(dirname($outputFilename)))
     {
       $currentUmask = umask(0000);
@@ -86,19 +90,7 @@ class sfImageGeneratorGD
       umask($currentUmask);
     }
 
-    switch ($this->format)
-    {
-      case 'png':
-        $result = imagepng($this->outputImage, $outputFilename);
-        break;
-      case 'gif':
-        $result = imagegif($this->outputImage, $outputFilename);
-        break;
-      default:
-        $result = imagejpeg($this->outputImage, $outputFilename, $this->quality);
-    }
-
-    if ($result)
+    if ($this->transform->save($outputFilename, $type, $this->quality))
     {
       return file_get_contents($outputFilename);
     }
@@ -111,151 +103,35 @@ class sfImageGeneratorGD
   */
   public function resize($binary, $format)
   {
-    if (!$sourceImage = imagecreatefromstring($binary))
+    $tmpfilename = tempnam(sys_get_temp_dir(), 'OPIMG');
+    file_put_contents($tmpfilename, $binary);
+
+    $result = $this->transform->load($tmpfilename);
+    @unlink($tmpfilename);
+    if (PEAR::isError($result))
     {
-      throw new sfException('Cannnot read an image binary.');
+      throw new sfException($result->getMessage());
     }
 
     // for mobile phone
     if ('jpg' === $this->format)
     {
-      imageinterlace($sourceImage, 0);
+      imageinterlace($this->transform->getHandle(), 0);
     }
 
-    $info = array('f' => $this->format, 'w' => '', 'h' => '');
-
-    if (!$this->width && !$this->height)
-    {
-      $this->outputImage = $sourceImage;
-      return $info;
-    }
-
-    $source = array(imagesx($sourceImage), imagesy($sourceImage));
-    $want = array($this->width, $this->height);
-    $output = $this->calcOutputImageSize($source, $want);
-
-    $info['w'] = $this->width;
-    $info['h'] = $this->height;
-
-    if (!$this->isNeedResize($source, $output))
-    {
-      $this->outputImage = $sourceImage;
-      return $info;
-    }
-
-    $outputImage = imagecreatetruecolor($output[0], $output[1]);
-    $this->setTransparent($outputImage, $sourceImage);
-    imagecopyresampled($outputImage, $sourceImage, 0, 0, 0, 0, $output[0], $output[1], $source[0], $source[1]);
-
-    $this->outputImage = $outputImage;
-
-    return $info;
-  }
-
-  protected function isNeedConvertFormat($format)
-  {
-    return (bool)($this->format !== $format);
-  }
-
-  protected function calcOutputImageSize(array $source, array $want)
-  {
-    list($sw, $sh) = $source;
-    list($ww, $wh) = $want;
-
-    if (!$ww)
-    {
-      $ww = $sw;
-    }
-    if (!$wh)
-    {
-      $wh = $sh;
-    }
-
-    if (!$this->checkSizeAllowed($ww, $wh))
+    if (!$this->checkSizeAllowed($this->width, $this->height))
     {
       $this->width = $this->height = '';
-
-      $ww = $sw;
-      $wh = $sh;
     }
 
-    $ow = $sw;
-    $oh = $sh;
-
-    if ($ww < $sw)
+    if ($this->width && $this->height)
     {
-      $ow  = $ww;
-      $oh = $sh * $ww / $sw;
-    }
-    if ($wh < $oh && $wh < $sh)
-    {
-      $ow  = $sw * $wh / $sh;
-      $oh = $wh;
-    }
-    if (!$ow)
-    {
-      $ow = 1;
-    }
-    if (!$oh)
-    {
-      $oh = 1;
+      $this->transform->fit($this->width, $this->height);
     }
 
-    return array($ow, $oh);
-  }
+    $this->outputImage = $this->transform->getHandle();
 
-  protected function isNeedResize(array $source, array $output)
-  {
-    list($sw, $sh) = $source;
-    list($ow, $oh) = $output;
-
-    if (!$ow && !$oh)
-    {
-      return false;
-    }
-    if (!$sw || !$sh)
-    {
-      return true;
-    }
-    if ($sw <= $ow && $sh <= $oh)
-    {
-      return false;
-    }
-
-    return true;
-  }
-
-  protected function setTransparent(&$outputImage, &$sourceImage)
-  {
-    if ($this->format !== 'gif' && $this->format !== 'png')
-    {
-      return null;
-    }
-
-    $sourceIndex = imagecolortransparent($sourceImage);
-
-    // a transparent color exists in the source index
-    if ($sourceIndex >= 0)
-    {
-      imagetruecolortopalette($outputImage, true, 256);
-
-      // gets a transparent color from the source image
-      $transparentColor = imagecolorsforindex($sourceImage, $transparentIndex);
-
-      // sets a transparent color to the output image
-      imagecolorset($sourceImage, 0, $transparentColor['red'], $transparentColor['green'], $transparentColor['blue']);
-      imagefill($outputImage, 0, 0, 0);
-      imagecolortransparent($outputImage, 0);
-    }
-    elseif ($this->format === 'png')
-    {
-      imagealphablending($outputImage, false);
-      imagesavealpha($outputImage, true);
-
-      // sets a transparent color
-      $color = imagecolorallocatealpha($outputImage, 0, 0, 0, 127);
-      imagefill($outputImage, 0, 0, $color);
-    }
+    return array('f' => $this->format, 'w' => $this->width, 'h' => $this->height);
   }
 
   public function getFormat()
