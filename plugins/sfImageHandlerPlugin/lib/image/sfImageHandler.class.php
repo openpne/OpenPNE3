@@ -42,7 +42,13 @@ class sfImageHandler
       $this->storage = Doctrine::getTable('File')->retrieveByFilename($options['filename']);
     }
 
-    $this->generator = new sfImageGeneratorGD($options);
+    $className = 'sfImageGenerator'.sfConfig::get('op_image_handler_name', 'GD');
+    if (!class_exists($className))
+    {
+      throw new RuntimeException(sprintf('The specified image handler, %s is not found', $className));
+    }
+
+    $this->generator = new $className($options);
     $this->options = $options;
   }
 
