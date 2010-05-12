@@ -150,18 +150,24 @@ class memberActions extends sfOpenPNEMemberAction
   */
   public function executeRegisterMobileToRegisterEnd(sfWebRequest $request)
   {
+    opActivateBehavior::disable();
     $this->form = new registerMobileForm($this->getUser()->getMember());
+    opActivateBehavior::enable();
     if ($request->isMethod(sfWebRequest::POST))
     {
       $this->form->bind($request->getParameter('member_config'));
       if ($this->form->isValid())
       {
         $this->form->save();
-        $this->redirect('member/registerMobileToRegisterEnd');
+        $this->redirect('member/registerMobileToRegisterEndFinish');
       }
     }
 
     return sfView::SUCCESS;
+  }
+
+  public function executeRegisterMobileToRegisterEndFinish(sfWebRequest $request)
+  {
   }
 
   /**
