@@ -132,6 +132,28 @@ ssl_selectable_actions:
   pc_backend: []
 
 ######################################
+# 画像 (Images)
+######################################
+
+# ImageMagick 使用設定 (Configuration of using ImageMagick)
+#   0: off - ImageMagick を使わない (Don't use ImageMagick)
+#   1: on  - GIF のみ ImageMagick を使う (Use ImageMagick only for GIF)
+#   2: on  - JEPG,PNG,GIF に ImageMagick を使う (ただし、 GD も必要) (Use ImageMagick for JPEG,PNG,GIF)
+use_imagemagick: 0
+
+# ImageMagick コマンドのパス
+# Path to ImageMagick binary
+imagemagick_path: '/usr/bin/convert'
+# imagemagick_path: '"C:\Program Files\ImageMagick-6.2.5-Q16\convert"'
+
+# 画像生成クラス設定 (Configuration of class for image-generating)
+#   この設定を有効にすると、 use_imagemagick の設定を無視して任意のクラスで画像を生成します。
+#   (If this configuration is enabled, OpenPNE generates image by using the specified class avoid "use_imagemagick")
+#   使用されるクラス名は、 sfImageGenerator[image_generator_name] となります
+#   (OpenPNE use a class that is named as "sfImageGenerator[image_generator_name]")
+# image_generator_name: "GD"
+
+######################################
 # データベース (Database)
 ######################################
 

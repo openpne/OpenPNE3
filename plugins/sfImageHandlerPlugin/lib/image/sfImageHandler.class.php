@@ -42,7 +42,21 @@ class sfImageHandler
       $this->storage = Doctrine::getTable('File')->retrieveByFilename($options['filename']);
     }
 
-    $className = 'sfImageGenerator'.sfConfig::get('op_image_handler_name', 'GD');
+    if (!sfConfig::has('op_image_generator_name'))
+    {
+      $isMagick = sfConfig::get('op_use_imagemagick', 0);
+
+      if ((2 == $isMagick) || (1 == $isMagick && 'gif' === $options['format']))
+      {
+        sfConfig::set('op_image_generator_name', 'IM');
+      }
+      else
+      {
+        sfConfig::set('op_image_generator_name', 'GD');
+      }
+    }
+
+    $className = 'sfImageGenerator'.sfConfig::get('op_image_generator_name');
     if (!class_exists($className))
     {
       throw new RuntimeException(sprintf('The specified image handler, %s is not found', $className));
