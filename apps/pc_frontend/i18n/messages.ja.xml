@@ -1283,6 +1283,18 @@
         <source>Agreement for use</source>
         <target>利用規約</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Mobile E-mail Address Registration Completed</source>
+        <target>携帯登録メール送信完了</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>When mobile information registration is done, the member registration is completed.</source>
+        <target>携帯登録をおこなうと、メンバー登録が完了します。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Sent a mail for your mobile e-mail address. Begin your registration from a URL in the mail.</source>
+        <target>入力された携帯メールアドレス宛てにメールを送信いたしましたので、メール内に記載されたURLから携帯登録をおこなってください。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

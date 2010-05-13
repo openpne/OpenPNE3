@@ -1,2 +1,3 @@
-<?php op_include_box('finish', '携帯登録をおこなうことでメンバー登録が完了します。<br />入力された携帯メールアドレス宛てにメールを送信いたしましたので、メール内に記載されたURLから携帯登録をおこなってください。', array('title' => '携帯登録メール送信完了')); ?>
+<?php op_include_box('finish', __('When mobile information registration is done, the member registration is completed.').'<br />'.__('Sent a mail for your mobile e-mail address. Begin your registration from a URL in the mail.'), array('title' => __('Mobile E-mail Address Registration Completed'))); ?>
+
 
