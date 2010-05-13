@@ -74,15 +74,14 @@ function sf_image_path($filename, $options = array(), $absolute = false)
     $f = 'jpg';
   }
 
-  $size_dir_name = 'w_h';
+  $size = null;
   if (isset($options['size']))
   {
-    list($width, $height) = explode('x', $options['size'], 2);
-    $size_dir_name = 'w'.$width.'_h'.$height;
+    $size = $options['size'];
     unset($options['size']);
   }
 
-  $filepath = 'img/'.$f.'/'.$size_dir_name.'/'.$filename.'.'.$f;
-  $options['raw_name'] = true;
-  return _compute_public_path($filepath, 'cache', $f, $absolute);
+  $class = sfImageHandler::getStorageClassName();
+
+  return  call_user_func(array($class, 'getUrlToImage'), $filename, $size, $f, $absolute);
 }

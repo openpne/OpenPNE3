@@ -39,7 +39,8 @@ class sfImageHandler
   {
     if (isset($options['filename']))
     {
-      $this->storage = Doctrine::getTable('File')->retrieveByFilename($options['filename']);
+      $class = self::getStorageClassName();
+      $this->storage = call_user_func(array($class, 'find'), $options['filename']);
     }
 
     if (!sfConfig::has('op_image_generator_name'))
@@ -68,27 +69,18 @@ class sfImageHandler
 
   public function createImage()
   {
-    $contents = $this->storage->getFileBin()->getBin();
+    $contents = $this->storage->getBinary();
 
-    $info = $this->generator->resize($contents, $this->storage->getImageFormat());
+    $info = $this->generator->resize($contents, $this->storage->getFormat());
 
     $filename = sprintf('%s/cache/img/%s/w%s_h%s/%s.%2$s', sfConfig::get('sf_web_dir'), $info['f'], $info['w'], $info['h'], $this->options['filename']);
+
     return $this->generator->output($filename);
   }
 
   public function isValidSource()
   {
-    if (!$this->storage)
-    {
-      return false;
-    }
-
-    if (!$this->storage->isImage())
-    {
-      return false;
-    }
-
-    return true;
+    return (bool)$this->storage;
   }
 
   public function getContentType()
@@ -102,4 +94,8 @@ class sfImageHandler
     return 'image/'.$format;
   }
 
+  static public function getStorageClassName()
+  {
+    return 'sfImageStorageDefault';
+  }
 }
