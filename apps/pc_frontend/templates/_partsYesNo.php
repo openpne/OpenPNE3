@@ -1,6 +1,6 @@
 <?php $rawOptions =  $sf_data->getRaw('options') ?>
 <?php
-$url = url_for(sfContext::getInstance()->getRouting()->getCurrentInternalUri());
+$url = $sf_request->getCurrentUri();
 $options->setDefault('yes_button', __('Yes'));
 $options->setDefault('no_button', __('No'));
 $options->setDefault('yes_url', $url);

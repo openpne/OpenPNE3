@@ -1,5 +1,5 @@
 <?php
-$url = sfContext::getInstance()->getRouting()->getCurrentInternalUri();
+$url = $sf_request->getCurrentUri();
 $options->setDefault('button', __('Yes'));
 $options->setDefault('url', url_for($url));
 $options->setDefault('method', 'post');

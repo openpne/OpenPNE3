@@ -77,7 +77,13 @@ class Gadget extends BaseGadget implements opAccessControlRecordInterface
       return false;
     }
 
-    if (!$this->isAllowed(sfContext::getInstance()->getUser()->getMember(), 'view'))
+    $member = sfContext::getInstance()->getUser()->getMember();
+    if (!$member)
+    {
+      $member = sfContext::getInstance()->getUser()->getMember(true);
+    }
+
+    if (!$member || !$this->isAllowed($member, 'view'))
     {
       return false;
     }

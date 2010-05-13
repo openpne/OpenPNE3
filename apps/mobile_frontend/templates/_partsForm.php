@@ -1,6 +1,6 @@
 <?php
 $options->setDefault('button', __('Send'));
-$options->setDefault('url', url_for(sfContext::getInstance()->getRouting()->getCurrentInternalUri()));
+$options->setDefault('url', $sf_request->getCurrentUri());
 $options->setDefault('method','post');
 $options->setDefault('mark_required_field', true);
 ?>

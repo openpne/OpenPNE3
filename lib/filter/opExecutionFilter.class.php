@@ -60,7 +60,7 @@ class opExecutionFilter extends sfExecutionFilter
       $currentPath = $request->getScriptName().$currentPath;
     }
 
-    if (sfConfig::get('op_use_ssl', false))
+    if (sfConfig::get('op_use_ssl', false) && $this->isFirstCall())
     {
       $sslRequiredAppList = sfConfig::get('op_ssl_required_applications', array());
       $sslRequiredList = sfConfig::get('op_ssl_required_actions', array(

@@ -272,6 +272,17 @@ class opWebRequest extends sfWebRequest
     }
   }
 
+  public function getCurrentUri($isAbsolute = false)
+  {
+    $uri = $this->getUri();
+    if (!$isAbsolute)
+    {
+      $uri = str_replace($this->getUriPrefix(), '', $uri);
+    }
+
+    return $uri;
+  }
+
   public function convertEncodingForInput($from_encoding)
   {
     $this->outsideEncoding = $from_encoding;

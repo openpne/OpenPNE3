@@ -173,8 +173,10 @@ class sfImageGeneratorGD
 
     if (!$this->checkSizeAllowed($ww, $wh))
     {
-      $ww = $this->width = $sw;
-      $wh = $this->height = $sh;
+      $this->width = $this->height = '';
+
+      $ww = $sw;
+      $wh = $sh;
     }
 
     $ow = $sw;
