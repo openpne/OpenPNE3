@@ -2,16 +2,16 @@
 
 <h2>
 <?php if ($form->isNew()) : ?>
-<?php echo __('プロフィール項目追加') ?>
+<?php echo __('Create new entry') ?>
 <?php else : ?>
-<?php echo __('プロフィール項目編集') ?>
+<?php echo __('Edit entry') ?>
 <?php endif; ?>
 </h2>
 
 <div style="margin-bottom: 1em;">
 <select id="original_preset">
-  <option name="presetting"<?php if ($isPreset) : ?> selected="selected"<?php endif; ?>>プリセットから選ぶ</option>
-  <option name="original"<?php if (!$isPreset) : ?> selected="selected"<?php endif; ?>>自分で入力する</option>
+  <option name="presetting"<?php if ($isPreset) : ?> selected="selected"<?php endif; ?>><?php echo __('Select from presets')?></option>
+  <option name="original"<?php if (!$isPreset) : ?> selected="selected"<?php endif; ?>><?php echo __('Enter on your own')?></option>
 </select>
 </div>
 
@@ -42,13 +42,13 @@
 <form action="<?php echo url_for('profile/edit?id=' . $profile->getId()) ?>" method="post">
 <?php endif; ?>
 <table>
-<tr><th colspan="2">ja_JP 用設定</th></tr>
+<tr><th colspan="2"><?php echo __('Settings for %language%', array('%language%'=>'ja_JP'))?></th></tr>
 <?php echo $form['ja_JP']['caption']->renderRow() ?>
 <?php echo $form['ja_JP']['info']->renderRow() ?>
 </table>
 
 <table id="common" style="width: 50%;">
-<tr><th colspan="2">共通設定</th></tr>
+<tr><th colspan="2"><?php echo __('General settings')?></th></tr>
 <?php echo $form['name']->renderRow() ?>
 <?php echo $form['is_required']->renderRow() ?>
 <?php echo $form['is_public_web']->renderRow() ?>
@@ -91,8 +91,8 @@
 <th><?php echo $form['value_min']->renderLabel() ?>～<?php echo $form['value_max']->renderLabel() ?></th>
 <td>
 <ul>
-<li><code>YYYY/MM/DD HH:MM:SS</code> 形式で入力（例：<code>2009/01/01 23:59:21</code>）</li>
-<li>その他、 PHP の <code>strtotime()</code> 関数が解釈することのできる特殊な文字列が利用可能</li>
+<li><?php echo __('Please input in format: %format% . For example: %example%', array('%format%' => 'YYYY/MM/DD HH:MM:SS', '%example%' => '2009/01/01 23:59:21')) ?></li>
+<li><?php echo __('Besides, you can use any particular string that can be interpreted by strtotime() function of PHP.') ?></li>
 </ul>
 <?php if ($form['value_min']->hasError()): ?>
 <?php $error = $form['value_min']->getError() ?>
