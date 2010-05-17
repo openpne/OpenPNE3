@@ -26,6 +26,17 @@ abstract class sfImageGeneratorImageTransform extends sfImageGenerator
     $this->transform = $this->creaateTransform();
   }
 
+  public function getBinary($type, $quality)
+  {
+    $tmpfilename = tempnam(sys_get_temp_dir(), 'IGITF');
+    $this->transform->save($tmpfilename, $type, $quality);
+
+    $result = file_get_contents($tmpfilename);
+    unlink($tmpfilename);
+
+    return $result;
+  }
+
   protected function doSave($outputFilename, $type, $quality)
   {
     $result = $this->transform->save($outputFilename, $type, $quality);

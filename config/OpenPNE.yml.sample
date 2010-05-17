@@ -144,14 +144,22 @@ use_imagemagick: 0
 # ImageMagick コマンドのパス
 # Path to ImageMagick binary
 imagemagick_path: '/usr/bin/convert'
-# imagemagick_path: '"C:\Program Files\ImageMagick-6.2.5-Q16\convert"'
+#imagemagick_path: '"C:\Program Files\ImageMagick-6.2.5-Q16\convert"'
 
 # 画像生成クラス設定 (Configuration of class for image-generating)
 #   この設定を有効にすると、 use_imagemagick の設定を無視して任意のクラスで画像を生成します。
 #   (If this configuration is enabled, OpenPNE generates image by using the specified class avoid "use_imagemagick")
 #   使用されるクラス名は、 sfImageGenerator[image_generator_name] となります
 #   (OpenPNE use a class that is named as "sfImageGenerator[image_generator_name]")
-# image_generator_name: "GD"
+#image_generator_name: "GD"
+
+# 画像ストレージ設定 (Configuration of using storage for storing image)
+image_storage: Default  # DB に画像バイナリを保存します (Store image binaries in DB)
+#image_storage: Filesystem  # ファイルシステム上の任意のディレクトリに画像バイナリを保存します (Store image binaries to any directories in filesystem)
+
+# 画像ストレージに Filesystem を選択した場合の画像保存先ディレクトリのパス (Web サーバからの書き込み権限が必要)
+# Path to directory for storing images if a value of "image_storage" is "Filesystem" (Need to write permission from Web server)
+#image_storage_filesystem_master_dir: '/path/to/directory'
 
 ######################################
 # データベース (Database)

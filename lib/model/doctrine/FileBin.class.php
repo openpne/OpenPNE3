@@ -10,41 +10,26 @@
 
 class FileBin extends BaseFileBin
 {
-  protected
-    $isFirstSave = true,
-    $isFirstDelete = true;
-
-  public function save(Doctrine_Connection $conn = null)
-  {
-    if ($this->getFile()->isImage() || !$this->isFirstSave)
-    {
-      $this->isFirstSave = true;
-
-      return parent::save($conn);
-    }
-
-    $this->isFirstSave = false;
-    $this->setFile(Doctrine::getTable('File')->find($this->getFileId()));
-
-    $class = sfImageHandler::getStorageClassName();
-    $storage = call_user_func(array($class, 'create'), $this->getFile());
-
-    return $storage->saveBinary($this);
-  }
+  protected $isFirstDelete = true;
 
   public function delete(Doctrine_Connection $conn = null)
   {
-    if ($this->getFile()->isImage() || !$this->isFirstDelete)
+    if (!$this->getFile()->isImage() || $this->getBin())
+    {
+      return parent::delete($conn);
+    }
+
+    if (!$this->isFirstDelete)
     {
       $this->isFirstDelete = true;
 
-      return parent::save($conn);
+      return parent::delete($conn);
     }
 
     $this->isFirstDelete = false;
 
     $class = sfImageHandler::getStorageClassName();
-    $storage = call_user_func(array($class, 'create'), $this->getFile());
+    $storage = call_user_func(array($class, 'create'), $this->getFile(), $class);
 
     return $storage->deleteBinary();
   }

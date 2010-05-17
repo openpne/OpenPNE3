@@ -22,6 +22,10 @@ class sfImageHandler
     $storage   = null,
     $options   = array();
 
+  protected static
+    $allowedSize = array(),
+    $allowedFormat = array('png', 'gif', 'jpg');
+
   public function __construct(array $options = array())
   {
     $this->initialize($options);
@@ -32,15 +36,32 @@ class sfImageHandler
   {
   }
 
- /**
-  * Initializes this handler.
-  */
+  public static function getAllowedFormat()
+  {
+    return self::$allowedFormat;
+  }
+
+  public static function getAllowedSize()
+  {
+    if (self::$allowedSize)
+    {
+      return self::$allowedSize;
+    }
+
+    self::$allowedSize = array_merge(
+      array('76x76', '120x120', '180x180', '240x320', '600x600'),
+      sfConfig::get('sf_image_handler_allowed_size', array())
+    );
+
+    return self::$allowedSize;
+  }
+
   public function initialize($options)
   {
     if (isset($options['filename']))
     {
       $class = self::getStorageClassName();
-      $this->storage = call_user_func(array($class, 'find'), $options['filename']);
+      $this->storage = call_user_func(array($class, 'find'), $options['filename'], $class);
     }
 
     if (!sfConfig::has('op_image_generator_name'))
@@ -73,9 +94,19 @@ class sfImageHandler
 
     $info = $this->generator->resize($contents, $this->storage->getFormat());
 
-    $filename = sprintf('%s/cache/img/%s/w%s_h%s/%s.%2$s', sfConfig::get('sf_web_dir'), $info['f'], $info['w'], $info['h'], $this->options['filename']);
+    $filename = self::getPathToFileCache($info['f'], $info['w'], $info['h'], $this->options['filename']);
 
     return $this->generator->output($filename);
+  }
+
+  public function getGenerator()
+  {
+    return $this->generator;
+  }
+
+  public function getStorage()
+  {
+    return $this->storage;
   }
 
   public function isValidSource()
@@ -96,6 +127,42 @@ class sfImageHandler
 
   static public function getStorageClassName()
   {
-    return 'sfImageStorageDefault';
+    return 'sfImageStorage'.sfConfig::get('op_image_storage', 'Default');
+  }
+
+  static public function getPathToFileCache($format, $width, $height, $filename)
+  {
+    return sprintf('%s/cache/img/%s/w%s_h%s/%s.%2$s', sfConfig::get('sf_web_dir'), $format, $width, $height, $filename);
+  }
+
+  static public function clearFileCache($filename)
+  {
+    $sizes = array_merge(self::getAllowedSize(), array('raw'));
+    $formats = self::getAllowedFormat();
+
+    $filesystem = new sfFilesystem();
+
+    foreach ($sizes as $size)
+    {
+      if ('raw' !== $size)
+      {
+        $s = explode('x', $size);
+        $width = $s[0];
+        $height = $s[1];
+      }
+      else
+      {
+        $width = $height = '';
+      }
+
+      foreach ($formats as $format)
+      {
+        $path = self::getPathToFileCache($format, $width, $height, $filename);
+        if (is_file($path))
+        {
+          @$filesystem->remove($path);
+        }
+      }
+    }
   }
 }

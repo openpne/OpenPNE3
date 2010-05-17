@@ -22,7 +22,7 @@ abstract class sfImageGenerator
     $width       = 0,
     $height      = 0,
     $format      = 'jpg',
-    $allowedSize = array('76x76', '120x120', '180x180', '240x320', '600x600'),
+    $allowedSize = null,
     $tmpfilename = null;
 
   public function __construct(array $options = array())
@@ -46,7 +46,7 @@ abstract class sfImageGenerator
       $this->format = $options['format'];
     }
 
-    $this->allowedSize = array_merge($this->allowedSize, sfConfig::get('sf_image_handler_allowed_size', array()));
+    $this->allowedSize = sfImageHandler::getAllowedSize();
   }
 
   public function configure()
@@ -65,6 +65,8 @@ abstract class sfImageGenerator
       $this->height = $height;
     }
   }
+
+  abstract public function getBinary($type, $quality);
 
   abstract protected function doSave($outputFilename, $type, $quality);
 
