@@ -227,11 +227,11 @@ community_home:
   requirements: { id: \d+ }
 
 privacy_policy:
-  url:  /privacyPolicy
+  url:  /default/privacyPolicy
   param: { module: default, action: privacyPolicy }
 
-terms_of_service:
-  url:  /termsOfService
+user_agreement:
+  url:  /default/userAgreement
   param: { module: default, action: userAgreement }
 
 # for cmd
