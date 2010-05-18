@@ -1170,6 +1170,10 @@
         <source>Delete</source>
         <target>削除する</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Visit Site</source>
+        <target>サイト確認</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

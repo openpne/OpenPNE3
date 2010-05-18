@@ -48,6 +48,19 @@ body.insecure #body {
   color: #FFFFFF;
   font-size: 18px;
   font-weight: bold;
+  float: left;
+}
+
+#header span#visit-site{
+  display: block;
+  float: left;
+  font-size: 12px;
+  margin-top: 4px;
+  padding-left: 18px;
+}
+
+#header span#visit-site a{
+  color: #FFFFFF;
 }
 
 #menu {
