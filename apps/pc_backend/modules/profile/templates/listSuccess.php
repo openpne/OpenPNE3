@@ -65,7 +65,10 @@
 <table id="profile_options_<?php echo $value->getId() ?>">
 <thead><tr>
 <th>ID</th>
-<th><?php echo __('Option name') ?></th>
+<?php $languages = sfConfig::get('op_supported_languages'); ?>
+<?php foreach ($languages as $language): ?>
+<th><?php echo __('Option name (%language%)', array('%language%' => $language)) ?></th>
+<?php endforeach; ?>
 <th colspan="2"><?php echo __('Operation')?></th>
 </tr></thead>
 <?php foreach ($option_form[$value->getId()] as $form) : ?>
@@ -77,10 +80,12 @@
 <form action="<?php echo url_for('profile/editOption?id=' . $form->getObject()->getId()) ?>" method="post">
 <tr>
 <td><?php echo ($form->getObject()->isNew() ? '-' : $form->getObject()->getId()) ?></td>
+<?php foreach ($languages as $language): ?>
 <td>
-<?php echo $form['ja_JP']['value']->renderError() ?>
-<?php echo $form['ja_JP']['value']->render() ?>
+<?php echo $form[$language]['value']->renderError() ?>
+<?php echo $form[$language]['value']->render() ?>
 </td>
+<?php endforeach; ?>
 <?php if ($form->getObject()->isNew()) : ?>
 <td colspan="2">
 <?php echo $form->renderHiddenFields() ?>

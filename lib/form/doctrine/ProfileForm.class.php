@@ -88,7 +88,7 @@ class ProfileForm extends BaseProfileForm
       'is_disp_search' => '1',
     ));
 
-    $this->embedI18n(array('ja_JP'));
+    $this->embedI18n(sfConfig::get('op_supported_languages'));
 
     $this->widgetSchema->setHelp('is_public_web', 'Anyone in the world may view member profiles');
   }

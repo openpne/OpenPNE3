@@ -41,10 +41,33 @@
 <?php else : ?>
 <form action="<?php echo url_for('profile/edit?id=' . $profile->getId()) ?>" method="post">
 <?php endif; ?>
+
+<?php $languages = sfConfig::get('op_supported_languages'); ?>
 <table>
-<tr><th colspan="2"><?php echo __('Settings for %language%', array('%language%'=>'ja_JP'))?></th></tr>
-<?php echo $form['ja_JP']['caption']->renderRow() ?>
-<?php echo $form['ja_JP']['info']->renderRow() ?>
+<tr>
+<th></th>
+<?php foreach ($languages as $language): ?>
+<th><?php echo __('Settings for %language%', array('%language%' => $language))?></th>
+<?php endforeach; ?>
+</tr>
+<tr>
+<th><?php echo __('Caption') ?></th>
+<?php foreach ($languages as $language): ?>
+<td>
+<?php echo $form[$language]['caption']->renderError() ?>
+<?php echo $form[$language]['caption'] ?>
+</td>
+<?php endforeach; ?>
+</tr>
+<tr>
+<th><?php echo __('Description') ?></th>
+<?php foreach ($languages as $language): ?>
+<td>
+<?php echo $form[$language]['info']->renderError() ?>
+<?php echo $form[$language]['info'] ?>
+</td>
+<?php endforeach; ?>
+</tr>
 </table>
 
 <table id="common" style="width: 50%;">

@@ -24,7 +24,7 @@
         <target>項目名</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Info</source>
+        <source>Description</source>
         <target>説明</target>
       </trans-unit>
 
@@ -1035,8 +1035,8 @@
         <target>項目追加</target>
       </trans-unit>
       <trans-unit id="">
-        <source>プロフィール項目編集</source>
-        <target>Edit entry</target>
+        <source>Edit entry</source>
+        <target>プロフィール項目編集</target>
       </trans-unit>
       <trans-unit id="">
         <source>Select from presets</source>
@@ -1169,6 +1169,10 @@
       <trans-unit id="">
         <source>Delete</source>
         <target>削除する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Option name (%language%)</source>
+        <target>項目名 (%language%)</target>
       </trans-unit>
     </body>
   </file>
