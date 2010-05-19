@@ -5,7 +5,7 @@
 <?php include_http_metas() ?>
 <?php include_metas() ?>
 
-<title><?php echo $op_config['sns_name'] ?>管理画面</title>
+<title><?php echo __('%sns% Administration', array('%sns%' => $op_config['sns_name'])) ?></title>
 
 
     <?php include_stylesheets() ?>
@@ -16,16 +16,16 @@
 <div id="contents" class="clearfix">
 
 <div id="header">
-<h1><?php echo $op_config['sns_name'] ?>管理画面</h1>
+<h1><?php echo __('%sns% Administration', array('%sns%' => $op_config['sns_name'])) ?></h1>
 <span id="visit-site"><a href="<?php echo app_url_for('pc_frontend', '@homepage') ?>" target="_blank"><?php echo __('Visit Site') ?></a></span>
 </div>
 
 <?php if ($sf_user->isAuthenticated()) : ?>
 <div id="menu">
 <ul>
-<li><?php echo link_to(__('管理画面トップ'), '@homepage') ?></li>
+<li><?php echo link_to(__('Top page'), '@homepage') ?></li>
 <?php include_component('default', 'sideMenu') ?>
-<li><?php echo link_to(__('ログアウト'), 'default/logout') ?></li>
+<li><?php echo link_to(__('Logout'), 'default/logout') ?></li>
 </ul>
 </div>
 <?php endif; ?>
