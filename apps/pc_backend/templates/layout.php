@@ -17,6 +17,7 @@
 
 <div id="header">
 <h1><?php echo $op_config['sns_name'] ?>管理画面</h1>
+<span id="visit-site"><a href="<?php echo app_url_for('pc_frontend', '@homepage') ?>" target="_blank"><?php echo __('Visit Site') ?></a></span>
 </div>
 
 <?php if ($sf_user->isAuthenticated()) : ?>

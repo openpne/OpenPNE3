@@ -863,7 +863,7 @@ function op_link_to_member($value, $options = array(), $routeName = '@obj_member
     $member = Doctrine::getTable('Member')->find($value);
   }
 
-  if ($member)
+  if ($member && $member->id)
   {
     $link_target = $member->name;
     if (isset($options['link_target']))

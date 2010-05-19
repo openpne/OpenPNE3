@@ -109,8 +109,9 @@ community_edit:
   param: { module: community, action: edit }
 
 community_delete:
-  url: /community/delete
+  url: /community/delete/:id
   param: { module: community, action: delete }
+  requirements: { id: \d+ }
 
 community_deleteImage:
   url: /community/deleteImage
