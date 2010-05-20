@@ -1,11 +1,7 @@
 <html>
 <head>
 <?php include_http_metas() ?>
-<?php if ($op_config['sns_title']): ?>
-<title><?php echo $op_config['sns_title'] ?></title>
-<?php else: ?>
-<title><?php echo $op_config['sns_name'] ?></title>
-<?php endif; ?>
+<?php include_title() ?>
 <?php if ($sf_request->getMobile()->isSoftBank() && $op_config['font_size']): ?>
 <style type="text/css">
 *{font-size:small;}

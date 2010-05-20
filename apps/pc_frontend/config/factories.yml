@@ -39,12 +39,13 @@ all:
         xml:  [text/xml, application/xml, application/x-xml]
         rdf:  application/rdf+xml
         atom: application/atom+xml
-#
-#  response:
-#    class: sfWebResponse
-#    param:
-#      logging: %SF_LOGGING_ENABLED%
-#      charset: %SF_CHARSET%
+
+  response:
+    class: opWebResponse
+    param:
+      logging:           %SF_LOGGING_ENABLED%
+      charset:           %SF_CHARSET%
+      send_http_headers: true
 #
 #  user:
 #    class: myUser
