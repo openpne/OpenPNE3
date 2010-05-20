@@ -4,14 +4,21 @@
 
 <?php slot('activities') ?>
 <?php if (isset($form)): ?>
-<form id="<?php echo $id ?>_form">
-<div id="<?php echo $id ?>_count" class="count" style="float:right;margin:0 auto;">140</div>
-<?php echo __('Public flag') ?><?php echo $form['public_flag'] ?>
-<?php echo $form['body']->render(array('id' => $id.'_activity_data_body')) ?>
-<?php echo $form->renderHiddenFields() ?>
-<br />
-<input id="<?php echo $id ?>_submit" type="submit" value="<?php echo __('Post Activity') ?>" class="submit" />
-</form>
+<form id="<?php echo $id ?>_form" action="" method="post"><div class="box_form">
+<?php echo $form->renderHiddenFields(), "\n" ?>
+<div class="box_public_flag">
+<label for="activity_data_public_flag"><?php echo __('Public flag') ?></label>
+<?php echo $form['public_flag'], "\n" ?>
+</div>
+<div class="box_count">
+<span class="note"><?php echo __('Characters left')?>: </span>
+<span id="<?php echo $id ?>_count" class="count">140</span>
+</div>
+<div class="box_body">
+<span class="inputForm"><?php echo $form['body']->render(array('id' => $id.'_activity_data_body')) ?></span>
+<span class="submit"><input id="<?php echo $id ?>_submit" type="submit" value="<?php echo __('Post Activity') ?>" class="submit" /></span>
+</div>
+</div></form>
 <script type="text/javascript">
 (function (){
 $('<?php echo $id ?>_form').observe('submit', function(e) {
@@ -36,11 +43,13 @@ $('<?php echo $id ?>_activity_data_body').onkeyup();
 })();
 </script>
 <?php endif; ?>
+<div class="box_list">
 <ol id="<?php echo $id ?>_timeline" class="activities">
 <?php foreach ($activities as $activity): ?>
 <?php include_partial('default/activityRecord', array('activity' => $activity)); ?>
 <?php endforeach; ?>
 </ol>
+</div>
 <?php end_slot(); ?>
 
 <?php $params = array(

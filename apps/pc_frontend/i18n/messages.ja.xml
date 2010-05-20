@@ -1292,6 +1292,10 @@
         <target>アクティビティの投稿に失敗しました。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Delete this activity of %time%</source>
+        <target>このアクティビティを削除 (%time%)</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Remember me</source>
         <target>次回から自動的にログイン</target>
       </trans-unit>

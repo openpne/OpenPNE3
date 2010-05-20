@@ -1248,47 +1248,120 @@ div.operation ul.moreInfo li {
 /*==============================================================================
  * Activity
  *----------------------------------------------------------------------------*/
-
-div.activityBox form textarea {
-  width: 98%;
-  height: 50px;
+div.activityBox {
+  word-wrap: break-word;
 }
 
-div.activityBox form .submit {
-  width: 98%;
+/*======================================
+ * box_form
+ *------------------------------------*/
+div.activityBox div.box_form div.box_public_flag {
+  float: left;
+  width: 50%;
+  margin-bottom: 8px;
 }
 
-div.activityBox .count {
-  font-size: 24px;
+div.activityBox div.box_form div.box_count {
+  float: right;
+  width: 50%;
+  text-align: right;
+}
+
+div.activityBox div.box_form div.box_count span.note {
+  display: none;
+}
+
+div.activityBox div.box_form div.box_count span.count {
+  margin-right: 10px;
   color: #888888;
+  font-size: 24px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-ol.activities li.activity:after {
+div.activityBox div.box_form div.box_body {
   clear: both;
-  height: 0;
-  visibility: hidden;
-  content: ".";
+}
+
+div.activityBox div.box_form div.box_body span.inputForm {
   display: block;
 }
 
-ol.activities li.activity {
-  border-bottom: 1px solid #888888;
-  min-height: 80px;
+div.activityBox div.box_form div.box_body span.inputForm textarea {
+  display: block;
+  width: 98%;
+  height: 3.5em;
 }
 
-ol.activities li.activity .memberImage {
-  padding: 2px;
-  position: absolute;
+div.activityBox div.box_form div.box_body span.submit {
+  display: block;
 }
 
-ol.activities li.activity .body {
-  padding: 5px;
-  margin-left: 80px;
+div.activityBox div.box_form div.box_body span.submit input.submit {
+  width: 98%;
+  margin: 0 1px;
 }
 
-ol.activities li.activity .info {
-  padding: 5px;
+/*======================================
+ * box_list
+ *------------------------------------*/
+#delete_activity div.box_list li.activity,
+div.activityBox div.box_list li.activity {
+  clear: both;
+  padding: 10px 0 8px;
+  border-bottom: 1px solid #cccccc;
+}
+
+#delete_activity div.box_list div.box_memberImage,
+div.activityBox div.box_list div.box_memberImage {
+  overflow: hidden;
+  float: left;
+  width: 76px;
+  margin-right: 8px;
+}
+
+#delete_activity div.box_list div.box_body,
+div.activityBox div.box_list div.box_body {
+  position: relative;
+  min-height: 76px;
+}
+
+* html #delete_activity div.box_list div.box_body,
+* html div.activityBox div.box_list div.box_body {
+  height: 76px;
+}
+
+#delete_activity div.box_list div.box_body p,
+div.activityBox div.box_list div.box_body p {
+  overflow: hidden;
+}
+
+#delete_activity div.box_list div.box_body p span.content .name,
+div.activityBox div.box_list div.box_body p span.content .name {
+  margin-right: 0.5em;
+  font-weight: bold;
+}
+
+#delete_activity div.box_list div.box_body p span.info,
+div.activityBox div.box_list div.box_body p span.info {
+  display: block;
+  padding-top: 2px;
+  padding-bottom: 1.3em;
   color: #888888;
+}
+
+#delete_activity div.box_list div.box_body ul.operation,
+div.activityBox div.box_list div.box_body ul.operation {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+}
+
+#delete_activity div.box_list div.box_body ul.operation li,
+div.activityBox div.box_list div.box_body ul.operation li {
+  display: inline;
+  margin-left: 0.5em;
 }
 
 /*==============================================================================
@@ -1302,57 +1375,57 @@ div.parts table.mceToolbar {
  * Decoration by opWidgetFormRichTextareaOpenPNE
  *----------------------------------------------------------------------------*/
 span.op_b {
-	text-decoration: inherit;
-	font-style: inherit;
-	font-weight: bold;
-	color: inherit;
-	font-size: inherit;
+        text-decoration: inherit;
+        font-style: inherit;
+        font-weight: bold;
+        color: inherit;
+        font-size: inherit;
 }
 
 span.op_u {
-	text-decoration: underline;
-	font-style: inherit;
-	font-weight: inherit;
-	color: inherit;
-	font-size: inherit;
+        text-decoration: underline;
+        font-style: inherit;
+        font-weight: inherit;
+        color: inherit;
+        font-size: inherit;
 }
 
 span.op_s {
-	text-decoration: line-through;
-	font-style: inherit;
-	font-weight: inherit;
-	color: inherit;
-	font-size: inherit;
+        text-decoration: line-through;
+        font-style: inherit;
+        font-weight: inherit;
+        color: inherit;
+        font-size: inherit;
 }
 
 span.op_i {
-	text-decoration: inherit;
-	font-style: italic;
-	font-weight: inherit;
-	color: inherit;
-	font-size: inherit;
+        text-decoration: inherit;
+        font-style: italic;
+        font-weight: inherit;
+        color: inherit;
+        font-size: inherit;
 }
 
 span.op_large {
-	text-decoration: inherit;
-	font-style: inherit;
-	font-weight: inherit;
-	color: inherit;
-	font-size: large;
+        text-decoration: inherit;
+        font-style: inherit;
+        font-weight: inherit;
+        color: inherit;
+        font-size: large;
 }
 
 span.op_small {
-	text-decoration: inherit;
-	font-style: inherit;
-	font-weight: inherit;
-	color: inherit;
-	font-size: xx-small;
+        text-decoration: inherit;
+        font-style: inherit;
+        font-weight: inherit;
+        color: inherit;
+        font-size: xx-small;
 }
 
 span.op_color {
-	text-decoration: inherit;
-	font-style: inherit;
-	font-weight: inherit;
-	color: inherit;
-	font-size: inherit;
+        text-decoration: inherit;
+        font-style: inherit;
+        font-weight: inherit;
+        color: inherit;
+        font-size: inherit;
 }
