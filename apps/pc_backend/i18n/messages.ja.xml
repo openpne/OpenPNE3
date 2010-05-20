@@ -1205,6 +1205,162 @@
       <trans-unit id="">
         <source>%sns% Administration</source>
         <target>%sns%管理画面</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Members</source>
+        <target>メンバーリスト</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>No members matching</source>
+        <target>該当するメンバーは存在しません。</target>
+      </trans-unit>  
+      <trans-unit id="">
+        <source>Unsubscribe</source>
+        <target>強制退会</target>
+      </trans-unit>  
+      <trans-unit id="">
+        <source>Ban</source>
+        <target>ログイン停止</target>
+      </trans-unit>  
+      <trans-unit id="">
+        <source>Unban</source>
+        <target>ログイン停止解除</target>
+      </trans-unit>  
+      <trans-unit id="">
+        <source>Reissue password</source>
+        <target>パスワード再発行</target>
+      </trans-unit>  
+      <trans-unit id="">
+        <source>Add mobile UID to blacklist</source>
+        <target>携帯電話個体識別番号をブラックリストに登録</target>
+      </trans-unit>  
+      <trans-unit id="">
+        <source>Invited by</source>
+        <target>招待者</target>
+      </trans-unit>  
+      <trans-unit id="">
+        <source>Last login</source>
+        <target>最終ログイン</target>
+      </trans-unit>  
+      <trans-unit id="">
+        <source>PC email</source>
+        <target>PCメールアドレス</target>
+      </trans-unit>  
+      <trans-unit id="">
+        <source>Mobile email</source>
+        <target>携帯メールアドレス</target>
+      </trans-unit>  
+      <trans-unit id="">
+        <source>Mobile UID</source>
+        <target>携帯電話個体識別番号（暗号化済）</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Ban Setting</source>
+        <target>ログイン停止設定</target>
+      </trans-unit> 
+      <trans-unit id="">
+        <source>[0]Do you want to ban this member?[1]Do you want to unban this member?</source>
+        <target>[0]ログイン停止設定を有効にします。|[1]ログイン停止設定を解除します。</target>
+      </trans-unit> 
+      <trans-unit id="">
+        <source>[0]Ban|[1]Unban</source>
+        <target>[0]有効にする|[1]解除する</target>
+      </trans-unit> 
+      <trans-unit id="">
+        <source>Return to previous page</source>
+        <target>前のページに戻る</target>
+      </trans-unit> 
+      <trans-unit id="">
+        <source>Change %1%'s password</source>
+        <target>%1%さんのパスワードを変更します。</target>
+      </trans-unit> 
+      <trans-unit id="">
+        <source>Change password</source>
+        <target>パスワード変更</target>
+      </trans-unit> 
+      <trans-unit id="">
+        <source>Blacklist Management</source>
+        <target>ブラックリスト管理</target>
+      </trans-unit> 
+      <trans-unit id="">
+        <source>Add to blacklist</source>
+        <target>ブラックリストに追加</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Blacklist</source>
+        <target>ブラックリスト一覧</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The blacklist is empty</source>
+        <target>ブラックリストが登録されていません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Memo</source>
+        <target>メモ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Invite Members</source>
+        <target>招待メール送信</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Send invitation message</source>
+        <target>招待メール送信</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Enter email addresses of people to invite to %1%.</source>
+        <target>入力されたメールアドレス宛に「%1%」への招待状を送信します。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please enter one email address per line.</source>
+        <target>複数のメールアドレス宛にメールを送信する場合は、改行で区切って入力してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Send</source>
+        <target>送信</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Can't unsubscribe the member has ID = 1</source>
+        <target>IDが1のメンバーは退会することができません。</target>
+      </trans-unit> 
+      <trans-unit id="">
+        <source>Do you want to delete this member anyway?</source>
+        <target>本当にこのメンバーを強制退会させてもよろしいですか？</target>
+      </trans-unit> 
+      <trans-unit id="">
+        <source>The data of this member will be lost forever.</source>
+        <target>強制退会させると、このメンバーに関する情報は削除され元に戻すことはできません。</target>
+      </trans-unit> 
+      <trans-unit id="">
+        <source>Delete Blacklist</source>
+        <target>ブラックリスト削除</target>
+      </trans-unit> 
+      <trans-unit id="">
+        <source>Do you want to delete the following?</source>
+        <target>以下の内容を本当に削除しますか？</target>
+      </trans-unit> 
+      <trans-unit id="">
+        <source>Authentication plugin is not available.</source>
+        <target>招待可能な認証プラグインがありません。</target>
+      </trans-unit> 
+      <trans-unit id="">
+        <source>Please try this again after changing "Authentication plugin" settings in "Plugins" menu.</source>
+        <target>「プラグイン設定」から認証プラグインの設定を変更してからやりなおしてください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>New password has been issued</source>
+        <target>パスワード再発行のお知らせ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The member has been banned</source>
+        <target>ログイン停止を有効にしました</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The ban has been removed</source>
+        <target>ログイン停止を解除しました</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The member has been unsubscribed</source>
+        <target>退会が完了しました</target>
       </trans-unit>    
     </body>
   </file>

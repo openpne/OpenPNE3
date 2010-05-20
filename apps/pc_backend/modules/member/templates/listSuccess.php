@@ -2,31 +2,31 @@
 <?php include_partial('submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', __('メンバーリスト')); ?>
+<?php slot('title', __('Members')); ?>
 
 <form action="<?php echo url_for('member/list') ?>" method="get">
 <table>
 <?php echo $form ?>
 <tr>
-<td colspan="2"><input type="submit" value="検索" /></td>
+<td colspan="2"><input type="submit" value=<?php echo __('Search') ?> /></td>
 </tr>
 </table>
 </form>
 
 <?php if (!$pager->getNbResults()): ?>
-<p><?php echo __('該当するメンバーは存在しません。') ?></p>
+<p><?php echo __('No members matching') ?></p>
 <?php else: ?>
 
 <p>
-<?php echo image_tag('backend/icn_delete_account.gif', array('alt' => __('強制退会'))) ?>: <?php echo __('強制退会') ?>
+<?php echo image_tag('backend/icn_delete_account.gif', array('alt' => __('Unsubscribe'))) ?>: <?php echo __('Unsubscribe') ?>
 &nbsp;
-<?php echo image_tag('backend/icn_rejected.gif', array('alt' => __('ログイン停止'))) ?>: <?php echo __('ログイン停止') ?>
+<?php echo image_tag('backend/icn_rejected.gif', array('alt' => __('Ban'))) ?>: <?php echo __('Ban') ?>
 &nbsp;
-<?php echo image_tag('backend/icn_permit.gif', array('alt' => __('ログイン停止解除'))) ?>: <?php echo __('ログイン停止解除') ?>
+<?php echo image_tag('backend/icn_permit.gif', array('alt' => __('Unban'))) ?>: <?php echo __('Unban') ?>
 &nbsp;
-<?php echo image_tag('backend/icn_passwd.gif', array('alt' => __('パスワード再発行'))) ?>: <?php echo __('パスワード再発行') ?>
+<?php echo image_tag('backend/icn_passwd.gif', array('alt' => __('Reissue password'))) ?>: <?php echo __('Reissue password') ?>
 &nbsp;
-<?php echo image_tag('backend/icn_blacklist.gif', array('alt' => __('携帯電話個体識別番号をブラックリストに登録'))) ?>: <?php echo __('携帯電話個体識別番号をブラックリストに登録') ?>
+<?php echo image_tag('backend/icn_blacklist.gif', array('alt' => __('Add mobile UID to blacklist'))) ?>: <?php echo __('Add mobile UID to blacklist') ?>
 </p>
 
 <table>
@@ -38,11 +38,11 @@
 </tr>
 
 <tr>
-<th colspan="4"><?php echo __('操作') ?></th>
+<th colspan="4"><?php echo __('Operation') ?></th>
 <th><?php echo __('ID') ?></th>
-<th><?php echo __('ニックネーム') ?></th>
-<th><?php echo __('招待者') ?></th>
-<th><?php echo __('最終ログイン') ?></th>
+<th><?php echo __('Nickname') ?></th>
+<th><?php echo __('Invited by') ?></th>
+<th><?php echo __('Last login') ?></th>
 <?php foreach ($profiles as $profile) : ?>
 <?php if ($profile->isPreset()): ?>
 <?php $config = $profile->getPresetConfig(); ?>
@@ -51,30 +51,30 @@
 <th><?php echo $profile->getCaption() ?></th>
 <?php endif; ?>
 <?php endforeach; ?>
-<th><?php echo __('PCメールアドレス') ?></th>
-<th><?php echo __('携帯メールアドレス') ?></th>
-<th><?php echo __('携帯電話個体識別番号（暗号化済）') ?></th>
+<th><?php echo __('PC email') ?></th>
+<th><?php echo __('Mobile email') ?></th>
+<th><?php echo __('Mobile UID') ?></th>
 </tr>
 
 <?php foreach ($pager->getResults() as $i => $member): ?>
 <tr style="background-color:<?php echo cycle_vars('member_list', '#fff, #eee') ?>;">
 <td>
 <?php if ($member->getId() != 1) : ?>
-<?php echo link_to(image_tag('backend/icn_delete_account.gif', array('alt' => __('強制退会'))), 'member/delete?id='.$member->getId()) ?>
+<?php echo link_to(image_tag('backend/icn_delete_account.gif', array('alt' => __('Unsubscribe'))), 'member/delete?id='.$member->getId()) ?>
 <?php endif; ?>
 </td>
 <td>
 <?php if (!$member->getIsLoginRejected()) : ?>
-<?php echo link_to(image_tag('backend/icn_rejected.gif', array('alt' => __('ログイン停止'))), 'member/reject?id='.$member->getId()) ?>
+<?php echo link_to(image_tag('backend/icn_rejected.gif', array('alt' => __('Ban'))), 'member/reject?id='.$member->getId()) ?>
 <?php else: ?>
-<?php echo link_to(image_tag('backend/icn_permit.gif', array('alt' => __('ログイン停止解除'))), 'member/reject?id='.$member->getId()) ?>
+<?php echo link_to(image_tag('backend/icn_permit.gif', array('alt' => __('Unban'))), 'member/reject?id='.$member->getId()) ?>
 <?php endif; ?>
 </td>
 <td>
-<?php echo link_to(image_tag('backend/icn_passwd.gif', array('alt' => __('パスワード再発行'))), 'member/reissuePassword?id='.$member->getId()) ?>
+<?php echo link_to(image_tag('backend/icn_passwd.gif', array('alt' => __('Reissue password'))), 'member/reissuePassword?id='.$member->getId()) ?>
 </td>
 <td>
-<?php echo link_to(image_tag('backend/icn_blacklist.gif', array('alt' => __('携帯電話個体識別番号をブラックリストに登録'))), 'member/blacklist?uid='.$member->getConfig('mobile_uid')) ?>
+<?php echo link_to(image_tag('backend/icn_blacklist.gif', array('alt' => __('Add mobile UID to blacklist'))), 'member/blacklist?uid='.$member->getConfig('mobile_uid')) ?>
 </td>
 <td><?php echo $member->getId() ?></td>
 <td><?php echo $member->getName() ?></td>

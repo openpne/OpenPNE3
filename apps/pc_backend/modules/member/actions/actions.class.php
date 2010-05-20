@@ -73,7 +73,7 @@ class memberActions extends sfActions
     if ($request->isMethod('post'))
     {
       $this->member->delete();
-      $this->getUser()->setFlash('notice', '退会が完了しました');
+      $this->getUser()->setFlash('notice', sfContext::getInstance()->getI18N()->__('The member has been unsubscribed'));
       $this->redirect('member/list');
     }
 
@@ -208,11 +208,11 @@ class memberActions extends sfActions
         $this->form->save();
         if ($this->member->getIsLoginRejected())
         {
-          $message = 'ログイン停止を有効にしました';
+          $message = sfContext::getInstance()->getI18N()->__('The member has been banned');
         }
         else
         {
-          $message = 'ログイン停止を解除しました';
+          $message = sfContext::getInstance()->getI18N()->__('The ban has been removed');
         }
         $this->getUser()->setFlash('notice', $message);
 

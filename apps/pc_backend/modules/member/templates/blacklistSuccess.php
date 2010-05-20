@@ -2,23 +2,23 @@
 <?php include_partial('submenu') ?>
 <?php end_slot(); ?>
 
-<h2><?php echo __('ブラックリスト管理') ?></h2>
+<h2><?php echo __('Blacklist Management') ?></h2>
 
-<h3><?php echo __('ブラックリストに追加') ?></h3>
+<h3><?php echo __('Add to blacklist') ?></h3>
 
 <form action="<?php echo url_for('member/blacklist') ?>" method="post">
 <table>
 <?php echo $form ?>
 <tr>
-<td colspan="2"><input type="submit" value="<?php echo __('追加') ?>" /></td>
+<td colspan="2"><input type="submit" value="<?php echo __('Add') ?>" /></td>
 </tr>
 </table>
 </form>
 
-<h3><?php echo __('ブラックリスト一覧') ?></h3>
+<h3><?php echo __('Blacklist') ?></h3>
 
 <?php if (!$pager->getNbResults()): ?>
-<p><?php echo __('ブラックリストが登録されていません。') ?></p>
+<p><?php echo __('The blacklist is empty') ?></p>
 <?php else: ?>
 <table>
 
@@ -30,9 +30,9 @@
 
 <tr>
 <th><?php echo __('ID') ?></th>
-<th><?php echo __('携帯電話個体識別番号（暗号化済）') ?></th>
-<th><?php echo __('メモ') ?></th>
-<th><?php echo __('操作') ?></th>
+<th><?php echo __('Mobile UID') ?></th>
+<th><?php echo __('Memo') ?></th>
+<th><?php echo __('Operation') ?></th>
 </tr>
 
 <?php foreach ($pager->getResults() as $blacklist): ?>
@@ -40,7 +40,7 @@
 <td><?php echo $blacklist->getId() ?></td>
 <td><?php echo $blacklist->getUid() ?></td>
 <td><?php echo nl2br($blacklist->getMemo()) ?></td>
-<td><?php echo link_to('削除', 'member/blacklistDelete?id='.$blacklist->getId()) ?></td>
+<td><?php echo link_to(__('Delete'), 'member/blacklistDelete?id='.$blacklist->getId()) ?></td>
 </tr>
 <?php endforeach; ?>
 

@@ -2,10 +2,10 @@
 <?php include_partial('submenu') ?>
 <?php end_slot(); ?>
 
-<h2><?php echo __('強制退会') ?></h2>
+<h2><?php echo __('Unsubscribe') ?></h2>
 
-<p><?php echo __('本当にこのメンバーを強制退会させてもよろしいですか？') ?></p>
-<p><?php echo __('強制退会させると、このメンバーに関する情報は削除され元に戻すことはできません。') ?></p>
+<p><?php echo __('Do you want to delete this member anyway?') ?></p>
+<p><?php echo __('The data of this member will be lost forever.') ?></p>
 
 <form action="<?php echo url_for('member/delete?id='.$member->getId()) ?>" method="post">
 <table>
@@ -13,7 +13,7 @@
 <th><?php echo __('ID') ?></th><td><?php echo $member->getId() ?></td>
 </tr>
 <tr>
-<th><?php echo __('ニックネーム') ?></th><td><?php echo $member->getName() ?></td>
+<th><?php echo __('Nickname') ?></th><td><?php echo $member->getName() ?></td>
 </tr>
 <?php foreach ($member->getProfiles() as $profile): ?>
 <tr>
@@ -22,19 +22,19 @@
 </tr>
 <?php endforeach ?>
 <tr>
-<th><?php echo __('PCメールアドレス') ?></th>
+<th><?php echo __('PC email') ?></th>
 <td><?php echo $member->getConfig('pc_address') ?></td>
 </tr>
 <tr>
-<th><?php echo __('携帯メールアドレス') ?></th>
+<th><?php echo __('Mobile email') ?></th>
 <td><?php echo $member->getConfig('mobile_address') ?></td>
 </tr>
 <?php echo $form ?>
 <tr>
-<td colspan="2"><input type="submit" value="<?php echo __('強制退会させる') ?>" /></td>
+<td colspan="2"><input type="submit" value="<?php echo __('Unsubscribe') ?>" /></td>
 </tr>
 </table>
 </form>
 
 <?php use_helper('Javascript') ?>
-<?php echo link_to_function(__('前のページに戻る'), 'history.back()') ?>
+<?php echo link_to_function(__('Return to previous page'), 'history.back()') ?>

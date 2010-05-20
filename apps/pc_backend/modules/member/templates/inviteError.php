@@ -2,10 +2,10 @@
 <?php include_partial('submenu'); ?>
 <?php end_slot(); ?>
 
-<h2><?php echo __('招待メール送信') ?></h2>
+<h2><?php echo __('Send invitation message') ?></h2>
 
-<p><?php echo __('招待可能な認証プラグインがありません。') ?></p>
-<p><?php echo __('「プラグイン設定」から認証プラグインの設定を変更してからやりなおしてください。') ?></p>
+<p><?php echo __('Authentication plugin is not available.') ?></p>
+<p><?php echo __('Please try this again after changing "Authentication plugin" settings in "Plugins" menu.') ?></p>
 
 <?php use_helper('Javascript') ?>
-<p><?php echo link_to_function(__('前のページに戻る'), 'history.back()') ?></p>
+<p><?php echo link_to_function(__('Return to previous page'), 'history.back()') ?></p>
