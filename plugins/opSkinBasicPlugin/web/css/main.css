@@ -1314,13 +1314,17 @@ div.activityBox div.box_list li.activity {
 #delete_activity div.box_list div.box_memberImage,
 div.activityBox div.box_list div.box_memberImage {
   overflow: hidden;
+  z-index: 256;
+  position: relative;
   float: left;
   width: 76px;
+  max-height: 76px;
   margin-right: 8px;
 }
 
 #delete_activity div.box_list div.box_body,
 div.activityBox div.box_list div.box_body {
+  z-index: 128;
   position: relative;
   min-height: 76px;
 }
