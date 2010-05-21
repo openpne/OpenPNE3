@@ -1322,6 +1322,11 @@ div.activityBox div.box_list div.box_memberImage {
   margin-right: 8px;
 }
 
+#delete_activity div.box_list div.box_memberImage p ,
+div.activityBox div.box_list div.box_memberImage p {
+  text-align: center;
+}
+
 #delete_activity div.box_list div.box_body,
 div.activityBox div.box_list div.box_body {
   z-index: 128;
