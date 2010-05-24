@@ -3,7 +3,7 @@
 include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 
-$t = new lime_test(54, new lime_output_color());
+$t = new lime_test(56, new lime_output_color());
 $table = Doctrine::getTable('Member');
 $member1 = $table->findOneByName('A');
 $member2 = $table->findOneByName('B');
@@ -43,6 +43,8 @@ $t->is($member1->getProfile('dummy'), null);
 $t->diag('Member::getConfig()');
 $t->is($member1->getConfig('pc_address'), 'sns@example.com');
 $t->is($member1->getConfig('dummy'), null);
+$t->is($member1->getConfig('dummy', array()), array());
+$t->is($member1->getConfig('dummy', 11111111111111111111), 11111111111111111111);
 
 //------------------------------------------------------------
 $t->diag('Member::setConfig()');
