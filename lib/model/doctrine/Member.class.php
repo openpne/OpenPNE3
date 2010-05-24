@@ -61,16 +61,11 @@ class Member extends BaseMember implements opAccessControlRecordInterface
     return false;
   }
 
-  public function getConfig($configName)
+  public function getConfig($configName, $default = null)
   {
     $config = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($configName, $this->getId());
 
-    if (!$config)
-    {
-      return null;
-    }
-
-    return $config->getValue();
+    return $config ? $config->getValue() : $default;
   }
 
   public function setConfig($configName, $value, $isDateTime = false)
