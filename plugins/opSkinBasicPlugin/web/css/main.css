@@ -1257,13 +1257,13 @@ div.activityBox {
  *------------------------------------*/
 div.activityBox div.box_form div.box_public_flag {
   float: left;
-  width: 50%;
+  width: 75%;
   margin-bottom: 8px;
 }
 
 div.activityBox div.box_form div.box_count {
   float: right;
-  width: 50%;
+  width: 25%;
   text-align: right;
 }
 
