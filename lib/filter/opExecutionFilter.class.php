@@ -101,6 +101,12 @@ class opExecutionFilter extends sfExecutionFilter
   {
     $moduleName = $actionInstance->getModuleName();
     $actionName = $actionInstance->getActionName();
+    $request = $actionInstance->getRequest();
+
+    if ($this->needToRedirectToSoftBankGateway())
+    {
+      $this->redirectToSoftBankGateway();
+    }
 
     $this->handleSSl($actionInstance);
 

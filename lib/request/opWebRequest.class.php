@@ -17,6 +17,9 @@
  */
 class opWebRequest extends sfWebRequest
 {
+  const SB_GW_COOKIE_NAME = 'is_sb_gw';
+  const SB_GW_BASE_URL = 'https://secure.softbank.ne.jp/';
+
   protected 
     $userAgentMobileInstance = null;
 
@@ -323,5 +326,35 @@ class opWebRequest extends sfWebRequest
     }
 
     return mb_convert_encoding($value, $this->outsideEncoding, 'UTF-8');
+  }
+
+  protected function needToRedirectToSoftBankGateway()
+  {
+    $request = $actionInstance->getRequest();
+
+    if (
+      !$request->getMobile()->isSoftBank()  // The gateway is usable only for SoftBank mobile phone
+      || !sfConfig::get('op_use_ssl', false)  // OpenPNE doesn't consider SSL
+      || !$request->isSecure()  // Non-SSL connection is already passed the gateway
+      || $request->getMobile()->getUID() // This UID is granted by the gateway
+      || $request->getCookie(self::SB_GW_COOKIE_NAME)  // Redirecting has already done
+    )
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  protected function redirectToSoftBankGateway()
+  {
+    $baseUrl = sfConfig::get('op_ssl_base_url');
+    sfContext::getInstance()->getResponse()->setCookie(self::SB_GW_COOKIE_NAME, '1');
+
+    $url = self::SB_GW_BASE_URL
+         .str_replace(array('https://', 'http://'), '', $baseUrl[sfConfig::get('sf_app')])
+         .$this->getCurrentUri();
+
+    $this->context->getController()->redirect($url);
   }
 }
