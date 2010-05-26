@@ -78,6 +78,10 @@ member_editProfile:
   url: /member/edit/profile
   param: { module: member, action: editProfile }
 
+member_setSid:
+  url: /member/setSid
+  param: { module: member, action: setSid }
+
 # friend rules
 friend_show_image:
   url: /friend/image

@@ -16,3 +16,6 @@ registerMobileToRegisterEnd:
 
 profile:
   is_secure: both
+
+setSid:
+  is_secure: false

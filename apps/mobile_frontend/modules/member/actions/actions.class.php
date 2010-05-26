@@ -13,15 +13,10 @@
  *
  * @package    OpenPNE
  * @subpackage member
- * @author     Kousuke Ebihara <ebihara@tejimaya.com>
+ * @author     Kousuke Ebihara <ebihara@php.net>
  */
 class memberActions extends opMemberAction
 {
- /**
-  * Executes home action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeHome($request)
   {
     $this->gadgetConfig = sfConfig::get('op_mobile_gadget_list');
@@ -38,11 +33,6 @@ class memberActions extends opMemberAction
     return parent::executeHome($request);
   }
 
- /**
-  * Executes login action
-  *
-  * @param sfWebRequest $request A request object
-  */
   public function executeLogin($request)
   {
     if (opConfig::get('external_mobile_login_url') && $request->isMethod(sfWebRequest::GET))
@@ -52,15 +42,10 @@ class memberActions extends opMemberAction
 
     $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('mobileLogin');
     $this->mobileLoginContentsGadgets = $gadgets['mobileLoginContents'];
-      
+
     return parent::executeLogin($request);
   }
 
- /**
-  * Executes search action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeSearch($request)
   {
     $this->size = 10;
@@ -68,11 +53,6 @@ class memberActions extends opMemberAction
     return parent::executeSearch($request);
   }
 
- /**
-  * Executes profile action
-  *
-  * @params sfRequest $request A request object
-  */ 
   public function executeProfile($request)
   {
     $this->friendsSize = 5;
@@ -86,11 +66,6 @@ class memberActions extends opMemberAction
     return parent::executeProfile($request);
   }
 
- /**
-  * Executes configUID action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeConfigUID($request)
   {
     $option = array('member' => $this->getUser()->getMember());
@@ -135,11 +110,6 @@ class memberActions extends opMemberAction
     return sfView::SUCCESS;
   }
 
- /**
-  * Executes registerMobileToRegisterEnd action
-  *
-  * @param sfRequest $request A request object
-  */
   public function executeRegisterMobileToRegisterEnd(sfWebRequest $request)
   {
 
@@ -191,5 +161,26 @@ class memberActions extends opMemberAction
     $this->size = 10;
 
     parent::executeShowActivity($request);
+  }
+
+  public function executeSetSid($request)
+  {
+    $this->forward404Unless(isset($request['sid']));
+
+    $uri = isset($request['next_uri']) ? $request['next_uri'] : '';
+    $validator = new opValidatorNextUri();
+
+    try
+    {
+      $uri = $validator->clean($uri);
+    }
+    catch (Exception $e)
+    {
+      $this->forward404($e->getMessage());
+    }
+
+    $this->getUser()->setSid($request['sid'], !empty($request['is_remember_login']));
+
+    $this->redirect($uri);
   }
 }
