@@ -1294,16 +1294,30 @@ div.activityBox div.box_form div.box_body span.inputForm textarea {
 
 div.activityBox div.box_form div.box_body span.submit {
   display: block;
+  float: right;
 }
 
 div.activityBox div.box_form div.box_body span.submit input.submit {
-  width: 98%;
-  margin: 0 1px;
+  -moz-border-radius:3px;
+  -webkit-boder-radius:3px;
+  border-radius: 3px;
+  font-size: 14px;
+  background: url("../images/bg_button_a.gif") repeat-x scroll 50% 0 #DADCE6;
+  border: 1px solid #888888;
+  letter-spacing: 0;
+  padding: 3px;
+  margin: 5px 6px;
+  height: 30px;
+  font-weight: bold;
 }
 
 /*======================================
  * box_list
  *------------------------------------*/
+div.box_list {
+  clear: both;
+}
+
 #delete_activity div.box_list li.activity,
 div.activityBox div.box_list li.activity {
   clear: both;
@@ -1317,8 +1331,8 @@ div.activityBox div.box_list div.box_memberImage {
   z-index: 256;
   position: relative;
   float: left;
-  width: 76px;
-  max-height: 76px;
+  width: 48px;
+  max-height: 48px;
   margin-right: 8px;
 }
 
