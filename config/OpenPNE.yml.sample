@@ -169,6 +169,10 @@ image_storage: Default  # DB に画像バイナリを保存します (Store imag
 # Table name prefix (e.g: table_prefix: "op_")
 table_prefix: ""
 
+# Query Cache および Result Cacheのキープレフィックス (例: doctrine_cache_key_prefix: "op_")
+# Key prefix of Query Cache & Result Cache (e.g: doctrine_cache_key_prefix: "op_")
+doctrine_cache_key_prefix: ""
+
 ######################################
 # プロキシ (Proxy)
 ######################################

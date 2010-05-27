@@ -95,7 +95,16 @@ class opProjectConfiguration extends sfProjectConfiguration
 
     if (extension_loaded('apc'))
     {
-      $cacheDriver = new Doctrine_Cache_Apc();
+      $options = array();
+      if ($prefix = sfConfig::get('op_doctrine_cache_key_prefix'))
+      {
+        $options['prefix'] = $prefix;
+      }
+      else
+      {
+        $options['prefix'] = md5(dirname(__FILE__));
+      }
+      $cacheDriver = new Doctrine_Cache_Apc($options);
       $manager->setAttribute(Doctrine::ATTR_QUERY_CACHE, $cacheDriver);
     }
 
