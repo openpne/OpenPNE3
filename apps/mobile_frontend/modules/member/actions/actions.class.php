@@ -74,33 +74,35 @@ class memberActions extends opMemberAction
     $this->isSetMobileUid = $mobileUid && $mobileUid->getValue();
     $this->isDeletableUid = ((int)opConfig::get('retrieve_uid') < 2) && $this->isSetMobileUid;
 
-    if ($request->isMethod('post')) {
+    if ($request->isMethod('post'))
+    {
       $this->passwordForm->bind($request->getParameter('password'));
       if ($this->passwordForm->isValid())
       {
         if ($request->hasParameter('update'))
         {
-          if (!$request->getMobileUID())
+          $cookieUid = sfContext::getInstance()->getResponse()->generateMobileUidCookie();
+
+          if (!$request->getMobileUID() && !$cookieUid)
           {
             $this->getUser()->setFlash('error', 'Your mobile UID was not registered.');
             $this->redirect('member/configUID');
           }
 
-          $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('mobile_uid', $this->getUser()->getMemberId());
-          if (!$memberConfig)
+          $member = $this->getUser()->getMember();
+          $member->setConfig('mobile_uid', $request->getMobileUID());
+          if ($cookieUid)
           {
-            $memberConfig = new MemberConfig();
-            $memberConfig->setMember($this->getUser()->getMember());
-            $memberConfig->setName('mobile_uid');
+            $member->setConfig('mobile_cookie_uid', $cookieUid);
           }
-          $memberConfig->setValue($request->getMobileUID());
-          $memberConfig->save();
+
           $this->getUser()->setFlash('notice', 'Your mobile UID was set successfully.');
           $this->redirect('member/configUID');
         }
         elseif ($request->hasParameter('delete') && $this->isDeletableUid)
         {
           $mobileUid->delete();
+          sfContext::getInstance()->getResponse()->deleteMobileUidCookie();
           $this->getUser()->setFlash('notice', 'Your mobile UID was deleted successfully.'); 
           $this->redirect('member/configUID');
         }

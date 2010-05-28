@@ -40,4 +40,15 @@ class opWebResponse extends sfWebResponse
 
     return $value;
   }
+
+  public function deleteMobileUidCookie()
+  {
+    $request = sfContext::getInstance()->getRequest();
+    if (!$request->isMobile() || !$request->isCookie())
+    {
+      return false;
+    }
+
+    $this->setCookie(opWebRequest::MOBILE_UID_COOKIE_NAME, '', time() - 3600);
+  }
 }
