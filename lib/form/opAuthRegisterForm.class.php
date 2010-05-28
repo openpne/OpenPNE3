@@ -52,6 +52,9 @@ abstract class opAuthRegisterForm extends BaseForm
 
     parent::__construct($defaults, $options, false);
 
+    $this->setValidator('mobile_uid', new sfValidatorPass());
+    $this->setValidator('mobile_cookie_uid', new sfValidatorPass());
+
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array($this, 'validateMobileUID'))));
 
     $this->widgetSchema->setNameFormat('auth[%s]');
@@ -117,7 +120,10 @@ abstract class opAuthRegisterForm extends BaseForm
     $this->memberForm->bind($request->getParameter('member'));
     $this->profileForm->bind($request->getParameter('profile'));
     $this->configForm->bind($request->getParameter('member_config'));
-    $this->bind($request->getParameter('auth'));
+    $this->bind($request->getParameter('auth', array(
+      'mobile_uid'        => '',
+      'mobile_cookie_uid' => '',
+    )));
   }
 
   public function validateMobileUID($validator, $values, $arguments = array())
@@ -140,6 +146,12 @@ abstract class opAuthRegisterForm extends BaseForm
         throw new sfValidatorError($validator, 'A mobile UID is invalid.');
       }
 
+      $cookieUid = sfContext::getInstance()->getResponse()->generateMobileUidCookie();
+      if ($cookieUid)
+      {
+        $values['mobile_cookie_uid'] = $cookieUid;
+      }
+
       $values['mobile_uid'] = $uid;
     }
 
@@ -160,6 +172,11 @@ abstract class opAuthRegisterForm extends BaseForm
       if ($this->getValue('mobile_uid'))
       {
         $this->getMember()->setConfig('mobile_uid', $this->getValue('mobile_uid'));
+      }
+
+      if ($this->getValue('mobile_cookie_uid'))
+      {
+        $this->getMember()->setConfig('mobile_cookie_uid', $this->getValue('mobile_cookie_uid'));
       }
 
       $communities = Doctrine::getTable('Community')->getDefaultCommunities();

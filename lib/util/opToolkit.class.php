@@ -475,4 +475,84 @@ class opToolkit
 
     return ($limit - $usage);
   }
+
+  /**
+   * Generates a randomized hash (from Ethna 2.5.0)
+   *
+   * Licensed under The BSD License. Original is the Ethna_Util::getRandom() method.
+   *
+   * Copyright (c) 2004-2006, Masaki Fujimoto
+   * All rights reserved.
+   *
+   * @author  Masaki Fujimoto <fujimoto@php.net>
+   * @license http://www.opensource.org/licenses/bsd-license.php The BSD License
+   *
+   * @param  int    $length  Length of a hash
+   * @return string
+   */
+  public function getRandom($length = 64)
+  {
+    static $srand = false;
+
+    if ($srand == false)
+    {
+      list($usec, $sec) = explode(' ', microtime());
+      mt_srand((float) $sec + ((float) $usec * 100000) + getmypid());
+      $srand = true;
+    }
+
+    // Is the "open_basedir" is on, and accessing to /proc is allowed?
+    // If the "open_basedir" is empty, this method consider that accessing to it is allowed.
+    $devfile = '/proc/net/dev';
+    $open_basedir_conf = ini_get('open_basedir');
+    $devfile_enabled = (empty($open_basedir_conf)
+      || (preg_match('#:/proc#', $open_basedir_conf) > 0
+      ||  preg_match('#^/proc#', $open_basedir_conf) > 0));
+
+    $value = '';
+    for ($i = 0; $i < 2; $i++)
+    {
+      // for Linux
+      if ($devfile_enabled && file_exists($devfile))
+      {
+        $rx = $tx = 0;
+        $fp = fopen($devfile, 'r');
+        if ($fp != null)
+        {
+          $header = true;
+          while (feof($fp) === false)
+          {
+            $s = fgets($fp, 4096);
+            if ($header)
+            {
+              $header = false;
+              continue;
+            }
+            $v = preg_split('/[:\s]+/', $s);
+            if (is_array($v) && count($v) > 10)
+            {
+              $rx += $v[2];
+              $tx += $v[10];
+            }
+          }
+        }
+        $platform_value = $rx.$tx.mt_rand().getmypid();
+      }
+      else
+      {
+        $platform_value = mt_rand().getmypid();
+      }
+      $now = strftime('%Y%m%d %T');
+      $time = gettimeofday();
+      $v = $now.$time['usec'].$platform_value.mt_rand(0, time());
+      $value .= md5($v);
+    }
+
+    if ($length < 64)
+    {
+      $value = substr($value, 0, $length);
+    }
+
+    return $value;
+  }
 }

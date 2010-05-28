@@ -19,6 +19,7 @@ class opWebRequest extends sfWebRequest
 {
   const SB_GW_COOKIE_NAME = 'is_sb_gw';
   const SB_GW_BASE_URL = 'https://secure.softbank.ne.jp/';
+  const MOBILE_UID_COOKIE_NAME = 'op_mobile_uid';
 
   protected 
     $userAgentMobileInstance = null;
@@ -140,7 +141,8 @@ class opWebRequest extends sfWebRequest
   */
   public function getMobileUID()
   {
-    if (!$this->isMobile()) {
+    if (!$this->isMobile())
+    {
       return false;
     }
 
@@ -164,6 +166,16 @@ class opWebRequest extends sfWebRequest
     }
 
     return false;
+  }
+
+  public function getMobileUidCookie()
+  {
+    return $this->getCookie(self::MOBILE_UID_COOKIE_NAME);
+  }
+
+  public function hasMobileUidCookie()
+  {
+    return (bool)$this->getCookie(self::MOBILE_UID_COOKIE_NAME);
   }
 
  /**

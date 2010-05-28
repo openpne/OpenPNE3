@@ -109,7 +109,7 @@ ssl_required_actions:
 
   # 携帯版設定
   # for mobile_frontend
-  mobile_frontend: ["member/register", "member/registerInput", "member/registerEnd", "member/editProfile", "member/config", "member/login", "member/logout", "member/invite"]
+  mobile_frontend: ["member/register", "member/registerInput", "member/registerEnd", "member/editProfile", "member/config", "member/login", "member/logout", "member/invite", "member/configUID"]
 
   # 管理画面設定
   # for pc_backend
