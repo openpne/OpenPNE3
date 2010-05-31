@@ -23,6 +23,7 @@ homeSuccess:
       is_component: true
 
 profileSuccess:
+  javascripts: [util]
   layout: layoutA
 
 configSuccess:
