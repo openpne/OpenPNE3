@@ -26,7 +26,7 @@ test:
 all:
   .settings:
     # Form security secret (CSRF protection)
-    csrf_secret:       <?php echo filemtime(__FILE__)."\n" ?>     # Unique secret to enable CSRF protection or false to disable
+    csrf_secret:       <?php sfConfig::has('op_csrf_secret') ? print sfConfig::get('op_csrf_secret') : print filemtime(__FILE__)."\n" ?>     # Unique secret to enable CSRF protection or false to disable
 
     # Output escaping settings
     escaping_strategy:      'on'            # Determines how variables are made available to templates. Accepted values: on, off.

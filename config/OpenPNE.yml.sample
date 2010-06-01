@@ -44,6 +44,14 @@ mail_address_hash_length: 12
 is_restrict_mail_template: true
 
 ######################################
+# キー設定 (Keys)
+######################################
+
+# A secret for generating CSRF token (You should change this if you want to run OpenPNEs on multiple servers)
+# CSRF トークンを生成するためのシークレット (複数 Web サーバで OpenPNE を動作させる場合、この設定を変更する必要があります)
+#csrf_secret: ""
+
+######################################
 # セッション (Session)
 ######################################
 
