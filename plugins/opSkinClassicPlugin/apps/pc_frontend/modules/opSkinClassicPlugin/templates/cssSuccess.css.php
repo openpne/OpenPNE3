@@ -2397,6 +2397,163 @@ span.op_color {
 	font-size: inherit;
 }
 
+/*==============================================================================
+ * Activity
+ *----------------------------------------------------------------------------*/
+div.activityBox div.moreInfo {
+  padding-bottom: 5px;
+}
+
+#delete_activity,
+div.activityBox {
+  word-wrap: break-word;
+}
+
+/*======================================
+ * box_form
+ *------------------------------------*/
+div.activityBox div.box_form {
+  margin-left: 5px;
+}
+
+div.activityBox div.box_form div.box_public_flag {
+  float: left;
+  width: 75%;
+  margin-bottom: 8px;
+}
+
+div.activityBox div.box_form div.box_public_flag {
+  float: left;
+  width: 75%;
+  margin-bottom: 8px;
+}
+
+div.activityBox div.box_form div.box_count {
+  float: right;
+  width: 25%;
+  text-align: right;
+}
+
+div.activityBox div.box_form div.box_count span.note {
+  display: none;
+}
+
+div.activityBox div.box_form div.box_count span.count {
+  margin-right: 10px;
+  color: #888888;
+  font-size: 24px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+div.activityBox div.box_form div.box_body {
+  clear: both;
+}
+
+div.activityBox div.box_form div.box_body span.inputForm {
+  display: block;
+}
+
+div.activityBox div.box_form div.box_body span.inputForm textarea {
+  display: block;
+  width: 98%;
+  height: 3.5em;
+}
+
+div.activityBox div.box_form div.box_body span.submit {
+  display: block;
+  float: right;
+}
+
+div.activityBox div.box_form div.box_body span.submit input.submit {
+  -moz-border-radius:3px;
+  -webkit-boder-radius:3px;
+  border-radius: 3px;
+  font-size: 14px;
+  background: url(<?php echo image_path(opSkinClassicConfig::get('bg_button_a_image')) ?>) repeat-x scroll 50% 0 #DADCE6;
+  border: 1px solid #888888;
+  letter-spacing: 0;
+  padding: 3px;
+  margin: 5px 6px;
+  height: 30px;
+  font-weight: bold;
+}
+
+/*======================================
+ * box_list
+ *------------------------------------*/
+div.box_list {
+  clear: both;
+}
+
+#delete_activity div.box_list li.activity,
+div.activityBox div.box_list li.activity {
+  clear: both;
+  padding: 10px 0 8px;
+  border-bottom: 1px solid #cccccc;
+}
+
+#delete_activity div.box_list div.box_memberImage,
+div.activityBox div.box_list div.box_memberImage {
+  overflow: hidden;
+  z-index: 256;
+  position: relative;
+  float: left;
+  width: 48px;
+  max-height: 48px;
+  margin-right: 8px;
+}
+
+#delete_activity div.box_list div.box_memberImage p,
+div.activityBox div.box_list div.box_memberImage p {
+  text-align: center;
+}
+
+#delete_activity div.box_list div.box_body,
+div.activityBox div.box_list div.box_body {
+  z-index: 128;
+  position: relative;
+  min-height: 76px;
+}
+
+* html #delete_activity div.box_list div.box_body,
+* html div.activityBox div.box_list div.box_body {
+  height: 76px;
+}
+
+#delete_activity div.box_list div.box_body p,
+div.activityBox div.box_list div.box_body p {
+  overflow: hidden;
+  text-align: left;
+}
+
+#delete_activity div.box_list div.box_body p span.content .name,
+div.activityBox div.box_list div.box_body p span.content .name {
+  margin-right: 0.5em;
+  font-weight: bold;
+}
+
+#delete_activity div.box_list div.box_body p span.info,
+div.activityBox div.box_list div.box_body p span.info {
+  display: block;
+  padding-top: 2px;
+  padding-bottom: 1.3em;
+  color: #888888;
+}
+
+#delete_activity div.box_list div.box_body ul.operation,
+div.activityBox div.box_list div.box_body ul.operation {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+}
+
+#delete_activity div.box_list div.box_body ul.operation li,
+div.activityBox div.box_list div.box_body ul.operation li {
+  display: inline;
+  margin-left: 0.5em;
+}
 
 /*==============================================================================
  * カスタムCSS

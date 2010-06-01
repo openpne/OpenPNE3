@@ -30,7 +30,7 @@ class opSkinClassicConfig
     ),
 
     $images = array(
-      'icon_arrow_1', 'bg_button', 'content_header_1', 'icon_title_1', 'icon_arrow_2',
+      'icon_arrow_1', 'bg_button', 'bg_button_a', 'content_header_1', 'icon_title_1', 'icon_arrow_2',
       'colon', 'icon_information', 'marker', 'articleList_marker', 'icon_3', 'icon_1', 'icon_2',
     );
 
