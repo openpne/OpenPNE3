@@ -35,7 +35,6 @@ class MemberProfile extends BaseMemberProfile implements opAccessControlRecordIn
     if (!$this->isNew())
     {
       $this->mapValue('name', $this->Profile->getName());
-      Profile::initializeI18n();
       $this->mapValue('caption', $this->Profile->Translation['ja_JP']->caption);
     }
 
