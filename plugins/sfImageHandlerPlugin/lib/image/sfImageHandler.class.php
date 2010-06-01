@@ -49,7 +49,7 @@ class sfImageHandler
     }
 
     self::$allowedSize = array_merge(
-      array('76x76', '120x120', '180x180', '240x320', '600x600'),
+      array('48x48', '76x76', '120x120', '180x180', '240x320', '600x600'),
       sfConfig::get('sf_image_handler_allowed_size', array())
     );
 
