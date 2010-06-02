@@ -51,6 +51,9 @@ is_restrict_mail_template: true
 # CSRF トークンを生成するためのシークレット (複数 Web サーバで OpenPNE を動作させる場合、この設定を変更する必要があります)
 #csrf_secret: ""
 
+# A secret for generating sid token
+sid_secret: "<?php echo filemtime(__FILE__) ?>"
+
 ######################################
 # セッション (Session)
 ######################################

@@ -168,6 +168,9 @@ class memberActions extends opMemberAction
   public function executeSetSid($request)
   {
     $this->forward404Unless(isset($request['sid']));
+    $this->forward404Unless(isset($request['ts']) && abs(time() - $request['ts']) <= strtotime('30 minutes'));
+
+    $sid = $this->getUser()->decryptSid($request['sid'], $request['ts']);
 
     $uri = isset($request['next_uri']) ? $request['next_uri'] : '';
     $validator = new opValidatorNextUri();
@@ -181,7 +184,7 @@ class memberActions extends opMemberAction
       $this->forward404($e->getMessage());
     }
 
-    $this->getUser()->setSid($request['sid'], !empty($request['is_remember_login']));
+    $this->getUser()->setSid($sid, !empty($request['is_remember_login']));
 
     $this->redirect($uri);
   }

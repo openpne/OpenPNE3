@@ -243,9 +243,12 @@ class opSecurityUser extends opAdaptableUser
         && ($request->getMobile()->isSoftBank() || $request->getMobile()->isEZweb())
       )
       {
+        $item = $this->encryptSid(session_id());
+
         $uri = '@member_setSid?next_uri='.$uri
              .'&is_remember_login='.(int)$this->getAuthAdapter()->getAuthForm()->getValue('is_remember_me')
-             .'&sid='.session_id();
+             .'&sid='.$item[0]
+             .'&ts='.$item[1];
       }
 
       return $uri;
@@ -391,5 +394,26 @@ class opSecurityUser extends opAdaptableUser
     {
       $this->setRememberLoginCookie();
     }
+  }
+
+  public function encryptSid($sid)
+  {
+    require_once 'Crypt/Blowfish.php';
+
+    $time  = time();
+    $bf = Crypt_Blowfish::factory('ecb',sfConfig::get('op_sid_secret').'-'.$time);
+    $data = base64_encode($bf->encrypt($sid));
+
+    return array($data, $time);
+  }
+
+  public function decryptSid($data, $time)
+  {
+    require_once 'Crypt/Blowfish.php';
+
+    $bf = Crypt_Blowfish::factory('ecb', sfConfig::get('op_sid_secret').'-'.$time);
+    $sid = $bf->decrypt(base64_decode($data));
+
+    return $sid;
   }
 }
