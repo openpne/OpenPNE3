@@ -48,7 +48,7 @@ class sfMessageSource_OpenPNECached extends sfMessageSource_File
       }
     }
 
-    return false;
+    return true;
   }
 
   public function save($catalogue = 'messages')
