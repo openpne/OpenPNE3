@@ -2406,26 +2406,21 @@ div.activityBox div.moreInfo {
 
 #delete_activity,
 div.activityBox {
+  zoom: 1;
   word-wrap: break-word;
 }
 
 /*======================================
  * box_form
  *------------------------------------*/
-div.activityBox div.box_form {
-  margin-left: 5px;
-}
-
 div.activityBox div.box_form div.box_public_flag {
   float: left;
   width: 75%;
   margin-bottom: 8px;
 }
 
-div.activityBox div.box_form div.box_public_flag {
-  float: left;
-  width: 75%;
-  margin-bottom: 8px;
+div.activityBox div.box_form div.box_public_flag label {
+  margin-left: 8px;
 }
 
 div.activityBox div.box_form div.box_count {
@@ -2450,45 +2445,60 @@ div.activityBox div.box_form div.box_body {
 }
 
 div.activityBox div.box_form div.box_body span.inputForm {
+  zoom: 1;
   display: block;
+  padding: 0 4px;
 }
 
 div.activityBox div.box_form div.box_body span.inputForm textarea {
   display: block;
   width: 98%;
   height: 3.5em;
+  margin: auto;
 }
 
 div.activityBox div.box_form div.box_body span.submit {
   display: block;
-  float: right;
+  width: 98%;
+  margin: 5px 0 5px 2px;
+  text-align: right;
 }
 
 div.activityBox div.box_form div.box_body span.submit input.submit {
-  -moz-border-radius:3px;
-  -webkit-boder-radius:3px;
+  min-height: 30px;
+  margin: 0;
+  padding: 0 8px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
   border-radius: 3px;
-  font-size: 14px;
-  background: url(<?php echo image_path(opSkinClassicConfig::get('bg_button_a_image')) ?>) repeat-x scroll 50% 0 #DADCE6;
   border: 1px solid #888888;
-  letter-spacing: 0;
-  padding: 3px;
-  margin: 5px 6px;
-  height: 30px;
+  background: url(<?php echo image_path(opSkinClassicConfig::get('bg_button_a_image')) ?>);
   font-weight: bold;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+div.activityBox div.box_form div.box_body span.submit input.submit:active {
+  color: #888888;
+}
+
+*:first-child+html div.activityBox div.box_form div.box_body span.submit input.submit {
+  padding: 0;
+  line-height: 24px;
+}
+
+* html div.activityBox div.box_form div.box_body span.submit input.submit {
+  padding: 0;
+  line-height: 24px;
 }
 
 /*======================================
  * box_list
  *------------------------------------*/
-div.box_list {
-  clear: both;
-}
-
 #delete_activity div.box_list li.activity,
 div.activityBox div.box_list li.activity {
   clear: both;
-  padding: 10px 0 8px;
+  padding: 10px 6px 8px;
   border-bottom: 1px solid #cccccc;
 }
 
@@ -2512,12 +2522,12 @@ div.activityBox div.box_list div.box_memberImage p {
 div.activityBox div.box_list div.box_body {
   z-index: 128;
   position: relative;
-  min-height: 76px;
+  min-height: 48px;
 }
 
 * html #delete_activity div.box_list div.box_body,
 * html div.activityBox div.box_list div.box_body {
-  height: 76px;
+  height: 48px;
 }
 
 #delete_activity div.box_list div.box_body p,
