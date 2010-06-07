@@ -1179,6 +1179,10 @@
         <source>Terms of service</source>
         <target>利用規約</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Search Members</source>
+        <target>メンバー検索</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

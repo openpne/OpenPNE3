@@ -1,6 +1,6 @@
 <?php
 $options = array(
-  'title'  => __('メンバー検索'),
+  'title'  => __('Search Members'),
   'url'    => url_for('member/search'),
   'button' => __('Search'),
   'method' => 'get'
