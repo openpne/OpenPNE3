@@ -15,7 +15,7 @@ cli:
 
 test:
   response:
-    class: sfWebResponse
+    class: opWebResponse
     param:
       send_http_headers: false
 
