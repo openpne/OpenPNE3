@@ -1,6 +1,6 @@
 <p>
 <?php echo link_to(__('Privacy policy'), '@privacy_policy', array('target' => '_blank')); ?> 
-<?php echo link_to(__('Agreement for use'), '@user_agreement', array('target' => '_blank')); ?> 
+<?php echo link_to(__('Terms of service'), '@user_agreement', array('target' => '_blank')); ?> 
 <?php $snsConfigSettings = sfConfig::get('openpne_sns_config'); ?>
 <?php if (opToolkit::isSecurePage()) : ?>
 <?php echo Doctrine::getTable('SnsConfig')->get('footer_after', $snsConfigSettings['footer_after']['Default']); ?>
