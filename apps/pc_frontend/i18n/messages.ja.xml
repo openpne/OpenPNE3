@@ -1295,6 +1295,10 @@
         <source>Sent a mail for your mobile e-mail address. Begin your registration from a URL in the mail.</source>
         <target>入力された携帯メールアドレス宛てにメールを送信いたしましたので、メール内に記載されたURLから携帯登録をおこなってください。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Search Members</source>
+        <target>メンバー検索</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
