@@ -666,6 +666,11 @@ function op_decoration($string, $is_strip = false, $is_use_stylesheet = null)
 
 function op_is_accessable_url($uri)
 {
+ if ('/' === $uri[0] || preg_match('#^[a-z][a-z0-9\+.\-]*\://#i', $uri))
+  {
+    return true;
+  }
+
   $info = sfContext::getInstance()->getController()->convertUrlStringToParameters($uri);
 
   if (!empty($info[0]))
