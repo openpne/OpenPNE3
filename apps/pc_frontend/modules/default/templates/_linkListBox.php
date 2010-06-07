@@ -2,7 +2,7 @@
 <ul>
 <?php for ($i = 1; $i <= 10; $i++): ?>
 <?php if ($gadget->getConfig('text'.$i) && $gadget->getConfig('url'.$i)): ?>
-  <li><?php echo link_to($gadget->getConfig('text'.$i), $gadget->getConfig('url'.$i)) ?></li>
+  <li><?php echo content_tag('a', $gadget->getConfig('text'.$i), array('href' => $gadget->getConfig('url'.$i))) ?></li>
 <?php endif; ?>
 <?php endfor; ?>
 </ul>
