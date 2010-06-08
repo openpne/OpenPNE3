@@ -210,39 +210,7 @@ function _app_url_for_route($application, $routeName, $params = array(), $absolu
 
 function _app_url_for_internal_uri($application, $internal_uri, $absolute = false)
 {
-  // stores current states
-  $current_application = sfContext::getInstance()->getConfiguration()->getApplication();
-  $current_environment = sfContext::getInstance()->getConfiguration()->getEnvironment();
-  $current_is_debug = sfContext::getInstance()->getConfiguration()->isDebug();
-  $current_config = sfConfig::getAll();
-
-  // computes a url
-  if (sfContext::hasInstance($application))
-  {
-    $context = sfContext::getInstance($application);
-    sfContext::switchTo($application);
-  }
-  else
-  {
-    $config = ProjectConfiguration::getApplicationConfiguration($application, $current_environment, $current_is_debug);
-    $context = sfContext::createInstance($config, $application);
-  }
-  $is_strip_script_name = (bool)sfConfig::get('sf_no_script_name');
-  $result_url = $context->getController()->genUrl($internal_uri, $absolute);
-
-  // restores the previous states
-  sfContext::switchTo($current_application);
-  sfConfig::add($current_config);
-
-  // replaces a script name
-  $before_script_name = basename(sfContext::getInstance()->getRequest()->getScriptName());
-  $after_script_name = _create_script_name($application, $current_environment);
-  if ($is_strip_script_name)
-  {
-    $before_script_name = '/'.$before_script_name;
-    $after_script_name = '';
-  }
-  return str_replace($before_script_name, $after_script_name, $result_url);
+  return sfContext::getInstance()->getConfiguration()->generateAppUrl($application, $internal_uri, $absolute);
 }
 
 function _create_script_name($application, $environment)
