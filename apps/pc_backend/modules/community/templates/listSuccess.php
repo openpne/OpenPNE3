@@ -4,6 +4,8 @@
 
 <?php slot('title', __('コミュニティリスト')); ?>
 
+<?php echo $form->getWidgetSchema()->setLabel("name", __('%community% Name', array('%community%' => $op_term['community']))); ?>
+<?php echo $form->getWidgetSchema()->setLabel("community_category_id", __('%community% Category', array('%community%' => $op_term['community']))); ?>
 <?php echo $form->renderFormTag(url_for('community/list'), array('method' => 'get')) ?>
 <table>
 <?php echo $form ?>

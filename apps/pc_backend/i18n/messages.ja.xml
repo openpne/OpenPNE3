@@ -670,6 +670,14 @@
         <source>Already exist.</source>
         <target>すでに存在します。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>%community% Name</source>
+        <target>%community%名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%community% Category</source>
+        <target>%community%カテゴリ</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
