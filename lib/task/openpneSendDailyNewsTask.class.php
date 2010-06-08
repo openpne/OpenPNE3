@@ -35,16 +35,16 @@ EOF;
     $targetMembers = Doctrine::getTable('Member')->findAll();
     foreach ($targetMembers as $member)
     {
-      if (!$member->getConfig('daily_news'))
+      $dailyNewsConfig = $member->getConfig('daily_news');
+      if (null !== $dailyNewsConfig && 0 === (int)$dailyNewsConfig)
       {
         continue;
       }
 
-      if (1 == $member->getConfig('daily_news') && !$this->isDailyNewsDay())
+      if (1 === (int)$dailyNewsConfig && !$this->isDailyNewsDay())
       {
         continue;
       }
-
       $address = $member->getEmailAddress();
       $gadgets = $pcGadgets['dailyNewsContents'];
       if (opToolkit::isMobileEmailAddress($address))
@@ -87,6 +87,6 @@ EOF;
       $day = 7;
     }
 
-    return in_array($day, opConfig::get('daily_news_day')->getRawValue());
+    return in_array($day, opConfig::get('daily_news_day'));
   }
 }
