@@ -48,7 +48,7 @@ class opExecutionFilter extends sfExecutionFilter
     $dispatcher->notify(new sfEvent($subject, 'op_action.post_execute', $params));
   }
 
-  protected function handleSSl($actionInstance)
+  protected function handleSsl($actionInstance)
   {
     $moduleName = $actionInstance->getModuleName();
     $actionName = $actionInstance->getActionName();
@@ -104,7 +104,7 @@ class opExecutionFilter extends sfExecutionFilter
       $request->redirectToSoftBankGateway();
     }
 
-    $this->handleSSl($actionInstance);
+    $this->handleSsl($actionInstance);
 
     $dispatcher = sfContext::getInstance()->getEventDispatcher();
 
