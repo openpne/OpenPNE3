@@ -78,6 +78,17 @@ class sfOpenPNEWebRequest extends sfWebRequest
     }
   }
 
+  public function getHost()
+  {
+    $result = parent::getHost();
+    if (!$result)
+    {
+      $result = parse_url(sfConfig::get('op_base_url'), PHP_URL_HOST);
+    }
+
+    return $result;
+  }
+
   public function getMobile()
   {
     return opMobileUserAgent::getInstance()->getMobile();
