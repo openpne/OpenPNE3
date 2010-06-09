@@ -13,9 +13,11 @@
 <input id="<?php echo $id ?>_submit" type="submit" value="<?php echo __('Post Activity') ?>" class="submit" />
 </form>
 <script type="text/javascript">
+(function (){
 $('<?php echo $id ?>_form').observe('submit', function(e) {
   e.stop();
-  if (this.<?php echo $id ?>_activity_data_body.value) {
+  var value = this.<?php echo $id ?>_activity_data_body.value;
+  if (value && value.length > 0 && value.length <= 140) {
     request = new Ajax.Request('<?php echo url_for('member/updateActivity') ?>',
       {method: 'post', parameters: this.serialize(), onSuccess: function(obj){
         tl_obj = $('<?php echo $id ?>_timeline');
@@ -27,16 +29,11 @@ $('<?php echo $id ?>_form').observe('submit', function(e) {
   }
 });
 $('<?php echo $id ?>_activity_data_body').onkeyup = function() {
-  submit_obj = $('<?php echo $id ?>_submit');
-  count = this.value.length;
-  if (count > 140 || count == 0) {
-    submit_obj.disable();
-  } else {
-    submit_obj.enable();
-  }
+  var count = this.value.length;
   $('<?php echo $id ?>_count').innerHTML = 140 - count;
 };
 $('<?php echo $id ?>_activity_data_body').onkeyup();
+})();
 </script>
 <?php endif; ?>
 <ol id="<?php echo $id ?>_timeline" class="activities">
