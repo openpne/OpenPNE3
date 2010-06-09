@@ -228,7 +228,12 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     $parameters['op_color']  = new opColorConfig();
 
     $table = Doctrine::getTable('SnsTerm');
-    $table->configure(sfContext::getInstance()->getUser()->getCulture(), sfConfig::get('sf_app'));
+    $application = sfConfig::get('sf_app');
+    if($application == 'pc_backend')
+    {
+        $application = 'pc_frontend';
+    }
+    $table->configure(sfContext::getInstance()->getUser()->getCulture(), $application);
     $parameters['op_term'] = $table;
     sfOutputEscaper::markClassAsSafe('SnsTermTable');
 

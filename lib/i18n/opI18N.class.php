@@ -21,7 +21,12 @@ class opI18N extends sfI18N
     parent::initialize($configuration, $cache, $options);
 
     $this->terms = Doctrine::getTable('SnsTerm');
-    $this->terms->configure($this->culture, sfConfig::get('sf_app'));
+    $application = sfConfig::get('sf_app');
+    if($application == 'pc_backend')
+    {
+        $application = 'pc_frontend';
+    }
+    $this->terms->configure($this->culture, $application);
   }
 
   public function __($string, $args = array(), $catalogue = 'messages')
