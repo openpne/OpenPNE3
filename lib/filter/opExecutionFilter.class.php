@@ -48,13 +48,15 @@ class opExecutionFilter extends sfExecutionFilter
     $dispatcher->notify(new sfEvent($subject, 'op_action.post_execute', $params));
   }
 
-  protected function handleSSl($actionInstance)
+  protected function handleSsl($actionInstance)
   {
     $moduleName = $actionInstance->getModuleName();
     $actionName = $actionInstance->getActionName();
     $request = $actionInstance->getRequest();
 
-    $currentPath = $request->getCurrentUri();
+    $scriptName = basename($request->getScriptName());
+    $replacement = (false !== strpos($request->getPathInfoPrefix(), $scriptName)) ? '/'.$scriptName : '';
+    $currentPath = str_replace($request->getPathInfoPrefix(), $replacement, $request->getCurrentUri());
 
     if (sfConfig::get('op_use_ssl', false) && $this->isFirstCall())
     {
@@ -104,7 +106,7 @@ class opExecutionFilter extends sfExecutionFilter
       $request->redirectToSoftBankGateway();
     }
 
-    $this->handleSSl($actionInstance);
+    $this->handleSsl($actionInstance);
 
     $dispatcher = sfContext::getInstance()->getEventDispatcher();
 

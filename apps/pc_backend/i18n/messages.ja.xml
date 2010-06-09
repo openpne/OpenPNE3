@@ -221,6 +221,14 @@
         <target>%min_length%文字以上で入力してください。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>password is too long (%max_length% characters max).</source>
+        <target>%max_length%文字以内で入力してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>password is too short (%min_length% characters min).</source>
+        <target>%min_length%文字以上で入力してください。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>"%value%" does not match the time format (%time_format%).</source>
         <target>%time_format%形式で入力してください。</target>
       </trans-unit>
@@ -1362,6 +1370,14 @@
         <source>The member has been unsubscribed</source>
         <target>退会が完了しました</target>
       </trans-unit>    
+      <trans-unit id="">
+        <source>%community% Name</source>
+        <target>%community%名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%community% Category</source>
+        <target>%community%カテゴリ</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

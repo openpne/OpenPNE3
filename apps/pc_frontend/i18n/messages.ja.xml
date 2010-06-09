@@ -736,6 +736,14 @@
         <target>%min_length%文字以上で入力してください。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>password is too long (%max_length% characters max).</source>
+        <target>%max_length%文字以内で入力してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>password is too short (%min_length% characters min).</source>
+        <target>%min_length%文字以上で入力してください。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>"%value%" does not match the time format (%time_format%).</source>
         <target>%time_format%形式で入力してください。</target>
       </trans-unit>
@@ -1306,6 +1314,10 @@
       <trans-unit id="">
         <source>Sent a mail for your mobile e-mail address. Begin your registration from a URL in the mail.</source>
         <target>入力された携帯メールアドレス宛てにメールを送信いたしましたので、メール内に記載されたURLから携帯登録をおこなってください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Search Members</source>
+        <target>メンバー検索</target>
       </trans-unit>
     </body>
   </file>
