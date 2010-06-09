@@ -54,7 +54,7 @@ class opExecutionFilter extends sfExecutionFilter
     $actionName = $actionInstance->getActionName();
     $request = $actionInstance->getRequest();
 
-    $currentPath = $request->getCurrentUri();
+    $currentPath = str_replace($request->getPathInfoPrefix(), '', $request->getCurrentUri());
 
     if (sfConfig::get('op_use_ssl', false) && $this->isFirstCall())
     {
