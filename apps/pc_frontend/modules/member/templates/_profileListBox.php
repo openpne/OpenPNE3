@@ -18,7 +18,7 @@ if ($member->getAge(true))
 
 foreach ($member->getProfiles(true) as $profile)
 {
-  $caption = $profile->getCaption();
+  $caption = $profile->getProfile()->getCaption();
   if ($profile->getProfile()->isPreset())
   {
     $presetConfig = $profile->getProfile()->getPresetConfig();
