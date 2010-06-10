@@ -164,11 +164,11 @@ imagemagick_path: '/usr/bin/convert'
 #   (OpenPNE use a class that is named as "sfImageGenerator[image_generator_name]")
 #image_generator_name: "GD"
 
-# 画像ストレージ設定 (Configuration of using storage for storing image)
+# 画像ストレージ設定 (Configuration of using storage for storing image) [experimental; unsupported yet (実験的な機能・未サポート)]
 image_storage: Default  # DB に画像バイナリを保存します (Store image binaries in DB)
 #image_storage: Filesystem  # ファイルシステム上の任意のディレクトリに画像バイナリを保存します (Store image binaries to any directories in filesystem)
 
-# 画像ストレージに Filesystem を選択した場合の画像保存先ディレクトリのパス (Web サーバからの書き込み権限が必要)
+# 画像ストレージに Filesystem を選択した場合の画像保存先ディレクトリのパス (Web サーバからの書き込み権限が必要) [experimental; unsupported yet (実験的な機能・未サポート)]
 # Path to directory for storing images if a value of "image_storage" is "Filesystem" (Need to write permission from Web server)
 #image_storage_filesystem_master_dir: '/path/to/directory'
 
