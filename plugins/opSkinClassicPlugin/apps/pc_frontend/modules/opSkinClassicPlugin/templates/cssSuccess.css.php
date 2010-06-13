@@ -358,6 +358,7 @@ div.dparts div.parts {
 	margin: 0;
 }
 div.parts {
+	zoom: 1;
 	margin: 0 auto 10px;
 }
 div.ditem {
@@ -2424,8 +2425,7 @@ div.activityBox div.box_form div.box_public_flag label {
 }
 
 div.activityBox div.box_form div.box_count {
-  float: right;
-  width: 25%;
+  margin-left: 75%;
   text-align: right;
 }
 
