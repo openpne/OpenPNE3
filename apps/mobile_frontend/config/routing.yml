@@ -53,6 +53,10 @@ global_user_agreement:
   url: /userAgreement
   param: { module: default, action: userAgreement }
 
+url_proxy:
+  url: /proxy
+  param: { module: default, action: urlProxy }
+
 # member rules
 member_config_image:
   url: /member/image/config

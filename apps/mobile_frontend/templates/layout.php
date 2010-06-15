@@ -48,7 +48,9 @@
 
 <?php include_component('default', 'nav', array('type' => 'mobile_global', 'line' => false)) ?>
 
-<?php if (!include_slot('op_mobile_footer')): ?>
+<?php if (has_slot('op_mobile_footer')): ?>
+<?php include_slot('op_mobile_footer') ?>
+<?php else: ?>
 <?php if ($sf_user->hasCredential('SNSMember')): ?>
 <table width="100%">
 <tbody><tr><td align="center" bgcolor="<?php echo $op_color["core_color_2"] ?>">

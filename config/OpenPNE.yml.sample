@@ -209,3 +209,19 @@ supported_languages: ['en', 'ja_JP']
 # プラグインリストのベース URL
 # plugin_list_base_url: "http://plugins.openpne.jp/packages/"
 
+###########################################
+# モバイル自動リンク設定 (Mobile Auto link)
+###########################################
+
+# モバイルで自動リンクするタイプ
+# all, urls, email_addresses, phone_numbers
+#
+# default_mobile_auto_link_type: ['urls']
+
+# 外部URLを自動リンクするか
+# default_mobile_auto_link_is_allow_outer_url: true
+
+# モバイルから外部のURLを利用する際に利用するプロキシ
+# Proxys is used when member link outer URL at the mobile
+mobile_proxys:
+  'Google' : 'http://www.google.co.jp/gwt/x?u='

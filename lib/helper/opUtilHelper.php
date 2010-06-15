@@ -384,6 +384,197 @@ function op_auto_link_text($text, $link = 'urls', $href_options = array('target'
 }
 
 /**
+ * op_auto_link_text_for_mobile
+ *
+ * @param string  $text
+ * @param mixed   $link         Types of text that is linked. (all|urls|email_addresses|phone_numbers)
+ * @param boolean $truncate
+ * @param integer $truncate_len
+ * @param string  $pad
+ * @param boolean $is_allow_outer_url
+ */
+function op_auto_link_text_for_mobile($text, $link = null, $href_options = array(), $truncate = true, $truncate_len = 37, $pad = '...', $is_allow_outer_url = null)
+{
+  use_helper('Text');
+
+  if (null === $link)
+  {
+    $link = sfConfig::get('op_default_mobile_auto_link_type', 'urls');
+  }
+
+  if (!$link)
+  {
+    return $text;
+  }
+  elseif ('all' == $link)
+  {
+    $link = array('urls', 'email_addresses', 'phone_numbers');
+  }
+  elseif (!is_array($link))
+  {
+    $link = array($link);
+  }
+
+  if (null === $is_allow_outer_url)
+  {
+    $is_allow_outer_url = sfConfig::get('op_default_mobile_auto_link_is_allow_outer_url', true);
+  }
+
+  $result = $text;
+  if (in_array('urls', $link))
+  {
+    $result = _op_auto_links_urls($result, $href_options, $truncate, $truncate_len, $pad);
+    if ($is_allow_outer_url)
+    {
+      $result = _op_auto_links_outer_urls($result, $href_options, $truncate, $truncate_len, $pad);
+    }
+  }
+  if (in_array('email_addresses', $link))
+  {
+    $result = _auto_link_email_addresses($result);
+  }
+  if (in_array('phone_numbers', $link))
+  {
+    $result = _op_auto_links_phone_number($result);
+  }
+
+  return $result;
+}
+
+function _op_auto_links_urls($text, $href_options = array(), $truncate = false, $truncate_len = 40, $pad = '...')
+{
+  $request = sfContext::getInstance()->getRequest();
+  $pathArray = $request->getPathInfoArray();
+  $host = explode(':', $request->getHost());
+  if (1 == count($host))
+  {
+    $host[] = isset($pathArray['SERVER_PORT']) ? $pathArray['SERVER_PORT'] : '';
+  }
+
+  if (80 == $host[1] || 443 == $host[1] || empty($host[1]))
+  {
+    unset($host[1]);
+  }
+
+  $pattern = '/
+    (
+      <\w+.*?>|             #   leading HTML tag, or
+      [^=!:\'"\/]|          #   leading punctuation, or
+      ^                     #   beginning of line
+    )
+    (
+      (?:https?:\/\/)         # protocol spec, or
+    )
+    (
+      '.preg_quote(implode(':', $host).($request->getRelativeUrlRoot() ? $request->getRelativeUrlRoot() : ''), '/').'
+    )
+    (
+      [a-zA-Z0-9_\-\/.,:;\~\?@&=+$%#!()]*
+    )
+    ([[:punct:]]|\s|<|$)      # trailing text
+    /x';
+
+  $href_options = _tag_options($href_options);
+
+  $callback_function = '
+    if (preg_match("/<a\s/i", $matches[1]))
+    {
+      return $matches[0];
+    }
+    ';
+
+    if ($truncate)
+    {
+    $callback_function .= '
+      else if (strlen($matches[4]) > '.$truncate_len.')
+      {
+        return $matches[1].\'<a href="\'.$matches[4].\'"'.$href_options.'>\'.substr($matches[4], 0, '.$truncate_len.').\''.$pad.'</a>\'.$matches[5];
+      }
+      ';
+    }
+
+    $callback_function .= '
+      else
+      {
+        return $matches[1].\'<a href="\'.$matches[4].\'"'.$href_options.'>\'.$matches[4].\'</a>\'.$matches[5];
+      }
+      ';
+
+  return preg_replace_callback(
+    $pattern,
+    create_function('$matches', $callback_function),
+    $text
+    );
+}
+
+function _op_auto_links_outer_urls($text, $href_options = array(), $truncate = false, $truncate_len = 40, $pad = '...')
+{
+  $request = sfContext::getInstance()->getRequest();
+  $href_options = _tag_options($href_options);
+  $proxyAction = $request->getUriPrefix().$request->getRelativeUrlRoot().'/proxy';
+
+  $callback_function = '
+    if (preg_match("/<a\s/i", $matches[1]))
+    {
+      return $matches[0];
+    }
+    ';
+
+  if ($truncate)
+  {
+    $callback_function .= '
+      else if (strlen($matches[2].$matches[3]) > '.$truncate_len.')
+      {
+        return $matches[1].\'<a href="'.$baseUrl.$proxyAction.'?url=\'.urlencode(($matches[2] == "www." ? "http://www." : $matches[2]).$matches[3]).\'"'.$href_options.'>\'.substr($matches[2].$matches[3], 0, '.$truncate_len.').\''.$pad.'</a>\'.$matches[4];
+      }
+      ';
+  }
+
+  $callback_function .= '
+    else
+    {
+      return $matches[1].\'<a href="'.$proxyAction.'?url=\'.urlencode(($matches[2] == "www." ? "http://www." : $matches[2]).$matches[3]).\'"'.$href_options.'>\'.$matches[2].$matches[3].\'</a>\'.$matches[4];
+    }
+    ';
+
+  return preg_replace_callback(
+    SF_AUTO_LINK_RE,
+    create_function('$matches', $callback_function),
+    $text
+    );
+}
+
+function _op_auto_links_phone_number($text)
+{
+  $pattern = '/
+    (
+      <\w+.*?>|             #   leading HTML tag, or
+      [^=!:\'"\/]|          #   leading punctuation, or
+      ^                     #   beginning of line
+    )
+    (0\d{1,3})-?(\d{2,4})-?(\d{4})
+    ([[:punct:]]|\s|<|$)      # trailing text
+    /x';
+
+  $callback_function = '
+    if (preg_match("/<a\s/i", $matches[1]))
+    {
+      return $matches[0];
+    }
+    else
+    {
+      return $matches[1].\'<a href="tel:\'.$matches[2].$matches[3].$matches[4].\'">\'.$matches[0].\'</a>\'.$matches[5];
+    }
+    ';
+
+  return preg_replace_callback(
+    $pattern,
+    create_function('$matches', $callback_function),
+    $text
+    );
+}
+
+/**
  * truncates a string
  *
  * @param string $string

@@ -1191,6 +1191,22 @@
         <source>SNS Member's %activity%</source>
         <target>SNSﾒﾝﾊﾞｰの%activity%</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Link outside URL</source>
+        <target>外部URLへのリンク</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>This url is the outside of %0%.</source>
+        <target>このURLは%0%の外です。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Direct link</source>
+        <target>直接ﾘﾝｸ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Send this URL by E-mail</source>
+        <target>ﾒｰﾙでURLを送る</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
