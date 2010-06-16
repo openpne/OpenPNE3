@@ -1,4 +1,3 @@
-<?php use_helper('Javascript') ?>
 <?php $id = 'activityBox' ?>
 <?php $id .= isset($gadget) ? '_'.$gadget->getId() : '' ?>
 
@@ -19,28 +18,9 @@
 <span class="submit"><input id="<?php echo $id ?>_submit" type="submit" value="<?php echo __('Post Activity') ?>" class="submit" /></span>
 </div>
 </div></form>
+<?php use_javascript('op_activity'); ?>
 <script type="text/javascript">
-(function (){
-$('<?php echo $id ?>_form').observe('submit', function(e) {
-  e.stop();
-  var value = this.<?php echo $id ?>_activity_data_body.value;
-  if (value && value.length > 0 && value.length <= 140) {
-    request = new Ajax.Request('<?php echo url_for('member/updateActivity') ?>',
-      {method: 'post', parameters: this.serialize(), onSuccess: function(obj){
-        tl_obj = $('<?php echo $id ?>_timeline');
-        tl_obj.innerHTML = obj.responseText + tl_obj.innerHTML;
-      }}
-    );
-    this.reset();
-    $('<?php echo $id ?>_activity_data_body').onkeyup();
-  }
-});
-$('<?php echo $id ?>_activity_data_body').onkeyup = function() {
-  var count = this.value.length;
-  $('<?php echo $id ?>_count').innerHTML = 140 - count;
-};
-$('<?php echo $id ?>_activity_data_body').onkeyup();
-})();
+new opActivity("<?php echo $id ?>", "<?php echo url_for('member/updateActivity') ?>");
 </script>
 <?php endif; ?>
 <div class="box_list">
