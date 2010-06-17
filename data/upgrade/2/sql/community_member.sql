@@ -1,0 +1,4 @@
+INSERT INTO community_member (id, community_id, member_id, is_receive_mail_pc, is_receive_mail_mobile, created_at, updated_at) (SELECT c_commu_member_id, c_commu_id, c_member_id, is_receive_mail_pc, is_receive_mail, r_datetime, r_datetime FROM c_commu_member);
+
+INSERT INTO community_member_position (id, community_id, member_id, community_member_id, name, created_at, updated_at) (SELECT c_commu_member_id, c_commu.c_commu_id, c_member_id, c_commu_member_id, "admin", NOW(), NOW() FROM c_commu_member, c_commu WHERE c_member_id = c_commu.c_member_id_admin AND c_commu_member.c_commu_id = c_commu.c_commu_id);
+INSERT INTO community_member_position (id, community_id, member_id, community_member_id, name, created_at, updated_at) (SELECT c_commu_member_id, c_commu.c_commu_id, c_member_id, c_commu_member_id, "sub_admin", NOW(), NOW() FROM c_commu_member, c_commu WHERE c_member_id = c_commu.c_member_id_sub_admin AND c_commu_member.c_commu_id = c_commu.c_commu_id);

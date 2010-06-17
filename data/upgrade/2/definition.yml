@@ -1,0 +1,105 @@
+#sync_plugin:
+#  strategy: SyncPlugin
+
+build_model:
+  strategy: BuildModel
+
+create_tables:
+  strategy: CreateTable
+
+member_basic:
+  strategy: SQLImport
+
+files:
+  strategy: SQLImport
+
+admin_user:
+  strategy: SQLImport
+
+member_secure:
+  strategy: SQLImport
+
+member_email:
+  strategy: opUpgradeFrom2ImportEmailAddressStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2ImportEmailAddressStrategy.class.php
+
+member_relationship:
+  strategy: opUpgradeFrom2MemberRelationshipStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2MemberRelationshipStrategy.class.php
+
+profile:
+  strategy: opUpgradeFrom2MemberProfileStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2MemberProfileStrategy.class.php
+
+member_image:
+  strategy: SQLImport
+
+member_config:
+  strategy: SQLImport
+
+album:
+  strategy: SQLImport
+
+diary:
+  strategy: SQLImport
+
+community:
+  strategy: opUpgradeFrom2ImportCommunityCategoryStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2ImportCommunityCategoryStrategy.class.php
+
+community_member:
+  strategy: SQLImport
+
+community_config:
+  strategy: SQLImport
+
+community_topic:
+  strategy: SQLImport
+
+ashiato:
+  strategy: SQLImport
+
+blacklist:
+  strategy: SQLImport
+
+admin_config:
+  strategy: opUpgradeFrom2AdminConfigStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2AdminConfigStrategy.class.php
+
+sns_term:
+  strategy: opUpgradeFrom2SnsTermStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2SnsTermStrategy.class.php
+
+skin_config:
+  strategy: opUpgradeFrom2SkinConfigStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2SkinConfigStrategy.class.php
+
+decoration:
+  strategy: SQLImport
+
+mobile_color_config:
+  strategy: SQLImport
+
+load_data:
+  strategy: opUpgradeFrom2DataLoadStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2DataLoadStrategy.class.php
+
+gadget:
+  strategy: SQLImport
+
+message:
+  strategy: SQLImport
+
+banner:
+  strategy: SQLImport
+
+confirmation:
+  strategy: SQLImport
+
+login_layout:
+  strategy: opUpgradeFrom2LoginLayoutStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2LoginLayoutStrategy.class.php
+
+fix_old_image_data:
+  strategy: opUpgradeFrom2FixOldImagesStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2FixOldImagesStrategy.class.php
