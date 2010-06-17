@@ -10,6 +10,8 @@
 <?php endif; ?>
 <?php if (!isset($isOperation) || $isOperation): ?>
 <div align="right">
+<?php if ($activity->getMemberId() == $sf_user->getMemberId()): ?>
 <?php echo link_to(__('Delete'), 'member/deleteActivity?id='.$activity->getId()) ?>
+<?php endif; ?>
 </div>
 <?php endif; ?>
