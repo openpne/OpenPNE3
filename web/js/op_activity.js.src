@@ -27,7 +27,6 @@ var opActivity = function(id, posturl){
     var req = null;
     if (window.XMLHttpRequest) {
       req = new XMLHttpRequest();
-      req.overrideMimeType("text/xml");
     } else if (window.ActiveXObject) {
       try {
         req = new ActiveXObject("Msxml2.XMLHTTP");
