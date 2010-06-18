@@ -54,6 +54,7 @@ class ProfileForm extends BaseProfileForm
       new sfValidatorDoctrineUnique(array('model' => 'Profile', 'column' => array('name')), array('invalid' => 'Already exist.'))
     );
 
+    $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'advancedValidator'))));
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateName'))));
     $this->setValidator('default_public_flag', new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('Profile')->getPublicFlags()))));
     $this->setValidator('value_min', new sfValidatorPass());
@@ -86,28 +87,26 @@ class ProfileForm extends BaseProfileForm
     $this->embedI18n(array('ja_JP'));
   }
 
-  public function bind($params)
+  static public function advancedValidator($validator, $values)
   {
-    if ($params['form_type'] === 'input' || $params['form_type'] === 'textarea')
+    if ($values['form_type'] === 'input' || $values['form_type'] === 'textarea')
     {
       $validator = new sfValidatorInteger(array('required' => false));
-      $this->setValidator('value_min', $validator);
-      $validator = new sfValidatorInteger(array('required' => false));
-      $this->setValidator('value_max', $validator);
+      $values['value_min'] = $validator->clean($values['value_min']);
+      $values['value_max'] = $validator->clean($values['value_max']);
     }
-    elseif ($params['form_type'] === 'date')
+    elseif ($values['form_type'] === 'date')
     {
       $validator = new opValidatorDate(array('required' => false));
-      $this->setValidator('value_min', $validator);
-      $validator = new opValidatorDate(array('required' => false));
-      $this->setValidator('value_max', $validator);
+      $validator->clean($values['value_min']);
+      $validator->clean($values['value_max']);
     }
-    elseif ($params['value_min'] || $params['value_max'])
+    elseif ($values['value_min'] || $values['value_max'])
     {
       throw new sfValidatorError($validator, 'invalid');
     }
 
-    return parent::bind($params);
+    return $values;
   }
 
   static public function validateName($validator, $values)
