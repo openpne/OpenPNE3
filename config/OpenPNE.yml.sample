@@ -4,7 +4,7 @@
 
 # SNS の URL
 # URL of the SNS
-base_url: "http://example.com/"
+base_url: "http://example.com"
 
 
 ######################################
