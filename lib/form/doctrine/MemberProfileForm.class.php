@@ -21,8 +21,6 @@ class MemberProfileForm extends BaseForm
   {
     parent::__construct(array(), $options, $CSRFSecret);
 
-    $profiles = Doctrine::getTable('Profile')->findAll();
-
     foreach ($profileMember as $profile)
     {
       if (!$profile)
