@@ -130,13 +130,13 @@ EOF
         $offId,
         $changerName,
         sprintf("op_toggle_mce_editor('%s')", $id),
-        $this->getOption('is_textmode') ? ' checked="true"' : '',
+        $this->getOption('is_textmode') ? ' checked="checked"' : '',
         $offId,
         sfContext::getInstance()->getI18N()->__('Text Mode'),
         $onId,
         $changerName,
         sprintf("op_toggle_mce_editor('%s')", $id),
-        $this->getOption('is_textmode') ? '' : ' checked="true"',
+        $this->getOption('is_textmode') ? '' : ' checked="checked"',
         $onId,
         sfContext::getInstance()->getI18N()->__('Preview Mode')
       );
