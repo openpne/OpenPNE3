@@ -501,7 +501,7 @@ abstract class opMemberAction extends sfActions
     {
       $request->checkCSRFProtection();
       $this->activity->delete();
-      $this->getUser()->setFlash('notice', 'An activity was deleted.');
+      $this->getUser()->setFlash('notice', 'An %activity% was deleted.');
       $this->redirect('friend/showActivity');
     }
 
@@ -540,7 +540,7 @@ abstract class opMemberAction extends sfActions
         }
         else
         {
-          $this->getUser()->setFlash('error', 'Failed to post activity.');
+          $this->getUser()->setFlash('error', 'Failed to post %activity%.');
           if (isset($params['next_uri']))
           {
             $this->redirect($params['next_uri']);

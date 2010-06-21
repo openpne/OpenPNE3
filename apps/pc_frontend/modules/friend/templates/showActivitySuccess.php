@@ -1,4 +1,7 @@
-<?php $title = __('Activities of %my_friend%', array('%my_friend%' => $op_term['my_friend']->pluralize()->titleize())) ?> 
+<?php $title = __('%activity% of %my_friend%', array(
+  '%activity%' => $op_term['activity']->pluralize()->titleize(),
+  '%my_friend%' => $op_term['my_friend']->pluralize()->titleize()
+)) ?>
 <?php if ($pager->getNbResults() || isset($form)): ?>
 <?php slot('pager') ?>
 <?php if ($pager->getNbResults()): ?>
@@ -17,7 +20,7 @@
 <?php include_slot('pager') ?>
 <?php else: ?>
 <?php op_include_parts('box', 'ActivityBox', array(
-  'body' => __('There is no activity.'),
+  'body' => __('There is no %activity%.'),
   'title' => $title
 )) ?>
 <?php endif; ?>

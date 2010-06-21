@@ -5,7 +5,7 @@
 <?php echo __('Public flag') ?><?php echo $form['public_flag'] ?><br />
 <?php echo $form['body'] ?>
 <?php echo $form->renderHiddenFields() ?>
-<input type="submit" value="<?php echo __('Post Activity') ?>" />
+<input type="submit" value="<?php echo __('%post_activity%') ?>" />
 </form>
 <?php end_slot() ?>
 <?php $list[] = get_slot('activity_form') ?>
@@ -15,7 +15,10 @@
 <?php endforeach; ?>
 
 <?php $params = array(
-  'title' => isset($title) ? $title : __('Activities of %my_friend%', array('%my_friend%' => $op_term['my_friend']->titleize()->pluralize())),
+  'title' => isset($title) ? $title : __('%activity% of %my_friend%', array(
+    '%activity%' => $op_term['activity']->titleize()->pluralize(),
+    '%my_friend%' => $op_term['my_friend']->titleize()->pluralize(),
+  )),
   'list' => $list,
   'border' => true,
 ) ?>

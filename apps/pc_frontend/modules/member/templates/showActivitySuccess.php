@@ -1,4 +1,9 @@
-<?php $title = $id === $sf_user->getMemberId() ? __('My Activities') : __('Activities of %0%', array('%0%' => $member->getName())) ?>
+<?php $title = $id === $sf_user->getMemberId() ? __('My %activity%', array(
+  '%activity%' => $op_term->pluralize()->titleize()
+)) : __('%activity% of %0%', array(
+  '%activity%' => $op_term->pluralize()->titleize(),
+  '%0%' => $member->getName()
+)) ?>
 <?php if ($pager->getNbResults()): ?>
 <?php slot('pager') ?>
 <?php op_include_pager_navigation($pager, 'member/showActivity?page=%d&id='.$id) ?>
@@ -11,7 +16,7 @@
 <?php include_slot('pager') ?>
 <?php else: ?>
 <?php op_include_parts('box', 'ActivityBox', array(
-  'body' => __('There is no activity.'),
+  'body' => __('There is no %activity%.'),
   'title' => $title
 )) ?>
 <?php endif; ?>

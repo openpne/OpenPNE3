@@ -15,7 +15,7 @@
 </div>
 <div class="box_body">
 <span class="inputForm"><?php echo $form['body']->render(array('id' => $id.'_activity_data_body')) ?></span>
-<span class="submit"><input id="<?php echo $id ?>_submit" type="submit" value="<?php echo __('Post Activity') ?>" class="submit" /></span>
+<span class="submit"><input id="<?php echo $id ?>_submit" type="submit" value="<?php echo __('%post_activity%', array('%post_activity%' => $op_term['post_activity']->titleize())) ?>" class="submit" /></span>
 </div>
 </div></form>
 <?php use_javascript('op_activity'); ?>
@@ -33,7 +33,10 @@ new opActivity("<?php echo $id ?>", "<?php echo url_for('member/updateActivity')
 <?php end_slot(); ?>
 
 <?php $params = array(
-  'title' => isset($title) ? $title : __('Activities of %my_friend%', array('%my_friend%' => $op_term['my_friend']->titleize()->pluralize())),
+  'title' => isset($title) ? $title : __('%activity% of %my_friend%', array(
+    '%activity%' => $op_term['activity']->titleize(),
+    '%my_friend%' => $op_term['my_friend']->titleize()->pluralize())
+  ),
   'class' => 'activityBox homeRecentList',
 ) ?>
 <?php if (isset($gadget)): ?>

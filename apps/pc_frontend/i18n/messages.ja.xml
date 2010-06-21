@@ -1256,44 +1256,36 @@
         <target>年齢の公開範囲</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Activity</source>
-        <target>アクティビティ</target>
+        <source>My %activity%</source>
+        <target>自分の%activity%</target>
       </trans-unit>
       <trans-unit id="">
-        <source>My Activities</source>
-        <target>自分のアクティビティ</target>
+        <source>%activity% of %my_friend%</source>
+        <target>%my_friend%の%activity%</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Activities of %my_friend%</source>
-        <target>%my_friend%のアクティビティ</target>
+        <source>%activity% of %0%</source>
+        <target>%0%の%activity%</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Activities of %0%</source>
-        <target>%0%のアクティビティ</target>
+        <source>There is no %activity%.</source>
+        <target>%activity%がありません。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Post Activity</source>
-        <target>アクティビティ投稿</target>
+        <source>Do you delete this %activity%?</source>
+        <target>この%activity%を削除してもよろしいですか？</target>
       </trans-unit>
       <trans-unit id="">
-        <source>There is no activity.</source>
-        <target>アクティビティがありません。</target>
+        <source>An %activity% was deleted.</source>
+        <target>%activity%を削除しました。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Do you delete this activity?</source>
-        <target>このアクティビティを削除してもよろしいですか？</target>
+        <source>Failed to post %activity%.</source>
+        <target>%activity%の投稿に失敗しました。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>An activity was deleted.</source>
-        <target>アクティビティを削除しました。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Failed to post activity.</source>
-        <target>アクティビティの投稿に失敗しました。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Delete this activity of %time%</source>
-        <target>このアクティビティを削除 (%time%)</target>
+        <source>Delete this %activity% of %time%</source>
+        <target>この%activity%を削除 (%time%)</target>
       </trans-unit>
       <trans-unit id="">
         <source>Remember me</source>

@@ -18,3 +18,12 @@ nickname:
     ja_JP: "ニックネーム"
     en: "Nickname"
 
+activity:
+  caption:
+    ja_JP: "アクティビティ"
+    en: "Activity"
+
+post_activity:
+  caption:
+    ja_JP: "アクティビティ投稿"
+    en: "Post Activity"
