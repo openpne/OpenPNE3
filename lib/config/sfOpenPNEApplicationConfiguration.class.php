@@ -459,7 +459,16 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 
   public function setCacheDir($cacheDir)
   {
-    $newCacheDir = $cacheDir.DIRECTORY_SEPARATOR.php_sapi_name();
+    $newCacheDir = $cacheDir.DIRECTORY_SEPARATOR;
+    if (is_callable('posix_getuid'))
+    {
+      $userinfo = posix_getpwuid(posix_getuid());
+      $newCacheDir .= $userinfo['name'];
+    }
+    else
+    {
+      $newCacheDir .= php_sapi_name();
+    }
 
     sfConfig::set('sf_cache_dir', $newCacheDir);
 
