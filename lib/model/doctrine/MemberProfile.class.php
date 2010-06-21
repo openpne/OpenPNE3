@@ -45,8 +45,13 @@ class MemberProfile extends BaseMemberProfile implements opAccessControlRecordIn
   {
     if ($this->_get('value_datetime'))
     {
-      $obj = new DateTime($this->_get('value_datetime'));
-      return $obj->format('Y-m-d');
+      if ($this->_get('value'))
+      {
+        $obj = new DateTime($this->_get('value_datetime'));
+        return $obj->format('Y-m-d');
+      }
+
+      return null;
     }
 
     if ($this->getProfile()->isPreset())
