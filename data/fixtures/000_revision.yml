@@ -1,4 +1,4 @@
 SnsConfig:
   current_revision:
     name:  "OpenPNE_revision"
-    value: 43
+    value: 44

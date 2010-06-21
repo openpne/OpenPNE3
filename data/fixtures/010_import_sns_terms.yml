@@ -70,3 +70,39 @@ SnsTerm:
         value: "ﾆｯｸﾈｰﾑ"
       en:
         value: "nickname"
+
+  term_activity_pc_frontend:
+    name: "activity"
+    application: "pc_frontend"
+    Translation:
+      ja_JP:
+        value: "アクティビティ"
+      en:
+        value: "activity"
+
+  term_activity_mobile_frontend:
+    name: "activity"
+    application: "mobile_frontend"
+    Translation:
+      ja_JP:
+        value: "ｱｸﾃｨﾋﾞﾃｨ"
+      en:
+        value: "activity"
+
+  term_post_activity_pc_frontend:
+    name: "post_activity"
+    application: "pc_frontend"
+    Translation:
+      ja_JP:
+        value: "アクティビティ投稿"
+      en:
+        value: "Post Activity"
+
+  term_post_activity_mobile_frontend:
+    name: "post_activity"
+    application: "mobile_frontend"
+    Translation:
+      ja_JP:
+        value: "投稿"
+      en:
+        value: "Post Activity"
