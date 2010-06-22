@@ -24,4 +24,13 @@ abstract class opMemberComponents extends sfComponents
     $this->member = Doctrine::getTable('Member')->find($id);
     $this->isMine = ($id == $this->getUser()->getMemberId());
   }
+
+  public function executeAllMemberActivityBox(sfWebRequest $request)
+  {
+    $this->activities = Doctrine::getTable('ActivityData')->getAllMemberActivityList($this->gadget->getConfig('row'));
+    if ($this->gadget->getConfig('is_viewable_activity_form') && opConfig::get('is_allow_post_activity'))
+    {
+      $this->form = new ActivityDataForm();
+    }
+  }
 }

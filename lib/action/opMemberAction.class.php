@@ -551,4 +551,20 @@ abstract class opMemberAction extends sfActions
     }
     return sfView::NONE;
   }
+
+  public function executeShowAllMemberActivity(sfWebRequest $request)
+  {
+    if (!isset($this->size))
+    {
+      $this->size = 20;
+    }
+
+    $page = $request->getParameter('page', 1);
+    if ($page == 1 && opConfig::get('is_allow_post_activity'))
+    {
+      $this->form = new ActivityDataForm();
+    }
+
+    $this->pager = Doctrine::getTable('ActivityData')->getAllMemberActivityListPager($page, $this->size);
+  }
 }

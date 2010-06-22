@@ -1187,6 +1187,10 @@
         <source>Failed to post %activity%.</source>
         <target>%activity%の投稿に失敗しました。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>SNS Member's %activity%</source>
+        <target>SNSﾒﾝﾊﾞｰの%activity%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

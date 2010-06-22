@@ -278,7 +278,7 @@ class ActivityDataTable extends Doctrine_Table
     {
       $flag = self::PUBLIC_FLAG_PRIVATE;
     }
-    else 
+    else
     {
       $relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($viewerMemberId, $memberId);
       if ($relation && $relation->isFriend())
@@ -329,6 +329,44 @@ class ActivityDataTable extends Doctrine_Table
   {
     $q = $this->getOrderdQuery();
     $this->addActivityQuery($q, $memberId, $viewerMemberId, $isCheckApp);
+    return $this->getPager($q, $page, $size);
+  }
+
+  protected function addAllMemberActivityQuery($q, $isCheckApp)
+  {
+    $q->whereIn('public_flag', array(self::PUBLIC_FLAG_OPEN, self::PUBLIC_FLAG_SNS));
+
+    if ($isCheckApp)
+    {
+      if (sfConfig::get('sf_app') == 'mobile_frontend')
+      {
+        $q->andWhere('is_mobile = ?', true);
+      }
+      else
+      {
+        $q->andWhere('is_pc = ?', true);
+      }
+    }
+
+    return $q;
+  }
+
+  public function getAllMemberActivityList($limit = 5, $isCheckApp = true)
+  {
+    $q = $this->getOrderdQuery();
+    $this->addAllMemberActivityQuery($q, $isCheckApp);
+    if (null !== $limit)
+    {
+      $q->limit($limit);
+    }
+
+    return $q->execute();
+  }
+
+  public function getAllMemberActivityListPager($page = 1, $size = 20, $isCheckApp = true)
+  {
+    $q = $this->getOrderdQuery();
+    $this->addAllMemberActivityQuery($q, $isCheckApp);
     return $this->getPager($q, $page, $size);
   }
 }

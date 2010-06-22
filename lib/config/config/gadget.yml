@@ -179,3 +179,27 @@ activityBox:
       IsRequired: true
       Default:    5
       Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 10: 10}
+
+allMemberActivityBox:
+  caption:
+    ja_JP: "全員のアクティビティ"
+  description:
+    ja_JP: "SNSメンバー全員のSNS上での活動記録を表示します"
+  component: [member, allMemberActivityBox]
+  config:
+    row:
+      Name:     "row"
+      Caption:  "表示する行"
+      FormType: "select"
+      ValueType: "int"
+      IsRequired: true
+      Default:    5
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 10: 10}
+    is_viewable_activity_form:
+      Name: "is_viewable_activity_form"
+      Caption: "投稿フォームを表示"
+      FormType: "radio"
+      ValueType: "int"
+      IsRequired: true
+      Default:    1
+      Choices:    {0: "No", 1: "Yes"}

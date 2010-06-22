@@ -1288,6 +1288,10 @@
         <target>この%activity%を削除 (%time%)</target>
       </trans-unit>
       <trans-unit id="">
+        <source>SNS Member's %activity%</source>
+        <target>SNSメンバーの%activity%</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Remember me</source>
         <target>次回から自動的にログイン</target>
       </trans-unit>

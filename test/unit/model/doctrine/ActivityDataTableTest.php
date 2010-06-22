@@ -7,7 +7,7 @@ $user = sfContext::getInstance()->getUser();
 $user->setAuthenticated(true);
 $user->setMemberId(1);
 
-$t = new lime_test(31, new lime_output_color());
+$t = new lime_test(34, new lime_output_color());
 $table = Doctrine::getTable('ActivityData');
 
 //------------------------------------------------------------
@@ -126,4 +126,13 @@ $t->is(count($result), 0);
 
 $t->diag('ActivityDataTable::getActivityListPager()');
 $result = $table->getActivityListPager(1, 1);
+$t->isa_ok($result, 'sfDoctrinePager');
+
+$t->diag('ActivityDataTable::getAllMemberActivityList()');
+$result = $table->getAllMemberActivityList();
+$t->isa_ok($result, 'Doctrine_Collection');
+$t->is(count($result), 5);
+
+$t->diag('ActivityDataTable::getAllMemberActivityListPager()');
+$result = $table->getAllMemberActivityListPager();
 $t->isa_ok($result, 'sfDoctrinePager');

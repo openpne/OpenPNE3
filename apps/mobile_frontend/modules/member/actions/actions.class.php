@@ -188,4 +188,17 @@ class memberActions extends opMemberAction
 
     $this->redirect($uri);
   }
+
+ /**
+  * Execute show all member activities action
+  *
+  * @param sfWebRequest $request a request object
+  */
+  public function executeShowAllMemberActivity(sfWebRequest $request)
+  {
+    $this->size = 10;
+
+    return parent::executeShowAllMemberActivity($request);
+  }
+
 }
