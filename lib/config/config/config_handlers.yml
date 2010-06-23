@@ -32,3 +32,6 @@ modules/*/config/security.yml:
 config/mobile_preset_color.yml:
   class: sfSimpleYamlConfigHandler
 
+config/regions.yml:
+  class: sfSimpleYamlConfigHandler
+

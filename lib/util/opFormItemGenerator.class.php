@@ -129,7 +129,7 @@ class opFormItemGenerator
         $obj = new sfWidgetFormChoice(array('choices' => $info->getCountries()));
         break;
       case 'region_select':
-        $list = sfYaml::load(sfConfig::get('sf_lib_dir').'/config/config/regions.yml');
+        $list = (array)include(sfContext::getInstance()->getConfigCache()->checkConfig('config/regions.yml'));
         $type = $field['ValueType'];
         if ('string' !== $type && isset($list[$type]))
         {
