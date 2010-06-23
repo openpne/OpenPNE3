@@ -67,7 +67,7 @@ class MemberRelationshipTable extends opAccessControlDoctrineTable
 
     foreach ($friendMemberIds as $friend)
     {
-      if (!in_array($friend[0], $inactiveMemberIds))
+      if (!isset($inactiveMemberIds[$friend[0]]))
       {
         $result[] = $friend[0];
       }
