@@ -1,7 +1,7 @@
 <?php $title = $id === $sf_user->getMemberId() ? __('My %activity%', array(
-  '%activity%' => $op_term->pluralize()->titleize()
+  '%activity%' => $op_term['activity']->pluralize()->titleize()
 )) : __('%activity% of %0%', array(
-  '%activity%' => $op_term->pluralize()->titleize(),
+  '%activity%' => $op_term['activity']->pluralize()->titleize(),
   '%0%' => $member->getName()
 )) ?>
 <?php if ($pager->getNbResults()): ?>
