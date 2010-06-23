@@ -115,13 +115,22 @@ class opProjectConfiguration extends sfProjectConfiguration
 
   protected function setOpenPNEConfiguration()
   {
-    $path = OPENPNE3_CONFIG_DIR.'/OpenPNE.yml';
-    $config = sfYaml::load($path.'.sample');
-    if (is_readable($path))
+    $opConfigCachePath = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'OpenPNE.yml.php';
+    if (is_readable($opConfigCachePath))
     {
-      $config = array_merge($config, sfYaml::load($path));
+      $config = (array)include($opConfigCachePath);
     }
-
+    else
+    {
+      $path = OPENPNE3_CONFIG_DIR.'/OpenPNE.yml';
+      $config = sfYaml::load($path.'.sample');
+      if (is_readable($path))
+      {
+        $config = array_merge($config, sfYaml::load($path));
+      }
+ 
+      file_put_contents($opConfigCachePath, '<?php return '.var_export($config, true).';');
+    }
     $this->configureSessionStorage($config['session_storage']['name'], (array)$config['session_storage']['options']);
     unset($config['session_storage']);
 
