@@ -65,7 +65,7 @@ class MemberTable extends opAccessControlDoctrineTable
     $memberIds = array();
     foreach ($members as $member)
     {
-      $memberIds[] = $member[0];
+      $memberIds[$member[0]] = $member[0];
     }
 
     return $memberIds;
