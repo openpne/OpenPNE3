@@ -17,7 +17,7 @@
 
 <div id="header">
 <h1><?php echo __('%sns% Administration', array('%sns%' => $op_config['sns_name'])) ?></h1>
-<span id="visit-site"><a href="<?php echo app_url_for('pc_frontend', '@homepage') ?>" target="_blank"><?php echo __('Visit Site') ?></a></span>
+<span id="visit-site"><a href="<?php echo app_url_for('pc_frontend', '@homepage', true) ?>" target="_blank"><?php echo __('Visit Site') ?></a></span>
 </div>
 
 <?php if ($sf_user->isAuthenticated()) : ?>
