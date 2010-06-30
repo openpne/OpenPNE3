@@ -2,7 +2,7 @@
 <?php include_partial('submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', __('コミュニティリスト')); ?>
+<?php slot('title', __('%community%リスト', array('%community%' => $op_term['community']))); ?>
 
 <?php echo $form->getWidgetSchema()->setLabel("name", __('%community% Name', array('%community%' => $op_term['community']))); ?>
 <?php echo $form->getWidgetSchema()->setLabel("community_category_id", __('%community% Category', array('%community%' => $op_term['community']))); ?>
@@ -15,7 +15,7 @@
 </form>
 
 <?php if (!$pager->getNbResults()): ?>
-<?php echo __('該当するコミュニティは存在しません。') ?></p>
+<?php echo __('該当する%community%は存在しません。', array('%community%' => $op_term['community'])) ?></p>
 <?php else: ?>
 <?php slot('pager') ?>
 <p><?php op_include_pager_navigation($pager, 'community/list?page=%d', array('use_current_query_string' => true)) ?></p>
