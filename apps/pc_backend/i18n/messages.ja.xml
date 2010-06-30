@@ -1,4 +1,3 @@
-<?xml version="1.0" ?>
 <xliff version="1.0">
   <file orginal="global" source-language="en" datatype="plaintext">
     <body>
@@ -57,8 +56,8 @@
         <target>公開しない</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Make all members join in this community</source>
-        <target>全メンバーをコミュニティに参加させる</target>
+        <source>Make all members join in this %community%</source>
+        <target>全メンバーを%community%参加させる</target>
       </trans-unit>
       <trans-unit id="">
         <source>Do you make all members join in this community?</source>
@@ -69,8 +68,8 @@
         <target>全メンバーが指定したコミュニティに加入しました。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Add this community as a default</source>
-        <target>初期コミュニティとして追加</target>
+        <source>Add this %community% as a default</source>
+        <target>初期%community%として追加</target>
       </trans-unit>
       <trans-unit id="">
         <source>Add default community</source>
@@ -81,8 +80,8 @@
         <target>このコミュニティを初期コミュニティとして追加してよろしいですか？</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Remove this community from the default</source>
-        <target>初期コミュニティから取り除く</target>
+        <source>Remove this %community% from the default</source>
+        <target>初期%community%から取り除く</target>
       </trans-unit>
       <trans-unit id="">
         <source>Remove default community</source>
@@ -94,24 +93,24 @@
       </trans-unit>
 
       <trans-unit id="">
-        <source>Community Name</source>
-        <target>コミュニティ名</target>
+        <source>%community% Name</source>
+        <target>%community%名</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Community Category</source>
-        <target>コミュニティカテゴリ</target>
+        <source>%community% Category</source>
+        <target>%community%カテゴリ</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Administrator</source>
-        <target>コミュニティ管理者</target>
+        <source>%community% Administrator</source>
+        <target>%community%管理者</target>
       </trans-unit>
       <trans-unit id="">
         <source>Date Created</source>
         <target>作成日</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Community Members</source>
-        <target>メンバー数</target>
+        <source>%community% Members</source>
+        <target>%community%メンバー数</target>
       </trans-unit>
       <trans-unit id="">
         <source>Community Description</source>
