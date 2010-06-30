@@ -133,7 +133,7 @@ class opDoctrineQuery extends Doctrine_Query
   {
     if ($this->specifiedConnection)
     {
-      $this->conn = $this->specifiedConnection;
+      $this->_conn = $this->specifiedConnection;
     }
     else
     {
