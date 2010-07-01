@@ -45,7 +45,7 @@ var opActivity = function(id, posturl){
 
     var data = "";
     for (var i = 0; i < this.form.elements.length; i++) {
-      data += "&" + this.form.elements[i].name + "=" + this.form.elements[i].value;
+      data += "&" + encodeURIComponent(this.form.elements[i].name) + "=" + encodeURIComponent(this.form.elements[i].value);
     }
     data =  data.length > 1 ? data.substring(1) : "";
     req.onreadystatechange = function (e) {
