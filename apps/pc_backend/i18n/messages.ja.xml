@@ -1378,6 +1378,10 @@
         <source>%community% Category</source>
         <target>%community%カテゴリ</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Setting</source>
+        <target>設定</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
