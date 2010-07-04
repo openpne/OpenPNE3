@@ -53,6 +53,11 @@ foreach ($member->getProfiles(true) as $profile)
   $caption = $profile->getCaption();
   $value = $profile;
 
+  if ('' === (string)$profile)
+  {
+    continue;
+  }
+
   if ($profile->getFormType() === 'textarea')
   {
     $value = op_auto_link_text_for_mobile((string)$profile);
