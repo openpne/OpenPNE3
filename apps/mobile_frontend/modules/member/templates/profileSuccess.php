@@ -52,7 +52,12 @@ foreach ($member->getProfiles(true) as $profile)
 {
   $caption = $profile->getCaption();
   $value = $profile;
-  if ($profile->getProfile()->isPreset())
+
+  if ($profile->getFormType() === 'textarea')
+  {
+    $value = op_auto_link_text_for_mobile((string)$profile);
+  }
+  elseif ($profile->getProfile()->isPreset())
   {
     $presetConfig = $profile->getProfile()->getPresetConfig();
     $caption = __($presetConfig['Caption']);
