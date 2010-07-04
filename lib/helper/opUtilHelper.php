@@ -525,7 +525,7 @@ function _op_auto_links_outer_urls($text, $href_options = array(), $truncate = f
     $callback_function .= '
       else if (strlen($matches[2].$matches[3]) > '.$truncate_len.')
       {
-        return $matches[1].\'<a href="'.$baseUrl.$proxyAction.'?url=\'.urlencode(($matches[2] == "www." ? "http://www." : $matches[2]).$matches[3]).\'"'.$href_options.'>\'.substr($matches[2].$matches[3], 0, '.$truncate_len.').\''.$pad.'</a>\'.$matches[4];
+        return $matches[1].\'<a href="'.$proxyAction.'?url=\'.urlencode(($matches[2] == "www." ? "http://www." : $matches[2]).$matches[3]).\'"'.$href_options.'>\'.substr($matches[2].$matches[3], 0, '.$truncate_len.').\''.$pad.'</a>\'.$matches[4];
       }
       ';
   }
