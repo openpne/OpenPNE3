@@ -99,7 +99,7 @@ class Profile extends BaseProfile
     if ('region_select' === $this->getFormType()
         && 'string' !== $this->getValueType())
     {
-      $name .= '_'.$this->getValueType();
+      $name = 'region_'.$this->getValueType();
     }
 
     return $name;
