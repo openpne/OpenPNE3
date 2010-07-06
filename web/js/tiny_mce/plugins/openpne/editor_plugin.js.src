@@ -502,13 +502,8 @@
 
                     var newObj = editor.dom.create(tagname);
                     editor.dom.setAttribs(newObj, args);
+                    editor.dom.replace(newObj, targetObj, true);
 
-                    if (tinymce.isIE) {
-                        newObj.innerHTML = targetObj.innerHTML;
-                        targetObj.parentNode.replaceChild(newObj, targetObj);
-                    } else {
-                        editor.dom.replace(newObj, targetObj, true);
-                    }
                     tagList = doc.getElementsByTagName(org_tagname);
                 }
                 s = editorDoc.innerHTML;
@@ -522,7 +517,7 @@
             rep(/<\/?div>/gi,"");  // for Safari
 
             if (Prototype.Browser.IE) {
-                rep(/<(\/?)op(b|u|s|i|font|large|small|color)/gi, '<$1op:$2');
+                rep(/<(\/?):?op(b|u|s|i|font|large|small|color)/gi, '<$1op:$2');
             }
 
             rep(/<br\s?\/?[^>]*>/gi,"\n\n");

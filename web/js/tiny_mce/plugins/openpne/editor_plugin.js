@@ -40,11 +40,10 @@ if(tagname==org_tagname){editor.dom.remove(targetObj,true);tagList=doc.getElemen
 if(!fontSizeMap[targetObj.style.fontSize]){editor.dom.remove(targetObj,true);continue;}
 tagname='op:font';args['size']=fontSizeMap[targetObj.style.fontSize];}else{editor.dom.remove(targetObj,true);continue;}}else{tagname='op:'+org_tagname;}
 if(tinymce.isIE){tagname=tagname.replace("op:","op");}
-var newObj=editor.dom.create(tagname);editor.dom.setAttribs(newObj,args);if(tinymce.isIE){newObj.innerHTML=targetObj.innerHTML;targetObj.parentNode.replaceChild(newObj,targetObj);}else{editor.dom.replace(newObj,targetObj,true);}
-tagList=doc.getElementsByTagName(org_tagname);}
+var newObj=editor.dom.create(tagname);editor.dom.setAttribs(newObj,args);editor.dom.replace(newObj,targetObj,true);tagList=doc.getElementsByTagName(org_tagname);}
 s=editorDoc.innerHTML;}
 var convertList=new Array('span','font','b','u','s','i');for(var i=0;i<convertList.length;i++){convertHtmlTagToDecoTag(editor.getBody(),convertList[i]);}
-rep(/<\/?div>/gi,"");if(Prototype.Browser.IE){rep(/<(\/?)op(b|u|s|i|font|large|small|color)/gi,'<$1op:$2');}
+rep(/<\/?div>/gi,"");if(Prototype.Browser.IE){rep(/<(\/?):?op(b|u|s|i|font|large|small|color)/gi,'<$1op:$2');}
 rep(/<br\s?\/?[^>]*>/gi,"\n\n");rep(/&nbsp;/gi," ");rep(/&quot;/gi,"\"");rep(/&lt;/gi,"<");rep(/&gt;/gi,">");rep(/&amp;/gi,"&");return s;},_textToPreview:function(s){s=tinymce.trim(s);var rule=/&lt;op:(b|u|s|i|font|large|small|color)(\s+(.*?)|)&gt;(.*?)&lt;\/op:\1&gt;/i;function rep(re,str){s=s.replace(re,str);};function getAttributes(str){var result={};if(!str){return result;}
 var reg=new RegExp(/([^\s]*?)=(?:&quot;|")(.*?)(?:&quote;|")/gi);while((att=reg.exec(str))!=null){result[att[1]]=att[2];}
 return result;};rep(/</gi,"&lt;");rep(/>/gi,"&gt;");rep(/\n/gi,"<br />");rep(/&lt;(\/|)op:(b|u|s|i|font|large|small|color)(?:\s+(.*?)|)&gt;/gi,function(str,isEndTag,org_tagname,attributes_str){var opt="";var style="";var tagname=org_tagname;var attributes=getAttributes(attributes_str);var fontSizeMap=["xx-small","x-small","small","medium","large","x-large","xx-large"];var fontsize=fontSizeMap[3];if(tagname=="font"||tagname=="color"||tagname=="large"||tagname=="small"){tagname="span";}
