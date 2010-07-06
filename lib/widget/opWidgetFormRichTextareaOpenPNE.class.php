@@ -68,7 +68,7 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
     'theme_advanced_buttons1'         => '',
     'theme_advanced_buttons2'         => '',
     'theme_advanced_buttons3'         => '',
-    'valid_elements'                  => 'b/strong,u,s/strike,i,font[color|size],span[style],br',
+    'valid_elements'                  => 'b/strong,u,s/strike,i/em,font[color|size],span[style],br',
     'forced_root_block'               => false,
     'force_p_newlines'                => false,
     'force_br_newlines'               => true,
