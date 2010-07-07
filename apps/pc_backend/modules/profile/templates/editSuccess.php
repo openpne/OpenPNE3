@@ -17,17 +17,25 @@
 
 <div id="preset"<?php if (!$isPreset): ?> style="display: none;"<?php endif ?>>
 <?php if ($presetForm->isNew()): ?>
+<?php if (0 < count($presetForm->getWidget('preset')->getChoices())): ?>
 <form action="<?php echo url_for('profile/edit?type=preset') ?>" method="post">
-<?php else : ?>
-<form action="<?php echo url_for('profile/edit?type=preset&id='.$profile->getId()) ?>" method="post">
-<?php endif; ?>
-<table>
+<table style="width: 50%;">
 <?php echo $presetForm ?>
 </table>
-<input type="submit" value="<?php echo $form->isNew() ? __('Add') : __('Modify') ?>" />
+<input type="submit" value="<?php echo  __('Add') ?>" />
 </form>
+<?php else: ?>
+<?php echo __('There is no preset profile.') ?>
+<?php endif; ?>
+<?php else: ?>
+<form action="<?php echo url_for('profile/edit?type=preset&id='.$profile->getId()) ?>" method="post">
+<table style="width: 50%;">
+<?php echo $presetForm ?>
+</table>
+<input type="submit" value="<?php echo  __('Modify') ?>" />
+</form>
+<?php endif; ?>
 </div>
-
 
 <div id="original"<?php if ($isPreset): ?> style="display: none;"<?php endif ?>>
 <?php if ($form->hasGlobalErrors()) : ?>
