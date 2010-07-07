@@ -1,0 +1,1 @@
+INSERT INTO intro_friend (id, member_id_to, member_id_from, content, created_at, updated_at) (SELECT NULL, c_member_id_to, c_member_id_from, intro, r_datetime_intro, r_datetime_intro FROM c_friend WHERE intro <> "");
