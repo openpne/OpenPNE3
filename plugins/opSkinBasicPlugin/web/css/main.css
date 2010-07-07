@@ -358,12 +358,8 @@ pre {
   text-decoration: none;
 }
 
-* html #globalNav li {
-  float: none;
-  display: inline;
-}
-
 * html #globalNav li a {
+  zoom: 1;
   display: inline;
 }
 
@@ -401,12 +397,12 @@ pre {
   display: block;
 }
 
-* html #localNav li {
-  float: none;
-  display: inline;
+* html #localNav ul {
+  zoom: 1;
 }
 
 * html #localNav li a {
+  zoom: 1;
   display: inline;
 }
 
