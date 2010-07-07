@@ -19,7 +19,8 @@ class opUpgrader extends sfBaseTask
 {
   protected
     $basePath = '',
-    $options = array();
+    $options = array(),
+    $definitionName = 'definition.yml';
 
   public function __construct(sfEventDispatcher $dispatcher, sfFormatter $formatter, $basePath, $configuration)
   {
@@ -34,12 +35,22 @@ class opUpgrader extends sfBaseTask
     $this->configuration = $configuration;
   }
 
+  public function setDefinitionName($definitionName)
+  {
+    $this->definitionName = $definitionName;
+  }
+
+  public function getDefinitionName()
+  {
+    return $this->definitionName;
+  }
+
   public function getDefinition()
   {
-    $path = $this->basePath.DIRECTORY_SEPARATOR.'definition.yml';
+    $path = $this->basePath.DIRECTORY_SEPARATOR.$this->definitionName;
     if (!is_file($path) || !is_readable($path))
     {
-      throw new RuntimeException('The upgrade base path doesn\'t have a definition file for upgrading.');
+      throw new RuntimeException('The upgrade base path doesn\'t have a definition file for upgrading ('.$path.')');
     }
 
     return sfSimpleYamlConfigHandler::replaceConstants(sfSimpleYamlConfigHandler::getConfiguration(array($path)));

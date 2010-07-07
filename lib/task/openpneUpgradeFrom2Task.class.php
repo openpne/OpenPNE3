@@ -45,9 +45,9 @@ EOF;
       $options['origin'] = '2.12';
     }
 
-    if (!in_array($options['origin'], array('2.12', '2.14')))
+    if (!in_array($options['origin'], array('2.12', '2.14', '3.4')))
     {
-      throw new RuntimeException('You must specify "2.12" or "2.14" to the --origin option. (--origin オプションには 2.12 か 2.14 を指定してください。)');
+      throw new RuntimeException('You must specify "2.12", "2.14" or "3.4" to the --origin option. (--origin オプションには 2.12、 2.14 または 3.4 を指定してください。)');
     }
     sfConfig::set('op_upgrade2_version', $options['origin']);
 
@@ -73,6 +73,10 @@ EOF;
     if ($options['rules'])
     {
       $upgrader->setOption('targets', $options['rules']);
+    }
+    if ('3.4' === $options['origin'])
+    {
+      $upgrader->setDefinitionName('definition-34to36.yml');
     }
 
     $this->logSection('upgrade', 'Begin upgrading from 2.x');
