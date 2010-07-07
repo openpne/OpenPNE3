@@ -190,7 +190,7 @@ MemberImage:
   second_member_image1:
     Member: second_member
     File: dummy_file1
-  
+
 MemberProfile:
   first_member_profile_sex:
     value: "Man"
@@ -272,6 +272,14 @@ MemberProfile:
         Member: second_member
         Profile: profile_checkbox_item
         ProfileOption: profile_option_checkbox_item1
+
+  second_member_profile_birthday:
+    value: ""
+    value_datetime: ""
+    public_flag: 1
+    Member: second_member
+    Profile: profile_birthday
+    children: []
 
 MemberConfig:
   first_member_pc_address:

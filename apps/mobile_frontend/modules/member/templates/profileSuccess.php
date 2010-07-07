@@ -52,6 +52,12 @@ foreach ($member->getProfiles(true) as $profile)
 {
   $caption = $profile->getCaption();
   $value = $profile;
+
+  if ('' === (string)$profile)
+  {
+    continue;
+  }
+
   if ($profile->getProfile()->isPreset())
   {
     $presetConfig = $profile->getProfile()->getPresetConfig();
