@@ -677,6 +677,10 @@
         <source>%community% Category</source>
         <target>%community%カテゴリ</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>There is no preset profile.</source>
+        <target>追加可能なプリセットがありません。</target>
+      </trans-unit>      
     </body>
   </file>
 </xliff>
