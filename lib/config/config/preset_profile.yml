@@ -63,7 +63,7 @@ region:
   DefaultPublicflag: 0
 
 region_JP:
-  Name: "region_in_japan"
+  Name: "region"
   Caption: "Region in Japan"
   FormType: "region_select"
   ValueType: "JP"
@@ -75,7 +75,7 @@ region_JP:
   DefaultPublicflag: 0
 
 region_US:
-  Name: "region_in_usa"
+  Name: "region"
   Caption: "Region in USA"
   FormType: "region_select"
   ValueType: "US"
@@ -87,7 +87,7 @@ region_US:
   DefaultPublicflag: 0
 
 region_GB:
-  Name: "region_in_uk"
+  Name: "region"
   Caption: "Region in UK"
   FormType: "region_select"
   ValueType: "GB"
@@ -99,7 +99,7 @@ region_GB:
   DefaultPublicflag: 0
 
 region_CA:
-  Name: "region_in_canada"
+  Name: "region"
   Caption: "Region in Canada"
   FormType: "region_select"
   ValueType: "CA"
@@ -111,7 +111,7 @@ region_CA:
   DefaultPublicflag: 0
 
 region_DE:
-  Name: "region_in_germany"
+  Name: "region"
   Caption: "Region in Germany"
   FormType: "region_select"
   ValueType: "DE"
@@ -123,7 +123,7 @@ region_DE:
   DefaultPublicflag: 0
 
 region_FR:
-  Name: "region_in_france"
+  Name: "region"
   Caption: "Region in France"
   FormType: "region_select"
   ValueType: "FR"
@@ -135,7 +135,7 @@ region_FR:
   DefaultPublicflag: 0
 
 region_IT:
-  Name: "region_in_italy"
+  Name: "region"
   Caption: "Region in Italy"
   FormType: "region_select"
   ValueType: "IT"
@@ -147,7 +147,7 @@ region_IT:
   DefaultPublicflag: 0
 
 region_CN:
-  Name: "region_in_china"
+  Name: "region"
   Caption: "Region in China"
   FormType: "region_select"
   ValueType: "CN"

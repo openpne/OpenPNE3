@@ -67,10 +67,7 @@ class opPresetProfileForm extends ProfileForm
 
     foreach ($list as $k => $v)
     {
-      if (!Doctrine::getTable('Profile')->retrieveByName('op_preset_'.$v['Name']))
-      {
-        $result[$k] = $i18n->__($v['Caption']);
-      }
+      $result[$k] = $i18n->__($v['Caption']);
     }
 
     return $result;
