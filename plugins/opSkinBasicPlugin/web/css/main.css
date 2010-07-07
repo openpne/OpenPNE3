@@ -358,12 +358,8 @@ pre {
   text-decoration: none;
 }
 
-* html #globalNav li {
-  float: none;
-  display: inline;
-}
-
 * html #globalNav li a {
+  zoom: 1;
   display: inline;
 }
 
@@ -401,12 +397,12 @@ pre {
   display: block;
 }
 
-* html #localNav li {
-  float: none;
-  display: inline;
+* html #localNav ul {
+  zoom: 1;
 }
 
 * html #localNav li a {
+  zoom: 1;
   display: inline;
 }
 
@@ -675,12 +671,19 @@ div.operation ul.moreInfo li {
   border: 1px solid #CCCCCC;
   background: #EEEEEE url(../images/icon_information.gif) no-repeat 5px 50%;
 }
+
 .informationBox div.body {
   min-height: 1.2em;
   padding: 5px;
   border-left: 1px solid #CCCCCC;
   background: #FFFFFF;
 }
+
+* html .informationBox,
+* html .informationBox div.body {
+  zoom: 1;
+}
+
 .informationBox .caution {
   color: #FF0000;
 }
