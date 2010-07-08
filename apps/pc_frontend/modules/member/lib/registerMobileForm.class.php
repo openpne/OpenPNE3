@@ -28,6 +28,8 @@ class registerMobileForm extends MemberConfigMobileAddressForm
     $token = md5(uniqid(mt_rand(), true));
 
     $this->member->setConfig('register_mobile_token', $token);
+    
+    $this->member->setConfig('mobile_address_pre', $this->getValue('mobile_address'));
 
     $param = array(
       'token' => $token,
