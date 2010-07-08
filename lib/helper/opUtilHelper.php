@@ -1054,3 +1054,90 @@ function op_get_gadget_type($type1, $type2)
   $type = strtolower(substr($type, 0, 1)).substr($type, 1);
   return $type;
 }
+
+/**
+ * Returns a image tag
+ *
+ * @param string  $source
+ * @param array   $options
+ *
+ * @return string An image tag.
+ * @see image_tag_sf_image
+ */
+function op_image_tag_sf_image($source, $options = array())
+{
+  if (!isset($options['no_image']))
+  {
+    $options['no_image'] = op_image_path('no_image.gif');
+  }
+
+  return image_tag_sf_image($source, $options);
+}
+
+/**
+ * Returns a image tag
+ *
+ * @param string  $source
+ * @param array   $options
+ *
+ * @return string An image tag.
+ * @see image_tag
+ */
+function op_image_tag($source, $options = array())
+{
+  if (!isset($options['raw_name']))
+  {
+    $absolute = false;
+    if (isset($options['absolute']))
+    {
+      unset($options['absolute']);
+      $absolute = true;
+    }
+
+    $options['raw_name'] = true;
+    $source = op_image_path($source, $absolute);
+  }
+
+  return image_tag($source, $options);
+}
+
+/**
+ * Returns a image path
+ *
+ * @param string  $source
+ * @param boolean $absolute
+ *
+ * @return string An image path.
+ * @see image_path
+ */
+function op_image_path($source, $absolute = false)
+{
+  if (strpos($source, '://'))
+  {
+    return $source;
+  }
+
+  if (0 !== strpos($source, '/'))
+  {
+    $plugins = sfContext::getInstance()->getConfiguration()->getPluginPaths();
+    foreach ($plugins as $plugin)
+    {
+      if (preg_match('/^'.preg_quote(sfConfig::get('sf_plugins_dir'), '/').'(\/opSkin.*Plugin)/', $plugin, $matches))
+      {
+        $pattern = $matches[0].'/web/images/'.$source;
+        $path = explode('/', $source);
+        if (strpos('.', $path[count($path) - 1]))
+        {
+          $pattern .= $pattern.'.png';
+        }
+
+        if (glob($pattern))
+        {
+          $source = $matches[1].'/images/'.$source;
+        }
+      }
+    }
+  }
+
+  return image_path($source, $absolute);
+}
