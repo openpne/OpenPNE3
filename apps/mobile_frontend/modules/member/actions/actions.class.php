@@ -131,7 +131,11 @@ class memberActions extends opMemberAction
       $this->form->bind($request->getParameter('password'));
       if ($this->form->isValid())
       {
-        $memberConfig->getMember()->setConfig('mobile_uid', $request->getMobileUID());
+        $member = $memberConfig->getMember();
+        $pre = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('mobile_address_pre', $id);
+        $member->setConfig('mobile_address', $pre->getValue());
+        $pre->delete();
+        $member->setConfig('mobile_uid', $request->getMobileUID());
 
         $this->getUser()->setCurrentAuthMode($memberConfig->getMember()->getConfig('register_auth_mode'));
         $this->getUser()->setMemberId($id);
