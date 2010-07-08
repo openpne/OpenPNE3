@@ -199,9 +199,6 @@ abstract class opMemberAction extends sfActions
     $this->communities = $this->member->getJoinCommunities($this->communitiesSize, true);
     $this->crownIds = Doctrine::getTable('CommunityMember')->getCommunityIdsOfAdminByMemberId($id);
 
-    $birthday = Doctrine::getTable('MemberProfile')->getViewableProfileByMemberIdAndProfileName($id, 'op_preset_birthday');
-    $this->targetDay = $birthday ? opToolkit::extractTargetDay((string)$birthday) : false;
-
     return sfView::SUCCESS;
   }
 

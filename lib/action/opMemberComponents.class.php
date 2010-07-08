@@ -33,4 +33,11 @@ abstract class opMemberComponents extends sfComponents
       $this->form = new ActivityDataForm();
     }
   }
+
+  public function executeBirthdayBox(sfWebRequest $request)
+  {
+    $id = $request->getParameter('id', $this->getUser()->getMemberId());
+    $birthday = Doctrine::getTable('MemberProfile')->getViewableProfileByMemberIdAndProfileName($id, 'op_preset_birthday');
+    $this->targetDay = $birthday ? opToolkit::extractTargetDay((string)$birthday) : false;
+  }
 }
