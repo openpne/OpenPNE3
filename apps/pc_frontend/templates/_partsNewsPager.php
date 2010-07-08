@@ -18,7 +18,7 @@ else
 ?>
  (<?php echo $res['name'] ?>)
 <?php if ($res['image']): ?>
-<?php echo image_tag( 'icon_camera.gif', array( 'alt' => __('Those with a photograph'))) ?>
+<?php echo op_image_tag( 'icon_camera.gif', array( 'alt' => __('Those with a photograph'))) ?>
 <?php endif; ?>
 </dd>
 </dl>

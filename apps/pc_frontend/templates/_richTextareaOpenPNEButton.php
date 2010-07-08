@@ -5,6 +5,6 @@
   preg_replace('/%id%/', $id, $onclick_actions[$key]) :
   "op_mce_insert_tagname('".$id."', '".str_replace("_", ":", $key)."');"
 ?> return false;">
-<?php echo image_tag($config['imageURL'], array('alt' => '')) ?></a>
+<?php echo op_image_tag($config['imageURL'], array('alt' => '')) ?></a>
 <?php endforeach; ?>
 <?php echo javascript_tag('opEmoji.getInstance("'.$id.'").createEmojiPallet();'); ?>

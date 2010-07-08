@@ -4,7 +4,7 @@
 <td>
 <?php if (isset($options['images'][$i])) : ?>
 <?php $image = $options['images'][$i] ?>
-<?php echo image_tag_sf_image($image->getFile(), array('size' => '180x180')) ?><br />
+<?php echo op_image_tag_sf_image($image->getFile(), array('size' => '180x180')) ?><br />
 <?php if (isset($options['form'])) : ?>
 [
 <?php echo link_to(__('Delete'), 'member/deleteImage?member_image_id='.$image->getId()) ?> |
@@ -16,7 +16,7 @@
 ]
 <?php endif; ?>
 <?php else: ?>
-<?php echo image_tag('no_image.gif', array('size' => '180x180', 'alt' => '')) ?>
+<?php echo op_image_tag('no_image.gif', array('size' => '180x180', 'alt' => '')) ?>
 <?php endif; ?>
 </td>
 <?php endfor; ?>

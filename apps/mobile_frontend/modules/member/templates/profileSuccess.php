@@ -25,7 +25,7 @@
 </td></tr>
 
 <tr><td align="center" width="50%" valign="top">
-<?php echo image_tag_sf_image($member->getImageFileName(), array('size' => '120x120', 'format' => 'jpg')) ?>
+<?php echo op_image_tag_sf_image($member->getImageFileName(), array('size' => '120x120', 'format' => 'jpg')) ?>
 <?php if ($relation->isSelf()) : ?>
 <br><?php echo link_to(__('Edit Photo'), 'member/configImage') ?>
 <?php elseif ($member->getImageFileName()) : ?>

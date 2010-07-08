@@ -1420,7 +1420,7 @@ class OpenPNE_KtaiEmoji_Img extends OpenPNE_KtaiEmoji_Common
         $emoji_name = $this->value_list[$carrier_id][$emoji_id];
 
         sfContext::getInstance()->getConfiguration()->loadHelpers('Asset');
-        return image_tag('emoji/'.$carrier_id.'/'.$emoji_code_id.$this->emoji_image_extension, array('alt' => $emoji_name));
+        return op_image_tag('emoji/'.$carrier_id.'/'.$emoji_code_id.$this->emoji_image_extension, array('alt' => $emoji_name));
     }
 }
 ?>

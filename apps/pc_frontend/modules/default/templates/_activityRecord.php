@@ -1,6 +1,6 @@
 <li class="activity">
 <div class="box_memberImage">
-<p><?php echo link_to(image_tag_sf_image($activity->getMember()->getImageFileName(), array('alt' => sprintf('[%s]', $activity->getMember()), 'size' => '48x48')), '@obj_member_profile?id='.$activity->getMemberId()) ?></p>
+<p><?php echo link_to(op_image_tag_sf_image($activity->getMember()->getImageFileName(), array('alt' => sprintf('[%s]', $activity->getMember()), 'size' => '48x48')), '@obj_member_profile?id='.$activity->getMemberId()) ?></p>
 </div>
 <div class="box_body">
 <p>
@@ -9,9 +9,9 @@
 <?php $images = $activity->getImages() ?>
 <?php for ($i = 0; $i < $images->count() && $i < 3;$i++): ?>
 <?php if ($images[$i]->getFileId()): ?>
-<?php echo image_tag_sf_image($images[$i]->getFile(), array('size' => '48x48')) ?>
+<?php echo op_image_tag_sf_image($images[$i]->getFile(), array('size' => '48x48')) ?>
 <?php else: ?>
-<?php echo image_tag($images[$i]->getUri(), array('width' => 48, 'height' => 48)) ?>
+<?php echo op_image_tag($images[$i]->getUri(), array('width' => 48, 'height' => 48)) ?>
 <?php endif; ?>
 <?php endfor; ?>
 <br />

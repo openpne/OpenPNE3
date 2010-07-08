@@ -5,9 +5,9 @@
 <?php $imgParam = array('size' => '180x180', 'alt' => $options->object->getName()) ?>
 <?php $nameMethod = $options->name_method ?>
 <?php if ($options->object): ?>
-<?php echo image_tag_sf_image($options->object->getImageFileName(), $imgParam) ?>
+<?php echo op_image_tag_sf_image($options->object->getImageFileName(), $imgParam) ?>
 <?php else: ?>
-<?php echo image_tag('no_image.gif', $imgParam) ?>
+<?php echo op_image_tag('no_image.gif', $imgParam) ?>
 <?php endif; ?>
 </p>
 <p class="text"><?php echo $options->object->$nameMethod() ?></p>

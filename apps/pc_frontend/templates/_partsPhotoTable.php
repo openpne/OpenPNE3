@@ -22,12 +22,12 @@ $options->addRequiredOption('link_to');
 <?php for ($j = ($i * $options->col) - $options->col; ($i * $options->col) > $j; $j++): ?>
 <td><?php if (!empty($options->list[$j])): ?>
 <?php if (in_array($options->list[$j]->getId(), $options->getRaw('crownIds'))): ?>
-<p class="crown"><?php echo image_tag('icon_crown.gif', array('alt' => 'admin')) ?></p>
+<p class="crown"><?php echo op_image_tag('icon_crown.gif', array('alt' => 'admin')) ?></p>
 <?php endif; ?>
 <?php if ($options->use_op_link_to_member): ?>
-<?php echo op_link_to_member($options->list[$j], array('link_target' => image_tag_sf_image($options->list[$j]->getImageFileName(), array('size' => '76x76')))) ?>
+<?php echo op_link_to_member($options->list[$j], array('link_target' => op_image_tag_sf_image($options->list[$j]->getImageFileName(), array('size' => '76x76')))) ?>
 <?php else: ?>
-<?php echo link_to(image_tag_sf_image($options->list[$j]->getImageFileName(), array('size' => '76x76')), $options->link_to.$options->list[$j]->getId()) ?>
+<?php echo link_to(op_image_tag_sf_image($options->list[$j]->getImageFileName(), array('size' => '76x76')), $options->link_to.$options->list[$j]->getId()) ?>
 <?php endif; ?>
 <?php endif; ?></td>
 <?php endfor; ?>

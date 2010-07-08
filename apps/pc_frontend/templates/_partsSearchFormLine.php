@@ -2,7 +2,7 @@
 
 <form action="<?php echo url_for('@global_search') ?>" method="get">
 <ul>
-<li><?php echo image_tag('icon_search.gif', array('alt' => 'search')) ?></li>
+<li><?php echo op_image_tag('icon_search.gif', array('alt' => 'search')) ?></li>
 <li>
 <input type="hidden" value="action" name="search" />
 <input type="text" class="input_text" size="30" value="" name="search_query" />

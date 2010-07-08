@@ -4,7 +4,7 @@
 <?php $images = $_member->getMemberImage() ?>
 <?php if ($images->count()): ?>
 <?php foreach ($images as $image) : ?>
-<?php echo image_tag_sf_image($image->getFile(), array('size' => '120x120', 'format' => 'jpg')) ?><br>
+<?php echo op_image_tag_sf_image($image->getFile(), array('size' => '120x120', 'format' => 'jpg')) ?><br>
 <?php echo sprintf('[%s]',link_to(__('Expansion'), sf_image_path($image->getFile(), array('size' => '320x320', 'format' => 'jpg')))) ?><br>
 <?php 
 if ($image->getIsPrimary())

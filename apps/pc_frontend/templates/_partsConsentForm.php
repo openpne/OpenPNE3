@@ -30,7 +30,7 @@ $options->setDefault('allow_image_filename', 'consent_allow1.gif');
 </style>
 <div id="consent_image">
 <?php echo $options->consent_from ?>
-<?php echo image_tag($options->allow_image_filename); ?>
+<?php echo op_image_tag($options->allow_image_filename); ?>
 <?php echo $options->consent_to ?>
 </div>
 <div id="whoami">
@@ -38,9 +38,9 @@ $options->setDefault('allow_image_filename', 'consent_allow1.gif');
 <p class="photo">
 <?php $imgParam = array('size' => '76x76', 'alt' => $sf_user->getMember()->getName()) ?>
 <?php if ($sf_user->getMember()): ?>
-<?php echo image_tag_sf_image($sf_user->getMember()->getImageFileName(), $imgParam) ?>
+<?php echo op_image_tag_sf_image($sf_user->getMember()->getImageFileName(), $imgParam) ?>
 <?php else: ?>
-<?php echo image_tag('no_image.gif', $imgParam) ?>
+<?php echo op_image_tag('no_image.gif', $imgParam) ?>
 <?php endif; ?>
 </p>
 <p class="text"><?php echo $sf_user->getMember()->getNameAndCount() ?></p>
