@@ -36,6 +36,7 @@ function image_tag_sf_image($filename, $options = array())
     if (isset($options['no_image']))
     {
       $filename = $options['no_image'];
+      unset($options['no_image']);
     }
     else
     {
