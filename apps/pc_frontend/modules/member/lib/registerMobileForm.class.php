@@ -21,6 +21,10 @@ class registerMobileForm extends MemberConfigMobileAddressForm
   {
     $this->setWidget('mobile_address', new sfWidgetFormInput());
     $this->setValidator('mobile_address', new sfValidatorMobileEmail());
+    $this->mergePostValidator(new sfValidatorCallback(array(
+        'callback' => array($this, 'isUnique'),
+        'arguments' => array('name' => 'mobile_address'),
+      )));    
   }
 
   public function save()
