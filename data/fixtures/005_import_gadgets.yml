@@ -1,4 +1,9 @@
 Gadget:
+  gadget_birthday:
+    type: "top"
+    name: "birthdayBox"
+    sort_order: 0
+
   gadget_search:
     type: "top"
     name: "searchBox"
@@ -34,6 +39,11 @@ Gadget:
     name: "sideBanner"
     sort_order: 20
 
+  mobile_gadget_birthday:
+    type: "mobileTop"
+    name: "birthdayBox"
+    sort_order: 0
+
   mobile_gadget_information:
     type: "mobileTop"
     name: "informationBox"
@@ -48,6 +58,11 @@ Gadget:
     type: "mobileLoginContents"
     name: "loginForm"
     sort_order: 10
+
+  profile_gadget_birthday:
+    type: "profileTop"
+    name: "birthdayBox"
+    sort_order: 0
 
   profile_gadget_member_image:
     type: "profileSideMenu"
@@ -68,6 +83,11 @@ Gadget:
     type: "profileContents"
     name: "profileListBox"
     sort_order: 10
+
+  mobile_profile_gadget_birthday:
+    type: "mobileProfileTop"
+    name: "birthdayBox"
+    sort_order: 0
 
   mobile_profile_gadget_friend_table:
     type: "mobileProfileBottom"

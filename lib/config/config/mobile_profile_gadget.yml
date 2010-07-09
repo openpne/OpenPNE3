@@ -66,3 +66,10 @@ activityBox:
       IsRequired: true
       Default:    3
       Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
+
+birthdayBox:
+  caption:
+    ja_JP: "バースデイボックス"
+  description:
+    ja_JP: "バースデイ通知ボックスを設置できます。"
+  component: [member, birthdayBox]

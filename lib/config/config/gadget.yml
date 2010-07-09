@@ -203,3 +203,10 @@ allMemberActivityBox:
       IsRequired: true
       Default:    1
       Choices:    {0: "No", 1: "Yes"}
+
+birthdayBox:
+  caption:
+    ja_JP: "バースデイボックス"
+  description:
+    ja_JP: "バースデイ通知ボックスを設置できます。"
+  component: [member, birthdayBox]
