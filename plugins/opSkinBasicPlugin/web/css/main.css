@@ -356,14 +356,21 @@ pre {
   display: block;
   color: #FFFFFF;
   text-decoration: none;
+  white-space: nowrap;
 }
 
-* html #globalNav li {
-  float: none;
+* html #globalNav ul {
+  overflow: hidden;
+  width: 100%;
+}
+
+*:first-child+html #globalNav li a {
+  zoom: 1;
   display: inline;
 }
 
 * html #globalNav li a {
+  zoom: 1;
   display: inline;
 }
 
@@ -399,14 +406,21 @@ pre {
   color: #FFFFFF;
   text-decoration: none;
   display: block;
+  white-space: nowrap;
 }
 
-* html #localNav li {
-  float: none;
+* html #localNav ul {
+  overflow: hidden;
+  width: 100%;
+}
+
+*:first-child+html #localNav li a {
+  zoom: 1;
   display: inline;
 }
 
 * html #localNav li a {
+  zoom: 1;
   display: inline;
 }
 
