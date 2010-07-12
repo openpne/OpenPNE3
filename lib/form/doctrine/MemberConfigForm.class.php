@@ -114,7 +114,7 @@ class MemberConfigForm extends BaseForm
       return $value;
     }
 
-    throw new sfValidatorError($validator, 'Invalid %name% address.', array('name' => $name));
+    throw new sfValidatorError($validator, 'Invalid %name%.', array('name' => $name));
   }
 
   public function isValid()
