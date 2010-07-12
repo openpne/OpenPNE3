@@ -213,6 +213,7 @@ div#LayoutC {
 #Left,
 #Center,
 #Top {
+  zoom: 1;
   overflow: hidden;
 }
 
@@ -356,14 +357,21 @@ pre {
   display: block;
   color: #FFFFFF;
   text-decoration: none;
+  white-space: nowrap;
 }
 
-* html #globalNav li {
-  float: none;
+* html #globalNav ul {
+  overflow: hidden;
+  width: 100%;
+}
+
+*:first-child+html #globalNav li a {
+  zoom: 1;
   display: inline;
 }
 
 * html #globalNav li a {
+  zoom: 1;
   display: inline;
 }
 
@@ -399,14 +407,21 @@ pre {
   color: #FFFFFF;
   text-decoration: none;
   display: block;
+  white-space: nowrap;
 }
 
-* html #localNav li {
-  float: none;
+* html #localNav ul {
+  overflow: hidden;
+  width: 100%;
+}
+
+*:first-child+html #localNav li a {
+  zoom: 1;
   display: inline;
 }
 
 * html #localNav li a {
+  zoom: 1;
   display: inline;
 }
 
@@ -675,12 +690,23 @@ div.operation ul.moreInfo li {
   border: 1px solid #CCCCCC;
   background: #EEEEEE url(../images/icon_information.gif) no-repeat 5px 50%;
 }
+
 .informationBox div.body {
   min-height: 1.2em;
   padding: 5px;
   border-left: 1px solid #CCCCCC;
   background: #FFFFFF;
 }
+
+* html .informationBox,
+* html .informationBox div.body {
+  zoom: 1;
+}
+
+* html .informationBox div.body {
+  height: 1.2em;
+}
+
 .informationBox .caution {
   color: #FF0000;
 }
