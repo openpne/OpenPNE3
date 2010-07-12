@@ -702,6 +702,10 @@ div.operation ul.moreInfo li {
   zoom: 1;
 }
 
+* html .informationBox div.body {
+  height: 1.2em;
+}
+
 .informationBox .caution {
   color: #FF0000;
 }
