@@ -213,7 +213,6 @@ div#LayoutC {
 #Left,
 #Center,
 #Top {
-  zoom: 1;
   overflow: hidden;
 }
 
