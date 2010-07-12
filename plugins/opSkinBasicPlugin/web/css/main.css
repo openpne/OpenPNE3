@@ -689,12 +689,19 @@ div.operation ul.moreInfo li {
   border: 1px solid #CCCCCC;
   background: #EEEEEE url(../images/icon_information.gif) no-repeat 5px 50%;
 }
+
 .informationBox div.body {
   min-height: 1.2em;
   padding: 5px;
   border-left: 1px solid #CCCCCC;
   background: #FFFFFF;
 }
+
+* html .informationBox,
+* html .informationBox div.body {
+  zoom: 1;
+}
+
 .informationBox .caution {
   color: #FF0000;
 }
