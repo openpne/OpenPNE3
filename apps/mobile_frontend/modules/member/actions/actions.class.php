@@ -133,8 +133,11 @@ class memberActions extends opMemberAction
       {
         $member = $memberConfig->getMember();
         $pre = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('mobile_address_pre', $id);
-        $member->setConfig('mobile_address', $pre->getValue());
-        $pre->delete();
+        if ($pre)
+        {
+          $member->setConfig('mobile_address', $pre->getValue());
+          $pre->delete();
+        }
         $member->setConfig('mobile_uid', $request->getMobileUID());
 
         $this->getUser()->setCurrentAuthMode($memberConfig->getMember()->getConfig('register_auth_mode'));
