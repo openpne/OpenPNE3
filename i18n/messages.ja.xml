@@ -223,8 +223,8 @@
         <target>上に表示されているキーワードを入力してください。</target>
       </trans-unit>    
       <trans-unit id="">
-        <source>This mobile_address address already exists.</source>
-        <target>この携帯アドレスは既に登録されました。</target>
+        <source>Invalid mobile_address　address.</source>
+        <target>メールアドレスが無効です。</target>
       </trans-unit>
     </body>
   </file>
