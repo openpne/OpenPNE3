@@ -84,7 +84,7 @@ class opMailSend
     $view->setPartialVars($params);
     $view->setAttribute('renderer_config', array('twig' => 'opTemplateRendererTwig'));
     $view->setAttribute('rule_config', array('notify_mail' => array(
-      array('loader' => 'sfTemplateSwitchableLoaderDoctrine', 'renderer' => 'twig', 'model' => 'NotificationMail'),
+      array('loader' => 'opNotificationMailTemplateLoaderDatabase', 'renderer' => 'twig'),
       array('loader' => 'opNotificationMailTemplateLoaderFilesystem', 'renderer' => 'php'),
     )));
     $view->execute();
@@ -130,7 +130,7 @@ class opMailSend
       $context = sfContext::getInstance();
     }
 
-    $body = self::getMailTemplate($template, $target, $params, false, $context);
+    $body      = self::getMailTemplate($template, $target, $params, false, $context);
     $signature = self::getMailTemplate('signature', $target, array(), true, $context);
     if ($signature)
     {
@@ -138,7 +138,7 @@ class opMailSend
     }
 
     $subject = $params['subject'];
-    $notificationMail = Doctrine::getTable('NotificationMail')->findOneByName($target.'_'.$template);
+    $notificationMail = Doctrine::getTable('NotificationMail')->fetchTemplate($target.'_'.$template);
     if (($notificationMail instanceof NotificationMail) && $notificationMail->getTitle())
     {
       $subject = $notificationMail->getTitle();
