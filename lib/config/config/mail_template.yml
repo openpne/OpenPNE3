@@ -409,17 +409,10 @@ mobile:
     title_configurable: false
     sample:
       ja_JP: |
-        ■□━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        
-        ご意見、ご感想などはお気軽にどうぞ！
-        
+        ---
         {{ op_config.sns_name }}
         URL　　　　　： {{ sf_config.op_base_url }}
         お問い合わせ ： {{ op_config.admin_mail_address }}
-        
-        このメールに書かれた内容の無断転載、無断複製を禁じます。
-        
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━□■
     variables:
       "op_config.sns_name": "SNS 名"
       "sf_config.op_base_url": "ベースの URL"
