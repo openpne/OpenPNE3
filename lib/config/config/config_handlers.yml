@@ -35,3 +35,5 @@ config/mobile_preset_color.yml:
 config/regions.yml:
   class: sfSimpleYamlConfigHandler
 
+config/activity_template.yml:
+  class: sfSimpleYamlConfigHandler

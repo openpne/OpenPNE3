@@ -613,6 +613,8 @@ ActivityData:
     source_uri: { type: string , comment: "The source URI" }
     foreign_table: { type: string, comment: "Reference table name" }
     foreign_id: { type: integer, comment: "The id of reference table" }
+    template: { type: string(64), comment: "Template name" }
+    template_param: { type: array, comment: "Params for template" }
   relations:
     Member: { foreignAlias: Activities, local: member_id, foreign: id, onDelete: cascade }
     InReplyTo: { class: ActivityData, local: in_reply_to_activity_id, foreign: id, onDelete: cascade }

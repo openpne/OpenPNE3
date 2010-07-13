@@ -840,3 +840,11 @@ ActivityData:
     body: "dummy6"
     foreign_table: "member_relationship"
     foreign_id: 2
+  dummy_activity7:
+    Member: first_member
+    template: "test_template"
+    template_param:
+      "%foo%" : "bar"
+  dummy_activity8:
+    Member: first_member
+    template: "xxxx_template"

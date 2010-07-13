@@ -13,7 +13,7 @@
  *
  * @package    OpenPNE
  * @subpackage model
- * @author     Shogo Kawahara <kawahara@tejimaya.net>
+ * @author     Shogo Kawahara <kawahara@bucyou.net>
  */
 class ActivityDataTable extends Doctrine_Table
 {
@@ -29,11 +29,31 @@ class ActivityDataTable extends Doctrine_Table
     self::PUBLIC_FLAG_PRIVATE => 'Private',
   );
 
+  protected
+    $templateConfig = null;
+
+  public function updateActivityByTemplate($memberId, $templateName, $params = array(), $options = array())
+  {
+    return $this->updateActivity($memberId, '', array_merge(array(
+      'template' => $templateName,
+      'template_param' => $params
+    ), $options));
+  }
+
   public function updateActivity($memberId, $body, $options = array())
   {
     $object = new ActivityData();
     $object->setMemberId($memberId);
     $object->setBody($body);
+
+    if (isset($options['template']))
+    {
+      $object->setTemplate($options['template']);
+      if (isset($options['template_param']) && is_array($options['template_param']))
+      {
+        $object->setTemplateParam($options['template_param']);
+      }
+    }
 
     if (isset($options['public_flag']))
     {
@@ -368,5 +388,34 @@ class ActivityDataTable extends Doctrine_Table
     $q = $this->getOrderdQuery();
     $this->addAllMemberActivityQuery($q, $isCheckApp);
     return $this->getPager($q, $page, $size);
+  }
+
+  public function getTemplateConfig()
+  {
+    if (null === $this->templateConfig)
+    {
+      $this->templateConfig = include(sfContext::getInstance()->getConfigCache()->checkConfig('config/activity_template.yml'));
+    }
+
+    return $this->templateConfig;
+  }
+
+  static public function filterBody(sfEvent $event, $value)
+  {
+    return preg_replace_callback('/%member_(\d+)_nickname%/', array(__CLASS__, 'replaceToNickname'), $value);
+  }
+
+  static protected function replaceToNickname($match)
+  {
+    if (1 <= count($match))
+    {
+      $member = Doctrine::getTable('Member')->find((int)$match[1]);
+      if ($member)
+      {
+        return $member->getName();
+      }
+    }
+
+    return opConfig::get('nickname_of_member_who_does_not_have_credentials');
   }
 }

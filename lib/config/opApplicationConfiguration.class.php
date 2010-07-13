@@ -34,6 +34,8 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
     $this->dispatcher->connect('op_confirmation.list', array(__CLASS__, 'getCoreConfirmList'));
     $this->dispatcher->connect('op_confirmation.decision', array(__CLASS__, 'processCoreConfirm'));
 
+    $this->dispatcher->connect('op_activity.template.filter_body', array('ActivityDataTable', 'filterBody'));
+
     $this->setConfigHandlers();
   }
 
