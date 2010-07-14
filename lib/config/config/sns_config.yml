@@ -78,13 +78,13 @@ general:
     IsRequired: true
     Default:    [0, 3]
     Choices:
-      - "月"
-      - "火"
-      - "水"
-      - "木"
-      - "金"
-      - "土"
-      - "日"
+      - "Mon"
+      - "Tue"
+      - "Wed"
+      - "Thu"
+      - "Fri"
+      - "Sat"
+      - "Sun"
 
   is_use_captcha:
     Name:       "is_use_captcha"
