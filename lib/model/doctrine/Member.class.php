@@ -147,10 +147,24 @@ class Member extends BaseMember implements opAccessControlRecordInterface
 
   public function getImage()
   {
-    return Doctrine::getTable('MemberImage')->createQuery()
-      ->where('member_id = ?', $this->getId())
-      ->orderBy('is_primary DESC')
-      ->fetchOne();
+    static $queryCacheHash;
+
+    $q = Doctrine::getTable('MemberImage')->createQuery()
+      ->where('member_id = ? ', $this->getId())
+      ->orderBy('is_primary DESC');
+
+    if (!$queryCacheHash)
+    {
+      $result = $q->fetchOne();
+      $queryCacheHash = $q->calculateQueryCacheHash();
+    }
+    else
+    {
+      $q->setCachedQueryCacheHash($queryCacheHash);
+      $result = $q->fetchOne();
+    }
+
+    return $result;
   }
 
   public function getImageFileName()

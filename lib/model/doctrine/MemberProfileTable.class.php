@@ -17,17 +17,29 @@ class MemberProfileTable extends opAccessControlDoctrineTable
       ->orderBy('sort_order')
       ->execute(array(), Doctrine::HYDRATE_NONE);
 
+    $queryCacheHash = '';
+
+    $q = $this->createQuery()
+      ->where('member_id = ?')
+      ->andWhere('profile_id = ?');
+
     $memberProfiles = array();
     foreach ($profiles as $profile)
     {
-      $memberProfile = $this->createQuery()
-        ->where('member_id = ?', $memberId)
-        ->andWhere('profile_id = ?', $profile[0])
-        ->fetchOne();
+      if ($queryCacheHash)
+      {
+        $q->setCachedQueryCacheHash($queryCacheHash);
+      }
 
+      $memberProfile = $q->fetchOne(array($memberId, $profile[0]));
       if ($memberProfile)
       {
         $memberProfiles[] = $memberProfile;
+      }
+
+      if (!$queryCacheHash)
+      {
+        $queryCacheHash = $q->calculateQueryCacheHash();
       }
     }
 
@@ -79,18 +91,50 @@ class MemberProfileTable extends opAccessControlDoctrineTable
       ->fetchOne();
   }
 
-  public function retrieveByMemberIdAndProfileName($memberId, $profileName)
+  public function retrieveByMemberIdAndProfileName($memberId, $profileName, $hydrationMode = Doctrine::HYDRATE_RECORD)
   {
-    $profile = Doctrine::getTable('Profile')->createQuery()
-      ->where('name = ?', $profileName)
-      ->fetchOne();
+    static $queryCacheHash;
 
-    if ($profile)
+    $profileId = Doctrine::getTable('Profile')->getProfileNameById($profileName);
+    if ($profileId)
     {
-      return $this->createQuery()
+      $q = $this->createQuery()
         ->where('member_id = ?', $memberId)
-        ->andWhere('profile_id = ?', $profile->getId())
-        ->fetchOne();
+        ->andWhere('profile_id = ?', $profileId);
+
+      if (!$queryCacheHash)
+      {
+        $result = $q->fetchOne(array(), $hydrationMode);
+
+        $queryCacheHash = $q->calculateQueryCacheHash();
+      }
+      else
+      {
+        $q->setCachedQueryCacheHash($queryCacheHash);
+
+        $result = $q->fetchOne(array(), $hydrationMode);
+      }
+
+      if (Doctrine::HYDRATE_SCALAR == $hydrationMode)
+      {
+        if (!$result['MemberProfile_profile_option_id'])
+        {
+          return $result;
+        }
+
+        $option = Doctrine::getTable('ProfileOptionTranslation')->createQuery()
+          ->select('value')
+          ->where('id = ?', $result['MemberProfile_profile_option_id'])
+          ->andWhere('lang = ?', sfContext::getInstance()->getUser()->getCulture())
+          ->fetchOne(array(), Doctrine::HYDRATE_NONE);
+
+        if ($option)
+        {
+          $result['MemberProfile_value'] = $option[0];
+        }
+      }
+
+      return $result;
     }
 
     return null;

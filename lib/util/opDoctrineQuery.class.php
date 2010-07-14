@@ -18,13 +18,15 @@
 class opDoctrineQuery extends Doctrine_Query
 {
   protected static
-    $detectedSlave = null;
+    $detectedSlave = null,
+    $findQueryCacheKeys = array();
 
   protected
     $shouldGoToMaster = false,
     $isFoundRows = false,
     $specifiedConnection = null,
-    $whereInCount = '';
+    $whereInCount = '',
+    $cachedQueryCacheHash = '';
 
   public function connectToMaster($isMaster = false)
   {
@@ -192,7 +194,39 @@ class opDoctrineQuery extends Doctrine_Query
 
   public function calculateQueryCacheHash()
   {
-    $result = parent::calculateQueryCacheHash();
+    if ($this->cachedQueryCacheHash)
+    {
+      $result = $this->cachedQueryCacheHash;
+
+      $this->cachedQueryCacheHash = '';
+
+      return $result;
+    }
+
+    $result = '';
+    $findQueryCacheKey = '';
+
+    if (isset($this->_dqlParts['from'][0]))
+    {
+      if (strpos($this->_dqlParts['from'][0], 'dctrn_find'))
+      {
+        $findQueryCacheKey = md5($this->_dqlParts['from'][0].count($this->getFlattenedParams()));
+      }
+
+      if (isset(self::$findQueryCacheKeys[$findQueryCacheKey]))
+      {
+        $result = self::$findQueryCacheKeys[$findQueryCacheKey];
+      }
+    }
+
+    if (!$result)
+    {
+      $result = parent::calculateQueryCacheHash();
+      if ($findQueryCacheKey)
+      {
+        self::$findQueryCacheKeys[$findQueryCacheKey] = $result;
+      }
+    }
 
     if ($this->isFoundRows)
     {
@@ -205,6 +239,11 @@ class opDoctrineQuery extends Doctrine_Query
     }
 
     return $result;
+  }
+
+  public function setCachedQueryCacheHash($hash)
+  {
+    $this->cachedQueryCacheHash = $hash;
   }
 
   protected function _buildSqlQueryBase()
@@ -225,5 +264,10 @@ class opDoctrineQuery extends Doctrine_Query
     }
 
     return $q;
+  }
+
+  public function getFrom()
+  {
+    return $this->_dqlParts['from'];
   }
 }

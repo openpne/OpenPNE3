@@ -12,10 +12,26 @@ class MemberRelationshipTable extends opAccessControlDoctrineTable
 {
   public function retrieveByFromAndTo($memberIdFrom, $memberIdTo)
   {
-    return $this->createQuery()
+    static $queryCacheHash;
+
+    $q = $this->createQuery()
       ->where('member_id_from = ?', $memberIdFrom)
-      ->andWhere('member_id_to = ?', $memberIdTo)
-      ->fetchOne();
+      ->andWhere('member_id_to = ?', $memberIdTo);
+
+    if (!$queryCacheHash)
+    {
+      $result = $q->fetchOne();
+
+      $queryCacheHash = $q->calculateQueryCacheHash();
+    }
+    else
+    {
+      $q->setCachedQueryCacheHash($queryCacheHash);
+
+      $result = $q->fetchOne();
+    }
+
+    return $result;
   }
 
   public function retrievesByMemberIdFrom($memberId)
@@ -55,13 +71,25 @@ class MemberRelationshipTable extends opAccessControlDoctrineTable
 
   public function getFriendMemberIds($memberId)
   {
+    static $queryCacheHash;
+
     $result = array();
 
-    $friendMemberIds = $this->createQuery()
-      ->select('member_id_to')
-      ->where('member_id_from = ?', $memberId)
-      ->andWhere('is_friend = ?', true)
-      ->execute(array(), Doctrine::HYDRATE_NONE);
+     $q = $this->createQuery()
+       ->select('member_id_to')
+       ->where('member_id_from = ?', $memberId)
+       ->andWhere('is_friend = ?', true);
+
+    if (!$queryCacheHash)
+    {
+      $friendMemberIds = $q->execute(array(), Doctrine::HYDRATE_NONE);
+      $queryCacheHash = $q->calculateQueryCacheHash();
+    }
+    else
+    {
+      $q->setCachedQueryCacheHash($queryCacheHash);
+      $friendMemberIds = $q->execute(array(), Doctrine::HYDRATE_NONE);
+    }
 
     $inactiveMemberIds = Doctrine::getTable('Member')->getInactiveMemberIds();
 

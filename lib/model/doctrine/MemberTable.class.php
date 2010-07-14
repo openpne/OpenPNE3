@@ -49,13 +49,25 @@ class MemberTable extends opAccessControlDoctrineTable
  
   public function getInactiveMemberIds()
   {
+    static $queryCacheHash;
+
     $e = opActivateBehavior::getEnabled();
     opActivateBehavior::disable();
 
-    $members = $this->createQuery()
+    $q = $this->createQuery()
       ->select('id')
-      ->andWhere('is_active = ?', false)
-      ->execute(array(), Doctrine::HYDRATE_NONE);
+      ->andWhere('is_active = ?', false);
+
+    if (!$queryCacheHash)
+    {
+      $members = $q->execute(array(), Doctrine::HYDRATE_NONE);
+      $queryCacheHash = $q->calculateQueryCacheHash();
+    }
+    else
+    {
+      $q->setCachedQueryCacheHash($queryCacheHash);
+      $members = $q->execute(array(), Doctrine::HYDRATE_NONE);
+    }
 
     if ($e)
     {

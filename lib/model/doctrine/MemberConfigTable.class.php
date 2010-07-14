@@ -60,11 +60,25 @@ class MemberConfigTable extends opAccessControlDoctrineTable
 
   protected function getResultsByMemberId($memberId, $force = false)
   {
+    static $queryCacheHash;
+
     if (!isset($this->results[$memberId]) || $force)
     {
-      $objects = $this->createQuery()
-        ->where('member_id = ?', $memberId)
-        ->execute();
+      $q = $this->createQuery()
+        ->where('member_id = ?', $memberId);
+
+      if (!$queryCacheHash)
+      {
+        $objects = $q->execute();
+
+        $queryCacheHash = $q->calculateQueryCacheHash();
+      }
+      else
+      {
+        $q->setCachedQueryCacheHash($queryCacheHash);
+
+        $objects = $q->execute();
+      }
 
       $this->results[$memberId] = array();
       foreach ($objects as $object)

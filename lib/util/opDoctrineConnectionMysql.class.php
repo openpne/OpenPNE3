@@ -17,6 +17,8 @@
  */
 class opDoctrineConnectionMysql extends Doctrine_Connection_Mysql
 {
+  protected $hashByQuery = array();
+
   public function __get($name)
   {
     if ('formatter' === $name && !isset($this->properties[$name]))
@@ -48,5 +50,57 @@ class opDoctrineConnectionMysql extends Doctrine_Connection_Mysql
     }
 
     return parent::quoteIdentifier($str, $checkOption);
+  }
+
+  public function query($query, array $params = array(), $hydrationMode = null)
+  {
+    $parser = Doctrine_Query::create();
+
+    $key = md5($query);
+    if (isset($this->hashByQuery[$key]))
+    {
+      $parser->setCachedQueryCacheHash($this->hashByQuery[$key][0]);
+
+      if ($this->hashByQuery[$key][1] && $this->hashByQuery[$key][2])
+      {
+        $parser->from($this->hashByQuery[$key][1])
+          ->where($this->hashByQuery[$key][2]);
+      }
+      else
+      {
+        $parser->parseDqlQuery($query);
+      }
+
+      $res = $parser->execute($params, $hydrationMode);
+    }
+    else
+    {
+      $res = $parser->query($query, $params, $hydrationMode);
+
+      $froms = $parser->getFrom();
+      $from = $froms[0];
+      if (1 < count($froms))
+      {
+        $from = '';
+      }
+      $where = '';
+
+      $simpleRelationQuery = 'FROM '.$from.' WHERE '.$from.'.id = ?';
+      $simpleRelationInQuery = 'FROM '.$from.' WHERE '.$from.'.id IN (?)';
+      if ($query === $simpleRelationQuery)
+      {
+        $where = $from.'.id = ?';
+      }
+      elseif ($query === $simpleRelationInQuery)
+      {
+        $where = $from.'.id IN (?)';
+      }
+
+      $this->hashByQuery[$key] = array($parser->calculateQueryCacheHash(), $from, $where);
+    }
+
+    $parser->free();
+
+    return $res;
   }
 }
