@@ -555,4 +555,31 @@ class opToolkit
 
     return $value;
   }
+
+  static public function writeCacheFile($pathToCacheFile, $content)
+  {
+    $filesystem = new sfFilesystem();
+
+    $currentUmask = umask();
+    umask(0000);
+
+    $tmpFile = tempnam(dirname($pathToCacheFile), basename($pathToCacheFile));
+    if (!$fp = @fopen($tmpFile, 'wb'))
+    {
+      throw new sfCacheException('Failed to write cache file.');
+    }
+
+    @fwrite($fp, $content);
+    @fclose($fp);
+    if (!@rename($tmpFile, $pathToCacheFile))
+    {
+      if ($filesystem->copy($tmpFile, $pathToCacheFile, array('override' => true)))
+      {
+        $filesystem->remove($tmpFile);
+      }
+    }
+
+    $filesystem->chmod($pathToCacheFile, 0666);
+    umask($currentUmask);
+  }
 }

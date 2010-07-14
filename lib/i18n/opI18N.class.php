@@ -56,37 +56,11 @@ class opI18N extends sfI18N
 
     $cacheDir = sfConfig::get('sf_app_cache_dir').DIRECTORY_SEPARATOR.'i18n';
 
-    $currentUmask = umask();
-    umask(0000);
-
-    $filesystem = new sfFilesystem();
-    $filesystem->mkdirs($cacheDir);
-
     foreach ($catalogues as $filename => $catalogue)
     {
       $path = $cacheDir.DIRECTORY_SEPARATOR.$filename.'.php';
-      $tmpFile = tempnam(dirname($path), basename($path));
-
-      if (!$fp = @fopen($tmpFile, 'wb'))
-      {
-        throw new sfCacheException('Failed to write OpenPNE i18n cache file.');
-      }
-
-      @fwrite($fp, '<?php return '.var_export($catalogue, true).';');
-      @fclose($fp);
-
-      if (!@rename($tmpFile, $path))
-      {
-        if (copy($tmpFile, $path))
-        {
-          unlink($tmpFile);
-        }
-      }
-
-      $filesystem->chmod($path, 0666);
+      opToolkit::writeCacheFile($path, '<?php return '.var_export($catalogue, true).';');
     }
-
-    umask($currentUmask);
   }
 
   public function setMessageSource($dirs, $culture = null)

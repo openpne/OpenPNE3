@@ -420,11 +420,6 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
       return $this->globPlugins($pattern, false, $isControllerPath);
     }
 
-    $filesystem = new sfFilesystem();
-
-    $currentUmask = umask();
-    umask(0000);
-
     $cacheKey = md5(serialize($pattern));
     $cacheHead = substr($cacheKey, 0, 2);
 
@@ -455,24 +450,7 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
 
     $_prop[$cacheHead][$cacheKey] = $this->globPlugins($pattern, false, $isControllerPath);
 
-    $tmpFile = tempnam(dirname($cacheFile), basename($cacheFile));
-    if (!$fp = @fopen($tmpFile, 'wb'))
-    {
-      throw new sfCacheException('Failed to write OpenPNE glob plugin cache file.');
-    }
-
-    @fwrite($fp, "<?php\nreturn ".var_export($_prop[$cacheHead], true).';');
-    @fclose($fp);
-    if (!@rename($tmpFile, $cacheFile))
-    {
-      if ($filesystem->copy($tmpFile, $cacheFile, array('override' => true)))
-      {
-        $filesystem->remove($tmpFile);
-      }
-    }
-
-    $filesystem->chmod($cacheFile, 0666);
-    umask($currentUmask);
+    opToolkit::writeCacheFile($cacheFile, "<?php\nreturn ".var_export($_prop[$cacheHead], true).';');
 
     return $_prop[$cacheHead][$cacheKey];
   }

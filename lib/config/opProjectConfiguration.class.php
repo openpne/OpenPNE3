@@ -38,6 +38,8 @@ class opProjectConfiguration extends sfProjectConfiguration
     $this->enableAllPluginsExcept(array('sfPropelPlugin'));
     $this->setIncludePath();
 
+    require_once dirname(__FILE__).'/../util/opToolkit.class.php';
+
     $this->setOpenPNEConfiguration();
 
     sfConfig::set('doctrine_model_builder_options', array(
@@ -115,7 +117,7 @@ class opProjectConfiguration extends sfProjectConfiguration
 
   protected function setOpenPNEConfiguration()
   {
-    $opConfigCachePath = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'OpenPNE.yml.php';
+    $opConfigCachePath = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'OpenPNE.yml.php';
     if (is_readable($opConfigCachePath))
     {
       $config = (array)include($opConfigCachePath);
@@ -128,8 +130,8 @@ class opProjectConfiguration extends sfProjectConfiguration
       {
         $config = array_merge($config, sfYaml::load($path));
       }
- 
-      file_put_contents($opConfigCachePath, '<?php return '.var_export($config, true).';');
+
+      opToolkit::writeCacheFile($opConfigCachePath, '<?php return '.var_export($config, true).';');
     }
     $this->configureSessionStorage($config['session_storage']['name'], (array)$config['session_storage']['options']);
     unset($config['session_storage']);
