@@ -22,6 +22,8 @@ class ProfileTable extends Doctrine_Table
     self::PUBLIC_FLAG_PRIVATE => 'Private',
   );
 
+  protected $nameByIds = array();
+
   public function getPublicFlags()
   {
     return array_map(array(sfContext::getInstance()->getI18N(), '__'), $this->publicFlags);
@@ -81,5 +83,29 @@ class ProfileTable extends Doctrine_Table
     }
 
     return 0;
+  }
+
+  public function getProfileNameById($name)
+  {
+    if (isset($this->nameByIds[$name]))
+    {
+      return $this->nameByIds[$name];
+    }
+
+    $profile = $this->createQuery()
+      ->select('id')
+      ->where('name = ?', $name)
+      ->fetchOne(array(), Doctrine::HYDRATE_NONE);
+
+    if ($profile)
+    {
+      $this->nameByIds[$name] = $profile[0];
+    }
+    else
+    {
+      $this->nameByIds[$name] = null;
+    }
+
+    return $this->nameByIds[$name];
   }
 }
