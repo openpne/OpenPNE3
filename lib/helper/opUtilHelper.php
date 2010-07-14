@@ -243,7 +243,7 @@ function op_format_date($date, $format = 'd', $culture = null, $charset = null)
           $format = 'MM/dd';
           break;
         default:
-          $format = 'd';
+          $format = 'm';
           break;
       }
       break;
@@ -254,7 +254,7 @@ function op_format_date($date, $format = 'd', $culture = null, $charset = null)
           $format = 'MM月dd日';
           break;
         default:
-          $format = 'd';
+          $format = 'm';
           break;
       }
       break;
