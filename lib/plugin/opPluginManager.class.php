@@ -203,28 +203,33 @@ class opPluginManager extends sfSymfonyPluginManager
 
   protected function registerOpenPNEPackage()
   {
-    $symfony = new PEAR_PackageFile_v2_rw();
-    $symfony->setPackage('openpne');
-    $symfony->setChannel('plugins.openpne.jp');
-    $symfony->setConfig($this->environment->getConfig());
-    $symfony->setPackageType('php');
-    $symfony->setAPIVersion(preg_replace('/\d+(\-\w+)?$/', '0', OPENPNE_VERSION));
-    $symfony->setAPIStability(false === strpos(OPENPNE_VERSION, 'dev') ? 'stable' : 'beta');
-    $symfony->setReleaseVersion(str_replace('-', '', OPENPNE_VERSION));
-    $symfony->setReleaseStability(false === strpos(OPENPNE_VERSION, 'dev') ? 'stable' : 'beta');
-    $symfony->setDate(date('Y-m-d'));
-    $symfony->setDescription('openpne');
-    $symfony->setSummary('openpne');
-    $symfony->setLicense('Apache License');
-    $symfony->clearContents();
-    $symfony->resetFilelist();
-    $symfony->addMaintainer('lead', 'ebihara', 'Kousuke Ebihara', 'ebihara@php.net');
-    $symfony->setNotes('-');
-    $symfony->setPearinstallerDep('1.4.3');
-    $symfony->setPhpDep('5.2.3');
+    $openpne = new PEAR_PackageFile_v2_rw();
+    $openpne->setPackage('openpne');
+    $openpne->setChannel('plugins.openpne.jp');
+    $openpne->setConfig($this->environment->getConfig());
+    $openpne->setPackageType('php');
+    $openpne->setAPIVersion(preg_replace('/\d+(\-\w+)?$/', '0', OPENPNE_VERSION));
+    $openpne->setAPIStability(false === strpos(OPENPNE_VERSION, 'dev') ? 'stable' : 'beta');
+    $openpne->setReleaseVersion(str_replace('-', '', OPENPNE_VERSION));
+    $openpne->setReleaseStability(false === strpos(OPENPNE_VERSION, 'dev') ? 'stable' : 'beta');
+    $openpne->setDate(date('Y-m-d'));
+    $openpne->setDescription('openpne');
+    $openpne->setSummary('openpne');
+    $openpne->setLicense('Apache License');
+    $openpne->clearContents();
+    $openpne->resetFilelist();
+    $openpne->addMaintainer('lead', 'ebihara', 'Kousuke Ebihara', 'ebihara@php.net');
+    $openpne->setNotes('-');
+    $openpne->setPearinstallerDep('1.4.3');
+    $openpne->setPhpDep('5.2.3');
+
+    // This is a stupid hack. This makes a validator skip validation because that validator
+    // doesn't support 3.X.X-betaX-dev formatted version number. Validation of dummy OpenPNE
+    // package doesn't make a sense...
+    $openpne->_isValid = PEAR_VALIDATE_NORMAL;
 
     $this->environment->getRegistry()->deletePackage('openpne', 'plugins.openpne.jp');
-    if (!$this->environment->getRegistry()->addPackage2($symfony))
+    if (!$this->environment->getRegistry()->addPackage2($openpne))
     {
       throw new sfPluginException('Unable to register the OpenPNE package');
     }
