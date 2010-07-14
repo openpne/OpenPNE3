@@ -190,6 +190,34 @@
         <source>This is daily news in %1%.</source>
         <target>%1% からの本日の最新情報のお知らせです。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Mon</source>
+        <target>月</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Tue</source>
+        <target>火</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Wed</source>
+        <target>水</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Thu</source>
+        <target>木</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Fri</source>
+        <target>金</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Sat</source>
+        <target>土</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Sun</source>
+        <target>日</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
