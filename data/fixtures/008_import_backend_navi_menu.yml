@@ -6,6 +6,8 @@ Navigation:
     Translation:
       ja_JP:
         caption: "メンバー管理"
+      en:
+        caption: "Members"
 
   backend_side_monitoring:
     type: "backend_side"
@@ -14,6 +16,8 @@ Navigation:
     Translation:
       ja_JP:
         caption: "画像・書き込み管理"
+      en:
+        caption: "Media"
 
   backend_side_community:
     type: "backend_side"
@@ -22,6 +26,8 @@ Navigation:
     Translation:
       ja_JP:
         caption: "コミュニティ管理"
+      en:
+        caption: "Communities"
 
   backend_side_sns_config:
     type: "backend_side"
@@ -30,6 +36,8 @@ Navigation:
     Translation:
       ja_JP:
         caption: "SNS設定"
+      en:
+        caption: "SNS"
 
   backend_side_mail:
     type: "backend_side"
@@ -38,6 +46,8 @@ Navigation:
     Translation:
       ja_JP:
         caption: "メール設定"
+      en:
+        caption: "Email"
 
   backend_side_design:
     type: "backend_side"
@@ -46,6 +56,8 @@ Navigation:
     Translation:
       ja_JP:
         caption: "デザイン設定"
+      en:
+        caption: "Appearance"
 
   backend_side_navigation:
     type: "backend_side"
@@ -54,6 +66,8 @@ Navigation:
     Translation:
       ja_JP:
         caption: "ナビゲーション設定"
+      en:
+        caption: "Navigaions"
 
   backend_side_profile_list:
     type: "backend_side"
@@ -62,6 +76,8 @@ Navigation:
     Translation:
       ja_JP:
         caption: "プロフィール項目設定"
+      en:
+        caption: "Profile"
 
   backend_side_plugin_list:
     type: "backend_side"
@@ -70,6 +86,8 @@ Navigation:
     Translation:
       ja_JP:
         caption: "プラグイン設定"
+      en:
+        caption: "Plugins"
 
   backend_side_admin:
     type: "backend_side"
@@ -78,3 +96,5 @@ Navigation:
     Translation:
       ja_JP:
         caption: "管理画面設定"
+      en:
+        caption: "Administration settings"

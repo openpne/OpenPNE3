@@ -5,21 +5,20 @@
 <?php include_http_metas() ?>
 <?php include_metas() ?>
 
-<title><?php echo $op_config['sns_name'] ?>管理画面</title>
-
+<title><?php echo __('%sns% Administration', array('%sns%' => $op_config['sns_name'])) ?></title>
 </head>
 <body id="<?php echo $sf_request->getParameter('module').'_'.$sf_request->getParameter('action') ?>"<?php if (!$sf_user->isAuthenticated()) : ?> class="insecure"<?php endif; ?>>
 
 <div id="header">
-<h1><?php echo $op_config['sns_name'] ?>管理画面</h1>
+<h1><?php echo __('%sns% Administration', array('%sns%' => $op_config['sns_name'])) ?></h1>
 </div>
 
 <?php if ($sf_user->isAuthenticated()) : ?>
 <div id="menu">
 <ul>
-<li><?php echo link_to(__('管理画面トップ'), '@homepage') ?></li>
+<li><?php echo link_to(__('Top page'), '@homepage') ?></li>
 <?php include_component('default', 'sideMenu') ?>
-<li><?php echo link_to(__('ログアウト'), 'default/logout') ?></li>
+<li><?php echo link_to(__('Logout'), 'default/logout') ?></li>
 </ul>
 </div>
 <?php endif; ?>
