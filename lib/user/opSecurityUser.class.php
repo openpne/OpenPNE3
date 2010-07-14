@@ -155,7 +155,7 @@ class opSecurityUser extends opAdaptableUser
     }
     else
     {
-      $rememberKey = opToolkit::generatePasswordString();
+      $rememberKey = opToolkit::getRandom();
       if (!$this->getMemberId())
       {
         throw new LogicException('No login');
