@@ -555,4 +555,9 @@ class opToolkit
 
     return $value;
   }
+
+  public function isOnWindows()
+  {
+    return ('\\' === DIRECTORY_SEPARATOR);
+  }
 }
