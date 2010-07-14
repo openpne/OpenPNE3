@@ -777,7 +777,7 @@ class Doctrine_Export_Mysql extends Doctrine_Export
     public function dropForeignKey($table, $name)
     {
         $table = $this->conn->quoteIdentifier($table);
-        $name  = $this->conn->quoteIdentifier($this->conn->formatter->getForeignKeyName($name));
+        $name  = $this->conn->quoteIdentifier($name);
 
         return $this->conn->exec('ALTER TABLE ' . $table . ' DROP FOREIGN KEY ' . $name);
     }
