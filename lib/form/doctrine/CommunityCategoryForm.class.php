@@ -27,6 +27,8 @@ class CommunityCategoryForm extends BaseCommunityCategoryForm
       $this->setWidget('tree_key', new sfWidgetFormInputHidden(array('default' => $obj->getTreeKey())));
     }
 
+    $this->widgetSchema->setLabel('name', 'Category Name');
+
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
     unset($this['created_at'], $this['updated_at']);
   }

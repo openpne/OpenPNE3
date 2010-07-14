@@ -34,6 +34,10 @@
         <source>Is allow member community</source>
         <target>メンバーのコミュニティ作成を許可</target>
       </trans-unit>
+      <trans-unit id="9">
+        <source>Category Name</source>
+        <target>カテゴリ名</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
