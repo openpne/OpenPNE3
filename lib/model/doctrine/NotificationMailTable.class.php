@@ -37,56 +37,60 @@ class NotificationMailTable extends Doctrine_Table
     return $result;
   }
 
+  public function fetchTemplateFromConfigSample($templateName)
+  {
+    $configs = $this->getConfigs();
+
+    $template = explode('_', $templateName, 2);
+    $sampleSubject = '';
+    if (2 === count($template) && isset($configs[$template[0]][$template[1]]))
+    {
+      $config = $configs[$template[0]][$template[1]];
+      if (isset($config['sample']) && is_array($config['sample']) && $config['sample'])
+      {
+        if (isset($config['sample'][sfDoctrineRecord::getDefaultCulture()]))
+        {
+          $sample = $config['sample'][sfDoctrineRecord::getDefaultCulture()];
+        }
+        else
+        {
+          $sample = $config['sample'][0];
+        }
+
+        if ($sample)
+        {
+          if (is_array($sample))
+          {
+            if (2 <= count($sample))
+            {
+              return $sample;
+            }
+            else
+            {
+              return array('', $sample[0]);
+            }
+          }
+          else
+          {
+            return array('', $sample);
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
   public function fetchTemplate($templateName)
   {
     $object = $this->findOneByName($templateName);
     if (!($object && $object->getTemplate()))
     {
-      $configs = $this->getConfigs();
-
-      $template = explode('_', $templateName, 2);
-      $sampleSubject = '';
-      if (2 === count($template) && isset($configs[$template[0]][$template[1]]))
-      {
-        $config = $configs[$template[0]][$template[1]];
-        if (isset($config['sample']) && is_array($config['sample']) && $config['sample'])
-        {
-          if (isset($config['sample'][sfDoctrineRecord::getDefaultCulture()]))
-          {
-            $sample = $config['sample'][sfDoctrineRecord::getDefaultCulture()];
-          }
-          else
-          {
-            $sample = $config['sample'][0];
-          }
-
-          if ($sample)
-          {
-            if (is_array($sample))
-            {
-              if (2 <= count($sample))
-              {
-                $sampleSubject = $sample[0];
-                $sampleBody    = $sample[1];
-              }
-              else
-              {
-                $sampleBody = $sample[0];
-              }
-            }
-            else
-            {
-              $sampleBody = $sample;
-            }
-          }
-        }
-      }
-
-      if ($sampleBody)
+      if (($sample = $this->fetchTemplateFromConfigSample($templateName)) && $sample[1])
       {
         $object = new NotificationMail();
-        $object->Translation[sfDoctrineRecord::getDefaultCulture()]->title    = $sampleSubject;
-        $object->Translation[sfDoctrineRecord::getDefaultCulture()]->template = $sampleBody;
+        $object->Translation[sfDoctrineRecord::getDefaultCulture()]->title    = $sample[0];
+        $object->Translation[sfDoctrineRecord::getDefaultCulture()]->template = $sample[1];
       }
     }
 

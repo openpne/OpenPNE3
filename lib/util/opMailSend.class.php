@@ -84,7 +84,8 @@ class opMailSend
     $view->setPartialVars($params);
     $view->setAttribute('renderer_config', array('twig' => 'opTemplateRendererTwig'));
     $view->setAttribute('rule_config', array('notify_mail' => array(
-      array('loader' => 'opNotificationMailTemplateLoaderDatabase', 'renderer' => 'twig'),
+      array('loader' => 'sfTemplateSwitchableLoaderDoctrine', 'renderer' => 'twig', 'model' => 'NotificationMail'),
+      array('loader' => 'opNotificationMailTemplateLoaderConfigSample', 'renderer' => 'twig'),
       array('loader' => 'opNotificationMailTemplateLoaderFilesystem', 'renderer' => 'php'),
     )));
     $view->execute();
