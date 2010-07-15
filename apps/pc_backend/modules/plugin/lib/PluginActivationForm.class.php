@@ -55,7 +55,7 @@ class PluginActivationForm extends sfForm
       $widgetOptions['multiple'] = false;
       $validatorOptions['multiple'] = false;
       $validatorOptions['required'] = true;
-      $validatorMessages['required'] = 'You must activate only an skin plugin.';
+      $validatorMessages['required'] = 'You must activate only a skin plugin.';
       if (is_array($pluginDefault))
       {
         $pluginDefault = $pluginDefault[0];
