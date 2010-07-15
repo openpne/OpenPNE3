@@ -17,8 +17,13 @@
  */
 class opDoctrineEventNotifier extends Doctrine_Record_Listener
 {
-  private static function notify($when, $action, $doctrineEvent)
+  protected static function notify($when, $action, $doctrineEvent)
   {
+    if (!sfContext::hasInstance())
+    {
+      return null;
+    }
+
     $dispatcher = sfContext::getInstance()->getEventDispatcher();
     $dispatcher->notify(new sfEvent(null, sprintf('op_doctrine.%s_%s_%s', $when, $action, get_class($doctrineEvent->getInvoker()))));
   }
