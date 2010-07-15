@@ -799,7 +799,7 @@
         <target>少なくともどれか一つ、認証プラグインを有効にしてください。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>You must activate only an skin plugin.</source>
+        <source>You must activate only a skin plugin.</source>
         <target>スキンプラグインは必ずどれか一つだけを有効にしてください。</target>
       </trans-unit>
       <trans-unit id="">
