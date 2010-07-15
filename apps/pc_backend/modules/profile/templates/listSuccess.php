@@ -77,8 +77,8 @@
 <?php else: ?>
 <tbody>
 <?php endif; ?>
-<form action="<?php echo url_for('profile/editOption?id=' . $form->getObject()->getId()) ?>" method="post">
 <tr>
+<form action="<?php echo url_for('profile/editOption?id=' . $form->getObject()->getId()) ?>" method="post">
 <td><?php echo ($form->getObject()->isNew() ? '-' : $form->getObject()->getId()) ?></td>
 <?php foreach ($languages as $language): ?>
 <td>
@@ -89,20 +89,20 @@
 <?php if ($form->getObject()->isNew()) : ?>
 <td colspan="2">
 <?php echo $form->renderHiddenFields() ?>
-<input type="submit" value=<?php echo __('Add new option')?> />
+<input type="submit" value="<?php echo __('Add new option')?>" />
 </td>
 </form>
 <?php else : ?>
 <td>
 <?php echo $form->renderHiddenFields() ?>
-<input type="submit" value=<?php echo __('Save')?> />
+<input type="submit" value="<?php echo __('Save')?>" />
 </td>
 </form>
 <td>
-<?php echo $form['id']->render() ?>
-<?php echo $form['profile_id']->render() ?>
 <form action="<?php echo url_for('profile/deleteOption?id=' . $form->getObject()->getId()) ?>" method="post">
-<input type="submit" value=<?php echo __('Delete') ?> />
+<?php echo $form['id']->render(), "\n" ?>
+<?php echo $form['profile_id']->render(), "\n" ?>
+<input type="submit" value="<?php echo __('Delete') ?>" />
 </form>
 </td>
 <?php endif; ?>
