@@ -554,7 +554,7 @@ function _op_auto_links_phone_number($text)
       [^=!:\'"\/]|          #   leading punctuation, or
       ^                     #   beginning of line
     )
-    (0\d{1,3})-?(\d{2,4})-?(\d{4})
+    ((0\d{1,3})-?(\d{2,4})-?(\d{4}))
     ([[:punct:]]|\s|<|$)      # trailing text
     /x';
 
@@ -565,7 +565,7 @@ function _op_auto_links_phone_number($text)
     }
     else
     {
-      return $matches[1].\'<a href="tel:\'.$matches[2].$matches[3].$matches[4].\'">\'.$matches[0].\'</a>\'.$matches[5];
+      return $matches[1].\'<a href="tel:\'.$matches[3].$matches[4].$matches[5].\'">\'.$matches[2].\'</a>\'.$matches[6];
     }
     ';
 
