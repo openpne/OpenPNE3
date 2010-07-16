@@ -1144,7 +1144,7 @@ function op_image_path($source, $absolute = false)
       $plugins = sfContext::getInstance()->getConfiguration()->getPlugins();
       foreach ($plugins as $plugin)
       {
-        if (preg_match('/^opSkin.*Plugin$/', $plugin))
+        if (0 === strpos($plugin, 'opSkin'))
         {
           $skinPlugin = $plugin;
           break;
