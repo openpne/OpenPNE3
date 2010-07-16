@@ -12,6 +12,14 @@ INSERT INTO community_event_comment (id, community_event_id, member_id, number, 
 
 INSERT INTO community_event_member (id, community_event_id, member_id, created_at, updated_at) (SELECT c_event_member_id, c_commu_topic_id, c_member_id, r_datetime, r_datetime FROM c_event_member);
 
+<?php for ($i = 1; $i <= 3; $i++): ?>
+ALTER TABLE c_commu_topic_comment CHANGE image_filename<?php echo $i ?> image_filename<?php echo $i ?> text CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+INSERT INTO community_topic_image (post_id, file_id, number) (SELECT c_commu_topic_id, <?php echo $this->getSQLForFileId('image_filename'.$i) ?>, <?php echo $i ?> FROM c_commu_topic_comment WHERE image_filename<?php echo $i ?> <> "" AND number = 0 AND c_commu_topic_id IN (SELECT c_commu_topic_id FROM c_commu_topic WHERE event_flag = 0));
+INSERT INTO community_topic_comment_image (post_id, file_id, number) (SELECT c_commu_topic_comment_id, <?php echo $this->getSQLForFileId('image_filename'.$i) ?>, <?php echo $i ?> FROM c_commu_topic_comment WHERE image_filename<?php echo $i ?> <> "" AND number <> 0 AND c_commu_topic_id IN (SELECT c_commu_topic_id FROM c_commu_topic WHERE event_flag = 0));
+INSERT INTO community_event_image (post_id, file_id, number) (SELECT c_commu_topic_id, <?php echo $this->getSQLForFileId('image_filename'.$i) ?>, <?php echo $i ?> FROM c_commu_topic_comment WHERE image_filename<?php echo $i ?> <> "" AND number = 0 AND c_commu_topic_id IN (SELECT c_commu_topic_id FROM c_commu_topic WHERE event_flag = 1));
+INSERT INTO community_event_comment_image (post_id, file_id, number) (SELECT c_commu_topic_comment_id, <?php echo $this->getSQLForFileId('image_filename'.$i) ?>, <?php echo $i ?> FROM c_commu_topic_comment WHERE image_filename<?php echo $i ?> <> "" AND number <> 0 AND c_commu_topic_id IN (SELECT c_commu_topic_id FROM c_commu_topic WHERE event_flag = 1));
+<?php endfor; ?>
+
 DROP TABLE c_commu_topic;
 DROP TABLE c_commu_topic_comment;
 DROP TABLE c_profile_pref;
