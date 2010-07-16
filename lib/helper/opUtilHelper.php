@@ -1130,7 +1130,7 @@ function op_image_tag($source, $options = array())
  */
 function op_image_path($source, $absolute = false)
 {
-  static $skinPluginDir = null;
+  static $skinPlugin = null;
 
   if (strpos($source, '://'))
   {
@@ -1139,32 +1139,33 @@ function op_image_path($source, $absolute = false)
 
   if (0 !== strpos($source, '/'))
   {
-    if (null === $skinPluginDir)
+    if (null === $skinPlugin)
     {
-      $plugins = sfContext::getInstance()->getConfiguration()->getPluginPaths();
+      $plugins = sfContext::getInstance()->getConfiguration()->getPlugins();
       foreach ($plugins as $plugin)
       {
-        if (preg_match('/^'.preg_quote(sfConfig::get('sf_plugins_dir'), '/').'(\/opSkin.*Plugin)/', $plugin, $matches))
+        if (preg_match('/^opSkin.*Plugin$/', $plugin))
         {
-          $skinPluginDir = $matches;
+          $skinPlugin = $plugin;
           break;
         }
-        $skinPluginDir = false;
+
+        $skinPlugin = false;
       }
     }
 
-    if ($skinPluginDir)
+    if ($skinPlugin)
     {
-      $pattern = $skinPluginDir[0].'/web/images/'.$source;
+      $file = sfConfig::get('sf_web_dir').'/'.$skinPlugin.'/images/'.$source;
       $path = explode('/', $source);
-      if (strpos('.', $path[count($path) - 1]))
+      if (false === strpos($path[count($path) - 1], '.'))
       {
-        $pattern .= $pattern.'.png';
+        $file .= '.png';
       }
 
-      if (glob($pattern))
+      if (file_exists($file))
       {
-        $source = $skinPluginDir[1].'/images/'.$source;
+        $source = '/'.$skinPlugin.'/images/'.$source;
       }
     }
   }
