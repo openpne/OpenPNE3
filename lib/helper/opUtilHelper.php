@@ -448,6 +448,18 @@ function _op_auto_links_urls($text, $href_options = array(), $truncate = false, 
   $request = sfContext::getInstance()->getRequest();
   $pathArray = $request->getPathInfoArray();
   $host = explode(':', $request->getHost());
+
+  $script_names = explode('/',$request->getScriptName());
+  $script_name  = is_array($script_names) ? array_pop($script_names) : '';
+  if ('index.php' === $script_name)
+  {
+    $script_name = '';
+  }
+  elseif ($script_name)
+  {
+    $script_name = '/'.$script_name;
+  }
+
   if (1 == count($host))
   {
     $host[] = isset($pathArray['SERVER_PORT']) ? $pathArray['SERVER_PORT'] : '';
@@ -468,8 +480,12 @@ function _op_auto_links_urls($text, $href_options = array(), $truncate = false, 
       (?:https?:\/\/)         # protocol spec, or
     )
     (
-      '.preg_quote(implode(':', $host).($request->getRelativeUrlRoot() ? $request->getRelativeUrlRoot() : ''), '/').'
+      '.preg_quote(implode(':', $host), '/').'
     )
+    (
+      '.preg_quote($request->getRelativeUrlRoot() ? $request->getRelativeUrlRoot() : '', '/').'
+    )
+    (?:\/.*\.php)?
     (
       [a-zA-Z0-9_\-\/.,:;\~\?@&=+$%#!()]*
     )
@@ -488,9 +504,9 @@ function _op_auto_links_urls($text, $href_options = array(), $truncate = false, 
     if ($truncate)
     {
     $callback_function .= '
-      else if (strlen($matches[4]) > '.$truncate_len.')
+      else if (strlen($matches[5]) > '.$truncate_len.')
       {
-        return $matches[1].\'<a href="\'.$matches[4].\'"'.$href_options.'>\'.substr($matches[4], 0, '.$truncate_len.').\''.$pad.'</a>\'.$matches[5];
+        return $matches[1].\'<a href="\'.$matches[4].\''.$script_name.'\'.$matches[5].\'"'.$href_options.'>\'.substr($matches[5], 0, '.$truncate_len.').\''.$pad.'</a>\'.$matches[6];
       }
       ';
     }
@@ -498,7 +514,7 @@ function _op_auto_links_urls($text, $href_options = array(), $truncate = false, 
     $callback_function .= '
       else
       {
-        return $matches[1].\'<a href="\'.$matches[4].\'"'.$href_options.'>\'.$matches[4].\'</a>\'.$matches[5];
+        return $matches[1].\'<a href="\'.$matches[4].\''.$script_name.'\'.$matches[5].\'"'.$href_options.'>\'.$matches[5].\'</a>\'.$matches[6];
       }
       ';
 
