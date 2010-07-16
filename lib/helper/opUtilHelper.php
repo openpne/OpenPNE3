@@ -406,13 +406,15 @@ function op_auto_link_text_for_mobile($text, $link = null, $href_options = array
   {
     return $text;
   }
-  elseif ('all' == $link)
-  {
-    $link = array('urls', 'email_addresses', 'phone_numbers');
-  }
-  elseif (!is_array($link))
+
+  if (!is_array($link))
   {
     $link = array($link);
+  }
+
+  if (in_array('all', $link))
+  {
+    $link = array('urls', 'email_addresses', 'phone_numbers');
   }
 
   if (null === $is_allow_outer_url)
