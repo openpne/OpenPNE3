@@ -449,8 +449,7 @@ function _op_auto_links_urls($text, $href_options = array(), $truncate = false, 
   $pathArray = $request->getPathInfoArray();
   $host = explode(':', $request->getHost());
 
-  $script_names = explode('/',$request->getScriptName());
-  $script_name  = is_array($script_names) ? array_pop($script_names) : '';
+  $script_name = basename($request->getScriptName());
   if ('index.php' === $script_name)
   {
     $script_name = '';
