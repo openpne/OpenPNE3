@@ -1398,6 +1398,10 @@
         <source>Default %community% Configuration</source>
         <target>初期%community%設定</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Delete %community%</source>
+        <target>%community%削除</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

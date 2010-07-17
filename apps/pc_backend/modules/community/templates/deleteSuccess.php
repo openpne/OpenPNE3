@@ -2,7 +2,7 @@
 <?php include_partial('submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', __('コミュニティ削除')); ?>
+<?php slot('title', __('Delete %community%', array('%community%' => $op_term['community']->titleize()))); ?>
 
 <p><?php echo __('本当にこのコミュニティを削除してもよろしいですか？') ?></p>
 

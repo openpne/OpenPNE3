@@ -2,7 +2,7 @@
 <?php include_partial('submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', __('初期コミュニティ設定')); ?>
+<?php slot('title', __('Default %community% Configuration', array('%community%' => $op_term['community']->titleize()))); ?>
 
 <p><?php echo __('メンバー新規登録時に以下で設定したコミュニティに自動的に参加させることができます。') ?></p>
 <p><?php echo __('参加させたいコミュニティのIDを入力して「追加」ボタンを押してください。') ?></p>

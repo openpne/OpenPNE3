@@ -2,7 +2,7 @@
 <?php include_partial('submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', __('コミュニティカテゴリ設定')); ?>
+<?php slot('title', __('%community% Category Configuration', array('%community%' => $op_term['community']->titleize()))); ?>
 
 <p><?php echo __('「メンバー作成コミュニティの許可」からチェックを外すと、 ID が 1 のメンバーしか、そのカテゴリ上でコミュニティの作成をおこなえなくなります。') ?></p>
 
