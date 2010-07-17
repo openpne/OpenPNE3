@@ -1156,8 +1156,7 @@ function op_image_path($source, $absolute = false)
     if ($skinPlugin)
     {
       $file = sfConfig::get('sf_web_dir').'/'.$skinPlugin.'/images/'.$source;
-      $path = explode('/', $source);
-      if (false === strpos($path[count($path) - 1], '.'))
+      if (false === strpos(basename($source), '.'))
       {
         $file .= '.png';
       }
