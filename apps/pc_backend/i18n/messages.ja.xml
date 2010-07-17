@@ -1385,7 +1385,19 @@
       <trans-unit id="">
         <source>There is no preset profile.</source>
         <target>追加可能なプリセットがありません。</target>
-      </trans-unit>      
+      </trans-unit>
+      <trans-unit id="">
+        <source>%community% List</source>
+        <target>%community%リスト</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%community% Category Configuration</source>
+        <target>%community%カテゴリ設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Default %community% Configuration</source>
+        <target>初期%community%設定</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
