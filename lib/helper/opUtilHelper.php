@@ -484,7 +484,7 @@ function _op_auto_links_urls($text, $href_options = array(), $truncate = false, 
     (
       '.preg_quote($request->getRelativeUrlRoot() ? $request->getRelativeUrlRoot() : '', '/').'
     )
-    (?:\/.*\.php)?
+    (?:\/.+?\.php)?
     (
       [a-zA-Z0-9_\-\/.,:;\~\?@&=+$%#!()]*
     )
