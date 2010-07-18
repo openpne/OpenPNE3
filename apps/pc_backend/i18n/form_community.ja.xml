@@ -23,7 +23,7 @@
         <target>参加条件</target>
       </trans-unit>
       <trans-unit id="6">
-        <source>%community% Description</source>
+        <source>Community Description</source>
         <target>コミュニティ説明文</target>
       </trans-unit>
       <trans-unit id="7">
@@ -31,7 +31,7 @@
         <target>すべてのカテゴリ</target>
       </trans-unit>
       <trans-unit id="8">
-        <source>Is Allow Member %community%</source>
+        <source>Is allow member community</source>
         <target>メンバーのコミュニティ作成を許可</target>
       </trans-unit>
       <trans-unit id="9">

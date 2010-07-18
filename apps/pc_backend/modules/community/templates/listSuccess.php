@@ -2,10 +2,10 @@
 <?php include_partial('submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', __('%community% List', array('%community%' => $op_term['community']->titleize()))); ?>
+<?php slot('title', __('%community%リスト', array('%community%' => $op_term['community']))); ?>
 
-<?php $form->getWidgetSchema()->setLabel("name", __('%community% Name', array('%community%' => $op_term['community']->titleize()))); ?>
-<?php $form->getWidgetSchema()->setLabel("community_category_id", __('%community% Category', array('%community%' => $op_term['community']->titleize()))); ?>
+<?php $form->getWidgetSchema()->setLabel("name", __('%community% Name', array('%community%' => $op_term['community']))); ?>
+<?php $form->getWidgetSchema()->setLabel("community_category_id", __('%community% Category', array('%community%' => $op_term['community']))); ?>
 <?php echo $form->renderFormTag(url_for('community/list'), array('method' => 'get')) ?>
 <table>
 <?php echo $form ?>
