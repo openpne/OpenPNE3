@@ -1,6 +1,6 @@
 <table>
 <tr>
-<th><img src="<?php echo public_path('images/icon_alert.gif') ?>" alt="" /></th>
+<th><?php echo op_image_tag('icon_alert.gif') ?></th>
 <td><?php echo $options->getRaw('body') ?></td>
 </tr>
 </table>
