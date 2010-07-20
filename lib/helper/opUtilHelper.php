@@ -423,14 +423,6 @@ function op_auto_link_text_for_mobile($text, $link = null, $href_options = array
   }
 
   $result = $text;
-  if (in_array('urls', $link))
-  {
-    $result = _op_auto_links_urls($result, $href_options, $truncate, $truncate_len, $pad);
-    if ($is_allow_outer_url)
-    {
-      $result = _op_auto_links_outer_urls($result, $href_options, $truncate, $truncate_len, $pad);
-    }
-  }
   if (in_array('email_addresses', $link))
   {
     $result = _auto_link_email_addresses($result);
@@ -438,6 +430,14 @@ function op_auto_link_text_for_mobile($text, $link = null, $href_options = array
   if (in_array('phone_numbers', $link))
   {
     $result = _op_auto_links_phone_number($result);
+  }
+  if (in_array('urls', $link))
+  {
+    $result = _op_auto_links_urls($result, $href_options, $truncate, $truncate_len, $pad);
+    if ($is_allow_outer_url)
+    {
+      $result = _op_auto_links_outer_urls($result, $href_options, $truncate, $truncate_len, $pad);
+    }
   }
 
   return $result;
