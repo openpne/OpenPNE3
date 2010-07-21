@@ -422,6 +422,22 @@ abstract class sfOpenPNEMemberAction extends sfActions
       $ignoredSnsConfig = unserialize($ignoredSnsConfig);
     }
 
+    if (isset($categories['mail']))
+    {
+      if (sfConfig::get('sf_app') == 'pc_frontend')
+      {
+        $dailyNewsNotification = Doctrine::getTable('NotificationMail')->findOneByName('pc_dailyNews');
+      }
+      elseif (sfConfig::get('sf_app') == 'mobile_frontend')
+      {
+        $dailyNewsNotification = Doctrine::getTable('NotificationMail')->findOneByName('mobile_dailyNews');
+      }
+      if (!$dailyNewsNotification->is_enabled)
+      {
+        unset($categories['mail']);
+      }
+    }
+    
     foreach ($categories as $key => $value)
     {
       $title = $key;
