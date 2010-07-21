@@ -21,30 +21,32 @@ class ProfileForm extends BaseProfileForm
   {
     unset($this['created_at'], $this['updated_at']);
 
-    $isDispOption = array('choices' => array('1' => '表示する', '0' => '表示しない'));
+    $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('profile_form');
+    
+    $isDispOption = array('choices' => array('1' => 'Allow', '0' => 'Deny'));
     $this->setWidgets(array(
       'name' => new sfWidgetFormInputText(),
-      'is_edit_public_flag' => new sfWidgetFormSelectRadio(array('choices' => array('0' => '固定', '1' => 'メンバー選択'))),
+      'is_edit_public_flag' => new sfWidgetFormSelectRadio(array('choices' => array('0' => 'Fixed', '1' => 'Allow member to select'))),
       'default_public_flag' => new sfWidgetFormSelect(array('choices' => Doctrine::getTable('Profile')->getPublicFlags())),
       'is_disp_regist' => new sfWidgetFormSelectRadio($isDispOption),
       'is_disp_config' => new sfWidgetFormSelectRadio($isDispOption),
       'is_disp_search' => new sfWidgetFormSelectRadio($isDispOption),
       'form_type' => new sfWidgetFormSelect(array('choices' => array(
-        'input'    => 'テキスト',
-        'textarea' => 'テキスト(複数行)',
-        'select'   => '単一選択(プルダウン)',
-        'radio'    => '単一選択(ラジオボタン)',
-        'checkbox' => '複数選択(チェックボックス)',
-        'date'     => '日付',
+        'input'    => 'Text',
+        'textarea' => 'Paragraph text',
+        'select'   => 'Single choice (Dropdown)',
+        'radio'    => 'Single choice (Radio)',
+        'checkbox' => 'Multiple choices (Checkbox)',
+        'date'     => 'Date',
       ))),
       'value_type' => new sfWidgetFormSelect(array('choices' => array(
-        'string' => '文字列',
-        'integer' => '数値',
-        'email' => 'メールアドレス',
+        'string' => 'String',
+        'integer' => 'Number',
+        'email' => 'Email',
         'url' => 'URL',
-        'regexp' => '正規表現',
+        'regexp' => 'Regular expression',
       ))),
-      'is_unique' => new sfWidgetFormSelectRadio(array('choices' => array('0' => '重複可', '1' => '重複不可'))),
+      'is_unique' => new sfWidgetFormSelectRadio(array('choices' => array('0' => 'Allow', '1' => 'Deny'))),
       'sort_order' => new sfWidgetFormInputHidden(),
     ) + $this->getWidgetSchema()->getFields());
 
@@ -62,19 +64,19 @@ class ProfileForm extends BaseProfileForm
     $this->setValidator('name', new sfValidatorRegex(array('pattern' => '/^\w*[a-z]\w*$/i')));
 
     $this->widgetSchema->setLabels(array(
-      'name' => '識別名',
-      'is_required' => '必須',
-      'is_edit_public_flag' => '公開設定の選択',
-      'default_public_flag' => '公開設定デフォルト値',
-      'is_unique' => '重複の可否',
-      'form_type' => 'フォームタイプ',
-      'value_type' => '入力値タイプ',
-      'value_regexp' => '正規表現',
-      'value_min' => '最小値',
-      'value_max' => '最大値',
-      'is_disp_regist' => '新規登録',
-      'is_disp_config' => 'プロフィール変更',
-      'is_disp_search' => 'メンバー検索'
+      'name' => 'Identification name',
+      'is_required' => 'Required',
+      'is_edit_public_flag' => 'Public setting',
+      'default_public_flag' => 'Public default setting',
+      'is_unique' => 'Duplication',
+      'form_type' => 'Input type',
+      'value_type' => 'Value type',
+      'value_regexp' => 'Regular expression',
+      'value_min' => 'Minimum',
+      'value_max' => 'Maximum',
+      'is_disp_regist' => 'New registration',
+      'is_disp_config' => 'Change profile',
+      'is_disp_search' => 'Member search'
    ));
 
     $this->setDefaults($this->getDefaults() + array(
@@ -84,7 +86,7 @@ class ProfileForm extends BaseProfileForm
       'is_disp_search' => '1',
     ));
 
-    $this->embedI18n(array('ja_JP'));
+    $this->embedI18n(sfConfig::get('op_supported_languages'));
   }
 
   public function bind($params)
