@@ -96,7 +96,21 @@
 <?php echo $form['value_type']->renderRow() ?>
 <tr>
 <th><?php echo $form['value_min']->renderLabel() ?>～<?php echo $form['value_max']->renderLabel() ?></th>
-<td><?php echo $form['value_min']->render() ?>～<?php echo $form['value_max']->render() ?></td>
+<td>
+<?php if ($form['value_min']->hasError()): ?>
+<?php $error = $form['value_min']->getError() ?>
+<?php $formatter = $form['value_min']->getParent()->getWidget()->getFormFormatter() ?>
+<?php $msg = $form['value_min']->renderLabel().': '.$formatter->translate($error->getMessageFormat(), $error->getArguments()) ?>
+<?php echo $formatter->formatErrorsForRow($msg) ?>
+<?php endif ?>
+<?php if ($form['value_max']->hasError()): ?>
+<?php $error = $form['value_max']->getError() ?>
+<?php $formatter = $form['value_max']->getParent()->getWidget()->getFormFormatter() ?>
+<?php $msg = $form['value_max']->renderLabel().': '.$formatter->translate($error->getMessageFormat(), $error->getArguments()) ?>
+<?php echo $formatter->formatErrorsForRow($msg) ?>
+<?php endif ?>
+<?php echo $form['value_min']->render() ?>～<?php echo $form['value_max']->render() ?>
+</td>
 </tr>
 <?php echo $form['value_regexp']->renderRow(array('class' => 'advanced')) ?>
 </table>
@@ -110,6 +124,18 @@
 <li><?php echo __('Please input in format: %format% . For example: %example%', array('%format%' => 'YYYY/MM/DD HH:MM:SS', '%example%' => '2009/01/01 23:59:21')) ?></li>
 <li><?php echo __('Besides, you can use any particular string that can be interpreted by strtotime() function of PHP.') ?></li>
 </ul>
+<?php if ($form['value_min']->hasError()): ?>
+<?php $error = $form['value_min']->getError() ?>
+<?php $formatter = $form['value_min']->getParent()->getWidget()->getFormFormatter() ?>
+<?php $msg = $form['value_min']->renderLabel().': '.$formatter->translate($error->getMessageFormat(), $error->getArguments()) ?>
+<?php echo $formatter->formatErrorsForRow($msg) ?>
+<?php endif ?>
+<?php if ($form['value_max']->hasError()): ?>
+<?php $error = $form['value_max']->getError() ?>
+<?php $formatter = $form['value_max']->getParent()->getWidget()->getFormFormatter() ?>
+<?php $msg = $form['value_max']->renderLabel().': '.$formatter->translate($error->getMessageFormat(), $error->getArguments()) ?>
+<?php echo $formatter->formatErrorsForRow($msg) ?>
+<?php endif ?>
 <?php echo $form['value_min']->render() ?>～<?php echo $form['value_max']->render() ?>
 </td>
 </tr>
