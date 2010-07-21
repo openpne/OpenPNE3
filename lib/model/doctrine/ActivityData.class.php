@@ -24,32 +24,4 @@ class ActivityData extends BaseActivityData
   {
     return $this->getTable()->publicFlagToCaption($this->getPublicFlag());
   }
-
-  public function getBody()
-  {
-    if (!sfContext::hasInstance())
-    {
-      return $this->_get('body');
-    }
-
-    if ($this->getTemplate())
-    {
-      $config = $this->getTable()->getTemplateConfig();
-      if (!isset($config[$this->getTemplate()]))
-      {
-        return '';
-      }
-
-      $body = sfContext::getInstance()->getI18N()->__($config[$this->getTemplate()], $this->getTemplateParam());
-      $event = sfContext::getInstance()->getEventDispatcher()->filter(new sfEvent($this, 'op_activity.template.filter_body'), $body);
-      $body = $event->getReturnValue();
-    }
-    else
-    {
-      $body =  $this->_get('body');
-    }
-
-    $event = sfContext::getInstance()->getEventDispatcher()->filter(new sfEvent($this, 'op_activity.filter_body'), $body);
-    return $event->getReturnValue();
-  }
 }
