@@ -24,7 +24,7 @@
         <target>項目名</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Info</source>
+        <source>Description</source>
         <target>説明</target>
       </trans-unit>
 
@@ -716,6 +716,234 @@
       <trans-unit id="">
         <source>%sns% Administration</source>
         <target>%sns%管理画面</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>There is no preset profile.</source>
+        <target>追加可能なプリセットがありません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Profile setting</source>
+        <target>プロフィール項目設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Entry list</source>
+        <target>プロフィール項目一覧</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Create new entry</source>
+        <target>プロフィール項目登録</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Operation</source>
+        <target>操作</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Entry name</source>
+        <target>項目名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Identification name</source>
+        <target>識別名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Required</source>
+        <target>必須</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Public setting</source>
+        <target>公開設定変更の可否</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Public default setting</source>
+        <target>公開設定デフォルト値</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Duplication</source>
+        <target>重複の可否</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Input type</source>
+        <target>フォームタイプ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Option</source>
+        <target>選択肢</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Registry</source>
+        <target>登録</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Change</source>
+        <target>変更</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Edit</source>
+        <target>変更</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Search</source>
+        <target>検索</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete</source>
+        <target>削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>List</source>
+        <target>一覧</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Option list</source>
+        <target>プロフィール選択肢一覧</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>No entries can set options.</source>
+        <target>選択肢を設定可能なプロフィール項目がありません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Add new option</source>
+        <target>項目追加</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Edit entry</source>
+        <target>プロフィール項目編集</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Select from presets</source>
+        <target>プリセットから選ぶ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Enter on your own</source>
+        <target>自分で入力する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Settings for %language%</source>
+        <target>%language%用設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>General settings</source>
+        <target>共通設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Value type</source>
+        <target>入力値タイプ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Regular expression</source>
+        <target>正規表現</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Minimum</source>
+        <target>最小値</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Maximum</source>
+        <target>最大値</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>New registration</source>
+        <target>新規登録</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Change profile</source>
+        <target>プロフィール変更</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Member search</source>
+        <target>メンバー検索</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Make it public</source>
+        <target>Web への公開の許可</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Allow</source>
+        <target>表示する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Deny</source>
+        <target>表示しない</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Fixed</source>
+        <target>固定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Allow member to select</source>
+        <target>メンバー選択</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Text</source>
+        <target>テキスト</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Paragraph text</source>
+        <target>テキスト(複数行)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Single choice (Dropdown)</source>
+        <target>単一選択(プルダウン)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Single choice (Radio)</source>
+        <target>単一選択(ラジオボタン)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Multiple choices (Checkbox)</source>
+        <target>複数選択(チェックボックス)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Date</source>
+        <target>日付</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>String</source>
+        <target>文字列</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Number</source>
+        <target>数値</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Email</source>
+        <target>メールアドレス</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Anyone in the world may view member profiles</source>
+        <target>公開範囲設定で「Web 全体に公開」の選択を許可するかどうかを設定します。ここで許可されていない場合は、既に設定済みの「Web 全体に公開」は「全員に公開」と同等のものとして扱われます</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please input in format: %format%. For example: %example%</source>
+        <target>%format% 形式で入力（例：%example%）</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Besides, you can use any particular string that can be interpreted by strtotime() function of PHP.</source>
+        <target>その他、 PHP の strtotime() 関数が解釈することのできる特殊な文字列が利用可能</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Preset</source>
+        <target>プリセット</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete profile entry</source>
+        <target>プロフィール項目削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you want to delete this anyway?</source>
+        <target>本当に削除してもよろしいですか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>※All the member's data in this entry will be lost.</source>
+        <target>※この項目に対するメンバーの入力値も失われます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete</source>
+        <target>削除する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Option name (%language%)</source>
+        <target>項目名 (%language%)</target>
       </trans-unit>
     </body>
   </file>

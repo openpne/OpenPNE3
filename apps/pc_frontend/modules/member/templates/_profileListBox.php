@@ -5,7 +5,7 @@ $culture = sfCultureInfo::getInstance($sf_user->getCulture());
 $list = array();
 foreach ($member->getProfiles(true) as $profile)
 {
-  $caption = $profile->getCaption();
+  $caption = $profile->getProfile()->getCaption();
   if ($profile->getProfile()->isPreset())
   {
     $presetConfig = $profile->getProfile()->getPresetConfig();

@@ -1,29 +1,29 @@
 <?php use_helper('Javascript'); ?>
-<h2>プロフィール項目設定</h2>
+<h2><?php echo __('Profile setting') ?></h2>
 
-<h3>プロフィール項目一覧</h3>
-<p><?php echo link_to('プロフィール項目登録', 'profile/edit') ?></p>
+<h3><?php echo __('Entry list') ?></h3>
+<p><?php echo link_to(__('Create new entry'), 'profile/edit') ?></p>
 <table id="profiles">
 <thead><tr>
-<th colspan="2">操作</th>
+<th colspan="2"><?php echo __('Operation')?></th>
 <th>ID</th>
-<th>項目名</th>
-<th>識別名</th>
-<th>必須</th>
-<th>公開設定変更の可否</th>
-<th>公開設定デフォルト値</th>
-<th>重複の可否</th>
-<th>フォームタイプ</th>
-<th>選択肢</th>
-<th>登録</th>
-<th>変更</th>
-<th>検索</th>
+<th><?php echo __('Entry name')?></th>
+<th><?php echo __('Identification name')?></th>
+<th><?php echo __('Required')?></th>
+<th><?php echo __('Public setting')?></th>
+<th><?php echo __('Public default setting')?></th>
+<th><?php echo __('Duplication')?></th>
+<th><?php echo __('Input type')?></th>
+<th><?php echo __('Option')?></th>
+<th><?php echo __('Registry')?></th>
+<th><?php echo __('Change')?></th>
+<th><?php echo __('Search')?></th>
 </tr></thead>
 <?php foreach ($profiles as $value): ?>
 <tbody id="profile_<?php echo $value->getId() ?>" class="sortable">
 <tr>
-<td><?php echo link_to('変更', 'profile/edit?id=' . $value->getId()) ?></td>
-<td><?php echo link_to('削除', 'profile/delete?id=' . $value->getId()) ?></td>
+<td><?php echo link_to(__('Edit'), 'profile/edit?id=' . $value->getId()) ?></td>
+<td><?php echo link_to(__('Delete'), 'profile/delete?id=' . $value->getId()) ?></td>
 <td><?php echo $value->getId() ?></td>
 <?php if ($value->isPreset()) : ?>
 <?php $presetConfig = $value->getPresetConfig(); ?>
@@ -39,7 +39,7 @@
 <td><?php echo $value->getFormType() ?></td>
 <td>
 <?php if (!$value->isPreset() && ($value->getFormType() == 'radio' || $value->getFormType() == 'checkbox' || $value->getFormType() == 'select')) : ?>
-<?php echo link_to('一覧', 'profile/list', array('anchor' => $value->getName())) ?>
+<?php echo link_to(__('List'), 'profile/list', array('anchor' => $value->getName())) ?>
 <?php else: ?>
 -
 <?php endif; ?>
@@ -56,7 +56,7 @@
   'url' => 'profile/sortProfile'
 )) ?>
 
-<h3>プロフィール選択肢一覧</h3>
+<h3><?php echo __('Option list')?></h3>
 <?php $selectionCount = 0; ?>
 <?php foreach ($profiles as $value): ?>
 <?php if (!$value->isPreset() && ($value->getFormType() == 'radio' || $value->getFormType() == 'checkbox' || $value->getFormType() == 'select')) : ?>
@@ -65,8 +65,11 @@
 <table id="profile_options_<?php echo $value->getId() ?>">
 <thead><tr>
 <th>ID</th>
-<th>項目名(ja_JP)</th>
-<th colspan="2">操作</th>
+<?php $languages = sfConfig::get('op_supported_languages'); ?>
+<?php foreach ($languages as $language): ?>
+<th><?php echo __('Option name (%language%)', array('%language%' => $language)) ?></th>
+<?php endforeach; ?>
+<th colspan="2"><?php echo __('Operation')?></th>
 </tr></thead>
 <?php foreach ($option_form[$value->getId()] as $form) : ?>
 <?php if (!$form->getObject()->isNew()) : ?>
@@ -77,27 +80,29 @@
 <form action="<?php echo url_for('profile/editOption?id=' . $form->getObject()->getId()) ?>" method="post">
 <tr>
 <td><?php echo ($form->getObject()->isNew() ? '-' : $form->getObject()->getId()) ?></td>
+<?php foreach ($languages as $language): ?>
 <td>
-<?php echo $form['ja_JP']['value']->renderError() ?>
-<?php echo $form['ja_JP']['value']->render() ?>
+<?php echo $form[$language]['value']->renderError() ?>
+<?php echo $form[$language]['value']->render() ?>
 </td>
+<?php endforeach; ?>
 <?php if ($form->getObject()->isNew()) : ?>
 <td colspan="2">
 <?php echo $form->renderHiddenFields() ?>
-<input type="submit" value="項目追加" />
+<input type="submit" value=<?php echo __('Add new option')?> />
 </td>
 </form>
 <?php else : ?>
 <td>
 <?php echo $form->renderHiddenFields() ?>
-<input type="submit" value="変更" />
+<input type="submit" value=<?php echo __('Save')?> />
 </td>
 </form>
 <td>
 <?php echo $form['id']->render() ?>
 <?php echo $form['profile_id']->render() ?>
 <form action="<?php echo url_for('profile/deleteOption?id=' . $form->getObject()->getId()) ?>" method="post">
-<input type="submit" value="削除" />
+<input type="submit" value=<?php echo __('Delete') ?> />
 </form>
 </td>
 <?php endif; ?>
@@ -113,5 +118,5 @@
 <?php endif; ?>
 <?php endforeach; ?>
 <?php if (!$selectionCount): ?>
-<p>選択肢を設定可能なプロフィール項目がありません。</p>
+<p><?php echo __('No entries can set options.')?></p>
 <?php endif; ?>
