@@ -258,8 +258,35 @@ class opFormItemGenerator
       // doesn't allow searching
       case 'increased_input':
       case 'language_select':
+      // country
       case 'country_select':
+        $info = sfCultureInfo::getInstance(sfContext::getInstance()->getUser()->getCulture());
+        $params['choices'] = array('' => '') + $info->getCountries();
+        $obj = new sfWidgetFormChoice($params);
+        break;
+      // region
       case 'region_select':
+        $list = sfYaml::load(sfConfig::get('sf_lib_dir').'/config/config/regions.yml');
+        $type = $field['ValueType'];
+        if ('string' !== $type && isset($list[$type]))
+        {
+          $list = $list[$type];
+          $list = array_combine($list, $list);
+        }
+        else
+        {
+          foreach ($list as $k => $v)
+          {
+            if ($v)
+            {
+              $list[$k] = array_combine($v, $v);
+            }
+          }
+        }
+        $list = opToolkit::arrayMapRecursive(array(sfContext::getInstance()->getI18N(), '__'), $list);
+        $params['choices'] = array('' => '')+ $list;
+        $obj = new sfWidgetFormChoice($params);
+        break;
       case 'password':
         $obj = null;
         break;
@@ -308,7 +335,11 @@ class opFormItemGenerator
       case 'increased_input':
       case 'language_select':
       case 'country_select':
+        $q->andWhere($column.' = ?', $value);
+        break;
       case 'region_select':
+        $q->andWhere($column.' = ?', $value);
+        break;
       case 'password':
         // pass
         break;
