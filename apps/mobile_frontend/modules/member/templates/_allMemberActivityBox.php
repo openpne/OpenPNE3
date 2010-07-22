@@ -1,4 +1,4 @@
-<?php if (count($activities)): ?>
+<?php if (count($activities) || isset($form)): ?>
 <?php $params = array(
   'activities' => $activities,
   'gadget' => $gadget,
