@@ -1,6 +1,8 @@
-<?php if ($pager->getNbResults()): ?>
+<?php if ($pager->getNbResults() || isset($form)): ?>
 <?php slot('pager') ?>
+<?php if ($pager->getNbResults()): ?>
 <?php op_include_pager_navigation($pager, 'member/showAllMemberActivity?page=%d&id='.$id) ?>
+<?php endif; ?>
 <?php end_slot(); ?>
 <?php include_slot('pager') ?>
 <?php $params = array(
