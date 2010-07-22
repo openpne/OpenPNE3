@@ -21,32 +21,32 @@ class ProfileForm extends BaseProfileForm
   {
     unset($this['created_at'], $this['updated_at']);
 
-    $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('profile_form');
+    $i18n = sfContext::getInstance()->getI18n();
     
-    $isDispOption = array('choices' => array('1' => 'Allow', '0' => 'Deny'));
+    $isDispOption = array('choices' => array('1' => $i18n->__('Allow'), '0' => $i18n->__('Deny')));
     $this->setWidgets(array(
       'name' => new sfWidgetFormInput(),
-      'is_edit_public_flag' => new sfWidgetFormSelectRadio(array('choices' => array('0' => 'Fixed', '1' => 'Allow member to select'))),
+      'is_edit_public_flag' => new sfWidgetFormSelectRadio(array('choices' => array('0' => $i18n->__('Fixed'), '1' => $i18n->__('Allow member to select')))),
       'default_public_flag' => new sfWidgetFormSelect(array('choices' => Doctrine::getTable('Profile')->getPublicFlags())),
       'is_disp_regist' => new sfWidgetFormSelectRadio($isDispOption),
       'is_disp_config' => new sfWidgetFormSelectRadio($isDispOption),
       'is_disp_search' => new sfWidgetFormSelectRadio($isDispOption),
       'form_type' => new sfWidgetFormSelect(array('choices' => array(
-        'input'    => 'Text',
-        'textarea' => 'Paragraph text',
-        'select'   => 'Single choice (Dropdown)',
-        'radio'    => 'Single choice (Radio)',
-        'checkbox' => 'Multiple choices (Checkbox)',
-        'date'     => 'Date',
+        'input'    => $i18n->__('Text'),
+        'textarea' => $i18n->__('Paragraph text'),
+        'select'   => $i18n->__('Single choice (Dropdown)'),
+        'radio'    => $i18n->__('Single choice (Radio)'),
+        'checkbox' => $i18n->__('Multiple choices (Checkbox)'),
+        'date'     => $i18n->__('Date'),
       ))),
       'value_type' => new sfWidgetFormSelect(array('choices' => array(
-        'string' => 'String',
-        'integer' => 'Number',
-        'email' => 'Email',
-        'url' => 'URL',
-        'regexp' => 'Regular expression',
+        'string' => $i18n->__('String'),
+        'integer' => $i18n->__('Number'),
+        'email' => $i18n->__('Email'),
+        'url' => $i18n->__('URL'),
+        'regexp' => $i18n->__('Regular expression'),
       ))),
-      'is_unique' => new sfWidgetFormSelectRadio(array('choices' => array('0' => 'Allow', '1' => 'Deny'))),
+      'is_unique' => new sfWidgetFormSelectRadio(array('choices' => array('0' => $i18n->__('Allow'), '1' => $i18n->__('Deny')))),
       'sort_order' => new sfWidgetFormInputHidden(),
     ) + $this->getWidgetSchema()->getFields());
 
