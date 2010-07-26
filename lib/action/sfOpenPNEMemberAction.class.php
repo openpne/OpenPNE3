@@ -432,7 +432,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
       {
         $dailyNewsNotification = Doctrine::getTable('NotificationMail')->findOneByName('mobile_dailyNews');
       }
-      if (!$dailyNewsNotification->is_enabled)
+      if ($dailyNewsNotification && !$dailyNewsNotification->is_enabled)
       {
         unset($categories['mail']);
       }
