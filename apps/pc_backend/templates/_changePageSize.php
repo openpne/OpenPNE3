@@ -1,11 +1,11 @@
-<form action="<?php echo $params['uri'] ?>" method="<?php echo $params['method'] ?>"> 
+<form action="<?php echo $params['uri'] ?>" method="<?php echo $params['method'] ?>">
 <p id="numberDisplays">
 <strong><?php echo $params['title'] ?></strong>：
 <select class="basic" name="<?php echo $params['name'] ?>">
 <?php foreach($params['params'] as $param): ?>
-<option value="<?php echo $param ?>">
+<option value="<?php echo $param ?>"<?php echo $param == $params['default'] ? ' selected="selected"' : ''; ?>>
 <?php echo $param.$params['unit'] ?>
-</option> 
+</option>
 <?php endforeach; ?>
 </select>
 <span class="textBtnS"><input type="submit" value="変更"></span>

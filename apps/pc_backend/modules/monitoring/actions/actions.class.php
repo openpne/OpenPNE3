@@ -34,8 +34,9 @@ class monitoringActions extends sfActions
   */
   public function executeImageList(sfWebRequest $request)
   {
+    $this->size = $request->getParameter('size', 20);
     $this->pager = Doctrine::getTable('File')
-      ->getImageFilePager($request->getParameter('page', 1), $request->getParameter('size', 20));
+      ->getImageFilePager($request->getParameter('page', 1), $this->size);
   }
 
  /**
