@@ -24,10 +24,15 @@ class ProfileForm extends BaseProfileForm
     $i18n = sfContext::getInstance()->getI18n();
     
     $isDispOption = array('choices' => array('1' => $i18n->__('Allow'), '0' => $i18n->__('Deny')));
+    $publicFlags = Doctrine::getTable('Profile')->getPublicFlags();
+    if (isset($publicFlags[ProfileTable::PUBLIC_FLAG_FRIEND]))
+    {
+      $publicFlags[ProfileTable::PUBLIC_FLAG_FRIEND] = $i18n->__('My Friends');
+    }
     $this->setWidgets(array(
       'name' => new sfWidgetFormInput(),
       'is_edit_public_flag' => new sfWidgetFormSelectRadio(array('choices' => array('0' => $i18n->__('Fixed'), '1' => $i18n->__('Allow member to select')))),
-      'default_public_flag' => new sfWidgetFormSelect(array('choices' => Doctrine::getTable('Profile')->getPublicFlags())),
+      'default_public_flag' => new sfWidgetFormSelect(array('choices' => $publicFlags)),
       'is_disp_regist' => new sfWidgetFormSelectRadio($isDispOption),
       'is_disp_config' => new sfWidgetFormSelectRadio($isDispOption),
       'is_disp_search' => new sfWidgetFormSelectRadio($isDispOption),
@@ -57,7 +62,7 @@ class ProfileForm extends BaseProfileForm
     );
 
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateName'))));
-    $this->setValidator('default_public_flag', new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('Profile')->getPublicFlags()))));
+    $this->setValidator('default_public_flag', new sfValidatorChoice(array('choices' => array_keys($publicFlags))));
     $this->setValidator('value_min', new sfValidatorPass());
     $this->setValidator('value_max', new sfValidatorPass());
     $this->setValidator('value_type', new sfValidatorString(array('required' => false, 'empty_value' => 'string')));
