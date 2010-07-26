@@ -21,6 +21,10 @@ class registerMobileForm extends MemberConfigMobileAddressForm
   {
     $this->setWidget('mobile_address', new sfWidgetFormInput());
     $this->setValidator('mobile_address', new sfValidatorMobileEmail());
+    $this->mergePostValidator(new sfValidatorCallback(array(
+        'callback' => array($this, 'isUnique'),
+        'arguments' => array('name' => 'mobile_address'),
+      ))); 
   }
 
   public function save()
@@ -28,6 +32,7 @@ class registerMobileForm extends MemberConfigMobileAddressForm
     $token = md5(uniqid(mt_rand(), true));
 
     $this->member->setConfig('register_mobile_token', $token);
+    $this->member->setConfig('mobile_address_pre', $this->getValue('mobile_address'));
 
     $param = array(
       'token' => $token,

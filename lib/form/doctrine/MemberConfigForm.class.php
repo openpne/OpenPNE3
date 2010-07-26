@@ -114,7 +114,7 @@ class MemberConfigForm extends sfForm
       return $value;
     }
 
-    throw new sfValidatorError($validator, 'This '.$name.' address already exists.');
+    throw new sfValidatorError($validator, 'Invalid %name%.', array('name' => $name));
   }
 
   public function isValid()
