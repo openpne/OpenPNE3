@@ -163,9 +163,12 @@ abstract class opAuthRegisterForm extends sfForm
       }
 
       $communities = Doctrine::getTable('Community')->getDefaultCommunities();
-      foreach ($communities as $community)
+      if ($communities)
       {
-        Doctrine::getTable('CommunityMember')->join($this->getMember()->getId(), $community->getId());
+        foreach ($communities as $community)
+        {
+          Doctrine::getTable('CommunityMember')->join($this->getMember()->getId(), $community->getId());
+        }
       }
 
       if (sfConfig::get('op_is_mail_address_contain_hash'))
