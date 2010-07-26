@@ -50,6 +50,11 @@ function image_tag_sf_image($filename, $options = array())
   {
     unset($options['size']);
   }
+  if (isset($options['no_image']))
+  {
+    unset($options['no_image']);
+  }
+
   return image_tag($filepath, $options);
 }
 
