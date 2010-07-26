@@ -11,8 +11,8 @@ configComplete:
 changeLanguage:
   is_secure: off
 
-registerMobileToRegisterEndFinish:
-  is_secure: false
-
 registerMobileToRegisterEnd:
+  credentials: SNSRegisterFinish
+
+registerMobileToRegisterEndFinish:
   credentials: SNSRegisterFinish
