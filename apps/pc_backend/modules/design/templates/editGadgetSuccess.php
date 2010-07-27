@@ -31,7 +31,7 @@ function deleteGadget(type, id)
   Element.remove(parentIframe.contentWindow.document.getElementById(typeId + '_gadget_' + id));
 
   var form = parent.document.getElementById('gadgetForm');
-  var hiddens = form.getElementsByClassName(type + 'Gadget');
+  var hiddens = Element.select(form, '.' + type + 'Gadget');
   for (var i = 0; i < hiddens.length; i++)
   {
     if (hiddens[i].value == id)
