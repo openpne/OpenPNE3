@@ -1,5 +1,8 @@
 gadgetSuccess:
-  javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
+  javascripts:
+    - %SF_PROTOTYPE_WEB_DIR%/js/prototype
+    - %SF_PROTOTYPE_WEB_DIR%/js/builder
+    - %SF_PROTOTYPE_WEB_DIR%/js/effects
 
 homeGadgetPlotSuccess: &gadget_plot_config
   layout: plain

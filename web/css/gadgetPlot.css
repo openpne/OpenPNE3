@@ -41,6 +41,7 @@ body
   margin-top: 10px;
   margin-left: 10px;
   float: left;
+  display: inline;
 }
 
 .layoutB #plotSideMenu,
@@ -101,7 +102,6 @@ body
 #plotDailyNewsContents div,
 #plotMobileDailyNewsContents div
 {
-  width: 100%;
   height: 35px;
   margin-bottom: 5px;
   text-align: center;
