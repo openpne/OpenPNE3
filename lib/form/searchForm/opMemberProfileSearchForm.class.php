@@ -47,6 +47,11 @@ class opMemberProfileSearchForm extends sfForm
 
     foreach ($this->getProfiles() as $profile)
     {
+      if (ProfileTable::PUBLIC_FLAG_PRIVATE == $profile->default_public_flag)
+      {
+        continue;
+      }
+
       $profileI18n = $profile->Translation[$culture]->toArray();
 
       if ($profile->isPreset())
