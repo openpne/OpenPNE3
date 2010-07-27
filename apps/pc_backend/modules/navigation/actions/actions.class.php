@@ -50,6 +50,28 @@ class navigationActions extends sfActions
       $nav->setType($type);
       $this->list[$type][] = new NavigationForm($nav);
     }
+    
+    if ($request->isMethod('post'))
+    {
+      $params = $request->getParameter('nav');
+      $type = $params['type'];
+      $count = count($this->list[$type]);
+      if ($params['id'])
+      {
+        for ($i=0;$i<$count-1;$i++)
+        {
+          if ($params['id'] === $this->list[$type][$i]->getObject()->id)
+          {
+            $this->list[$type][$i]->bind($params);
+            break;
+          }
+        }
+      }
+      else
+      {
+        $this->list[$type][$count-1]->bind($params);
+      }
+    }
   }
 
  /**
@@ -73,15 +95,17 @@ class navigationActions extends sfActions
         $types = Doctrine::getTable('Navigation')->getTypesByAppName($app);
         $this->forward404Unless(in_array($nav['type'], $types));
         $this->form->save();
-      }
 
-      if ('pc' === $app)
-      {
-        $this->removeNavCaches();
+        if ('pc' === $app)
+        {
+          $this->removeNavCaches();
+        }
+
+        $this->redirect('navigation/list?app='.$app);
       }
     }
 
-    $this->redirect('navigation/list?app='.$app);
+    $this->forward('navigation','list');
   }
 
  /**
