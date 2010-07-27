@@ -12,5 +12,6 @@ class NavigationTranslationForm extends BaseNavigationTranslationForm
   public function configure()
   {
     $this->setWidget('caption', new sfWidgetFormInput());
+    $this->setValidator('caption', new opValidatorString(array('trim' => true, 'required' => true)));
   }
 }
