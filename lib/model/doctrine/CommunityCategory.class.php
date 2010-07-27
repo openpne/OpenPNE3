@@ -39,6 +39,20 @@ class CommunityCategory extends BaseCommunityCategory
     return parent::save($conn);
   }
 
+  public function isRoot()
+  {
+    return (1 == $this->lft);
+  }
+
+  public function deleteAllChildren()
+  {
+    $children = Doctrine::getTable('CommunityCategory')->retrieveAllChildrenOfCategory($this);
+    foreach ($children as $child)
+    {
+      $child->delete();
+    }
+  }
+
   public function getForm()
   {
     return new CommunityCategoryForm($this);

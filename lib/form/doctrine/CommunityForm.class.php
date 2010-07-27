@@ -34,9 +34,10 @@ class CommunityForm extends BaseCommunityForm
     }
     $this->setWidget('community_category_id', new sfWidgetFormDoctrineChoice(array(
       'model'       => 'CommunityCategory',
-      'add_empty'   => false,
+      'add_empty'   => true,
       'query'    => $q,
     )));
+
     $this->widgetSchema->setLabel('community_category_id', '%community% Category');
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
 
@@ -70,6 +71,11 @@ class CommunityForm extends BaseCommunityForm
 
   public function checkCreatable($validator, $value)
   {
+    if (empty($value['community_category_id']))
+    {
+      return $value;
+    }
+
     $category = Doctrine::getTable('CommunityCategory')->find($value['community_category_id']);
     if (!$category)
     {
