@@ -15,3 +15,18 @@ class TestActivityTemplateConfigHandler extends sfConfigHandler
 }
 sfContext::getInstance()->getConfigCache()->registerConfigHandler('config/activity_template.yml', 'TestActivityTemplateConfigHandler');
 
+$dispacher = sfContext::getInstance()->getEventDispatcher();
+$listeners = $dispacher->getListeners('op_activity.template.filter_body');
+foreach ($listeners as $listener)
+{
+  if (in_array($listener) && 'ActivityDataTable' === $listener[0])
+  {
+    $dispacher->disconnect('op_activity.template.filter_body', $listener);
+  }
+}
+
+$listeners = $dispacher->getListeners('op_activity.filter_body');
+foreach ($listeners as $listener)
+{
+  $dispacher->disconnect('op_activity.filter_body', $listener);
+}
