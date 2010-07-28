@@ -92,8 +92,9 @@ class monitoringActions extends sfActions
   */
   public function executeFileList(sfWebRequest $request)
   {
+    $this->size = $request->getParameter('size', 20);
     $this->pager = Doctrine::getTable('File')
-      ->getFilePager($request->getParameter('page', 1), $request->getParameter('size', 20));
+      ->getFilePager($request->getParameter('page', 1), $this->size);
   }
 
  /**
