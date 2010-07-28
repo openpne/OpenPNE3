@@ -21,6 +21,6 @@ class smartphone_frontendConfiguration extends opApplicationConfiguration
   {
     parent::initialize();
 
-    sfWidgetFormSchema::setDefaultFormFormatterName('smartphone');
+    sfWidgetFormSchema::setDefaultFormFormatterName('pc');
   }
 }
