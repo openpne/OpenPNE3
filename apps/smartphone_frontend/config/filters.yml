@@ -1,10 +1,25 @@
-# You can find more information about this file on the symfony website:
-# http://www.symfony-project.org/reference/1_4/en/12-Filters
-
 rendering: ~
+
+cache_control:
+  class: opCacheControlFilter
+
+enable_app:
+  class: opCheckEnabledApplicationFilter
+
+xrds_header:
+  class: opAppendXRDSHeaderFilter
+
+remember_login:
+  class: opRememberLoginFilter
+
 security:  ~
 
-# insert your own filters here
+emoji:
+  class: opEmojiFilter
 
 cache:     ~
-execution: ~
+
+execution:
+  class: opExecutionFilter
+  param:
+    type: execution

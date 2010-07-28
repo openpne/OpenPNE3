@@ -1,6 +1,3 @@
-# You can find more information about this file on the symfony website:
-# http://www.symfony-project.org/reference/1_4/en/05-Factories
-
 prod:
   logger:
     class:   sfNoLogger
@@ -8,35 +5,115 @@ prod:
       level:   err
       loggers: ~
 
-test:
-  storage:
-    class: sfSessionTestStorage
-    param:
-      session_path: %SF_TEST_CACHE_DIR%/sessions
+cli:
+  controller:
+    class: sfConsoleController
+  request:
+    class: sfConsoleRequest
+  response:
+    class: sfConsoleResponse
 
+test:
   response:
     class: sfWebResponse
     param:
       send_http_headers: false
 
-  mailer:
+  storage:
+    class: sfSessionTestStorage
     param:
-      delivery_strategy: none
-
-dev:
-  mailer:
-    param:
-      delivery_strategy: none
+      session_path: %SF_TEST_CACHE_DIR%/sessions
 
 all:
+  controller:
+    class: opPcFrontWebController
+
+  request:
+    class: opWebRequest
+    param:
+      formats:
+        txt:  text/plain
+        js:   [application/javascript, application/x-javascript, text/javascript]
+        css:  text/css
+        json: [application/json, application/x-json]
+        xml:  [text/xml, application/xml, application/x-xml]
+        rdf:  application/rdf+xml
+        atom: application/atom+xml
+
+  response:
+    class: opWebResponse
+    param:
+      logging:           %SF_LOGGING_ENABLED%
+      charset:           %SF_CHARSET%
+      send_http_headers: true
+#
+#  user:
+#    class: myUser
+#    param:
+#      timeout:         1800
+#      logging:         %SF_LOGGING_ENABLED%
+#      use_flash:       true
+#      default_culture: %SF_DEFAULT_CULTURE%
+#
+  storage:
+    class: sfSessionStorage
+    param:
+      session_name: OpenPNE_pc_frontend
+
+  logger:
+    class: sfAggregateLogger
+    param:
+      level: debug
+      loggers:
+        sf_web_debug:
+          class: sfWebDebugLogger
+          param:
+            level: debug
+            condition:       %SF_WEB_DEBUG%
+            xdebug_logging:  true
+            web_debug_class: sfWebDebug
+        sf_file_debug:
+          class: opFileLogger
+          param:
+            level: debug
+            file: %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log
+#
+#  view_cache:
+#    class: sfFileCache
+#    param:
+#      automatic_cleaning_factor: 0
+#      cache_dir:                 %SF_TEMPLATE_CACHE_DIR%
+#      lifetime:                  86400
+#      prefix:                    %SF_APP_DIR%
+#
+  i18n:
+    class: opI18N
+    param:
+      source:               OpenPNE
+      debug:                false
+      untranslated_prefix:  "[T]"
+      untranslated_suffix:  "[/T]"
+      cache: ~
+
   routing:
     class: sfPatternRouting
     param:
       generate_shortest_url:            true
       extra_parameters_as_query_string: true
 
-  view_cache_manager:
-    class: sfViewCacheManager
-    param:
-      cache_key_use_vary_headers: true
-      cache_key_use_host_name:    true
+#  logger:
+#    class: sfAggregateLogger
+#    param:
+#      level: debug
+#      loggers:
+#        sf_web_debug:
+#          class: sfWebDebugLogger
+#          param:
+#            level: debug
+#            condition:      %SF_WEB_DEBUG%
+#            xdebug_logging: true
+#        sf_file_debug:
+#          class: sfFileLogger
+#          param:
+#            level: debug
+#            file: %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log

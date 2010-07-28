@@ -1,0 +1,18 @@
+all:
+  has_layout: false
+
+indexTrust:
+  has_layout: true
+  layout: layoutC
+
+transferSuccess:
+  has_layout: true
+  layout: layoutC
+
+listSuccess:
+  has_layout: true
+  layout: layoutC
+
+unsetPermissionSuccess:
+  has_layout: true
+  layout: layoutC

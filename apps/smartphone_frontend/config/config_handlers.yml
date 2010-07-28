@@ -1,0 +1,7 @@
+modules/*/config/view.yml:
+  class:    opViewConfigHandler
+  file:     %SF_LIB_DIR%/config/opViewConfigHandler.class.php
+
+config/routing.yml:
+  class:    opRoutingConfigHandler
+  file:     %SF_LIB_DIR%/config/opRoutingConfigHandler.class.php
