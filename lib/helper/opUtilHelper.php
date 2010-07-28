@@ -807,7 +807,7 @@ function op_have_privilege_by_uri($uri, $params = array(), $member_id = null)
   return true;
 }
 
-function op_decoration($string, $is_strip = false, $is_use_stylesheet = null)
+function op_decoration($string, $is_strip = false, $is_use_stylesheet = null, $is_html_tag_followup = true)
 {
   if (is_null($is_use_stylesheet))
   {
@@ -818,7 +818,7 @@ function op_decoration($string, $is_strip = false, $is_use_stylesheet = null)
     }
   }
 
-  return opWidgetFormRichTextareaOpenPNE::toHtml($string, $is_strip, $is_use_stylesheet);
+  return opWidgetFormRichTextareaOpenPNE::toHtml($string, $is_strip, $is_use_stylesheet, $is_html_tag_followup);
 }
 
 function op_is_accessable_url($uri)

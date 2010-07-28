@@ -270,7 +270,7 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
   * @param boolean $isStrip          true if original tag is stripped from the string, false original tag convert html tag. 
   * @param boolean $isUseStylesheet
   */
-  static public function toHtml($string, $isStrip, $isUseStylesheet)
+  static public function toHtml($string, $isStrip, $isUseStylesheet, $isHtmlTagFollowup = true)
   {
     new self();
     $regexp = '/(?:&lt;|<)(\/?)(op:.+?)(?:\s+(.*?))?(?:&gt;|>)/i';
@@ -291,7 +291,48 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
       }
     }
 
+    if ($isHtmlTagFollowup)
+    {
+      $converted = self::htmlTagFollowup($converted);
+    }
+
     return $converted;
+  }
+
+  static protected function htmlTagFollowup($string)
+  {
+    $countStartTags = $countEndTags = array();
+    preg_match_all('/(?:<)(\/?)(\w+)?(?:\s+.*?)?(\/?)(?:>)/i', $string, $matches);
+    foreach ($matches[2] as $key => $value)
+    {
+      $tagname = strtolower($value);
+      if ($matches[3][$key])
+      {
+        continue;
+      }
+      if ($matches[1][$key])
+      {
+        $countEndTags[$tagname] = isset($countEndTags[$tagname]) ? $countEndTags[$tagname] + 1 : 1;
+      }
+      else
+      {
+        $countStartTags[$tagname] = isset($countStartTags[$tagname]) ? $countStartTags[$tagname] + 1 : 1;
+      }
+    }
+
+    foreach ($countStartTags as $k => $v)
+    {
+      if ($v <= (int)$countEndTags[$k])
+      {
+        continue;
+      }
+      for ($i = 1; $i <= $v - (int)$countEndTags[$k]; $i++)
+      {
+        $string .= sprintf('</%s>', $k);
+      }
+    }
+
+    return $string;
   }
 
   static protected function getHtmlAttribute($matches)
