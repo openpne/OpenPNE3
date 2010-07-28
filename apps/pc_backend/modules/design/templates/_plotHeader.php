@@ -8,6 +8,11 @@ function showModalOnParent(url)
   var modalIframe = modalContents.getElementsByTagName('iframe')[0];
   modalIframe.src = url;
   modalContents.setStyle(parent.getCenterMuchScreen(modalContents));
+
+  modal.style.height = (parent.document.documentElement.scrollHeight || parent.document.body.scrollHeight) + 'px';
+  modal.style.width = (parent.document.documentElement.scrollWidth || parent.document.body.scrollWidth) + 'px';
+  modal.style.position = 'absolute';
+
   new Effect.Appear(modal, {from:0, to:0.7, duration: 0.5, fps: 100});
   new Effect.Appear(modalContents, {from:0, to:1.0, duration: 0.6});
 }
@@ -15,11 +20,10 @@ function showModalOnParent(url)
 function insertHiddenTags(type, ids)
 {
   var form = parent.document.getElementById('gadgetForm');
-  var hiddens = form.getElementsByClassName(type + 'Gadget');
-
-  while (hiddens.length)
+  var hiddens = Element.select(form, '.' + type + 'Gadget');
+  for (var i = 0; i < hiddens.length; i++)
   {
-    Element.remove(hiddens[0]);
+    Element.remove(hiddens[i]);
   }
 
   for (var i = 0; i < ids.length; i++)
@@ -29,7 +33,7 @@ function insertHiddenTags(type, ids)
       continue;
     }
 
-    var obj = document.createElement('input');
+    var obj = parent.document.createElement('input');
     obj.setAttribute('class', type + 'Gadget');
     obj.setAttribute('type', 'hidden');
     obj.setAttribute('name', 'gadget[' + type + '][' + i + ']');
@@ -41,12 +45,13 @@ function insertHiddenTags(type, ids)
 function dropNewGadget(type, name, obj)
 {
   var form = parent.document.getElementById('gadgetForm');
-  var hiddens = form.getElementsByClassName(type + 'New');
-  for (var i = 0; i < hiddens.length; i++)
+  var elements = form.elements;
+  var inputName = 'new[' + type + '][]';
+  for (var i = 0; i < elements.length; i++)
   {
-    if (hiddens[i].value == name)
+    if (elements[i].type == 'hidden' && elements[i].name == inputName && elements[i].value == name)
     {
-      Element.remove(hiddens[i]);
+      Element.remove(elements[i]);
       break;
     }
   }
@@ -54,6 +59,5 @@ function dropNewGadget(type, name, obj)
 
   parent.adjustByIframeContens(this.frameElement);
 }
-
 ");
 ?>
