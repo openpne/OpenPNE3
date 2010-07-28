@@ -541,29 +541,14 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
     }
 
     sfConfig::set('sf_cache_dir', $newCacheDir);
-
-    $filesystem = new sfFilesystem();
-    $filesystem->mkdirs(sfConfig::get('sf_cache_dir'));
-
-    if ('\\' === DIRECTORY_SEPARATOR)  // Windows
+    if (is_dir($newCacheDir))
     {
-      $permission = substr(sprintf('%o', fileperms($newCacheDir)), -4);
-      if ('0777' !== $permission)
-      {
-        register_shutdown_function(array($this, 'removeCacheDir'));
-      }
+      $filesystem = new sfFilesystem();
+      $filesystem->mkdirs($newCacheDir);
+      $filesystem->chmod($newCacheDir, 0777);
     }
 
     parent::setCacheDir($newCacheDir);
-  }
-
-  public function removeCacheDir()
-  {
-    $dir = sfConfig::get('sf_cache_dir');
-
-    $filesystem = new sfFilesystem();
-    $filesystem->remove(sfFinder::type('any')->in($dir));
-    $filesystem->remove($dir);
   }
 
   public function generateAppUrl($application, $parameters = array(), $absolute = false)
