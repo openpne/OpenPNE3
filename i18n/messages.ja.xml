@@ -222,6 +222,18 @@
         <source>Invalid mobile_address.</source>
         <target>メールアドレスが無効です。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>"%value%" must be at least %min%.</source>
+        <target>%min%以上でなければなりません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>"%value%" must be at most %max%.</source>
+        <target>%max%以下でなければなりません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Value must be less than or equal to Minimum value.</source>
+        <target>最小値以下でなければなりません。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
