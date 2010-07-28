@@ -58,7 +58,7 @@ all:
   storage:
     class: sfSessionStorage
     param:
-      session_name: OpenPNE_pc_frontend
+      session_name: OpenPNE_smartphone_frontend
 
   logger:
     class: sfAggregateLogger
