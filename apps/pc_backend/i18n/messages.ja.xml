@@ -1095,14 +1095,6 @@
         <target>Web への公開の許可</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Allow</source>
-        <target>表示する</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Deny</source>
-        <target>表示しない</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Fixed</source>
         <target>固定</target>
       </trans-unit>
@@ -1173,10 +1165,6 @@
       <trans-unit id="">
         <source>※All the member's data in this entry will be lost.</source>
         <target>※この項目に対するメンバーの入力値も失われます。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Delete</source>
-        <target>削除する</target>
       </trans-unit>
       <trans-unit id="">
         <source>Option name (%language%)</source>
