@@ -32,13 +32,22 @@ class CommunityForm extends BaseCommunityForm
     {
       $q->andWhere('is_allow_member_community = 1');
     }
-    $this->setWidget('community_category_id', new sfWidgetFormDoctrineChoice(array(
-      'model'       => 'CommunityCategory',
-      'add_empty'   => true,
-      'query'    => $q,
-    )));
+    $communityCategories = $q->execute();
+    if (0 < count($communityCategories))
+    {
+      $choices = array();
+      foreach ($communityCategories as $category)
+      {
+        $choices[$category->id] = $category->name;
+      }
+      $this->setWidget('community_category_id', new sfWidgetFormChoice(array('choices' => array('' => '') + $choices)));
+      $this->widgetSchema->setLabel('community_category_id', '%community% Category');
+    }
+    else
+    {
+      unset($this['community_category_id']);
+    }
 
-    $this->widgetSchema->setLabel('community_category_id', '%community% Category');
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
 
     $uniqueValidator = new sfValidatorDoctrineUnique(array('model' => 'Community', 'column' => array('name')));
