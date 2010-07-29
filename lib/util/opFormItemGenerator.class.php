@@ -181,25 +181,31 @@ class opFormItemGenerator
 
     if ($field['ValueType'] === 'integer' || $field['FormType'] === 'date')
     {
-        if (!empty($field['ValueMin']))
-        {
-          $option['min'] = $field['ValueMin'];
-        }
-        if (!empty($field['ValueMax']))
-        {
-          $option['max'] = $field['ValueMax'];
-        }
+      if (!empty($field['ValueMin']))
+      {
+        $option['min'] = $field['ValueMin'];
+      }
+      if (!empty($field['ValueMax']))
+      {
+        $option['max'] = $field['ValueMax'];
+      }
     }
     else
     {
-        if (isset($field['ValueMin']))
+      if (isset($field['ValueMin']))
+      {
+        $option['min_length'] = $field['ValueMin'];
+      }
+      if (isset($field['ValueMax']))
+      {
+        $option['max_length'] = $field['ValueMax'];
+
+        if (1 > (int)$field['ValueMax'] || (isset($field['ValueMin']) && (int)$field['ValueMin'] > (int)$field['ValueMax']))
         {
-          $option['min_length'] = $field['ValueMin'];
+          unset($option['min_length']);
+          unset($option['max_length']);
         }
-        if (isset($field['ValueMax']))
-        {
-          $option['max_length'] = $field['ValueMax'];
-        }
+      }
     }
 
     if ($field['FormType'] === 'date')
