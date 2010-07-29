@@ -47,7 +47,7 @@ class opMemberProfileSearchForm extends sfForm
 
     foreach ($this->getProfiles() as $profile)
     {
-      if (ProfileTable::PUBLIC_FLAG_PRIVATE == $profile->default_public_flag)
+      if (ProfileTable::PUBLIC_FLAG_PRIVATE == $profile->default_public_flag && !$profile->is_edit_public_flag)
       {
         continue;
       }
