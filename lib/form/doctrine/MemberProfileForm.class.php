@@ -143,6 +143,14 @@ class MemberProfileForm extends sfForm
 
     foreach ($profiles as $profile)
     {
+      if ('mobile_frontend' === sfConfig::get('sf_app'))
+      {
+        if ('op_preset_country' === $profile->getName() || 'op_preset_region' === $profile->getName())
+        {
+          continue;
+        }
+      }
+
       $profileI18n = $profile->Translation[sfContext::getInstance()->getUser()->getCulture()]->toArray();
       $profileWithI18n = $profile->toArray() + $profileI18n;
 
