@@ -302,7 +302,7 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
   static protected function htmlTagFollowup($string)
   {
     $countStartTags = $countEndTags = array();
-    preg_match_all('/(?:<)(\/?)(\w+)?(?:\s+.*?)?(\/?)(?:>)/i', $string, $matches);
+    preg_match_all('/<(\/?)(\w+)?(?:\s+.*?)?(\/?)>/', $string, $matches);
     foreach ($matches[2] as $key => $value)
     {
       $tagname = strtolower($value);
@@ -322,11 +322,15 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
 
     foreach ($countStartTags as $k => $v)
     {
-      if ($v <= (int)$countEndTags[$k])
+      if (!isset($countEndTags[$k]))
+      {
+        $countEndTags[$k] = 0;
+      }
+      if ($v <= $countEndTags[$k])
       {
         continue;
       }
-      for ($i = 1; $i <= $v - (int)$countEndTags[$k]; $i++)
+      for ($i = 1; $i <= $v - $countEndTags[$k]; $i++)
       {
         $string .= sprintf('</%s>', $k);
       }
