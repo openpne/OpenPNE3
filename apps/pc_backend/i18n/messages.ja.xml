@@ -1095,6 +1095,14 @@
         <target>Web への公開の許可</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Allow</source>
+        <target>許可</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Deny</source>
+        <target>禁止</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Fixed</source>
         <target>固定</target>
       </trans-unit>
