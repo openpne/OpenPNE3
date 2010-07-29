@@ -229,11 +229,7 @@ class communityActions extends sfActions
     $category = Doctrine::getTable('CommunityCategory')->find($request->getParameter('id'));
     $this->forward404Unless($category);
 
-    if ($category->isRoot())
-    {
-      $category->deleteAllChildren();
-    }
-    $category->delete();
+    $category->getNode()->delete();
 
     $this->getUser()->setFlash('notice', 'Deleted.');
     $this->redirect('community/categoryList');
