@@ -58,6 +58,10 @@ class navigationActions extends sfActions
       $type = $params['type'];
       $this->forward404Unless(isset($this->list[$type]));
       $count = count($this->list[$type]);
+      if (!isset($params['id']))
+      {
+        $params['id'] = 0;
+      }
       if ($params['id'])
       {
         for ($i = 0; $i < $count - 1; $i++)
