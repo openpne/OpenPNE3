@@ -122,8 +122,9 @@ class ProfileForm extends BaseProfileForm
       $validatorArgs = array(
         'required' => false,
         'trim' => true,
-        'with_time' => true,
-        'datetime_output' => 'Y/m/d',
+        'date_format' => '/^(?P<year>\d{4})\/(?P<month>\d{1,2})\/(?P<day>\d{1,2})$/',
+        'date_output' => 'Y/m/d',
+        'date_format_error' => 'YYYY/MM/DD',
       );
       $validatorMin = new opValidatorDate($validatorArgs);
       $validatorMax = new opValidatorDate($validatorArgs);
@@ -160,6 +161,7 @@ class ProfileForm extends BaseProfileForm
         throw new sfValidatorErrorSchema($validator, array('value_max' => new sfValidatorError($validator, 'invalid')));
       }
     }
+
     return $params;
   }
 

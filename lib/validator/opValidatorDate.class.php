@@ -56,7 +56,7 @@ class opValidatorDate extends sfValidatorDate
       $max = new DateTime($this->getOption('max'));
       if ($max && $clean->format('U') > $max->format('U'))
       {
-        throw new sfValidatorError($this, 'max', array('max' => $max->format('Y-m-d')));
+        throw new sfValidatorError($this, 'max', array('max' => $max->format($this->getOption('date_format_range_error'))));
       }
     }
 
@@ -65,7 +65,7 @@ class opValidatorDate extends sfValidatorDate
       $min = new DateTime($this->getOption('min'));
       if ($min && $clean->format('U') < $min->format('U'))
       {
-        throw new sfValidatorError($this, 'min', array('min' => $min->format('Y-m-d')));
+        throw new sfValidatorError($this, 'min', array('min' => $min->format($this->getOption('date_format_range_error'))));
       }
     }
 
@@ -91,7 +91,7 @@ class opValidatorDate extends sfValidatorDate
     // all elements must be empty or a number
     foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
     {
-      if (isset($value[$key]) && !preg_match('#^\d+$#', $value[$key]) && !empty($value[$key]))
+      if (isset($value[$key]) && !preg_match('#^\d+$#', $value[$key]) && 0 !== (int)$value[$key])
       {
         throw new sfValidatorError($this, 'invalid', array('value' => $value));
       }
