@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>PC frontend</source>
+        <target>ナビ設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Mobile frontend</source>
+        <target>携帯版ナビ設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Administration</source>
+        <target>管理画面ナビ設定</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
