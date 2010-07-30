@@ -54,6 +54,7 @@ class navigationActions extends sfActions
     if ($request->isMethod(sfWebRequest::POST))
     {
       $params = $request->getParameter('nav');
+      $this->forward404Unless(isset($params['type']));
       $type = $params['type'];
       $this->forward404Unless(isset($this->list[$type]));
       $count = count($this->list[$type]);
