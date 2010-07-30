@@ -58,7 +58,7 @@ class navigationActions extends sfActions
       $count = count($this->list[$type]);
       if ($params['id'])
       {
-        for ($i=0;$i<$count-1;$i++)
+        for ($i = 0; $i < $count - 1; $i++)
         {
           if ($params['id'] === $this->list[$type][$i]->getObject()->id)
           {
@@ -69,7 +69,7 @@ class navigationActions extends sfActions
       }
       else
       {
-        $this->list[$type][$count-1]->bind($params);
+        $this->list[$type][$count - 1]->bind($params);
       }
     }
   }
