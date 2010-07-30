@@ -99,7 +99,7 @@ class navigationActions extends sfActions
       }
     }
 
-    $this->forward('navigation','list');
+    $this->forward('navigation', 'list');
   }
 
  /**
