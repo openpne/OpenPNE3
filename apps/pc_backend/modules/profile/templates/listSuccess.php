@@ -34,7 +34,17 @@
 <td><?php echo $value->getName() ?></td>
 <td><?php echo ($value->getIsRequired() ? '○' : '×') ?></td>
 <td><?php echo ($value->getIsEditPublicFlag() ? '○' :'×') ?></td>
-<td><?php echo (Doctrine::getTable('Profile')->getPublicFlag($value->getDefaultPublicFlag())) ?></td>
+<td>
+<?php
+if (ProfileTable::PUBLIC_FLAG_FRIEND == $value->getDefaultPublicFlag())
+{
+  echo __('My Friends');
+}
+else
+{
+  echo (Doctrine::getTable('Profile')->getPublicFlag($value->getDefaultPublicFlag()));
+}
+?></td>
 <td><?php echo ($value->getIsUnique() ? '×' :'○') ?></td>
 <td><?php echo $value->getFormType() ?></td>
 <td>

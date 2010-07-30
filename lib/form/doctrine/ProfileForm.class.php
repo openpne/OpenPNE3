@@ -21,32 +21,38 @@ class ProfileForm extends BaseProfileForm
   {
     unset($this['created_at'], $this['updated_at']);
 
-    $i18n = sfContext::getInstance()->getI18n();
+    $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('profile_form');
     
-    $isDispOption = array('choices' => array('1' => $i18n->__('Allow'), '0' => $i18n->__('Deny')));
+    $isDispOption = array('choices' => array('1' => 'Allow', '0' => 'Deny'));
+    $publicFlags = Doctrine::getTable('Profile')->getPublicFlags();
+    if (isset($publicFlags[ProfileTable::PUBLIC_FLAG_FRIEND]))
+    {
+      $publicFlags[ProfileTable::PUBLIC_FLAG_FRIEND] = 'My Friends';
+    }
     $this->setWidgets(array(
-      'name' => new sfWidgetFormInput(),
-      'is_edit_public_flag' => new sfWidgetFormSelectRadio(array('choices' => array('0' => $i18n->__('Fixed'), '1' => $i18n->__('Allow member to select')))),
-      'default_public_flag' => new sfWidgetFormSelect(array('choices' => Doctrine::getTable('Profile')->getPublicFlags())),
+      'name' => new sfWidgetFormInputText(),
+      'is_public_web' => new sfWidgetFormSelectRadio(array('choices' => array('0' => 'Deny', '1' => 'Allow'))),
+      'is_edit_public_flag' => new sfWidgetFormSelectRadio(array('choices' => array('0' => 'Fixed', '1' => 'Allow member to select'))),
+      'default_public_flag' => new sfWidgetFormSelect(array('choices' => $publicFlags)),
       'is_disp_regist' => new sfWidgetFormSelectRadio($isDispOption),
       'is_disp_config' => new sfWidgetFormSelectRadio($isDispOption),
       'is_disp_search' => new sfWidgetFormSelectRadio($isDispOption),
       'form_type' => new sfWidgetFormSelect(array('choices' => array(
-        'input'    => $i18n->__('Text'),
-        'textarea' => $i18n->__('Paragraph text'),
-        'select'   => $i18n->__('Single choice (Dropdown)'),
-        'radio'    => $i18n->__('Single choice (Radio)'),
-        'checkbox' => $i18n->__('Multiple choices (Checkbox)'),
-        'date'     => $i18n->__('Date'),
+        'input'    => 'Text',
+        'textarea' => 'Paragraph text',
+        'select'   => 'Single choice (Dropdown)',
+        'radio'    => 'Single choice (Radio)',
+        'checkbox' => 'Multiple choices (Checkbox)',
+        'date'     => 'Date',
       ))),
       'value_type' => new sfWidgetFormSelect(array('choices' => array(
-        'string' => $i18n->__('String'),
-        'integer' => $i18n->__('Number'),
-        'email' => $i18n->__('Email'),
-        'url' => $i18n->__('URL'),
-        'regexp' => $i18n->__('Regular expression'),
+        'string' => 'String',
+        'integer' => 'Number',
+        'email' => 'Email',
+        'url' => 'URL',
+        'regexp' => 'Regular expression',
       ))),
-      'is_unique' => new sfWidgetFormSelectRadio(array('choices' => array('0' => $i18n->__('Allow'), '1' => $i18n->__('Deny')))),
+      'is_unique' => new sfWidgetFormSelectRadio(array('choices' => array('0' => 'Allow', '1' => 'Deny'))),
       'sort_order' => new sfWidgetFormInputHidden(),
     ) + $this->getWidgetSchema()->getFields());
 
@@ -57,10 +63,11 @@ class ProfileForm extends BaseProfileForm
     );
 
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateName'))));
-    $this->setValidator('default_public_flag', new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('Profile')->getPublicFlags()))));
+    $this->setValidator('default_public_flag', new sfValidatorChoice(array('choices' => array_keys($publicFlags))));
     $this->setValidator('value_min', new sfValidatorPass());
     $this->setValidator('value_max', new sfValidatorPass());
     $this->setValidator('value_type', new sfValidatorString(array('required' => false, 'empty_value' => 'string')));
+    $this->setValidator('name', new opValidatorString(array('required' => true, 'trim' => true)));
 
     $this->widgetSchema->setLabels(array(
       'name' => 'Identification name',
@@ -75,7 +82,8 @@ class ProfileForm extends BaseProfileForm
       'value_max' => 'Maximum',
       'is_disp_regist' => 'New registration',
       'is_disp_config' => 'Change profile',
-      'is_disp_search' => 'Member search'
+      'is_disp_search' => 'Member search',
+      'is_public_web' => 'Make it public',
    ));
 
     $this->setDefaults($this->getDefaults() + array(
@@ -86,72 +94,32 @@ class ProfileForm extends BaseProfileForm
     ));
 
     $this->embedI18n(sfConfig::get('op_supported_languages'));
+
+    $this->widgetSchema->setHelp('is_public_web', 'Anyone in the world may view member profiles');
   }
 
   public function bind($params)
   {
-    if ('input' === $params['form_type'] || 'textarea' === $params['form_type'])
+    if ($params['form_type'] === 'input' || $params['form_type'] === 'textarea')
     {
-      $validatorArgs = array(
-        'required' => false,
-        'trim' => true,
-      );
-      $validatorMin = new sfValidatorInteger($validatorArgs);
-      $validatorMax = new sfValidatorInteger($validatorArgs);
-      if ('integer' !== $params['value_type'])
-      {
-        $validatorMin->setOption('min', 0);
-        $validatorMax->setOption('min', 1);
-      }
-
-      $this->setValidator('value_min', $validatorMin);
-      $this->setValidator('value_max', $validatorMax);
+      $validator = new sfValidatorInteger(array('required' => false));
+      $this->setValidator('value_min', $validator);
+      $validator = new sfValidatorInteger(array('required' => false));
+      $this->setValidator('value_max', $validator);
     }
-    elseif ('date' === $params['form_type'])
+    elseif ($params['form_type'] === 'date')
     {
-      $validatorArgs = array(
-        'required' => false,
-        'trim' => true,
-        'with_time' => true,
-        'datetime_output' => 'Y/m/d',
-        'min' => '0001/01/01',
-      );
-      $validatorMin = new opValidatorDate($validatorArgs);
-      $validatorMax = new opValidatorDate($validatorArgs);
-
-      $this->setValidator('value_min', $validatorMin);
-      $this->setValidator('value_max', $validatorMax);
+      $validator = new opValidatorDate(array('required' => false));
+      $this->setValidator('value_min', $validator);
+      $validator = new opValidatorDate(array('required' => false));
+      $this->setValidator('value_max', $validator);
     }
     elseif ($params['value_min'] || $params['value_max'])
     {
       throw new sfValidatorError($validator, 'invalid');
     }
 
-    $this->validatorSchema->setPostValidator(new sfValidatorCallback(
-      array('callback' => array($this, 'compareMinAndMax')),
-      array('invalid' => 'Value must be less than or equal to Minimum value.')
-    ));
-
     return parent::bind($params);
-  }
-
-  public function compareMinAndMax(sfValidatorBase $validator, $params)
-  {
-    $value_min = $params['value_min'];
-    $value_max = $params['value_max'];
-    if (!is_null($value_min) && !is_null($value_max))
-    {
-      if ('date' !== $params['form_type'])
-      {
-        $value_min = (int)$value_min;
-        $value_max = (int)$value_max;
-      }
-      if ($value_min > $value_max)
-      {
-        throw new sfValidatorErrorSchema($validator, array('value_max' => new sfValidatorError($validator, 'invalid')));
-      }
-    }
-    return $params;
   }
 
   static public function validateName($validator, $values)
