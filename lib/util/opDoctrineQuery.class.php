@@ -123,7 +123,7 @@ class opDoctrineQuery extends Doctrine_Query
       return self::getMasterConnectionDirect();
     }
 
-    elseif (self::SELECT === $queryType && !$shouldGoToMaster)
+    elseif (0 == self::getMasterConnection()->transaction->getState() && (self::SELECT === $queryType && !$shouldGoToMaster))
     {
       return self::getSlaveConnection();
     }
