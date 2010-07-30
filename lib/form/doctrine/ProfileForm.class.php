@@ -119,6 +119,7 @@ class ProfileForm extends BaseProfileForm
         'trim' => true,
         'with_time' => true,
         'datetime_output' => 'Y/m/d',
+        'min' => '0001/01/01',
       );
       $validatorMin = new opValidatorDate($validatorArgs);
       $validatorMax = new opValidatorDate($validatorArgs);
