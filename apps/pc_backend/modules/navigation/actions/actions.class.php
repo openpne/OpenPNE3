@@ -51,10 +51,11 @@ class navigationActions extends sfActions
       $this->list[$type][] = new NavigationForm($nav);
     }
     
-    if ($request->isMethod('post'))
+    if ($request->isMethod(sfWebRequest::POST))
     {
       $params = $request->getParameter('nav');
       $type = $params['type'];
+      $this->forward404Unless(isset($this->list[$type]));
       $count = count($this->list[$type]);
       if ($params['id'])
       {
