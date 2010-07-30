@@ -23,7 +23,7 @@ class ProfileForm extends BaseProfileForm
 
     $i18n = sfContext::getInstance()->getI18n();
     
-    $isDispOption = array('choices' => array('1' => $i18n->__('Allow'), '0' => $i18n->__('Deny')));
+    $isDispOption = array('choices' => array('1' => $i18n->__('Show'), '0' => $i18n->__('Hide')));
     $this->setWidgets(array(
       'name' => new sfWidgetFormInput(),
       'is_edit_public_flag' => new sfWidgetFormSelectRadio(array('choices' => array('0' => $i18n->__('Fixed'), '1' => $i18n->__('Allow member to select')))),
