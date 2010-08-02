@@ -183,11 +183,11 @@ class opFormItemGenerator
 
     if ($field['ValueType'] === 'integer' || $field['FormType'] === 'date')
     {
-      if (!empty($field['ValueMin']))
+      if (isset($field['ValueMin']))
       {
         $option['min'] = $field['ValueMin'];
       }
-      if (!empty($field['ValueMax']))
+      if (isset($field['ValueMax']))
       {
         $option['max'] = $field['ValueMax'];
       }
