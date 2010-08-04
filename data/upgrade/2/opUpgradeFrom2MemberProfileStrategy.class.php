@@ -42,7 +42,7 @@ class opUpgradeFrom2MemberProfileStrategy extends opUpgradeAbstractStrategy
     $ids = $this->conn->fetchColumn('SELECT c_profile_id FROM c_profile WHERE name NOT IN (?, ?, ?, ?)', array('self_intro', 'PNE_POINT', 'PNE_MY_NEWS', 'PNE_MY_NEWS_DATETIME'));
     $idStr = implode(',', array_fill(0, count($ids), '?'));
 
-    $this->conn->execute('INSERT INTO profile (id, name, is_required, is_unique, is_edit_public_flag, default_public_flag, form_type, value_type, is_disp_regist, is_disp_config, is_disp_search, value_regexp, value_min, value_max, sort_order, created_at, updated_at) (SELECT c_profile_id, name, is_required, 0, public_flag_edit, public_flag_default, form_type, val_type, disp_regist, disp_config, disp_search, val_regexp, val_min, val_max, sort_order, NOW(), NOW() FROM c_profile WHERE c_profile_id IN ('.$idStr.')) LIMIT 16', $ids);
+    $this->importProfile($ids, $idStr);
     $this->conn->execute('INSERT INTO profile_translation (id, caption, info, lang) (SELECT c_profile_id, caption, info, "ja_JP" FROM c_profile WHERE c_profile_id IN ('.$idStr.')) LIMIT 16', $ids);
 
     $this->conn->execute('INSERT INTO profile_option (id, profile_id, sort_order, created_at, updated_at) (SELECT c_profile_option_id, c_profile_id, sort_order, NOW(), NOW() FROM c_profile_option WHERE c_profile_id IN ('.implode(',', array_fill(0, count($ids), '?')).'))', $ids);
@@ -56,6 +56,22 @@ class opUpgradeFrom2MemberProfileStrategy extends opUpgradeAbstractStrategy
     $this->conn->execute('DROP TABLE c_member_profile');
     $this->conn->execute('DROP TABLE c_profile');
     $this->conn->execute('DROP TABLE c_profile_option');
+  }
+
+  protected function importProfile($ids, $idStr)
+  {
+    $list = $this->conn->fetchAll('SELECT c_profile_id, name, is_required, public_flag_edit, public_flag_default, form_type, val_type, disp_regist, disp_config, disp_search, val_regexp, val_min, val_max, sort_order FROM c_profile WHERE c_profile_id IN ('.$idStr.') LIMIT 16', $ids);
+    foreach ($list as $profile)
+    {
+      $valMin = (0 == $profile['val_min']) ? null : $profile['val_min'];
+      $valMax = (0 == $profile['val_max']) ? null : $profile['val_max'];
+
+      $this->conn->execute('INSERT INTO profile (id, name, is_required, is_unique, is_edit_public_flag, default_public_flag, form_type, value_type, is_disp_regist, is_disp_config, is_disp_search, value_regexp, value_min, value_max, sort_order, created_at, updated_at) VALUES (?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())', array(
+        $profile['c_profile_id'] , $profile['name']     , $profile['is_required'] , $profile['public_flag_edit'] , $profile['public_flag_default'] ,
+        $profile['form_type']    , $profile['val_type'] , $profile['disp_regist'] , $profile['disp_config']      , $profile['disp_search']         ,
+        $profile['val_regexp']   , $valMin              , $valMax                 , $profile['sort_order']
+      ));
+    }
   }
 
   protected function importTreeMemberProfile($ids, $idStr)
