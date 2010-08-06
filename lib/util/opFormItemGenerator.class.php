@@ -287,6 +287,9 @@ class opFormItemGenerator
       // doesn't allow searching
       case 'increased_input':
       case 'language_select':
+      case 'password':
+        $obj = null;
+        break;
       // country
       case 'country_select':
         $info = sfCultureInfo::getInstance(sfContext::getInstance()->getUser()->getCulture());
@@ -315,9 +318,6 @@ class opFormItemGenerator
         $list = opToolkit::arrayMapRecursive(array(sfContext::getInstance()->getI18N(), '__'), $list);
         $params['choices'] = array('' => '')+ $list;
         $obj = new sfWidgetFormChoice($params);
-        break;
-      case 'password':
-        $obj = null;
         break;
       // date
       case 'date':
@@ -360,14 +360,14 @@ class opFormItemGenerator
       case 'date':
         $q->andWhere($column.' LIKE ?', $value);
         break;
-      case 'country_select':
-      case 'region_select':
-        $q->andWhere($column.' = ?', $value);
-        break;
       // doesn't allow searching
       case 'increased_input':
       case 'language_select':
       case 'password':
+        break;
+      case 'country_select':
+      case 'region_select':
+        $q->andWhere($column.' = ?', $value);
         break;
       // text and something else
       default:
