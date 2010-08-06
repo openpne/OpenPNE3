@@ -360,14 +360,17 @@ class opFormItemGenerator
       case 'date':
         $q->andWhere($column.' LIKE ?', $value);
         break;
-      case 'country_select':
-      case 'region_select':
-        $q->andWhere($column.' = ?', $value);
-        break;
       // doesn't allow searching
       case 'increased_input':
       case 'language_select':
+      case 'country_select':
+        $q->andWhere($column.' = ?', $value);
+        break;
+      case 'region_select':
+        $q->andWhere($column.' = ?', $value);
+        break;
       case 'password':
+        // pass
         break;
       // text and something else
       default:
