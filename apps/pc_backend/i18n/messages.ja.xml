@@ -49,7 +49,7 @@
         <target>全員に公開</target>
       </trans-unit>
       <trans-unit id="">
-        <source>%my_friends%</source>
+        <source>My Friends</source>
         <target>マイフレンドまで公開</target>
       </trans-unit>
       <trans-unit id="">
