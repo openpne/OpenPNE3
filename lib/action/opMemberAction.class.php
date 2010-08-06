@@ -185,7 +185,7 @@ abstract class opMemberAction extends sfActions
     {
       $this->member = $this->getRoute()->getObject();
     }
-    
+
     if (!$this->friendsSize)
     {
       $this->friendsSize = 9;
@@ -337,7 +337,7 @@ abstract class opMemberAction extends sfActions
         $this->redirect('member/invite');
       }
     }
- 
+
     return sfView::INPUT;
   }
 
@@ -424,6 +424,22 @@ abstract class opMemberAction extends sfActions
     if ($ignoredSnsConfig)
     {
       $ignoredSnsConfig = unserialize($ignoredSnsConfig);
+    }
+
+    if (isset($categories['mail']))
+    {
+      if (sfConfig::get('sf_app') == 'pc_frontend')
+      {
+        $dailyNewsNotification = Doctrine::getTable('NotificationMail')->findOneByName('pc_dailyNews');
+      }
+      elseif (sfConfig::get('sf_app') == 'mobile_frontend')
+      {
+        $dailyNewsNotification = Doctrine::getTable('NotificationMail')->findOneByName('mobile_dailyNews');
+      }
+      if ($dailyNewsNotification && !$dailyNewsNotification->is_enabled)
+      {
+        unset($categories['mail']);
+      }
     }
 
     foreach ($categories as $key => $value)
