@@ -51,14 +51,20 @@ class navigationActions extends sfActions
       $this->list[$type][] = new NavigationForm($nav);
     }
     
-    if ($request->isMethod('post'))
+    if ($request->isMethod(sfWebRequest::POST))
     {
       $params = $request->getParameter('nav');
+      $this->forward404Unless(isset($params['type']));
       $type = $params['type'];
+      $this->forward404Unless(isset($this->list[$type]));
       $count = count($this->list[$type]);
+      if (!isset($params['id']))
+      {
+        $params['id'] = 0;
+      }
       if ($params['id'])
       {
-        for ($i=0;$i<$count-1;$i++)
+        for ($i = 0; $i < $count - 1; $i++)
         {
           if ($params['id'] === $this->list[$type][$i]->getObject()->id)
           {
@@ -69,7 +75,7 @@ class navigationActions extends sfActions
       }
       else
       {
-        $this->list[$type][$count-1]->bind($params);
+        $this->list[$type][$count - 1]->bind($params);
       }
     }
   }
@@ -105,7 +111,7 @@ class navigationActions extends sfActions
       }
     }
 
-    $this->forward('navigation','list');
+    $this->forward('navigation', 'list');
   }
 
  /**
