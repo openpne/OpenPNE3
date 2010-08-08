@@ -415,6 +415,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
 
   public function executeDeleteImage($request)
   {
+    $request->checkCSRFProtection();
     $image = Doctrine::getTable('MemberImage')->find($request->getParameter('member_image_id'));
     $this->forward404Unless($image);
     $this->forward404Unless($image->getMemberId() == $this->getUser()->getMemberId());
@@ -426,6 +427,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
 
   public function executeChangeMainImage($request)
   {
+    $request->checkCSRFProtection();
     $image = Doctrine::getTable('MemberImage')->find($request->getParameter('member_image_id'));
     $this->forward404Unless($image);
     $this->forward404Unless($image->getMemberId() == $this->getUser()->getMemberId());
