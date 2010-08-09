@@ -29,11 +29,13 @@ op_include_parts('nineTable', 'frendList', $options);
 <?php end_slot(); ?>
 
 <?php
-$list = array(
-  __('%community% Name', array('%community%' => $op_term['community']->titleize()))     => $community->getName(),
-  __('%community% Category', array('%community%' => $op_term['community']->titleize())) => $community->getCommunityCategory(),
-  __('Date Created')       => op_format_date($community->getCreatedAt(), 'D'),
-  __('Administrator')      => link_to($communityAdmin->getName(), '@member_profile?id='.$communityAdmin->getId()),
+$list = array(__('%community% Name', array('%community%' => $op_term['community']->titleize())) => $community->getName());
+if ($community->community_category_id)
+{
+  $list[__('%community% Category', array('%community%' => $op_term['community']->titleize()))] = $community->getCommunityCategory();
+}
+$list += array(__('Date Created')       => op_format_date($community->getCreatedAt(), 'D'),
+               __('Administrator')      => link_to($communityAdmin->getName(), '@member_profile?id='.$communityAdmin->getId()),
 );
 $subAdminCaption = '';
 foreach ($communitySubAdmins as $m)
