@@ -50,7 +50,7 @@ class navigationActions extends sfActions
       $nav->setType($type);
       $this->list[$type][] = new NavigationForm($nav);
     }
-    
+
     if ($request->isMethod(sfWebRequest::POST))
     {
       $params = $request->getParameter('nav');
