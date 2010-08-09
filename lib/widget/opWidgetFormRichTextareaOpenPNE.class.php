@@ -361,14 +361,20 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
   static public function opColorToHtml($isEndtag, $tagname, $attributes, $isUseStylesheet)
   {
     $options = array();
+    $code = isset($attributes['code']) ? $attributes['code'] : '';
+    if (!($code && preg_match('/^#[0-9a-fA-F]{6}$/', $code)))
+    {
+      $code = '';
+    }
+
     if ($isUseStylesheet)
     {
       if ($isEndtag) {
         return '</span>';
       }
       $options['class'] = strtr($tagname, ':', '_');
-      if (isset($attributes['code'])) {
-        $options['style'] = 'color:'.$attributes['code'];
+      if ($code) {
+        $options['style'] = 'color:'.$code;
       }
 
       return tag('span', $options, true);
@@ -379,8 +385,8 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
       {
         return '</font>';
       }
-      if (isset($attributes['code'])) {
-        $options['color'] = $attributes['code'];
+      if ($code) {
+        $options['color'] = $code;
       }
 
       return tag('font', $options, true);
@@ -390,6 +396,13 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
   static public function opFontToHtml($isEndtag, $tagname, $attributes, $isUseStylesheet)
   {
     $options = array();
+
+    $color = isset($attributes['color']) ? $attributes['color'] : '';
+    if (!($color && preg_match('/^#[0-9a-fA-F]{6}$/', $color)))
+    {
+      $color = '';
+    }
+
     if ($isUseStylesheet)
     {
       if ($isEndtag) {
@@ -397,8 +410,8 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
       }
       $options['class'] = 'op_font';
       $options['style'] = '';
-      if (isset($attributes['color'])) {
-        $options['style'] .= 'color:'.$attributes['color'].';';
+      if ($color) {
+        $options['style'] .= 'color:'.$color.';';
       }
       $size = isset($attributes['size']) ? (int)$attributes['size'] : 0;
       $fontSizeMap = array(
@@ -411,7 +424,6 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
         7 => 'xx-large'
       );
       if (isset($fontSizeMap[$size])) {
-
         $options['style'] .= 'font-size:'.$fontSizeMap[$size];
       }
 
@@ -423,8 +435,8 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
       {
         return '</font>';
       }
-      if (isset($attributes['color'])) {
-        $options['color'] = $attributes['color'];
+      if ($color) {
+        $options['color'] = $color;
       }
       $size = isset($attributes['size']) ? (int)$attributes['size'] : 0;
       if ($size >= 1 && $size <= 7)
