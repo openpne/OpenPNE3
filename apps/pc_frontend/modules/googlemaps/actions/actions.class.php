@@ -17,11 +17,6 @@ class googlemapsActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->x = $request->getParameter('x');
-    $this->y = $request->getParameter('y');
-    $this->z = $request->getParameter('z');
-    $this->q = $request->getParameter('q');
-
     $this->mapType = 'G_NORMAL_MAP';
     switch ($request->getParameter('t'))
     {
