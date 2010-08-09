@@ -24,9 +24,14 @@
 <form action="<?php echo url_for('navigation/edit?app='.$sf_request->getParameter('app', 'pc')) ?>" method="post">
 <td>
 <?php echo $form->renderHiddenFields() ?>
-<?php echo $form['uri']->render() ?></td>
+<?php echo $form['uri']->renderError() ?>
+<?php echo $form['uri']->render() ?>
+</td>
 <?php foreach ($languages as $language): ?>
-<td><?php echo $form[$language]['caption']->render() ?></td>
+<td>
+<?php echo $form[$language]['caption']->renderError() ?>
+<?php echo $form[$language]['caption']->render() ?>
+</td>
 <?php endforeach; ?>
 <?php if ($form->isNew()) : ?>
 <td colspan="2"><input type="submit" value="<?php echo __('Add') ?>" /></td>
