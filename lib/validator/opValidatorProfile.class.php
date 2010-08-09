@@ -26,6 +26,7 @@ class opValidatorProfile extends sfValidatorBase
   {
     $this->addRequiredOption('validator');
     $this->addOption('is_edit_public_flag', false);
+    $this->setOption('required', $options['validator']->getOption('required'));
   }
 
   /**
@@ -34,10 +35,6 @@ class opValidatorProfile extends sfValidatorBase
   protected function doClean($value)
   {
     $clean = array();
-    if (!isset($value['value']))
-    {
-      throw new sfValidatorError($this, 'invalid');
-    }
     $clean['value'] = $this->getOption('validator')->clean($value['value']);
 
     if ($this->getOption('is_edit_public_flag'))
