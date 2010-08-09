@@ -112,8 +112,9 @@ abstract class sfOpenPNECommunityAction extends sfActions
 
     if ($request->isMethod('post'))
     {
-      if($request->hasParameter('is_delete'))
+      if ($request->hasParameter('is_delete'))
       {
+        $request->checkCSRFProtection();
         $community = CommunityPeer::retrieveByPk($this->id);
         if ($community)
         {
