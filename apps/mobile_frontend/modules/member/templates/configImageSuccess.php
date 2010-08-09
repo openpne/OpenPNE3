@@ -1,5 +1,7 @@
 <?php op_mobile_page_title(__('Settings'), __('Edit Photo')) ?>
 <center>
+<?php $form = new sfForm() ?>
+<?php $csrfToken = '&'.$form->getCSRFFieldName().'='.$form->getCSRFToken() ?>
 <?php $_member = $sf_user->getMember() ?>
 <?php $images = $_member->getMemberImages() ?>
 <?php for ($i = 0; $i < 3 && $i < count($images); $i++) : ?>
@@ -13,7 +15,7 @@ if ($image->getIsPrimary())
 }
 else
 {
-  $main = link_to(__('Main Photo'), 'member/changeMainImage?member_image_id='.$image->getId());
+  $main = link_to(__('Main Photo'), 'member/changeMainImage?member_image_id='.$image->getId().$csrfToken);
 }
 ?>
 <?php echo sprintf('[%s|%s]', link_to(__('Delete'), 'member/deleteImage?member_image_id='.$image->getId()), $main) ?>

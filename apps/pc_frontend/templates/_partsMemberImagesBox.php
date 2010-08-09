@@ -1,5 +1,7 @@
 <table>
 <tr>
+<?php $form = new sfForm() ?>
+<?php $csrfToken = '&'.$form->getCSRFFieldName().'='.$form->getCSRFToken() ?>
 <?php for ($i = 0; $i < 3; $i++) : ?>
 <td>
 <?php if (isset($options['images'][$i])) : ?>
@@ -7,11 +9,11 @@
 <?php echo image_tag_sf_image($image->getFile(), array('size' => '180x180')) ?><br />
 <?php if (isset($options['form'])) : ?>
 [
-<?php echo link_to(__('Delete'), 'member/deleteImage?member_image_id='.$image->getId()) ?> |
+<?php echo link_to(__('Delete'), 'member/deleteImage?member_image_id='.$image->getId().$csrfToken) ?> |
 <?php if ($image->getIsPrimary()) : ?>
 <?php echo(__('Main Photo')) ?>
 <?php else: ?>
-<?php echo link_to(__('Main Photo'), 'member/changeMainImage?member_image_id='.$image->getId()) ?>
+<?php echo link_to(__('Main Photo'), 'member/changeMainImage?member_image_id='.$image->getId().$csrfToken) ?>
 <?php endif; ?>
 ]
 <?php endif; ?>
