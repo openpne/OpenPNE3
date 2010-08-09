@@ -585,14 +585,14 @@
                         style += 'font-size:' + fontsize + ';';
                     }
 
-                    if (attributes["color"]) {
+                    if (attributes["color"] && attributes["color"].match(/^#[0-9a-fA-F]{6}$/)) {
                         style += 'color:' + attributes["color"] + ';';
                     }
                     opt = ' style="' + style + '"';
                 }
 
                 // old style
-                if (org_tagname == "color" && attributes["code"]) {
+                if (org_tagname == "color" && attributes["code"] && attributes["code"].match(/^#[0-9a-fA-F]{6}$/)) {
                     opt = ' style="color:' + attributes["code"] + ';"';
                 }
 
