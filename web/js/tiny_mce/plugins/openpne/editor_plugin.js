@@ -50,9 +50,9 @@ return result;};rep(/</gi,"&lt;");rep(/>/gi,"&gt;");rep(/\n/gi,"<br />");rep(/&l
 if(isEndTag){return"</"+tagname+">";}
 if(org_tagname=="font"){if(attributes["size"]){if(fontSizeMap[attributes["size"]-1]){fontsize=fontSizeMap[attributes["size"]-1];}
 style+='font-size:'+fontsize+';';}
-if(attributes["color"]){style+='color:'+attributes["color"]+';';}
+if(attributes["color"]&&attributes["color"].match(/^#[0-9a-fA-F]{6}$/)){style+='color:'+attributes["color"]+';';}
 opt=' style="'+style+'"';}
-if(org_tagname=="color"&&attributes["code"]){opt=' style="color:'+attributes["code"]+';"';}
+if(org_tagname=="color"&&attributes["code"]&&attributes["code"].match(/^#[0-9a-fA-F]{6}$/)){opt=' style="color:'+attributes["code"]+';"';}
 if(org_tagname=="large"){opt=' style="font-size:large"';}
 if(org_tagname=="small"){opt=' style="font-size:xx-small"';}
 return"<"+tagname+opt+">";});return s;}});tinymce.PluginManager.add('openpne',tinymce.plugins.OpenPNEPlugin);})();
