@@ -1137,6 +1137,22 @@
         <source>Option name (%language%)</source>
         <target>項目名 (%language%)</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Navigation settings</source>
+        <target>ナビ設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Top page</source>
+        <target>管理画面トップ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Logout</source>
+        <target>ログアウト</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%sns% Administration</source>
+        <target>%sns%管理画面</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
