@@ -68,8 +68,8 @@
 <?php else: ?>
 <tbody>
 <?php endif; ?>
-<form action="<?php echo url_for('profile/editOption?id=' . $form->getObject()->getId()) ?>" method="post">
 <tr>
+<form action="<?php echo url_for('profile/editOption?id='.$form->getObject()->getId()) ?>" method="post">
 <td><?php echo ($form->getObject()->isNew() ? '-' : $form->getObject()->getId()) ?></td>
 <td>
 <?php echo $form['ja_JP']['value']->render() ?>
@@ -87,9 +87,10 @@
 </td>
 </form>
 <td>
-<?php echo $form['id']->render() ?>
-<?php echo $form['profile_id']->render() ?>
-<form action="<?php echo url_for('profile/deleteOption?id=' . $form->getObject()->getId()) ?>" method="post">
+<form action="<?php echo url_for('profile/deleteOption?id='.$form->getObject()->getId()) ?>" method="post">
+<?php echo $form['id']->render(), "\n" ?>
+<?php echo $form['profile_id']->render(), "\n" ?>
+<?php $formCSRF = new sfForm(); ?><input type="hidden" name="<?php echo $formCSRF->getCSRFFieldName() ?>" value="<?php echo $formCSRF->getCSRFToken() ?>" />
 <input type="submit" value="削除" />
 </form>
 </td>

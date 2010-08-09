@@ -100,7 +100,9 @@ class profileActions extends sfActions
     $this->profile = ProfilePeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->profile);
 
-    if ($request->isMethod('post')) {
+    if ($request->isMethod('post'))
+    {
+      $request->checkCSRFProtection();
       $this->profile->delete();
       $this->redirect('profile/list');
     }
@@ -116,7 +118,9 @@ class profileActions extends sfActions
     $this->profileOption = ProfileOptionPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->profileOption);
 
-    if ($request->isMethod('post')) {
+    if ($request->isMethod('post'))
+    {
+      $request->checkCSRFProtection();
       $this->profileOption->delete();
     }
     $this->redirect('profile/list');
