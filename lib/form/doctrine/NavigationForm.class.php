@@ -18,7 +18,7 @@ class NavigationForm extends BaseNavigationForm
     ));
 
     $this->widgetSchema->setNameFormat('nav[%s]');
-    $this->embedI18n(sfConfig::get('op_supported_languages'));
+    $this->embedI18n(array('ja_JP'));
 
     unset($this['sort_order'], $this['created_at'], $this['updated_at']);
   }
