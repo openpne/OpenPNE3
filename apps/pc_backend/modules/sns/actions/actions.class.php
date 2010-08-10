@@ -115,6 +115,7 @@ class snsActions extends sfActions
 
   public function executeRichTextarea(sfWebRequest $request)
   {
+    $this->sortForm = new BaseForm();
     $this->configForm = new opRichTextareaOpenPNEConfigForm();
     $this->buttonConfigForm = new opRichTextareaOpenPNEButtonConfigForm();
     $this->buttonConfig = opWidgetFormRichTextareaOpenPNE::getAllButtons();
@@ -134,6 +135,8 @@ class snsActions extends sfActions
   {
     if ($request->isXmlHttpRequest())
     {
+      $request->checkCSRFProtection();
+
       $buttons = $request->getParameter('button');
       Doctrine::getTable('SnsConfig')->set('richtextarea_buttons_sort_order', serialize($buttons));
     }
