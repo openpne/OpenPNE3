@@ -59,6 +59,7 @@ class communityActions extends sfActions
 
     if ($request->isMethod(sfRequest::POST))
     {
+      $request->checkCSRFProtection();
       $this->community->delete();
       $this->getUser()->setFlash('notice', 'Deleted.');
       $this->redirect('community/list');
