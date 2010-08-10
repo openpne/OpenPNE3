@@ -24,7 +24,7 @@ class BannerImageForm extends BaseBannerImageForm
     $this->setWidget('url', new sfWidgetFormInputText(array(), array('size' => 40)));
     $this->setWidget('name', new sfWidgetFormInputText());
     $this->setValidators(array(
-      'file' => new opValidatorImageFile(),
+      'file' => new opValidatorImageFile(array('required' => $this->isNew())),
       'url' => new sfValidatorPass(),
       'name' => new sfValidatorPass(),
     ));
@@ -38,10 +38,6 @@ class BannerImageForm extends BaseBannerImageForm
 
   public function save()
   {
-    $file = new File();
-    $file->setFromValidatedFile($this->getValue('file'));
-    $file->setName('b_'.$file->getName());
-
     if ($this->isNew())
     {
       $bannerImage = new BannerImage();
@@ -50,7 +46,15 @@ class BannerImageForm extends BaseBannerImageForm
     {
       $bannerImage = $this->getObject();
     }
-    $bannerImage->setFile($file);
+
+    if ($this->getValue('file'))
+    {
+      $file = new File();
+      $file->setFromValidatedFile($this->getValue('file'));
+      $file->setName('b_'.$file->getName());
+      $bannerImage->setFile($file);
+    }
+
     $bannerImage->setUrl($this->getValue('url'));
     $bannerImage->setName($this->getValue('name'));
 
