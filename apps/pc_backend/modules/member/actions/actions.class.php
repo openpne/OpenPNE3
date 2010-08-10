@@ -72,6 +72,7 @@ class memberActions extends sfActions
     $this->form = new sfForm();
     if ($request->isMethod('post'))
     {
+      $request->checkCSRFProtection();
       $this->member->delete();
       $this->getUser()->setFlash('notice', sfContext::getInstance()->getI18N()->__('The member has been unsubscribed'));
       $this->redirect('member/list');
