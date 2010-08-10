@@ -38,5 +38,6 @@
   'tag'  => 'tbody',
   'only' => 'sortable',
   'format' => '/^button_(.*)$/',
-  'url'  => 'sns/changeRichTextareaButtonOrder'
+  'url'  => 'sns/changeRichTextareaButtonOrder',
+  'with' => 'Sortable.serialize("button")+"&'.urlencode($sortForm->getCSRFFieldName()).'='.urlencode($sortForm->getCSRFToken()).'"',
 )) ?>
