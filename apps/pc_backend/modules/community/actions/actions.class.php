@@ -117,7 +117,6 @@ class communityActions extends sfActions
    */
   public function executeRemoveDefaultCommunity(sfWebRequest $request)
   {
-    $request->checkCSRFProtection();
     $this->forward404Unless($request->hasParameter('id'));
     $this->community = Doctrine::getTable('Community')->find($request->getParameter('id'));
     $this->forward404Unless($this->community);
