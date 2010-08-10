@@ -6,10 +6,15 @@
 
 <p><?php echo __('本当にこのコミュニティを削除してもよろしいですか？') ?></p>
 
+<?php
+$form = new BaseForm();
+$csrfToken = '<input type="hidden" name="'.$form->getCSRFFieldName().'" value="'.$form->getCSRFToken().'"/>';
+?>
+
 <form action="<?php url_for('community/delete?id='.$community->getId()) ?>" method="post">
 <?php include_partial('community/communityInfo', array(
   'community' => $community,
-  'moreInfo' => array('<input type="submit" value="削除" />')
+  'moreInfo' => array($csrfToken.'<input type="submit" value="削除" />')
 )); ?>
 </form>
 
