@@ -232,6 +232,7 @@ abstract class sfOpenPNECommunityAction extends sfActions
   */
   public function executeJoinAccept($request)
   {
+    $request->checkCSRFProtection();
     $this->redirectUnless($this->isAdmin, '@error');
 
     $communityMember = CommunityMemberPeer::retrieveByMemberIdAndCommunityId($request->getParameter('member_id'), $this->id);
@@ -253,8 +254,9 @@ abstract class sfOpenPNECommunityAction extends sfActions
    */
   public function executeJoinReject($request)
   {
+    $request->checkCSRFProtection();
     $this->forward404Unless($this->isAdmin);
-    
+
     $communityMember = CommunityMemberPeer::retrieveByMemberIdAndCommunityId($request->getParameter('member_id'), $this->id);
     $this->forward404Unless($communityMember);
 

@@ -1,3 +1,4 @@
+<?php $form = new sfForm() ?>
 <?php foreach ($communityMembers as $communityMember) : ?>
 <p class="caution">
 <?php echo __('%1% send request for participation to %2%.', array(
@@ -6,6 +7,7 @@
 )) ?>
 &nbsp;
 <?php $param = 'id='.$communityMember->getCommunityId().'&member_id='.$communityMember->getMemberId(); ?>
+<?php $param .= '&'.$form->getCSRFFieldName().'='.$form->getCSRFToken() ?>
 <?php echo link_to(__('Permits'), 'community/joinAccept?'.$param) ?>
 &nbsp;
 <?php echo link_to(__('Refuses'), 'community/joinReject?'.$param) ?>
