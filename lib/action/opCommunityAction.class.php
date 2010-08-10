@@ -137,6 +137,7 @@ abstract class opCommunityAction extends sfActions
     {
       if($request->hasParameter('is_delete'))
       {
+        $request->checkCSRFProtection();
         $community = Doctrine::getTable('Community')->find($this->id);
         if ($community)
         {
