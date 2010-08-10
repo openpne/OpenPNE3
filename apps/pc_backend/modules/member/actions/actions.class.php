@@ -72,6 +72,7 @@ class memberActions extends sfActions
     $this->form = new sfForm();
     if ($request->isMethod('post'))
     {
+      $request->checkCSRFProtection();
       $this->member->delete();
       $this->getUser()->setFlash('notice', '退会が完了しました');
       $this->redirect('member/list');
