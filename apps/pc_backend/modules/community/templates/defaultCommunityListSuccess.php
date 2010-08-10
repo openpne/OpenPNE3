@@ -22,12 +22,16 @@
 <th>管理者名</th>
 <th>操作</th>
 </tr>
+<?php
+$form = new BaseForm();
+$csrfToken = '&'.$form->getCSRFFieldName().'='.$form->getCSRFToken();
+?>
 <?php foreach ($communities as $community): ?>
 <tr>
 <td><?php echo $community->getId() ?></td>
 <td><?php echo $community->getName() ?></td>
 <td><?php echo $community->getAdminMember()->getName() ?></td>
-<td><?php echo link_to('削除', 'community/removeDefaultCommunity?id='.$community->getId()) ?></td>
+<td><?php echo link_to('削除', 'community/removeDefaultCommunity?id='.$community->getId().$csrfToken) ?></td>
 </tr>
 <?php endforeach; ?>
 </table>
