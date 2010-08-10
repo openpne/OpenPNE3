@@ -274,6 +274,7 @@ class designActions extends sfActions
 
     if ($request->isMethod(sfWebRequest::POST))
     {
+      $request->checkCSRFProtection();
       $banner->delete();
       $this->redirect('design/banner');
     }
