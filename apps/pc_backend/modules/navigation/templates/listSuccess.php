@@ -54,7 +54,8 @@
 <?php echo sortable_element('type_'.str_replace(' ', '_', $type), array(
   'tag'  => 'tbody',
   'only' => 'sortable',
-  'url'  => 'navigation/sort'
+  'url'  => 'navigation/sort',
+  'with' => 'Sortable.serialize("type_'.str_replace(' ', '_', $type).'")+"&'.urlencode($sortForm->getCSRFFieldName()).'='.urlencode($sortForm->getCSRFToken()).'"',
 )) ?>
 
 <?php endforeach; ?>
