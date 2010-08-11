@@ -39,6 +39,8 @@ class profileActions extends sfActions
       $newProfileOption->setProfileId($value->getId());
       $this->option_form[$value->getId()][] = new ProfileOptionForm($newProfileOption);
     }
+
+    $this->tokenForm = new sfForm();
   }
 
  /**
@@ -135,6 +137,7 @@ class profileActions extends sfActions
   {
     if ($request->isXmlHttpRequest())
     {
+      $request->checkCSRFProtection();
       $order = $request->getParameter('profiles');
       for ($i = 0; $i < count($order); $i++)
       {
@@ -158,6 +161,7 @@ class profileActions extends sfActions
   {
     if ($request->isXmlHttpRequest())
     {
+      $request->checkCSRFProtection();
       $parameters = $request->getParameterHolder();
       $keys       = $parameters->getNames();
       foreach ($keys as $key)
