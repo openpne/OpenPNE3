@@ -229,7 +229,7 @@ class communityActions extends sfActions
     $category = Doctrine::getTable('CommunityCategory')->find($request->getParameter('id'));
     $this->forward404Unless($category);
 
-    $category->delete();
+    $category->getNode()->delete();
 
     $this->getUser()->setFlash('notice', 'Deleted.');
     $this->redirect('community/categoryList');

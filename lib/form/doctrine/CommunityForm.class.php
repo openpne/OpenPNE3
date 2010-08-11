@@ -32,12 +32,22 @@ class CommunityForm extends BaseCommunityForm
     {
       $q->andWhere('is_allow_member_community = 1');
     }
-    $this->setWidget('community_category_id', new sfWidgetFormDoctrineChoice(array(
-      'model'       => 'CommunityCategory',
-      'add_empty'   => false,
-      'query'    => $q,
-    )));
-    $this->widgetSchema->setLabel('community_category_id', '%community% Category');
+    $communityCategories = $q->execute();
+    if (0 < count($communityCategories))
+    {
+      $choices = array();
+      foreach ($communityCategories as $category)
+      {
+        $choices[$category->id] = $category->name;
+      }
+      $this->setWidget('community_category_id', new sfWidgetFormChoice(array('choices' => array('' => '') + $choices)));
+      $this->widgetSchema->setLabel('community_category_id', '%community% Category');
+    }
+    else
+    {
+      unset($this['community_category_id']);
+    }
+
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
 
     $uniqueValidator = new sfValidatorDoctrineUnique(array('model' => 'Community', 'column' => array('name')));
@@ -70,6 +80,11 @@ class CommunityForm extends BaseCommunityForm
 
   public function checkCreatable($validator, $value)
   {
+    if (empty($value['community_category_id']))
+    {
+      return $value;
+    }
+
     $category = Doctrine::getTable('CommunityCategory')->find($value['community_category_id']);
     if (!$category)
     {
