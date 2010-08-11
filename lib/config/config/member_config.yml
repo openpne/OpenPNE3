@@ -130,7 +130,7 @@ mail:
     IsRegist:   false
     IsConfig:   true
     IsUnique:   false
-    IsRequired: false
+    IsRequired: true
     IsConfirm:  false
     Default: 2
     Choices:
