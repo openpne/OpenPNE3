@@ -52,8 +52,9 @@
 <?php endforeach; ?>
 </table>
 <?php echo sortable_element('profiles',array(
-  'tag' => 'tbody',
-  'url' => 'profile/sortProfile'
+  'tag'  => 'tbody',
+  'url'  => 'profile/sortProfile',
+  'with' => 'Sortable.serialize("profiles")+"&'.urlencode($tokenForm->getCSRFFieldName()).'='.urlencode($tokenForm->getCSRFToken()).'"'
 )) ?>
 
 <h3><?php echo __('Option list')?></h3>
@@ -114,7 +115,8 @@
 <?php echo sortable_element('profile_options_'.$value->getId(),array(
   'tag'  => 'tbody',
   'only' => 'sortable',
-  'url'  => 'profile/sortProfileOption'
+  'url'  => 'profile/sortProfileOption',
+  'with' => 'Sortable.serialize("profile_options_'.$value->getId().'")+"&'.urlencode($tokenForm->getCSRFFieldName()).'='.urlencode($tokenForm->getCSRFToken()).'"'
 )) ?>
 <?php endif; ?>
 <?php endforeach; ?>
