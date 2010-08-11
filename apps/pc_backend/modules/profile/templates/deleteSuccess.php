@@ -3,5 +3,5 @@
 <p><?php echo __('※All the member\'s data in this entry will be lost.') ?></p>
 <form action="<?php echo url_for('profile/delete?id='.$profile->getId()) ?>" method="post">
 <?php $formCSRF = new sfForm(); ?><input type="hidden" name="<?php echo $formCSRF->getCSRFFieldName() ?>" value="<?php echo $formCSRF->getCSRFToken() ?>" />
-<input type="submit" value="<?php echo __('Delete')" ?> />
+<input type="submit" value="<?php echo __('Delete') ?>" />
 </form>
