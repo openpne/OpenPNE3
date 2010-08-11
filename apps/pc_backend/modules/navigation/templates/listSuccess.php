@@ -34,7 +34,12 @@
 <?php else : ?>
 <td><input type="submit" value="<?php echo __('Edit') ?>" /></td>
 </form>
-<td><form action="<?php echo url_for('navigation/delete?app='.$sf_request->getParameter('app', 'pc').'&id='.$form->getObject()->getId()) ?>" method="post" /><input type="submit" value="<?php echo __('Delete') ?>" /></form></td>
+<td>
+<form action="<?php echo url_for('navigation/delete?app='.$sf_request->getParameter('app', 'pc').'&id='.$form->getObject()->getId()) ?>" method="post">
+<?php echo $deleteForm ?>
+<input type="submit" value="<?php echo __('Delete') ?>" />
+</form>
+</td>
 <?php endif; ?>
 </tr>
 </tbody>
