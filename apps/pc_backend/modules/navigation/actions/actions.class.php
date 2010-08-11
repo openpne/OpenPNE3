@@ -37,6 +37,7 @@ class navigationActions extends sfActions
   {
     $this->list = array();
     $this->deleteForm = new BaseForm();
+    $this->sortForm = new BaseForm();
 
     $types = Doctrine::getTable('Navigation')->getTypesByAppName($request->getParameter('app', 'pc'));
 
@@ -125,6 +126,8 @@ class navigationActions extends sfActions
     {
       $this->forward404();
     }
+
+    $request->checkCSRFProtection();
 
     $parameters = $request->getParameterHolder();
     $keys = $parameters->getNames();
