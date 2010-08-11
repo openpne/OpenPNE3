@@ -29,7 +29,11 @@
 <?php else : ?>
 <td><input type="submit" value="<?php echo __('編集') ?>" /></td>
 </form>
-<td><form action="<?php echo url_for('navigation/delete?app='.$sf_request->getParameter('app', 'pc').'&id='.$form->getObject()->getId()) ?>" method="post" /><input type="submit" value="<?php echo __('削除') ?>" /></form></td>
+<td>
+<form action="<?php echo url_for('navigation/delete?app='.$sf_request->getParameter('app', 'pc').'&id='.$form->getObject()->getId()) ?>" method="post">
+<?php echo $deleteForm ?>
+<input type="submit" value="<?php echo __('Delete') ?>" />
+</td>
 <?php endif; ?>
 </tr>
 </tbody>
