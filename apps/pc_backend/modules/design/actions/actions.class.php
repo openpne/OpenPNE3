@@ -268,6 +268,7 @@ class designActions extends sfActions
     $isMobile = (bool)('mobile' === $this->app);
 
     $this->list = array();
+    $this->deleteForm = new sfForm();
 
     $types = NavigationPeer::retrieveTypes($isMobile);
 
@@ -317,6 +318,8 @@ class designActions extends sfActions
 
     if ($request->isMethod('post'))
     {
+      $request->checkCSRFProtection();
+
       $model = NavigationPeer::retrieveByPk($request->getParameter('id'));
       $this->forward404Unless($model);
       $model->delete();

@@ -27,7 +27,12 @@
 <?php else : ?>
 <td><?php echo $form['id']->render() ?>
 <input type="submit" value="<?php echo __('編集') ?>" /></form></td>
-<td><form action="<?php echo url_for('design/navigationDelete?id=' . $form->getObject()->getId()) ?>" method="post" /><input type="submit" value="<?php echo __('削除') ?>" /></form></td>
+<td>
+<form action="<?php echo url_for('design/navigationDelete?id=' . $form->getObject()->getId()) ?>" method="post">
+<?php echo $deleteForm ?>
+<input type="submit" value="<?php echo __('削除') ?>" />
+</form>
+</td>
 <?php endif; ?>
 </tr>
 </tbody>
