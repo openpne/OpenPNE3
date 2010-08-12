@@ -77,34 +77,35 @@
 <?php else: ?>
 <tbody>
 <?php endif; ?>
-<form action="<?php echo url_for('profile/editOption?id=' . $form->getObject()->getId()) ?>" method="post">
 <tr>
+<form action="<?php echo url_for('profile/editOption?id='.$form->getObject()->getId()) ?>" method="post">
 <td><?php echo ($form->getObject()->isNew() ? '-' : $form->getObject()->getId()) ?></td>
 <?php foreach ($languages as $language): ?>
 <td>
-<?php echo $form[$language]['value']->renderError() ?>
-<?php echo $form[$language]['value']->render() ?>
+<?php echo $form[$language]['value']->renderError(), "\n" ?>
+<?php echo $form[$language]['value']->render(), "\n" ?>
 </td>
 <?php endforeach; ?>
-<?php if ($form->getObject()->isNew()) : ?>
+<?php if (!$form->getObject()->isNew()): ?>
+<td>
+<?php echo $form->renderHiddenFields(), "\n" ?>
+<input type="submit" value="<?php echo __('Save')?>" />
+</td>
+</form>
+<td>
+<form action="<?php echo url_for('profile/deleteOption?id='.$form->getObject()->getId()) ?>" method="post">
+<?php echo $form['id']->render(), "\n" ?>
+<?php echo $form['profile_id']->render(), "\n" ?>
+<?php $formCSRF = new sfForm(); ?><input type="hidden" name="<?php echo $formCSRF->getCSRFFieldName() ?>" value="<?php echo $formCSRF->getCSRFToken() ?>" />
+<input type="submit" value="<?php echo __('Delete') ?>" />
+</form>
+</td>
+<?php else: ?>
 <td colspan="2">
 <?php echo $form->renderHiddenFields() ?>
-<input type="submit" value=<?php echo __('Add new option')?> />
+<input type="submit" value="<?php echo __('Add new option')?>" />
 </td>
 </form>
-<?php else : ?>
-<td>
-<?php echo $form->renderHiddenFields() ?>
-<input type="submit" value=<?php echo __('Save')?> />
-</td>
-</form>
-<td>
-<?php echo $form['id']->render() ?>
-<?php echo $form['profile_id']->render() ?>
-<form action="<?php echo url_for('profile/deleteOption?id=' . $form->getObject()->getId()) ?>" method="post">
-<input type="submit" value=<?php echo __('Delete') ?> />
-</form>
-</td>
 <?php endif; ?>
 </tr>
 </tbody>
@@ -113,7 +114,7 @@
 <?php echo sortable_element('profile_options_'.$value->getId(),array(
   'tag'  => 'tbody',
   'only' => 'sortable',
-  'url'  => 'profile/sortProfileOption'
+  'url'  => 'profile/sortProfileOption',
 )) ?>
 <?php endif; ?>
 <?php endforeach; ?>
