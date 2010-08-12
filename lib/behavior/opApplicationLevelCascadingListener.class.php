@@ -21,10 +21,6 @@ class opApplicationLevelCascadingListener extends Doctrine_Record_Listener
       $relations = $event->getInvoker()->$target['alias'];
       if (!($relations instanceof Doctrine_Collection))
       {
-        if (!count($relations))
-        {
-          continue;
-        }
         $relations = array($relations);
       }
 
