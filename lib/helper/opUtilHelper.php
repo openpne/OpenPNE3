@@ -1008,7 +1008,7 @@ function op_link_to_member($value, $options = array(), $routeName = '@obj_member
   {
     $member = $value;
   }
-  elseif (is_numeric($value))
+  elseif ($value)
   {
     $member = Doctrine::getTable('Member')->find($value);
   }
