@@ -1041,7 +1041,7 @@ function op_link_to_member($value, $options = array(), $routeName = '@obj_member
 
   if ($member && $member->id)
   {
-    $link_target = $member->name;
+    $link_target = escape_once($member->name);
     if (isset($options['link_target']))
     {
       $link_target = $options['link_target'];
