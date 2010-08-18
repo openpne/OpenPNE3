@@ -6,7 +6,7 @@ include_once dirname(__FILE__) . '/../../bootstrap/database.php';
 sfContext::createInstance(ProjectConfiguration::getApplicationConfiguration('pc_frontend', 'test', true));
 
 include_once sfConfig::get('sf_lib_dir').'/vendor/symfony/lib/helper/HelperHelper.php';
-use_helper('opUtil', 'Url', 'Tag');
+use_helper('opUtil', 'Url', 'Tag', 'Escaping');
 
 $t = new lime_test(null, new lime_output_color());
 

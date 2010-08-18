@@ -1029,19 +1029,23 @@ function op_replace_sns_term($string)
 function op_link_to_member($value, $options = array(), $routeName = '@obj_member_profile')
 {
   $member = null;
-  $value = $value instanceof sfOutputEscaper ? $value->getRawValue() : $value;
-  if ($value instanceof Member)
+  if ($value instanceof sfOutputEscaper || $value instanceof Member)
   {
     $member = $value;
   }
-  elseif ($value)
+  elseif (is_numeric($value))
   {
     $member = Doctrine::getTable('Member')->find($value);
   }
 
   if ($member && $member->id)
   {
-    $link_target = escape_once($member->name);
+    if (!($member instanceof sfOutputEscaper))
+    {
+      $member = sfOutputEscaper::escape(sfConfig::get('sf_escaping_method'), $member);
+    }
+
+    $link_target = $member->name;
     if (isset($options['link_target']))
     {
       $link_target = $options['link_target'];
