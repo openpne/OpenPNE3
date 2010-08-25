@@ -6,7 +6,7 @@ sfContext::createInstance(ProjectConfiguration::getApplicationConfiguration('pc_
 include_once sfConfig::get('sf_lib_dir').'/vendor/symfony/lib/helper/HelperHelper.php';
 use_helper('Tag');
 
-$t = new lime_test(24, new lime_output_color());
+$t = new lime_test(27, new lime_output_color());
 
 //------------------------------------------------------------
 $t->diag('opWidgetFormRichTextareaOpenPNE::toHtml() non strip');
@@ -33,8 +33,8 @@ $patterns = array(
     '&lt;op:i color="#333<span class="op_i">"&gt;#333</span>',
   ),
   array(
-    '&lt;op:font color="#333"&gt;#333&lt;/op:font&gt;',
-    '<span class="op_font" style="color:#333;">#333</span>',
+    '&lt;op:font color="#333333"&gt;#333&lt;/op:font&gt;',
+    '<span class="op_font" style="color:#333333;">#333</span>',
   ),
   array(
     '&lt;op:tetetetetete0111111&gt;',
@@ -43,6 +43,10 @@ $patterns = array(
   array(
     '&lt;op:i<br />&gt;&lt;op:',
     '&lt;op:i<br />&gt;&lt;op:',
+  ),
+  array(
+    '&lt;op:font color="expression(alert(0))"&gt;Attack!&lt;/op:font&gt;',
+    '<span class="op_font" style="">Attack!</span>',
   ),
 );
 foreach ($patterns as $pattern)
@@ -85,6 +89,10 @@ $patterns2 = array(
     '&lt;op:i<br />&gt;&lt;op:',
     '&lt;op:i<br />&gt;&lt;op:',
   ),
+  array(
+    '&lt;op:font color="expression(alert(0))"&gt;Attack!&lt;/op:font&gt;',
+    'Attack!',
+  ),
 );
 foreach ($patterns2 as $pattern2)
 {
@@ -115,8 +123,8 @@ $patterns3 = array(
     '&lt;op:i color="#333<span class="op_i">"&gt;#333</span>',
   ),
   array(
-    '&lt;op:font color="#333"&gt;#333',
-    '<span class="op_font" style="color:#333;">#333</span>',
+    '&lt;op:font color="#333333"&gt;#333',
+    '<span class="op_font" style="color:#333333;">#333</span>',
   ),
   array(
     '&lt;op:tetetetetete0111111&gt;',
@@ -125,6 +133,10 @@ $patterns3 = array(
   array(
     '&lt;op:i&gt;&lt;op:&lt;op:i&gt;&lt;op:i&gt;&lt;op:i&gt;&lt;op:333333&gt;',
     '<span class="op_i">&lt;op:<span class="op_i"><span class="op_i"><span class="op_i"><span class="op_333333"></span></span></span></span></span>',
+  ),
+  array(
+    '&lt;op:font color="expression(alert(0))"&gt;Attack!',
+    '<span class="op_font" style="">Attack!</span>',
   ),
 );
 foreach ($patterns3 as $pattern3)
