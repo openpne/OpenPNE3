@@ -485,7 +485,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
         unset($categories['mail']);
       }
     }
-
+    
     foreach ($categories as $key => $value)
     {
       $title = $key;
