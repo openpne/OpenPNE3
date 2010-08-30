@@ -114,7 +114,7 @@ mail:
     IsRegist:   false
     IsConfig:   true
     IsUnique:   false
-    IsRequired: true
+    IsRequired: false
     IsConfirm:  false
     Default: 2
     Choices:
