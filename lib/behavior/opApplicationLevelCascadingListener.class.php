@@ -33,7 +33,7 @@ class opApplicationLevelCascadingListener extends Doctrine_Record_Listener
         switch (strtolower($target['delete']))
         {
           case 'cascade':
-            if($record instanceof Doctrine_Table)
+            if ($record instanceof Doctrine_Record)
             {
               $record->delete();
             }
