@@ -20,7 +20,7 @@
 <?php echo op_format_date($community->getCreatedAt(), 'D') ?><br>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Administrator') ?>:</font><br>
 <?php echo link_to($communityAdmin->getName(), '@member_profile?id='.$communityAdmin->getId()) ?><br>
-<?php  
+<?php
 $subAdminCaption = array();
 foreach ($communitySubAdmins as $m)
 {
@@ -31,8 +31,10 @@ foreach ($communitySubAdmins as $m)
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Sub Administrator') ?>:</font><br>
 <?php echo implode("<br>\n", $subAdminCaption) ?>
 <?php endif; ?>
+<?php if ($community->community_category_id): ?>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('%community% Category', array(), 'form_community') ?>:</font><br>
 <?php echo $community->getCommunityCategory() ?><br>
+<?php endif; ?>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Register policy', array(), 'form_community') ?>:</font><br>
 <?php echo __($sf_data->getRaw('community')->getRegisterPolicy()) ?><br>
 </td>
