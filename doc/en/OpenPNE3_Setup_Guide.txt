@@ -1,10 +1,10 @@
-How to Install OpenPNE3.1
-=========================
+How to Install OpenPNE 3.4.x
+============================
 
 Getting Started
 ---------------
 
-This document is for OpenPNE 3.1.
+This document is for OpenPNE 3.4.x.
 
 OpenPNE 3 should work under the following server environment.
 
@@ -29,17 +29,23 @@ Database Server
 Download Package and Install It
 -------------------------------
 
-Download
-~~~~~~~~
+Upload source files
+~~~~~~~~~~~~~~~~~~~
 
-Please download a package of OpenPNE 3.1 from the following URL.
+Please download a package of OpenPNE 3.4.x from the following URL.
 
-3.1.0 - 3.1.2
-  https://sourceforge.net/project/showfiles.php?group_id=174268&package_id=307735
-3.1.3 +
+3.4.x
   http://github.com/openpne/OpenPNE3/downloads
 
 And unzip the zip file.
+
+Or clone OpenPNE 3.4.x source files.
+
+::
+
+  $ git clone git://github.com/openpne/OpenPNE3.git
+  $ cd OpenPNE3
+  $ git checkout ${OpenPNE-3.4.x}
 
 Setting Files
 ~~~~~~~~~~~~~
@@ -73,12 +79,11 @@ Set the files to be the following structure:
 Setting the HTTP proxy
 ~~~~~~~~~~~~~~~~~~~~~~
 
-If you want to use HTTP proxy, change the "op_http_proxy" configuration in your config/ProjectConfiguration.class.php.
+If you want to use HTTP proxy, change the "http_proxy" configuration in your "config/OpenPNE.yml".
 
 ::
 
-  //HTTP proxy to use when downloading plugin packages
-  sfConfig::set('op_http_proxy', 'example.com:8080');
+  http_proxy: "example.com:8080"
 
 Executing Install Command
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -99,6 +104,13 @@ If you execute the command, you will be required inputing the following:
 
 Installing will be started automatically based on your inputted information.
 
+Delete the development files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+  $ ./symfony project:clear-controllers
+
 Configuring mod_rewrite
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -109,122 +121,6 @@ Configure the RewriteBase setting in your web/.htaccess for your environment (It
   RewriteBase /                            # Or /web
 
 RewriteBase is must be absoulte path of URL.
-
-Access from Web Browser (PC)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-(1) Access http://example.com/index.php
-(2) Input sns@example.com / password to login form, and make sure you to log in
-
-You must change the default email address and password.
-
-Access form Web Browser (Backend)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-(1) Access http://example.com/pc_backend.php
-(2) Input admin / password to login form, and make sure you to log in
-
-You must change the default account and password.
-
-Getting from Git and Setup It (3.1.3 +)
----------------------------------------
-
-Clone OpenPNE3
-~~~~~~~~~~~~~~
-
-::
-
-  $ git clone git://github.com/openpne/OpenPNE3.git
-
-Copy the config/ProjectConfiguration.class.php
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-  $ cd OpenPNE3
-  $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
-
-Setting the HTTP proxy
-~~~~~~~~~~~~~~~~~~~~~~
-
-If you want to use HTTP proxy, change the "op_http_proxy" configuration in your config/ProjectConfiguration.class.php.
-
-::
-
-  //HTTP proxy to use when downloading plugin packages
-  sfConfig::set('op_http_proxy', 'example.com:8080');
-
-Installing
-~~~~~~~~~~
-
-Execute the following command.
-
-::
-
-  $ ./symfony openpne:install
-
-Access from Web Browser (PC)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-(1) Access http://example.com/index.php
-(2) Input sns@example.com / password to login form, and make sure you to log in
-
-You must change the default email address and password.
-
-Access form Web Browser (Backend)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-(1) Access http://example.com/pc_backend.php
-(2) Input admin / password to login form, and make sure you to log in
-
-You must change the default account and password.
-
-Check out from SVN and Setup It (3.1.0 - 3.1.2)
------------------------------------------------
-
-The following assumes the you have already installed symfony 1.2.
-
-Checkout OpenPNE3
-~~~~~~~~~~~~~~~~~
-
-::
-
-  $ svn co https://trac.openpne.jp/svn/OpenPNE3/tags/OpenPNE-3.1.0/
-
-Configure config/ProjectConfiguration.class.php
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-  $ cd OpenPNE-3.1.0
-  $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
-  $ vi config/ProjectConfiguration.class.php
-
-Replace ##SYMFONY_LIB_DIR## to the path to libraries of symfony.
-(e.g. /usr/share/php/data/symfony)
-
-::
-
-    require_once '##SYMFONY_LIB_DIR##/autoload/sfCoreAutoload.class.php';
-
-Setting the HTTP proxy
-~~~~~~~~~~~~~~~~~~~~~~
-
-If you want to use HTTP proxy, change the "op_http_proxy" configuration in your config/ProjectConfiguration.class.php.
-
-::
-
-  //HTTP proxy to use when downloading plugin packages
-  sfConfig::set('op_http_proxy', 'example.com:8080');
-
-Installing
-~~~~~~~~~~
-
-Execute the following command.
-
-::
-
-  $ ./symfony openpne:install
 
 Access from Web Browser (PC)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
