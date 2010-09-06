@@ -1,60 +1,49 @@
-How to Update OpenPNE3.3
-========================
+How to Update OpenPNE 3.4.x
+===========================
 
 Getting Started
 ---------------
 
-This document is for updating OpenPNE 3.2.0 + to OpenPNE 3.3.x.
+This document is for updating OpenPNE 3.2/OpenPNE 3.4 to OpenPNE 3.4.x.
 
-You should backup database before your updating.
+Updating Steps
+--------------
 
-Plan
-----
+The updating steps are the followings:
 
-The updating plan is the following:
-
-(1) Setting files
-(2) Update the configuration file
-(3) Execute the updating command
+(1) Upload source files
+(2) Create the configuration files
+(3) Back up the database
+(4) Execute the updating command
+(5) Delete the development files
 
 The Way to Work
 ---------------
 
-Setting Files
-~~~~~~~~~~~~~
+Upload source files
+~~~~~~~~~~~~~~~~~~~
 
-Set the OpenPNE 3.3 files to your web server.
+Upload the OpenPNE 3.4.x files to your web server.
 
-You must change the files from the old to avoid troubles by mixing the new with the old.
+You must upload the source files to a new directory to avoid the troubles by mixing the new files with the old.
 
-Update the configuration file
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Create the configuration files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Copy config/ProjectConfiguration.class.php.sample to config/ProjectConfiguration.class.php.
+Copy "config/ProjectConfiguration.class.php.sample" to "config/ProjectConfiguration.class.php".
 
-If you write your original configuration to your old config/ProjectConfiguration.class.php, you should change the new file.
+Copy "config/OpenPNE.yml.sample" to "config/OpenPNE.yml".
 
-And copy the old config/database.yml to new config/database.yml.
+(If you want to add your own configurations to the new files, you should read your old configuration files for reference.)
 
-Copy the Plugin Directory
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Copy the old "config/database.yml" to "config/database.yml".
 
-Copy the contents in old plugins.
-
-::
-
-  $ cp -aur /path/to/old/OpenPNE3/plugins/* /path/to/new/OpenPNE3/plugins
-  $ cp -aur /path/to/old/OpenPNE3/plugins/.* /path/to/new/OpenPNE3/plugins
-
-Re-build Models
-~~~~~~~~~~~~~~~
-
-Execute the following command in the project root directory.
+Back up the database
+~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-  $ ./symfony doctrine:build-model
-  $ ./symfony cc
+  $ mysqldump -u $USERNAME -p --default-character-set=utf8 $DBNAME > /tmp/backup.dump
 
 Execute the Updating Command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,9 +53,14 @@ Execute the following command in the project root directory.
 ::
 
   $ ./symfony openpne:migrate
-  $ ./symfony plugin:publish-assets
-
 
 This command will update OpenPNE and plugins to newer version.
+
+Delete the development files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+  $ ./symfony project:clear-controllers
 
 Now, updating has been done.
