@@ -132,7 +132,7 @@ class ProfileForm extends BaseProfileForm
       throw new sfValidatorError($validator, 'invalid');
     }
 
-    $this->validatorSchema->setPostValidator(new sfValidatorCallback(
+    $this->mergePostValidator(new sfValidatorCallback(
       array('callback' => array($this, 'compareMinAndMax')),
       array('invalid' => 'Value must be less than or equal to Minimum value.')
     ));
