@@ -15,6 +15,7 @@ The updating steps are the followings:
 (2) Create the configuration files
 (3) Back up the database
 (4) Execute the updating command
+(5) Delete the development files
 
 The Way to Work
 ---------------
@@ -54,5 +55,12 @@ Execute the following command in the project root directory.
   $ ./symfony openpne:migrate
 
 This command will update OpenPNE and plugins to newer version.
+
+Delete the development files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+  $ ./symfony project:clear-controllers
 
 Now, updating has been done.
