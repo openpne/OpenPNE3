@@ -200,7 +200,7 @@
         <target>表示する</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Not show</source>
+        <source>Hide</source>
         <target>表示しない</target>
       </trans-unit>
       <trans-unit id="">
