@@ -1,66 +1,83 @@
-OpenPNE 3.4.x バージョンアップ手順
-==================================
+================================
+OpenPNE 3.4 バージョンアップ手順
+================================
 
 はじめに
---------
+========
 
-このドキュメントは、OpenPNE 3.2/OpenPNE 3.4 を OpenPNE 3.4.x にバージョンアップする作業の手順を示したものです。
+このドキュメントは、 OpenPNE 3.2.0 + から OpenPNE 3.4.x へのバージョンアップ作業の手順を示したものです。
+
+※バージョンアップをおこなう前に、データベースのバックアップを取っておくことを強くお勧めします。
 
 手順
-----
+====
 
 バージョンアップは以下の手順でおこないます。
 
-(1) ソースファイルのアップロード
-(2) 設定ファイルの作成
-(3) データベースのバックアップ
-(4) バージョンアップコマンドの実行
-(5) 開発環境用ファイルを削除
+(1) ファイルの設置
+(2) 設定ファイルの上書き
+(3) バージョンアップコマンドの実行
 
 作業方法
---------
+========
 
-ソースファイルのアップロード
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ファイルの設置
+--------------
 
-OpenPNE 3.4.x のソースファイルをWebサーバーに設置します。
+Web サーバ上に OpenPNE 3.4 のソースファイルを設置します。（※新旧ソースファイル混在によるトラブルを防ぐため、上書きではなくファイルすべてを交換してください。）
 
-新旧バージョンのソースファイルを混同してしまうトラブルを避けるため、必ず新しいディレクトリにソースファイルを設置します。
+設定ファイルをコピー
+--------------------
 
-設定ファイルの作成
-~~~~~~~~~~~~~~~~~~
+古いバージョンの config/databases.yml を新しいバージョンの config/databases.yml としてコピーします。
 
-"config/ProjectConfiguration.class.php.sample" を "config/ProjectConfiguration.class.php" にコピーします。
-
-"config/OpenPNE.yml.sample" を "config/OpenPNE.yml" にコピーします。
-
-(それぞれの設定ファイルに独自の記述をしている場合は、古い設定ファイルを参考に新しいファイルに反映してください。)
-
-バージョンアップ前のディレクトリに存在する "config/databases.yml" を新しいディレクトリにそのままコピーします。
-
-データベースのバックアップ
-~~~~~~~~~~~~~~~~~~~~~~~~~
+その後、以下のようにして OpenPNE 3.4 付属の設定ファイルをコピーしてください。
 
 ::
 
-  $ mysqldump -u $USERNAME -p --default-character-set=utf8 $DBNAME > /tmp/backup.dump
+  $ cd OpenPNE3
+  $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
+  $ cp config/OpenPNE.yml.sample config/OpenPNE.yml
+
+config/ProjectConfiguration.class.php に独自の設定を記述している場合は、古いファイルを参考に新しいファイルを変更してください。
+
+OpenPNE.yml の設定値を環境に合わせて変更してください。特に base_url と mail_domain はメール投稿、メール配信の際に利用されるので必ず設定をおこなってください。
+
+OpenPNE 3.2 で管理画面からメールテンプレートを変更し、 OpenPNE 3.4 にアップデートした際に問題が生じた場合、 OpenPNE.yml の is_restrict_mail_template を false に設定してください。
+
+プラグインディレクトリのコピー
+------------------------------
+
+古いバージョンの plugins ディレクトリの中身をコピーします。
+
+::
+
+  $ cp -aur /path/to/old/OpenPNE3/plugins/* /path/to/new/OpenPNE3/plugins
+  $ cp -aur /path/to/old/OpenPNE3/plugins/.* /path/to/new/OpenPNE3/plugins
+
+モデルの再構築
+--------------
+
+プロジェクトルートディレクトリで、以下のコマンドを実行します。
+
+::
+
+  $ ./symfony doctrine:build-model
+  $ ./symfony cc
+
+この手順は、次の「バージョンアップコマンドの実行」に必要となります。
 
 バージョンアップコマンドの実行
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 プロジェクトルートディレクトリで、以下のバージョンアップコマンドを実行します。
 
 ::
 
   $ ./symfony openpne:migrate
+  $ ./symfony plugin:publish-assets
 
 このコマンドは OpenPNE 本体、プラグインの両方を最新の状態にバージョンアップします。
 
-開発環境用ファイルを削除
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-  $ ./symfony project:clear-controllers
 
 以上でバージョンアップは完了です。
