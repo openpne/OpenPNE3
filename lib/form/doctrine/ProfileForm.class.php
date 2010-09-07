@@ -23,7 +23,7 @@ class ProfileForm extends BaseProfileForm
 
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('profile_form');
     
-    $isDispOption = array('choices' => array('1' => 'Allow', '0' => 'Deny'));
+    $isDispOption = array('choices' => array('1' => 'Show', '0' => 'Hide'));
     $this->setWidgets(array(
       'name' => new sfWidgetFormInputText(),
       'is_public_web' => new sfWidgetFormSelectRadio(array('choices' => array('0' => 'Deny', '1' => 'Allow'))),
