@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+        <source>%nickname%</source>
+        <target>%nickname%</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Required.</source>
+        <target>必須項目です。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,25 @@
+rendering: ~
+
+cache_control:
+  class: opCacheControlFilter
+
+enable_app:
+  class: opCheckEnabledApplicationFilter
+
+xrds_header:
+  class: opAppendXRDSHeaderFilter
+
+remember_login:
+  class: opRememberLoginFilter
+
+security:  ~
+
+emoji:
+  class: opEmojiFilter
+
+cache:     ~
+
+execution:
+  class: opExecutionFilter
+  param:
+    type: execution

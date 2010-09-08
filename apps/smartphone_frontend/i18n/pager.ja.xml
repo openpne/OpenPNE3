@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+        <source>Previous</source>
+        <target>前を表示</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Next</source>
+        <target>次を表示</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>%first% - %last% of %total%</source>
+        <target>%total%件中 %first%～%last%件目を表示</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

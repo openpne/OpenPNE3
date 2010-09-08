@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Name</source>
+        <target>ニックネーム</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Email</source>
+        <target>E-mail</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Language</source>
+        <target>使用する言語</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Time zone</source>
+        <target>タイムゾーン</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Image</source>
+        <target>プロフィール画像</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
