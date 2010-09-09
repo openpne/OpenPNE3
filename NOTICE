@@ -32,7 +32,19 @@ This product needs the third-party softwares listed blow to run.
 
 This product includes dependent libraries listed blow:
   - symfony 1.4.1
-  - Zend Framework 1.7.3PL1 (partly)
+  - ZendFramework 1.10.8 (partly)
+    - Zend_Acl
+    - Zend_Exception
+    - Zend_Feed
+    - Zend_Http
+    - Zend_Loader
+    - Zend_Mail
+    - Zend_Mime
+    - Zend_Registry
+    - Zend_Search
+    - Zend_Uri
+    - Zend_Validate
+    - Zend_Version
   - Auth OpenID 2.1.2
   - PHP OAuth library
   - sfFormExtraPlugin 1.0.12
