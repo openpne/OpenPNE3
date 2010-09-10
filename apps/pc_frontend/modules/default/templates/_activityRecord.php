@@ -1,3 +1,5 @@
+<?php use_helper('opActivity') ?>
+
 <li class="activity">
 <div class="box_memberImage">
 <p><?php echo link_to(op_image_tag_sf_image($activity->getMember()->getImageFileName(), array('alt' => sprintf('[%s]', $activity->getMember()), 'size' => '48x48')), '@obj_member_profile?id='.$activity->getMemberId()) ?></p>
@@ -17,11 +19,7 @@
 <br />
 <?php endif; ?>
 <strong class="name"><?php echo op_link_to_member($activity->getMember()) ?></strong>
-<?php if ($activity->getUri()): ?>
-<?php echo link_to($activity->getBody(), $activity->getUri()) ?>
-<?php else: ?>
-<span class="bodyText"><?php echo op_auto_link_text($activity->getBody()) ?></span>
-<?php endif; ?>
+<span class="bodyText"><?php echo op_activity_body_filter($activity) ?></span>
 </span>
 <span class="info">
 <span class="time"><?php echo $time = op_format_activity_time(strtotime($activity->getCreatedAt())) ?>
