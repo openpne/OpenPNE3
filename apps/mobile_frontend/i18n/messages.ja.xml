@@ -1200,6 +1200,10 @@
         <target>このURLは%0%の外です。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Use Proxy Site for Mobile</source>
+        <target>携帯用のｺﾝﾃﾝﾂ変換を利用</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Direct link</source>
         <target>直接ﾘﾝｸ</target>
       </trans-unit>
