@@ -44,7 +44,7 @@ op_include_form('searchCommunity', $filters, $options);
 $list = array();
 foreach ($categorys as $category)
 {
-  $list[] = link_to(sprintf('%s', $category->getName()), 'community/search', array('query_string' => 'community_category_id='.$category->getId()));
+  $list[] = link_to(sprintf('%s', $category->getName()), 'community/search', array('query_string' => 'community[community_category_id]='.$category->getId()));
 }
 $option = array(
   'border' => true,
