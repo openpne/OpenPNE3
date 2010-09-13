@@ -49,6 +49,8 @@ EOF;
       $birthMember = $profile->getMember();
       foreach ($birthMember->getFriends() as $member)
       {
+        $this->setCultureByMember($member);
+
         $params = array(
           'member'      => $member,
           'birthMember' => $birthMember,

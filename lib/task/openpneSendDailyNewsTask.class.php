@@ -36,6 +36,8 @@ EOF;
     $targetMembers = Doctrine::getTable('Member')->findAll();
     foreach ($targetMembers as $member)
     {
+      $this->setCultureByMember($member);
+
       $dailyNewsConfig = $member->getConfig('daily_news');
       if (null !== $dailyNewsConfig && 0 === (int)$dailyNewsConfig)
       {
