@@ -239,9 +239,8 @@ class sfWebRequest extends sfRequest
   public function getPathInfo()
   {
     $pathInfo = '';
-    $isIis = (isset($_SERVER['SERVER_SOFTWARE']) && false !== stripos($_SERVER['SERVER_SOFTWARE'], 'iis'));
-
     $pathArray = $this->getPathInfoArray();
+    $isIis = (isset($pathArray['SERVER_SOFTWARE']) && false !== stripos($pathArray['SERVER_SOFTWARE'], 'iis'));
 
     // simulate PATH_INFO if needed
     $sf_path_info_key = $this->options['path_info_key'];
@@ -261,7 +260,7 @@ class sfWebRequest extends sfRequest
     else
     {
       $pathInfo = $pathArray[$sf_path_info_key];
-      if ($relativeUrlRoot = $this->getRelativeUrlRoot() && $isIis)
+      if ($isIis && $relativeUrlRoot = $this->getRelativeUrlRoot())
       {
         $pathInfo = preg_replace('/^'.str_replace('/', '\\/', $relativeUrlRoot).'\//', '', $pathInfo);
       }
