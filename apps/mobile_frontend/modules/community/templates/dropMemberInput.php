@@ -5,6 +5,6 @@
   'yes_form'  => new sfForm(),
   'no_url'    => url_for('@community_memberManage'),
   'no_method' => 'get',
-  'no_form'   => '<input type="hidden" name="id" value="'.$community->getId().'"/>',
+  'no_form'   => '<input type="hidden" name="id" value="'.$community->getId().'">',
   'align'     => 'center',
 )) ?>
