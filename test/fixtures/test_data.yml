@@ -409,6 +409,12 @@ CommunityCategory:
     name: "CategoryA"
     tree_key: 1
     is_allow_member_community: 1
+    sort_order: 2
+  community_category_2:
+    name: "CategoryB"
+    tree_key: 1
+    is_allow_member_community: 1
+    sort_order: 1
 
 CommunityConfig:
   community_1_description:
