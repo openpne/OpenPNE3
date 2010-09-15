@@ -10,8 +10,6 @@
 
 abstract class opBaseSendMailTask extends sfDoctrineBaseTask
 {
-  protected $defaultCulture;
-
   protected function configure()
   {
     $this->addOptions(array(
@@ -35,8 +33,7 @@ abstract class opBaseSendMailTask extends sfDoctrineBaseTask
     // opMailSend requires Zend
     opApplicationConfiguration::registerZend();
 
-    $this->defaultCulture = sfConfig::get('default_culture', 'ja_JP');
-    opDoctrineRecord::setDefaultCulture($this->defaultCulture);
+    opDoctrineRecord::setDefaultCulture(sfConfig::get('default_culture', 'ja_JP'));
   }
 
   protected function openDatabaseConnection()
@@ -62,36 +59,5 @@ abstract class opBaseSendMailTask extends sfDoctrineBaseTask
     }
 
     return $context;
-  }
-
-  protected function setCultureByDefault()
-  {
-    $this->setCulture($this->defaultCulture);
-  }
-
-  protected function setCultureByMember($member)
-  {
-    $lang = $member->getConfig('language');
-    if (!$lang)
-    {
-      $this->setCultureByDefault();
-    }
-
-    $this->setCulture($lang);
-  }
-
-  protected function setCulture($lang)
-  {
-    if ($lang === opDoctrineRecord::getDefaultCulture())
-    {
-      return;
-    }
-
-    opDoctrineRecord::setDefaultCulture($lang);
-    if ($context = sfContext::getInstance())
-    {
-      $i18n = $context->getI18N();
-      $i18n->setCulture($lang);
-    }
   }
 }
