@@ -57,6 +57,10 @@ class opCommunityAclBuilder extends opAclBuilder
     {
       $acl->allow('alien', null, 'view');
     }
+    else if ('auth_commu_member' ===  $resource->getConfig('public_flag'))
+    {
+      $acl->allow('member', null, 'view');
+    }
     else
     {
       $event = new sfEvent(sfContext::getInstance(), 'op_acl.unknown_community_public_flag', array('public_flag' => $resource->getConfig('public_flag')));
