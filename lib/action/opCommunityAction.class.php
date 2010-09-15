@@ -17,6 +17,11 @@
  */
 abstract class opCommunityAction extends sfActions
 {
+  static protected function getAcl($community, $member = null)
+  {
+    return opCommunityAclBuilder::buildResource($community, array($member));
+  }
+
   public function preExecute()
   {
     $this->id = $this->getRequestParameter('id');
@@ -28,6 +33,16 @@ abstract class opCommunityAction extends sfActions
     $this->isSubAdmin = Doctrine::getTable('CommunityMember')->isSubAdmin($memberId, $this->id);
     $this->isEditCommunity = $this->isAdmin || $this->isSubAdmin;
     $this->isDeleteCommunity = $this->isAdmin;
+
+    $this->role = $memberId ? $memberId : 'alien';
+  }
+
+  public function postExecute()
+  {
+    if ($this->getUser()->getMember())
+    {
+      opToolkit::setIsSecure($this);
+    }
   }
 
  /**
@@ -39,6 +54,8 @@ abstract class opCommunityAction extends sfActions
   {
     $this->community = Doctrine::getTable('Community')->find($this->id);
     $this->forward404Unless($this->community, 'Undefined community.');
+    $acl = self::getAcl($this->community, $this->getUser()->getMember());
+    $this->forward404Unless($acl->isAllowed($this->role, null, 'view'));
     $this->communityAdmin = $this->community->getAdminMember();
     $this->communitySubAdmins = $this->community->getSubAdminMembers();
 
@@ -59,6 +76,7 @@ abstract class opCommunityAction extends sfActions
     $this->forward404If($this->id && !$this->isEditCommunity);
 
     $this->community = Doctrine::getTable('Community')->find($this->id);
+
     if (!$this->community)
     {
       $this->community = new Community();
@@ -132,16 +150,17 @@ abstract class opCommunityAction extends sfActions
   public function executeDelete($request)
   {
     $this->forward404If($this->id && !$this->isDeleteCommunity);
+    $this->community = Doctrine::getTable('Community')->find($this->id);
 
     if ($request->isMethod('post'))
     {
       if($request->hasParameter('is_delete'))
       {
         $request->checkCSRFProtection();
-        $community = Doctrine::getTable('Community')->find($this->id);
-        if ($community)
+
+        if ($this->$community)
         {
-          $community->delete();
+          $this->community->delete();
         }
         $this->redirect('community/search');
       }
@@ -150,7 +169,6 @@ abstract class opCommunityAction extends sfActions
         $this->redirect('@community_home?id=' . $this->id);
       }
     }
-    $this->community = Doctrine::getTable('Community')->find($this->id);
   }
 
  /**

@@ -591,6 +591,14 @@
         <target>この写真を削除する</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Everyone can see</source>
+        <target>Web全体に公開</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Only SNS members can see</source>
+        <target>SNS参加者のみ公開</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Everyone can join</source>
         <target>誰でも参加可能</target>
       </trans-unit>

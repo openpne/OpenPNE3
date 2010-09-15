@@ -1,3 +1,10 @@
 all:
   is_secure: true
   credentials: SNSMember
+
+home:
+  is_secure: false
+
+memberList:
+  is_secure: false
+
