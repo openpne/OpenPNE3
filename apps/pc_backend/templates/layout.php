@@ -16,7 +16,7 @@
 <div id="contents" class="clearfix">
 
 <div id="header">
-<h1><?php echo __('%sns% Administration', array('%sns%' => $op_config['sns_name'])) ?></h1>
+<h1><?php echo link_to(__('%sns% Administration', array('%sns%' => $op_config['sns_name'])), '@homepage') ?></h1>
 <span id="visit-site"><a href="<?php echo app_url_for('pc_frontend', '@homepage', true) ?>" target="_blank"><?php echo __('Visit Site') ?></a></span>
 </div>
 
