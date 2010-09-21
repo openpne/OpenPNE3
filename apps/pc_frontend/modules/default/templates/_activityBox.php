@@ -4,7 +4,7 @@
 
 <?php slot('activities') ?>
 <?php if (isset($form)): ?>
-<form id="<?php echo $id ?>_form">
+<form id="<?php echo $id ?>_form" action="<?php echo url_for('member/updateActivity') ?>" method="post">
 <div id="<?php echo $id ?>_count" class="count" style="float:right;margin:0 auto;">140</div>
 <?php echo __('Public flag') ?><?php echo $form['public_flag'] ?>
 <?php echo $form['body']->render(array('id' => $id.'_activity_data_body')) ?>
