@@ -61,36 +61,36 @@
         <target>全メンバーを%community%参加させる</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Do you make all members join in this community?</source>
-        <target>全メンバーをこのコミュニティに参加させますか？</target>
+        <source>Do you make all members join in this %community%?</source>
+        <target>全メンバーをこの%community%に参加させますか？</target>
       </trans-unit>
       <trans-unit id="">
-        <source>All member joined the community.</source>
-        <target>全メンバーが指定したコミュニティに加入しました。</target>
+        <source>All member joined.</source>
+        <target>全メンバーが加入しました。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Add this %community% as a default</source>
         <target>初期%community%として追加</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Add default community</source>
-        <target>初期コミュニティ追加</target>
+        <source>Add Default %community%</source>
+        <target>初期%community%追加</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Do you add this community as a default?</source>
-        <target>このコミュニティを初期コミュニティとして追加してよろしいですか？</target>
+        <source>Do you add this %community% as a default?</source>
+        <target>このコミュニティを初期%community%として追加してよろしいですか？</target>
       </trans-unit>
       <trans-unit id="">
         <source>Remove this %community% from the default</source>
         <target>初期%community%から取り除く</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Remove default community</source>
-        <target>初期コミュニティから取り除く</target>
+        <source>Remove default %community%</source>
+        <target>初期%community%から取り除く</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Do you remove this community from default?</source>
-        <target>このコミュニティを初期コミュニティから取り除いてよろしいですか？</target>
+        <source>Do you remove this %community% from default?</source>
+        <target>このコミュニティを初期%community%から取り除いてよろしいですか？</target>
       </trans-unit>
 
       <trans-unit id="">
@@ -1381,7 +1381,67 @@
       <trans-unit id="">
         <source>There is no preset profile.</source>
         <target>追加可能なプリセットがありません。</target>
-      </trans-unit>      
+      </trans-unit>
+      <trans-unit id="">
+        <source>%community% List</source>
+        <target>%community%リスト</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%community% Category Configuration</source>
+        <target>%community%カテゴリ設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Default %community% Configuration</source>
+        <target>初期%community%設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete %community%</source>
+        <target>%community%削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Administrator</source>
+        <target>管理者</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You can set new members to join the following %community% automatically.</source>
+        <target>メンバー新規登録時に以下で設定した%community%に自動的に参加させることができます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Input the %community% ID you want new members to join and click "Add" button.</source>
+        <target>参加させたい%community%のIDを入力して「追加」ボタンを押してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Authority to Read Topic</source>
+        <target>トピック閲覧権限</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Authority to Create Topic</source>
+        <target>トピック作成権限</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Register policy</source>
+        <target>参加方針</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%community% Description</source>
+        <target>%community%説明文</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If you uncheck "Is allow Member %community%", only the member who has id 1 can make %community% of the category.</source>
+        <target>「メンバー作成%community%の許可」からチェックを外すと、 ID が 1 のメンバーしか、そのカテゴリ上で%community%の作成をおこなえなくなります。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Big Category</source>
+        <target>大カテゴリ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Small Category</source>
+        <target>小カテゴリ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Are you sure you want to delete this %community%?</source>
+        <target>本当にこの%community%を削除してもよろしいですか？</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

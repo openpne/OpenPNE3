@@ -2,9 +2,9 @@
 <tr>
 <th><?php echo $form['name']->renderLabel() ?></th>
 <?php if (empty($forceAllowUserCommunity)) : ?>
-<th><?php echo __($form['is_allow_member_community']->renderLabel(), array(), 'form_community') ?></th>
+<th><?php echo __('Is Allow Member %community%', array('%community%' => $op_term['community']->titleize()), 'form_community') ?></th>
 <?php endif; ?>
-<th colspan="2"><?php echo __('操作') ?></th>
+<th colspan="2"><?php echo __('Operation') ?></th>
 </tr>
 
 <?php if ($categories): ?>
@@ -24,13 +24,13 @@
 <?php foreach ($category->getForm() as $row) : ?>
 <?php if ($row->isHidden()) : ?><?php echo $row ?><?php endif; ?>
 <?php endforeach; ?>
-<input type="submit" value="<?php echo __('編集') ?>" />
+<input type="submit" value="<?php echo __('Edit') ?>" />
 </td>
 </form>
 <td>
 <form action="<?php echo url_for('community/categoryDelete?id='.$category->getId()) ?>" method="post">
 <?php echo $deleteForm ?>
-<input type="submit" value="<?php echo __('削除') ?>" />
+<input type="submit" value="<?php echo __('Delete') ?>" />
 </form>
 </td>
 </tr>
@@ -52,7 +52,7 @@
 <?php foreach ($form as $row) : ?>
 <?php if ($row->isHidden()) : ?><?php echo $row ?><?php endif; ?>
 <?php endforeach; ?>
-<input type="submit" value="<?php echo __('追加') ?>" />
+<input type="submit" value="<?php echo __('Add') ?>" />
 </td>
 </tr>
 </form>

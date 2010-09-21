@@ -2,11 +2,11 @@
 <?php include_partial('submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', __('コミュニティカテゴリ設定')); ?>
+<?php slot('title', __('%community% Category Configuration', array('%community%' => $op_term['community']->titleize()))); ?>
 
-<p><?php echo __('「メンバー作成コミュニティの許可」からチェックを外すと、 ID が 1 のメンバーしか、そのカテゴリ上でコミュニティの作成をおこなえなくなります。') ?></p>
+<p><?php echo __('If you uncheck "Is allow Member %community%", only the member who has id 1 can make %community% of the category.', array('%community%' => $op_term['community']->titleize())) ?></p>
 
-<h3>大カテゴリ</h3>
+<h3><?php echo __('Big Category') ?></h3>
 <?php include_partial('categoryListForm', array(
   'form'                    => $rootForm,
   'forceAllowUserCommunity' => true,
@@ -14,7 +14,7 @@
   'deleteForm'              => $deleteForm,
 )) ?>
 
-<h3>小カテゴリ</h3>
+<h3><?php echo __('Small Category') ?></h3>
 <?php foreach ($categories as $category): ?>
 <h4><?php echo $category ?></h4>
 <?php include_partial('categoryListForm', array(
