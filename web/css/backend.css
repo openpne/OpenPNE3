@@ -51,7 +51,7 @@ body.insecure #body {
   float: left;
 }
 
-#header h1 a:link, a:visited, a:hover, a:active {
+#header h1 a {
   color: #FFFFFF;
 }
 
