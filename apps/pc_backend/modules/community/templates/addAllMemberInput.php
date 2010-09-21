@@ -2,9 +2,9 @@
 <?php include_partial('submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', __('Make all members join in this community')); ?>
+<?php slot('title', __('Make all members join in this %community%', array('%community%' => $op_term['community']))); ?>
 
-<p><?php echo __('Do you make all members join in this community?') ?></p>
+<p><?php echo __('Do you make all members join in this %community%?', array('%community%' => $op_term['community'])) ?></p>
 
 <?php $form = new BaseForm() ?>
 <?php echo $form->renderFormTag(url_for('community/addAllMember?id='.$community->getId())) ?>

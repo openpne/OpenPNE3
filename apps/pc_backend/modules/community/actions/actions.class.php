@@ -158,7 +158,7 @@ class communityActions extends sfActions
       {
         Doctrine::getTable('CommunityMember')->join($id, $this->community->getId());
       }
-      $this->getUser()->setFlash('notice', 'All member joined the community.');
+      $this->getUser()->setFlash('notice', 'All member joined.');
       $this->redirect('community/list');
     }
 

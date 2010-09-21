@@ -2,9 +2,9 @@
 <?php include_partial('submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', __('Add default community')); ?>
+<?php slot('title', __('Add Default %community%', array('%community%' => $op_term['community']->titleize()))); ?>
 
-<p><?php echo __('Do you add this community as a default?') ?></p>
+<p><?php echo __('Do you add this %community% as a default?', array('%community%' => $op_term['community'])) ?></p>
 
 <?php $form = new BaseForm() ?>
 <?php echo $form->renderFormTag(url_for('community/addDefaultCommunity?id='.$community->getId())) ?>

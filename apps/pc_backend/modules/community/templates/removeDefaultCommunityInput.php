@@ -2,9 +2,9 @@
 <?php include_partial('submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', __('Remove default community')); ?>
+<?php slot('title', __('Remove default %community%', array('%community%' => $op_term['community']))); ?>
 
-<p><?php echo __('Do you remove this community from default?') ?></p>
+<p><?php echo __('Do you remove this %community% from default?', array('%community%' => $op_term['community'])) ?></p>
 
 <?php $form = new BaseForm() ?>
 <?php echo $form->renderFormTag(url_for('community/removeDefaultCommunity?id='.$community->getId())) ?>
