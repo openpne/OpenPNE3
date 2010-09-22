@@ -215,11 +215,15 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
 
     $table = Doctrine::getTable('SnsTerm');
     $application = sfConfig::get('sf_app');
-    if($application == 'pc_backend')
+    if ($application == 'pc_backend')
     {
         $application = 'pc_frontend';
     }
     $table->configure(sfContext::getInstance()->getUser()->getCulture(), $application);
+    if (!$table['member'])
+    {
+      $table->configure('en', $application);
+    }
     $parameters['op_term'] = $table;
     sfOutputEscaper::markClassAsSafe('SnsTermTable');
 
