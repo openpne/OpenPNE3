@@ -21,8 +21,15 @@ class opUpgradeBuildModelStrategy extends opUpgradeAbstractStrategy
   {
     opApplicationConfiguration::unregisterZend();
 
-    $task = new sfDoctrineBuildModelTask(clone $this->options['dispatcher'], clone $this->options['formatter']);
-    $task->run(array(), array('application' => 'pc_frontend', 'env' => sfConfig::get('sf_environment', 'prod')));
+    $task = new sfDoctrineBuildTask(clone $this->options['dispatcher'], clone $this->options['formatter']);
+    $task->run(array(), array(
+      'no-confirmation' => true,
+      'model'           => true,
+      'forms'           => true,
+      'filters'         => true,
+      'application'     => 'pc_frontend',
+      'env'             => sfConfig::get('sf_environment', 'prod'),
+    ));
 
     $task = new sfCacheClearTask(clone $this->options['dispatcher'], clone $this->options['formatter']);
     $task->run(array(), array('application' => null, 'env' => sfConfig::get('sf_environment', 'prod')));
