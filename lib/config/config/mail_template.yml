@@ -43,7 +43,7 @@ pc:
           If you register(free) of member by the following URL,
           you can participate in {{ op_config.sns_name }}.
           
-          * Participate in { op_config.sns_name }}
+          * Participate in {{ op_config.sns_name }}
           {% app_url_for('pc_frontend', 'member/register?token='~token, true) %}
       ja_JP:
         - "{{ op_config.sns_name }}招待状"
@@ -447,7 +447,7 @@ mobile:
           If you register(free) of member by the following URL,
           you can participate in {{ op_config.sns_name }}.
           
-          * Participate in { op_config.sns_name }}
+          * Participate in {{ op_config.sns_name }}
           {% app_url_for('mobile_frontend', 'member/register?token='~token, true) %}
       ja_JP:
         - "{{ op_config.sns_name }}招待状"
