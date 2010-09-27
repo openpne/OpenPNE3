@@ -2,11 +2,15 @@
 
 <?php echo __('This url is the outside of %0%.', array('%0%' => $op_config['sns_name'])) ?>
 <hr>
+<form action="" method="">
 URL <input type="text" value="<?php echo $url ?>">
+</form>
 <hr>
 <?php if ($proxys instanceof sfOutputEscaperArrayDecorator && count($proxys)): ?>
 <?php $i = 1; ?>
+<?php echo __('Use Proxy Site for Mobile') ?>
 <?php foreach ($proxys as $name => $purl): ?>
+<br>
 <a href="<?php echo strpos($purl, '%s') ? sprintf($purl, urlencode($url)) : $purl.urlencode($url) ?>"<?php echo $i <= 9 ? 'accesskey="'.$i.'"' : '' ?>><?php echo ($i <= 9 ? $i++.'. ' : '').$name ?></a>
 <?php endforeach; ?>
 <hr>

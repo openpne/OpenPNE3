@@ -3,7 +3,7 @@
 
 <?php slot('activities') ?>
 <?php if (isset($form)): ?>
-<form id="<?php echo $id ?>_form" action="" method="post"><div class="box_form">
+<form id="<?php echo $id ?>_form" action="<?php echo url_for('member/updateActivity') ?>" method="post"><div class="box_form">
 <?php echo $form->renderHiddenFields(), "\n" ?>
 <div class="box_public_flag">
 <label for="activity_data_public_flag"><?php echo __('Public flag') ?></label>

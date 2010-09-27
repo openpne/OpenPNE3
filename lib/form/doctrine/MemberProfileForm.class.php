@@ -53,24 +53,24 @@ class MemberProfileForm extends BaseForm
       }
 
       $memberProfile = Doctrine::getTable('MemberProfile')->retrieveByMemberIdAndProfileId($memberId, $profile->getId());
+
+      if (null === $value['value'])
+      {
+        if ($memberProfile)
+        {
+          if ($profile->isMultipleSelect())
+          {
+            $memberProfile->clearChildren();
+          }
+          $memberProfile->delete();
+        }
+        continue;
+      }
       if (!$memberProfile)
       {
-        if (empty($value['value']))
-        {
-          continue;
-        }
         $memberProfile = new MemberProfile();
         $memberProfile->setMemberId($memberId);
         $memberProfile->setProfileId($profile->getId());
-      }
-      elseif (empty($value['value']))
-      {
-        if ($profile->isMultipleSelect())
-        {
-          $memberProfile->clearChildren();
-        }
-        $memberProfile->delete();
-        continue;
       }
 
       $memberProfile->setPublicFlag($memberProfile->getProfile()->getDefaultPublicFlag());

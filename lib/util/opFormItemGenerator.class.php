@@ -181,27 +181,54 @@ class opFormItemGenerator
       return $obj;
     }
 
-    if ($field['ValueType'] === 'integer' || $field['FormType'] === 'date')
+    if ($field['ValueType'] === 'integer')
     {
-        if (!empty($field['ValueMin']))
+      if (isset($field['ValueMin']) && is_numeric($field['ValueMin']))
+      {
+        $option['min'] = $field['ValueMin'];
+      }
+      if (isset($field['ValueMax']) && is_numeric($field['ValueMax']))
+      {
+        $option['max'] = $field['ValueMax'];
+        if (isset($option['min']) && (int)$option['min'] > (int)$option['max'])
         {
-          $option['min'] = $field['ValueMin'];
+          unset($option['min']);
+          unset($option['max']);
         }
-        if (!empty($field['ValueMax']))
+      }
+    }
+    elseif ($field['FormType'] === 'date')
+    {
+      if (isset($field['ValueMin']) && false !== strtotime($field['ValueMin']))
+      {
+        $option['min'] = $field['ValueMin'];
+      }
+      if (isset($field['ValueMax']) && false !== strtotime($field['ValueMax']))
+      {
+        $option['max'] = $field['ValueMax'];
+        if (isset($option['min']) && strtotime($option['min']) > strtotime($option['max']))
         {
-          $option['max'] = $field['ValueMax'];
+          unset($option['min']);
+          unset($option['max']);
         }
+      }
     }
     else
     {
-        if (isset($field['ValueMin']))
+      if (isset($field['ValueMin']))
+      {
+        $option['min_length'] = $field['ValueMin'];
+      }
+      if (isset($field['ValueMax']))
+      {
+        $option['max_length'] = $field['ValueMax'];
+
+        if (1 > (int)$field['ValueMax'] || (isset($field['ValueMin']) && (int)$field['ValueMin'] > (int)$field['ValueMax']))
         {
-          $option['min_length'] = $field['ValueMin'];
+          unset($option['min_length']);
+          unset($option['max_length']);
         }
-        if (isset($field['ValueMax']))
-        {
-          $option['max_length'] = $field['ValueMax'];
-        }
+      }
     }
 
     if ($field['FormType'] === 'date')

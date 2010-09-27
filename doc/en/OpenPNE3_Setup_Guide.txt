@@ -99,6 +99,13 @@ If you execute the command, you will be required inputing the following:
 
 Installing will be started automatically based on your inputted information.
 
+Delete the development files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+  $ ./symfony project:clear-controllers
+
 Configuring mod_rewrite
 ~~~~~~~~~~~~~~~~~~~~~~~
 

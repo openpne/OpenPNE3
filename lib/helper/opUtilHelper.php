@@ -423,14 +423,6 @@ function op_auto_link_text_for_mobile($text, $link = null, $href_options = array
   }
 
   $result = $text;
-  if (in_array('urls', $link))
-  {
-    $result = _op_auto_links_urls($result, $href_options, $truncate, $truncate_len, $pad);
-    if ($is_allow_outer_url)
-    {
-      $result = _op_auto_links_outer_urls($result, $href_options, $truncate, $truncate_len, $pad);
-    }
-  }
   if (in_array('email_addresses', $link))
   {
     $result = _auto_link_email_addresses($result);
@@ -438,6 +430,14 @@ function op_auto_link_text_for_mobile($text, $link = null, $href_options = array
   if (in_array('phone_numbers', $link))
   {
     $result = _op_auto_links_phone_number($result);
+  }
+  if (in_array('urls', $link))
+  {
+    $result = _op_auto_links_urls($result, $href_options, $truncate, $truncate_len, $pad);
+    if ($is_allow_outer_url)
+    {
+      $result = _op_auto_links_outer_urls($result, $href_options, $truncate, $truncate_len, $pad);
+    }
   }
 
   return $result;
@@ -563,32 +563,7 @@ function _op_auto_links_outer_urls($text, $href_options = array(), $truncate = f
 
 function _op_auto_links_phone_number($text)
 {
-  $pattern = '/
-    (
-      <\w+.*?>|             #   leading HTML tag, or
-      [^=!:\'"\/]|          #   leading punctuation, or
-      ^                     #   beginning of line
-    )
-    ((0\d{1,3})-?(\d{2,4})-?(\d{4}))
-    ([[:punct:]]|\s|<|$)      # trailing text
-    /x';
-
-  $callback_function = '
-    if (preg_match("/<a\s/i", $matches[1]))
-    {
-      return $matches[0];
-    }
-    else
-    {
-      return $matches[1].\'<a href="tel:\'.$matches[3].$matches[4].$matches[5].\'">\'.$matches[2].\'</a>\'.$matches[6];
-    }
-    ';
-
-  return preg_replace_callback(
-    $pattern,
-    create_function('$matches', $callback_function),
-    $text
-    );
+  return preg_replace('/\b((0\d{1,3})-?(\d{2,4})-?(\d{4}))\b/', '<a href="tel:\\2\\3\\4">\\1</a>', $text);
 }
 
 /**

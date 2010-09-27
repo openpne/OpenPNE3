@@ -54,7 +54,7 @@ class NotificationMailTable extends Doctrine_Table
         }
         else
         {
-          $sample = $config['sample'][0];
+          $sample = current($config['sample']);
         }
 
         if ($sample)

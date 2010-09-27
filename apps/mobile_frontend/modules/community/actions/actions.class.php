@@ -64,7 +64,6 @@ class communityActions extends opCommunityAction
     sfConfig::set('sf_nav_type', 'default');
 
     $params = $request->getParameter('community', array());
-    $params['community_category_id'] = $request->getParameter('community_category_id');
     $this->isResult = false;
     $this->category_id = 0;
     if (isset($params['name']))

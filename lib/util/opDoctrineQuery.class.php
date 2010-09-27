@@ -17,9 +17,7 @@
  */
 class opDoctrineQuery extends Doctrine_Query
 {
-  protected static
-    $detectedSlave = null,
-    $findQueryCacheKeys = array();
+  protected static $detectedSlave = null;
 
   protected
     $shouldGoToMaster = false,
@@ -123,7 +121,9 @@ class opDoctrineQuery extends Doctrine_Query
       return self::getMasterConnectionDirect();
     }
 
-    elseif (self::SELECT === $queryType && !$shouldGoToMaster)
+    if (Doctrine_Transaction::STATE_SLEEP === self::getMasterConnection()->transaction->getState()
+      && (self::SELECT === $queryType && !$shouldGoToMaster)
+    )
     {
       return self::getSlaveConnection();
     }
@@ -204,28 +204,9 @@ class opDoctrineQuery extends Doctrine_Query
     }
 
     $result = '';
-    $findQueryCacheKey = '';
-
-    if (isset($this->_dqlParts['from'][0]))
-    {
-      if (strpos($this->_dqlParts['from'][0], 'dctrn_find'))
-      {
-        $findQueryCacheKey = md5($this->_dqlParts['from'][0].count($this->getFlattenedParams()));
-      }
-
-      if (isset(self::$findQueryCacheKeys[$findQueryCacheKey]))
-      {
-        $result = self::$findQueryCacheKeys[$findQueryCacheKey];
-      }
-    }
-
     if (!$result)
     {
       $result = parent::calculateQueryCacheHash();
-      if ($findQueryCacheKey)
-      {
-        self::$findQueryCacheKeys[$findQueryCacheKey] = $result;
-      }
     }
 
     if ($this->isFoundRows)

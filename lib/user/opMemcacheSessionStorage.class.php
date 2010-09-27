@@ -33,6 +33,11 @@ class opMemcacheSessionStorage extends sfSessionStorage
    */
   public function initialize($options = array())
   {
+    $isAutoStart = true;
+    if (isset($options['auto_start']))
+    {
+      $isAutoStart = $options['auto_start'];
+    }
     // disable auto_start
     $options['auto_start'] = false;
 
@@ -54,8 +59,12 @@ class opMemcacheSessionStorage extends sfSessionStorage
                              array($this, 'sessionDestroy'),
                              array($this, 'sessionGC'));
 
-    // start our session
-    session_start();
+    if ($isAutoStart && !parent::$sessionStarted)
+    {
+      // start our session
+      session_start();
+      parent::$sessionStarted = true;
+    }
   }
 
   /**
