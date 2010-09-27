@@ -273,7 +273,7 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
   static public function toHtml($string, $isStrip, $isUseStylesheet, $isHtmlTagFollowup = true)
   {
     new self();
-    $regexp = '/(?:&lt;|<)(\/?)(op:.+?)(?:\s+(.*?))?(?:&gt;|>)/i';
+    $regexp = '/(?:&lt;|<)(\/?)(op:\w+)(?:\s+((?:(?!&lt;|<).)*))?(?:&gt;|>)/i';
 
     if ($isStrip)
     {
