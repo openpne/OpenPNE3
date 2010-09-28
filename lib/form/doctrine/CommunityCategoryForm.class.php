@@ -31,5 +31,7 @@ class CommunityCategoryForm extends BaseCommunityCategoryForm
 
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
     unset($this['created_at'], $this['updated_at']);
+
+    $this->getValidator('name')->setOption('required', true);
   }
 }
