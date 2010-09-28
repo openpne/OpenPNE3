@@ -298,7 +298,7 @@ CommunityCategory:
     Timestampable:
   columns:
     id: { type: integer(4), primary: true, autoincrement: true, comment: "Serial number" }
-    name: { type: string(64), default: "", notnull: true, comment: "Category name" }
+    name: { type: string(64), notnull: true, comment: "Category name" }
     is_allow_member_community: { type: boolean, default: true, notnull: true, comment: "Member can create this category community" }
     tree_key: { type: integer(4), comment: "Nested tree key" }
     sort_order: { type: integer(4), comment: "Order to sort" }
