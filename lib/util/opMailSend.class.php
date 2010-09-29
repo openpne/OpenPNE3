@@ -179,7 +179,23 @@ class opMailSend
       $mailer->setReturnPath($envelopeFrom);
     }
 
-    $result = $mailer->send();
+    try
+    {
+      $result = $mailer->send();
+    }
+    catch (Zend_Mail_Protocol_Exception $e)
+    {
+      if (sfContext::getInstance()->getActionName() === null)
+      {
+        error_log('Mail Send Error');
+      }
+      else
+      {
+        error_log(var_dump(sfContext::getInstance()->getActionName()));
+        $action = sfContext::getInstance()->getActionStack()->getFirstEntry()->getActionInstance();
+        $action->redirect('default/mailError');
+      }
+    }
 
     Zend_Loader::registerAutoLoad('Zend_Loader', false);
 

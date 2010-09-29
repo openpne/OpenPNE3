@@ -1327,6 +1327,10 @@
         <source>Search Members</source>
         <target>メンバー検索</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Couldn't send E-mail. Please retry or contact to administrator.</source>
+        <target>メールの送信に失敗しました。もう一度実行するか管理者に連絡して下さい。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
