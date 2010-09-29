@@ -232,7 +232,6 @@ class opMailSend
       }
       else
       {
-        error_log(var_dump(sfContext::getInstance()->getActionName()));
         $action = sfContext::getInstance()->getActionStack()->getFirstEntry()->getActionInstance();
         $action->redirect('default/mailError');
       }
