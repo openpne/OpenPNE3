@@ -315,13 +315,7 @@ abstract class opMemberAction extends sfActions
       $this->form->bind($request->getParameter('member_config'));
       if ($this->form->isValid())
       {
-        try
-        {
-          $this->form->save();
-        }
-        catch (Zend_Mail_Protocol_Exception $e)
-        {
-        }
+        $this->form->save();
 
         return sfView::SUCCESS;
       }
