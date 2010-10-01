@@ -78,7 +78,16 @@ class sfOpenPNEMailSend
 
     $params['sf_config'] = sfConfig::getAll();
 
+    $escapingMethod = sfConfig::get('sf_escaping_method');
+    $escapingStrategy = sfConfig::get('sf_escaping_strategy');
+    sfConfig::set('sf_escaping_method', 'off');
+    sfConfig::set('sf_escaping_strategy', 'off');
+
     $view = new sfTemplatingComponentPartialView($context, 'superGlobal', 'notify_mail:'.$target.'_'.$template, '');
+
+    sfConfig::set('sf_escaping_method', $escapingMethod);
+    sfConfig::set('sf_escaping_strategy', $escapingStrategy);
+
     $context->set('view_instance', $view);
 
     $view->setPartialVars($params);
