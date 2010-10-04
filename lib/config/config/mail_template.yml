@@ -263,7 +263,7 @@ pc:
           This is daily news in {{ op_config.sns_name }}.
           
           {% for item in gadgets %}
-          {% include_component(item.component.module, item.component.action, item) %}
+          {% include_component(item.component.module, item.component.action, ['gadget': item.gadget]) %}
           
           {% endfor %}
       ja_JP:
@@ -283,7 +283,7 @@ pc:
           本日の最新情報のお知らせです。
           
           {% for item in gadgets %}
-          {% include_component(item.component.module, item.component.action, item) %}
+          {% include_component(item.component.module, item.component.action, ['gadget': item.gadget]) %}
           
           {% endfor %}
     variables:
@@ -590,7 +590,7 @@ mobile:
           This is daily news in {{ op_config.sns_name }}.
           
           {% for item in gadgets %}
-          {% include_component(item.component.module, item.component.action, item) %}
+          {% include_component(item.component.module, item.component.action, ['gadget': item.gadget]) %}
           
           {% endfor %}
       ja_JP:
@@ -610,7 +610,7 @@ mobile:
           本日の最新情報のお知らせです。
           
           {% for item in gadgets %}
-          {% include_component(item.component.module, item.component.action, item) %}
+          {% include_component(item.component.module, item.component.action, ['gadget': item.gadget]) %}
           
           {% endfor %}
     variables:
