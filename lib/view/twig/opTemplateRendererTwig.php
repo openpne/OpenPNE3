@@ -61,7 +61,13 @@ class opTemplateRendererTwig extends sfTemplateRendererTwig
 
       return array_map(array($this, 'normalizeParametersCallback'), $member);
     }
-    elseif ($current instanceof Doctrine_Record)
+
+    if ($current instanceof Gadget)
+    {
+      return $current;
+    }
+
+    if ($current instanceof Doctrine_Record)
     {
       return array_map(array($this, 'normalizeParametersCallback'), $current->toArray());
     }
@@ -90,7 +96,7 @@ class opTemplateRendererTwig extends sfTemplateRendererTwig
 
   protected function filterIgoredParametersCallback($current)
   {
-    $allowedClasses = array('opConfig', 'opColorConfig', 'SnsTermTable');
+    $allowedClasses = array('opConfig', 'opColorConfig', 'SnsTermTable', 'Gadget');
 
     if (is_scalar($current) || is_array($current) || in_array(get_class($current), $allowedClasses) || empty($current))
     {
