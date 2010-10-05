@@ -1300,11 +1300,14 @@ ol.activities li.activity:after {
 ol.activities li.activity {
   border-bottom: 1px solid #888888;
   min-height: 80px;
+  position: relative;
 }
 
 ol.activities li.activity .memberImage {
   padding: 2px;
   position: absolute;
+  top: 0;
+  left: 0;
 }
 
 ol.activities li.activity .body {
