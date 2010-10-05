@@ -8,17 +8,19 @@
 <?php endif; ?>
 </h2>
 
+<?php if ($form->isNew()) : ?>
 <div style="margin-bottom: 1em;">
 <select id="original_preset">
   <option name="presetting"<?php if ($isPreset) : ?> selected="selected"<?php endif; ?>><?php echo __('Select from presets')?></option>
   <option name="original"<?php if (!$isPreset) : ?> selected="selected"<?php endif; ?>><?php echo __('Enter on your own')?></option>
 </select>
 </div>
+<?php endif; ?>
 
 <div id="preset"<?php if (!$isPreset): ?> style="display: none;"<?php endif ?>>
 <?php if ($presetForm->isNew()): ?>
 <?php if (0 < count($presetForm->getWidget('preset')->getChoices())): ?>
-<form action="<?php echo url_for('profile/edit?type=preset') ?>" method="post">
+<form action="<?php echo Url_for('profile/edit?type=preset') ?>" method="post">
 <table style="width: 50%;">
 <?php echo $presetForm ?>
 </table>

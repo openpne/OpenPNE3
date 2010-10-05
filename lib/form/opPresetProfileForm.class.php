@@ -22,22 +22,20 @@ class opPresetProfileForm extends ProfileForm
     parent::configure();
 
     $this->validatorSchema->setPostValidator(new sfValidatorPass());
-    
-    $this->setWidget('preset', new sfWidgetFormSelect(array('choices' => $this->getPresetChoiceList())));
-    $this->setValidator('preset', new sfValidatorChoice(array('choices' => array_keys($this->getPresetChoiceList()))));
-    $this->widgetSchema->setLabel('preset', 'Preset');
-    $this->widgetSchema->moveField('preset', sfWidgetFormSchema::FIRST);
+
+    if ($this->isNew())
+    {
+      $this->setWidget('preset', new sfWidgetFormSelect(array('choices' => $this->getPresetChoiceList())));
+      $this->setValidator('preset', new sfValidatorChoice(array('choices' => array_keys($this->getPresetChoiceList()))));
+      $this->widgetSchema->setLabel('preset', 'Preset');
+      $this->widgetSchema->moveField('preset', sfWidgetFormSchema::FIRST);
+    }
 
     unset($this['name'], $this['form_type'], $this['value_type'], $this['is_unique'], $this['value_min'], $this['value_max'], $this['value_type'], $this['value_regexp']);
     $embeds = array_keys($this->getEmbeddedForms());
     foreach ($embeds as $embed)
     {
       unset($this[$embed]);
-    }
-
-    if ($this->getObject())
-    {
-      $this->setDefault('preset', $this->getObject()->getRawPresetName());
     }
   }
 
@@ -99,17 +97,19 @@ class opPresetProfileForm extends ProfileForm
 
   public function save($con = null)
   {
-    $values = $this->getValues();
-    $presetList = opToolkit::getPresetProfileList();
-    $presetName = $values['preset'];
-    $preset = $presetList[$presetName];
+    if ($this->isNew())
+    {
+      $values = $this->getValues();
+      $presetList = opToolkit::getPresetProfileList();
+      $presetName = $values['preset'];
+      $preset = $presetList[$presetName];
 
-    $values = $this->mergePresetAndValues($preset, $values);
-    $values['name'] = 'op_preset_'.$values['name'];
+      $values = $this->mergePresetAndValues($preset, $values);
+      $values['name'] = 'op_preset_'.$values['name'];
 
-    unset($values['preset'], $values['choices'], $values['caption']);
-
-    $this->values = $values;
+      unset($values['preset'], $values['choices'], $values['caption']);
+      $this->values = $values;
+    }
 
     parent::save($con);
   }
