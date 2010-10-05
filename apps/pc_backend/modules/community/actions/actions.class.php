@@ -147,13 +147,14 @@ class communityActions extends sfActions
     if ($request->isMethod(sfWebRequest::POST))
     {
       $request->checkCSRFProtection();
+      $conn = Doctrine::getTable('Member')->getConnection();
+      $insertIds = $conn->fetchColumn('SELECT id FROM '.Doctrine::getTable('Member')->getTableName());
       $ids = Doctrine::getTable('CommunityMember')->getMemberIdsByCommunityId($this->community->getId());
-      $query = Doctrine::getTable('Member')->createQuery()->select('id');
       if (count($ids))
       {
-        $query->whereNotIn('id', $ids);
+        $insertIds = array_diff($insertIds, $ids);
       }
-      foreach ($query->execute()->getPrimaryKeys() as $id)
+      foreach ($insertIds as $id)
       {
         Doctrine::getTable('CommunityMember')->join($id, $this->community->getId());
       }
