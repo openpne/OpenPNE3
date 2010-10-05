@@ -24,19 +24,10 @@ class CommunityCategoryTable extends Doctrine_Table
       ->execute();
   }
 
-  public function retrieveAllChildren($sort = true)
+  public function retrieveAllChildren()
   {
-    return $this->getAllChildrenQuery($sort)->execute();
-  }
-
-  public function getAllChildrenQuery($sort = true)
-  {
-    $q = $this->createQuery()->where('lft > 1');
-    if ($sort)
-    {
-      $q->orderBy('sort_order');
-    }
-
-    return $q;
+    return $this->createQuery()
+      ->where('lft > 1')
+      ->execute();
   }
 }
