@@ -254,26 +254,6 @@
         <source>Sun</source>
         <target>日</target>
       </trans-unit>
-      <trans-unit id="">
-        <source>*+--------------------------------------------------------</source>
-        <target>■□━━━━━━━━━━━━━━━━━━━━━━━━━━━</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Feedback and Suggestions Feel free to us!</source>
-        <target>ご意見、ご感想などはお気軽にどうぞ！</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Contact us</source>
-        <target>お問い合わせ</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Unapproved reproduction of the contents written to this mail, Unauthorized copying is prohibited.</source>
-        <target>このメールに書かれた内容の無断転載、無断複製を禁じます。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>--------------------------------------------------------+*</source>
-        <target>━━━━━━━━━━━━━━━━━━━━━━━━━━━□■</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>
