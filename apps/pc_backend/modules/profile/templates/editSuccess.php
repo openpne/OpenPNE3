@@ -8,12 +8,14 @@
 <?php endif; ?>
 </h2>
 
+<?php if ($form->isNew()) : ?>
 <div style="margin-bottom: 1em;">
 <select id="original_preset">
   <option name="presetting"<?php if ($isPreset) : ?> selected="selected"<?php endif; ?>><?php echo __('Select from presets')?></option>
   <option name="original"<?php if (!$isPreset) : ?> selected="selected"<?php endif; ?>><?php echo __('Enter on your own')?></option>
 </select>
 </div>
+<?php endif; ?>
 
 <div id="preset"<?php if (!$isPreset): ?> style="display: none;"<?php endif ?>>
 <?php if ($presetForm->isNew()): ?>
