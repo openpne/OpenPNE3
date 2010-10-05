@@ -20,7 +20,7 @@
 <div id="preset"<?php if (!$isPreset): ?> style="display: none;"<?php endif ?>>
 <?php if ($presetForm->isNew()): ?>
 <?php if (0 < count($presetForm->getWidget('preset')->getChoices())): ?>
-<form action="<?php echo Url_for('profile/edit?type=preset') ?>" method="post">
+<form action="<?php echo url_for('profile/edit?type=preset') ?>" method="post">
 <table style="width: 50%;">
 <?php echo $presetForm ?>
 </table>
