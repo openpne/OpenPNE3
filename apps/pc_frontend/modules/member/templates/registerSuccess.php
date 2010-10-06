@@ -1,6 +1,6 @@
 <?php $has_register_box = false ?>
 <?php foreach ($sf_user->getAuthAdapters() as $adapter): ?>
-<?php if (in_array($adapter->getAuthModeName(), $sf_user->getAuthModes()->getRawValue()) && $sf_context->getController()->componentExists($adapter->getAuthModuleName(), 'registerBox')): ?>
+<?php if ($adapter->isInvitedRegisterable() && $sf_context->getController()->componentExists($adapter->getAuthModuleName(), 'registerBox')): ?>
 <?php
 $has_register_box = true;
 include_component($adapter->getAuthModuleName(), 'registerBox');

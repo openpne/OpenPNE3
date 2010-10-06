@@ -323,7 +323,7 @@ class opSecurityUser extends opAdaptableUser
   {
     $member = $this->getMember(true);
 
-    return ($member && $member->getInviteMemberId());
+    return ($member && ($member->getConfig('is_admin_invited', false) || $member->getInviteMemberId()));
   }
 
   public function isRegisterBegin()
