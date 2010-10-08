@@ -8,12 +8,14 @@
 <?php endif; ?>
 </h2>
 
+<?php if ($form->isNew()) : ?>
 <div style="margin-bottom: 1em;">
 <select id="original_preset">
   <option name="presetting"<?php if ($isPreset) : ?> selected="selected"<?php endif; ?>><?php echo __('Select from presets')?></option>
   <option name="original"<?php if (!$isPreset) : ?> selected="selected"<?php endif; ?>><?php echo __('Enter on your own')?></option>
 </select>
 </div>
+<?php endif; ?>
 
 <div id="preset"<?php if (!$isPreset): ?> style="display: none;"<?php endif ?>>
 <?php if ($presetForm->isNew()): ?>
@@ -122,7 +124,7 @@
 <th><?php echo $form['value_min']->renderLabel() ?>～<?php echo $form['value_max']->renderLabel() ?></th>
 <td>
 <ul>
-<li><?php echo __('Please input in format: %format% . For example: %example%', array('%format%' => 'YYYY/MM/DD HH:MM:SS', '%example%' => '2009/01/01 23:59:21')) ?></li>
+<li><?php echo __('Please input in format: %format%. For example: %example%', array('%format%' => 'YYYY/MM/DD', '%example%' => '2010/07/18, 0001/01/01')) ?></li>
 <li><?php echo __('Besides, you can use any particular string that can be interpreted by strtotime() function of PHP.') ?></li>
 </ul>
 <?php if ($form['value_min']->hasError()): ?>

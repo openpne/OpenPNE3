@@ -95,26 +95,69 @@ class ProfileForm extends BaseProfileForm
 
   public function bind($params)
   {
-    if ($params['form_type'] === 'input' || $params['form_type'] === 'textarea')
+    if ('input' === $params['form_type'] || 'textarea' === $params['form_type'])
     {
-      $validator = new sfValidatorInteger(array('required' => false));
-      $this->setValidator('value_min', $validator);
-      $validator = new sfValidatorInteger(array('required' => false));
-      $this->setValidator('value_max', $validator);
+      $validatorArgs = array(
+        'required' => false,
+        'trim' => true,
+      );
+      $validatorMin = new sfValidatorInteger($validatorArgs);
+      $validatorMax = new sfValidatorInteger($validatorArgs);
+      if ('integer' !== $params['value_type'])
+      {
+        $validatorMin->setOption('min', 0);
+        $validatorMax->setOption('min', 1);
+      }
+
+      $this->setValidator('value_min', $validatorMin);
+      $this->setValidator('value_max', $validatorMax);
     }
-    elseif ($params['form_type'] === 'date')
+    elseif ('date' === $params['form_type'])
     {
-      $validator = new opValidatorDate(array('required' => false));
-      $this->setValidator('value_min', $validator);
-      $validator = new opValidatorDate(array('required' => false));
-      $this->setValidator('value_max', $validator);
+      $validatorArgs = array(
+        'required' => false,
+        'trim' => true,
+        'date_format' => '/^(?P<year>\d{4})\/(?P<month>\d{1,2})\/(?P<day>\d{1,2})$/',
+        'date_output' => 'Y/m/d',
+        'date_format_error' => 'YYYY/MM/DD',
+      );
+      $validatorMin = new opValidatorDate($validatorArgs);
+      $validatorMax = new opValidatorDate($validatorArgs);
+
+      $this->setValidator('value_min', $validatorMin);
+      $this->setValidator('value_max', $validatorMax);
     }
     elseif ($params['value_min'] || $params['value_max'])
     {
       throw new sfValidatorError($validator, 'invalid');
     }
 
+    $this->mergePostValidator(new sfValidatorCallback(
+      array('callback' => array($this, 'compareMinAndMax')),
+      array('invalid' => 'Value must be less than or equal to Minimum value.')
+    ));
+
     return parent::bind($params);
+  }
+
+  public function compareMinAndMax(sfValidatorBase $validator, $params)
+  {
+    $value_min = $params['value_min'];
+    $value_max = $params['value_max'];
+    if (!is_null($value_min) && !is_null($value_max))
+    {
+      if ('date' !== $params['form_type'])
+      {
+        $value_min = (int)$value_min;
+        $value_max = (int)$value_max;
+      }
+      if ($value_min > $value_max)
+      {
+        throw new sfValidatorErrorSchema($validator, array('value_max' => new sfValidatorError($validator, 'invalid')));
+      }
+    }
+
+    return $params;
   }
 
   static public function validateName($validator, $values)
