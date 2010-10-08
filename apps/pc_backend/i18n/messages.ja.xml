@@ -34,7 +34,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>%Community%'s admin authorization needed</source>
-        <target>コミュニティ参加者の承認が必要</target>
+        <target>%Community%参加者の承認が必要</target>
       </trans-unit>
       <trans-unit id="">
         <source>Public Flag for Profile Page</source>
@@ -78,7 +78,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>Do you add this %community% as a default?</source>
-        <target>このコミュニティを初期%community%として追加してよろしいですか？</target>
+        <target>この%community%を初期%community%として追加してよろしいですか？</target>
       </trans-unit>
       <trans-unit id="">
         <source>Remove this %community% from the default</source>
@@ -90,7 +90,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>Do you remove this %community% from default?</source>
-        <target>このコミュニティを初期%community%から取り除いてよろしいですか？</target>
+        <target>この%community%を初期%community%から取り除いてよろしいですか？</target>
       </trans-unit>
 
       <trans-unit id="">
@@ -114,8 +114,8 @@
         <target>%community%メンバー数</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Community Description</source>
-        <target>コミュニティ説明</target>
+        <source>%community% Description</source>
+        <target>%community%説明文</target>
       </trans-unit>
 
       <trans-unit id="">
@@ -1421,10 +1421,6 @@
       <trans-unit id="">
         <source>Register policy</source>
         <target>参加方針</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>%community% Description</source>
-        <target>%community%説明文</target>
       </trans-unit>
       <trans-unit id="">
         <source>If you uncheck "Is allow Member %community%", only the member who has id 1 can make %community% of the category.</source>
