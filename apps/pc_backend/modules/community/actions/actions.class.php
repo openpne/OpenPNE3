@@ -213,7 +213,7 @@ class communityActions extends sfActions
       }
       else
       {
-        $this->getUser()->setFlash('error', $form->getErrorSchema()->getMessage());
+        $this->getUser()->setFlash('error', $form['name']->getError()->getMessage());
       }
     }
     $this->redirect('community/categoryList');
