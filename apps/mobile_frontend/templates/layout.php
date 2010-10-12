@@ -14,7 +14,7 @@
 <?php echo $op_config->get('mobile_html_head') ?>
 </head>
 <body
-<?php if !($sf_request->getMobile()->isDocomo() && '#000000' === $op_color['core_color_14']): ?>
+<?php if (!($sf_request->getMobile()->isDocomo() && '#000000' === $op_color['core_color_14'])): ?>
  text="<?php echo $op_color['core_color_14'] ?>"
 <?php endif; ?>
  bgcolor="<?php echo $op_color['core_color_1'] ?>"
