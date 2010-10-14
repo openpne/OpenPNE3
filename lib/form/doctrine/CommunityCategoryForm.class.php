@@ -19,7 +19,15 @@ class CommunityCategoryForm extends BaseCommunityCategoryForm
 {
   public function configure()
   {
-    unset($this['id'], $this['sort_order'], $this['lft'], $this['rgt'], $this['level'], $this->widgetSchema['tree_key']);
+    unset(
+      $this['id'],
+      $this['sort_order'],
+      $this['lft'],
+      $this['rgt'],
+      $this['level'],
+      $this->widgetSchema['tree_key'],
+      $this['created_at'], $this['updated_at']
+    );
 
     $obj = $this->isNew() ? $this->getOption('category') : $this->getObject();
     if ($obj instanceof CommunityCategory)
@@ -30,6 +38,7 @@ class CommunityCategoryForm extends BaseCommunityCategoryForm
     $this->widgetSchema->setLabel('name', 'Category Name');
 
     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('form_community');
-    unset($this['created_at'], $this['updated_at']);
+
+    $this->setValidator('name', new opValidatorString(array('max_length' => 64, 'trim' => true)));
   }
 }

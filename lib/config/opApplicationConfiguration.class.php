@@ -215,11 +215,15 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
 
     $table = Doctrine::getTable('SnsTerm');
     $application = sfConfig::get('sf_app');
-    if($application == 'pc_backend' || $application == 'smartphone_frontend')
+    if ($application == 'pc_backend')
     {
         $application = 'pc_frontend';
     }
     $table->configure(sfContext::getInstance()->getUser()->getCulture(), $application);
+    if (!$table['member'])
+    {
+      $table->configure('en', $application);
+    }
     $parameters['op_term'] = $table;
     sfOutputEscaper::markClassAsSafe('SnsTermTable');
 
@@ -541,12 +545,6 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
     }
 
     sfConfig::set('sf_cache_dir', $newCacheDir);
-    if (is_dir($newCacheDir))
-    {
-      $filesystem = new sfFilesystem();
-      $filesystem->mkdirs($newCacheDir);
-      $filesystem->chmod($newCacheDir, 0777);
-    }
 
     parent::setCacheDir($newCacheDir);
   }

@@ -173,11 +173,6 @@ class opWebRequest extends sfWebRequest
     return $this->getCookie(self::MOBILE_UID_COOKIE_NAME);
   }
 
-  public function hasMobileUidCookie()
-  {
-    return (bool)$this->getCookie(self::MOBILE_UID_COOKIE_NAME);
-  }
-
  /**
   * Checks whether the mobile UID is a valid or not.
   *

@@ -59,6 +59,7 @@ class opMailSend
   {
     $template = '_'.$template;
     $view = new opGlobalPartialView(sfContext::getInstance(), 'superGlobal', $template, '');
+    $view->getAttributeHolder()->setEscaping(false);
     $view->setPartialVars($params);
     $body = $view->render();
     $this->body = $body;
@@ -81,6 +82,7 @@ class opMailSend
     $view = new sfTemplatingComponentPartialView($context, 'superGlobal', 'notify_mail:'.$target.'_'.$template, '');
     $context->set('view_instance', $view);
 
+    $view->getAttributeHolder()->setEscaping(false);
     $view->setPartialVars($params);
     $view->setAttribute('renderer_config', array('twig' => 'opTemplateRendererTwig'));
     $view->setAttribute('rule_config', array('notify_mail' => array(
@@ -179,7 +181,22 @@ class opMailSend
       $mailer->setReturnPath($envelopeFrom);
     }
 
-    $result = $mailer->send();
+    try
+    {
+      $result = $mailer->send();
+    }
+    catch (Zend_Mail_Protocol_Exception $e)
+    {
+      if (sfContext::getInstance()->getActionName() === null)
+      {
+        error_log('Mail Send Error');
+      }
+      else
+      {
+        $action = sfContext::getInstance()->getActionStack()->getFirstEntry()->getActionInstance();
+        $action->redirect('default/mailError');
+      }
+    }
 
     Zend_Loader::registerAutoLoad('Zend_Loader', false);
 

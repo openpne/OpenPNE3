@@ -24,7 +24,7 @@ class CommunityFormFilter extends BaseCommunityFormFilter
 
   public function configure()
   {
-    $q = Doctrine::getTable('CommunityCategory')->createQuery()->where('lft > 1');
+    $q = Doctrine::getTable('CommunityCategory')->getAllChildrenQuery();
     $widgets = array(
       'name'                  => new sfWidgetFormInput(),
       'community_category_id' => new sfWidgetFormDoctrineChoice(array(

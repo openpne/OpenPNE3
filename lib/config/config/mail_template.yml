@@ -3,6 +3,13 @@ pc:
     caption: "Notification of Confirmation of Changing Your PC E-mail Address"
     configurable: false
     sample:
+      en:
+        - "Information of a mail address change page"
+        - |
+          Please click following URL, input the password, and complete registration.
+          If the mail address is registered, it is changed to a new mail address.
+          
+          {% app_url_for('pc_frontend', 'member/configComplete?token='~token~'&id='~id~'&type='~type, true) %}
       ja_JP:
         - "メールアドレス変更ページのお知らせ"
         - |
@@ -19,6 +26,25 @@ pc:
     caption: "Notification of Registration URL"
     configurable: false
     sample:
+      en:
+        - "{{ op_config.sns_name }} Letter of invitation"
+        - |
+          Hello! This is information from {{ op_config.sns_name }}.
+          {% if name %}
+          {{ name }} is inviting in {{ op_config.sns_name }} you.
+          
+          {% if message %}
+          ---------- The message to you from < {{ name }} > ----------
+          ---------------------------------------------------
+          {{ message }}
+          ---------------------------------------------------
+          {% endif %}
+          {% endif %}
+          If you register(free) of member by the following URL,
+          you can participate in {{ op_config.sns_name }}.
+          
+          * Participate in {{ op_config.sns_name }}
+          {% app_url_for('pc_frontend', 'member/register?token='~token, true) %}
       ja_JP:
         - "{{ op_config.sns_name }}招待状"
         - |
@@ -49,6 +75,13 @@ pc:
     caption: "Notification of Confirmation of Changing Password"
     configurable: false
     sample:
+      en:
+        - "Information of a password recurrence line"
+        - |
+          Your password was reissued.
+          
+          MailAddress: {{ mailAddress }}
+          New Password: {{ newPassword }}
       ja_JP:
         - "パスワード再発行のお知らせ"
         - |
@@ -64,6 +97,17 @@ pc:
     caption: "Notification of Someone's Joining Your Community"
     configurable: true
     sample:
+      en:
+        - "{{ new_member.name }} registered your {{ op_term.community }}, {{ community.name }}"
+        - |
+          Hello! This is information from {{ op_config.sns_name }}.
+          
+          {{ new_member.name }} registered your {{ op_term.community }}, {{ community.name }}.
+          
+          {{ community.name }} {{ op_term.community }} page:
+          {% app_url_for('pc_frontend', '@community_home?id='~community.id, true) %}
+          {{ new_member.name }}'s profile page:
+          {% app_url_for('pc_frontend', '@member_profile?id='~new_member.id, true) %}
       ja_JP:
         - "{{ new_member.name }} さんがあなたの{{ op_term.community }}に参加しました"
         - |
@@ -87,6 +131,12 @@ pc:
     caption: "Notification of Completion of Friend Link"
     configurable: true
     sample:
+      en:
+        - "{{ member.name }} accepted your {{ op_term.friend }} link request"
+        - |
+          Hello! This is information from {{ op_config.sns_name }}.
+          
+          {{ member.name }} accepted your {{ op_term.friend }} link request.
       ja_JP:
         - "{{ member.name }} さんがあなたの{{ op_term.friend }}リンクリクエストを承認しました"
         - |
@@ -102,6 +152,21 @@ pc:
     caption: "Notification of Completion of Your Registration"
     configurable: false
     sample : 
+      en:
+        - "Information of the completion of registration"
+        - |
+          Hello! This is information from {{ op_config.sns_name }}.
+          We've just accepted your registration.
+          
+          We hope that using {{ op_config.sns_name }} is useful for your future.
+          
+          {{ url }}
+          
+          *Don't you remember this registration?
+          If you think that any your friends shouldn't invite you and you haven't tried registration, please inform to the following e-mail address.
+          Your information in this site will be deleted.
+          
+          {{ op_config.admin_mail_address }}
       ja_JP:
         - "登録完了のお知らせ"
         - |
@@ -126,6 +191,13 @@ pc:
     caption: "Notification of Completion of Leaving From the SNS"
     configurable: false
     sample:
+      en:
+        - "Your leaving process was finished"
+        - |
+          Hello! This is information from {{ op_config.sns_name }}.
+
+          {{ member.name }}, your leaving process was finished.
+          Thank you for your using.
       ja_JP:
         - "退会手続きが完了しました"
         - |
@@ -141,6 +213,17 @@ pc:
     caption: "Notification of Friend Birthday"
     configurable: true
     sample:
+      en:
+        - "There is {{ member.name }}'s {{ op_term.my_friend }} that its birthday is coming soon"
+        - |
+          There is {{ member.name }}'s {{ op_term.my_friend }} that its birthday is coming soon.
+          We suggest you to send birthday message to your friend.
+          
+          Birthday : {{ birthMember.profile.op_preset_birthday|date("m/d") }}
+          {{ op_term.nickname }} : {{ birthMember.name }}
+          URL : {{ sf_config.op_base_url }}{% app_url_for("pc_frontend", "@member_profile?id="~birthMember.id) %}
+          
+          We hope that using {{ op_config.sns_name }} is useful for your future.
       ja_JP:
         - "{{ member.name }} さんの {{ op_term.my_friend }} に誕生日の近い方がいます！"
         - |
@@ -164,6 +247,25 @@ pc:
     caption: "Daily News"
     configurable: true
     sample:
+      en:
+        - "Daily News"
+        - |
+          --- {{ sf_config.op_base_url }} -----------------------------
+          
+          {{ op_config.sns_name }}
+          
+          Today News  [{{ 'now'|date('Y. m. d/D') }}]
+         
+          ----------------------------------------------------------
+          
+          Hi, {{ member.name }}!
+          
+          This is daily news in {{ op_config.sns_name }}.
+          
+          {% for item in gadgets %}
+          {% include_component(item.component.module, item.component.action, ['gadget': item.gadget]) %}
+          
+          {% endfor %}
       ja_JP:
         - "デイリーニュース"
         - |
@@ -181,7 +283,7 @@ pc:
           本日の最新情報のお知らせです。
           
           {% for item in gadgets %}
-          {% include_component(item.component.module, item.component.action, item) %}
+          {% include_component(item.component.module, item.component.action, ['gadget': item.gadget]) %}
           
           {% endfor %}
     variables:
@@ -195,6 +297,18 @@ pc:
     configurable: false
     title_configurable: false
     sample:
+      en: |
+        *+--------------------------------------------------------
+        
+        Feedback and Suggestions Feel free to us!
+        
+        {{ op_config.sns_name }}
+        URL         : {{ sf_config.op_base_url }}
+        Contact us  : {{ op_config.admin_mail_address }}
+        
+        Unapproved reproduction of the contents written to this mail, Unauthorized copying is prohibited.
+        
+        --------------------------------------------------------+*
       ja_JP: |
         ■□━━━━━━━━━━━━━━━━━━━━━━━━━━━
         
@@ -217,6 +331,13 @@ mobile:
     caption: "Notification of Confirmation of Changing Your Mobile E-mail Address"
     configurable: false
     sample:
+      en:
+        - "Information of a mail address change page"
+        - |
+          Please click following URL, input the password, and complete registration.
+          If the mail address is registered, it is changed to a new mail address.
+          
+          {% app_url_for('mobile_frontend', 'member/configComplete?token='~token~'&id='~id~'&type='~type, true) %}
       ja_JP:
         - "メールアドレス変更ページのお知らせ"
         - |
@@ -233,6 +354,17 @@ mobile:
     caption: "Notification of Someone's Joining Your Community"
     configurable: true
     sample:
+      en:
+        - "{{ new_member.name }} registered your {{ op_term.community }}, {{ community.name }}"
+        - |
+          Hello! This is information from {{ op_config.sns_name }}.
+          
+          {{ new_member.name }} registered your {{ op_term.community }}, {{ community.name }}.
+          
+          {{ community.name }} {{ op_term.community }} page:
+          {% app_url_for('mobile_frontend', '@community_home?id='~community.id, true) %}
+          {{ new_member.name }}'s profile page:
+          {% app_url_for('mobile_frontend', '@member_profile?id='~new_member.id, true) %}
       ja_JP:
         - "{{ new_member.name }} さんがあなたの {{ op_term.community }} に参加しました"
         - |
@@ -256,6 +388,12 @@ mobile:
     caption: "Notification of Completion of Friend Link"
     configurable: true
     sample:
+      en:
+        - "{{ member.name }} accepted your {{ op_term.friend }} link request"
+        - |
+          Hello! This is information from {{ op_config.sns_name }}.
+          
+          {{ member.name }} accepted your {{ op_term.friend }} link request.
       ja_JP:
         - "{{ member.name }} さんがあなたの{{ op_term.friend }}リンクリクエストを承認しました"
         - |
@@ -270,6 +408,13 @@ mobile:
     caption: "Notification of Confirmation of Changing Password"
     configurable: false
     sample:
+      en:
+        - "Information of a password recurrence line"
+        - |
+          Your password was reissued.
+          
+          MailAddress: {{ mailAddress }}
+          New Password: {{ newPassword }}
       ja_JP:
         - "パスワード再発行のお知らせ"
         - |
@@ -285,6 +430,25 @@ mobile:
     caption: "Notification of Registration URL"
     configurable: false
     sample:
+      en:
+        - "{{ op_config.sns_name }} Letter of invitation"
+        - |
+          Hello! This is information from {{ op_config.sns_name }}.
+          {% if name %}
+          {{ name }} is inviting in {{ op_config.sns_name }} you.
+          
+          {% if message %}
+          ---------- The message to you from < {{ name }} > ----------
+          ---------------------------------------------------
+          {{ message }}
+          ---------------------------------------------------
+          {% endif %}
+          {% endif %}
+          If you register(free) of member by the following URL,
+          you can participate in {{ op_config.sns_name }}.
+          
+          * Participate in {{ op_config.sns_name }}
+          {% app_url_for('mobile_frontend', 'member/register?token='~token, true) %}
       ja_JP:
         - "{{ op_config.sns_name }}招待状"
         - |
@@ -315,6 +479,21 @@ mobile:
     caption: "Notification of Completion of Your Registration"
     configurable: false
     sample:
+      en:
+        - "Information of the completion of registration"
+        - |
+          Hello! This is information from {{ op_config.sns_name }}.
+          We've just accepted your registration.
+          
+          We hope that using {{ op_config.sns_name }} is useful for your future.
+          
+          {{ url }}
+          
+          *Don't you remember this registration?
+          If you think that any your friends shouldn't invite you and you haven't tried registration, please inform to the following e-mail address.
+          Your information in this site will be deleted.
+          
+          {{ op_config.admin_mail_address }}
       ja_JP:
         - "登録完了のお知らせ"
         - |
@@ -339,6 +518,13 @@ mobile:
     caption: "Notification of Completion of Leaving From the SNS"
     configurable: false
     sample:
+      en:
+        - "Your leaving process was finished"
+        - |
+          Hello! This is information from {{ op_config.sns_name }}.
+
+          {{ member.name }}, your leaving process was finished.
+          Thank you for your using.
       ja_JP:
         - "退会手続きが完了しました"
         - |
@@ -354,6 +540,17 @@ mobile:
     caption: "Notification of Friend Birthday"
     configurable: true
     sample:
+      en:
+        - "There is {{ member.name }}'s {{ op_term.my_friend }} that its birthday is coming soon"
+        - |
+          There is {{ member.name }}'s {{ op_term.my_friend }} that its birthday is coming soon.
+          We suggest you to send birthday message to your friend.
+          
+          Birthday : {{ birthMember.profile.op_preset_birthday|date("m/d") }}
+          {{ op_term.nickname }} : {{ birthMember.name }}
+          URL : {{ sf_config.op_base_url }}{% app_url_for("mobile_frontend", "@member_profile?id="~birthMember.id) %}
+          
+          We hope that using {{ op_config.sns_name }} is useful for your future.
       ja_JP:
         - "{{ member.name }} さんの {{ op_term.my_friend }} に誕生日の近い方がいます！"
         - |
@@ -377,6 +574,25 @@ mobile:
     caption: "Daily News"
     configurable: true
     sample:
+      en:
+        - "Daily News"
+        - |
+          --- {{ sf_config.op_base_url }} -----------------------------
+          
+          {{ op_config.sns_name }}
+          
+          Today News  [{{ 'now'|date('Y. m. d/D') }}]
+         
+          ----------------------------------------------------------
+          
+          Hi, {{ member.name }}!
+          
+          This is daily news in {{ op_config.sns_name }}.
+          
+          {% for item in gadgets %}
+          {% include_component(item.component.module, item.component.action, ['gadget': item.gadget]) %}
+          
+          {% endfor %}
       ja_JP:
         - "デイリーニュース"
         - |
@@ -394,7 +610,7 @@ mobile:
           本日の最新情報のお知らせです。
           
           {% for item in gadgets %}
-          {% include_component(item.component.module, item.component.action, item) %}
+          {% include_component(item.component.module, item.component.action, ['gadget': item.gadget]) %}
           
           {% endfor %}
     variables:
@@ -408,6 +624,11 @@ mobile:
     configurable: false
     title_configurable: false
     sample:
+      en: |
+        ---
+        {{ op_config.sns_name }}
+        URL         : {{ sf_config.op_base_url }}
+        Contact us  : {{ op_config.admin_mail_address }}
       ja_JP: |
         ---
         {{ op_config.sns_name }}

@@ -13,7 +13,17 @@
 <?php endif; ?>
 <?php echo $op_config->get('mobile_html_head') ?>
 </head>
-<body>
+<body
+<?php if (!($sf_request->getMobile()->isDocomo() && '#000000' === $op_color['core_color_14'])): ?>
+ text="<?php echo $op_color['core_color_14'] ?>"
+<?php endif; ?>
+ bgcolor="<?php echo $op_color['core_color_1'] ?>"
+ link="<?php echo $op_color['core_color_15'] ?>"
+<?php if ($sf_request->getMobile()->isDocomo()): ?>
+ alink="<?php echo $op_color['core_color_23'] ?>"
+<?php endif; ?>
+ vlink="<?php echo $op_color['core_color_17'] ?>"
+>
 <?php echo $op_config->get('mobile_header') ?>
 
 <a name="top"></a>

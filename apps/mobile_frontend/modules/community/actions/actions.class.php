@@ -80,7 +80,7 @@ class communityActions extends opCommunityAction
 
     $this->filters = new CommunityFormFilter();
     $this->filters->bind($params);
-    $q = $this->filters->getQuery();
+    $q = $this->filters->getQuery()->orderBy('id desc');
 
     $this->pager = new sfDoctrinePager('Community', 10);
     $this->pager->setQuery($q);

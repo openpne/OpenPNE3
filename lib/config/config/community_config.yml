@@ -1,4 +1,15 @@
 general:
+  public_flag:
+    Name: "public_flag"
+    Caption: "Authority to See Community"
+    FormType: "radio"
+    ValueType: "string"
+    IsUnique: false
+    IsRequired: true
+    Default: "public"
+    Choices:
+      public: "Only SNS members can see"
+      open: "Everyone can see"
   register_policy:
     Name:       "register_policy"
     Caption:    "Register policy"

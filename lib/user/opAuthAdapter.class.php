@@ -344,4 +344,26 @@ abstract class opAuthAdapter
   {
     return $this->authModuleName;
   }
+
+  public function isInvitedRegisterable()
+  {
+    // is this adapter allowed registration?
+    if (!in_array($this->getAuthModeName(), sfContext::getInstance()->getUser()->getAuthModes()))
+    {
+      return false;
+    }
+
+    $member = sfContext::getInstance()->getUser()->getMember(true);
+    if (!$member)
+    {
+      return false;
+    }
+
+    if ($member->getConfig('is_admin_invited', false) && $this->getAuthModeName() !== $member->getConfig('register_auth_mode'))
+    {
+      return false;
+    }
+
+    return true;
+  }
 }

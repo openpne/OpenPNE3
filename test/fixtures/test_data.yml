@@ -361,6 +361,26 @@ MemberConfig:
     value: "sns2@example.com"
     Member: third_member
 
+  fourth_member_pc_address:
+    name: "pc_address"
+    value: "sns4@example.com"
+    Member: fourth_member
+
+  fourth_member_password:
+    name: "password"
+    value: <?php echo md5('password') . "\n"; ?>
+    Member: fourth_member
+
+  fifth_member_pc_address:
+    name: "pc_address"
+    value: "sns5@example.com"
+    Member: fifth_member
+
+  fifth_member_password:
+    name: "password"
+    value: <?php echo md5('password') . "\n"; ?>
+    Member: fifth_member
+
 AdminUser:
   first_admin:
     id: ~
@@ -463,6 +483,12 @@ CommunityCategory:
     name: "CategoryA"
     tree_key: 1
     is_allow_member_community: 1
+    sort_order: 2
+  community_category_2:
+    name: "CategoryB"
+    tree_key: 1
+    is_allow_member_community: 1
+    sort_order: 1
 
 CommunityConfig:
   community_1_description:
@@ -481,10 +507,18 @@ CommunityConfig:
     Community: community_2
     name: "register_policy"
     value: "close"
+  community_2_public_flag:
+    Community: community_2
+    name: "public_flag"
+    value: "public"
   community_3_is_default:
     Community: community_3
     name: "is_default"
     value: true
+  community_3_public_flag:
+    Community: community_3
+    name: "public_flag"
+    value: "open"
 
 CommunityMember:
   community_1_first_member:
@@ -493,15 +527,24 @@ CommunityMember:
   community_1_second_member:
     Community: community_1
     Member: second_member
+  community_1_fourth_member:
+    Community: community_1
+    Member: fourth_member
   community_2_second_member:
     Community: community_2
     Member: second_member
+  community_2_fourth_member:
+    Community: community_2
+    Member: fourth_member
   community_3_first_member:
     Community: community_3
     Member: first_member
   Community_3_second_member:
     Community: community_3
     Member: second_member
+  community_3_fourth_member:
+    Community: community_3
+    Member: fourth_member
   community_4_first_member:
     Community: community_4
     Member: first_member

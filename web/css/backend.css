@@ -51,6 +51,10 @@ body.insecure #body {
   float: left;
 }
 
+#header h1 a {
+  color: #FFFFFF;
+}
+
 #header span#visit-site{
   display: block;
   float: left;

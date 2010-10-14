@@ -162,6 +162,14 @@
         <source>%Community% Members</source>
         <target>%Community%ﾒﾝﾊﾞｰ</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Everyone can see</source>
+        <target>Web全体に公開</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Only SNS members can see</source>
+        <target>SNS参加者のみ公開</target>
+      </trans-unit>
       <trans-unit>
         <source>Everyone can join</source>
         <target>誰でも参加できる</target>
@@ -1210,6 +1218,14 @@
       <trans-unit id="">
         <source>Send this URL by E-mail</source>
         <target>ﾒｰﾙでURLを送る</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Mail Send Error</source>
+        <target>ﾒｰﾙ送信ｴﾗｰ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Couldn't send E-mail. Please retry or contact to administrator.</source>
+        <target>ﾒｰﾙの送信に失敗しました。もう一度実行するか管理者に連絡して下さい>。</target>
       </trans-unit>
     </body>
   </file>
