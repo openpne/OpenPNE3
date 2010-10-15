@@ -522,6 +522,24 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     $filesystem = new sfFilesystem();
     $filesystem->mkdirs(sfConfig::get('sf_cache_dir'));
 
+    if (!opToolkit::isOnWindows())
+    {
+      $permission = substr(sprintf('%o', fileperms($newCacheDir)), -4);
+      if ('0777' !== $permission)
+      {
+        register_shutdown_function(array($this, 'removeCacheDir'));
+      }
+    }
+
     parent::setCacheDir($newCacheDir);
+  }
+
+  public function removeCacheDir()
+  {
+    $dir = sfConfig::get('sf_cache_dir');
+
+    $filesystem = new sfFilesystem();
+    $filesystem->remove(sfFinder::type('any')->in($dir));
+    $filesystem->remove($dir);
   }
 }
