@@ -518,12 +518,6 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     }
 
     sfConfig::set('sf_cache_dir', $newCacheDir);
-    if (is_dir($newCacheDir))
-    {
-      $filesystem = new sfFilesystem();
-      $filesystem->mkdirs($newCacheDir);
-      $filesystem->chmod($newCacheDir, 0777);
-    }
 
     parent::setCacheDir($newCacheDir);
   }
