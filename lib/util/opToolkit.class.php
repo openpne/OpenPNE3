@@ -475,9 +475,4 @@ class opToolkit
 
     return ($limit - $usage);
   }
-
-  public function isOnWindows()
-  {
-    return ('\\' === DIRECTORY_SEPARATOR);
-  }
 }

@@ -522,7 +522,7 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     $filesystem = new sfFilesystem();
     $filesystem->mkdirs(sfConfig::get('sf_cache_dir'));
 
-    if (!opToolkit::isOnWindows())
+    if ('\\' === DIRECTORY_SEPARATOR)  // Windows
     {
       $permission = substr(sprintf('%o', fileperms($newCacheDir)), -4);
       if ('0777' !== $permission)
