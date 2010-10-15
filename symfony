@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  */
 
+chdir(dirname(__FILE__));
 // project exists?
 if (file_exists('config/ProjectConfiguration.class.php'))
 {
