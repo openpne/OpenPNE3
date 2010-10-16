@@ -1301,6 +1301,7 @@ ol.activities li.activity {
   border-bottom: 1px solid #888888;
   min-height: 80px;
   position: relative;
+  zoom: 1;
 }
 
 ol.activities li.activity .memberImage {
