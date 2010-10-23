@@ -39,3 +39,6 @@ if (!isset($executeLoader) || $executeLoader)
 
 // remove all cache
 sfToolkit::clearDirectory(sfConfig::get('sf_app_cache_dir'));
+
+$conn = Doctrine_Manager::getInstance()->getCurrentConnection();
+$conn->clear();
