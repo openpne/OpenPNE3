@@ -51,4 +51,12 @@ $browser
     ->isStatusCode(200)
     ->checkElement('#flashError td:contains("これ以上画像を追加できません。")', true)
   ->end()
+
+  ->info('member/profile')
+  ->get('member/1055')
+  ->with('html_escape')->begin()
+    ->isAllEscapedData('Member', 'name')
+    ->isAllEscapedData('Profile', 'caption')
+    ->isAllEscapedData('MemberProfile', 'value')
+  ->end()
 ;
