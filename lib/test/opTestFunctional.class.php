@@ -24,6 +24,7 @@ class opTestFunctional extends sfTestFunctional
   {
     $testers = array_merge(array(
       'html_escape' => 'opTesterHtmlEscape',
+      'response'    => 'opTesterResponse',
     ), $testers);
 
     parent::__construct($browser, $lime, $testers);
@@ -69,5 +70,17 @@ class opTestFunctional extends sfTestFunctional
   public function isStatusCode($code)
   {
     return $this->with('response')->isStatusCode($code);
+  }
+
+  public function checkCSRF()
+  {
+    $selectors = array(
+     '#contents div:contains("前の画面を読み直して、操作をやり直してください。")',
+     '#FormGlobalError td:contains("csrf token: 必須項目です。")',
+    );
+
+    return $this->with('response')->begin()
+      ->checkElement(implode(',', $selectors))
+    ->end();
   }
 }

@@ -2,9 +2,7 @@
 
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-$browser = new sfTestFunctional(new sfBrowser(), new lime_test(null, new lime_output_color()));
-$params = array('admin_user' => array(
-));
+$browser = new opTestFunctional(new sfBrowser(), new lime_test(null, new lime_output_color()));
 $browser
   ->info('0. Login')
   ->get('/default/login')
@@ -39,4 +37,40 @@ $browser
   ->get('/sns/config/category/policy')
   ->click('設定変更')
   ->isStatusCode(302)
+
+  ->info('/sns/config - CSRF')
+  ->post('/sns/config', array())
+  ->checkCSRF()
+
+  ->info('/sns/config/category/external_login_page - CSRF')
+  ->post('/sns/config/category/external_login_page', array())
+  ->checkCSRF()
+
+  ->info('/sns/config/category/authentication - CSRF')
+  ->post('/sns/config/category/authentication', array())
+  ->checkCSRF()
+
+  ->info('/sns/config/category/mobile - CSRF')
+  ->post('/sns/config/category/mobile', array())
+  ->checkCSRF()
+
+  ->info('/sns/config/category/policy - CSRF')
+  ->post('/sns/config/category/policy', array())
+  ->checkCSRF()
+
+  ->info('/sns/config/category/api_keys - CSRF')
+  ->post('/sns/config/category/api_keys', array())
+  ->checkCSRF()
+
+  ->info('/sns/term - CSRF')
+  ->post('/sns/term', array())
+  ->checkCSRF()
+
+  ->info('/sns/cache - CSRF')
+  ->post('/sns/cache', array())
+  ->checkCSRF()
+
+  ->info('/sns/richTextarea - CSRF')
+  ->post('/sns/richTextarea', array())
+  ->checkCSRF()
 ;
