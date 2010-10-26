@@ -2,18 +2,30 @@
 
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-$browser = new sfTestFunctional(new sfBrowser());
+$browser = new opTestFunctional(new opBrowser(), new lime_test(null, new lime_output_color()));
+echo $browser
+  ->info('Login')
+  ->login('sns@example.com', 'password')
 
-$browser->
-  get('/confirmation/index')->
+  ->info('/confirmation/friend_confirm/2 - CSRF')
+  ->post('/confirmation/friend_confirm/2', array())
+  ->getResponse()->getContent()
 
-  with('request')->begin()->
-    isParameter('module', 'confirmation')->
-    isParameter('action', 'index')->
-  end()->
+  ->checkCSRF()
 
-  with('response')->begin()->
-    isStatusCode(200)->
-    checkElement('body', '!/This is a temporary page/')->
-  end()
+  ->info('/confirmation/community_confirm/11 - CSRF')
+  ->post('/confirmation/community_confirm/11', array())
+  ->checkCSRF()
+
+  ->login('sns2@example.com', 'password')
+
+  ->info('/confirmation/community_admin_request/5 - CSRF')
+  ->post('/confirmation/community_admin_request/5', array())
+  ->checkCSRF()
+
+  ->login('sns3@example.com', 'password')
+
+  ->info('/confirmation/community_sub_admin_request/8 - CSRF')
+  ->post('/confirmation/community_sub_admin_request/8', array())
+  ->checkCSRF()
 ;

@@ -20,6 +20,15 @@ class opTestFunctional extends sfTestFunctional
   protected
     $mobileUserAgent = 'KDDI-CA39 UP.Browser/6.2.0.13.1.5 (FUI) MMP/2.0';
 
+  public function __construct(sfBrowserBase $browser, lime_test $lime = null, $testers = array())
+  {
+    $testers = array_merge(array(
+      'response'       => 'opTesterResponse',
+    ), $testers);
+
+    parent::__construct($browser, $lime, $testers);
+  }
+
   public function setMobile($userAgent = null)
   {
     if ($userAgent)
@@ -60,5 +69,17 @@ class opTestFunctional extends sfTestFunctional
   public function isStatusCode($code)
   {
     return $this->with('response')->isStatusCode($code);
+  }
+
+  public function checkCSRF()
+  {
+    $selectors = array(
+     '#contents div:contains("前の画面を読み直して、操作をやり直してください。")',
+     '#FormGlobalError td:contains("csrf token: 必須項目です。")',
+    );
+
+    return $this->with('response')->begin()
+      ->checkElement(implode(',', $selectors))
+    ->end();
   }
 }
