@@ -2,12 +2,19 @@
 
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-// create a new test browser
-$browser = new sfTestBrowser();
+$browser = new opTestFunctional(new opBrowser(), new lime_test(null, new lime_output_color()));
+$browser
+  ->info('Login')
+  ->login('sns@example.com', 'password')
+  ->isStatusCode(302)
 
-$browser->
-  get('/friend/index')->
-  isStatusCode(200)->
-  isRequestParameter('module', 'friend')->
-  isRequestParameter('action', 'index')->
-  checkResponseElement('body', '!/This is a temporary page/');
+  ->post('/friend/link/id/6')
+  ->checkCSRF()
+
+  ->post('/friend/unlink/2')
+  ->checkCSRF()
+
+  ->get('/friend/unlink/2')
+  ->click('はい', array())
+  ->checkCSRF()
+;

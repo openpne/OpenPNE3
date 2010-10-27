@@ -2,15 +2,14 @@
 
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-$browser = new sfTestFunctional(new sfBrowser());
+$browser = new opTestFunctional(new opBrowser(), new lime_test(null, new lime_output_color()));
+$browser
+  ->info('Login')
+  ->login('sns@example.com', 'password')
 
-$browser->
-  get('/confirmation/index')->
-
-  with('request')->begin()->
-    isParameter('module', 'confirmation')->
-    isParameter('action', 'index')->
-  end()->
+  ->info('/confirmation/friend_confirm/2 - CSRF')
+  ->post('/confirmation/friend_confirm/2', array())
+  ->checkCSRF()
 
   with('response')->begin()->
     isStatusCode(200)->
