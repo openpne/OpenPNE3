@@ -74,11 +74,11 @@ class opTestFunctional extends sfTestFunctional
 
   public function checkCSRF()
   {
+    $i18n = $this->getContext()->getI18N();
     $selectors = array(
-     '#contents div:contains("前の画面を読み直して、操作をやり直してください。")',
-     '#FormGlobalError td:contains("csrf token: 必須項目です。")',
-     'p:contains("_csrf_token [必須項目です。]")',
-     'p:contains("_csrf_token [Required.]")',
+     '#contents div:contains("'.$i18n->__('CSRF attack detected.').'")',
+     '#FormGlobalError td:contains("csrf token: '.$i18n->__('Required.').'")',
+     'p:contains("_csrf_token ['.$i18n->__('Required.').']")',
     );
 
     return $this->with('response')->begin()
