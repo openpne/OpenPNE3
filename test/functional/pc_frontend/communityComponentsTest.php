@@ -2,7 +2,7 @@
 
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-$browser = new sfTestFunctional(new sfBrowser(), new lime_test(null, new lime_output_color()));
+$browser = new opTestFunctional(new opBrowser(), new lime_test(null, new lime_output_color()));
 $browser
   ->info('0. Login')
   ->get('/member/login')
@@ -12,20 +12,12 @@ $browser
   )))
   ->isStatusCode(302)
 
-  ->info('1. Create a community.')
-  ->get('community/edit')
-  ->click('送信', array('community' => array(
-    'name'   => 'test',
-    'config' => array('public_flag' => 'public', 'topic_authority' => 'public', 'description' => 'test')
-  )))
-  ->isStatusCode(302)
-
-  ->info('2. Community list is shown on the member\'s home.')
+  ->info('1. Community list is shown on the member\'s home.')
   ->get('member/home')
 ;
 
 $selector = new sfDomCssSelector($browser->getResponseDom());
-$list = $selector->getElements('#Left h3:contains("コミュニティリスト")');
+$list = $selector->matchAll('#Left h3:contains("コミュニティリスト")')->getNodes();
 $browser->test()->ok($list, 'a community list gadget exists');
 
 $photoLink = '';

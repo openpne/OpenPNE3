@@ -3,7 +3,7 @@
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
 $browser = new opTestFunctional(new opBrowser(), new lime_test(null, new lime_output_color()));
-echo $browser
+$browser
   ->info('Login')
   ->login('sns@example.com', 'password')
   ->isStatusCode(302)

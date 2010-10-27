@@ -160,28 +160,36 @@ ProfileOption:
 
 Member:
   first_member:
+    id: 1
     name: "A"
     is_active: 1
   second_member:
+    id: 2
     name: "B"
     Member: first_member
     is_active: 1
   third_member:
+    id: 3
     name: "C"
     is_active: 1
   fourth_member:
+    id: 4
     name: "D"
     is_active: 1
   fifth_member:
+    id: 5
     name: "E"
     is_active: 1
   sixth_member:
+    id: 6
     name: "F"
     is_active: 1
   seventh_member:
+    id: 7
     name: "G"
     is_active: 1
   eighth_member:
+    id: 8
     name: "H"
     is_active: 1
 
@@ -643,6 +651,11 @@ Gadget:
     type: "mobileProfileBottom"
     name: "friendListBox"
     sort_order: 10
+
+  gadget_community_table:
+    type: "sideMenu"
+    name: "communityJoinListBox"
+    sort_order: 30
 
 GadgetConfig:
   gadget_friend_list_box_config_row:
