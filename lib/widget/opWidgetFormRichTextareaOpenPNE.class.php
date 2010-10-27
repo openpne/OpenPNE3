@@ -291,6 +291,9 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
       }
     }
 
+    $event = sfContext::getInstance()->getEventDispatcher()->filter(new sfEvent(null, 'op_decoration.filter_html'), $converted);
+    $converted = $event->getReturnValue();
+
     if ($isHtmlTagFollowup)
     {
       $converted = self::htmlTagFollowup($converted);
