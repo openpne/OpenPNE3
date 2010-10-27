@@ -1,13 +1,20 @@
 <?php
-
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-// create a new test browser
-$browser = new sfTestBrowser();
+$browser = new opTestFunctional(new opBrowser(), new lime_test(null, new lime_output_color()));
+$browser
+  ->info('Login')
+  ->get('/')
+  ->click('ログイン', array('admin_user' => array(
+    'username' => 'admin',
+    'password' => 'password',
+  )))
 
-$browser->
-  get('/profile/index')->
-  isStatusCode(200)->
-  isRequestParameter('module', 'profile')->
-  isRequestParameter('action', 'index')->
-  checkResponseElement('body', '!/This is a temporary page/');
+  ->info('/profile/edit - CSRF')
+  ->post('/profile/edit', array())
+  ->checkCSRF()
+
+  ->info('/profile/delete/id/1 - CSRF')
+  ->post('/profile/delete/id/1', array())
+  ->checkCSRF()
+;

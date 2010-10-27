@@ -10,11 +10,11 @@ $browser
     'password' => 'password',
   )))
 
-  ->info('monitoring/editImage - CSRF')
-  ->post('monitoring/editImage', array())
+  ->info('/monitoring/editImage - CSRF')
+  ->post('/monitoring/editImage', array())
   ->checkCSRF()
 
-  ->info('monitoring/deleteImage/id/1 - CSRF')
-  ->post('monitoring/deleteImage/id/1', array())
+  ->info('/monitoring/deleteImage/id/1 - CSRF')
+  ->post('/monitoring/deleteImage/id/1', array())
   ->checkCSRF()
 ;
