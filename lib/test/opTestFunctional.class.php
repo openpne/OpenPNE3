@@ -70,4 +70,18 @@ class opTestFunctional extends sfTestFunctional
   {
     return $this->with('response')->isStatusCode($code);
   }
+
+  public function checkCSRF()
+  {
+    $selectors = array(
+     '#contents div:contains("前の画面を読み直して、操作をやり直してください。")',
+     '#FormGlobalError td:contains("csrf token: 必須項目です。")',
+     'p:contains("_csrf_token [必須項目です。]")',
+     'p:contains("_csrf_token [Required.]")',
+    );
+
+    return $this->with('response')->begin()
+      ->checkElement(implode(',', $selectors))
+    ->end();
+  }
 }
