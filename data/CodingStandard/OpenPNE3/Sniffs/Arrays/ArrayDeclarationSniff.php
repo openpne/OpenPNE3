@@ -23,6 +23,9 @@ class OpenPNE3_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sn
 
   public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
   {
+    // this class is not stable yet...
+    return null;
+
     $tokens = $phpcsFile->getTokens();
 
     $arrayStart = $tokens[$stackPtr]['parenthesis_opener'];
