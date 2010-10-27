@@ -18,9 +18,22 @@ class OpenPNE3_Sniffs_NamingConventions_ValidClassNameSniff extends Squiz_Sniffs
 {
   public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
   {
-    if (false !== strpos($phpcsFile->getFilename(), 'model')
-       || false !== strpos($phpcsFile->getFilename(), 'form') 
-       || false !== strpos($phpcsFile->getFilename(), 'filter') 
+    if (
+      // sfOpenPNE... classes are already replaced to op... classes
+      // But these are still in the source code for BC reason.
+      false !== strpos($phpcsFile->getFilename(), 'sfOpenPNE')
+
+      // don't check auto-generated files
+      || false !== strpos($phpcsFile->getFilename(), 'model')
+      || false !== strpos($phpcsFile->getFilename(), 'form')
+      || false !== strpos($phpcsFile->getFilename(), 'filter')
+
+      // myUser.class.php should be excluded
+      || false !== strpos($phpcsFile->getFilename(), 'myUser.class.php')
+      // actioon classes should be excluded
+      || false !== strpos($phpcsFile->getFilename(), 'actions.class.php')
+      || false !== strpos($phpcsFile->getFilename(), 'components.class.php')
+      || false !== strpos($phpcsFile->getFilename(), 'Action.class.php')
     )
     {
       return null;
