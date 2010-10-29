@@ -1,7 +1,4 @@
-<?php
-
-/**
- * This file is part of the OpenPNE package.
+<?php /** * This file is part of the OpenPNE package.
  * (c) OpenPNE Project (http://www.openpne.jp/)
  *
  * For the full copyright and license information, please view the LICENSE
@@ -76,13 +73,22 @@ class opTestFunctional extends sfTestFunctional
   {
     $i18n = $this->getContext()->getI18N();
     $selectors = array(
-     '#contents div:contains("'.$i18n->__('CSRF attack detected.').'")',
-     '#FormGlobalError td:contains("csrf token: '.$i18n->__('Required.').'")',
-     'p:contains("_csrf_token ['.$i18n->__('Required.').']")',
+      $i18n->__('CSRF attack detected.'),
+      'csrf[^a-zA-Z]*token:[^a-zA-Z]*'.$i18n->__('Required.'),
     );
 
-    return $this->with('response')->begin()
-      ->checkElement(implode(',', $selectors))
-    ->end();
+    $content = $this->getResponse()->getContent();
+    $exists = false;
+    foreach ($selectors as $selector)
+    {
+      if (mb_ereg($selector, $content))
+      {
+        $exists = true;
+        break;
+      }
+    }
+    $this->test()->is($exists, true, 'message about CSRF token exists');
+
+    return $this;
   }
 }
