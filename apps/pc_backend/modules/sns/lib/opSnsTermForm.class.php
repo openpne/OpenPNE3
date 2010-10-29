@@ -93,7 +93,6 @@ class opSnsTermForm extends sfForm
         {
           throw new sfValidatorErrorSchema($validator, array($name => $e));
         }
-        $values[$name][$application] =  htmlspecialchars($values[$name][$application], ENT_QUOTES, sfConfig::get('sf_charset'));
       }
     }
 
