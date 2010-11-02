@@ -12,6 +12,10 @@ class ProjectConfiguration extends opProjectConfiguration
   public function setupProjectOpenPNE()
   {
     // You can write your own configurations
+
+    // In default, OpenPNE saves session data file to default session.save_path.
+    // But in some cases, you may need to change the session save path:
+    // session_save_path('/tmp');
   }
 
   public function setupProjectOpenPNEDoctrine($manager)
