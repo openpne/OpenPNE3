@@ -82,6 +82,11 @@ class opSecurityUser extends opAdaptableUser
 
   public function isValidSiteIdentifier()
   {
+    if (!sfConfig::get('op_check_session_site_identifier', true))
+    {
+      return true;
+    }
+
     return ($this->generateSiteIdentifier() === $this->storage->read(self::SITE_IDENTIFIER_NAMESPACE));
   }
 

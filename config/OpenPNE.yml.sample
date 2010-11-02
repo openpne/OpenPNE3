@@ -91,6 +91,10 @@ session_life_time:
 # 「自動的にログイン」の持続時間
 remember_login_limit: 2592000 # 30 days
 
+# セッションデータにサイト特有の識別子を含めるかどうか
+# Configuration of using site_identifier in session data
+check_session_site_identifier: true
+
 ######################################
 # SSL
 ######################################
