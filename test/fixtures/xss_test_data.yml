@@ -63,6 +63,9 @@ Community:
   html_community_1:
     id: 1055
     name: "<&\"'>Community.name ESCAPING HTML TEST DATA"
+  html_community_2:
+    id: 1056
+    name: "<&\"'>Community.name2 ESCAPING HTML TEST DATA"
 
 CommunityCategory:
   html_community_category_1:
@@ -80,10 +83,17 @@ CommunityConfig:
     Community: html_community_1
     name: "register_policy"
     value: "open"
+  html_community_2_is_default:
+    Community: html_community_2
+    name: "is_default"
+    value: 1
 
 CommunityMember:
   html_community_1_first_member:
     Community: html_community_1
+    Member: html_member_1
+  html_community_2_first_member:
+    Community: html_community_2
     Member: html_member_1
 
 CommunityMemberPosition:
@@ -91,4 +101,9 @@ CommunityMemberPosition:
     Community: html_community_1
     Member: html_member_1
     CommunityMember: html_community_1_first_member
+    name: "admin"
+  html_community_2_admin:
+    Community: html_community_2
+    Member: html_member_1
+    CommunityMember: html_community_2_first_member
     name: "admin"
