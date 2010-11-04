@@ -105,33 +105,38 @@ echo $browser
     ->check('Gadget', array('id' => '5', 'sort_order' => 20), true)
   ->end()
 
+// CSRF
   ->info('5. CSRF check')
 
   ->info('/design')
-  ->post('/design', array())
+  ->post('/design')
   ->checkCSRF()
 
   ->info('/design/gadget')
-  ->post('/design/gadget', array())
+  ->post('/design/gadget')
+  ->checkCSRF()
+
+  ->info('/design/editGadget/id/1')
+  ->post('/design/editGadget/id/1')
   ->checkCSRF()
 
   ->info('/design/html')
-  ->post('/design/html', array())
+  ->post('/design/html')
   ->checkCSRF()
 
   ->info('/design/banner')
-  ->post('/design/banner', array())
+  ->post('/design/banner')
   ->checkCSRF()
 
   ->info('/design/banneradd')
-  ->post('/design/banneradd', array())
+  ->post('/design/banneradd')
   ->checkCSRF()
 
   ->info('/design/customCss')
-  ->post('/design/customCss', array())
+  ->post('/design/customCss')
   ->checkCSRF()
 
   ->info('/design/mobileColorConfig')
-  ->post('/design/mobileColorConfig', array())
+  ->post('/design/mobileColorConfig')
   ->checkCSRF()
 ;
