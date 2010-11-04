@@ -10,15 +10,20 @@ $browser
     'password' => 'password',
   )))
 
+// CSRF
   ->info('/admin/addUser - CSRF')
   ->post('/admin/addUser', array())
   ->checkCSRF()
 
-  ->info('admin/editPassword - CSRF')
-  ->post('admin/editPassword', array())
+  ->info('/admin/deleteUser/id/2 - CSRF')
+  ->post('/admin/deleteUser/id/2', array())
   ->checkCSRF()
 
-  ->info('admin/editPassword - CSRF')
-  ->post('admin/editPassword', array())
+  ->info('/admin/editPassword - CSRF')
+  ->post('/admin/editPassword', array())
+  ->checkCSRF()
+
+  ->info('/admin/changeLanguage - CSRF')
+  ->post('/admin/changeLanguage', array())
   ->checkCSRF()
 ;

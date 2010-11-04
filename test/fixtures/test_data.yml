@@ -374,6 +374,10 @@ AdminUser:
     id: ~
     username: "admin"
     password: "password"
+  second_admin:
+    id: ~
+    username: "admin2"
+    password: "password"
 
 Navigation:
   secure_global_navigation_home:
