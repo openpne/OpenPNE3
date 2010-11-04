@@ -38,39 +38,45 @@ $browser
   ->click('設定変更')
   ->isStatusCode(302)
 
+// CSRF
   ->info('/sns/config - CSRF')
-  ->post('/sns/config', array())
+  ->post('/sns/config')
   ->checkCSRF()
 
   ->info('/sns/config/category/external_login_page - CSRF')
-  ->post('/sns/config/category/external_login_page', array())
+  ->post('/sns/config/category/external_login_page')
   ->checkCSRF()
 
   ->info('/sns/config/category/authentication - CSRF')
-  ->post('/sns/config/category/authentication', array())
+  ->post('/sns/config/category/authentication')
   ->checkCSRF()
 
   ->info('/sns/config/category/mobile - CSRF')
-  ->post('/sns/config/category/mobile', array())
+  ->post('/sns/config/category/mobile')
   ->checkCSRF()
 
   ->info('/sns/config/category/policy - CSRF')
-  ->post('/sns/config/category/policy', array())
+  ->post('/sns/config/category/policy')
   ->checkCSRF()
 
   ->info('/sns/config/category/api_keys - CSRF')
-  ->post('/sns/config/category/api_keys', array())
+  ->post('/sns/config/category/api_keys')
   ->checkCSRF()
 
   ->info('/sns/term - CSRF')
-  ->post('/sns/term', array())
+  ->post('/sns/term')
   ->checkCSRF()
 
   ->info('/sns/cache - CSRF')
-  ->post('/sns/cache', array())
+  ->post('/sns/cache')
   ->checkCSRF()
 
   ->info('/sns/richTextarea - CSRF')
-  ->post('/sns/richTextarea', array())
+  ->post('/sns/richTextarea')
+  ->checkCSRF()
+
+  ->info('/sns/changeRichTextareaButtonOrder - CSRF')
+  ->setHttpHeader('X_REQUESTED_WITH', 'XMLHttpRequest')
+  ->post('/sns/changeRichTextareaButtonOrder')
   ->checkCSRF()
 ;
