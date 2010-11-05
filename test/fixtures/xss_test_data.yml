@@ -107,3 +107,19 @@ CommunityMemberPosition:
     Member: html_member_1
     CommunityMember: html_community_2_first_member
     name: "admin"
+
+File:
+  html_file1:
+    id: 1055
+    name: "<&\"'>File.name ESCAPING HTML TEST DATA"
+    type: "image/png"
+    original_filename: "<&\"'>File.original_filename ESCAPING HTML TEST DATA"
+    FileBin:
+      bin: ~
+  html_file2:
+    id: 1056
+    name: "<&\"'>File.name2 ESCAPING HTML TEST DATA"
+    type: "text/plain"
+    original_filename: "<&\"'>File.original_filename ESCAPING HTML TEST DATA"
+    FileBin:
+      bin: ~
