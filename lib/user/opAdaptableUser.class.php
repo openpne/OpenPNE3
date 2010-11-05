@@ -15,7 +15,7 @@
  * @subpackage user
  * @author     Kousuke Ebihara <ebihara@php.net>
  */
-abstract class opAdaptableUser extends sfBasicSecurityUser
+abstract class opAdaptableUser extends opBaseSecurityUser
 {
   protected
     $authAdapters = array();
