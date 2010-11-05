@@ -81,6 +81,17 @@ MemberConfig:
     value: <?php echo md5('password') . "\n"; ?>
     Member: html_member_1
 
+  html_member_2_pc_address:
+    name: "pc_address"
+    value: "html2@example.com"
+    Member: html_member_2
+
+  html_member_2_password:
+    name: "password"
+    value: <?php echo md5('password') . "\n"; ?>
+    Member: html_member_2
+
+
 Community:
   html_community_1:
     id: 1055
@@ -111,24 +122,35 @@ CommunityConfig:
     value: 1
 
 CommunityMember:
-  html_community_1_first_member:
+  html_community_1_html_member_1:
     Community: html_community_1
     Member: html_member_1
-  html_community_2_first_member:
+  html_community_1_html_member_2:
+    Community: html_community_1
+    Member: html_member_2
+  html_community_2_html_member_1:
     Community: html_community_2
     Member: html_member_1
+  html_community_2_html_member_2:
+    Community: html_community_2
+    Member: html_member_2
 
 CommunityMemberPosition:
   html_community_1_admin:
     Community: html_community_1
     Member: html_member_1
-    CommunityMember: html_community_1_first_member
+    CommunityMember: html_community_1_html_member_1
     name: "admin"
   html_community_2_admin:
     Community: html_community_2
     Member: html_member_1
-    CommunityMember: html_community_2_first_member
+    CommunityMember: html_community_2_html_member_1
     name: "admin"
+  html_community_2_sub_admin:
+    Community: html_community_2
+    Member: html_member_2
+    CommunityMember: html_community_2_html_member_2
+    name: "sub_admin"
 
 File:
   html_file1:
