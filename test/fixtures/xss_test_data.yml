@@ -33,6 +33,28 @@ Member:
     id: 1055 # it means "XSS (X-55)"
     name: "<&\"'>Member.name ESCAPING HTML TEST DATA"
     is_active: 1
+  html_member_2:
+    id: 1056
+    name: "<&\"'>Member.name ESCAPING HTML TEST DATA"
+    is_active: 1
+
+MemberRelationship:
+  first_member_html_member_1:
+    Member: first_member
+    MemberRelatedByMemberIdFrom: html_member_1
+    is_friend: 1
+  html_member_1_first_member:
+    Member: html_member_1
+    MemberRelatedByMemberIdFrom: first_member
+    is_friend: 1
+  html_member_2_html_member_1:
+    Member: html_member_2
+    MemberRelatedByMemberIdFrom: html_member_1
+    is_friend: 1
+  html_member_1_first_member_2:
+    Member: html_member_1
+    MemberRelatedByMemberIdFrom: html_member_2
+    is_friend: 1
 
 MemberProfile:
   html_member_1_profile_html_1:
@@ -123,3 +145,10 @@ File:
     original_filename: "<&\"'>File.original_filename ESCAPING HTML TEST DATA"
     FileBin:
       bin: ~
+
+ActivityData:
+  html_activity1:
+    Member: html_member_2
+    body: "<&\"'>ActivityData.body ESCAPING HTML TEST DATA"
+    created_at: <?php echo date('Y-m-d 00:00:00\n', strtotime('+1day')) ?>
+    updated_at: <?php echo date('Y-m-d 00:00:00\n', strtotime('+1day')) ?>
