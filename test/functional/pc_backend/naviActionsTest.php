@@ -11,14 +11,19 @@ $browser
   )))
 
   ->info('/navigation/edit/app/pc - CSRF')
-  ->post('/navigation/edit/app/pc', array())
+  ->post('/navigation/edit/app/pc')
   ->checkCSRF()
 
   ->info('/navigation/edit/app/mobile - CSRF')
-  ->post('/navigation/edit/app/mobile', array())
+  ->post('/navigation/edit/app/mobile')
   ->checkCSRF()
 
   ->info('/navigation/edit/app/backEnd - CSRF')
-  ->post('/navigation/edit/app/backend', array())
+  ->post('/navigation/edit/app/backend')
+  ->checkCSRF()
+
+  ->info('/navigation/sort - CSRF')
+  ->setHttpHeader('X_REQUESTED_WITH', 'XMLHttpRequest')
+  ->post('/navigation/sort')
   ->checkCSRF()
 ;
