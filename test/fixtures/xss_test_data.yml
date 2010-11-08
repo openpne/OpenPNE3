@@ -191,3 +191,19 @@ GadgetConfig:
     Gadget: gadget_rss_box 
     name: "url"
     value: "<?php echo dirname(__FILE__) ?>/feeds/www.xss.feed.rss"
+
+OpenIDTrustLog:
+  html_openid_trust1:
+    id: 2
+    Member:  html_member_1
+    uri:     "<&\"'>OpenIDTrustLog.uri ESCAPING HTML TEST DATA"
+    uri_key: "__hash__"
+    is_permanent: true
+
+OAuthConsumerInformation:
+  html_oauth_consumer1:
+    id:          1055
+    name:        "<&\"'>OAuthConsumerInformation.name ESCAPING HTML TEST DATA"
+    description: "<&\"'>OAuthConsumerInformation.description ESCAPING HTML TEST DATA"
+    using_apis: ["webapi_member_get"]
+    Member: html_member_1
