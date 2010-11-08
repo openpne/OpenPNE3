@@ -1,5 +1,9 @@
 <?php
 
+// OAuth library uses split() that is deprecated function.
+// The deprecated error generates invalid array key ...
+$debug = false;
+
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
 function _oauth_get_request_token_params(OAuthConsumer $consumer, $callbackUrl)
