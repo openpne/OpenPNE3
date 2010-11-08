@@ -15,8 +15,12 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enableAllPluginsExcept(array('sfCompat10Plugin'));
     $this->setIncludePath();
 
-    //HTTP proxy to use when downloading plugin packages
+    // HTTP proxy to use when downloading plugin packages
     sfConfig::set('op_http_proxy', null);
+
+    // セッションデータにサイト特有の識別子を含めるかどうか
+    // Configuration of using site_identifier in session data
+    sfConfig::set('op_check_session_site_identifier', true);
 
     // In default, OpenPNE saves session data file to default session.save_path.
     // But in some cases, you may need to change the session save path:
