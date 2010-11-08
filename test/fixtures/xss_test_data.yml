@@ -181,3 +181,13 @@ ActivityData:
     body: "<&\"'>ActivityData.body ESCAPING HTML TEST DATA"
     created_at: "<?php echo date('Y-m-d H:i:s', strtotime('+1 day')) ?>"
     updated_at: "<?php echo date('Y-m-d H:i:s', strtotime('+1 day')) ?>"
+
+GadgetConfig:
+  gadget_config_rss_box_title:
+    Gadget: gadget_rss_box 
+    name: "title"
+    value: "XSS test feed"
+  gadget_config_rss_box_url:
+    Gadget: gadget_rss_box 
+    name: "url"
+    value: "<?php echo dirname(__FILE__) ?>/feeds/www.xss.feed.rss"

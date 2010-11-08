@@ -172,5 +172,14 @@ $browser
   ->with('html_escape')->begin()
     ->isAllEscapedData('Member', 'name')
   ->end()
-
 ;
+
+$content = $browser
+  ->info('/ rss gadget - XSS')
+  ->get('/')
+  ->getResponse()->getContent();
+$browser->test()->is(
+  substr_count($content, '&#039;Rss.title ESCAPING HTML TEST DATA') > 0,
+  true,
+  'all of value of "Rss"."title" are escaped.'
+);
