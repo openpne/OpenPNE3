@@ -105,7 +105,10 @@ $browser
   ->checkCSRF()
 
   ->info('/member/config?category=accessBlock - CSRF')
-  ->post('/member/config?category=accessBlock')
+  ->post('/member/config?category=accessBlock', array('member_config' => array(
+    'ids'          => array(),
+    'access_block' => array(),
+  )))
   ->checkCSRF()
 
   ->info('/member/config?category=mail - CSRF')
@@ -131,10 +134,6 @@ $browser
 
   ->info('/member/editProfile - CSRF')
   ->post('/member/editProfile')
-  ->checkCSRF()
-
-  ->info('/member/login/authMode/MailAddress - CSRF')
-  ->post('/member/login/authMode/MailAddress')
   ->checkCSRF()
 
   ->info('/member/registerMobileToRegisterEnd - CSRF')
@@ -191,14 +190,10 @@ $browser
   ->with('html_escape')->begin()
     ->isAllEscapedData('Member', 'name')
   ->end()
-;
 
-$content = $browser
   ->info('/ rss gadget - XSS')
   ->get('/')
-  ->getResponse()->getContent();
-$browser->test()->is(
-  substr_count($content, '&#039;Rss.title ESCAPING HTML TEST DATA') > 0,
-  true,
-  'all of value of "Rss"."title" are escaped.'
-);
+  ->with('html_escape')->begin()
+    ->isAllEscapedData('Rss', 'title')
+  ->end()
+;

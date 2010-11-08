@@ -716,7 +716,7 @@ SnsConfig:
     value: "test1"
   sns_config2:
     name: "daily_news_day"
-    value: ""
+    value: [0, 3]
 
 Blacklist:
   dummy_black_uid:
