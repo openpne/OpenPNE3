@@ -207,3 +207,12 @@ OAuthConsumerInformation:
     description: "<&\"'>OAuthConsumerInformation.description ESCAPING HTML TEST DATA"
     using_apis: ["webapi_member_get"]
     Member: html_member_1
+
+OAuthMemberToken:
+  first_member_html_oauth_token:
+    key_string: "fIrStMeMbErHtMlOaUtHtOkEn"
+    secret: "fIrStMeMbErHtMlOaUtHsEcReT"
+    type: "access"
+    is_active: 1
+    Consumer: html_oauth_consumer1
+    Member: first_member
