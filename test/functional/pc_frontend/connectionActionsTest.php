@@ -1,19 +1,25 @@
-<?php
+<?php include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-include(dirname(__FILE__).'/../../bootstrap/functional.php');
+$browser = new opTestFunctional(new opBrowser(), new lime_test(null, new lime_output_color()));
+$browser
+  ->info('Login')
+  ->login('sns@example.com', 'password')
+  ->isStatusCode(302)
 
-$browser = new opTestFunctional(new sfBrowser());
+// CSRF
+  ->info('/connection - CSRF')
+  ->post('/connection')
+  ->checkCSRF()
 
-$browser->
-  get('/connection')->
+  ->info('/connection/2/delete - CSRF')
+  ->post('/connection/2/delete')
+  ->checkCSRF()
 
-  with('request')->begin()->
-    isParameter('module', 'connection')->
-    isParameter('action', 'list')->
-  end()->
+  ->info('/connection/2 - CSRF')
+  ->post('/connection/2')
+  ->checkCSRF()
 
-  with('response')->begin()->
-    isStatusCode(200)->
-    checkElement('body', '!/This is a temporary page/')->
-  end()
+  ->info('/connection/revoke/2 - CSRF')
+  ->post('/connection/revoke/2')
+  ->checkCSRF()
 ;
