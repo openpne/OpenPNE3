@@ -2,18 +2,22 @@
 
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-$browser = new sfTestFunctional(new sfBrowser());
+$browser = new opTestFunctional(new opBrowser());
 
-$browser->
-  get('/OpenID/index')->
+$browser
 
-  with('request')->begin()->
-    isParameter('module', 'OpenID')->
-    isParameter('action', 'index')->
-  end()->
+// XSS
+  ->login('html1@example.com', 'password')
 
-  with('response')->begin()->
-    isStatusCode(200)->
-    checkElement('body', '!/This is a temporary page/')->
-  end()
+  ->info('/OpenID/index - XSS')
+  ->get('/OpenID/list')
+  ->with('html_escape')->begin()
+    ->isAllEscapedData('OpenIDTrustLog', 'uri')
+  ->end()
+
+// CSRF
+  ->info('/OpenID/unsetPermission - CSRF')
+  ->post('/OpenID/unsetPermission/id/2')
+  ->checkCSRF()
+
 ;

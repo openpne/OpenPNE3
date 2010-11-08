@@ -191,3 +191,11 @@ GadgetConfig:
     Gadget: gadget_rss_box 
     name: "url"
     value: "<?php echo dirname(__FILE__) ?>/feeds/www.xss.feed.rss"
+
+OpenIDTrustLog:
+  html_openid_trust1:
+    id: 2
+    Member:  html_member_1
+    uri:     "<&\"'>OpenIDTrustLog.uri ESCAPING HTML TEST DATA"
+    uri_key: "__hash__"
+    is_permanent: true
