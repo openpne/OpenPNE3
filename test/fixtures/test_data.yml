@@ -699,6 +699,11 @@ Gadget:
     name: "allMemberActivityBox"
     sort_order: 20
 
+  gadget_rss_box:
+    type: "contents"
+    name: "rssBox"
+    sort_order: 30
+
 GadgetConfig:
   gadget_friend_list_box_config_row:
     Gadget: gadget_friend_list_box

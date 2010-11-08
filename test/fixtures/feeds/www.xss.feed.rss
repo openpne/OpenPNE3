@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+<channel>
+
+<title>&lt;&amp;&quot;&#39;&gt;Rss.title ESCAPING HTML TEST DATA</title>
+<description>&lt;&amp;&quot;&#39;&gt;Rss.description ESCAPING HTML TEST DATA</description>
+<link>http://example.com/</link>
+<lastBuildDate>Fri, 1 Jan 2010 01:00:00 GMT</lastBuildDate>
+
+<item>
+<title>&lt;&amp;&quot;&#39;&gt;Rss.title ESCAPING HTML TEST DATA</title>
+<link>http://example.com/1</link>
+<pubDate>Fri, 1 Jan 2010 00:00:00 GMT</pubDate>
+<description>&lt;&amp;&quot;&#39;&gt;Rss.description ESCAPING HTML TEST DATA</description>
+</item>
+
+<item>
+<title>&lt;&amp;&quot;&#39;&gt;Rss.title ESCAPING HTML TEST DATA</title>
+<link>http://example.com/2</link>
+<pubDate>Fri, 1 Jan 2010 00:00:00 GMT</pubDate>
+<description>&lt;&amp;&quot;&#39;&gt;Rss.description ESCAPING HTML TEST DATA</description>
+</item>
+
+<item>
+<title>&lt;&amp;&quot;&#39;&gt;Rss.title ESCAPING HTML TEST DATA</title>
+<link>http://example.com/3</link>
+<pubDate>Fri, 1 Jan 2010 00:00:00 GMT</pubDate>
+<description>&lt;&amp;&quot;&#39;&gt;Rss.description ESCAPING HTML TEST DATA</description>
+</item>
+
+</channel>
+</rss>
