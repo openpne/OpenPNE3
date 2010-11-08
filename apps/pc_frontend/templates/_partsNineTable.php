@@ -8,7 +8,7 @@ $options->setDefault('crownIds', array());
 $options->setDefault('use_op_link_to_member', false);
 ?>
 <table>
-<?php $row = ceil(count($options->list) / $options->row) ?>
+<?php $row = min($options->row, ceil(count($options->list) / $options->col)) ?>
 <?php for ($i = $j = 1; $row >= $i; $i++): ?>
 <?php if ($options->type === 'full' || $options->type === 'only_image'): ?>
 <tr class="photo">
