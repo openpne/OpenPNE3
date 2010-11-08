@@ -17,6 +17,10 @@ class ProjectConfiguration extends sfProjectConfiguration
 
     //HTTP proxy to use when downloading plugin packages
     sfConfig::set('op_http_proxy', null);
+
+    // In default, OpenPNE saves session data file to default session.save_path.
+    // But in some cases, you may need to change the session save path:
+    // session_save_path('/tmp');
   }
 
   public function setIncludePath()
