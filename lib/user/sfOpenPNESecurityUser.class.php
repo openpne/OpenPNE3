@@ -15,10 +15,8 @@
  * @subpackage user
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class sfOpenPNESecurityUser extends sfBasicSecurityUser
+class sfOpenPNESecurityUser extends opBaseSecurityUser
 {
-  const SITE_IDENTIFIER_NAMESPACE = 'OpenPNE/user/sfOpenPNESecurityUser/site_identifier';
-
   protected $authAdapter = null;
 
   /**
@@ -28,17 +26,6 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
    */
   public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = array())
   {
-    if (!isset($options['session_namespaces']))
-    {
-      $options['session_namespaces'] = array(
-        self::SITE_IDENTIFIER_NAMESPACE,
-        self::LAST_REQUEST_NAMESPACE,
-        self::AUTH_NAMESPACE,
-        self::CREDENTIAL_NAMESPACE,
-        self::ATTRIBUTE_NAMESPACE,
-      );
-    }
-
     parent::initialize($dispatcher, $storage, $options);
 
     $request = sfContext::getInstance()->getRequest();
@@ -51,49 +38,7 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
     $containerClass = self::getAuthAdapterClassName($this->getCurrentAuthMode());
     $this->authAdapter = new $containerClass($this->getCurrentAuthMode());
 
-    if (!$this->isValidSiteIdentifier())
-    {
-      // This session is not for this site.
-      $this->logout();
-
-      // So we need to clear all data of the current session because they might be tainted by attacker.
-      // If OpenPNE uses that tainted data, it may cause limited session fixation attack.
-      $this->clearSessionData();
-
-      return null;
-    }
-
     $this->initializeCredentials();
-  }
-
-  public function clearSessionData()
-  {
-    // remove data in storage
-    foreach ($this->options['session_namespaces'] as $v)
-    {
-      $this->storage->remove($v);
-    }
-
-    // remove attribtues
-    $this->attributeHolder->clear();
-  }
-
-  public function isValidSiteIdentifier()
-  {
-    if (!sfConfig::get('op_check_session_site_identifier', true))
-    {
-      return true;
-    }
-
-    return ($this->generateSiteIdentifier() === $this->storage->read(self::SITE_IDENTIFIER_NAMESPACE));
-  }
-
-  public function generateSiteIdentifier()
-  {
-    $request = sfContext::getInstance()->getRequest();
-    $identifier = $request->getUriPrefix().$request->getRelativeUrlRoot();
-
-    return $identifier;
   }
 
   public function getAuthModes()
@@ -379,12 +324,5 @@ class sfOpenPNESecurityUser extends sfBasicSecurityUser
         $this->credentials[] = $aCredential;
       }
     }
-  }
-
-  public function shutdown()
-  {
-    $this->storage->write(self::SITE_IDENTIFIER_NAMESPACE, $this->generateSiteIdentifier());
-
-    parent::shutdown();
   }
 }
