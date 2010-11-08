@@ -6,6 +6,20 @@ $browser
   ->login('sns@example.com', 'password')
   ->isStatusCode(302)
 
+// XSS
+  ->info('/connection/1055 - XSS')
+  ->get('/connection/1055')
+  ->with('html_escape')->begin()
+    ->isAllEscapedData('OAuthConsumerInformation', 'name')
+    ->isAllEscapedData('OAuthConsumerInformation', 'description')
+  ->end()
+
+  ->info('/connection/list - XSS')
+  ->get('/connection/list')
+  ->with('html_escape')->begin()
+    ->isAllEscapedData('OAuthConsumerInformation', 'name')
+  ->end()
+
 // CSRF
   ->info('/connection - CSRF')
   ->post('/connection')
