@@ -37,6 +37,11 @@ Member:
     id: 1056
     name: "<&\"'>Member.name ESCAPING HTML TEST DATA"
     is_active: 1
+  html_member_3:
+    id: 1057
+    name: "<&\"'>Member.name ESCAPING HTML TEST DATA"
+    is_active: 1
+
 
 MemberRelationship:
   first_member_html_member_1:
@@ -55,6 +60,14 @@ MemberRelationship:
     Member: html_member_1
     MemberRelatedByMemberIdFrom: html_member_2
     is_friend: 1
+  html_member_3_html_member_1:
+    Member: html_member_3
+    MemberRelatedByMemberIdFrom: html_member_1
+    is_friend_pre: 1
+  html_member_1_first_member_3:
+    Member: html_member_1
+    MemberRelatedByMemberIdFrom: html_member_3
+    is_friend_pre: 1
 
 MemberProfile:
   html_member_1_profile_html_1:
@@ -75,22 +88,26 @@ MemberConfig:
     name: "pc_address"
     value: "html1@example.com"
     Member: html_member_1
-
   html_member_1_password:
     name: "password"
     value: <?php echo md5('password') . "\n"; ?>
     Member: html_member_1
-
   html_member_2_pc_address:
     name: "pc_address"
     value: "html2@example.com"
     Member: html_member_2
-
   html_member_2_password:
     name: "password"
     value: <?php echo md5('password') . "\n"; ?>
     Member: html_member_2
-
+  html_member_3_pc_address:
+    name: "pc_address"
+    value: "html3@example.com"
+    Member: html_member_3
+  html_member_3_password:
+    name: "password"
+    value: <?php echo md5('password') . "\n"; ?>
+    Member: html_member_3
 
 Community:
   html_community_1:
@@ -134,6 +151,10 @@ CommunityMember:
   html_community_2_html_member_2:
     Community: html_community_2
     Member: html_member_2
+  html_community_1_html_member_3:
+    Community: html_community_1
+    Member: html_member_3
+    is_pre: 1
 
 CommunityMemberPosition:
   html_community_1_admin:
@@ -146,6 +167,16 @@ CommunityMemberPosition:
     Member: html_member_1
     CommunityMember: html_community_2_html_member_1
     name: "admin"
+  html_community_1_sub_admin_confirm:
+    Community: html_community_1
+    Member: html_member_2
+    CommunityMember: html_community_1_html_member_2
+    name: "sub_admin_confirm"
+  html_community_1_admin_confirm:
+    Community: html_community_1
+    Member: html_member_2
+    CommunityMember: html_community_1_html_member_2
+    name: "admin_confirm"
   html_community_2_sub_admin:
     Community: html_community_2
     Member: html_member_2
