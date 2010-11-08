@@ -15,3 +15,6 @@ $task->run(array(), array(
   'application'     => $_app,
   'env'             => $_env,
 ));
+
+$conn = Doctrine_Manager::getInstance()->getCurrentConnection();
+$conn->clear();
