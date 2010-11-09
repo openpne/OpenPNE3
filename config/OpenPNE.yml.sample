@@ -61,8 +61,8 @@ sid_secret: "<?php echo filemtime(__FILE__) ?>"
 # セッションストレージ設定 (Configure Session storage)
 #   name の値には、 file, database, memcache の他、任意のセッションストレージクラス名が使用できます
 #   ("file", "database", "memcached" and any class names of session storage class as value of "name")
-#   database を選択した場合、扱えるセッション ID は 86 バイトまでとなります。必要に応じて session.hash_function と session.hash_bits_per_character の値を調節してください
-#   (If you use "database", you can handle 86 bytes session id. Tune session.hash_function and session.hash_bits_per_character for your needs)
+#   database を選択した場合、扱えるセッション ID の文字列長 128 までとなります。必要に応じて session.hash_function と session.hash_bits_per_character の値を調節してください
+#   (If you use "database", you can handle 128 length session id. Tune session.hash_function and session.hash_bits_per_character for your needs)
 session_storage:
   name: "file"
   options:
