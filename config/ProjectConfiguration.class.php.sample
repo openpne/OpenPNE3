@@ -5,7 +5,7 @@ sfCoreAutoload::register();
 
 require_once dirname(__FILE__).'/../lib/util/sfPropelBaseTask.class.php';
 
-define('OPENPNE_CONFIGURAIOTN_SAMPLE_HASH', '1e12fb5497c263ab1919a3ce97029f85');
+define('OPENPNE_CONFIGURAIOTN_SAMPLE_HASH', 'c53e83bb3a6d8fed9c53121b437f440d');
 
 if (!defined('E_DEPRECATED'))
 {

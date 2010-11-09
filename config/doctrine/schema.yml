@@ -468,7 +468,7 @@ BannerUseImage:
 Session:
   actAs: []
   columns:
-    id: { type: string(32), primary: true }
+    id: { type: string(86), primary: true }
     data: { type: string, comment: "Session information" }
     time: { type: string, comment: "Timestamp of generated time" }
   options:
