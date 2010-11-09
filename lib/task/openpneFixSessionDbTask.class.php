@@ -49,7 +49,7 @@ EOF;
         'id' => array(
           'definition' => array(
             'type'    => 'string',
-            'length'  => 86,
+            'length'  => 128,
             'primary' => '1',
           ),
         ),
