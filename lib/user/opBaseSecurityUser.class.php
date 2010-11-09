@@ -47,7 +47,7 @@ abstract class opBaseSecurityUser extends sfBasicSecurityUser
     }
   }
 
-  abstract function logout();
+  abstract public function logout();
 
   public function clearSessionData()
   {
