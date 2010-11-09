@@ -56,6 +56,9 @@ EOF;
       ),
     ));
 
+    $this->logSection('fix-session-db', 'Clear current session data');
+    $conn->execute('TRUNCATE session');
+
     $this->logSection('fix-session-db', 'Finish to fix session table structure');
   }
 
