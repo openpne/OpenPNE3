@@ -119,7 +119,8 @@ abstract class sfOpenPNECommunityAction extends sfActions
     }
 
     $this->pager = new sfDoctrinePager('Community', $this->size);
-    $this->pager->setQuery($this->filters->getQuery());
+    $q = $this->filters->getQuery()->orderBy('id desc');
+    $this->pager->setQuery($q);
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
   }
