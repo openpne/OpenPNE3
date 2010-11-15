@@ -68,10 +68,10 @@ class opTestFunctional extends sfTestFunctional
     return $this->with('response')->isStatusCode($code);
   }
 
-  public function checkCSRF()
+  public function checkCSRF($selectors = array())
   {
     $i18n = $this->getContext()->getI18N();
-    $selectors = array(
+    $selectors += array(
       $i18n->__('CSRF attack detected.'),
       'csrf[^a-zA-Z]*token:[^a-zA-Z]*'.$i18n->__('Required.'),
     );
