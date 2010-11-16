@@ -73,7 +73,7 @@ class SnsTerm extends BaseSnsTerm
       $this->process[$k] = false;
     }
 
-    return $value;
+    return htmlspecialchars($value, ENT_QUOTES, sfConfig::get('sf_charset'));
   }
 
   public function __call($name, $args)
