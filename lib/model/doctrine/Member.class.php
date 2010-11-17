@@ -306,4 +306,19 @@ class Member extends BaseMember implements opAccessControlRecordInterface
 
     return 'everyone';
   }
+
+  public function countJoinCommunity()
+  {
+    static $cache = false;
+
+    if ($cache === false)
+    {
+      $cache = Doctrine::getTable('CommunityMember')->createQuery()
+        ->where('member_id = ?', $this->getId())
+        ->andWhere('is_pre = ?', false)
+        ->count();
+    }
+
+    return $cache;
+  }
 }
