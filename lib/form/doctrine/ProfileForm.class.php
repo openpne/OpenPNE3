@@ -134,7 +134,7 @@ class ProfileForm extends BaseProfileForm
 
     $this->mergePostValidator(new sfValidatorCallback(
       array('callback' => array($this, 'compareMinAndMax')),
-      array('invalid' => 'Value must be less than or equal to Minimum value.')
+      array('invalid' => 'Value must be greater than or equal to Minimum value.')
     ));
 
     return parent::bind($params);
