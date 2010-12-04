@@ -155,7 +155,7 @@ class Net_UserAgent_Mobile
 
         $class = "Net_UserAgent_Mobile_$driver";
 
-        if (!class_exists($class)) {
+        if (!class_exists($class, false)) {
             $file = str_replace('_', '/', $class) . '.php';
             if (!include_once $file) {
                 return PEAR::raiseError(null,

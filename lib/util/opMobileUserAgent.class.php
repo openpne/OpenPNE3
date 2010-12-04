@@ -24,7 +24,8 @@ class opMobileUserAgent
   protected function __construct()
   {
     require_once 'Net/UserAgent/Mobile.php';
-    
+    require_once 'Net/UserAgent/Mobile/NonMobile.php';
+
     self::$mobile = Net_UserAgent_Mobile::factory();
     if (self::$mobile instanceof Net_UserAgent_Mobile_Error)
     {
