@@ -73,14 +73,20 @@ class AdminInviteForm extends InviteForm
 
     foreach ($this->getValue('pc') as $value)
     {
-      $this->member = Doctrine::getTable('Member')->createPre();
+      if (!$this->validateAddress('pc_address', $value))
+      {
+        $this->member = Doctrine::getTable('Member')->createPre();
+      }
       $this->saveConfig('pc_address', $value);
       $this->member->setConfig('register_auth_mode', $authMode);
     }
 
     foreach ($this->getValue('mobile') as $value)
     {
-      $this->member = Doctrine::getTable('Member')->createPre();
+      if (!$this->validateAddress('mobile_address', $value))
+      {
+        $this->member = Doctrine::getTable('Member')->createPre();
+      }
       $this->saveConfig('mobile_address', $value);
       $this->member->setConfig('register_auth_mode', $authMode);
     }
