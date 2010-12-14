@@ -15,7 +15,7 @@
  * @subpackage user
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class sfOpenPNESecurityUser extends sfBasicSecurityUser
+class sfOpenPNESecurityUser extends opBaseSecurityUser
 {
   protected
     $authAdapters = array();
