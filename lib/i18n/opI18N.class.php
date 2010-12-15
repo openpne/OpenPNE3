@@ -107,7 +107,7 @@ class opI18N extends sfI18N
 
   public function __($string, $args = array(), $catalogue = 'messages')
   {
-    if (empty($parsed[$string]))
+    if (empty($this->parsed[$string]))
     {
       $this->parsed[$string] = array();
 
