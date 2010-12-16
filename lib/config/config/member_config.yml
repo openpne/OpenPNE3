@@ -26,7 +26,7 @@ publicFlag:
     ValueType:  "integer"
     IsRegist:   false
     IsConfig:   true
-    IsRequired: false
+    IsRequired: true
     IsUnique:   false
     IsConfirm:  false
     Default: 1
