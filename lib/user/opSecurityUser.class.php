@@ -227,8 +227,6 @@ class opSecurityUser extends opAdaptableUser
         return false;
       }
       opActivateBehavior::enable();
-
-      $this->setAuthenticated(true);
     }
 
     $this->initializeCredentials();
@@ -309,6 +307,14 @@ class opSecurityUser extends opAdaptableUser
     $memberId = $this->getMemberId();
 
     $isSNSMember = $this->isSNSMember();
+    if ($isSNSMember)
+    {
+      if ($this->getMember()->getIsLoginRejected())
+      {
+        $isSNSMember = false;
+      }
+    }
+
     // for BC
     $this->setIsSNSMember($isSNSMember);
     if ($isSNSMember)
