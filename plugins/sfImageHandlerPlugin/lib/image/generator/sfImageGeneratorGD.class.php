@@ -17,6 +17,8 @@
  */
 class sfImageGeneratorGD
 {
+  const ERROR_NOT_ALLOWED_SIZE = 101;
+
   protected
     $quality     = 75,
     $width       = 0,
@@ -36,6 +38,8 @@ class sfImageGeneratorGD
   */
   public function initialize($options)
   {
+    $this->allowedSize = array_merge($this->allowedSize, sfConfig::get('sf_image_handler_allowed_size', array()));
+
     $options = array_merge(array('width' => $this->width, 'height' => $this->height), $options);
     $this->setImageSize($options['width'], $options['height']);
 
@@ -49,7 +53,6 @@ class sfImageGeneratorGD
       $this->format = $options['format'];
     }
 
-    $this->allowedSize = array_merge($this->allowedSize, sfConfig::get('sf_image_handler_allowed_size', array()));
   }
 
   public function configure()
@@ -61,6 +64,12 @@ class sfImageGeneratorGD
   */
   public function setImageSize($width, $height)
   {
+    if (!$this->checkSizeAllowed($width, $height))
+    {
+      // TODO: Use this plugin's exception
+      throw new RuntimeException('Requested image size is not allowed', sfImageGeneratorGD::ERROR_NOT_ALLOWED_SIZE);
+    }
+
     if (is_numeric($width))
     {
       $this->width = $width;
@@ -263,6 +272,12 @@ class sfImageGeneratorGD
 
   protected function checkSizeAllowed($w, $h)
   {
+    // an empty string of width and height are allowed
+    if ('' === $w && '' === $h)
+    {
+      return true;
+    }
+
     return in_array($w.'x'.$h, $this->allowedSize);
   }
 }
