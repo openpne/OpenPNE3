@@ -37,13 +37,13 @@ class sfImageHandler
   */
   public function initialize($options)
   {
+    $this->generator = new sfImageGeneratorGD($options);
+    $this->options = $options;
+
     if (isset($options['filename']))
     {
       $this->storage = FilePeer::retrieveByFilename($options['filename']);
     }
-
-    $this->generator = new sfImageGeneratorGD($options);
-    $this->options = $options;
   }
 
   public function createImage()
