@@ -28,7 +28,21 @@ class imageActions extends sfActions
       'width'    => str_replace('w', '', $request->getParameter('width', null)),
       'height'   => str_replace('h', '', $request->getParameter('height', null)),
     );
-    $image = new sfImageHandler($params);
+
+    try
+    {
+      $image = new sfImageHandler($params);
+    }
+    catch (RuntimeException $e)
+    {
+      if (sfImageGenerator::ERROR_NOT_ALLOWED_SIZE !== $e->getCode())
+      {
+        throw $e;
+      }
+
+      $this->forward404($e->getMessage());
+    }
+
     $this->forward404Unless($image->isValidSource(), 'Invalid URL.');
 
     $binary = $image->createImage();
