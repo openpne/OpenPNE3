@@ -58,12 +58,6 @@ class sfImageHandler
 
   public function initialize($options)
   {
-    if (isset($options['filename']))
-    {
-      $class = self::getStorageClassName();
-      $this->storage = call_user_func(array($class, 'find'), $options['filename'], $class);
-    }
-
     if (!sfConfig::has('op_image_generator_name'))
     {
       $isMagick = sfConfig::get('op_use_imagemagick', 0);
@@ -86,6 +80,12 @@ class sfImageHandler
 
     $this->generator = new $className($options);
     $this->options = $options;
+
+    if (isset($options['filename']))
+    {
+      $class = self::getStorageClassName();
+      $this->storage = call_user_func(array($class, 'find'), $options['filename'], $class);
+    }
   }
 
   public function createImage()
