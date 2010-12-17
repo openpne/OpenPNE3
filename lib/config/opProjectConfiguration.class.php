@@ -142,6 +142,24 @@ class opProjectConfiguration extends sfProjectConfiguration
     }
   }
 
+  public function setCacheDir($cacheDir)
+  {
+    $newCacheDir = $cacheDir.DIRECTORY_SEPARATOR;
+    if (is_callable('posix_getuid'))
+    {
+      $userinfo = posix_getpwuid(posix_getuid());
+      $newCacheDir .= $userinfo['name'];
+    }
+    else
+    {
+      $newCacheDir .= php_sapi_name();
+    }
+
+    sfConfig::set('sf_cache_dir', $newCacheDir);
+
+    parent::setCacheDir($newCacheDir);
+  }
+
   static public function filterDoctrineCliConfig($event, $config)
   {
     $config['migrations_path'] = sfConfig::get('sf_data_dir').'/migrations/generated';

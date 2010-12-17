@@ -531,24 +531,6 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
     require_once 'Auth/OpenID/SReg.php';
   }
 
-  public function setCacheDir($cacheDir)
-  {
-    $newCacheDir = $cacheDir.DIRECTORY_SEPARATOR;
-    if (is_callable('posix_getuid'))
-    {
-      $userinfo = posix_getpwuid(posix_getuid());
-      $newCacheDir .= $userinfo['name'];
-    }
-    else
-    {
-      $newCacheDir .= php_sapi_name();
-    }
-
-    sfConfig::set('sf_cache_dir', $newCacheDir);
-
-    parent::setCacheDir($newCacheDir);
-  }
-
   public function generateAppUrl($application, $parameters = array(), $absolute = false)
   {
     list($route, $parameters) = sfContext::getInstance()->getController()
