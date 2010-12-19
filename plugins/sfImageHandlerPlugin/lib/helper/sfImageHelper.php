@@ -54,6 +54,14 @@ function image_tag_sf_image($filename, $options = array())
   {
     unset($options['no_image']);
   }
+  if (isset($options['f']))
+  {
+    unset($options['f']);
+  }
+  if (isset($options['format']))
+  {
+    unset($options['format']);
+  }
 
   return image_tag($filepath, $options);
 }
@@ -63,9 +71,12 @@ function sf_image_path($filename, $options = array(), $absolute = false)
   if (isset($options['f']))
   {
     $f = $options['f'];
-    unset($options['f']);
   }
- elseif (is_callable(array($filename, 'getType')))
+  elseif (isset($options['format']))
+  {
+    $f = $options['format'];
+  }
+  elseif (is_callable(array($filename, 'getType')))
   {
     $f = str_replace('image/', '', $filename->getType());
   }
@@ -84,7 +95,6 @@ function sf_image_path($filename, $options = array(), $absolute = false)
   if (isset($options['size']))
   {
     $size = $options['size'];
-    unset($options['size']);
   }
 
   $class = sfImageHandler::getStorageClassName();
