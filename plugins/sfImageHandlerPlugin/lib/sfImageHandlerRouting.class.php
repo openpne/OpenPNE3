@@ -4,6 +4,14 @@ class sfImageHandlerRouting
   static public function listenToRoutingLoadConfigurationEvent(sfEvent $event)
   {
     $routing = $event->getSubject();
+
+    $routing->prependRoute('image_nodefaults',
+      new sfRoute(
+        '/image/*',
+        array('module' => 'default', 'action' => 'error')
+      )
+    );
+
     $routing->prependRoute('image',
       new sfRoute(
         '/cache/img/:format/:width_:height/:filename.:noice',
