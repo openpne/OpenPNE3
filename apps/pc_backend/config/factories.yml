@@ -86,7 +86,7 @@ all:
 #      prefix:                    %SF_APP_DIR%
 #
   i18n:
-    class: sfI18N
+    class: opI18N
     param:
       source:               OpenPNE
       debug:                false
