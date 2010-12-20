@@ -59,7 +59,6 @@ abstract class sfImageGenerator
   {
     if (!$this->checkSizeAllowed($width, $height))
     {
-      // TODO: Use this plugin's exception
       throw new RuntimeException('Requested image size is not allowed', sfImageGenerator::ERROR_NOT_ALLOWED_SIZE);
     }
 
