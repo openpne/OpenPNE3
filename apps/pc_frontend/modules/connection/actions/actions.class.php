@@ -17,6 +17,11 @@
  */
 class connectionActions extends opOAuthConsumerAction
 {
+  public function preExecute()
+  {
+    $this->forward404Unless(opConfig::get('enable_connection'));
+  }
+
   public function executeList(sfWebRequest $request)
   {
     $this->pager = Doctrine::getTable('OAuthConsumerInformation')

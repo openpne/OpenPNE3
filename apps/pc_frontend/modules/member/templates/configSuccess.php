@@ -14,7 +14,10 @@ op_include_parts('pageNav', 'pageNav', array('list' => $list, 'current' => $cate
 <?php
 $list = array();
 
-$list[] = link_to(__('Connecting with External Application'), '@connection_list');
+if (opConfig::get('enable_connection'))
+{
+  $list[] = link_to(__('Connecting with External Application'), '@connection_list');
+}
 
 if (opConfig::get('enable_openid'))
 {
