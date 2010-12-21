@@ -144,6 +144,17 @@ general:
     IsRequired: false
     Default:    "-"
 
+  enable_openid:
+    Name:      "enable_openid"
+    Caption:   "OpenID Provider 使用設定"
+    FormType:  "radio"
+    ValueType: "text"
+    IsRequired: true
+    Default:    0
+    Choices:
+      - "使用しない"
+      - "使用する"
+
 external_login_page:
   _attributes:
     Caption: "External Login Page Configuration"
