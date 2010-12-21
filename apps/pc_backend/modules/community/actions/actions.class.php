@@ -236,4 +236,40 @@ class communityActions extends sfActions
     $this->getUser()->setFlash('notice', 'Deleted.');
     $this->redirect('community/categoryList');
   }
+
+  /**
+   * Executes categorySort action
+   *
+   * @param sfWebRequest $request A request object
+   */
+  public function executeCategorySort(sfWebRequest $request)
+  {
+    if (!$request->isXmlHttpRequest())
+    {
+      $this->forward404();
+    }
+
+    $request->checkCSRFProtection();
+
+    $parameters = $request->getParameterHolder();
+    $keys = $parameters->getNames();
+    foreach ($keys as $key)
+    {
+      if (strpos($key, 'type_') === 0)
+      {
+        $order = $parameters->get($key);
+        for ($i = 0; $i < count($order); $i++)
+        {
+          $category = Doctrine::getTable('CommunityCategory')->find($order[$i]);
+          if ($category)
+          {
+            $category->setSortOrder($i * 10);
+            $category->save();
+          }
+        }
+        break;
+      }
+    }
+    return sfView::NONE;
+  }
 }

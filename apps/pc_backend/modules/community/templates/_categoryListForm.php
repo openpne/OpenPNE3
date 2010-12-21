@@ -1,4 +1,4 @@
-<table>
+<table id="type_<?php echo $type ?>">
 <tr>
 <th><?php echo $form['name']->renderLabel() ?></th>
 <?php if (empty($forceAllowUserCommunity)) : ?>
@@ -9,9 +9,10 @@
 
 <?php if ($categories): ?>
 <?php foreach ($categories as $category): ?>
+<tbody id="type_<?php echo $type ?>_<?php echo $category->getId() ?>" class="sortable" style="position: relative;">
+<tr>
 <form action="<?php echo url_for('community/categoryEdit?id='.$category->getId()) ?>" method="post">
 <?php echo $category->getForm()->renderGlobalErrors() ?>
-<tr>
 <?php foreach ($category->getForm() as $key => $row) : ?>
 <?php if (!$row->isHidden()) : ?>
 <?php if (empty($forceAllowUserCommunity) || $key != 'is_allow_member_community') : ?>
@@ -34,6 +35,7 @@
 </form>
 </td>
 </tr>
+</tbody>
 <?php endforeach; ?>
 <?php endif; ?>
 
@@ -58,3 +60,11 @@
 </form>
 
 </table>
+
+<?php $form = new BaseForm() ?>
+<?php echo sortable_element('type_'.$type, array(
+  'tag'  => 'tbody',
+  'only' => 'sortable',
+  'url'  => 'community/categorySort',
+  'with' => 'Sortable.serialize("type_'.$type.'")+"&'.urlencode($form->getCSRFFieldName()).'='.urlencode($form->getCSRFToken()).'"',
+)) ?>
