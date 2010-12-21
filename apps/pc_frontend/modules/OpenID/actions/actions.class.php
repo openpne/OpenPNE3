@@ -17,6 +17,11 @@
  */
 class OpenIDActions extends sfActions
 {
+  public function preExecute()
+  {
+    $this->forward404Unless(opConfig::get('enable_openid'));
+  }
+
  /**
   * Executes index action
   *
