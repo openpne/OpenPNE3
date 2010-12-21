@@ -428,6 +428,14 @@ abstract class opMemberAction extends sfActions
       $ignoredSnsConfig = unserialize($ignoredSnsConfig);
     }
 
+    if (isset($categories['language']))
+    {
+      if (!opConfig::get('enable_language'))
+      {
+        unset($categories['language']);
+      }
+    }
+
     if (isset($categories['mail']))
     {
       if (sfConfig::get('sf_app') == 'pc_frontend')
