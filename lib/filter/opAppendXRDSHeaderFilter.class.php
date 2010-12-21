@@ -21,7 +21,11 @@ class opAppendXRDSHeaderFilter extends sfFilter
   {
     $route = $this->context->getRouting()->getCurrentRouteName();
 
-    if ('homepage' === $route)
+    if (!opConfig::get('enable_openid'))
+    {
+      $filterChain->execute();
+    }
+    elseif ('homepage' === $route)
     {
       $this->context->getResponse()->setHttpHeader('X-XRDS-Location', $this->context->getController()->genUrl('@openid_idpxrds', true));
     }
