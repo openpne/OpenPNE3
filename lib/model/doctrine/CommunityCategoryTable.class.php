@@ -48,4 +48,35 @@ class CommunityCategoryTable extends Doctrine_Table
 
     return $q;
   }
+
+  public function getAllChildren($checkIsAllowMemberCommunity = false)
+  {
+    $roots = $this->retrieveAllRoots();
+    $children = $this->retrieveAllChildren();
+
+    // sort by root category
+    $temp = array();
+    foreach ($children as $child)
+    {
+      if ($checkIsAllowMemberCommunity && !$child->getIsAllowMemberCommunity())
+      {
+        continue;
+      }
+      $temp[$child->getTreeKey()][] = $child;
+    }
+
+    $data = array();
+    foreach ($roots as $root)
+    {
+      if (isset($temp[$root->getId()]))
+      {
+        $data = array_merge($data, $temp[$root->getId()]);
+      }
+    }
+
+    $collection = new Doctrine_Collection($this);
+    $collection->setData($data);
+
+    return $collection;
+  }
 }
