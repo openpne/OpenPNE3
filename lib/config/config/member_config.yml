@@ -43,7 +43,7 @@ publicFlag:
     IsRequired: true
     IsUnique:   false
     IsConfirm:  false
-    Default: 1
+    Default: 3
     Choices:
       4: "All Users on the Web"
       1: "All Members"
