@@ -369,7 +369,7 @@ class Member extends BaseMember implements opAccessControlRecordInterface
     if ($options['is_send_pc'] && ($address = $this->getConfig('pc_address')) &&
       (
         !isset($mailConfigs['pc'][$template]['member_configurable']) ||
-        $mailConfigs['pc'][$template]['member_configurable'] &&
+        !$mailConfigs['pc'][$template]['member_configurable'] ||
         $this->getConfig('is_send_pc_'.$template.'_mail', true)
       )
     )
@@ -382,7 +382,7 @@ class Member extends BaseMember implements opAccessControlRecordInterface
     if ($options['is_send_mobile'] && ($address = $this->getConfig('mobile_address')) &&
       (
         !isset($mailConfigs['mobile'][$template]['member_configurable']) ||
-        $mailConfigs['mobile'][$template]['member_configurable'] &&
+        !$mailConfigs['mobile'][$template]['member_configurable'] ||
         $this->getConfig('is_send_mobile_'.$template.'_mail', true)
       )
     )
