@@ -39,6 +39,39 @@ class MemberConfigMailForm extends MemberConfigForm
     $this->widgetSchema['daily_news']->setOptions($options);
   }
 
+  public function configure()
+  {
+    $configs = Doctrine::getTable('NotificationMail')->getConfigs();
+    $app = 'mobile_frontend' == sfConfig::get('sf_app') ? 'mobile' : 'pc';
+    if (!isset($configs[$app]))
+    {
+      return;
+    }
+
+    $choices = array(
+      1 => '受信する',
+      0 => '受信しない'
+    );
+
+    foreach ($configs[$app] as $key => $value)
+    {
+      if (isset($value['member_configurable']) && $value['member_configurable'])
+      {
+        $notification = Doctrine::getTable('NotificationMail')->findOneByName($app.'_'.$key);
+        if (!$notification || $notification->getIsEnabled())
+        {
+          $name  = 'is_send_'.$app.'_'.$key.'_mail';
+
+          $this->setWidget($name, new sfWidgetFormChoice(array('choices' => $choices, 'expanded' => true)));
+          $this->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices), 'required' => true)));
+          $this->widgetSchema->setLabel($name, $value['caption']);
+
+          $this->setDefault($name, $this->member->getConfig($name, 1));
+        }
+      }
+    }
+  }
+
   protected function generateDayList()
   {
     $result = array();

@@ -54,7 +54,8 @@ EOF;
           'birthMember' => $birthMember,
           'subject'     => $i18n->__('There is your %my_friend% that its birthday is coming soon'),
         );
-        opMailSend::sendTemplateMail('birthday', $member->getEmailAddress(), opConfig::get('admin_mail_address'), $params, $context);
+
+        $member->sendNotificationMail('birthday', $params, array(), $context);
       }
     }
   }
