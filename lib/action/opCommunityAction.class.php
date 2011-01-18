@@ -442,7 +442,16 @@ abstract class opCommunityAction extends sfActions
         'community'  => $community,
         'new_member' => $member,
       );
-      opMailSend::sendTemplateMail('joinCommunity', $community->getAdminMember()->getEmailAddress(), opConfig::get('admin_mail_address'), $params);
+
+      $isSendPc     = $community->getConfig('is_send_pc_joinCommunity_mail');
+      $isSendMobile = $community->getConfig('is_send_mobile_joinCommunity_mail');
+
+      $options = array(
+        'is_send_pc'     => (bool)(null === $isSendPc ? 1 : $isSendPc),
+        'is_send_mobile' => (bool)(null === $isSendMobile ? 1 : $isSendMobile)
+      );
+
+      $community->getAdminMember()->sendNotificationMail('joinCommunity', $params, $options);
     }
   }
 }

@@ -130,6 +130,7 @@ pc:
   friendLinkComplete:
     caption: "Notification of Completion of Friend Link"
     configurable: true
+    member_configurable: true
     sample:
       en:
         - "{{ member.name }} accepted your {{ op_term.friend }} link request"
@@ -212,6 +213,7 @@ pc:
   birthday:
     caption: "Notification of Friend Birthday"
     configurable: true
+    member_configurable: true
     sample:
       en:
         - "There is {{ member.name }}'s {{ op_term.my_friend }} that its birthday is coming soon"
@@ -387,6 +389,7 @@ mobile:
   friendLinkComplete:
     caption: "Notification of Completion of Friend Link"
     configurable: true
+    member_configurable: true
     sample:
       en:
         - "{{ member.name }} accepted your {{ op_term.friend }} link request"
@@ -539,6 +542,7 @@ mobile:
   birthday:
     caption: "Notification of Friend Birthday"
     configurable: true
+    member_configurable: true
     sample:
       en:
         - "There is {{ member.name }}'s {{ op_term.my_friend }} that its birthday is coming soon"
