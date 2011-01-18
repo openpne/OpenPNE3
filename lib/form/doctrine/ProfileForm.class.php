@@ -176,16 +176,6 @@ class ProfileForm extends BaseProfileForm
 
     $values = $this->getValues();
 
-    if (!$values['is_edit_public_flag'])
-    {
-      Doctrine_Query::create()
-        ->update('MemberProfile')
-        ->set('public_flag', $values['default_public_flag'])
-        ->where('lft = 1')
-        ->andWhere('profile_id = ?', $profile->getId())
-        ->execute();
-    }
-
     if ($values['form_type'] === 'date')
     {
       if (!$profile->getProfileOption()->count())

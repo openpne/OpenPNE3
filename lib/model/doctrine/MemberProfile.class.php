@@ -198,6 +198,17 @@ class MemberProfile extends BaseMemberProfile implements opAccessControlRecordIn
     }
   }
 
+  public function getPublicFlag()
+  {
+    $profile = $this->getProfile();
+    if ($profile->getIsEditPublicFlag())
+    {
+      return $this->_data['public_flag'] ? $this->_data['public_flag'] : $profile->getDefaultPublicFlag();
+    }
+
+    return $profile->getDefaultPublicFlag();
+  }
+
   public function generateRoleId(Member $member)
   {
     $relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($this->Member->id, $member->id);
