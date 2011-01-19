@@ -197,7 +197,7 @@ class MemberRelationshipTable extends opAccessControlDoctrineTable
         'member'  => $event['member'],
       );
 
-      $toMember->sendNotificationMail('friendLinkComplete', $params);
+      opMailSend::sendTemplateMailToMember('friendLinkComplete', $toMember, $params);
     }
     else
     {

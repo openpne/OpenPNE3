@@ -413,7 +413,7 @@ abstract class opMemberAction extends sfActions
 
     // to member
     $param['subject'] = sfContext::getInstance()->getI18N()->__('Leaving from this site is finished');
-    $member->sendNotificationMail('leave', $param);
+    opMailSend::sendTemplateMailToMember('leave', $member, $param);
   }
 
   protected function filterConfigCategory()

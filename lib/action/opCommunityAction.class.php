@@ -451,7 +451,7 @@ abstract class opCommunityAction extends sfActions
         'is_send_mobile' => (bool)(null === $isSendMobile ? 1 : $isSendMobile)
       );
 
-      $community->getAdminMember()->sendNotificationMail('joinCommunity', $params, $options);
+      opMailSend::sendTemplateMailToMember('joinCommunity', $community->getAdminMember(), $params, $options);
     }
   }
 }
