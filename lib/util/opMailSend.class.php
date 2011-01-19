@@ -156,6 +156,45 @@ class opMailSend
     return self::execute($subject, $to, $from, $body.$signature);
   }
 
+  public static function sendTemplateMailToMember($template, Member $member, $params = array(), $options = array(), $context = null)
+  {
+    $mailConfigs = Doctrine::getTable('NotificationMail')->getConfigs();
+
+    $options = array_merge(array(
+      'from'           => opConfig::get('admin_mail_address'),
+      'is_send_pc'     => true,
+      'is_send_mobile' => true,
+      'pc_params'      => array(),
+      'mobile_params'  => array()
+    ), $options);
+
+    // to pc
+    if ($options['is_send_pc'] && ($address = $member->getConfig('pc_address')) &&
+      (
+        !isset($mailConfigs['pc'][$template]['member_configurable']) ||
+        !$mailConfigs['pc'][$template]['member_configurable'] ||
+        $member->getConfig('is_send_pc_'.$template.'_mail', true)
+      )
+    )
+    {
+      opMailSend::sendTemplateMail($template, $address, $options['from'],
+        array_merge($params, $options['pc_params']), $context);
+    }
+
+    // to mobile
+    if ($options['is_send_mobile'] && ($address = $member->getConfig('mobile_address')) &&
+      (
+        !isset($mailConfigs['mobile'][$template]['member_configurable']) ||
+        !$mailConfigs['mobile'][$template]['member_configurable'] ||
+        $member->getConfig('is_send_mobile_'.$template.'_mail', true)
+      )
+    )
+    {
+      opMailSend::sendTemplateMail($template, $address, $options['from'],
+        array_merge($params, $options['mobile_params']), $context);
+    }
+  }
+
   public static function execute($subject, $to, $from, $body)
   {
     if (!$to)
