@@ -21,7 +21,6 @@ class opTestFunctional extends sfTestFunctional
   {
     $testers = array_merge(array(
       'html_escape' => 'opTesterHtmlEscape',
-      'response'    => 'opTesterResponse',
     ), $testers);
 
     parent::__construct($browser, $lime, $testers);
