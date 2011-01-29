@@ -27,10 +27,6 @@ class opI18N extends sfI18N
     }
     $this->terms = Doctrine::getTable('SnsTerm');
     $this->terms->configure($this->culture, $application);
-    if (!$this->terms['member'])
-    {
-      $this->terms->configure('en', $application);
-    }
   }
 
   public function generateApplicationMessages($dirs)
