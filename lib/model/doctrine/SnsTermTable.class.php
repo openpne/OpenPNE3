@@ -104,7 +104,7 @@ class SnsTermTable extends Doctrine_Table implements ArrayAccess
 
       if ($this->culture)
       {
-        $q->andWhere('id IN (SELECT id FROM SnsTermTranslation WHERE lang = ?)', $this->culture);
+        $q->leftJoinTranslation('SnsTerm', $this->culture);
       }
 
       foreach ($q->execute() as $term)
