@@ -47,6 +47,8 @@ class sfMessageSource_OpenPNECached extends sfMessageSource_File
 
   public function &loadData($variant)
   {
-    return include($variant);
+    $load = include($variant);
+
+    return $load;
   }
 }
