@@ -159,7 +159,7 @@ abstract class opCommunityAction extends sfActions
       {
         $request->checkCSRFProtection();
 
-        if ($this->$community)
+        if ($this->community)
         {
           $this->community->delete();
         }
