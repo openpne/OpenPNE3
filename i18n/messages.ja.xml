@@ -274,6 +274,10 @@
         <source>--------------------------------------------------------+*</source>
         <target>━━━━━━━━━━━━━━━━━━━━━━━━━━━□■</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Invitation from %sns%</source>
+        <target>%sns%招待状</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
