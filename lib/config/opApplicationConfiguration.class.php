@@ -544,8 +544,6 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
       $newCacheDir .= php_sapi_name();
     }
 
-    sfConfig::set('sf_cache_dir', $newCacheDir);
-
     parent::setCacheDir($newCacheDir);
   }
 
