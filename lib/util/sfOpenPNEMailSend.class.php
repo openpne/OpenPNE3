@@ -169,7 +169,18 @@ class sfOpenPNEMailSend
       $mailer->setReturnPath($envelopeFrom);
     }
 
-    $result = $mailer->send();
+    try
+    {
+      $result = $mailer->send();
+    }
+    catch (Zend_Mail_Protocol_Exception $e)
+    {
+      if (sfConfig::get('sf_logging_enabled'))
+      {
+        sfContext::getInstance()->getLogger()->err('{sfOpenPNEMailSend::execute()} Mail Send Error');
+      }
+      // do nothing
+    }
 
     Zend_Loader::registerAutoLoad('Zend_Loader', false);
 
