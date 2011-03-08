@@ -517,8 +517,6 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
       $newCacheDir .= php_sapi_name();
     }
 
-    sfConfig::set('sf_cache_dir', $newCacheDir);
-
     parent::setCacheDir($newCacheDir);
   }
 }
