@@ -15,7 +15,7 @@
  * @subpackage util
  * @author     Kousuke Ebihara <ebihara@php.net>
  */
-class opDoctrineConnectionMysql extends Doctrine_Connection_Mysql
+class opDoctrineConnectionMysql extends Doctrine_Connection_Mysql_ExtraFunctions
 {
   protected $hashByQuery = array();
 
