@@ -13,7 +13,7 @@ class opCustomCssForm extends sfForm
   public function configure()
   {
     $this->setWidget('css', new sfWidgetFormTextarea(array(), array('rows' => '20', 'cols' => '70')));
-    $this->setValidator('css', new opValidatorString());
+    $this->setValidator('css', new opValidatorString(array('required' => false)));
 
     $this->setDefault('css', Doctrine::getTable('SnsConfig')->get('customizing_css'));
 
