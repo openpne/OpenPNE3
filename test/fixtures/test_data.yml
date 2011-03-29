@@ -896,9 +896,11 @@ ActivityData:
     foreign_id: 2
   dummy_activity7:
     Member: first_member
+    body: "dummy7"
     template: "test_template"
     template_param:
       "%foo%" : "bar"
   dummy_activity8:
     Member: first_member
+    body: "dummy8"
     template: "xxxx_template"
