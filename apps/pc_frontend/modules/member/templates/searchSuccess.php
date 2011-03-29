@@ -18,9 +18,10 @@ foreach ($pager->getResults() as $key => $member)
 {
   $list[$key] = array();
   $list[$key][__('Nickname')] = $member->getName();
-  if ($member->getProfile('self_intro'))
+  $introduction = $member->getProfile('self_intro', true);
+  if ($introduction)
   {
-    $list[$key][$member->getProfile('self_intro')->getCaption()] = $member->getProfile('self_intro');
+    $list[$key][$introduction->getCaption()] = $introduction;
   }
   $list[$key][__('Last Login')] = distance_of_time_in_words($member->getLastLoginTime());
 }
