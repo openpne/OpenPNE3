@@ -106,20 +106,10 @@ $$(".partsHeading").each(function(obj){
   if (sortInfo)
   {
     var obj = document.getElementById(type);
-    var preGadget = null;
     sortInfo.split(",").each(function(value){
       var gadget = document.getElementById(value);
-      if (preGadget)
-      {
-        Element.remove(gadget);
-        Insertion.After(preGadget, gadget);
-      }
-      else
-      {
-        Element.remove(gadget);
-        Insertion.Top(obj, gadget);
-      }
-      preGadget = gadget;
+      Element.remove(gadget);
+      obj.appendChild(gadget);
     });
   }
 });
