@@ -29,6 +29,10 @@ class Member extends BaseMember
   public function getProfile($profileName, $viewableCheck = false, $myMemberId = null)
   {
     $profile = MemberProfilePeer::retrieveByMemberIdAndProfileName($this->getId(), $profileName);
+    if (!$profile)
+    {
+      return null;
+    }
 
     if ($viewableCheck)
     {
