@@ -111,7 +111,9 @@ class opDoctrineQuery extends Doctrine_Query
       return self::getMasterConnectionDirect();
     }
 
-    elseif (self::SELECT === $queryType && !$shouldGoToMaster)
+    if (Doctrine_Transaction::STATE_SLEEP === self::getMasterConnection()->transaction->getState()
+      && (self::SELECT === $queryType && !$shouldGoToMaster)
+    )
     {
       return self::getSlaveConnection();
     }
