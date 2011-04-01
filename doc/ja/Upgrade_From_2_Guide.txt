@@ -46,7 +46,7 @@ http://github.com/openpne/OpenPNE3/downloads
 
 Git リポジトリを利用する場合、以下のコマンドを実行してください (バージョン番号は適切なものに変更してください)::
 
-  $ git clone git://github.com/openpne/OpenPNE3.github
+  $ git clone git://github.com/openpne/OpenPNE3.git
   $ git checkout OpenPNE-3.4.x
 
 その後、 OpenPNE3 のソースコード内にある web ディレクトリが、ウェブサーバの公開領域となるように設置してください (セットアップガイドも参照してください)。
