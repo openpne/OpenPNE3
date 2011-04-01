@@ -133,6 +133,11 @@ class opDoctrineQuery extends Doctrine_Query
 
   public function preQuery()
   {
+    if ($this->_passedConn)
+    {
+      return;
+    }
+
     if ($this->specifiedConnection)
     {
       $this->_conn = $this->specifiedConnection;
