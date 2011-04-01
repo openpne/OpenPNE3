@@ -23,6 +23,10 @@ class Member extends BaseMember implements opAccessControlRecordInterface
   public function getProfile($profileName, $viewableCheck = false, $myMemberId = null)
   {
     $profile = Doctrine::getTable('MemberProfile')->retrieveByMemberIdAndProfileName($this->getId(), $profileName);
+    if (!$profile)
+    {
+      return null;
+    }
 
     if ($viewableCheck)
     {
