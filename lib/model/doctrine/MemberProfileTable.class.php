@@ -283,12 +283,18 @@ class MemberProfileTable extends opAccessControlDoctrineTable
       $ignores[] = $memberConfigTable->generateNameValueHash('age_public_flag', $k);
     }
 
-    $ignoreMemberIds = $memberConfigTable->createQuery()
+    $rs = $memberConfigTable->createQuery()
       ->select('member_id')
       ->whereIn('name_value_hash', $ignores)
       ->execute(array(), Doctrine::HYDRATE_NONE);
 
-    $ids = array_diff($ids, $ignoreMemberIds[0]);
+    $ignoreMemberIds = array();
+    foreach ($rs as $r)
+    {
+      $ignoreMemberIds[] = $r[0];
+    }
+
+    $ids = array_diff($ids, $ignoreMemberIds);
 
     return $ids;
   }
