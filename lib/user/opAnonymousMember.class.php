@@ -42,7 +42,7 @@ class opAnonymousMember extends Member
     return array();
   }
 
-  public function getProfile($profileName)
+  public function getProfile($profileName, $viewableCheck = false, $myMemberId = null)
   {
     return null;
   }
