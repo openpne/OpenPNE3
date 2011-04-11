@@ -66,7 +66,16 @@ Execute the following command in the project root directory.
   $ ./symfony openpne:migrate
   $ ./symfony plugin:publish-assets
 
-
 This command will update OpenPNE and plugins to newer version.
+
+OpenPNE 3.4.9 or OpenPNE 3.2.7.2 or
+earlier versions of the original, please perform the following command.
+
+Please check the following blog post before performing the command.
+http://www.openpne.jp/archives/5689/
+
+::
+
+  $ ./symfony openpne:fix-session-db
 
 Now, updating has been done.
