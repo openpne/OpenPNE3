@@ -68,7 +68,7 @@ Execute the following command in the project root directory.
 
 This command will update OpenPNE and plugins to newer version.
 
-OpenPNE 3.2.7.2, 3.4.9 less than or equal versions of the original, please perform the following command.
+Please execute the following command if your using version is less than or equal to OpenPNE 3.4.9, OpenPNE 3.2.7.2.
 
 Please check the following blog post before performing the command.
 
