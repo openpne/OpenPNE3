@@ -106,7 +106,7 @@ class MemberProfilePeer extends BaseMemberProfileNestedSetPeer
         }
         continue;
       }
-      elseif (is_array($value))
+      elseif ($item->isMultipleSelect() || $item->isSingleSelect())
       {
         $column = self::PROFILE_OPTION_ID;
       }
