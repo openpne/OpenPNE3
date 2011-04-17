@@ -36,7 +36,7 @@ class memberActions extends sfActions
   {
     $params = $request->getParameter('member', array());
 
-    $this->form = new opMemberProfileSearchForm();
+    $this->form = new opMemberProfileSearchForm(array(), array('is_check_public_flag' => false));
     $this->form->bind($params);
 
     $this->pager = new sfPropelPager('Member', 20);
