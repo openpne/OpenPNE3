@@ -1,22 +1,44 @@
 <?php
-/* vim: set ts=4 sw=4: */
-// +----------------------------------------------------------------------+
-// | PHP Version 4                                                        |
-// +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2003 The PHP Group                                |
-// +----------------------------------------------------------------------+
-// | This source file is subject to version 3.0 of the PHP license,       |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available through the world-wide-web at the following url:           |
-// | http://www.php.net/license/3_0.txt.                                  |
-// | If you did not receive a copy of the PHP license and are unable to   |
-// | obtain it through the world-wide-web, please send a note to          |
-// | license@php.net so we can mail you a copy immediately.               |
-// +----------------------------------------------------------------------+
-// | Author: Vincent Blavet <vincent@phpconcept.net>                      |
-// +----------------------------------------------------------------------+
-//
-// $Id: Tar.php,v 1.39 2006/12/22 19:20:08 cellog Exp $
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+
+/**
+ * File::CSV
+ *
+ * PHP versions 4 and 5
+ *
+ * Copyright (c) 1997-2008,
+ * Vincent Blavet <vincent@phpconcept.net>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright notice,
+ *       this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *
+ * @category    File_Formats
+ * @package     Archive_Tar
+ * @author      Vincent Blavet <vincent@phpconcept.net>
+ * @copyright   1997-2008 The Authors
+ * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @version     CVS: $Id$
+ * @link        http://pear.php.net/package/Archive_Tar
+ */
 
 require_once 'PEAR.php';
 
@@ -29,7 +51,8 @@ define ('ARCHIVE_TAR_END_BLOCK', pack("a512", ''));
 *
 * @author   Vincent Blavet <vincent@phpconcept.net>
 * @version  $Revision: 1.39 $
-* @package  Archive
+* @license  http://www.opensource.org/licenses/bsd-license.php New BSD License
+* @package  Archive_Tar
 */
 class Archive_Tar extends PEAR
 {
@@ -1254,7 +1277,7 @@ class Archive_Tar extends PEAR
         }
 
         // ----- Extract the properties
-        $v_header['filename'] = trim($v_data['filename']);
+        $v_header['filename'] = $v_data['filename'];
         if ($this->_maliciousFilename($v_header['filename'])) {
             $this->_error('Malicious .tar detected, file "' . $v_header['filename'] .
                 '" will not install in desired directory tree');
@@ -1314,7 +1337,7 @@ class Archive_Tar extends PEAR
       }
       if (($v_header['size'] % 512) != 0) {
         $v_content = $this->_readBlock();
-        $v_filename .= $v_content;
+        $v_filename .= trim($v_content);
       }
 
       // ----- Read the next header
@@ -1323,6 +1346,7 @@ class Archive_Tar extends PEAR
       if (!$this->_readHeader($v_binary_data, $v_header))
         return false;
 
+      $v_filename = trim($v_filename);
       $v_header['filename'] = $v_filename;
         if ($this->_maliciousFilename($v_filename)) {
             $this->_error('Malicious .tar detected, file "' . $v_filename .
