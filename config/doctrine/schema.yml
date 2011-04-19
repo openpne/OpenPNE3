@@ -495,7 +495,7 @@ BannerUseImage:
 Session:
   actAs: []
   columns:
-    id: { type: integer(4), primary: true, comment: "Serial number" }
+    id: { type: string(128), primary: true }
     session_data: { type: string, comment: "Session information" }
     time: { type: string, comment: "Timestamp of generated time" }
   options:

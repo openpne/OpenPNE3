@@ -40,6 +40,14 @@ class opSecurityUser extends opAdaptableUser
     $this->initializeCredentials();
   }
 
+  public function clearSessionData()
+  {
+    parent::clearSessionData();
+
+    // remove member cache
+    $this->serializedMember = '';
+  }
+
   public function getMemberId()
   {
     return $this->getAttribute('member_id', null, 'opSecurityUser');
@@ -219,8 +227,6 @@ class opSecurityUser extends opAdaptableUser
         return false;
       }
       opActivateBehavior::enable();
-
-      $this->setAuthenticated(true);
     }
 
     $this->initializeCredentials();
@@ -301,6 +307,14 @@ class opSecurityUser extends opAdaptableUser
     $memberId = $this->getMemberId();
 
     $isSNSMember = $this->isSNSMember();
+    if ($isSNSMember)
+    {
+      if ($this->getMember()->getIsLoginRejected())
+      {
+        $isSNSMember = false;
+      }
+    }
+
     // for BC
     $this->setIsSNSMember($isSNSMember);
     if ($isSNSMember)

@@ -340,9 +340,9 @@ class Member extends BaseMember implements opAccessControlRecordInterface
 
   public function countJoinCommunity()
   {
-    static $cache = false;
+    static $cache = null;
 
-    if ($cache === false)
+    if (is_null($cache))
     {
       $cache = Doctrine::getTable('CommunityMember')->createQuery()
         ->where('member_id = ?', $this->getId())

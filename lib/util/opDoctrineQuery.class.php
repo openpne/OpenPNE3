@@ -133,6 +133,11 @@ class opDoctrineQuery extends Doctrine_Query
 
   public function preQuery()
   {
+    if ($this->_passedConn)
+    {
+      return;
+    }
+
     if ($this->specifiedConnection)
     {
       $this->_conn = $this->specifiedConnection;
@@ -250,5 +255,18 @@ class opDoctrineQuery extends Doctrine_Query
   public function getFrom()
   {
     return $this->_dqlParts['from'];
+  }
+
+  public function leftJoinTranslation($tableName, $culture = null)
+  {
+    $culture = $culture !== null ? $culture : opDoctrineRecord::getDefaultCulture();
+    $fallbackCulture = sfConfig::get('sf_default_culture');
+
+    if ($culture === $fallbackCulture)
+    {
+      return $this->leftJoin($tableName.'.Translation t WITH t.lang = ?', $culture);
+    }
+
+    return $this->leftJoin($tableName.'.Translation t WITH t.lang IN (?, ?)', array($culture, $fallbackCulture));
   }
 }

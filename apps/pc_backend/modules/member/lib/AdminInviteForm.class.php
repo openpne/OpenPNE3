@@ -71,9 +71,14 @@ class AdminInviteForm extends InviteForm
     $authMode = $authModes[$this->getValue('auth_mode')];
     $this->setOption('authMode', $authMode);
 
+    $memberConfigTable = Member::getTable('MemberConfig');
+
     foreach ($this->getValue('pc') as $value)
     {
-      $this->member = Doctrine::getTable('Member')->createPre();
+      if (!$this->validateAddress('pc_address', $value))
+      {
+        $this->member = Doctrine::getTable('Member')->createPre();
+      }
       $this->saveConfig('pc_address', $value);
       $this->member->setConfig('register_auth_mode', $authMode);
       $this->member->setConfig('is_admin_invited', true);
@@ -81,7 +86,10 @@ class AdminInviteForm extends InviteForm
 
     foreach ($this->getValue('mobile') as $value)
     {
-      $this->member = Doctrine::getTable('Member')->createPre();
+      if (!$this->validateAddress('mobile_address', $value))
+      {
+        $this->member = Doctrine::getTable('Member')->createPre();
+      }
       $this->saveConfig('mobile_address', $value);
       $this->member->setConfig('register_auth_mode', $authMode);
       $this->member->setConfig('is_admin_invited', true);

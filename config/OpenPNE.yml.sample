@@ -58,8 +58,11 @@ sid_secret: "<?php echo filemtime(__FILE__) ?>"
 # セッション (Session)
 ######################################
 
-# セッションストレージ設定
-# Configure Session storage
+# セッションストレージ設定 (Configure Session storage)
+#   name の値には、 file, database, memcache の他、任意のセッションストレージクラス名が使用できます
+#   ("file", "database", "memcached" and any class names of session storage class as value of "name")
+#   database を選択した場合、扱えるセッション ID の文字列長 128 までとなります。必要に応じて session.hash_function と session.hash_bits_per_character の値を調節してください
+#   (If you use "database", you can handle 128 length session id. Tune session.hash_function and session.hash_bits_per_character for your needs)
 session_storage:
   name: "file"
   options:
@@ -90,6 +93,10 @@ session_life_time:
 
 # 「自動的にログイン」の持続時間
 remember_login_limit: 2592000 # 30 days
+
+# セッションデータにサイト特有の識別子を含めるかどうか
+# Configuration of using site_identifier in session data
+check_session_site_identifier: true
 
 ######################################
 # SSL

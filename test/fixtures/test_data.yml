@@ -475,20 +475,31 @@ Community:
     name: "CommunityE"
 
 CommunityCategory:
-  community_category:
-    name: "コミュニティカテゴリ"
-    is_allow_member_community: 1
-
   community_category_1:
+    name: "コミュニティカテゴリA"
+    is_allow_member_community: 1
+    sort_order: 2
+
+  community_category_2:
+    name: "コミュニティカテゴリB"
+    is_allow_member_community: 1
+    sort_order: 1
+
+  community_category_3:
     name: "CategoryA"
     tree_key: 1
     is_allow_member_community: 1
     sort_order: 2
-  community_category_2:
+  community_category_4:
     name: "CategoryB"
     tree_key: 1
     is_allow_member_community: 1
     sort_order: 1
+  community_category_5:
+    name: "CategoryC"
+    tree_key: 2
+    is_allow_member_community: 0
+    sort_order: 3
 
 CommunityConfig:
   community_1_description:
@@ -885,9 +896,11 @@ ActivityData:
     foreign_id: 2
   dummy_activity7:
     Member: first_member
+    body: "dummy7"
     template: "test_template"
     template_param:
       "%foo%" : "bar"
   dummy_activity8:
     Member: first_member
+    body: "dummy8"
     template: "xxxx_template"

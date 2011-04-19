@@ -68,5 +68,16 @@ config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.cla
 
 このコマンドは OpenPNE 本体、プラグインの両方を最新の状態にバージョンアップします。
 
+OpenPNE 3.2.7.2、3.4.9、3.6beta6 以前からのバージョンアップの場合、以下のコマンドを実施する必要があります。
+
+コマンドの実施前に以下のブログ記事をお読みください。
+
+【緊急リリース】OpenPNE 3 に存在するセッション管理の不備に関する複数の脆弱性のお知らせ
+
+http://www.openpne.jp/archives/5689/
+
+::
+
+  $ ./symfony openpne:fix-session-db
 
 以上でバージョンアップは完了です。

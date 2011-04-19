@@ -134,7 +134,7 @@ class ProfileForm extends BaseProfileForm
 
     $this->mergePostValidator(new sfValidatorCallback(
       array('callback' => array($this, 'compareMinAndMax')),
-      array('invalid' => 'Value must be less than or equal to Minimum value.')
+      array('invalid' => 'Value must be greater than or equal to Minimum value.')
     ));
 
     return parent::bind($params);
@@ -175,16 +175,6 @@ class ProfileForm extends BaseProfileForm
     $profile  = parent::save($con);
 
     $values = $this->getValues();
-
-    if (!$values['is_edit_public_flag'])
-    {
-      Doctrine_Query::create()
-        ->update('MemberProfile')
-        ->set('public_flag', $values['default_public_flag'])
-        ->where('lft = 1')
-        ->andWhere('profile_id = ?', $profile->getId())
-        ->execute();
-    }
 
     if ($values['form_type'] === 'date')
     {

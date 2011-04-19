@@ -91,6 +91,10 @@ class opProjectConfiguration extends sfProjectConfiguration
 
   public function configureDoctrine($manager)
   {
+    spl_autoload_register(array('Doctrine', 'extensionsAutoload'));
+    Doctrine::setExtensionsPath(sfConfig::get('sf_lib_dir').'/vendor/doctrine_extensions');
+    $manager->registerExtension('ExtraFunctions');
+
     $manager->setAttribute(Doctrine::ATTR_AUTOLOAD_TABLE_CLASSES, true);
     $manager->setAttribute(Doctrine::ATTR_RECURSIVE_MERGE_FIXTURES, true);
     $manager->setAttribute(Doctrine::ATTR_QUERY_CLASS, 'opDoctrineQuery');
@@ -111,6 +115,8 @@ class opProjectConfiguration extends sfProjectConfiguration
     }
 
     $manager->registerConnectionDriver('mysql', 'opDoctrineConnectionMysql');
+    $manager->registerConnectionDriver('pgsql', 'Doctrine_Connection_Pgsql_ExtraFunctions');
+    $manager->registerConnectionDriver('sqlite', 'Doctrine_Connection_Sqlite_ExtraFunctions');
 
     $this->setupProjectOpenPNEDoctrine($manager);
   }

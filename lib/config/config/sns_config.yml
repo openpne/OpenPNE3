@@ -144,6 +144,39 @@ general:
     IsRequired: false
     Default:    "-"
 
+  enable_language:
+    Name:      "enable_language"
+    Caption:   "言語とタイムゾーンの設定の使用設定"
+    FormType:  "radio"
+    ValueType: "text"
+    IsRequired: true
+    Default:    0
+    Choices:
+      - "使用しない"
+      - "使用する"
+
+  enable_connection:
+    Name:      "enable_connection"
+    Caption:   "外部サービスとの接続設定の使用設定"
+    FormType:  "radio"
+    ValueType: "text"
+    IsRequired: true
+    Default:    0
+    Choices:
+      - "使用しない"
+      - "使用する"
+
+  enable_openid:
+    Name:      "enable_openid"
+    Caption:   "OpenID Provider 使用設定"
+    FormType:  "radio"
+    ValueType: "text"
+    IsRequired: true
+    Default:    0
+    Choices:
+      - "使用しない"
+      - "使用する"
+
 external_login_page:
   _attributes:
     Caption: "External Login Page Configuration"

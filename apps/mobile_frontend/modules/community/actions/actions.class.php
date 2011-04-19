@@ -87,10 +87,7 @@ class communityActions extends opCommunityAction
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
 
-    $this->categorys = Doctrine::getTable('CommunityCategory')
-      ->createQuery()
-      ->where('lft > 1')
-      ->execute();
+    $this->categorys = Doctrine::getTable('CommunityCategory')->getAllChildren();
 
     return sfView::SUCCESS;
   }

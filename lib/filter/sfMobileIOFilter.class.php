@@ -32,8 +32,11 @@ class sfMobileIOFilter extends sfFilter
       return null;
     }
 
-    $this->convertEmojiForInput();
-    $this->convertEncodingForInput();
+    if ($this->isFirstCall())
+    {
+      $this->convertEmojiForInput();
+      $this->convertEncodingForInput();
+    }
 
     $filterChain->execute();
 

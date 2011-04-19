@@ -123,8 +123,8 @@
         <target>%max%以下でなければなりません。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Value must be less than or equal to Minimum value.</source>
-        <target>最小値以下でなければなりません。</target>
+        <source>Value must be greater than or equal to Minimum value.</source>
+        <target>最小値以上でなければなりません。</target>
       </trans-unit>
     </body>
   </file>

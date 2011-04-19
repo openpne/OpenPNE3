@@ -14,6 +14,7 @@
  * @package    OpenPNE
  * @subpackage i18n
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
+ * @author     Masato Nagasawa <nagasawa@tejimaya.com>
  */
 class sfMessageSource_OpenPNECached extends sfMessageSource_File
 {
@@ -22,33 +23,11 @@ class sfMessageSource_OpenPNECached extends sfMessageSource_File
   public function getCatalogueList($catalogue)
   {
     $variants = explode('_', $this->culture);
-    $base = $this->source.DIRECTORY_SEPARATOR.$catalogue.$this->dataSeparator;
+    $base = $catalogue.$this->dataSeparator;
 
     return array(
       $base.$variants[0].$this->dataExt, $base.$this->culture.$this->dataExt,
     );
-  }
-
-  public function load($catalogue = 'messages')
-  {
-    $variants = $this->getCatalogueList($catalogue);
-
-    foreach ($variants as $variant)
-    {
-      if (isset($this->messages[$variant]))
-      {
-        return true;
-      }
-
-      if (is_file($variant))
-      {
-        $this->messages[$variant] = include($variant);
-
-        return true;
-      }
-    }
-
-    return true;
   }
 
   public function save($catalogue = 'messages')
@@ -64,5 +43,12 @@ class sfMessageSource_OpenPNECached extends sfMessageSource_File
   public function update($text, $target, $comments, $catalogue = 'messages')
   {
     return true;
+  }
+
+  public function &loadData($variant)
+  {
+    $load = include($variant);
+
+    return $load;
   }
 }

@@ -62,6 +62,10 @@ abstract class opFriendAction extends sfActions
   {
     $this->redirectUnless(opConfig::get('enable_friend_link'), '@error');
     $this->redirectIf($this->relation->isAccessBlocked(), '@error');
+    $this->forward404If($this->relation->getMemberIdFrom() == $this->relation->getMemberIdTo());
+
+    $this->member = Doctrine::getTable('Member')->find($this->id);
+    $this->forward404Unless($this->member);
 
     if ($this->relation->isFriend())
     {
@@ -88,8 +92,6 @@ abstract class opFriendAction extends sfActions
         $this->redirect('@member_profile?id='.$this->id);
       }
     }
-
-    $this->member = Doctrine::getTable('Member')->find($this->id);
 
     return sfView::INPUT;
   }

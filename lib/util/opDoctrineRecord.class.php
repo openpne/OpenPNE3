@@ -52,7 +52,10 @@ abstract class opDoctrineRecord extends sfDoctrineRecord implements Zend_Acl_Res
 
   public function save(Doctrine_Connection $conn = null)
   {
-    if (is_null($conn))
+    $hasConnection = Doctrine_Manager::getInstance()
+        ->hasConnectionForComponent($this->getTable()->getComponentName());
+
+    if (is_null($conn) && !$hasConnection)
     {
       $conn = opDoctrineQuery::chooseConnection(true);
     }

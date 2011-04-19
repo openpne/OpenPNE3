@@ -17,6 +17,8 @@
  */
 abstract class sfImageGenerator
 {
+  const ERROR_NOT_ALLOWED_SIZE = 101;
+
   protected
     $quality     = 75,
     $width       = 0,
@@ -33,6 +35,8 @@ abstract class sfImageGenerator
 
   public function initialize($options)
   {
+    $this->allowedSize = sfImageHandler::getAllowedSize();
+
     $options = array_merge(array('width' => $this->width, 'height' => $this->height), $options);
     $this->setImageSize($options['width'], $options['height']);
 
@@ -45,8 +49,6 @@ abstract class sfImageGenerator
     {
       $this->format = $options['format'];
     }
-
-    $this->allowedSize = sfImageHandler::getAllowedSize();
   }
 
   public function configure()
@@ -55,6 +57,11 @@ abstract class sfImageGenerator
 
   public function setImageSize($width, $height)
   {
+    if (!$this->checkSizeAllowed($width, $height))
+    {
+      throw new RuntimeException('Requested image size is not allowed', sfImageGenerator::ERROR_NOT_ALLOWED_SIZE);
+    }
+
     if (is_numeric($width))
     {
       $this->width = $width;
@@ -84,6 +91,12 @@ abstract class sfImageGenerator
 
   protected function checkSizeAllowed($w, $h)
   {
+    // an empty string of width and height are allowed
+    if ('' === $w && '' === $h)
+    {
+      return true;
+    }
+
     return in_array($w.'x'.$h, $this->allowedSize);
   }
 
