@@ -85,8 +85,10 @@ class MemberProfilePeer extends BaseMemberProfileNestedSetPeer
     return MemberProfilePeer::doSelectOne($c);
   }
 
-  public static function searchMemberIds($profile = array(), $ids = array())
+  public static function searchMemberIds($profile = array(), $ids = array(), $isCheckPublicFlag = true)
   {
+    $publicFlag = ($isCheckPublicFlag) ? 1 : null;
+
     if (!is_array($profile)) return $ids;
     foreach ($profile as $key => $value)
     {
@@ -101,23 +103,23 @@ class MemberProfilePeer extends BaseMemberProfileNestedSetPeer
           $option = array_shift($options);
           if ($v)
           {
-            $ids = self::filterMemberIdByProfileOption($ids, $column, $v, $option, array());
+            $ids = self::filterMemberIdByProfileOption($ids, $column, $v, $option, array(), $publicFlag);
           }
         }
         continue;
       }
-      elseif (is_array($value))
+      elseif ($item->isMultipleSelect() || $item->isSingleSelect())
       {
         $column = self::PROFILE_OPTION_ID;
       }
 
-      $ids = self::filterMemberIdByProfile($ids, $column, $value, $item, array());
+      $ids = self::filterMemberIdByProfile($ids, $column, $value, $item, array(), $publicFlag);
     }
 
     return $ids;
   }
 
-  public static function filterMemberIdByProfile($ids, $column, $value, Profile $item, $choices)
+  public static function filterMemberIdByProfile($ids, $column, $value, Profile $item, $choices, $publicFlag = 1)
   {
     $_result = array();
 
@@ -125,6 +127,21 @@ class MemberProfilePeer extends BaseMemberProfileNestedSetPeer
     $c->clearSelectColumns()->addSelectColumn(self::MEMBER_ID);
     $c->setIgnoreCase(false);
     $c->add(self::PROFILE_ID, $item->getId());
+
+    if (is_integer($publicFlag))
+    {
+      if ($item->isMultipleSelect())
+      {
+        $c->addAlias('pm', self::TABLE_NAME);
+        $c->addJoin(self::TREE_KEY, self::alias('pm', self::ID));
+        $c->add(self::alias('pm', self::PUBLIC_FLAG), $publicFlag);
+      }
+      else
+      {
+        $c->add(self::PUBLIC_FLAG, $publicFlag);
+      }
+    }
+
     $stmt = self::doSelectStmt($c);
     while ($raw = $stmt->fetch(PDO::FETCH_NUM))
     {
@@ -143,7 +160,7 @@ class MemberProfilePeer extends BaseMemberProfileNestedSetPeer
     return $ids;
   }
 
-  public static function filterMemberIdByProfileOption($ids, $column, $value, ProfileOption $item, $choices)
+  public static function filterMemberIdByProfileOption($ids, $column, $value, ProfileOption $item, $choices, $publicFlag = 1)
   {
     $_result = array();
     $c = new Criteria();
@@ -151,6 +168,14 @@ class MemberProfilePeer extends BaseMemberProfileNestedSetPeer
     $c->clearSelectColumns()->addSelectColumn(self::MEMBER_ID);
     $c->setIgnoreCase(false);
     $c->add(self::PROFILE_OPTION_ID, $item->getId());
+
+    if (is_integer($publicFlag))
+    {
+      $c->addAlias('pm', self::TABLE_NAME);
+      $c->addJoin(self::TREE_KEY, self::alias('pm', self::ID));
+      $c->add(self::alias('pm', self::PUBLIC_FLAG), $publicFlag);
+    }
+
     $stmt = self::doSelectStmt($c);
     while ($raw = $stmt->fetch(PDO::FETCH_NUM))
     {

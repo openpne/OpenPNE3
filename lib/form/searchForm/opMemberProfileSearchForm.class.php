@@ -43,7 +43,7 @@ class opMemberProfileSearchForm extends sfForm
     $c = new Criteria();
 
     $ids = MemberPeer::searchMemberIds($this->getValue('member'));
-    $ids = MemberProfilePeer::searchMemberIds($this->getValue('profile'), $ids);
+    $ids = MemberProfilePeer::searchMemberIds($this->getValue('profile'), $ids, $this->getOption('is_check_public_flag', true));
 
     if ($this->getValue('member') || $this->getValue('profile'))
     {

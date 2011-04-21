@@ -26,9 +26,36 @@ class Member extends BaseMember
     return MemberProfilePeer::getProfileListByMemberId($this->getId());
   }
 
-  public function getProfile($profileName)
+  public function getProfile($profileName, $viewableCheck = false, $myMemberId = null)
   {
     $profile = MemberProfilePeer::retrieveByMemberIdAndProfileName($this->getId(), $profileName);
+    if (!$profile)
+    {
+      return null;
+    }
+
+    if ($viewableCheck)
+    {
+      if ($myMemberId)
+      {
+        $member = MemberPeer::retrieveByPk($myMemberId);
+      }
+      else
+      {
+        $member = sfContext::getInstance()->getUser()->getMember();
+      }
+
+      if (!$member)
+      {
+        return null;
+      }
+
+      if (!$profile->isViewable($member->getId()))
+      {
+        return null;
+      }
+    }
+
     return $profile;
   }
 

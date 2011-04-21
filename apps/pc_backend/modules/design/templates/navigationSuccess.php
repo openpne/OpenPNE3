@@ -27,7 +27,12 @@
 <?php else : ?>
 <td><?php echo $form['id']->render() ?>
 <input type="submit" value="<?php echo __('編集') ?>" /></form></td>
-<td><form action="<?php echo url_for('design/navigationDelete?id=' . $form->getObject()->getId()) ?>" method="post" /><input type="submit" value="<?php echo __('削除') ?>" /></form></td>
+<td>
+<form action="<?php echo url_for('design/navigationDelete?id=' . $form->getObject()->getId()) ?>" method="post">
+<?php echo $deleteForm ?>
+<input type="submit" value="<?php echo __('削除') ?>" />
+</form>
+</td>
 <?php endif; ?>
 </tr>
 </tbody>
@@ -37,7 +42,8 @@
 <?php echo sortable_element('type_'.str_replace(' ', '_', $type), array(
   'tag'  => 'tbody',
   'only' => 'sortable',
-  'url'  => 'design/navigationSort'
+  'url'  => 'design/navigationSort',
+  'with' => 'Sortable.serialize("type_'.str_replace(' ', '_', $type).'")+"&'.urlencode($sortForm->getCSRFFieldName()).'='.urlencode($sortForm->getCSRFToken()).'"',
 )) ?>
 
 <?php endforeach; ?>

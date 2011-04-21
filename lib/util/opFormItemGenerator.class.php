@@ -247,7 +247,11 @@ class opFormItemGenerator
       case 'radio':
         if (count($value) == 1)
         {
-          $c->add($column, array_shift($value));
+          if (is_array($value))
+          {
+            $value = array_shift($value);
+          }
+          $c->add($column, $value);
         }
         else
         {
