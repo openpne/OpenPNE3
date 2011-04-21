@@ -59,6 +59,7 @@ class communityActions extends sfActions
 
     if ($request->isMethod(sfRequest::POST))
     {
+      $request->checkCSRFProtection();
       $this->community->delete();
       $this->getUser()->setFlash('notice', 'Deleted.');
       $this->redirect('community/list');
@@ -96,6 +97,8 @@ class communityActions extends sfActions
    */
   public function executeRemoveDefaultCommunity(sfWebRequest $request)
   {
+    $request->checkCSRFProtection();
+
     $communityConfig = Doctrine::getTable('CommunityConfig')->retrieveByNameAndCommunityId('is_default', $request->getParameter('id'));
     $this->forward404Unless($communityConfig);
     

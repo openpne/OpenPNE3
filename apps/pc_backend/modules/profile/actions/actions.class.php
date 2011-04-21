@@ -50,6 +50,8 @@ class profileActions extends sfActions
         $this->option_form[$profileId][$profileOptionId]->bind($parameter);
       }
     }
+
+    $this->tokenForm = new sfForm();
   }
 
  /**
@@ -141,7 +143,9 @@ class profileActions extends sfActions
     $this->profile = Doctrine::getTable('Profile')->find($request->getParameter('id'));
     $this->forward404Unless($this->profile);
 
-    if ($request->isMethod('post')) {
+    if ($request->isMethod('post'))
+    {
+      $request->checkCSRFProtection();
       $this->profile->delete();
       $this->redirect('profile/list');
     }
@@ -157,7 +161,9 @@ class profileActions extends sfActions
     $this->profileOption = Doctrine::getTable('ProfileOption')->find($request->getParameter('id'));
     $this->forward404Unless($this->profileOption);
 
-    if ($request->isMethod('post')) {
+    if ($request->isMethod('post'))
+    {
+      $request->checkCSRFProtection();
       $this->profileOption->delete();
     }
     $this->redirect('profile/list');
@@ -172,6 +178,7 @@ class profileActions extends sfActions
   {
     if ($request->isXmlHttpRequest())
     {
+      $request->checkCSRFProtection();
       $order = $request->getParameter('profiles');
       for ($i = 0; $i < count($order); $i++)
       {
@@ -195,6 +202,7 @@ class profileActions extends sfActions
   {
     if ($request->isXmlHttpRequest())
     {
+      $request->checkCSRFProtection();
       $parameters = $request->getParameterHolder();
       $keys       = $parameters->getNames();
       foreach ($keys as $key)

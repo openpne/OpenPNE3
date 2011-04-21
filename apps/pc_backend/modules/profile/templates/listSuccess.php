@@ -52,8 +52,9 @@
 <?php endforeach; ?>
 </table>
 <?php echo sortable_element('profiles',array(
-  'tag' => 'tbody',
-  'url' => 'profile/sortProfile'
+  'tag'  => 'tbody',
+  'url'  => 'profile/sortProfile',
+  'with' => 'Sortable.serialize("profiles")+"&'.urlencode($tokenForm->getCSRFFieldName()).'='.urlencode($tokenForm->getCSRFToken()).'"'
 )) ?>
 
 <h3><?php echo __('Option list')?></h3>
@@ -78,33 +79,34 @@
 <tbody>
 <?php endif; ?>
 <tr>
-<form action="<?php echo url_for('profile/editOption?id=' . $form->getObject()->getId()) ?>" method="post">
+<form action="<?php echo url_for('profile/editOption?id='.$form->getObject()->getId()) ?>" method="post">
 <td><?php echo ($form->getObject()->isNew() ? '-' : $form->getObject()->getId()) ?></td>
 <?php foreach ($languages as $language): ?>
 <td>
-<?php echo $form[$language]['value']->renderError() ?>
-<?php echo $form[$language]['value']->render() ?>
+<?php echo $form[$language]['value']->renderError(), "\n" ?>
+<?php echo $form[$language]['value']->render(), "\n" ?>
 </td>
 <?php endforeach; ?>
-<?php if ($form->getObject()->isNew()) : ?>
+<?php if (!$form->getObject()->isNew()): ?>
+<td>
+<?php echo $form->renderHiddenFields(), "\n" ?>
+<input type="submit" value="<?php echo __('Save')?>" />
+</td>
+</form>
+<td>
+<form action="<?php echo url_for('profile/deleteOption?id='.$form->getObject()->getId()) ?>" method="post">
+<?php echo $form['id']->render(), "\n" ?>
+<?php echo $form['profile_id']->render(), "\n" ?>
+<?php $formCSRF = new sfForm(); ?><input type="hidden" name="<?php echo $formCSRF->getCSRFFieldName() ?>" value="<?php echo $formCSRF->getCSRFToken() ?>" />
+<input type="submit" value="<?php echo __('Delete') ?>" />
+</form>
+</td>
+<?php else: ?>
 <td colspan="2">
 <?php echo $form->renderHiddenFields() ?>
 <input type="submit" value="<?php echo __('Add new option')?>" />
 </td>
 </form>
-<?php else : ?>
-<td>
-<?php echo $form->renderHiddenFields() ?>
-<input type="submit" value="<?php echo __('Save')?>" />
-</td>
-</form>
-<td>
-<form action="<?php echo url_for('profile/deleteOption?id=' . $form->getObject()->getId()) ?>" method="post">
-<?php echo $form['id']->render(), "\n" ?>
-<?php echo $form['profile_id']->render(), "\n" ?>
-<input type="submit" value="<?php echo __('Delete') ?>" />
-</form>
-</td>
 <?php endif; ?>
 </tr>
 </tbody>
@@ -113,7 +115,8 @@
 <?php echo sortable_element('profile_options_'.$value->getId(),array(
   'tag'  => 'tbody',
   'only' => 'sortable',
-  'url'  => 'profile/sortProfileOption'
+  'url'  => 'profile/sortProfileOption',
+  'with' => 'Sortable.serialize("profile_options_'.$value->getId().'")+"&'.urlencode($tokenForm->getCSRFFieldName()).'='.urlencode($tokenForm->getCSRFToken()).'"'
 )) ?>
 <?php endif; ?>
 <?php endforeach; ?>
