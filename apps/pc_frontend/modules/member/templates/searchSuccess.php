@@ -16,9 +16,10 @@ foreach ($pager->getResults() as $key => $member)
 {
   $list[$key] = array();
   $list[$key][__('%nickname%', array('%nickname%' => $op_term['nickname']->titleize()))] = $member->getName();
-  if ($member->getProfile('op_preset_self_introduction'))
+  $introduction = $member->getProfile('op_preset_self_introduction', true);
+  if ($introduction)
   {
-    $list[$key][__('Self Introduction')] = $member->getProfile('op_preset_self_introduction');
+    $list[$key][__('Self Introduction')] = $introduction;
   }
   $list[$key][__('Last Login')] = op_format_last_login_time($member->getLastLoginTime());
 }
