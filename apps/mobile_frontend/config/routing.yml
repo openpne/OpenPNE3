@@ -236,7 +236,7 @@ google_maps:
   url:  /googlemaps
   param: { module: googlemaps, action: index }
 
-# アクセスブロック
+# access block
 member_accessBlock_delete_confirm:
   url: /member/accessBlockDelete/:id
   param: { module: member, action: accessBlockDelete }
