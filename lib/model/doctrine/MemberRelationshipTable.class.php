@@ -41,12 +41,22 @@ class MemberRelationshipTable extends opAccessControlDoctrineTable
       ->execute();
   }
 
+  public function getRetrievesAccessBlockByMemberIdFromQuery($id, Doctrine_Query $q = null)
+  {
+    if (!$q)
+    {
+      $q = $this->createQuery();
+    }
+    $q->where('member_id_from = ?', $id);
+    $q->addWhere('is_access_block = ?', true);
+
+    return $q;
+  }
+
   public function retrievesAccessBlockByMemberIdFrom($memberId)
   {
-    return $this->createQuery()
-      ->where('member_id_from = ?', $memberId)
-      ->andWhere('is_access_block = ?', true)
-      ->execute(array(), Doctrine::HYDRATE_ARRAY);
+    $q = $this->getRetrievesAccessBlockByMemberIdFromQuery($memberId);
+    return $q->execute(array(), Doctrine::HYDRATE_ARRAY);
   }
 
   public function getBlockedMemberIdsByTo($memberId)
@@ -219,5 +229,18 @@ class MemberRelationshipTable extends opAccessControlDoctrineTable
     $acl->allow('everyone', $resource, 'friend_link');
 
     return $acl;
+  }
+
+  public function getAccessBlockListPager($memberId, $page = 1, $size = 10)
+  {
+    $q = $this->getRetrievesAccessBlockByMemberIdFromQuery($memberId);
+    $q->orderBy('member_id_to ASC');
+
+    $pager = new sfDoctrinePager('MemberRelationship', $size);
+    $pager->setQuery($q);
+    $pager->setPage($page);
+    $pager->init();
+
+    return $pager;
   }
 }

@@ -38,6 +38,9 @@ op_include_parts('pageNav', 'navForDelete', array('list' => $list));
 
 <?php if ($categoryName): ?>
 <?php op_include_form($categoryName.'Form', $form, array('title' => __($categoryCaptions[$categoryName]), 'url' => url_for('@member_config?category='.$categoryName))) ?>
+<?php if ($categoryName === 'accessBlock'): ?>
+<?php include_component('member', 'accessBlockList'); ?>
+<?php endif; ?>
 <?php else: ?>
 <?php op_include_box('configInformation', __('Please select the item that wants to be set from the menu.'), array('title' => __('Change Settings'))); ?>
 <?php endif; ?>

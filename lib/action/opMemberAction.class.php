@@ -293,6 +293,7 @@ abstract class opMemberAction extends sfActions
         $this->form->save($this->getUser()->getMemberId());
         $this->redirect('@member_config?category='.$this->categoryName);
       }
+      return sfView::SUCCESS;
     }
 
     return sfView::SUCCESS;
@@ -592,4 +593,35 @@ abstract class opMemberAction extends sfActions
 
     $this->pager = Doctrine::getTable('ActivityData')->getAllMemberActivityListPager($page, $this->size);
   }
+
+  /**
+   * Executes AccessBlockDelete action
+   *
+   * @param sfWebRequest $request A request object
+   */
+  public function executeAccessBlockDelete(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->id = $request->getParameter('id'));
+    $this->forward404Unless($relationship = Doctrine_Core::getTable('MemberRelationship')->findOneById($this->id));
+    $this->forward404Unless($relationship->getMemberIdFrom() == $this->getUser()->getMemberId());
+    $this->forward404Unless($relationship->getIsAccessBlock());
+    $this->form = new BaseForm();
+    $this->blockMember = $relationship->getMember();
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind(array(
+          $this->form->getCSRFFieldName() => $request->getParameter($this->form->getCSRFFieldName())
+      ));
+      if ($this->form->isValid())
+      {
+        $relationship->setIsAccessBlock(false);
+        $relationship->save();
+        $this->getUser()->setFlash('notice', sfContext::getInstance()->getI18N()->__('Member ID: %id% was deleted.', array('%id%' => $this->blockMember->getId())));
+        $this->redirect('@member_config?category=accessBlock');
+      }
+      $this->redirect('@member_config?category=accessBlock');
+    }
+    return sfView::INPUT;
+  }
+
 }
