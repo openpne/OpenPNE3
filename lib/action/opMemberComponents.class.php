@@ -45,7 +45,14 @@ abstract class opMemberComponents extends sfComponents
   {
     if (!$this->size)
     {
-      $this->size = 20;
+      if (sfConfig::get('sf_app') == 'mobile_frontend')
+      {
+        $this->size = 10;
+      }
+      else
+      {
+        $this->size = 20;
+      }
     }
 
     $this->accessBlockPager =
