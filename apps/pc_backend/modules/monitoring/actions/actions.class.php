@@ -34,9 +34,9 @@ class monitoringActions extends sfActions
   */
   public function executeImageList(sfWebRequest $request)
   {
-    $this->size = $request->getParameter('size', 20);
-    $this->pager = Doctrine::getTable('File')
-      ->getImageFilePager($request->getParameter('page', 1), $this->size);
+    $fileTable = Doctrine_Core::getTable('File');
+    $this->size = $fileTable->getValidPagerSize($request->getParameter('size', 20));
+    $this->pager = $fileTable->getImageFilePager($request->getParameter('page', 1), $this->size);
   }
 
  /**
@@ -92,9 +92,9 @@ class monitoringActions extends sfActions
   */
   public function executeFileList(sfWebRequest $request)
   {
-    $this->size = $request->getParameter('size', 20);
-    $this->pager = Doctrine::getTable('File')
-      ->getFilePager($request->getParameter('page', 1), $this->size);
+    $fileTable = Doctrine_Core::getTable('File');
+    $this->size = $fileTable->getValidPagerSize($request->getParameter('size', 20));
+    $this->pager = $fileTable->getFilePager($request->getParameter('page', 1), $this->size);
   }
 
  /**
