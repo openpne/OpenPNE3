@@ -1151,56 +1151,61 @@ div.operation ul.moreInfo li {
  * recentList
  *----------------------------------------------------------------------------*/
 .recentList dl {
+  overflow: hidden;
+  clear: both;
   border: 1px solid #CCCCCC;
   margin-bottom: 5px;
+  /zoom: 1;
 }
 
 .recentList dt {
   float: left;
   width: 170px;
   padding: 5px;
+  border-right: 1px solid #CCCCCC;
   text-align: center;
 }
 
 .recentList dd {
-  zoom: 1;
   margin-left: 180px;
   padding: 5px;
   border-left: 1px solid #CCCCCC;
 }
 
 * html #Body .recentList dd {
-  height: 1.2em;
+  text-indent: -3px;
 }
 
 /*==============================================================================
  * commentList
  *----------------------------------------------------------------------------*/
 .commentList dl {
+  overflow: hidden;
+  clear: both;
   border: 1px solid #CCCCCC;
   margin-bottom: 10px;
+  /zoom: 1;
 }
 
 .commentList dt {
   float: left;
-  width: 70px;
-  padding-top: 5px;
+  width: 60px;
+  padding: 5px;
+  border-right: 1px solid #CCCCCC;
   text-align: center;
 }
 
 .commentList dd {
-  zoom: 1;
-  min-height: 5.5em;
   margin-left: 70px;
   border-left: 1px solid #CCCCCC;
 }
 
 * html .commentList dd {
-  height: 5.5em;
+  text-indent: -3px;
 }
 
 #LayoutC .commentList dt {
-  width: 110px;
+  width: 100px;
 }
 
 #LayoutC .commentList dd {
