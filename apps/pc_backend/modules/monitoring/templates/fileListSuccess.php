@@ -12,7 +12,6 @@ $params = array();
 $params['uri'] = url_for('monitoring/fileList');
 $params['method'] = 'get';
 $params['title'] = __('表示件数');
-$params['params'] = array(20, 50, 100, 500);
 $params['unit'] = '件';
 $params['name'] = 'size';
 $params['default'] = $size;

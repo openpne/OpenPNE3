@@ -10,6 +10,30 @@
 
 class FileTable extends Doctrine_Table
 {
+  protected $allowedPagerSizeList = array(
+    20, 50, 100, 500,
+  );
+
+  public function getAllowedPagerSizeList()
+  {
+    return $this->allowedPagerSizeList;
+  }
+
+  public function getDefaultPagerSize()
+  {
+    return 20;
+  }
+
+  public function getValidPagerSize($size)
+  {
+    if (in_array($size, $this->allowedPagerSizeList))
+    {
+      return $size;
+    }
+
+    return $this->getDefaultPagerSize();
+  }
+
   public function retrieveByFilename($filename)
   {
     return $this->createQuery()
