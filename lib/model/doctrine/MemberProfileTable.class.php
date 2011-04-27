@@ -205,7 +205,8 @@ class MemberProfileTable extends opAccessControlDoctrineTable
       ->select('m.member_id')
       ->andWhere('m.profile_id = ?', $item->getId());
 
-    if (is_integer($publicFlag))
+    $isCheckPublicFlag = is_integer($publicFlag);
+    if ($isCheckPublicFlag)
     {
       $publicFlags = (array)$publicFlag;
       if (1 == $publicFlag)
@@ -227,9 +228,9 @@ class MemberProfileTable extends opAccessControlDoctrineTable
 
     $list = $q->execute();
 
-    foreach ($list as $value)
+    foreach ($list as $v)
     {
-      $_result[] = $value->getMemberId();
+      $_result[] = $v->getMemberId();
     }
 
     if (is_array($ids))
@@ -240,6 +241,60 @@ class MemberProfileTable extends opAccessControlDoctrineTable
     {
       $ids = array_values($_result);
     }
+
+    if ($isCheckPublicFlag && 'op_preset_birthday' === $item->getName())
+    {
+      if ('%-' !== substr($value, 0, 2))  // "year" part is specified
+      {
+        $ids = $this->filterMemberIdsByAgePublicFlag($ids);
+      }
+    }
+
+    return $ids;
+  }
+
+  /**
+   * Filters member ids of the specified array by checking a value of "age_public_flag" configuration
+   *
+   * Currently, this method has the following LIMITATIONS for performance reason:
+   *
+   *   - This method can't handle a custom "public_flag" condition (only "All Members" and "All Users on the Web")
+   *   - This method is impelemented on the assumption that the default value of "age_public_flag" is "All Members"
+   *
+   * @param  array $ids
+   * @return array
+   */
+  protected function filterMemberIdsByAgePublicFlag(array $ids)
+  {
+    $memberConfigTable = Doctrine::getTable('MemberConfig');
+
+    $memberConfigSettings = sfConfig::get('openpne_member_config');
+    $choises = $memberConfigSettings['age_public_flag']['Choices'];
+
+    $ignores = array();
+    foreach ($choises as $k => $v)
+    {
+      // skip "All Members" and "All Users on the Web"
+      if (1 == $k || 4 == $k)
+      {
+        continue;
+      }
+
+      $ignores[] = $memberConfigTable->generateNameValueHash('age_public_flag', $k);
+    }
+
+    $rs = $memberConfigTable->createQuery()
+      ->select('member_id')
+      ->whereIn('name_value_hash', $ignores)
+      ->execute(array(), Doctrine::HYDRATE_NONE);
+
+    $ignoreMemberIds = array();
+    foreach ($rs as $r)
+    {
+      $ignoreMemberIds[] = $r[0];
+    }
+
+    $ids = array_diff($ids, $ignoreMemberIds);
 
     return $ids;
   }
