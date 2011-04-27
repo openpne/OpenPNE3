@@ -95,11 +95,17 @@ class defaultComponents extends sfComponents
 
   public function executeRssBox()
   {
-    $fetcher = new opRssFetcher('UTF-8');
-    $this->result = @$fetcher->fetch($this->gadget->getConfig('url'), true);
-    if ($this->result)
+    try
     {
-      $this->result[1] = array_slice($this->result[1], 0, 5);
+      $fetcher = new opRssFetcher('UTF-8');
+      $this->result = @$fetcher->fetch($this->gadget->getConfig('url'), true);
+      if ($this->result)
+      {
+        $this->result[1] = array_slice($this->result[1], 0, 5);
+      }
+    }
+    catch (Exception $e)
+    {
     }
   }
 
