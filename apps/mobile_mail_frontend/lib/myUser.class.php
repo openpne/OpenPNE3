@@ -8,6 +8,6 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class myUser extends opSecurityUser
+class myUser extends sfBasicSecurityUser
 {
 }
