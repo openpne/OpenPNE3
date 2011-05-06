@@ -194,6 +194,15 @@ class sfOpenPNESecurityUser extends opBaseSecurityUser
 
         return false;
       }
+
+      if (!$this->getMember()->getIsActive() && $this->isRegisterFinish())
+      {
+        if (opConfig::get('retrieve_uid') != 3)
+        {
+          $this->getAuthAdapter()->activate();
+          $this->serializedMember = null;
+        }
+      }
       opActivateBehavior::enable();
 
       $this->setAuthenticated(true);
