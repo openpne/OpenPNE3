@@ -226,6 +226,15 @@ class opSecurityUser extends opAdaptableUser
 
         return false;
       }
+
+      if (!$this->getMember()->getIsActive() && $this->isRegisterFinish())
+      {
+        if (opConfig::get('retrieve_uid') != 3)
+        {
+          $this->getAuthAdapter()->activate();
+          $this->serializedMember = null;
+        }
+      }
       opActivateBehavior::enable();
     }
 
