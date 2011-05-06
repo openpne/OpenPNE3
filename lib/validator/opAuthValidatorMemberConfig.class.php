@@ -62,6 +62,8 @@ class opAuthValidatorMemberConfig extends sfValidatorSchema
 
     if (!$this->getOption('allow_empty_value') && empty($values[$fieldName]))
     {
+      opActivateBehavior::enable();
+
       return $values;
     }
 
