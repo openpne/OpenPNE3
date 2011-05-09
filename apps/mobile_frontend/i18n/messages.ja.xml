@@ -1233,7 +1233,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>It's your member ID.</source>
-        <target>自分のﾒﾝﾊﾞｰIDです</target>
+        <target>自分のﾒﾝﾊﾞｰIDです。</target>
       </trans-unit>
       <trans-unit id="">
         <source>List of access block</source>
@@ -1249,19 +1249,19 @@
       </trans-unit>
       <trans-unit id="">
         <source>You have already blocked the member ID.</source>
-        <target>既に登録済みのﾒﾝﾊﾞｰIDです</target>
+        <target>既に登録済みのﾒﾝﾊﾞｰIDです。</target>
       </trans-unit>
       <trans-unit id="">
         <source>The member ID was deleted or do not exist.</source>
-        <target>退会済みか存在しないﾒﾝﾊﾞｰIDです</target>
+        <target>既に退会したか、存在しないﾒﾝﾊﾞｰIDです。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Member ID: %id% was added.</source>
-        <target>ﾒﾝﾊﾞｰID:%id% を追加しました</target>
+        <target>ﾒﾝﾊﾞｰID:%id%を追加しました。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Member ID: %id% was deleted.</source>
-        <target>ﾒﾝﾊﾞｰID:%id% を削除しました</target>
+        <target>ﾒﾝﾊﾞｰID:%id%を削除しました。</target>
       </trans-unit>
     </body>
   </file>
