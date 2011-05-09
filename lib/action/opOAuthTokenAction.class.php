@@ -36,8 +36,7 @@ abstract class opOAuthTokenAction extends sfActions
     $this->tokenRecord = $this->getTokenTable()->findByKeyString($token->key);
     if ($this->tokenRecord)
     {
-      $callback = $authRequest->get_parameter('oauth_callback');
-      $this->tokenRecord->setCallbackUrl($callback ? $callback : 'oob');
+      $this->tokenRecord->setCallbackUrl($request->getParameter('oauth_callback', 'oob'));
       $this->tokenRecord->setIsActive(false);
       $this->tokenRecord->save();
     }
@@ -49,8 +48,7 @@ abstract class opOAuthTokenAction extends sfActions
 
   public function executeAuthorizeToken(sfWebRequest $request)
   {
-    $authRequest = OAuthRequest::from_request();
-    $this->token = $authRequest->get_parameter('oauth_token');
+    $this->token = $request->getParameter('oauth_token');
 
     $this->information = $this->getTokenTable()->findByKeyString($this->token);
     $this->forward404Unless($this->information);
@@ -76,13 +74,13 @@ abstract class opOAuthTokenAction extends sfActions
   {
     require_once 'OAuth.php';
 
-    $authRequest = OAuthRequest::from_request();
-    $requestToken = $authRequest->get_parameter('oauth_token');
+    $requestToken = $request->getParameter('oauth_token');
     $this->information = $this->getTokenTable()->findByKeyString($requestToken);
     $this->forward404Unless($this->information);
     $this->forward404Unless($this->information->getIsActive());
-    $this->forward404Unless($this->information->getVerifier() === $authRequest->get_parameter('oauth_verifier'));
+    $this->forward404Unless($this->information->getVerifier() === $request->getParameter('oauth_verifier'));
 
+    $authRequest = OAuthRequest::from_request();
     $token = $this->getServer()->fetch_access_token($authRequest);
 
     $this->information->delete();

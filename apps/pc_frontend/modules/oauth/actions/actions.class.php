@@ -42,8 +42,7 @@ class oauthActions extends opOAuthTokenAction
 
   public function executeAuthorizeToken(sfWebRequest $request)
   {
-    $authRequest = OAuthRequest::from_request();
-    $this->token = $authRequest->get_parameter('oauth_token');
+    $this->token = $request->getParameter('oauth_token');
 
     $this->information = $this->getTokenTable()->findByKeyString($this->token);
     $this->forward404Unless($this->information);
@@ -77,15 +76,15 @@ class oauthActions extends opOAuthTokenAction
   {
     require_once 'OAuth.php';
 
-    $authRequest = OAuthRequest::from_request();
-    $requestToken = $authRequest->get_parameter('oauth_token');
+    $requestToken = $request->getParameter('oauth_token');
     $this->information = $this->getTokenTable()->findByKeyString($requestToken);
     $this->forward404Unless($this->information);
     $this->forward404Unless($this->information->getIsActive());
-    $this->forward404Unless($this->information->getVerifier() === $authRequest->get_parameter('oauth_verifier'));
+    $this->forward404Unless($this->information->getVerifier() === $request->getParameter('oauth_verifier'));
 
     $this->getUser()->setMemberId($this->information->getMemberId());
 
+    $authRequest = OAuthRequest::from_request();
     $token = $this->getServer()->fetch_access_token($authRequest);
 
     $this->getResponse()->setContent((string)$token);
