@@ -44,7 +44,7 @@ class mailActions extends sfActions
     {
       $obj = Doctrine::getTable('NotificationMail')->create(array('name' => $this->name));
     }
-    $translation = $obj->Translation[sfDoctrineRecord::getDefaultCulture()];
+    $translation = $obj->Translation['ja_JP'];
 
     $this->form = new NotificationMailTranslationForm($translation);
     $this->form->updateDefaultsByConfig($this->getMailConfiguration($this->config, $this->name));
