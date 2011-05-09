@@ -170,7 +170,14 @@ File:
 
 ActivityData:
   html_activity1:
+    id: 1055
+    Member: html_member_1
+    body: "<&\"'>ActivityData.body ESCAPING HTML TEST DATA"
+    created_at: "<?php echo date('Y-m-d H:i:s', strtotime('+1 day')) ?>"
+    updated_at: "<?php echo date('Y-m-d H:i:s', strtotime('+1 day')) ?>"
+  html_activity2:
+    id: 1056
     Member: html_member_2
     body: "<&\"'>ActivityData.body ESCAPING HTML TEST DATA"
-    created_at: <?php echo date('Y-m-d 00:00:00\n', strtotime('+1day')) ?>
-    updated_at: <?php echo date('Y-m-d 00:00:00\n', strtotime('+1day')) ?>
+    created_at: "<?php echo date('Y-m-d H:i:s', strtotime('+1 day')) ?>"
+    updated_at: "<?php echo date('Y-m-d H:i:s', strtotime('+1 day')) ?>"

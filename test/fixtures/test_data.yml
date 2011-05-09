@@ -694,6 +694,11 @@ Gadget:
     name: "activityBox"
     sort_order: 10
 
+  gadget_all_activity_box:
+    type: "contents"
+    name: "allMemberActivityBox"
+    sort_order: 20
+
 GadgetConfig:
   gadget_friend_list_box_config_row:
     Gadget: gadget_friend_list_box
