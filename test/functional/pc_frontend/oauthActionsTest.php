@@ -5,15 +5,11 @@ include(dirname(__FILE__).'/../../bootstrap/functional.php');
 $browser = new sfTestFunctional(new sfBrowser());
 
 $browser->
-  get('/oauth/index')->
+  get('/oauth/request_token')->
 
-  with('request')->begin()->
-    isParameter('module', 'oauth')->
-    isParameter('action', 'index')->
+  with('request')->begin()-> isParameter('module', 'oauth')->
+    isParameter('action', 'requestToken')->
   end()->
 
-  with('response')->begin()->
-    isStatusCode(200)->
-    checkElement('body', '!/This is a temporary page/')->
-  end()
+  resetCurrentException()
 ;

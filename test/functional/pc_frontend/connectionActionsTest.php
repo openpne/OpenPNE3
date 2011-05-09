@@ -2,14 +2,14 @@
 
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-$browser = new sfTestFunctional(new sfBrowser());
+$browser = new opTestFunctional(new sfBrowser());
 
 $browser->
-  get('/connection/index')->
+  get('/connection')->
 
   with('request')->begin()->
     isParameter('module', 'connection')->
-    isParameter('action', 'index')->
+    isParameter('action', 'list')->
   end()->
 
   with('response')->begin()->
