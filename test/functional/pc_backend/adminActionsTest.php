@@ -1,19 +1,24 @@
 <?php
-
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-$browser = new sfTestFunctional(new sfBrowser());
+$browser = new opTestFunctional(new opBrowser(), new lime_test(null, new lime_output_color()));
+$browser
+  ->info('Login')
+  ->get('/')
+  ->click('ログイン', array('admin_user' => array(
+    'username' => 'admin',
+    'password' => 'password',
+  )))
 
-$browser->
-  get('/admin/index')->
+  ->info('/admin/addUser - CSRF')
+  ->post('/admin/addUser', array())
+  ->checkCSRF()
 
-  with('request')->begin()->
-    isParameter('module', 'admin')->
-    isParameter('action', 'index')->
-  end()->
+  ->info('admin/editPassword - CSRF')
+  ->post('admin/editPassword', array())
+  ->checkCSRF()
 
-  with('response')->begin()->
-    isStatusCode(200)->
-    checkElement('body', '!/This is a temporary page/')->
-  end()
+  ->info('admin/editPassword - CSRF')
+  ->post('admin/editPassword', array())
+  ->checkCSRF()
 ;

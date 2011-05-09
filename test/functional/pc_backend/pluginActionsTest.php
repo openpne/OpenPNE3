@@ -1,19 +1,27 @@
 <?php
-
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-$browser = new sfTestFunctional(new sfBrowser());
+$browser = new opTestFunctional(new opBrowser(), new lime_test(null, new lime_output_color()));
+echo $browser
+  ->info('Login')
+  ->get('/')
+  ->click('ログイン', array('admin_user' => array(
+    'username' => 'admin',
+    'password' => 'password',
+  )))
 
-$browser->
-  get('/plugin/index')->
+  ->info('/plugin/list/type/application - CSRF')
+  ->post('/plugin/list/type/application', array())
+  ->followRedirect()
+  ->checkCSRF()
 
-  with('request')->begin()->
-    isParameter('module', 'plugin')->
-    isParameter('action', 'index')->
-  end()->
+  ->info('/plugin/list/type/auth - CSRF')
+  ->post('/plugin/list/type/auth', array())
+  ->followRedirect()
+  ->checkCSRF()
 
-  with('response')->begin()->
-    isStatusCode(200)->
-    checkElement('body', '!/This is a temporary page/')->
-  end()
+  ->info('/plugin/list/type/skin - CSRF')
+  ->post('/plugin/list/type/skin', array())
+  ->followRedirect()
+  ->checkCSRF()
 ;
