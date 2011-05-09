@@ -1,0 +1,94 @@
+Profile:
+  profile_html_1:
+    name: "html"
+    is_required: 0
+    form_type: "textarea"
+    value_type: "string"
+    is_disp_regist: 1
+    is_disp_config: 1
+    is_disp_search: 1
+    is_edit_public_flag: 0
+    default_public_flag: 1
+    sort_order: 1055
+    Translation:
+      ja_JP:
+        caption: "<&\"'>Profile.caption ESCAPING HTML TEST DATA"
+        info:    "<&\"'>Profile.info ESCAPING HTML TEST DATA"
+      en:
+        caption: "<&\"'>Profile.caption ESCAPING HTML TEST DATA"
+        info:    "<&\"'>Profile.info ESCAPING HTML TEST DATA"
+
+ProfileOption:
+  profile_option_html_1:
+    sort_order: 1055
+    Profile: profile_select_item
+    Translation:
+      ja_JP:
+        value: "<&\"'>ProfileOption.value ESCAPING HTML TEST DATA"
+      en:
+        value: "<&\"'>ProfileOption.value ESCAPING HTML TEST DATA"
+
+Member:
+  html_member_1:
+    id: 1055 # it means "XSS (X-55)"
+    name: "<&\"'>Member.name ESCAPING HTML TEST DATA"
+    is_active: 1
+
+MemberProfile:
+  html_member_1_profile_html_1:
+    value: "<&\"'>MemberProfile.value ESCAPING HTML TEST DATA"
+    public_flag: 1
+    Member: html_member_1
+    Profile: profile_html_1
+
+  html_member_1_profile_select_item:
+    public_flag: 1
+    Profile: profile_select_item
+    ProfileOption: profile_option_html_1
+    Member: html_member_1
+    children: []
+
+MemberConfig:
+  html_member_1_pc_address:
+    name: "pc_address"
+    value: "html1@example.com"
+    Member: html_member_1
+
+  html_member_1_password:
+    name: "password"
+    value: <?php echo md5('password') . "\n"; ?>
+    Member: html_member_1
+
+Community:
+  html_community_1:
+    id: 1055
+    name: "<&\"'>Community.name ESCAPING HTML TEST DATA"
+
+CommunityCategory:
+  html_community_category_1:
+    name: "<&\"'>CommunityCategory.name ESCAPING HTML TEST DATA"
+    tree_key: 1
+    is_allow_member_community: 1
+    sort_order: 1055
+
+CommunityConfig:
+  html_community_description_1:
+    Community: html_community_1
+    name: "description"
+    value: "<&\"'>CommunityConfig.value ESCAPING HTML TEST DATA"
+  html_community_1_register_policy:
+    Community: html_community_1
+    name: "register_policy"
+    value: "open"
+
+CommunityMember:
+  html_community_1_first_member:
+    Community: html_community_1
+    Member: html_member_1
+
+CommunityMemberPosition:
+  html_community_1_admin:
+    Community: html_community_1
+    Member: html_member_1
+    CommunityMember: html_community_1_first_member
+    name: "admin"

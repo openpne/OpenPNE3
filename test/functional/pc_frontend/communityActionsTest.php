@@ -76,3 +76,17 @@ $user
   ->end()
   ->with('response')->isStatusCode(200)
 ;
+
+$user->login('sns@example.com', 'password');
+$user
+  ->info('community/search')
+  ->get('/community/search')
+  ->with('html_escape')->begin()
+    ->isAllEscapedData('CommunityCategory', 'name')
+    ->isAllEscapedData('Community', 'name')
+    ->countEscapedData(1, 'CommunityConfig', 'value', array(
+      'width' => 36,
+      'rows'  => 3,
+    ))
+  ->end()
+;

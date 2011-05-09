@@ -20,6 +20,15 @@ class opTestFunctional extends sfTestFunctional
   protected
     $mobileUserAgent = 'KDDI-CA39 UP.Browser/6.2.0.13.1.5 (FUI) MMP/2.0';
 
+  public function __construct(sfBrowserBase $browser, lime_test $lime = null, $testers = array())
+  {
+    $testers = array_merge(array(
+      'html_escape' => 'opTesterHtmlEscape',
+    ), $testers);
+
+    parent::__construct($browser, $lime, $testers);
+  }
+
   public function setMobile($userAgent = null)
   {
     if ($userAgent)
