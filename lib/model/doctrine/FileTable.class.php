@@ -21,7 +21,7 @@ class FileTable extends Doctrine_Table
 
   public function getDefaultPagerSize()
   {
-    return 20;
+    return $this->allowedPagerSizeList[0];
   }
 
   public function getValidPagerSize($size)
@@ -45,14 +45,14 @@ class FileTable extends Doctrine_Table
   {
     $q = $this->getImageOrderdQuery()
       ->where('type NOT LIKE ?', 'image%');
-    return $this->getPager($q, $page, $size);
+    return $this->getPager($q, $page, $this->getValidPagerSize($size));
   }
 
   public function getImageFilePager($page = 1, $size = 20)
   {
     $q = $this->getImageOrderdQuery()
       ->where('type LIKE ?', 'image%');
-    return $this->getPager($q, $page, $size);
+    return $this->getPager($q, $page, $this->getValidPagerSize($size));
   }
 
   protected function getPager(Doctrine_Query $q, $page, $size)
