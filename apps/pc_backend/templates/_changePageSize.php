@@ -1,15 +1,13 @@
 <?php
-$fileTable = Doctrine_Core::getTable('File');
-$default = $fileTable->getDefaultPagerSize();
-$fileSizeList = $fileTable->getAllowedPagerSizeList();
+$pagerSizeList = Doctrine_Core::getTable('File')->getAllowedPagerSizeList();
 ?>
 <form action="<?php echo $params['uri'] ?>" method="<?php echo $params['method'] ?>">
 <p id="numberDisplays">
 <strong><?php echo $params['title'] ?></strong>：
 <select class="basic" name="<?php echo $params['name'] ?>">
-<?php foreach($fileSizeList as $fileSize): ?>
-<option value="<?php echo $fileSize ?>"<?php echo $fileSize == $params['default'] ? ' selected="selected"' : ''; ?>>
-<?php echo $fileSize.$params['unit'] ?>
+<?php foreach($pagerSizeList as $pagerSize): ?>
+<option value="<?php echo $pagerSize ?>"<?php echo $pagerSize == $params['default'] ? ' selected="selected"' : ''; ?>>
+<?php echo $pagerSize.$params['unit'] ?>
 </option>
 <?php endforeach; ?>
 </select>
