@@ -24,7 +24,7 @@
 
 <tr>
 <td colspan="4">
-<?php op_include_pager_navigation($pager, 'member/list?page=%d', true, '?'.$sf_request->getCurrentQueryString()) ?>
+<?php op_include_pager_navigation($pager, 'member/blacklist?page=%d', array('use_current_query_string' => true)) ?>
 </td>
 </tr>
 
