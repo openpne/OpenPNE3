@@ -142,6 +142,13 @@ class opProjectConfiguration extends sfProjectConfiguration
     $this->configureSessionStorage($config['session_storage']['name'], (array)$config['session_storage']['options']);
     unset($config['session_storage']);
 
+    $url = $config['base_url'];
+    $len = mb_strlen($url) - 1;
+    if (0 < $len && '/' == mb_substr($url, $len, 1))
+    {
+      $config['base_url'] = mb_substr($url, 0, $len);
+    }
+
     foreach ($config as $key => $value)
     {
       sfConfig::set('op_'.$key, $value);
