@@ -261,6 +261,9 @@ class opFormItemGenerator
       case 'password':
         $obj = new sfValidatorPassword($option);
         break;
+      case 'image_size':
+        $obj = new opValidatorImageSize($option);
+        break;
       case 'pass':
         $obj = new sfValidatorPass($option);
         break;

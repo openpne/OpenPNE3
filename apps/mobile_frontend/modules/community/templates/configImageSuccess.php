@@ -3,7 +3,7 @@
 <?php if ($community->getImageFileName()): ?>
 <?php echo op_image_tag_sf_image($community->getFile(), array('size' => '120x120', 'format' => 'jpg')) ?><br>
 <?php echo sprintf('[%s | %s]',
-  link_to(__('Expansion'), sf_image_path($community->getFile(), array('size' => '320x320', 'format' => 'jpg'))),
+  link_to(__('Expansion'), sf_image_path($community->getFile(), array('size' => opConfig::get('mobile_image_max_size'), 'format' => 'jpg'))),
   link_to(__('Delete'), '@community_deleteImage?id='.$community->getId())
 ) ?>
 <br><br>

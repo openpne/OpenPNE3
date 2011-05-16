@@ -3,7 +3,7 @@
 <hr color="<?php echo $op_color["core_color_12"] ?>">
 <center>
 <?php echo op_image_tag_sf_image($community->getImageFileName(), array('size' => '120x120', 'format' => 'jpg')) ?><br>
-<?php echo sprintf('[%s]',link_to(__('Expansion'), sf_image_path($community->getImageFileName(), array('size' => '320x320', 'format' => 'jpg')))) ?><br>
+<?php echo sprintf('[%s]',link_to(__('Expansion'), sf_image_path($community->getImageFileName(), array('size' => opConfig::get('mobile_image_max_size'), 'format' => 'jpg')))) ?><br>
 </center>
 <hr color="<?php echo $op_color["core_color_12"] ?>">
 <?php op_include_form('deleteForm', $form, array(

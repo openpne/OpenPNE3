@@ -7,7 +7,7 @@
 <?php $csrfToken = '&'.$form->getCSRFFieldName().'='.$form->getCSRFToken() ?>
 <?php foreach ($images as $image) : ?>
 <?php echo op_image_tag_sf_image($image->getFile(), array('size' => '120x120', 'format' => 'jpg')) ?><br>
-<?php echo sprintf('[%s]',link_to(__('Expansion'), sf_image_path($image->getFile(), array('size' => '320x320', 'format' => 'jpg')))) ?><br>
+<?php echo sprintf('[%s]',link_to(__('Expansion'), sf_image_path($image->getFile(), array('size' => opConfig::get('mobile_image_max_size'), 'format' => 'jpg')))) ?><br>
 <?php 
 if ($image->getIsPrimary())
 {
