@@ -1,5 +1,5 @@
 INSERT INTO member_config (member_id, name, value, name_value_hash) (SELECT c_member_id, "password", hashed_password, MD5(<?php echo $this->conn->expression->concat($this->conn->quote('password'), $this->conn->quote(','), 'hashed_password') ?>) FROM c_member_secure);
-INSERT INTO member_config (member_id, name, value, name_value_hash) (SELECT c_member_id, "mobile_uid", easy_access_id, MD5(<?php echo $this->conn->expression->concat($this->conn->quote('mobile_uid'), $this->conn->quote(','), 'easy_access_id') ?>) FROM c_member_secure);
+INSERT INTO member_config (member_id, name, value, name_value_hash) (SELECT c_member_id, "mobile_uid", easy_access_id, MD5(<?php echo $this->conn->expression->concat($this->conn->quote('mobile_uid'), $this->conn->quote(','), 'easy_access_id') ?>) FROM c_member_secure WHERE easy_access_id <> "");
 
 <?php
 $questions = array(
