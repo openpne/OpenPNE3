@@ -9,7 +9,7 @@
  */
 
 /**
- * opValidatorImageFile validates a date
+ * opValidatorImageSize validates a image size
  *
  * @package    OpenPNE
  * @subpackage validator
