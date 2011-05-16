@@ -258,6 +258,14 @@ mobile:
     Choices:
       1: "携帯電話のIP帯域をチェックする"
       0: "携帯電話のIP帯域をチェックしない"
+  mobile_image_max_size:
+    Name:        "mobile_image_max_size"
+    Caption:     "画像の最大サイズ設定"
+    Help:        "許可されている画像サイズを\"横x縦\"で指定してください。<br />(空欄の場合フルサイズになります)"
+    FormType:    "input"
+    ValueType:   "image_size"
+    IsRequired:  false
+    Default:     "320x320"
 
 policy:
   _attributes:
