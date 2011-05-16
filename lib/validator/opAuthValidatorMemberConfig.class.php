@@ -42,6 +42,7 @@ class opAuthValidatorMemberConfig extends sfValidatorSchema
   protected function configure($options = array(), $messages = array())
   {
     $this->addOption('field_name');
+    $this->addOption('allow_empty_value', true);
     $this->addRequiredOption('config_name');
     $this->setMessage('invalid', 'ID is not a valid.');
   }
@@ -58,6 +59,14 @@ class opAuthValidatorMemberConfig extends sfValidatorSchema
     {
       $fieldName = $configName;
     }
+
+    if (!$this->getOption('allow_empty_value') && empty($values[$fieldName]))
+    {
+      opActivateBehavior::enable();
+
+      return $values;
+    }
+
     $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndValue($configName, $values[$fieldName]);
     if ($memberConfig)
     {
