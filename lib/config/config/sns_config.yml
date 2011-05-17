@@ -26,6 +26,7 @@ general:
     ValueType:  "email"
     Default:    "sns@example.com"
     IsRequired: true
+    IsTrim:     true
 
   enable_pc:
     Name:      "enable_pc"
@@ -33,6 +34,7 @@ general:
     FormType:  "radio"
     ValueType: "text"
     IsRequired: true
+    IsTrim:     true
     Default:    1
     Choices:
       - "使用しない"
@@ -44,6 +46,7 @@ general:
     FormType:  "radio"
     ValueType: "text"
     IsRequired: true
+    IsTrim:     true
     Default:    1
     Choices:
       - "使用しない"
@@ -67,6 +70,7 @@ general:
     ValueType:   "regexp"
     ValueRegexp: "/^[1-9]\d*[K|M]?$/"
     IsRequired:  true
+    IsTrim:      true
     Default:     "300K"
 
   daily_news_day:
@@ -189,6 +193,7 @@ external_login_page:
     ValueType: "text"
     Default:   ""
     IsRequired: false
+    IsTrim:   true
 
   external_mobile_login_url:
     Name:     "external_mobile_login_url"
@@ -198,6 +203,7 @@ external_login_page:
     ValueType: "text"
     Default:   ""
     IsRequired: false
+    IsTrim:   true
 
 authentication:
   _attributes:
@@ -303,6 +309,7 @@ api_keys:
     FormType:   "text"
     ValueType:  "string"
     IsRequired: false
+    IsTrim:     true
     Default:    ""
   google_AJAX_search_api_key:
     Name:       "google AJAX search api key"
@@ -310,4 +317,5 @@ api_keys:
     FormType:   "text"
     ValueType:  "string"
     IsRequired: false
+    IsTrim:     true
     Default:    ""
