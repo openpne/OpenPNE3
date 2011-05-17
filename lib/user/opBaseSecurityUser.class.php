@@ -32,6 +32,12 @@ abstract class opBaseSecurityUser extends sfBasicSecurityUser
       );
     }
 
+    $sessionConfig = sfConfig::get('op_session_life_time');
+    if (!empty($sessionConfig[sfConfig::get('sf_app')]['idletime']))
+    {
+      $options['timeout'] = $sessionConfig[sfConfig::get('sf_app')]['idletime'];
+    }
+
     parent::initialize($dispatcher, $storage, $options);
 
     if (!$this->isValidSiteIdentifier())
