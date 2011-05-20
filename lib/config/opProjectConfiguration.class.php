@@ -131,6 +131,11 @@ class opProjectConfiguration extends sfProjectConfiguration
         $config = array_merge($config, sfYaml::load($path));
       }
 
+      if (isset($config['base_url']))
+      {
+        $config['base_url'] = preg_replace('/\/$/', '', $config['base_url']);
+      }
+
       opToolkit::writeCacheFile($opConfigCachePath, '<?php return '.var_export($config, true).';');
     }
     $this->configureSessionStorage($config['session_storage']['name'], (array)$config['session_storage']['options']);
