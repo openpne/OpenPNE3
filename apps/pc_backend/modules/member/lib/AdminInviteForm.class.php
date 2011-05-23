@@ -71,8 +71,6 @@ class AdminInviteForm extends InviteForm
     $authMode = $authModes[$this->getValue('auth_mode')];
     $this->setOption('authMode', $authMode);
 
-    $memberConfigTable = Member::getTable('MemberConfig');
-
     foreach ($this->getValue('pc') as $value)
     {
       if (!$this->validateAddress('pc_address', $value))
