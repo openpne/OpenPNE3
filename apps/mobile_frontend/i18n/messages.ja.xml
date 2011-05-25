@@ -1227,6 +1227,42 @@
         <source>Couldn't send E-mail. Please retry or contact to administrator.</source>
         <target>ﾒｰﾙの送信に失敗しました。もう一度実行するか管理者に連絡して下さい>。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Member ID</source>
+        <target>ﾒﾝﾊﾞｰID</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>It's your member ID.</source>
+        <target>自分のﾒﾝﾊﾞｰIDです。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>List of access block</source>
+        <target>ｱｸｾｽﾌﾞﾛｯｸﾒﾝﾊﾞｰ一覧</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete access block</source>
+        <target>ｱｸｾｽﾌﾞﾛｯｸの削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Are you sure to delete %name% (Member ID:%id%) from access block list?</source>
+        <target>%name% (ﾒﾝﾊﾞｰID:%id%) を削除してよろしいですか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You have already blocked the member ID.</source>
+        <target>既に登録済みのﾒﾝﾊﾞｰIDです。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The member ID was deleted or do not exist.</source>
+        <target>既に退会したか、存在しないﾒﾝﾊﾞｰIDです。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Member ID: %id% was added.</source>
+        <target>ﾒﾝﾊﾞｰID:%id%を追加しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Member ID: %id% was deleted.</source>
+        <target>ﾒﾝﾊﾞｰID:%id%を削除しました。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

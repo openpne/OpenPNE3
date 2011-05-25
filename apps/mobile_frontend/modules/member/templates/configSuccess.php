@@ -10,6 +10,9 @@
   'align'  => 'center',
   'button' => __('Save')
 )) ?>
+<?php if ($categoryName === 'accessBlock'): ?>
+<?php include_component('member', 'accessBlockList') ?>
+<?php endif; ?>
 <?php else: ?>
 <?php echo __('Please select the item from the menu.'); ?>
 <?php endif; ?>

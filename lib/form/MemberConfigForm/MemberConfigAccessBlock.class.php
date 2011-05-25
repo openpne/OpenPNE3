@@ -15,133 +15,71 @@
  * @subpackage form
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
-class MemberConfigAccessBlockForm extends MemberConfigForm
+class MemberConfigAccessBlockForm extends BaseForm
 {
-  protected
-    $category = 'accessBlock',
-    $blockedId = array(),
-    $setBlockedId = array();
+  protected $member;
 
-  public function configure()
+  public function __construct(Member $member = null, $options = array(), $CSRFSecret = null)
   {
-    $relations = Doctrine::getTable('MemberRelationship')->retrievesAccessBlockByMemberIdFrom($this->member->getId());
-    foreach ($relations as $relation)
+    parent::__construct(array(), $options, $CSRFSecret);
+
+    $this->member = $member;
+
+    $this->widgetSchema['access_block'] = new sfWidgetFormInput();
+    $this->widgetSchema->setLabel('access_block', 'Member ID');
+
+    $validatorCallback = new sfValidatorCallback(array('callback' => array($this, 'validate')));
+    $validatorInteger = new sfValidatorInteger(array('min' => 1), array('invalid' => 'Invalid.', 'min' => 'Invalid.'));
+
+    $this->validatorSchema['access_block'] = new sfValidatorAnd(array($validatorInteger, $validatorCallback));
+
+
+
+    if ('mobile_frontend' === sfConfig::get('sf_app'))
     {
-      $this->blockedId[] = $relation['member_id_to'];
-      $this->blockedRelationshipId[] = $relation['id'];
+      opToolkit::appendMobileInputModeAttributesForFormWidget($this->widgetSchema['access_block'], 'numeric');
+      $this->widgetSchema['access_block']->setAttribute('size', 8);
     }
+    $this->widgetSchema->setNameFormat('member_config[%s]');
   }
 
-  public function saveConfig($name, $value)
+  public function save()
   {
-    if ($name !== 'access_block')
+    $this->member->save();
+    $relationship = Doctrine::getTable('MemberRelationship')
+          ->retrieveByFromAndTo($this->member->getId(), $this->getValue('access_block'));
+    if (!$relationship)
     {
-      return parent::saveConfig($name, $value);
+      $relationship = new MemberRelationship();
+      $relationship->setMemberIdFrom($this->member->getId());
+      $relationship->setMemberIdTo($this->getValue('access_block'));
     }
-    $value = $this->setBlockedIds;
-    $key = 0;
-    foreach ($value as $memberId)
-    {
-      $defaultId = 0;
-      if ($key + 1 <= count($this->blockedId))
-      {
-        $defaultId = $this->blockedId[$key];
-      }
-
-      switch ($memberId)
-      {
-      case '':
-        // delete
-        if (!$defaultId) break;
-        $relationship = Doctrine::getTable('MemberRelationship')
-          ->retrieveByFromAndTo($this->member->getId(), $defaultId);
-        if (!$relationship) break;
-        $relationship->setIsAccessBlock(false);
-        $relationship->save();
-        break;
-      case $defaultId:
-        // equal
-        break;
-      default:
-        $relationship = Doctrine::getTable('MemberRelationship')
-          ->retrieveByFromAndTo($this->member->getId(), $memberId);
-        // update
-        if ($defaultId)
-        {
-          if (!$relationship)
-          {
-            $relationship = Doctrine::getTable('MemberRelationship')
-              ->retrieveByFromAndTo($this->member->getId(), $defaultId);
-          }
-        }
-        // insert
-        else
-        {
-          if (!$relationship)
-          {
-            $relationship = new MemberRelationship();
-            $relationship->setMemberIdFrom($this->member->getId());
-          }
-        }
-        $relationship->setMemberIdTo($memberId);
-        $relationship->setIsAccessBlock(true);
-        $relationship->save();
-      }
-      if ($key >= count($this->blockedId)) break;
-      $key++;
-    }
+    $relationship->setIsAccessBlock(true);
+    $relationship->save();
+    return true;
   }
 
-  public function bind($params)
+  public function validate($validator, $value)
   {
-    $this->setBlockedIds = $params['access_block'];
-    return parent::bind($params);
+    if (sfContext::getInstance()->getUser()->getMemberId() == $value)
+    {
+      throw new sfValidatorError($validator, 'It\'s your member ID.');
+    }
+    if (preg_match('/^[1-9]\d*$/', $value) && !Doctrine::getTable('Member')->find($value))
+    {
+      throw new sfValidatorError($validator, 'The member ID was deleted or do not exist.');
+    }
+    $relationship = Doctrine::getTable('MemberRelationship')
+          ->retrieveByFromAndTo(sfContext::getInstance()->getUser()->getMemberId(), $value);
+    if ($relationship && $relationship->getIsAccessBlock())
+    {
+      throw new sfValidatorError($validator, 'You have already blocked the member ID.');
+    }
+    return $value;
   }
 
-  public function setMemberConfigWidget($name)
+  public function getCompleteMessage()
   {
-    $result = parent::setMemberConfigWidget($name);
-
-    if ($name === 'access_block')
-    {
-      $this->setDefault($name, $this->blockedId);
-
-      $this->mergePostValidator(new sfValidatorCallback(array(
-        'callback'  => array('MemberConfigAccessBlockForm', 'validate'),
-        'arguments' => array('ids' => $this->blockedId),
-      )));
-    }
-
-    return $result;
-  }
-
-  public static function validate($validator, $values, $arguments = array())
-  {
-    $result = array();
-
-    $memberIds = array_merge($arguments['ids'], $values['access_block']);
-
-    if (in_array(sfContext::getInstance()->getUser()->getMemberId(), $memberIds))
-    {
-      throw new sfValidatorError($validator, 'invalid');
-    }
-
-    foreach ($memberIds as $memberId)
-    {
-      if (!$memberId)
-      {
-        continue;
-      }
-
-      if (!Doctrine::getTable('Member')->find($memberId))
-      {
-        throw new sfValidatorError($validator, 'invalid');
-      }
-
-      $result[] = $memberId;
-    }
-
-    $values['access_block'] = $result;
-    return $values;
+    return sfContext::getInstance()->getI18N()->__('Member ID: %id% was added.', array('%id%' => $this->getValue('access_block')));
   }
 }

@@ -235,3 +235,14 @@ community_home:
 google_maps:
   url:  /googlemaps
   param: { module: googlemaps, action: index }
+
+# access block
+member_accessBlock_delete_confirm:
+  url: /member/accessBlockDelete/:id
+  param: { module: member, action: accessBlockDelete }
+  requirements: { id: \d+, sf_method: get }
+
+member_accessBlock_delete:
+  url: /member/accessBlockDelete/:id
+  param: { module: member, action: accessBlockDelete }
+  requirements: { id: \d+, sf_method: post }
