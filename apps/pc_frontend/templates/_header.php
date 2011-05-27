@@ -12,7 +12,8 @@ include_component('default', 'globalNav', $globalNavOptions);
 </div><!-- globalNav -->
 
 <div id="topBanner">
-<?php if ($sf_user->getMember()): ?>
+<?php $member = $sf_user->getMember()->getRawValue() ?>
+<?php if ($member && 'opAnonymousMember' !== get_class($member)): ?>
 <?php echo op_banner('top_after') ?>
 <?php else: ?>
 <?php echo op_banner('top_before') ?>
