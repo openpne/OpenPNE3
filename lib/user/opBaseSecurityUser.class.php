@@ -76,7 +76,7 @@ abstract class opBaseSecurityUser extends sfBasicSecurityUser
 
     $identifier = $this->storage->read(self::SITE_IDENTIFIER_NAMESPACE);
 
-    return (null === $identifier || $this->generateSiteIdentifier() === $identifier);
+    return (is_null($identifier) || $this->generateSiteIdentifier() === $identifier);
   }
 
   public function generateSiteIdentifier()
