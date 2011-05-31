@@ -235,6 +235,10 @@ user_agreement:
   url:  /default/userAgreement
   param: { module: default, action: userAgreement }
 
+no_default:
+  url: /default/*
+  param: { module: default, action: error }
+
 # for cmd
 google_maps:
   url:  /googlemaps
