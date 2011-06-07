@@ -596,6 +596,15 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
         'host'   => $parts['host'],
       );
     }
+    else
+    {
+      $path = $options['context']['prefix'];
+      if (preg_match('/\.php$/', $path))
+      {
+        $path = dirname($path);
+      }
+      $options['context']['prefix'] = $this->getAppScriptName($application, sfConfig::get('sf_environment'), $path, $isNoScriptName);
+    }
 
     $routing = new sfPatternRouting($context->getEventDispatcher(), null, $options);
     $routing->setRoutes($config->evaluate($configuration->getConfigPaths('config/routing.yml')));
