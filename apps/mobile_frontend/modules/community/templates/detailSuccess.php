@@ -19,7 +19,7 @@ foreach ($community->getConfigs() as $key => $config)
   $list[__($key, array(), 'form_community')] = $config;
 }
 $list[__('Register policy', array(), 'form_community')] = __($sf_data->getRaw('community')->getRegisterPolicy());
-$list[__('%community% Description', array(), 'form_community')] = nl2br($community->getConfig('description'));
+$list[__('%community% Description', array(), 'form_community')] = op_auto_link_text_for_mobile(nl2br($community->getConfig('description')));
 ?>
 <?php foreach ($list as $key => $value): ?>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo $key ?>:</font><br>
