@@ -30,6 +30,7 @@ foreach ($communitySubAdmins as $m)
 <?php if (count($subAdminCaption)): ?>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('Sub Administrator') ?>:</font><br>
 <?php echo implode("<br>\n", $subAdminCaption) ?>
+<br>
 <?php endif; ?>
 <?php if ($community->community_category_id): ?>
 <font color="<?php echo $op_color["core_color_19"] ?>"><?php echo __('%community% Category', array(), 'form_community') ?>:</font><br>
