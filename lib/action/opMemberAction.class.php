@@ -82,10 +82,13 @@ abstract class opMemberAction extends sfActions
 
     if ($request->hasParameter('authMode'))
     {
-      if ($uri = $this->getUser()->login())
+      $uri = $this->getUser()->login();
+
+      $this->redirectIf($this->getUser()->isRegisterBegin(), $this->getUser()->getRegisterInputAction());
+      $this->redirectIf($this->getUser()->isRegisterFinish(), $this->getUser()->getRegisterEndAction());
+
+      if ($uri)
       {
-        $this->redirectIf($this->getUser()->isRegisterBegin(), $this->getUser()->getRegisterInputAction());
-        $this->redirectIf($this->getUser()->isRegisterFinish(), $this->getUser()->getRegisterEndAction());
         $this->redirectIf($this->getUser()->isMember(), $uri);
       }
 
