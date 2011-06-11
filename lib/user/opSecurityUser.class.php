@@ -355,7 +355,8 @@ class opSecurityUser extends opAdaptableUser
     }
     else
     {
-      $this->removeCredential('SNSMember');
+      // Set authenticated is false and remove credencials.
+      $this->setAuthenticated(false);
     }
   }
 
