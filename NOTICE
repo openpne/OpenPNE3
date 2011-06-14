@@ -32,7 +32,7 @@ This product needs the third-party softwares listed blow to run.
 
 This product includes dependent libraries listed blow:
   - symfony 1.4.1
-  - ZendFramework 1.10.8 (partly)
+  - Zend Framework 1.10.8 (partly)
     - Zend_Acl
     - Zend_Exception
     - Zend_Feed
