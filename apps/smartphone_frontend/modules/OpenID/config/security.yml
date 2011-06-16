@@ -1,6 +1,0 @@
-all:
-  is_secure: false
-
-list:
-  is_secure: true
-  credentials: SNSMember
