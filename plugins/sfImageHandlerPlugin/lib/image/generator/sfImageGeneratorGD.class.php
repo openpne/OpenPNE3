@@ -19,7 +19,10 @@ class sfImageGeneratorGD extends sfImageGeneratorImageTransform
 {
   protected function creaateTransform()
   {
-    return Image_Transform::factory('GD');
+    $transform = Image_Transform::factory('GD');
+    $transform->setOption('scaleMethod', 'pixel');
+    
+    return $transform;
   }
 
   protected function disableInterlace()
