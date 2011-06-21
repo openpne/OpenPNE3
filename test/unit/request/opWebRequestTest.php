@@ -34,6 +34,16 @@ class myOpenPNEWebRequest extends opWebRequest
 
         opMobileUserAgent::resetInstance();
     }
+
+  public function setTestDate($dateStr)
+  {
+    $this->SoftBankSSLSpecChangeDate = $dateStr;
+  }
+  
+  public function isSecure()
+  {
+    return true;
+  }
 }
 
 $dispatcher = new sfEventDispatcher();
@@ -80,3 +90,20 @@ $t->is($request->getMobileUID(false), false, '->getMobileUID() returns no uids w
 // softbank (no uid)
 $request->setMobile('SoftBank/1.0/930SH/SHJ001 Browser/NetFront/3.4 Profile/MIDP-2.0 Configuration/CLDC-1.1', array('HTTP_X_JPHONE_UID' => null));
 $t->is($request->getMobileUID(), false, '->getMobileUID() returns no uids when any uids are not specified in the request');
+
+
+// --- SoftBank SSL Spec Change Test
+sfConfig::set('op_use_ssl', true);
+$t->is($request->getMobile()->isSoftBank(), true);
+$t->is(sfConfig::get('op_use_ssl', false), true);
+$t->is($request->isSecure(), true);
+$t->is($request->getMobile()->getUID(), false);
+$t->is($request->getCookie($request::SB_GW_COOKIE_NAME), false);
+
+$t->diag('SoftBankSSLSpecChangeDate < TestDate');
+$request->setTestDate(date('Y-m-d H:i:s', time() - 60).' JST');
+$t->is($request->needToRedirectToSoftBankGateway(), false, "after SoftBankSSLSpecChangeDate, don't need to redirect to SoftBank GW");
+
+$t->diag('SoftBankSSLSpecChangeDate > test_date');
+$request->setTestDate(date('Y-m-d H:i:s', time() + 60).' JST');
+$t->is($request->needToRedirectToSoftBankGateway(), true, "before SoftBankSSLSpecChangeDate, need to redirect to SoftBank GW");
