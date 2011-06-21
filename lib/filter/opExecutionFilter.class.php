@@ -17,6 +17,9 @@
  */
 class opExecutionFilter extends sfExecutionFilter
 {
+  protected $retrivingMobileUIDActions = array('member/register', 'member/registerInput', 'member/registerEnd', 'member/configUID');
+  protected $mobileUIDAuthModeName = 'MobileUID';
+
   public static function notifyPreExecuteActionEvent($subject, sfEventDispatcher $dispatcher, sfAction $actionInstance)
   {
     $moduleName = $actionInstance->getModuleName();
@@ -46,6 +49,30 @@ class opExecutionFilter extends sfExecutionFilter
 
     $dispatcher->notify(new sfEvent($subject, 'op_action.post_execute_'.$moduleName.'_'.$actionName, $params));
     $dispatcher->notify(new sfEvent($subject, 'op_action.post_execute', $params));
+  }
+
+  protected function needToRetriveMobileUID($moduleName, $actionName, $request, $sslSelectableList)
+  {
+    if ('mobile_frontend' !== sfConfig::get('sf_app'))
+    {
+      return false;
+    }
+
+    $action = $moduleName.'/'.$actionName;
+
+    if (in_array($action, $sslSelectableList[sfConfig::get('sf_app')]))
+    {
+      if (in_array($action, $this->retrivingMobileUIDActions))
+      {
+        return true;
+      }
+      elseif ('member/login' === $action && $request->getParameter('authMode') === $this->mobileUIDAuthModeName)
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   protected function handleSsl($actionInstance)
@@ -87,6 +114,12 @@ class opExecutionFilter extends sfExecutionFilter
         }
       }
       elseif (!in_array($moduleName.'/'.$actionName, $sslSelectableList[sfConfig::get('sf_app')]) && $request->isSecure())
+      {
+        $baseUrl = sfConfig::get('op_base_url');
+
+        $actionInstance->redirect($baseUrl.$currentPath);
+      }
+      elseif ($this->needToRetriveMobileUID($moduleName, $actionName, $request, $sslSelectableList) && $request->isSecure())
       {
         $baseUrl = sfConfig::get('op_base_url');
 
