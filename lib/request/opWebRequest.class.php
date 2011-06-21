@@ -149,6 +149,12 @@ class opWebRequest extends sfWebRequest
       return false;
     }
 
+    // OpenPNE doesn't trust mobile uid in SSL connection
+    if ($this->isSecure())
+    {
+      return false;
+    }
+
     $uid = $this->hashMobileUid($this->getMobile()->getUID());
     if (!$uid && $allowFallback)
     {
