@@ -95,14 +95,13 @@ class opExecutionFilter extends sfExecutionFilter
     }
   }
 
-  protected $spec_change_date = '2011/6/30 03:00:00';
   protected function handleAction($filterChain, $actionInstance)
   {
     $moduleName = $actionInstance->getModuleName();
     $actionName = $actionInstance->getActionName();
     $request = $actionInstance->getRequest();
 
-    if ((strtotime($this->spec_change_date) > time()) && $request->needToRedirectToSoftBankGateway())
+    if ($request->needToRedirectToSoftBankGateway())
     {
       $request->redirectToSoftBankGateway();
     }
