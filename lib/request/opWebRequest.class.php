@@ -23,7 +23,10 @@ class opWebRequest extends sfWebRequest
 
   protected 
     $userAgentMobileInstance = null;
-
+  
+  protected 
+    $SoftBankSSLSpecChangeDate = '2011/6/30 03:00:00 JST';
+    
   private
     $outsideEncoding = null;
 
@@ -337,6 +340,11 @@ class opWebRequest extends sfWebRequest
 
   public function needToRedirectToSoftBankGateway()
   {
+    if ((strtotime($this->SoftBankSSLSpecChangeDate) < time()))
+    {
+      return false;
+    }
+    
     if (
       !$this->getMobile()->isSoftBank()  // The gateway is usable only for SoftBank mobile phone
       || !sfConfig::get('op_use_ssl', false)  // OpenPNE doesn't consider SSL
