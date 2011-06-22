@@ -7,5 +7,9 @@ default_index:
   url:   /:module
   param: { action: index }
 
+no_default:
+  url: /default/*
+  param: { module: default, action: error }
+
 default:
   url:   /:module/:action/*
