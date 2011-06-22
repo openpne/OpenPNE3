@@ -231,6 +231,10 @@ community_home:
   param: { module: community, action: home }
   requirements: { id: \d+ }
 
+no_default:
+  url: /default/*
+  param: { module: default, action: error }
+
 # for cmd
 google_maps:
   url:  /googlemaps
