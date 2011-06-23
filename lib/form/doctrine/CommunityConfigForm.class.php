@@ -61,6 +61,27 @@ class CommunityConfigForm extends BaseForm
     {
       $this->setConfigWidget($key);
     }
+
+    $app = 'mobile_frontend' == sfConfig::get('sf_app') ? 'mobile' : 'pc';
+    $template = 'joinCommunity';
+    $notificationMail = Doctrine::getTable('NotificationMail')->findOneByName($app.'_'.$template);
+
+    if (!$notificationMail || $notificationMail->getIsEnabled())
+    {
+      $choices = array(
+        1 => '受信する',
+        0 => '受信しない'
+      );
+      $name = 'is_send_'.$app.'_'.$template.'_mail';
+      $this->setWidget($name, new sfWidgetFormChoice(array('choices' => $choices, 'expanded' => true)));
+      $this->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
+      $this->widgetSchema->setLabel($name, '参加お知らせメール受信設定');
+      $this->widgetSchema->setHelp($name, 'コミュニティに新しく参加者が加わったときに、管理者(あなた)にメールを送ります。');
+
+      $default = $this->community->getConfig($name);
+      $default = null === $default ? 1 : $default;
+      $this->setDefault($name, $default);
+    }
   }
 
   public function setConfigWidget($name)
