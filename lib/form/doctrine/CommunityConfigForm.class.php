@@ -80,7 +80,7 @@ class CommunityConfigForm extends BaseForm
       $this->widgetSchema->setHelp($name, $i18n->__('Send a notice mail to administrator when new member joined the %community%.'));
 
       $default = $this->community->getConfig($name);
-      $default = null === $default ? 1 : $default;
+      $default = is_null($default) ? 1 : $default;
       $this->setDefault($name, $default);
     }
   }
