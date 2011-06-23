@@ -251,6 +251,7 @@ class opSecurityUser extends opAdaptableUser
              .'&ts='.$item[1];
       }
 
+      $this->setCulture($this->getMember()->getConfig('language', sfConfig::get('sf_default_culture')));
       return $uri;
     }
 
