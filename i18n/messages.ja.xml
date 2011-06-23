@@ -114,6 +114,22 @@
         <source>Sun</source>
         <target>日</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Receive</source>
+        <target>受信する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Don't Receive</source>
+        <target>受信しない</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Receive a notice mail when member joined</source>
+        <target>参加お知らせメール受信設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Send a notice mail to administrator when new member joined the %community%.</source>
+        <target>%community%に新しく参加者が加わったときに、管理者(あなた)にメールを送ります。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

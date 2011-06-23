@@ -49,8 +49,8 @@ class MemberConfigMailForm extends MemberConfigForm
     }
 
     $choices = array(
-      1 => '受信する',
-      0 => '受信しない'
+      1 => $i18n->__('Receive'),
+      0 => $i18n->__('Don\'t Receive')
     );
 
     foreach ($configs[$app] as $key => $value)
