@@ -206,6 +206,20 @@ class MemberProfileTable extends opAccessControlDoctrineTable
       ->andWhere('m.profile_id = ?', $item->getId());
 
     $isCheckPublicFlag = is_integer($publicFlag);
+    if (!$item->getIsEditPublicFlag())
+    {
+      if (
+        ProfileTable::PUBLIC_FLAG_SNS == $item->getDefaultPublicFlag()
+        || ProfileTable::PUBLIC_FLAG_WEB == $item->getDefaultPublicFlag()
+      )
+      {
+        $isCheckPublicFlag = false;
+      }
+      else
+      {
+        return array();
+      }
+    }
     if ($isCheckPublicFlag)
     {
       $publicFlags = (array)$publicFlag;
