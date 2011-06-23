@@ -180,10 +180,8 @@ class memberActions extends opMemberAction
     if ($request->isMethod(sfWebRequest::POST))
     {
       $form = new opLanguageSelecterForm();
-      $form->bind($request->getParameter('language'));
-      if ($form->isValid())
+      if ($form->bindAndSetCulture($request->getParameter('language')))
       {
-        $form->setCulture();
         $this->redirect($form->getValue('next_uri'));
       }
     }
