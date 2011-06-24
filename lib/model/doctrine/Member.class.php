@@ -69,13 +69,13 @@ class Member extends BaseMember implements opAccessControlRecordInterface
     $age = opToolkit::calculateAge($birthday);
     $publicFlag = $this->getConfig('age_public_flag');
     $publicFlag = null === $publicFlag ? ProfileTable::PUBLIC_FLAG_PRIVATE : $publicFlag;
-    if (!$viewableCheck || $publicFlag == ProfileTable::PUBLIC_FLAG_SNS)
+    if (!$viewableCheck || ProfileTable::PUBLIC_FLAG_SNS == $publicFlag)
     {
       return $age;
     }
 
     $relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($myMemberId, $this->id);
-    if ($publicFlag == ProfileTable::PUBLIC_FLAG_FRIEND && ($this->id == $myMemberId || ($relation && $relation->isFriend())))
+    if (ProfileTable::PUBLIC_FLAG_FRIEND == $publicFlag && ($this->id == $myMemberId || ($relation && $relation->isFriend())))
     {
       return $age;
     }
