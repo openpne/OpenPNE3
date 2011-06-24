@@ -68,18 +68,18 @@ class Member extends BaseMember implements opAccessControlRecordInterface
 
     $age = opToolkit::calculateAge($birthday);
     $publicFlag = $this->getConfig('age_public_flag', ProfileTable::PUBLIC_FLAG_PRIVATE);
-    if (!$viewableCheck || ($publicFlag == ProfileTable::PUBLIC_FLAG_SNS && $myMemberId))
+    if (!$viewableCheck || (ProfileTable::PUBLIC_FLAG_SNS == $publicFlag && $myMemberId))
     {
       return $age;
     }
 
     $relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($myMemberId, $this->id);
-    if ($publicFlag == ProfileTable::PUBLIC_FLAG_FRIEND && ($this->id == $myMemberId || ($relation && $relation->isFriend())))
+    if (ProfileTable::PUBLIC_FLAG_FRIEND == $publicFlag && ($this->id == $myMemberId || ($relation && $relation->isFriend())))
     {
       return $age;
     }
 
-    if ($publicFlag == ProfileTable::PUBLIC_FLAG_WEB && Doctrine::getTable('SnsConfig')->get('is_allow_web_public_flag_age'))
+    if (ProfileTable::PUBLIC_FLAG_WEB == $publicFlag && Doctrine::getTable('SnsConfig')->get('is_allow_web_public_flag_age'))
     {
       return $age;
     }
