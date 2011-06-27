@@ -30,7 +30,7 @@ foreach ($pager->getResults() as $member) {
     }
     elseif ($communityMember->hasPosition('sub_admin'))
     {
-      $operation[] = link_to(__("Demotion from this %community%'s sub-administrator"), 'community/removeSubAdmin?id='.$community->getId().'&member_id='.$member->getId());
+      $operation[] = link_to(__("Demote this member from this %community%'s sub-administrator"), 'community/removeSubAdmin?id='.$community->getId().'&member_id='.$member->getId());
     }
 
     if (!$communityMember->hasPosition('admin'))
