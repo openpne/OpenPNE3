@@ -35,7 +35,7 @@ $communityMember = Doctrine::getTable('CommunityMember')->retrieveByMemberIdAndC
 <?php echo link_to(__("Request this %community%'s sub-administrator to this member"), 'community/subAdminRequest?id='.$community->getId().'&member_id='.$member->getId()) ?>
 <?php endif; ?>
 <?php elseif ($communityMember->hasPosition('sub_admin')): ?>
-<?php echo link_to(__("Demotion from this %community%'s sub-administrator"), 'community/removeSubAdmin?id='.$community->getId().'&member_id='.$member->getId()) ?>
+<?php echo link_to(__("Demote this member from this %community%'s sub-administrator"), 'community/removeSubAdmin?id='.$community->getId().'&member_id='.$member->getId()) ?>
 <?php else: ?>
 &nbsp;
 <?php endif; ?>
