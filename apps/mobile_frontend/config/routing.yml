@@ -126,8 +126,9 @@ community_memberList:
   param: { module: community, action: memberList }
 
 community_memberManage:
-  url: /community/member/manage
+  url: /community/member/manage/:id
   param: { module: community, action: memberManage }
+  requirements: { id: \d+ }
 
 community_join:
   url: /community/join
