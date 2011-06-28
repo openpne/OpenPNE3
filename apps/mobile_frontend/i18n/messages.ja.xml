@@ -203,7 +203,7 @@
         <target>副管理者依頼中</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Demote this member from this %community%'s sub-administrator</source>
+        <source>Demotion from this %community%'s sub-administrator</source>
         <target>副管理者から降格</target>
       </trans-unit>
       <trans-unit id="">
@@ -211,11 +211,11 @@
         <target>副管理者依頼</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Demotion of the sub-administrator of this %community%</source>
+        <source>Demotion sub-administrator of this %community%</source>
         <target>副管理人から降格</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Do you demote %0% from this %community%'s sub-administrator?</source>
+        <source>Do you demotion %0% from this %community%'s sub-administrator?</source>
         <target>%0%を副管理者から降格してもよろしいですか？</target>
       </trans-unit>
       <trans-unit id="">
