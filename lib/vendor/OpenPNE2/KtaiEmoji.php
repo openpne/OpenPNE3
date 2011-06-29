@@ -2999,56 +2999,65 @@ class OpenPNE_KtaiEmoji
   {
     $sjis1 = ord($bin[0]);
     $sjis2 = ord($bin[1]);
-    $web = 0;
+    $web1 = $web2 = 0;
     switch ($sjis1)
     {
       case 0xF9:
         if ($sjis2 >= 0x41 && $sjis2 <= 0x7E)
         {
-          $web = 0xE000 + $sjis2 - 0x40;
+          $web1 = ord('G');
+          $web2 = $sjis2 - 0x20;
         }
         elseif ($sjis2 >= 0x80 && $sjis2 <= 0x9B)
         {
-          $web = 0xE000 + $sjis2 - 0x41;
+          $web1 = ord('G');
+          $web2 = $sjis2 - 0x21;
         }
         elseif ($sjis2 >= 0xA1 && $sjis2 <= 0xED)
         {
-          $web = 0xE300 + $sjis2 - 0xA0;
+          $web1 = ord('O');
+          $web2 = $sjis2 - 0x80;
         }
         break;
       case 0xF7:
         if ($sjis2 >= 0x41 && $sjis2 <= 0x7E)
         {
-          $web = 0xE100 + $sjis2 - 0x40;
+          $web1 = ord('E');
+          $web2 = $sjis2 - 0x20;
         }
         elseif ($sjis2 >= 0x80 && $sjis2 <= 0x9B)
         {
-          $web = 0xE100 + $sjis2 - 0x41;
+          $web1 = ord('E');
+          $web2 = $sjis2 - 0x21;
         }
         elseif ($sjis2 >= 0xA1 && $sjis2 <= 0xF3)
         {
-          $web = 0xE200 + $sjis2 - 0xA0;
+          $web1 = ord('F');
+          $web2 = $sjis2 - 0x80;
         }
         break;
       case 0xFB:
         if ($sjis2 >= 0x41 && $sjis2 <= 0x7E)
         {
-          $web = 0xE400 + $sjis2 - 0x40;
+          $web1 = ord('P');
+          $web2 = $sjis2 - 0x20;
         }
         elseif ($sjis2 >= 0x80 && $sjis2 <= 0x8D)
         {
-          $web = 0xE400 + $sjis2 - 0x41;
+          $web1 = ord('P');
+          $web2 = $sjis2 - 0x21;
         }
         elseif ($sjis2 >= 0xA1 && $sjis2 <= 0xD7)
         {
-          $web = 0xE500 + $sjis2 - 0xA0;
+          $web1 = ord('Q');
+          $web2 = $sjis2 - 0x80;
         }
         break;
       default:
         return '';
     }
     $emoji_code = OpenPNE_KtaiEmoji::getInstance();
-    $code = $emoji_code->get_emoji_code4emoji(sprintf('&#x%04X;', $web), 's');
+    $code = $emoji_code->get_emoji_code4emoji(pack('c5', 0x1b, 0x24, $web1, $web2, 0x0f), 's');
     return '['.$code.']';
   }
 }
