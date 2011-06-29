@@ -2999,56 +2999,56 @@ class OpenPNE_KtaiEmoji
   {
     $sjis1 = ord($bin[0]);
     $sjis2 = ord($bin[1]);
-    $web = 0;
+    $codepoint = 0;
     switch ($sjis1)
     {
       case 0xF9:
         if ($sjis2 >= 0x41 && $sjis2 <= 0x7E)
         {
-          $web = 0xE000 + $sjis2 - 0x40;
+          $codepoint = 0xE000 + $sjis2 - 0x40;
         }
         elseif ($sjis2 >= 0x80 && $sjis2 <= 0x9B)
         {
-          $web = 0xE000 + $sjis2 - 0x41;
+          $codepoint = 0xE000 + $sjis2 - 0x41;
         }
         elseif ($sjis2 >= 0xA1 && $sjis2 <= 0xED)
         {
-          $web = 0xE300 + $sjis2 - 0xA0;
+          $codepoint = 0xE300 + $sjis2 - 0xA0;
         }
         break;
       case 0xF7:
         if ($sjis2 >= 0x41 && $sjis2 <= 0x7E)
         {
-          $web = 0xE100 + $sjis2 - 0x40;
+          $codepoint = 0xE100 + $sjis2 - 0x40;
         }
         elseif ($sjis2 >= 0x80 && $sjis2 <= 0x9B)
         {
-          $web = 0xE100 + $sjis2 - 0x41;
+          $codepoint = 0xE100 + $sjis2 - 0x41;
         }
         elseif ($sjis2 >= 0xA1 && $sjis2 <= 0xF3)
         {
-          $web = 0xE200 + $sjis2 - 0xA0;
+          $codepoint = 0xE200 + $sjis2 - 0xA0;
         }
         break;
       case 0xFB:
         if ($sjis2 >= 0x41 && $sjis2 <= 0x7E)
         {
-          $web = 0xE400 + $sjis2 - 0x40;
+          $codepoint = 0xE400 + $sjis2 - 0x40;
         }
         elseif ($sjis2 >= 0x80 && $sjis2 <= 0x8D)
         {
-          $web = 0xE400 + $sjis2 - 0x41;
+          $codepoint = 0xE400 + $sjis2 - 0x41;
         }
         elseif ($sjis2 >= 0xA1 && $sjis2 <= 0xD7)
         {
-          $web = 0xE500 + $sjis2 - 0xA0;
+          $codepoint = 0xE500 + $sjis2 - 0xA0;
         }
         break;
       default:
         return '';
     }
     $emoji_code = OpenPNE_KtaiEmoji::getInstance();
-    $code = $emoji_code->get_emoji_code4emoji(sprintf('&#x%04X;', $web), 's');
+    $code = $emoji_code->get_emoji_code4emoji(sprintf('&#x%04X;', $codepoint), 's');
     return '['.$code.']';
   }
 }
