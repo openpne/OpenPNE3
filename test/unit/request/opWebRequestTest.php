@@ -16,6 +16,8 @@ $uids = array(
 
 class myOpenPNEWebRequest extends opWebRequest
 {
+    public $isSecure = false;
+
     public function isMobile()
     {
         return true;
@@ -42,7 +44,7 @@ class myOpenPNEWebRequest extends opWebRequest
   
   public function isSecure()
   {
-    return true;
+    return $this->isSecure;
   }
 }
 
@@ -50,6 +52,8 @@ $dispatcher = new sfEventDispatcher();
 $request = new myOpenPNEWebRequest($dispatcher);
 
 // ---
+
+$request->isSecure = false;
 
 // au (uid)
 $t->info('check retrieving mobile uid for au');
@@ -91,9 +95,15 @@ $t->is($request->getMobileUID(false), false, '->getMobileUID() returns no uids w
 $request->setMobile('SoftBank/1.0/930SH/SHJ001 Browser/NetFront/3.4 Profile/MIDP-2.0 Configuration/CLDC-1.1', array('HTTP_X_JPHONE_UID' => null));
 $t->is($request->getMobileUID(), false, '->getMobileUID() returns no uids when any uids are not specified in the request');
 
+// ---
+$request->isSecure = true;
+$t->info('check retrieving mobile uid in ssl connection');
+$t->is($request->getMobileUID(), false, '->getMobileUID() returns false in ssl connection');
+
 
 // --- SoftBank SSL Spec Change Test
 sfConfig::set('op_use_ssl', true);
+$request->isSecure = true;
 $t->is($request->getMobile()->isSoftBank(), true);
 $t->is(sfConfig::get('op_use_ssl', false), true);
 $t->is($request->isSecure(), true);
