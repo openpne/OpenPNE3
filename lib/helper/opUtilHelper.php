@@ -632,7 +632,7 @@ function op_decoration($string, $is_strip = false, $is_use_stylesheet = null, $i
   return opWidgetFormRichTextareaOpenPNE::toHtml($string, $is_strip, $is_use_stylesheet, $is_html_tag_followup);
 }
 
-function op_is_accessable_url($uri)
+function op_is_accessible_url($uri)
 {
   if ('/' === $uri[0] || preg_match('#^[a-z][a-z0-9\+.\-]*\://#i', $uri))
   {
@@ -649,6 +649,14 @@ function op_is_accessable_url($uri)
   {
     return sfContext::getInstance()->getController()->actionExists($info[1]['module'], $info[1]['action']);
   }
+}
+
+/**
+ * just for BC
+ */
+function op_is_accessable_url($uri)
+{
+ return op_is_accessible_url($uri);
 }
 
 
