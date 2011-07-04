@@ -11,7 +11,7 @@ $list = array(
   __('%community% Name')     => $community->getName(),
   __('%community% Category', array(), 'form_community') => $community->getCommunityCategory(),
   __('Date Created')       => op_format_date($community->getCreatedAt(), 'D'),
-  __('Administrator')      => op_link_to_member($community_admin),
+  __('Administrator')      => op_link_to_member($communityAdmin),
 );
 $subAdminCaption = array();
 foreach ($communitySubAdmins as $m)
