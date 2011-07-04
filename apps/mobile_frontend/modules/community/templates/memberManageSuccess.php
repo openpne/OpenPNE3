@@ -35,11 +35,14 @@ foreach ($pager->getResults() as $member) {
 
     if (!$communityMember->hasPosition('admin'))
     {
-      $operation[] = link_to(__("Take over this %community%'s administrator to this member"), 'community/changeAdminRequest?id='.$community->getId().'&member_id='.$member->getId());
-    }
-    elseif ($communityMember->hasPosition('admin_confirm'))
-    {
-      $operation[] = __("You are taking over this %community%'s administrator to this member now.");
+      if ($communityMember->hasPosition('admin_confirm'))
+      {
+        $operation[] = __("You are taking over this %community%'s administrator to this member now.");
+      }
+      else
+      {
+        $operation[] = link_to(__("Take over this %community%'s administrator to this member"), 'community/changeAdminRequest?id='.$community->getId().'&member_id='.$member->getId());
+      }
     }
   }
 
