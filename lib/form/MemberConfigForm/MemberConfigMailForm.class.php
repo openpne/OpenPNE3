@@ -48,6 +48,7 @@ class MemberConfigMailForm extends MemberConfigForm
       return;
     }
 
+    $i18n = sfContext::getInstance()->getI18N();
     $choices = array(
       1 => $i18n->__('Receive'),
       0 => $i18n->__('Don\'t Receive')
