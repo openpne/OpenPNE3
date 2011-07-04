@@ -53,6 +53,7 @@ body.insecure #body {
 
 #header h1 a {
   color: #FFFFFF;
+  text-decoration: none;
 }
 
 #header span#visit-site{
