@@ -575,6 +575,10 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
     if ('http://example.com' !== $url)
     {
       $parts = parse_url($url);
+
+      $parts['path'] = isset($parts['path']) ? $parts['path'] : '/';
+      $parts['host'] = isset($parts['host']) ? $parts['host'] : '';
+
       $options['context'] = array(
         'prefix' => $this->getAppScriptName($application, sfConfig::get('sf_environment'), $parts['path'], $isNoScriptName),
         'host'   => $parts['host'],
