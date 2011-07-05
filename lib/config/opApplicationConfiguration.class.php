@@ -588,13 +588,14 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
     {
       $parts = parse_url($url);
 
-      $parts['path'] = isset($parts['path']) ? $parts['path'] : '/';
-      $parts['host'] = isset($parts['host']) ? $parts['host'] : '';
+      $parts['path'] = isset($parts['path']) ? $parts['path'] : '';
+      $options['context']['prefix'] =
+        $this->getAppScriptName($application, sfConfig::get('sf_environment'), $parts['path'], $isNoScriptName);
 
-      $options['context'] = array(
-        'prefix' => $this->getAppScriptName($application, sfConfig::get('sf_environment'), $parts['path'], $isNoScriptName),
-        'host'   => $parts['host'],
-      );
+      if (isset($parts['host']))
+      {
+        $options['context']['host'] = $parts['host'];
+      }
     }
     else
     {
