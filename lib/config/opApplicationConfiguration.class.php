@@ -586,11 +586,7 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
     }
     else
     {
-      $path = $options['context']['prefix'];
-      if (preg_match('/\.php$/', $path))
-      {
-        $path = dirname($path);
-      }
+      $path = preg_replace('#/[^/]+\.php$#', '', $options['context']['prefix']);
       $options['context']['prefix'] = $this->getAppScriptName($application, sfConfig::get('sf_environment'), $path, $isNoScriptName);
     }
 
