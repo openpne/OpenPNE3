@@ -55,7 +55,7 @@
             for (var num in s.emoji) {
                 var emoji = s.emoji[num];
                 for (var i = emoji.start; i <= emoji.end; i++) {
-                    if ((i - 1) % 25 == 0) {
+                    if ((i - emoji.start) % 25 == 0) {
                         tr = DOM.add(tb, 'tr');
                     }
                     n = DOM.add(tr, 'td');
