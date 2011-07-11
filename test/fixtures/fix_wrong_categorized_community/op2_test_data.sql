@@ -60,3 +60,5 @@ INSERT INTO c_commu VALUES(2, "communityB", 1, 0, "", 2, NOW(), NOW(), "", 1, 0,
 INSERT INTO c_commu VALUES(3, "communityC", 1, 0, "", 3, NOW(), NOW(), "", 1, 0, NOW(), "public", "public", "member", "member", "public", "public");
 INSERT INTO c_commu VALUES(4, "communityD", 1, 0, "", 1, NOW(), NOW(), "", 1, 0, NOW(), "public", "public", "member", "member", "public", "public");
 INSERT INTO c_commu VALUES(5, "communityE", 1, 0, "", 1, NOW(), NOW(), "", 1, 0, NOW(), "public", "public", "member", "member", "public", "public");
+
+INSERT INTO c_commu VALUES(6, "communityG", 1, 0, "", 1, NOW(), NOW(), "", 1, 0, NOW(), "public", "public", "member", "member", "public", "public");

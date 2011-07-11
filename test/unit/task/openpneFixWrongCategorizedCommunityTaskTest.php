@@ -84,6 +84,14 @@ class opInteractiveTaskTestHandlerFixCommunityCategories extends opInteractiveTa
     return $this;
   }
 
+  public function getCommunityIdByItsName($name)
+  {
+    $conn = opDoctrineQuery::getMasterConnectionDirect();
+    $result = $conn->fetchOne('SELECT id FROM community WHERE name = ?', array($name));
+
+    return $result;
+  }
+
   public function getCommunityCategoryByCommunityId($id)
   {
     $conn = opDoctrineQuery::getMasterConnectionDirect();
@@ -154,7 +162,7 @@ $handler
   ->input('y')
   ->outputUntil('/^Auto\-detected community which OpenPNE 3 recogized to fix are "([0-9]+)" to "([0-9]+)"$/', $matches)
   ->is('1', $matches[1], 'Start of auto-detected community is ID:1')
-  ->is('5', $matches[2], 'End of auto-detected community is ID:5')
+  ->is('6', $matches[2], 'End of auto-detected community is ID:6')
   ->outputUntilSelectSpecifyCommunity()
   ->input('y')
   ->info('Start convertion')
@@ -172,5 +180,5 @@ $handler
   ->is($handler->getCommunityCategoryByCommunityId(4), 3, 'CommunityD belongs to category1')
   ->is($handler->getCommunityCategoryByCommunityId(5), 3, 'CommunityE belongs to category1')
   ->is($handler->getCommunityCategoryByCommunityId(6), 3, 'CommunityF belongs to category1')
-
+  ->ok(!$handler->getCommunityIdByItsName('communityG'), 'Removed CommunityG are not salvaged')
 ;

@@ -145,7 +145,7 @@ EOF;
   {
     $conn = opDoctrineQuery::getMasterConnectionDirect();
 
-    return $conn->fetchColumn('SELECT c_commu_id FROM c_commu WHERE c_commu_category_id = ? AND c_commu_id NOT IN (SELECT id FROM community WHERE id <= ?)', array($oldCategoryId, $oldMaxId));
+    return $conn->fetchColumn('SELECT c_commu_id FROM c_commu WHERE c_commu_category_id = ? AND c_commu_id NOT IN (SELECT id FROM community WHERE id <= ?) AND c_commu_id IN (SELECT community_id FROM community_member WHERE community_id = c_commu_id)', array($oldCategoryId, $oldMaxId));
   }
 
   protected function createNewCommunityFromOpenPNE2($idList)
