@@ -11,6 +11,9 @@ if (!isset($fixture))
 $configuration = ProjectConfiguration::getApplicationConfiguration($_app, $_env, true);
 new sfDatabaseManager($configuration);
 
+$conn = opDoctrineQuery::getMasterConnectionDirect();
+$conn->exec('SET FOREIGN_KEY_CHECKS = 0');
+
 $task = new sfDoctrineBuildTask($configuration->getEventDispatcher(), new sfFormatter());
 $task->setConfiguration($configuration);
 $task->run(array(), array(
