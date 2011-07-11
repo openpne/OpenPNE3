@@ -19,6 +19,8 @@ class opInteractiveTaskTestHandler
 {
   public $cli, $t, $lastStatus, $resource = null;
 
+  public $debug = false;
+
   public $pipes = array();
   public $output = '';
 
@@ -52,7 +54,7 @@ class opInteractiveTaskTestHandler
   public function output($display = false)
   {
     $this->output = fgets($this->pipes[1]);
-    if ($display)
+    if ($display || $this->debug)
     {
       $this->t->info('Output: '.trim($this->output));
     }
