@@ -28,7 +28,7 @@ class opInteractiveTaskTestHandlerFixCommunityCategories extends opInteractiveTa
 
   public function outputUntilSelectSpecifyCommunity()
   {
-    $this->outputUntilLiteral('※注意: 手動でコミュニティを修復したい場合、ここでは "n" を選択してください。');
+    $this->outputUntilLiteral('このような場合は手動での修復を選ぶか、もしくはこのタスクによる修復をあきらめてください。');
 
     return $this;
   }
@@ -152,7 +152,7 @@ $handler
   ->importTestData()
   ->beginTask()
   ->input('y')
-  ->outputUntil('/^Auto\-detected community which OpenPNE 3 recogized to fix are "([0-9]+)" to "([0-9]+)"$/', $matches)
+  ->outputUntil('/^Auto\-detected communities which OpenPNE 3 recognized to fix are ID\:"([0-9]+)" to ID\:"([0-9]+)".$/', $matches)
   ->is('1', $matches[1], 'Start of auto-detected community is ID:1')
   ->is('5', $matches[2], 'End of auto-detected community is ID:5')
   ->outputUntilSelectSpecifyCommunity()
