@@ -28,7 +28,7 @@ class opInteractiveTaskTestHandlerFixCommunityCategories extends opInteractiveTa
 
   public function outputUntilSelectSpecifyCommunity()
   {
-    $this->outputUntilLiteral('※注意: 手動でコミュニティを修復したい場合、ここでは "n" を選択してください。');
+    $this->outputUntilLiteral('このような場合は手動での修復を選ぶか、もしくはこのタスクによる修復をあきらめてください。');
 
     return $this;
   }
@@ -82,6 +82,14 @@ class opInteractiveTaskTestHandlerFixCommunityCategories extends opInteractiveTa
     }
 
     return $this;
+  }
+
+  public function getCommunityIdByItsName($name)
+  {
+    $conn = opDoctrineQuery::getMasterConnectionDirect();
+    $result = $conn->fetchOne('SELECT id FROM community WHERE name = ?', array($name));
+
+    return $result;
   }
 
   public function getCommunityCategoryByCommunityId($id)
@@ -152,9 +160,9 @@ $handler
   ->importTestData()
   ->beginTask()
   ->input('y')
-  ->outputUntil('/^Auto\-detected community which OpenPNE 3 recogized to fix are "([0-9]+)" to "([0-9]+)"$/', $matches)
+  ->outputUntil('/^Auto\-detected communities which OpenPNE 3 recognized to fix are ID\:"([0-9]+)" to ID\:"([0-9]+)".$/', $matches)
   ->is('1', $matches[1], 'Start of auto-detected community is ID:1')
-  ->is('5', $matches[2], 'End of auto-detected community is ID:5')
+  ->is('6', $matches[2], 'End of auto-detected community is ID:6')
   ->outputUntilSelectSpecifyCommunity()
   ->input('y')
   ->info('Start convertion')
@@ -172,5 +180,5 @@ $handler
   ->is($handler->getCommunityCategoryByCommunityId(4), 3, 'CommunityD belongs to category1')
   ->is($handler->getCommunityCategoryByCommunityId(5), 3, 'CommunityE belongs to category1')
   ->is($handler->getCommunityCategoryByCommunityId(6), 3, 'CommunityF belongs to category1')
-
+  ->ok(!$handler->getCommunityIdByItsName('communityG'), 'Removed CommunityG are not salvaged')
 ;

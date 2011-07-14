@@ -118,14 +118,28 @@ EOF;
   protected function askToRecoverWrongCategorized($min, $max)
   {
     $messages = array(
-      sprintf('Auto-detected community which OpenPNE 3 recogized to fix are "%d" to "%d"', $min, $max),
-      sprintf('(OpenPNE 3 が修正するべきだと自動認識したコミュニティは "%d" から "%d" です)', $min, $max),
+      sprintf('Auto-detected communities which OpenPNE 3 recognized to fix are ID:"%d" to ID:"%d".', $min, $max),
+      sprintf('(OpenPNE 3 が修正するべきだと自動認識したコミュニティは ID:"%d" から ID:"%d" です)', $min, $max),
       '',
-      'If you want to fix auto-detected communities? [Y/n]',
-      '(自動認識されたコミュニティを修復しますか？) [Y/n]',
+      'This task tries to fix these communities automatically by the following steps:',
+      '(このタスクは以下のステップによってコミュニティを自動修復しようとします)',
+      '    1. Salvage a missing community from OpenPNE 2 data. "Missing community" has data of community member, but doesn\'t have data of itself.',
+      '      (欠損したコミュニティを OpenPNE 2 のデータから復旧します。「欠損したコミュニティ」には、メンバーのデータは存在するものの、',
+      '       コミュニティ自体のデータが存在していません)',
+      '    2. Re-categorize all communities which are imported from OpenPNE 2',
+      '      (OpenPNE 2 から存在していたすべてのコミュニティのカテゴリ分けをもう一度おこないます)',
       '',
-      '# NOTE: If you want to specify communities manually, please input "n" here.',
+      'Do you want to fix these communities automatically? [Y/n]',
+      '(これらのコミュニティを自動修復しますか？) [Y/n]',
+      '',
+      '# NOTE: If you want to fix communities manually, please input "n" here.',
+      '    If you have already re-categorized community or have changed names of community category for repairing wrong-categorized community,',
+      '    this task may try to "fix" these wrong categorization by bad guessing. In this case, you should select manual detection or give up ',
+      '    fix them by using this task.',
       '※注意: 手動でコミュニティを修復したい場合、ここでは "n" を選択してください。',
+      '    誤ってカテゴリ分けされたコミュニティを修復する目的で、既にコミュニティカテゴリの紐付け直しやカテゴリ名の変更をおこなっている場合、',
+      '    このタスクは誤った推測のもとで誤ったカテゴリ分けの修復をおこなおうとします。',
+      '    このような場合は手動での修復を選ぶか、もしくはこのタスクによる修復をあきらめてください。',
     );
 
     return $this->askConfirmation($messages);
@@ -145,7 +159,7 @@ EOF;
   {
     $conn = opDoctrineQuery::getMasterConnectionDirect();
 
-    return $conn->fetchColumn('SELECT c_commu_id FROM c_commu WHERE c_commu_category_id = ? AND c_commu_id NOT IN (SELECT id FROM community WHERE id <= ?)', array($oldCategoryId, $oldMaxId));
+    return $conn->fetchColumn('SELECT c_commu_id FROM c_commu WHERE c_commu_category_id = ? AND c_commu_id NOT IN (SELECT id FROM community WHERE id <= ?) AND c_commu_id IN (SELECT community_id FROM community_member WHERE community_id = c_commu_id)', array($oldCategoryId, $oldMaxId));
   }
 
   protected function createNewCommunityFromOpenPNE2($idList)

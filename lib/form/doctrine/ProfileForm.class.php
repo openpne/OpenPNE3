@@ -57,6 +57,8 @@ class ProfileForm extends BaseProfileForm
       new sfValidatorDoctrineUnique(array('model' => 'Profile', 'column' => array('name')), array('invalid' => 'Already exist.'))
     );
 
+    $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateValueMin'))));
+    $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateValueMax'))));
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateName'))));
     $this->setValidator('default_public_flag', new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('Profile')->getPublicFlags()))));
     $this->setValidator('value_min', new sfValidatorPass());
@@ -93,71 +95,51 @@ class ProfileForm extends BaseProfileForm
     $this->widgetSchema->setHelp('is_public_web', 'Anyone in the world may view member profiles');
   }
 
-  public function bind($params)
+  static public function validateValue($validator, $values, $valueKey)
   {
-    if ('input' === $params['form_type'] || 'textarea' === $params['form_type'])
+    $options = array('required' => false);
+    $validator = null;
+
+    switch ($values['form_type'])
     {
-      $validatorArgs = array(
-        'required' => false,
-        'trim' => true,
-      );
-      $validatorMin = new sfValidatorInteger($validatorArgs);
-      $validatorMax = new sfValidatorInteger($validatorArgs);
-      if ('integer' !== $params['value_type'])
+      case 'input':
+      case 'textarea':
+        $validator = new sfValidatorInteger($options);
+        break;
+      case 'date':
+        $validator = new sfValidatorDate($options);
+        break;
+      default:
+        break; // Do nothing.
+    }
+
+    if (null !== $validator)
+    {
+      try
       {
-        $validatorMin->setOption('min', 0);
-        $validatorMax->setOption('min', 1);
+        $validator->clean($values[$valueKey]);
       }
-
-      $this->setValidator('value_min', $validatorMin);
-      $this->setValidator('value_max', $validatorMax);
+      catch (Exception $e)
+      {
+        throw new sfValidatorErrorSchema($validator, array($valueKey => new sfValidatorError($validator, 'invalid')));
+      }
     }
-    elseif ('date' === $params['form_type'])
-    {
-      $validatorArgs = array(
-        'required' => false,
-        'trim' => true,
-        'date_format' => '/^(?P<year>\d{4})\/(?P<month>\d{1,2})\/(?P<day>\d{1,2})$/',
-        'date_output' => 'Y/m/d',
-        'date_format_error' => 'YYYY/MM/DD',
-      );
-      $validatorMin = new opValidatorDate($validatorArgs);
-      $validatorMax = new opValidatorDate($validatorArgs);
-
-      $this->setValidator('value_min', $validatorMin);
-      $this->setValidator('value_max', $validatorMax);
-    }
-    elseif ($params['value_min'] || $params['value_max'])
+    elseif ($values[$valueKey])
     {
       throw new sfValidatorError($validator, 'invalid');
     }
 
-    $this->mergePostValidator(new sfValidatorCallback(
-      array('callback' => array($this, 'compareMinAndMax')),
-      array('invalid' => 'Value must be greater than or equal to Minimum value.')
-    ));
-
-    return parent::bind($params);
+    return $values;
   }
 
-  public function compareMinAndMax(sfValidatorBase $validator, $params)
+  static public function validateValueMin($validator, $values)
   {
-    $value_min = $params['value_min'];
-    $value_max = $params['value_max'];
-    if (!is_null($value_min) && !is_null($value_max))
-    {
-      if ('date' !== $params['form_type'])
-      {
-        $value_min = (int)$value_min;
-        $value_max = (int)$value_max;
-      }
-      if ($value_min > $value_max)
-      {
-        throw new sfValidatorErrorSchema($validator, array('value_max' => new sfValidatorError($validator, 'invalid')));
-      }
-    }
+    return self::validateValue($validator, $values, 'value_min');
+  }
 
-    return $params;
+  static public function validateValueMax($validator, $values)
+  {
+    return self::validateValue($validator, $values, 'value_max');
   }
 
   static public function validateName($validator, $values)
