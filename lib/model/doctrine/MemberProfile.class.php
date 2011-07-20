@@ -48,6 +48,11 @@ class MemberProfile extends BaseMemberProfile implements opAccessControlRecordIn
     {
       if ($this->_get('value'))
       {
+        if ('0000-00-00 00:00:00' === $this->_get('value_datetime'))
+        {
+          return null;
+        }
+        
         $obj = new DateTime($this->_get('value_datetime'));
         return $obj->format('Y-m-d');
       }
@@ -57,6 +62,11 @@ class MemberProfile extends BaseMemberProfile implements opAccessControlRecordIn
 
     if ($this->getProfile()->isPreset())
     {
+      if ('op_preset_birthday' === $this->getProfile()->getName())
+      {
+        return null;
+      }
+      
       return $this->_get('value');
     }
     elseif ('date' !== $this->getFormType() && $this->getProfileOptionId())
