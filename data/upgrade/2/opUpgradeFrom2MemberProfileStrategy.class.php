@@ -42,17 +42,7 @@ class opUpgradeFrom2MemberProfileStrategy extends opUpgradeAbstractStrategy
     $ids = $this->conn->fetchColumn('SELECT c_profile_id FROM c_profile WHERE name NOT IN (?, ?, ?, ?)', array('self_intro', 'PNE_POINT', 'PNE_MY_NEWS', 'PNE_MY_NEWS_DATETIME'));
     if (0 < count($ids))
     {
-      $idStr = implode(',', array_fill(0, count($ids), '?'));
-
-      $this->importProfile($ids, $idStr);
-      $this->conn->execute('INSERT INTO profile_translation (id, caption, info, lang) (SELECT c_profile_id, caption, info, "ja_JP" FROM c_profile WHERE c_profile_id IN ('.$idStr.')) LIMIT 16', $ids);
-
-      $this->conn->execute('INSERT INTO profile_option (id, profile_id, sort_order, created_at, updated_at) (SELECT c_profile_option_id, c_profile_id, sort_order, NOW(), NOW() FROM c_profile_option WHERE c_profile_id IN ('.implode(',', array_fill(0, count($ids), '?')).'))', $ids);
-      $this->conn->execute('INSERT INTO profile_option_translation (id, value, lang) (SELECT c_profile_option_id, value, "ja_JP" FROM c_profile_option WHERE c_profile_id IN ('.implode(',', array_fill(0, count($ids), '?')).'))', $ids);
-
-      $this->conn->execute('INSERT INTO member_profile (id, member_id, profile_id, profile_option_id, value, value_datetime, public_flag, tree_key, lft, rgt, level, created_at, updated_at) (SELECT c_member_profile_id, c_member_id, c_profile_id, NULL, value, NULL, public_flag, c_member_profile_id, 1, 2, 0, NOW(), NOW() FROM c_member_profile WHERE c_profile_id IN ('.$idStr.') AND c_profile_option_id = 0)', $ids);
-
-      $this->importTreeMemberProfile($ids, $idStr);
+      $this->setMemberProfiles($ids);
     }
     $this->setPresetMemberProfiles();
 
@@ -124,5 +114,20 @@ class opUpgradeFrom2MemberProfileStrategy extends opUpgradeAbstractStrategy
     $date = $this->conn->expression->concat('birth_year', '"-"', 'birth_month', '"-"' , 'birth_day');
     $this->conn->execute('INSERT INTO member_profile (id, member_id, profile_id, profile_option_id, value, value_datetime, public_flag, tree_key, lft, rgt, level, created_at, updated_at) (SELECT NULL, c_member_id, ?, NULL, '.$date.', '.$date.', public_flag_birth_month_day, NULL, 1, 2, 0, NOW(), NOW() FROM c_member WHERE birth_year <> 0 AND birth_month <> 0 AND birth_day <> 0)', array($birthdayId));
     $this->conn->execute('UPDATE member_profile SET tree_key = id WHERE profile_id = ?', array($birthdayId));
+  }
+
+  protected function setMemberProfiles($ids)
+  {
+    $idStr = implode(',', array_fill(0, count($ids), '?'));
+
+    $this->importProfile($ids, $idStr);
+    $this->conn->execute('INSERT INTO profile_translation (id, caption, info, lang) (SELECT c_profile_id, caption, info, "ja_JP" FROM c_profile WHERE c_profile_id IN ('.$idStr.')) LIMIT 16', $ids);
+
+    $this->conn->execute('INSERT INTO profile_option (id, profile_id, sort_order, created_at, updated_at) (SELECT c_profile_option_id, c_profile_id, sort_order, NOW(), NOW() FROM c_profile_option WHERE c_profile_id IN ('.implode(',', array_fill(0, count($ids), '?')).'))', $ids);
+    $this->conn->execute('INSERT INTO profile_option_translation (id, value, lang) (SELECT c_profile_option_id, value, "ja_JP" FROM c_profile_option WHERE c_profile_id IN ('.implode(',', array_fill(0, count($ids), '?')).'))', $ids);
+
+    $this->conn->execute('INSERT INTO member_profile (id, member_id, profile_id, profile_option_id, value, value_datetime, public_flag, tree_key, lft, rgt, level, created_at, updated_at) (SELECT c_member_profile_id, c_member_id, c_profile_id, NULL, value, NULL, public_flag, c_member_profile_id, 1, 2, 0, NOW(), NOW() FROM c_member_profile WHERE c_profile_id IN ('.$idStr.') AND c_profile_option_id = 0)', $ids);
+
+    $this->importTreeMemberProfile($ids, $idStr);
   }
 }
