@@ -147,6 +147,7 @@ class opValidatorDate extends sfValidatorDate
     {
       $clean = new DateTime();
       $clean->setDate(intval($value['year']), intval($value['month']), intval($value['day']));
+      $clean->setTime(0, 0, 0);
     }
 
     return $clean;
