@@ -97,7 +97,7 @@ class opUpgradeFrom2ImportCommunityCategoryStrategy extends opUpgradeSQLImportSt
         }
         else
         {
-          $this->conn->execute($baseInsert.' '.$baseSelect.')', array($categoryId));
+          $this->conn->execute($baseInsert.' '.$baseSelect.')', array($child['c_commu_category_id']));
         }
       }
     }

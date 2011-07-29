@@ -1,0 +1,133 @@
+# ======================
+# Strucutre of test data
+# ======================
+# 
+# See Also: ./op2_test_data.sql
+# 
+# Step1. OpenPNE 2
+# ================
+# 
+# ::
+# 
+#     parent1
+#      ├── category1
+#      │   ├── communityA
+#      │   ├── communityD
+#      │   ├── communityE
+#      │   └── communityG
+#      └── category2
+#          └── communityB
+#     parent2
+#      └── category3
+#          └── communityC
+# 
+# Step2. Wrong Converted OpenPNE 3 (with modified by user)
+# ========================================================
+# 
+# ::
+# 
+#     parent1
+#      └── category1
+#           ├── communityA
+#           ├── communityC <--- communityC was moved here
+#           └── communityF <--- communityF was created
+#     parent2
+#      ├── category3
+#      │   └── communityB <--- communityB was moved here
+#      ├── category2 <--- category2 was moved here
+#      └── communityD <--- communityD is in parent2!
+# 
+#     (communityE has gone away)
+#     (communityG has been removed by its admin)
+# 
+# Step3. Corrected OpenPNE 3 by the task
+# ======================================
+# 
+# ::
+# 
+#     parent1
+#      └── category1
+#           ├── communityA
+#           ├── communityD <--- communityD is here correctly
+#           ├── communityE <--- communityE comes here from old OpenPNE 2 data
+#           └── communityF <--- do nothing to new-commer
+#     parent2
+#      ├── category3
+#      │   ├── communityC <--- communityC is here correctly
+#      │   └── communityB <--- communityB is still in wrong place because "parent1 > category2" is not found
+#      └── category2
+# 
+#     (communityG is still removed)
+
+Member:
+    member_1:
+        name: "member 1"
+
+CommunityCategory:
+  parent_community_category_1:
+    name: "parent1"
+    is_allow_member_community: 1
+
+  parent_community_category_2:
+    name: "parent2"
+    is_allow_member_community: 1
+
+  community_category_1:
+    name: "category1"
+    tree_key: 1
+    is_allow_member_community: 1
+  community_category_2:
+    name: "category2"
+    tree_key: 2
+    is_allow_member_community: 1
+  community_category_3:
+    name: "category3"
+    tree_key: 2
+    is_allow_member_community: 1
+
+Community:
+  community_A:
+    id: 1
+    name: "CommunityA"
+    CommunityCategory: community_category_1
+  community_B:
+    id: 2
+    name: "CommunityB"
+    CommunityCategory: community_category_3
+  community_C:
+    id: 3
+    name: "CommunityC"
+    CommunityCategory: community_category_1
+  community_D:
+    id: 4
+    name: "CommunityD"
+    CommunityCategory: parent_community_category_2
+  community_F:
+    id: 6
+    name: "CommunityF"
+    CommunityCategory: community_category_1
+
+CommunityMember:
+  community_A_member_1:
+    Community: community_A
+    Member: member_1
+
+  community_B_member_1:
+    Community: community_B
+    Member: member_1
+
+  community_C_member_1:
+    Community: community_C
+    Member: member_1
+
+  community_D_member_1:
+    Community: community_D
+    Member: member_1
+
+  community_E_member_1:
+    community_id: 5
+    Member: member_1
+
+  community_F_member_1:
+    Community: community_F
+    Member: member_1
