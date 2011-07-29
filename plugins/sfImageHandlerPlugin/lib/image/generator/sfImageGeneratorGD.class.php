@@ -24,7 +24,7 @@ class sfImageGeneratorGD
     $width       = 0,
     $height      = 0,
     $format      = 'jpg',
-    $allowedSize = array('76x76', '120x120', '180x180', '240x320', '600x600'),
+    $allowedSize = array('76x76', '120x120', '180x180', '240x320', '320x320', '600x600'),
     $outputImage = null;
 
   public function __construct(array $options = array())
