@@ -29,6 +29,7 @@ publicFlag:
     IsRequired: true
     IsUnique:   false
     IsConfirm:  false
+    Default: 3
     Choices:
       1: "All Members"
       2: "%my_friend%"
