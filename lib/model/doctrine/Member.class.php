@@ -68,6 +68,7 @@ class Member extends BaseMember implements opAccessControlRecordInterface
 
     $age = opToolkit::calculateAge($birthday);
     $publicFlag = $this->getConfig('age_public_flag');
+    $publicFlag = null === $publicFlag ? ProfileTable::PUBLIC_FLAG_PRIVATE : $publicFlag;
     if (!$viewableCheck || $publicFlag == ProfileTable::PUBLIC_FLAG_SNS)
     {
       return $age;
