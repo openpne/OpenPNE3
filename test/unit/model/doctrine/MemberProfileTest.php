@@ -7,7 +7,7 @@ $user = sfContext::getInstance()->getUser();
 $user->setAuthenticated(true);
 $user->setMemberId(1);
 
-$t = new lime_test(28, new lime_output_color());
+$t = new lime_test(32, new lime_output_color());
 
 $table = Doctrine::getTable('MemberProfile');
 $memberProfile1 = $table->retrieveByMemberIdAndProfileName(1, 'op_preset_sex');
@@ -62,6 +62,13 @@ $t->diag('MemberProfile::clearChildren()');
 $t->is($memberProfile8->getNode()->getChildren()->count(), 1, 'member profile has a child before ->clearChildren()');
 $memberProfile8->clearChildren();
 $t->cmp_ok($memberProfile8->getNode()->getChildren(), '===', false, "member profile hasn't child after ->clearChildren()");
+
+//------------------------------------------------------------
+$t->diag('MemberProfile::getPublicFlag()');
+$t->is($memberProfile1->getPublicFlag(), 1, '->getPublicFlag() returns 1');
+$t->is($memberProfile2->getPublicFlag(), 1, '->getPublicFlag() returns 1');
+$t->is($memberProfile3->getPublicFlag(), 2, '->getPublicFlag() returns 2');
+$t->is($memberProfile4->getPublicFlag(), 3, '->getPublicFlag() returns 3');
 
 //------------------------------------------------------------
 $t->diag('MemberProfile::generateRoleId()');
