@@ -13,7 +13,7 @@
  *
  * @package    OpenPNE
  * @subpackage default
- * @author     Kousuke Ebihara <ebihara@tejimaya.com>
+ * @author     Shinichi Urabe <urabe@tejimaya.com>
  * @version    SVN: $Id: actions.class.php 9301 2008-05-27 01:08:46Z dwhittle $
  */
 class secureAction extends opDefaultSecureAction
