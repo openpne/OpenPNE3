@@ -371,7 +371,7 @@ class opFormItemGenerator
         break;
       // text and something else
       default:
-        $q->andWhere($column.' LIKE ?', '%'.$value.'%');
+        $q->andWhere($column.' LIKE ?', '%'.Doctrine_Manager::connection()->formatter->escapePattern($value).'%');
     }
 
     return $q;
