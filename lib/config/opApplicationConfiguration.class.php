@@ -503,8 +503,8 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
     $zendPath = sfConfig::get('sf_lib_dir').$DS.'vendor'.$DS;  // ##PROJECT_LIB_DIR##/vendor/
 
     set_include_path($zendPath.PATH_SEPARATOR.get_include_path());
-    require_once 'Zend/Loader.php';
-    Zend_Loader::registerAutoLoad();
+
+    opZendLoader::registerAutoLoad();
     self::$zendLoaded = true;
   }
 
@@ -515,8 +515,7 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
       return true;
     }
 
-    require_once 'Zend/Loader.php';
-    Zend_Loader::registerAutoLoad('Zend_Loader', false);
+    opZendLoader::registerAutoload('Zend_Loader', false);
     self::$zendLoaded = false;
   }
 
