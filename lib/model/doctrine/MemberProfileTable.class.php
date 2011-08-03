@@ -21,7 +21,9 @@ class MemberProfileTable extends opAccessControlDoctrineTable
 
     $q = $this->createQuery()
       ->where('member_id = ?')
-      ->andWhere('profile_id = ?');
+      ->andWhere('profile_id = ?')
+      ->andWhere('level = 0')
+      ->orderBy('id');
 
     $memberProfiles = array();
     foreach ($profiles as $profile)
