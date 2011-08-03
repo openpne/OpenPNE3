@@ -40,4 +40,26 @@ abstract class opMemberComponents extends sfComponents
     $birthday = Doctrine::getTable('MemberProfile')->getViewableProfileByMemberIdAndProfileName($id, 'op_preset_birthday');
     $this->targetDay = $birthday ? opToolkit::extractTargetDay((string)$birthday) : false;
   }
+
+  public function executeAccessBlockList(sfWebRequest $request)
+  {
+    if (!$this->size)
+    {
+      if (sfConfig::get('sf_app') == 'mobile_frontend')
+      {
+        $this->size = 10;
+      }
+      else
+      {
+        $this->size = 20;
+      }
+    }
+
+    $this->accessBlockPager =
+      Doctrine::getTable('MemberRelationship')->getAccessBlockListPager(
+      $this->getUser()->getMemberId(),
+      $request->getParameter('page', 1),
+      $this->size
+    );
+  }
 }
