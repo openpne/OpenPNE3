@@ -36,3 +36,7 @@ community_home:
   url:   /community/:id
   param: { module: community, action: home }
   requirements: { id: \d+ }
+
+no_default:
+  url: /default/*
+  param: { module: default, action: error }

@@ -46,3 +46,6 @@ default_template_help:
   requirements:
     sf_method: [get]
 
+no_default:
+  url: /default/*
+  param: { module: default, action: error }
