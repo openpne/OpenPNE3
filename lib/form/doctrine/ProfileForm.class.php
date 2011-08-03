@@ -57,9 +57,10 @@ class ProfileForm extends BaseProfileForm
       new sfValidatorDoctrineUnique(array('model' => 'Profile', 'column' => array('name')), array('invalid' => 'Already exist.'))
     );
 
+    $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateName'))));
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateValueMin'))));
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateValueMax'))));
-    $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateName'))));
+
     $this->setValidator('default_public_flag', new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('Profile')->getPublicFlags()))));
     $this->setValidator('value_min', new sfValidatorPass());
     $this->setValidator('value_max', new sfValidatorPass());
@@ -107,7 +108,8 @@ class ProfileForm extends BaseProfileForm
         $validator = new sfValidatorInteger($options);
         break;
       case 'date':
-        $validator = new sfValidatorDate($options);
+        $options['date_format_range_error'] = 'Y-m-d';
+        $validator = new opValidatorDate($options);
         break;
       default:
         break; // Do nothing.
@@ -117,7 +119,11 @@ class ProfileForm extends BaseProfileForm
     {
       try
       {
-        $validator->clean($values[$valueKey]);
+        $cleanValue = $validator->clean($values[$valueKey]);
+
+        if (!($validator instanceof opValidatorDate)) {
+          $values[$valueKey] = $cleanValue;
+        }
       }
       catch (Exception $e)
       {
