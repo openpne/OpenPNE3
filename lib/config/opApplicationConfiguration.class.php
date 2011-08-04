@@ -504,7 +504,9 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
 
     set_include_path($zendPath.PATH_SEPARATOR.get_include_path());
 
-    opZendLoader::registerAutoLoad();
+    require_once 'Zend/Loader/Autoloader.php';
+    Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
+    
     self::$zendLoaded = true;
   }
 
@@ -515,7 +517,9 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
       return true;
     }
 
-    opZendLoader::registerAutoload('Zend_Loader', false);
+    Zend_Loader_Autoloader::resetInstance();
+    spl_autoload_unregister(array('Zend_Loader_Autoloader', 'autoload'));
+    
     self::$zendLoaded = false;
   }
 
