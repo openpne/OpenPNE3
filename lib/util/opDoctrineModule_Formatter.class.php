@@ -17,14 +17,6 @@
  */
 class opDoctrineModule_Formatter extends Doctrine_Formatter
 {
-  public function __construct($conn = null)
-  {
-    parent::__construct($conn);
-
-    $this->string_quoting = $this->conn->string_quoting;
-    $this->wildcards = $this->conn->wildcards;
-  }
-
   public function getForeignKeyName($fkey)
   {
     $prefix = sfConfig::get('op_table_prefix', '');

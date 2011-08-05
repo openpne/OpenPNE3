@@ -69,7 +69,7 @@ class CommunityFormFilter extends BaseCommunityFormFilter
     {
       foreach ($values as $value)
       {
-        $query->addWhere('r.'.$fieldName.' LIKE ?', '%'.Doctrine_Manager::connection()->formatter->escapePattern($value).'%');
+        $query->addWhere('r.'.$fieldName.' LIKE ?', '%'.$value.'%');
       }
     }
   }

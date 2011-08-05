@@ -94,14 +94,14 @@ class opMemberProfileSearchForm extends BaseForm
       {
         foreach ($value as $v)
         {
-          $query->addWhere('name LIKE ?', '%'.Doctrine_Manager::connection()->formatter->escapePattern($v).'%');
+          $query->addWhere('name LIKE ?', '%'.$v.'%');
         }
       }
       else
       {
         if (!empty($value))
         {
-          $query->addWhere('name LIKE ?', '%'.Doctrine_Manager::connection()->formatter->escapePattern($values).'%');
+          $query->addWhere('name LIKE ?', '%'.$values.'%');
         }
       }
     }
