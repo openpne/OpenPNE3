@@ -18,19 +18,24 @@
 class opDoctrineQuery extends Doctrine_Query
 {
   /**
+   * constant for exact match
+   */
+  const MATCH_EXACT = 0;
+
+  /**
    * constant for broad match
    */
-  const MATCH_BROAD = 0;
+  const MATCH_BROAD = 1;
 
   /**
    * constant for left-hand match
    */
-  const MATCH_LEFT = 1;
+  const MATCH_LEFT = 2;
 
   /**
    * constant for right-hand match
    */
-  const MATCH_RIGHT = 2;
+  const MATCH_RIGHT = 3;
 
   protected static $detectedSlave = null;
 
@@ -303,7 +308,6 @@ class opDoctrineQuery extends Doctrine_Query
         $match = '%'.$match;
         break;
       case self::MATCH_BROAD:
-      default:
         $match = '%'.$match.'%';
         break;
     }

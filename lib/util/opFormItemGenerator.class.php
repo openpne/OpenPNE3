@@ -375,7 +375,7 @@ class opFormItemGenerator
         break;
       // text and something else
       default:
-        $q->andWhere($column.' LIKE ?', '%'.$value.'%');
+        $q->andWhereLike($column, $value);
     }
 
     return $q;

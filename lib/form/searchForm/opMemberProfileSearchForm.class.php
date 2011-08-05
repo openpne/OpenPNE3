@@ -94,14 +94,14 @@ class opMemberProfileSearchForm extends BaseForm
       {
         foreach ($value as $v)
         {
-          $query->addWhere('name LIKE ?', '%'.$v.'%');
+          $query->andWhereLike('name', $v);
         }
       }
       else
       {
         if (!empty($value))
         {
-          $query->addWhere('name LIKE ?', '%'.$values.'%');
+          $query->andWhereLike('name', $values);
         }
       }
     }
