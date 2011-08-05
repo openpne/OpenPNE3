@@ -237,7 +237,7 @@ class opMailSend
       }
     }
 
-    opZendLoader::registerAutoload('Zend_Loader', false);
+    opApplicationConfiguration::unregisterZend();
 
     return $result;
   }
