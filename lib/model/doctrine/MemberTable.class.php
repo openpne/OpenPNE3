@@ -25,7 +25,7 @@ class MemberTable extends opAccessControlDoctrineTable
     {
       $_result = $this->createQuery()
         ->select('id')
-        ->where('name LIKE ?', '%'.Doctrine_Manager::connection()->formatter->escapePattern($nickname).'%')
+        ->where('name LIKE ?', '%'.$nickname.'%')
         ->execute();
       $result = array();
 
