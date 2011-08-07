@@ -136,7 +136,7 @@ abstract class opAuthRegisterForm extends BaseForm
     if (sfConfig::get('app_is_mobile', false))
     {
       $request = sfContext::getInstance()->getRequest();
-      $uid = $request->getMobileUID();
+      $uid = $request->getMobileUID(false);
       if (!$uid && opConfig::get('retrieve_uid') >= 2)
       {
         throw new sfValidatorError($validator, 'A mobile UID is required. Please check settings of your mobile phone and retry.');
