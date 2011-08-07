@@ -70,7 +70,7 @@ class opSecurityUser extends opAdaptableUser
     }
 
     $result = Doctrine::getTable('Member')->find($this->getMemberId());
-    if ($result)
+    if ($result && $result->getIsActive())
     {
       $this->serializedMember = serialize($result);
     }
@@ -300,22 +300,24 @@ class opSecurityUser extends opAdaptableUser
   */
   public function initializeCredentials()
   {
-    $memberId = $this->getMemberId();
+    opActivateBehavior::disable();
+    $member = $this->getMember();
+    opActivateBehavior::enable();
 
-    $isSNSMember = $this->isSNSMember();
-    if ($isSNSMember)
+    if (!$member || $member instanceof opAnonymousMember || $member->getIsLoginRejected())
     {
-      if ($this->getMember()->getIsLoginRejected())
-      {
-        $isSNSMember = false;
-      }
+      $this->logout();
+      $isSNSMember = false;
+    }
+    else
+    {
+      $isSNSMember = (bool)$member->getIsActive();
     }
 
-    // for BC
     $this->setIsSNSMember($isSNSMember);
     if ($isSNSMember)
     {
-      $this->getMember()->updateLastLoginTime();
+      $member->updateLastLoginTime();
     }
   }
 
@@ -348,15 +350,12 @@ class opSecurityUser extends opAdaptableUser
 
   public function setIsSNSMember($isSNSMember)
   {
+    $this->setAuthenticated($isSNSMember);
+
+    // for BC
     if ($isSNSMember)
     {
-      $this->setAuthenticated(true);
       $this->addCredential('SNSMember');
-    }
-    else
-    {
-      // Set authenticated is false and remove credencials.
-      $this->setAuthenticated(false);
     }
   }
 
