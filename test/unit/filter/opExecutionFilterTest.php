@@ -21,11 +21,11 @@ class myFilter extends opExecutionFilter
     return true;
   }
 
-  public function callNeedToRetriveMobileUID($module, $action, $retriveUIDMode = 1, $parameters = array())
+  public function callNeedToRetrieveMobileUID($module, $action, $retriveUIDMode = 1, $parameters = array())
   {
     opConfig::set('retrive_uid', $retriveUIDMode);
 
-    return $this->needToRetriveMobileUID($module, $action, new opWebRequest(new sfEventDispatcher(), $parameters), sfConfig::get('op_ssl_selectable_actions'));
+    return $this->needToRetrieveMobileUID($module, $action, new opWebRequest(new sfEventDispatcher(), $parameters), sfConfig::get('op_ssl_selectable_actions'));
   }
 
   public function createActionInstance($module, $action)
@@ -89,12 +89,12 @@ sfConfig::set('op_ssl_selectable_actions', array(
 
 // ---
 
-$t->diag('->needToRetriveMobileUID()');
-$t->ok($filter->callNeedToRetriveMobileUID('member', 'configUID'), 'member/configUID redirects user to HTTP');
-$t->ok($filter->callNeedToRetriveMobileUID('member', 'configUID', 0), 'member/configUID does not redirects user to HTTP when it does not retrieve uid');
-$t->ok(!$filter->callNeedToRetriveMobileUID('member', 'home'), 'member/home does not redirect user to HTTP');
-$t->ok(!$filter->callNeedToRetriveMobileUID('member', 'login'), 'member/login does not redirect user to HTTP');
-$t->ok($filter->callNeedToRetriveMobileUID('member', 'login', 1, array('authMode' => 'MobileUID')), 'member/login redirect user to HTTP when the authMode is MobileUID');
+$t->diag('->needToRetrieveMobileUID()');
+$t->ok($filter->callNeedToRetrieveMobileUID('member', 'configUID'), 'member/configUID redirects user to HTTP');
+$t->ok($filter->callNeedToRetrieveMobileUID('member', 'configUID', 0), 'member/configUID does not redirects user to HTTP when it does not retrieve uid');
+$t->ok(!$filter->callNeedToRetrieveMobileUID('member', 'home'), 'member/home does not redirect user to HTTP');
+$t->ok(!$filter->callNeedToRetrieveMobileUID('member', 'login'), 'member/login does not redirect user to HTTP');
+$t->ok($filter->callNeedToRetrieveMobileUID('member', 'login', 1, array('authMode' => 'MobileUID')), 'member/login redirect user to HTTP when the authMode is MobileUID');
 
 $t->diag('->handleSsl()');
 
