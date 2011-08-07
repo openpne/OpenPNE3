@@ -83,14 +83,14 @@ class memberActions extends opMemberAction
         {
           $cookieUid = sfContext::getInstance()->getResponse()->generateMobileUidCookie();
 
-          if (!$request->getMobileUID() && !$cookieUid)
+          if (!$request->getMobileUID(false) && !$cookieUid)
           {
             $this->getUser()->setFlash('error', 'Your mobile UID was not registered.');
             $this->redirect('member/configUID');
           }
 
           $member = $this->getUser()->getMember();
-          $member->setConfig('mobile_uid', $request->getMobileUID());
+          $member->setConfig('mobile_uid', $request->getMobileUID(false));
           if ($cookieUid)
           {
             $member->setConfig('mobile_cookie_uid', $cookieUid);
