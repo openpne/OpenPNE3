@@ -51,7 +51,7 @@ class opExecutionFilter extends sfExecutionFilter
     $dispatcher->notify(new sfEvent($subject, 'op_action.post_execute', $params));
   }
 
-  protected function needToRetriveMobileUID($moduleName, $actionName, $request, $sslSelectableList)
+  protected function needToRetrieveMobileUID($moduleName, $actionName, $request, $sslSelectableList)
   {
     if ('mobile_frontend' !== sfConfig::get('sf_app'))
     {
@@ -119,7 +119,7 @@ class opExecutionFilter extends sfExecutionFilter
 
         $actionInstance->redirect($baseUrl.$currentPath);
       }
-      elseif ($this->needToRetriveMobileUID($moduleName, $actionName, $request, $sslSelectableList) && $request->isSecure())
+      elseif ($this->needToRetrieveMobileUID($moduleName, $actionName, $request, $sslSelectableList) && $request->isSecure())
       {
         $baseUrl = sfConfig::get('op_base_url');
 
