@@ -31,7 +31,7 @@ class opSecurityUser extends opAdaptableUser
   {
     parent::initialize($dispatcher, $storage, $options);
 
-    $this->initializeCredentials();
+    $this->initializeUserStatus();
   }
 
   public function clearSessionData()
@@ -223,7 +223,7 @@ class opSecurityUser extends opAdaptableUser
       opActivateBehavior::enable();
     }
 
-    $this->initializeCredentials();
+    $this->initializeUserStatus();
 
     if ($this->getAuthAdapter()->getAuthForm()->getValue('is_remember_me'))
     {
@@ -296,9 +296,9 @@ class opSecurityUser extends opAdaptableUser
   }
 
  /**
-  * Initializes all credentials associated with this user.
+  * Initializes all credentials associated and status with this user.
   */
-  public function initializeCredentials()
+  public function initializeUserStatus()
   {
     opActivateBehavior::disable();
     $member = $this->getMember();
