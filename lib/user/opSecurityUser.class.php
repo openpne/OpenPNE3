@@ -42,9 +42,9 @@ class opSecurityUser extends opAdaptableUser
     $this->serializedMember = '';
   }
 
-  public function getMemberId()
+  public function getMemberId($inactive = false)
   {
-    return $this->getAttribute('member_id', null, 'opSecurityUser');
+    return $this->getMember($inactive)->getId();
   }
 
   public function setMemberId($memberId)
@@ -54,28 +54,43 @@ class opSecurityUser extends opAdaptableUser
 
   public function getMember($inactive = false)
   {
-    if (!$this->getMemberId())
+    $memberId = $this->getAttribute('member_id', null, 'opSecurityUser');
+
+    if (!$memberId)
     {
       return new opAnonymousMember();
     }
 
     if ($inactive)
     {
-      return Doctrine::getTable('Member')->findInactive($this->getMemberId());
+      $member = Doctrine::getTable('Member')->findInactive($memberId);
+      if (!$member)
+      {
+        return new opAnonymousMember();
+      }
+
+      return $member;
     }
 
     if ($this->serializedMember)
     {
-      return unserialize($this->serializedMember);
+      $member = unserialize($this->serializedMember);
     }
-
-    $result = Doctrine::getTable('Member')->find($this->getMemberId());
-    if ($result && $result->getIsActive())
+    else
     {
-      $this->serializedMember = serialize($result);
+      $member = Doctrine::getTable('Member')->find($memberId);
+      if (!$member)
+      {
+        return new opAnonymousMember();
+      }
+
+      if ($member->getIsActive())
+      {
+        $this->serializedMember = serialize($member);
+      }
     }
 
-    return $result;
+    return $member;
   }
 
   public function getCurrentMemberRegisterToken()
@@ -340,12 +355,20 @@ class opSecurityUser extends opAdaptableUser
 
   public function isRegisterBegin()
   {
-    return $this->getAuthAdapter()->isRegisterBegin($this->getMemberId());
+    opActivateBehavior::disable();
+    $memberId = $this->getMemberId();
+    opActivateBehavior::enable();
+
+    return $this->getAuthAdapter()->isRegisterBegin($memberId);
   }
 
   public function isRegisterFinish()
   {
-    return $this->getAuthAdapter()->isRegisterFinish($this->getMemberId());
+    opActivateBehavior::disable();
+    $memberId = $this->getMemberId();
+    opActivateBehavior::enable();
+
+    return $this->getAuthAdapter()->isRegisterFinish($memberId);
   }
 
   public function setIsSNSMember($isSNSMember)
