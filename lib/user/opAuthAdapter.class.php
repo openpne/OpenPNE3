@@ -354,10 +354,6 @@ abstract class opAuthAdapter
     }
 
     $member = sfContext::getInstance()->getUser()->getMember(true);
-    if (!$member)
-    {
-      return false;
-    }
 
     if ($member->getConfig('is_admin_invited', false) && $this->getAuthModeName() !== $member->getConfig('register_auth_mode'))
     {

@@ -162,7 +162,7 @@ class opSecurityUser extends opAdaptableUser
         return;
       }
 
-      if ($this->getMember())
+      if ($this->getMemberId())
       {
         $this->getMember()->setConfig('remember_key', '');
       }
@@ -319,7 +319,7 @@ class opSecurityUser extends opAdaptableUser
     $member = $this->getMember();
     opActivateBehavior::enable();
 
-    if (!$member || $member instanceof opAnonymousMember || $member->getIsLoginRejected())
+    if ($member instanceof opAnonymousMember || $member->getIsLoginRejected())
     {
       $this->logout();
       $isSNSMember = false;
@@ -343,14 +343,14 @@ class opSecurityUser extends opAdaptableUser
 
   public function isSNSMember()
   {
-    return ($this->getMember() && $this->getMember()->getIsActive());
+    return ($this->getMember()->getIsActive());
   }
 
   public function isInvited()
   {
     $member = $this->getMember(true);
 
-    return ($member && ($member->getConfig('is_admin_invited', false) || $member->getInviteMemberId()));
+    return $member->getConfig('is_admin_invited', false) || $member->getInviteMemberId();
   }
 
   public function isRegisterBegin()
