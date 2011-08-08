@@ -78,17 +78,9 @@ class Gadget extends BaseGadget implements opAccessControlRecordInterface
     }
 
     $member = sfContext::getInstance()->getUser()->getMember();
-    if (!$member)
-    {
-      $member = sfContext::getInstance()->getUser()->getMember(true);
-    }
+    $isEnabled = $this->isAllowed($member, 'view');
 
-    if (!$member || !$this->isAllowed($member, 'view'))
-    {
-      return false;
-    }
-
-    return true;
+    return $isEnabled;
   }
 
   public function getConfig($name)
