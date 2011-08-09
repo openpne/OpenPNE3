@@ -52,8 +52,15 @@ class opSecurityUser extends opAdaptableUser
     return $this->setAttribute('member_id', $memberId, 'opSecurityUser');
   }
 
+  /**
+   * Get Member object. This method always return object.
+   *
+   * @param  bool $inactive If true then use Member::findInactive(), otherwise use Member::find().
+   * @return Member or opAnonymousMember
+   */
   public function getMember($inactive = false)
   {
+    // get memberId from session storage
     $memberId = $this->getAttribute('member_id', null, 'opSecurityUser');
 
     if (!$memberId)
@@ -78,6 +85,7 @@ class opSecurityUser extends opAdaptableUser
     }
     else
     {
+      // You may get a inactive Member object here.
       $member = Doctrine::getTable('Member')->find($memberId);
       if (!$member)
       {
@@ -343,7 +351,7 @@ class opSecurityUser extends opAdaptableUser
 
   public function isSNSMember()
   {
-    return ($this->getMember()->getIsActive());
+    return (bool)$this->getMember()->getIsActive();
   }
 
   public function isInvited()
