@@ -139,7 +139,10 @@ class InviteForm extends MemberConfigPcAddressForm
   public function save()
   {
     $user = sfContext::getInstance()->getUser();
-    $this->member->setInviteMemberId($user->getMemberId());
+    if ($user instanceof sfOpenPNESecurityUser)
+    {
+      $this->member->setInviteMemberId($user->getMemberId());
+    }
 
     parent::save();
 
