@@ -139,16 +139,20 @@ class InviteForm extends MemberConfigPcAddressForm
   public function save()
   {
     $user = sfContext::getInstance()->getUser();
-    if ($user instanceof sfOpenPNESecurityUser)
+    $isSfOpenPNESecurityUser = $user instanceof sfOpenPNESecurityUser;
+
+    $currentAuthMode = null;
+    if ($isSfOpenPNESecurityUser)
     {
       $this->member->setInviteMemberId($user->getMemberId());
+      $currentAuthMode = $user->getCurrentAuthMode();
     }
 
     parent::save();
 
-    $this->member->setConfig('register_auth_mode', $this->getOption('authMode', $user->getCurrentAuthMode()));
+    $this->member->setConfig('register_auth_mode', $this->getOption('authMode', $currentAuthMode));
 
-    if ($this->getOption('is_link'))
+    if ($this->getOption('is_link') && $isSfOpenPNESecurityUser)
     {
       $fromMemberId = $user->getMemberId();
       $toMemberId = $this->member->getId();
