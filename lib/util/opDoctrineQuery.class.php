@@ -23,19 +23,19 @@ class opDoctrineQuery extends Doctrine_Query
   const MATCH_EXACT = 0;
 
   /**
-   * constant for broad match
-   */
-  const MATCH_BROAD = 1;
-
-  /**
    * constant for left-hand match
    */
-  const MATCH_LEFT = 2;
+  const MATCH_LEFT = 1;
 
   /**
    * constant for right-hand match
    */
-  const MATCH_RIGHT = 3;
+  const MATCH_RIGHT = 2;
+
+  /**
+   * constant for broad match
+   */
+  const MATCH_BROAD = 3;
 
   protected static $detectedSlave = null;
 
@@ -279,28 +279,31 @@ class opDoctrineQuery extends Doctrine_Query
 
   public function andWhereLike($expr, $param, $matchType = self::MATCH_BROAD, $not = false)
   {
-    $match = $this->escapePattern($param);
-
-    switch ($matchType)
+    if (self::MATCH_EXACT != $matchType)
     {
-      case self::MATCH_LEFT:
-        $match = $match.'%';
-        break;
-      case self::MATCH_RIGHT:
-        $match = '%'.$match;
-        break;
-      case self::MATCH_BROAD:
-        $match = '%'.$match.'%';
-        break;
+      $param = $this->escapePattern($param);
+
+      switch ($matchType)
+      {
+        case self::MATCH_LEFT:
+          $param = $param.'%';
+          break;
+        case self::MATCH_RIGHT:
+          $param = '%'.$param;
+          break;
+        case self::MATCH_BROAD:
+          $param = '%'.$param.'%';
+          break;
+      }
     }
 
     if ($not)
     {
-      $this->andWhere($expr.' NOT LIKE ?', $match);
+      $this->andWhere($expr.' NOT LIKE ?', $param);
     }
     else
     {
-      $this->andWhere($expr.' LIKE ?', $match);
+      $this->andWhere($expr.' LIKE ?', $param);
     }
 
     return $this;
@@ -312,14 +315,14 @@ class opDoctrineQuery extends Doctrine_Query
 
     if (!$conn->string_quoting['escape_pattern'])
     {
-        return $text;
+      return $text;
     }
     $tmp = $conn->string_quoting;
 
     $text = str_replace($tmp['escape_pattern'], $tmp['escape_pattern'].$tmp['escape_pattern'], $text);
 
     foreach ($conn->wildcards as $wildcard) {
-        $text = str_replace($wildcard, $tmp['escape_pattern'] . $wildcard, $text);
+      $text = str_replace($wildcard, $tmp['escape_pattern'].$wildcard, $text);
     }
 
     return $text;
