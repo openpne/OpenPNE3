@@ -166,7 +166,7 @@ class memberActions extends sfOpenPNEMemberAction
           $member->setConfig('mobile_address', $pre->getValue());
           $pre->delete();
         }
-        $member->setConfig('mobile_uid', $request->getMobileUID());
+        $member->setConfig('mobile_uid', $request->getMobileUID(false));
 
         $this->getUser()->setCurrentAuthMode($memberConfig->getMember()->getConfig('register_auth_mode'));
         $this->getUser()->setMemberId($id);
