@@ -17,7 +17,7 @@
  */
 class opExecutionFilter extends sfExecutionFilter
 {
-  protected $retrivingMobileUIDActions = array('member/register', 'member/registerInput', 'member/registerEnd', 'member/configUID');
+  protected $retrivingMobileUIDActions = array('member/register', 'member/registerInput', 'member/registerEnd', 'member/configUID', 'member/registerMobileToRegisterEnd');
   protected $mobileUIDAuthModeName = 'MobileUID';
 
   public static function notifyPreExecuteActionEvent($subject, sfEventDispatcher $dispatcher, sfAction $actionInstance)
