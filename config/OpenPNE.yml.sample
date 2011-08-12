@@ -145,7 +145,7 @@ ssl_selectable_actions:
   # for mobile_frontend
   #   * OpenPNE は SSL 通信で得られた携帯電話個体識別番号は信頼しないため、携帯電話個体識別番号を扱うアクション群がデフォルト設定となっています
   #   * ここで指定された、携帯電話個体識別番号を扱うアクションでは、携帯電話個体識別番号を扱う場合のみ HTTP を選択し、それ以外の場合は HTTPS を使わせるようにしています
-  mobile_frontend: ["member/register", "member/registerInput", "member/registerEnd", "member/login", "member/configUID"]
+  mobile_frontend: ["member/register", "member/registerInput", "member/registerEnd", "member/login", "member/configUID", "member/registerMobileToRegisterEnd"]
 
   # 管理画面設定
   # for pc_backend
