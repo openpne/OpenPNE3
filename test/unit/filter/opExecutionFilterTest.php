@@ -21,9 +21,9 @@ class myFilter extends opExecutionFilter
     return true;
   }
 
-  public function callNeedToRetrieveMobileUID($module, $action, $retriveUIDMode = 1, $parameters = array())
+  public function callNeedToRetrieveMobileUID($module, $action, $retrieveUIDMode = 1, $parameters = array())
   {
-    opConfig::set('retrive_uid', $retriveUIDMode);
+    opConfig::set('retrieve_uid', $retrieveUIDMode);
 
     return $this->needToRetrieveMobileUID($module, $action, new opWebRequest(new sfEventDispatcher(), $parameters), sfConfig::get('op_ssl_selectable_actions'));
   }
