@@ -443,7 +443,14 @@ class Zend_Uri_Http extends Zend_Uri
         }
 
         // Check the host against the allowed values; delegated to Zend_Filter.
-        $validate = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_ALL);
+        if (version_compare(PHP_VERSION, '5.2.6', '>='))
+        {
+          $validate = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_ALL);
+        }
+        else
+        {
+          $validate = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_ALL, false);
+        }
 
         return $validate->isValid($host);
     }
