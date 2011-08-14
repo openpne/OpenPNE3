@@ -18,4 +18,14 @@
 class MemberConfigLanguageForm extends MemberConfigForm
 {
   protected $category = 'language';
+
+  public function save()
+  {
+    parent::save();
+
+    $user = sfContext::getInstance()->getUser();
+    $user->setCulture($this->getValue('language'));
+
+    return true;
+  }
 }
