@@ -29,4 +29,21 @@ class sfImageGeneratorGD extends sfImageGeneratorImageTransform
   {
     imageinterlace($this->transform->getHandle(), 0);
   }
+  
+  protected function doSave($outputFilename, $type, $quality)
+  {
+    $result = $this->transform->crop($this->transform->new_x, $this->transform->new_y);
+    if (PEAR::isError($result))
+    {
+      throw new sfException($result->getMessage());
+    }
+
+    $result = $this->transform->save($outputFilename, $type, $quality);
+    if (PEAR::isError($result))
+    {
+      throw new sfException($result->getMessage());
+    }
+
+    return true;
+  }
 }
