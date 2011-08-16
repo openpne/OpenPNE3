@@ -121,7 +121,8 @@ class ProfileForm extends BaseProfileForm
       {
         $cleanValue = $validator->clean($values[$valueKey]);
 
-        if (!($validator instanceof opValidatorDate)) {
+        if (!($validator instanceof opValidatorDate))
+        {
           $values[$valueKey] = $cleanValue;
         }
       }
