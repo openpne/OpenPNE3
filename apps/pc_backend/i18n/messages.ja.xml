@@ -1118,8 +1118,8 @@
         <target>その他、 PHP の strtotime() 関数が解釈することのできる特殊な文字列が利用可能</target>
       </trans-unit>
       <trans-unit id="">
-        <source>If you input "now," it means not the inputted date on the backend but just a validated date on the frontend.</source>
-        <target>"now" と入力した場合、メンバーの入力に対してバリデートを行う時点の日時を意味します。</target>
+        <source>If you input "now" as a date, it means not the inputted date on the backend but just a validated date on the frontend.</source>
+        <target>"now" と入力した場合、それはメンバーの入力に対してバリデートを行う時点の日時を意味します。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Preset</source>
