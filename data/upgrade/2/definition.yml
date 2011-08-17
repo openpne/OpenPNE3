@@ -102,6 +102,9 @@ banner:
 confirmation:
   strategy: SQLImport
 
+mobile_uid_bc_config:
+  strategy: SQLImport
+
 login_layout:
   strategy: opUpgradeFrom2LoginLayoutStrategy
   file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2LoginLayoutStrategy.class.php
