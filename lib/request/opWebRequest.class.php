@@ -159,26 +159,51 @@ class opWebRequest extends sfWebRequest
     if (!$uid && $allowFallback)
     {
       // result of opWebRequest::getMobileFallbackUID() is already hashed
-      $uid = $this->getMobileFallbackUID();
+      $uids = $this->getMobileFallbackUID();
+
+      // to keep backward compatible of this method with OpenPNE 3.4 and before,
+      // only returns OpenPNE 3 format UID
+      if (isset($uids[0])) {
+        $uid = $uids[0];
+      }
     }
 
     return $uid;
   }
 
+ /**
+  * Returns a fallback mobile UIDs.
+  *
+  * This method returns both of OpenPNE 3 format and OpenPNE 2 one.
+  *
+  * @return array  list of fallback mobile UIDs
+  */
   public function getMobileFallbackUID()
   {
-    $uid = false;
+    $uids = array();
 
     if ($this->getMobile()->isSoftBank())
     {
       $uid = $this->getMobile()->getSerialNumber();
+      if ($uid) {
+        $uids = array(
+            $this->hashMobileUid($uid),
+            $this->hashMobileUid('SN'.$uid)  // OpenPNE 2 format
+        );
+      }
     }
     elseif ($this->getMobile()->isDoCoMo())
     {
       $uid = $this->getMobile()->getCardID();
+      if ($uid) {
+        $uids = array(
+            $this->hashMobileUid($uid),
+            $this->hashMobileUid('icc'.$uid)  // OpenPNE 2 format
+        );
+      }
     }
 
-    return $this->hashMobileUid($uid);
+    return $uids;
   }
 
   protected function hashMobileUid($string)
