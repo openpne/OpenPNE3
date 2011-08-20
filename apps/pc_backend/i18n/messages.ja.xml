@@ -1147,6 +1147,14 @@
         <target>メールアドレス</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Format is invalid.</source>
+        <target>形式が正しくありません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Identification name can contain only underscore or alphanumeric characters. (must have at least one alphabet.)</source>
+        <target>アンダースコアと半角英数字のみが使えます。識別名にはアルファベットが含まれていなければなりません。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Anyone in the world may view member profiles</source>
         <target>公開範囲設定で「Web 全体に公開」の選択を許可するかどうかを設定します。ここで許可されていない場合は、既に設定済みの「Web 全体に公開」は「全員に公開」と同等のものとして扱われます</target>
       </trans-unit>
