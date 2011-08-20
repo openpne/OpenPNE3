@@ -1147,6 +1147,10 @@
         <target>メールアドレス</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Can not use "op_preset_" as a prefix.</source>
+        <target>"op_preset_" を接頭辞にすることはできません。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Format is invalid.</source>
         <target>形式が正しくありません。</target>
       </trans-unit>
