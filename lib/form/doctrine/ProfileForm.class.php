@@ -65,7 +65,10 @@ class ProfileForm extends BaseProfileForm
     $this->setValidator('value_min', new sfValidatorPass());
     $this->setValidator('value_max', new sfValidatorPass());
     $this->setValidator('value_type', new sfValidatorString(array('required' => false, 'empty_value' => 'string')));
-    $this->setValidator('name', new opValidatorString(array('required' => true, 'trim' => true)));
+    $this->setValidator('name', new sfValidatorRegex(
+      array('pattern' => '/^\w*[a-z]\w*$/i'),
+      array('invalid' => 'Format is invalid.')
+    ));
 
     $this->widgetSchema->setLabels(array(
       'name' => 'Identification name',
@@ -93,7 +96,10 @@ class ProfileForm extends BaseProfileForm
 
     $this->embedI18n(sfConfig::get('op_supported_languages'));
 
-    $this->widgetSchema->setHelp('is_public_web', 'Anyone in the world may view member profiles');
+    $this->widgetSchema->setHelps(array(
+      'name' => 'Identification name can contain only underscore or alphanumeric characters. (must have at least one alphabet.)',
+      'is_public_web' => 'Anyone in the world may view member profiles',
+    ));
   }
 
   static public function validateValue($validator, $values, $valueKey)
