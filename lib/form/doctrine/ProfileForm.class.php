@@ -57,7 +57,10 @@ class ProfileForm extends BaseProfileForm
       new sfValidatorDoctrineUnique(array('model' => 'Profile', 'column' => array('name')), array('invalid' => 'Already exist.'))
     );
 
-    $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateName'))));
+    $this->mergePostValidator(new sfValidatorCallback(
+      array('callback' => array('ProfileForm', 'validateName')),
+      array('invalid' => 'Can not use "op_preset_" as a prefix.')
+    ));
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateValueMin'))));
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateValueMax'))));
 
@@ -159,7 +162,7 @@ class ProfileForm extends BaseProfileForm
   {
     if (0 === strpos($values['name'], 'op_preset_'))
     {
-      throw new sfValidatorError($validator, 'invalid');
+      throw new sfValidatorErrorSchema($validator, array('name' => new sfValidatorError($validator, 'invalid')));
     }
 
     return $values;
