@@ -8,7 +8,7 @@
 <?php $uri = $nav->uri; ?>
 <?php endif; ?>
 
-<?php if (op_is_accessable_url($uri)): ?>
+<?php if (op_is_accessible_url($uri)): ?>
 <li id="<?php echo $nav->type ?>_<?php echo op_url_to_id($nav->uri) ?>"><?php echo link_to($nav->caption, $uri); ?></li>
 <?php endif; ?>
 

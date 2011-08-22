@@ -5,11 +5,17 @@ foreach ($navs as $nav)
 {
   if (isset($id))
   {
-    $list[] = link_to($nav->getCaption(), $nav->getUri().'?id='.$id);
+    if(op_is_accessible_url($nav->getUri().'?id='.$id))
+    {
+      $list[] = link_to($nav->getCaption(), $nav->getUri().'?id='.$id);
+    }
   }
   else
   {
-    $list[] = link_to($nav->getCaption(), $nav->getUri());
+    if(op_is_accessible_url($nav->getUri()))
+    {
+      $list[] = link_to($nav->getCaption(), $nav->getUri());
+    }
   }
 }
 echo implode(isset($separator) ? $separator : "<br>\n", $list);
