@@ -100,7 +100,7 @@ abstract class opMemberAction extends sfActions
       && 'login' !== $routing->getCurrentRouteName()
     )
     {
-      $this->getUser()->setFlash('notice', 'Please login to visit this page');
+      $this->getUser()->setFlash('notice', 'Please login to visit this page', false);
     }
 
     return sfView::SUCCESS;
