@@ -351,8 +351,8 @@ function _op_url_cmd($matches)
     $cmd .= $pmatch[1];
   }
 
-  $file = $cmd . '.js';
-  $path = './cmd/' . $file;
+  $file = $cmd.'.js';
+  $path = './cmd/'.$file;
 
   if (preg_match('/<a/', $matches[1]) || !is_readable($path))
   {
@@ -397,7 +397,7 @@ function op_auto_link_text_for_mobile($text, $link = null, $href_options = array
 {
   use_helper('Text');
 
-  if (null === $link)
+  if (is_null($link))
   {
     $link = sfConfig::get('op_default_mobile_auto_link_type', 'urls');
   }
@@ -417,7 +417,7 @@ function op_auto_link_text_for_mobile($text, $link = null, $href_options = array
     $link = array('urls', 'email_addresses', 'phone_numbers');
   }
 
-  if (null === $is_allow_outer_url)
+  if (is_null($is_allow_outer_url))
   {
     $is_allow_outer_url = sfConfig::get('op_default_mobile_auto_link_is_allow_outer_url', true);
   }
@@ -845,7 +845,7 @@ function op_is_accessible_url($uri)
  */
 function op_is_accessable_url($uri)
 {
- return op_is_accessible_url($uri);
+  return op_is_accessible_url($uri);
 }
 
 
@@ -1128,7 +1128,7 @@ function op_image_path($source, $absolute = false)
 
   if (0 !== strpos($source, '/'))
   {
-    if (null === $skinPlugin)
+    if (is_null($skinPlugin))
     {
       $plugins = sfContext::getInstance()->getConfiguration()->getPlugins();
       foreach ($plugins as $plugin)

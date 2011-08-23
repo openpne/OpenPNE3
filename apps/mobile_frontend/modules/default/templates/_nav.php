@@ -5,14 +5,14 @@ foreach ($navs as $nav)
 {
   if (isset($id))
   {
-    if(op_is_accessible_url($nav->getUri().'?id='.$id))
+    if (op_is_accessible_url($nav->getUri().'?id='.$id))
     {
       $list[] = link_to($nav->getCaption(), $nav->getUri().'?id='.$id);
     }
   }
   else
   {
-    if(op_is_accessible_url($nav->getUri()))
+    if (op_is_accessible_url($nav->getUri()))
     {
       $list[] = link_to($nav->getCaption(), $nav->getUri());
     }
