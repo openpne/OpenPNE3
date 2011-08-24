@@ -4,9 +4,9 @@
 
 <?php use_helper('Javascript'); ?>
 
-<?php slot('title', __('%community% Category Configuration', array('%community%' => $op_term['community']->titleize()))); ?>
+<?php slot('title', __('%Community% Category Configuration')); ?>
 
-<p><?php echo __('If you uncheck "Is allow Member %community%", only the member who has id 1 can make %community% of the category.', array('%community%' => $op_term['community']->titleize())) ?></p>
+<p><?php echo __('If you uncheck "Is allow Member %community%", only the member who has id 1 can make %community% of the category.') ?></p>
 
 <h3><?php echo __('Big Category') ?></h3>
 <?php include_partial('categoryListForm', array(

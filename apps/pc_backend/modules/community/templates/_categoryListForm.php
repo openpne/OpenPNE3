@@ -2,7 +2,7 @@
 <tr>
 <th><?php echo $form['name']->renderLabel() ?></th>
 <?php if (empty($forceAllowUserCommunity)) : ?>
-<th><?php echo __('Is Allow Member %community%', array('%community%' => $op_term['community']->titleize()), 'form_community') ?></th>
+<th><?php echo __('Is Allow Member %community%', array(), 'form_community') ?></th>
 <?php endif; ?>
 <th colspan="2"><?php echo __('Operation') ?></th>
 </tr>

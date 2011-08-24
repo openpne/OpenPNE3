@@ -92,26 +92,17 @@
         <source>Do you remove this %community% from default?</source>
         <target>この%community%を初期%community%から取り除いてよろしいですか？</target>
       </trans-unit>
-
       <trans-unit id="">
-        <source>%community% Name</source>
-        <target>%community%名</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>%community% Category</source>
-        <target>%community%カテゴリ</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>%community% Administrator</source>
-        <target>%community%管理者</target>
+        <source>%Community% Administrator</source>
+        <target>%Community%管理者</target>
       </trans-unit>
       <trans-unit id="">
         <source>Date Created</source>
         <target>作成日</target>
       </trans-unit>
       <trans-unit id="">
-        <source>%community% Members</source>
-        <target>%community%メンバー数</target>
+        <source>%Community% Members</source>
+        <target>%Community%メンバー数</target>
       </trans-unit>
       <trans-unit id="">
         <source>%community% Description</source>
@@ -1383,12 +1374,12 @@
         <target>退会が完了しました</target>
       </trans-unit>    
       <trans-unit id="">
-        <source>%community% Name</source>
-        <target>%community%名</target>
+        <source>%Community% Name</source>
+        <target>%Community%名</target>
       </trans-unit>
       <trans-unit id="">
-        <source>%community% Category</source>
-        <target>%community%カテゴリ</target>
+        <source>%Community% Category</source>
+        <target>%Community%カテゴリ</target>
       </trans-unit>
       <trans-unit id="">
         <source>Setting</source>
@@ -1399,12 +1390,12 @@
         <target>追加可能なプリセットがありません。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>%community% List</source>
-        <target>%community%リスト</target>
+        <source>%Community% List</source>
+        <target>%Community%リスト</target>
       </trans-unit>
       <trans-unit id="">
-        <source>%community% Category Configuration</source>
-        <target>%community%カテゴリ設定</target>
+        <source>%Community% Category Configuration</source>
+        <target>%Community%カテゴリ設定</target>
       </trans-unit>
       <trans-unit id="">
         <source>Default %community% Configuration</source>
