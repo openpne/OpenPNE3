@@ -1,4 +1,4 @@
-<div id="formDiaryDelete" class="dparts box"><div class="parts">
+<div id="formAccessBlockDelete" class="dparts box"><div class="parts">
 <div class="partsHeading">
 <h3><?php echo __('Delete access block') ?></h3>
 </div>
@@ -11,6 +11,3 @@
 )) ?>
 </div>
 </div></div>
-
-
-

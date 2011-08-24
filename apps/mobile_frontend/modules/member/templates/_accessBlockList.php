@@ -1,5 +1,5 @@
 <?php if ($accessBlockPager->getNbResults()): ?>
-<?php $partsInfo = '<center>'.pager_total($accessBlockPager).'<br></center><hr color="'.$op_color["core_color_12"] .'">'; ?>
+<?php $partsInfo = '<center>'.pager_total($accessBlockPager).'<br></center><hr color="'.$op_color["core_color_12"].'">'; ?>
 
 <?php
 foreach ($accessBlockPager->getResults() as $accessBlock)

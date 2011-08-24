@@ -33,8 +33,6 @@ class MemberConfigAccessBlockForm extends BaseForm
 
     $this->validatorSchema['access_block'] = new sfValidatorAnd(array($validatorInteger, $validatorCallback));
 
-
-
     if ('mobile_frontend' === sfConfig::get('sf_app'))
     {
       opToolkit::appendMobileInputModeAttributesForFormWidget($this->widgetSchema['access_block'], 'numeric');
@@ -56,6 +54,7 @@ class MemberConfigAccessBlockForm extends BaseForm
     }
     $relationship->setIsAccessBlock(true);
     $relationship->save();
+
     return true;
   }
 
@@ -75,6 +74,7 @@ class MemberConfigAccessBlockForm extends BaseForm
     {
       throw new sfValidatorError($validator, 'You have already blocked the member ID.');
     }
+
     return $value;
   }
 

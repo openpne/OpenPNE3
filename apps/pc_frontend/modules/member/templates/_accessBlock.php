@@ -4,10 +4,10 @@
 <table><tbody>
 <tr>
 <td rowspan="2" class="photo">
-<?php if($member): ?>
-<?php echo link_to(image_tag_sf_image($member->getFile(), array('size' => '76x76')), '@member_profile?id=' .$accessBlock->getMemberIdTo()); ?><br />
+<?php if ($member): ?>
+<?php echo link_to(image_tag_sf_image($member->getFile(), array('size' => '76x76')), '@member_profile?id='.$accessBlock->getMemberIdTo()); ?><br />
 <?php else: ?>
-<?php echo link_to(image_tag_sf_image(null, array('size' => '76x76')), '@member_profile?id=' .$accessBlock->getMemberIdTo()); ?><br />
+<?php echo link_to(image_tag_sf_image(null, array('size' => '76x76')), '@member_profile?id='.$accessBlock->getMemberIdTo()); ?><br />
 <?php endif; ?>
 </td>
 <th><?php echo __('Nickname') ?></th>

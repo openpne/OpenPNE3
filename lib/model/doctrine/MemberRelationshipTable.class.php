@@ -56,6 +56,7 @@ class MemberRelationshipTable extends opAccessControlDoctrineTable
   public function retrievesAccessBlockByMemberIdFrom($memberId)
   {
     $q = $this->getRetrievesAccessBlockByMemberIdFromQuery($memberId);
+
     return $q->execute(array(), Doctrine::HYDRATE_ARRAY);
   }
 

@@ -621,6 +621,7 @@ abstract class opMemberAction extends sfActions
       }
       $this->redirect('@member_config?category=accessBlock');
     }
+
     return sfView::INPUT;
   }
 
