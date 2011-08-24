@@ -2,9 +2,9 @@
 <?php include_partial('submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', __('Delete %community%', array('%community%' => $op_term['community']->titleize()))); ?>
+<?php slot('title', __('Delete %community%')); ?>
 
-<p><?php echo __('Are you sure you want to delete this %community%?', array('%community%' => $op_term['community'])) ?></p>
+<p><?php echo __('Are you sure you want to delete this %community%?') ?></p>
 
 <?php
 $form = new BaseForm();
