@@ -234,3 +234,12 @@ supported_languages: ['en', 'ja_JP']
 # Proxys is used when member link outer URL at the mobile
 mobile_proxys:
   'Google' : 'http://www.google.co.jp/gwt/x?u='
+
+####################################
+# モバイルCookie使用設定
+####################################
+
+# モバイルでCookieを使用するかどうか (使用できる場合に限る）
+# Configuration of using cookie with mobile (only if it can use)
+#
+# is_use_mobile_cookie: true
