@@ -406,6 +406,20 @@ class opSecurityUser extends opAdaptableUser
       return false;
     }
 
+    if (!is_null($member->getConfig("pc_address_pre")))
+    {
+      $mailType = "pc_address_pre";
+    }
+    elseif (!is_null($member->getConfig("mobile_address_pre")))
+    {
+      $mailType = "mobile_address_pre";
+    }
+    $latestMember = Doctrine::getTable('Member')->getLatestByAddressPre($mailType, $member->getConfig($mailType));
+    if ($member->getId() !== $latestMember->getId())
+    {
+      return false;
+    }
+
     $this->setMemberId($member->getId());
 
     $authMode = $member->getConfig('register_auth_mode');
