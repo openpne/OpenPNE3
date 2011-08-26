@@ -152,4 +152,30 @@ class MemberTable extends opAccessControlDoctrineTable
 
     return $this->findInactive($config->getMemberId());
   }
+
+  public function getLatestByAddressPre($mailType, $address)
+  {
+    $configs = Doctrine::getTable('MemberConfig')
+      ->createQuery('m')
+      ->select('m.member_id')
+      ->where('m.name = ?', $mailType)
+      ->andWhere('m.value = ?', $address)
+      ->fetchArray();
+
+    $memberIds = array();
+    $updateTimes = array();
+    foreach ($configs as $config)
+    {
+      $memberIds[] = $memberId = $config['member_id'];
+      $updateTimes[] = Doctrine::getTable('MemberConfig')
+        ->createQuery('m')
+        ->where('m.member_id = ?', $memberId)
+        ->AndWhere('m.name = "register_token"')
+        ->fetchOne()
+        ->getUpdatedAt();
+    }
+    array_multisort($updateTimes, $memberIds);
+
+    return $this->findInactive($memberIds[count($memberIds)-1]);
+  }
 }
