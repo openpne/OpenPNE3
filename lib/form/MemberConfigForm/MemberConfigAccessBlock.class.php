@@ -38,7 +38,7 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
 
   public function saveConfig($name, $value)
   {
-    if ($name !== 'access_block')
+    if ('access_block' !== $name)
     {
       return parent::saveConfig($name, $value);
     }
@@ -56,10 +56,16 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
       {
       case '':
         // delete
-        if (!$defaultId) break;
+        if (!$defaultId)
+        {
+          break;
+        }
         $relationship = Doctrine::getTable('MemberRelationship')
           ->retrieveByFromAndTo($this->member->getId(), $defaultId);
-        if (!$relationship) break;
+        if (!$relationship)
+        {
+          break;
+        }
         $relationship->setIsAccessBlock(false);
         $relationship->save();
         break;
@@ -91,7 +97,10 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
         $relationship->setIsAccessBlock(true);
         $relationship->save();
       }
-      if ($key >= count($this->blockedId)) break;
+      if ($key >= count($this->blockedId))
+      {
+        break;
+      }
       $key++;
     }
   }
@@ -99,6 +108,7 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
   public function bind($params)
   {
     $this->setBlockedIds = $params['access_block'];
+
     return parent::bind($params);
   }
 
@@ -106,7 +116,7 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
   {
     $result = parent::setMemberConfigWidget($name);
 
-    if ($name === 'access_block')
+    if ('access_block' === $name)
     {
       $this->setDefault($name, $this->blockedId);
 
@@ -146,6 +156,7 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
     }
 
     $values['access_block'] = $result;
+
     return $values;
   }
 }
