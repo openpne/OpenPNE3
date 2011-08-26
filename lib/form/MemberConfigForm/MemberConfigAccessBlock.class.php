@@ -24,6 +24,10 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
 
   public function configure()
   {
+    $this->widgetSchema->setHelp('access_block',
+      'Block access from the selected member with input MemberID.'
+    . " MemberID is written at the end of member top page URL."
+    . " ex. The MemberID is 1 when the URL \"http://sns.example.com/member/1\"");
     $relations = Doctrine::getTable('MemberRelationship')->retrievesAccessBlockByMemberIdFrom($this->member->getId());
     foreach ($relations as $relation)
     {
