@@ -34,6 +34,7 @@ class ProfileTable extends Doctrine_Table
     {
       $publicFlags = $this->publicFlags;
     }
+
     return $publicFlags;
   }
 
