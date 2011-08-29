@@ -226,7 +226,7 @@ class opSecurityUser extends opAdaptableUser
   */
   public function login($memberId = null)
   {
-    if (null === $memberId)
+    if (is_null($memberId))
     {
       $memberId = $this->getAuthAdapter()->authenticate();
     }
