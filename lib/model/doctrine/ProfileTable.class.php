@@ -24,9 +24,17 @@ class ProfileTable extends Doctrine_Table
 
   protected $nameByIds = array();
 
-  public function getPublicFlags()
+  public function getPublicFlags($isI18n = true)
   {
-    return array_map(array(sfContext::getInstance()->getI18N(), '__'), $this->publicFlags);
+    if ($isI18n)
+    {
+      $publicFlags = array_map(array(sfContext::getInstance()->getI18N(), '__'), $this->publicFlags);
+    }
+    else
+    {
+      $publicFlags = $this->publicFlags;
+    }
+    return $publicFlags;
   }
 
   public function getPublicFlag($flag)

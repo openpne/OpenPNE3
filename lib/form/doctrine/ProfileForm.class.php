@@ -28,7 +28,7 @@ class ProfileForm extends BaseProfileForm
       'name' => new sfWidgetFormInputText(),
       'is_public_web' => new sfWidgetFormSelectRadio(array('choices' => array('0' => 'Deny', '1' => 'Allow'))),
       'is_edit_public_flag' => new sfWidgetFormSelectRadio(array('choices' => array('0' => 'Fixed', '1' => 'Allow member to select'))),
-      'default_public_flag' => new sfWidgetFormSelect(array('choices' => Doctrine::getTable('Profile')->getPublicFlags())),
+      'default_public_flag' => new sfWidgetFormSelect(array('choices' => Doctrine::getTable('Profile')->getPublicFlags(false))),
       'is_disp_regist' => new sfWidgetFormSelectRadio($isDispOption),
       'is_disp_config' => new sfWidgetFormSelectRadio($isDispOption),
       'is_disp_search' => new sfWidgetFormSelectRadio($isDispOption),
@@ -61,7 +61,7 @@ class ProfileForm extends BaseProfileForm
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateValueMin'))));
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateValueMax'))));
 
-    $this->setValidator('default_public_flag', new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('Profile')->getPublicFlags()))));
+    $this->setValidator('default_public_flag', new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('Profile')->getPublicFlags(false)))));
     $this->setValidator('value_min', new sfValidatorPass());
     $this->setValidator('value_max', new sfValidatorPass());
     $this->setValidator('value_type', new sfValidatorString(array('required' => false, 'empty_value' => 'string')));
