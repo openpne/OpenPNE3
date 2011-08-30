@@ -1232,8 +1232,8 @@
         <target>ﾒｰﾙの送信に失敗しました｡もう一度実行するか管理者に連絡して下さい｡</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Block access from the selected member with input MemberID. MemberID is written at the end of member top page URL. ex. The MemberID is 1 when the URL "http://sns.example.com/member/1"</source>
-        <target>ﾒﾝﾊﾞｰIDを入力して特定のﾒﾝﾊﾞｰからのｱｸｾｽをﾌﾞﾛｯｸします。ﾒﾝﾊﾞｰIDは相手ﾄｯﾌﾟﾍﾟｰｼﾞのURL末尾に表示されています。例："http://sns.example.com/member/1" というURLである場合にはﾒﾝﾊﾞｰIDは1になります。</target>
+        <source>Block access from the selected member with input MemberID.&lt;br&gt; MemberID is written at the end of member top page URL.&lt;br&gt; ex. The MemberID is 1 when the URL "http://sns.example.com/member/1"</source>
+        <target>ﾒﾝﾊﾞｰIDを入力して特定のﾒﾝﾊﾞｰからのｱｸｾｽをﾌﾞﾛｯｸします。&lt;br&gt;ﾒﾝﾊﾞｰIDは相手ﾄｯﾌﾟﾍﾟｰｼﾞのURL末尾に表示されています。&lt;br&gt;例："http://sns.example.com/member/1" というURLである場合にはﾒﾝﾊﾞｰIDは1になります。</target>
       </trans-unit>
     </body>
   </file>
