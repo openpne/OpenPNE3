@@ -61,7 +61,12 @@ class opMobileUserAgent
     $mobile = $this->getMobile();
 
     $isUseMobileCookie = sfConfig::get('op_is_use_mobile_cookie', true);
-    if (!$isUseMobileCookie || ($mobile->isDoCoMo() && '1.0' == $mobile->getBrowserVersion()) || ($mobile->isSoftBank() && !($mobile->isType3GC() || $mobile->isTypeW())))
+    if (!$isUseMobileCookie)
+    {
+      return false;
+    }
+
+    if (($mobile->isDoCoMo() && '1.0' == $mobile->getBrowserVersion()) || ($mobile->isSoftBank() && !($mobile->isType3GC() || $mobile->isTypeW())))
     {
       return false;
     }
