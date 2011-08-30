@@ -242,4 +242,4 @@ mobile_proxys:
 # モバイルでCookieを使用するかどうか (使用できる場合に限る）
 # Configuration of using cookie with mobile (only if it can use)
 #
-# is_use_mobile_cookie: true
+is_use_mobile_cookie: true
