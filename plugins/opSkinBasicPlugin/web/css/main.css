@@ -1440,6 +1440,7 @@ div.activityBox div.box_list div.box_body ul.operation li {
  * toolbar of opWidgetFormRichTextareaOpenPNE
  *----------------------------------------------------------------------------*/
 div.parts table.mceToolbar {
+  table-layout: auto;
   width: auto;
 }
 
