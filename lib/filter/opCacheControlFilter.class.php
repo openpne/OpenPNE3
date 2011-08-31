@@ -31,13 +31,16 @@ class opCacheControlFilter extends sfFilter
 
     if (!headers_sent())
     {
-      if ($request->getMobile()->isEZweb())
+      $action = sfContext::getInstance()->getActionName();
+      if ('customizingCss' != $action && !$response->hasHttpHeader('Pragma') && !$response->hasHttpHeader('Expires') && !$response->hasHttpHeader('Cache-Control'))
       {
         $response->setHttpHeader('Expires', sfWebResponse::getDate(577731600));
         $response->setHttpHeader('LastModified', sfWebResponse::getDate(time()));
 
         $response->addCacheControlHttpHeader('no-store');
         $response->addCacheControlHttpHeader('no-cache');
+        $response->addCacheControlHttpHeader('private');
+        $response->addCacheControlHttpHeader('max-age', 0);
         $response->addCacheControlHttpHeader('must-revalidate');
         $response->addCacheControlHttpHeader('post-check', 0);
         $response->addCacheControlHttpHeader('pre-check', 0);
