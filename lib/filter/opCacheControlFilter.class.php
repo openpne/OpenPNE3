@@ -26,11 +26,9 @@ class opCacheControlFilter extends sfFilter
   {
     $filterChain->execute();
 
-    $response = $this->getContext()->getResponse();
-    $request = $this->getContext()->getRequest();
-
     if (!headers_sent())
     {
+      $response = $this->getContext()->getResponse();
       if (!$response->hasHttpHeader('Pragma') && !$response->hasHttpHeader('Expires') && !$response->hasHttpHeader('Cache-Control'))
       {
         $response->setHttpHeader('Expires', sfWebResponse::getDate(577731600));
