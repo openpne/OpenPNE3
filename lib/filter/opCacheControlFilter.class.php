@@ -31,8 +31,7 @@ class opCacheControlFilter extends sfFilter
 
     if (!headers_sent())
     {
-      $action = sfContext::getInstance()->getActionName();
-      if ('customizingCss' != $action && !$response->hasHttpHeader('Pragma') && !$response->hasHttpHeader('Expires') && !$response->hasHttpHeader('Cache-Control'))
+      if (!$response->hasHttpHeader('Pragma') && !$response->hasHttpHeader('Expires') && !$response->hasHttpHeader('Cache-Control'))
       {
         $response->setHttpHeader('Expires', sfWebResponse::getDate(577731600));
         $response->setHttpHeader('LastModified', sfWebResponse::getDate(time()));
