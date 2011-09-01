@@ -22,7 +22,7 @@
             return h;
         },
 
-        // copied from tiny_mce/tiny_mce.js.src (ver 3.4.4), and does not use "t.editor"
+        // copied from tiny_mce/tiny_mce_src.js (ver 3.4.4)
         renderMenu : function() {
             var t = this, m, i = 0, s = t.settings, n, tb, tr, w, context;
 
@@ -50,20 +50,22 @@
                     style : {
                         backgroundColor : '#' + c
                     },
+                    // OpenPNE: Does not use t.editor
                     // 'title': t.editor.getLang('colors.' + c, c),
                     'data-mce-color' : '#' + c
                 });
 
-                if (t.editor && t.editor.forcedHighContrastMode) {
-                    n = DOM.add(n, 'canvas', { width: 16, height: 16, 'aria-hidden': 'true' });
-                    if (n.getContext && (context = n.getContext("2d"))) {
-                        context.fillStyle = '#' + c;
-                        context.fillRect(0, 0, 16, 16);
-                    } else {
-                        // No point leaving a canvas element around if it's not supported for drawing on anyway.
-                        DOM.remove(n);
-                    }
-                }
+                // OpenPNE: Does not use t.editor
+                // if (t.editor.forcedHighContrastMode) {
+                //     n = DOM.add(n, 'canvas', { width: 16, height: 16, 'aria-hidden': 'true' });
+                //     if (n.getContext && (context = n.getContext("2d"))) {
+                //         context.fillStyle = '#' + c;
+                //         context.fillRect(0, 0, 16, 16);
+                //     } else {
+                //         // No point leaving a canvas element around if it's not supported for drawing on anyway.
+                //        DOM.remove(n);
+                //     }
+                // }
             });
 
             if (s.more_colors_func) {
@@ -151,14 +153,13 @@
                         height: 12
                     });
 
-                    // Emoji input action. Use 'click' event (does not use 'mousedown' event).
-                    Event.add(n, 'click', function(e) {
+                    // Emoji input action.
+                    Event.add(n, 'mousedown', function(e) {
                         if (Prototype.Browser.IE) {
                             tinyMCE.execCommand("mceInsertContent", false, e.srcElement.getAttribute("alt"));
                         } else {
                             tinyMCE.execCommand("mceInsertContent", false, e.element().getAttribute("alt"));
                         }
-                        t.isMenuVisible = 1;
                     });
                 }
             }
@@ -219,6 +220,28 @@
             }
 
             t.isMenuVisible = 1;
+        },
+
+        // copied from tiny_mce/tiny_mce_src.js (ver 3.4.4)
+        hideMenu : function(e) {
+            var t = this;
+
+            // OpenPNE: Execute hideMenu regardless of value of t.isMenuVisible
+            // if (t.isMenuVisible) {
+            {
+                // Prevent double toogles by canceling the mouse click event to the button
+                if (e && e.type == "mousedown" && DOM.getParent(e.target, function(e) {return e.id === t.id + '_open';}))
+                    return;
+
+                if (!e || !DOM.getParent(e.target, '.mceSplitButtonMenu')) {
+                    DOM.removeClass(t.id, 'mceSplitButtonSelected');
+                    Event.remove(DOM.doc, 'mousedown', t.hideMenu, t);
+                    Event.remove(t.id + '_menu', 'keydown', t._keyHandler);
+                    DOM.hide(t.id + '_menu');
+                }
+
+                t.isMenuVisible = 0;
+            }
         },
 
         postRender : function() {
