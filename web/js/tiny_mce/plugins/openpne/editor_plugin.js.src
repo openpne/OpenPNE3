@@ -182,6 +182,7 @@
             return h;
         },
 
+        // copied from tiny_mce/tiny_mce_src.js (ver 3.4.4)
         showMenu : function() {
             var t = this, r, p, e, p2;
 
@@ -200,9 +201,14 @@
             DOM.show(t.id + '_menu');
             DOM.addClass(e, 'mceSplitButtonSelected');
             p2 = DOM.getPos(e);
+            // OpenPNE: Change the position of the emoji palette
+            var pp = DOM.get(t.id + '_menu');
             DOM.setStyles(t.id + '_menu', {
-                left : 720 - DOM.get(t.id + '_menu').clientWidth,
-                top : p2.y + e.clientHeight,
+                // left : p2.x,
+                // top : p2.y + e.clientHeight,
+                // zIndex : 200000
+                left : Math.max(p2.x - ((pp.clientWidth - e.clientWidth) / 2), 0),
+                top : Math.max(p2.y - pp.clientHeight, 0),
                 zIndex : 150
             });
             e = 0;
