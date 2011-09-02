@@ -131,7 +131,7 @@
             var t = this, m, i = 0, s = t.settings, n, tb, tr, w;
 
             w = DOM.add(s.menu_container, 'div', {id : t.id + '_menu', dir : 'ltr', 'class' : s['menu_class'] + ' ' + s['class'],
-                style : 'position:absolute;left:0;top:-1000px;width:402px;margin-left:-201px'});
+                style : 'position:absolute;left:0;top:-1000px;width:402px;'});
             m = DOM.add(w, 'div', {'class' : s['class'] + ' mceSplitButtonMenu'});
             DOM.add(m, 'span', {'class' : 'mceMenuLine'});
 
@@ -201,8 +201,8 @@
             DOM.addClass(e, 'mceSplitButtonSelected');
             p2 = DOM.getPos(e);
             DOM.setStyles(t.id + '_menu', {
-                left : '50%',
-                top : p2.y - DOM.get(t.id + '_menu').clientHeight,
+                left : 720 - DOM.get(t.id + '_menu').clientWidth,
+                top : p2.y + e.clientHeight,
                 zIndex : 150
             });
             e = 0;
