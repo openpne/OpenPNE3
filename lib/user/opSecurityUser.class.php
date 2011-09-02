@@ -400,27 +400,10 @@ class opSecurityUser extends opAdaptableUser
 
   public function setRegisterToken($token)
   {
-    $member = Doctrine::getTable('Member')->findByRegisterToken($token);
+    $member = Doctrine::getTable('Member')->findByValidRegisterToken($token);
     if (!$member)
     {
       return false;
-    }
-
-    if (!is_null($member->getConfig("pc_address_pre")))
-    {
-      $preMailType = "pc_address_pre";
-    }
-    elseif (!is_null($member->getConfig("mobile_address_pre")))
-    {
-      $preMailType = "mobile_address_pre";
-    }
-    if (isset($preMailType)) 
-    {
-      $latestMember = Doctrine::getTable('Member')->getLatestByAddressPre($preMailType, $member->getConfig($preMailType));
-      if ($member->getId() !== $latestMember->getId())
-      {
-        return false;
-      }
     }
 
     $this->setMemberId($member->getId());
