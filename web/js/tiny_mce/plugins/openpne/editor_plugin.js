@@ -11,7 +11,7 @@ DOM.addClass(m,'mceColorSplitMenu');return w;},renderHTML:function(){var s=this.
 return h;},showMenu:function(){var t=this,r,p,e,p2;if(t.isDisabled())
 return;if(!t.isMenuRendered){t.renderMenu();t.isMenuRendered=true;}
 if(t.isMenuVisible)
-return t.hideMenu();e=DOM.get(t.id);DOM.show(t.id+'_menu');DOM.addClass(e,'mceSplitButtonSelected');p2=DOM.getPos(e);DOM.setStyles(t.id+'_menu',{left:720-DOM.get(t.id+'_menu').clientWidth,top:p2.y+e.clientHeight,zIndex:150});e=0;Event.add(DOM.doc,'mousedown',t.hideMenu,t);t.onShowMenu.dispatch(t);if(t._focused){t._keyHandler=Event.add(t.id+'_menu','keydown',function(e){if(e.keyCode==27)
+return t.hideMenu();e=DOM.get(t.id);DOM.show(t.id+'_menu');DOM.addClass(e,'mceSplitButtonSelected');p2=DOM.getPos(e);var pp=DOM.get(t.id+'_menu');DOM.setStyles(t.id+'_menu',{left:Math.max(p2.x-((pp.clientWidth-e.clientWidth)/2),0),top:Math.max(p2.y-pp.clientHeight,0),zIndex:150});e=0;Event.add(DOM.doc,'mousedown',t.hideMenu,t);t.onShowMenu.dispatch(t);if(t._focused){t._keyHandler=Event.add(t.id+'_menu','keydown',function(e){if(e.keyCode==27)
 t.hideMenu();});DOM.select('a',t.id+'_menu')[0].focus();}
 t.isMenuVisible=1;},hideMenu:function(e){var t=this;{if(e&&e.type=="mousedown"&&DOM.getParent(e.target,function(e){return e.id===t.id+'_open';}))
 return;if(!e||!DOM.getParent(e.target,'.mceSplitButtonMenu')){DOM.removeClass(t.id,'mceSplitButtonSelected');Event.remove(DOM.doc,'mousedown',t.hideMenu,t);Event.remove(t.id+'_menu','keydown',t._keyHandler);DOM.hide(t.id+'_menu');}
