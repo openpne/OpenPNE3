@@ -161,12 +161,14 @@ class MemberTable extends opAccessControlDoctrineTable
       return false;
     }
 
+    $configTable = Doctrine::getTable('MemberConfig');
+
     $mailTypes = array("pc_address", "pc_address_pre", "mobile_address", "mobile_address_pre");
-    $query = Doctrine::getTable('MemberConfig')
-      ->createQuery('m');
+    $query = $configTable->createQuery('m');
     foreach ($mailTypes as $mailType)
     {
-      $query->orWhere('m.value = ?', $member->getConfig($mailType));
+      $hash = $configTable->generateNameValueHash($mailType, $member->getConfig($mailType));
+      $query->orWhere('m.name_value_hash = ?', $hash);
     }
     $configs = $query->fetchArray();
 
@@ -175,7 +177,7 @@ class MemberTable extends opAccessControlDoctrineTable
     foreach ($configs as $config)
     {
       $memberIds[] = $memberId = $config['member_id'];
-      $updateTimes[] = Doctrine::getTable('MemberConfig')
+      $updateTimes[] = $configTable
         ->createQuery('m')
         ->where('m.member_id = ?', $memberId)
         ->AndWhere('m.name = "register_token"')
