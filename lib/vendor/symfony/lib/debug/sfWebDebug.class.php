@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage debug
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWebDebug.class.php 27284 2010-01-28 18:34:57Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfWebDebug.class.php 31254 2010-10-26 15:26:03Z fabien $
  */
 class sfWebDebug
 {
@@ -154,14 +154,33 @@ class sfWebDebug
    */
   public function injectToolbar($content)
   {
-    $content = str_ireplace('</head>', '<style type="text/css">'.str_replace(array("\r", "\n"), ' ', $this->getStylesheet()).'</style></head>', $content);
+    if (function_exists('mb_stripos'))
+    {
+      $posFunction = 'mb_stripos';
+      $posrFunction = 'mb_strripos';
+      $substrFunction = 'mb_substr';
+    }
+    else
+    {
+      $posFunction = 'stripos';
+      $posrFunction = 'strripos';
+      $substrFunction = 'substr';
+    }
+
+    if (false !== $pos = $posFunction($content, '</head>'))
+    {
+      $styles = '<style type="text/css">'.str_replace(array("\r", "\n"), ' ', $this->getStylesheet()).'</style>';
+      $content = $substrFunction($content, 0, $pos).$styles.$substrFunction($content, $pos);
+    }
 
     $debug = $this->asHtml();
-    $count = 0;
-    $content = str_ireplace('</body>', '<script type="text/javascript">'.$this->getJavascript().'</script>'.$debug.'</body>', $content, $count);
-    if (!$count)
+    if (false === $pos = $posrFunction($content, '</body>'))
     {
       $content .= $debug;
+    }
+    else
+    {
+      $content = $substrFunction($content, 0, $pos).'<script type="text/javascript">'.$this->getJavascript().'</script>'.$debug.$substrFunction($content, $pos);
     }
 
     return $content;
