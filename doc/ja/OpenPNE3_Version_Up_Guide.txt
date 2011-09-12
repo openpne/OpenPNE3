@@ -41,8 +41,7 @@ config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.cla
 
 ::
 
-  $ cp -aur /path/to/old/OpenPNE3/plugins/* /path/to/new/OpenPNE3/plugins
-  $ cp -aur /path/to/old/OpenPNE3/plugins/.* /path/to/new/OpenPNE3/plugins
+  $ cp -au /path/tp/old/OpenPNE3/plugins/. /path/to/new/OpenPNE3/plugins
 
 モデルの再構築
 ~~~~~~~~~~~~~~
