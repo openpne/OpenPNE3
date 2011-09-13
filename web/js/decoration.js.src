@@ -123,6 +123,7 @@ function op_mce_show_color_table(id, tagname)
 
   button_container.appendChild(table);
   button_container.style.position = "relative";
+  button.style.display = "inline-block";
 
   var buttonContainerPosition = Position.cumulativeOffset(button_container);
   var buttonPosition = Position.cumulativeOffset(button);
