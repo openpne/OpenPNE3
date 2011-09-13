@@ -57,7 +57,11 @@ class opPluginManager extends sfSymfonyPluginManager
     parent::__construct($dispatcher, $environment);
 
     // register OpenPNE for dependencies
-    $this->registerOpenPNEPackage();
+    try
+    {
+      $this->registerOpenPNEPackage();
+    }
+    catch (sfPluginException $e) {}
   }
 
   public function getChannel()
