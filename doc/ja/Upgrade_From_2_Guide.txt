@@ -104,6 +104,16 @@ config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.cla
 
 * fix_old_image_data のコンバートで「Allowed memory size of xxxx bytes exhausted ... 」というようなエラーメッセージとともに失敗する場合、 php.ini の memory_limit ディレクティブの設定を見直すか、それが難しい場合は config/config.OpenPNE2.php の IMAGE_MAX_FILESIZE の設定値を大きな値に設定してください
 
+* OpenPNE2 に Google のAPIキーを設定している場合、 OpenPNE3 の管理画面で再設定する必要があります。
+
+   1. OpenPNE2 の config.php に記述してある Google Maps API key と Google AJAX Search API key をコピーします。
+
+   2. OpenPNE3 の管理画面( /pc_backend.php )を開いて、 「SNS設定」 -> 「APIキーの設定」( /pc_backend.php/sns/config/category/api_keys ) を開きます。
+
+   3. Google Maps API key と Google AJAX Search API key のテキストボックス内に、先程コピーしたAPIキーを貼り付けます。
+
+   4. 「設定変更」ボタンを押します。
+
 * 2.12, 2.14 の以下の機能に関するデータの変換は OpenPNE3 側で未実装なため対応していません
 
   * BIZ 関連機能
