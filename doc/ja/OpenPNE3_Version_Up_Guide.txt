@@ -80,3 +80,16 @@ http://www.openpne.jp/archives/5689/
   $ ./symfony openpne:fix-session-db
 
 以上でバージョンアップは完了です。
+
+注意事項
+========
+
+バージョンアップに際していくつか注意事項があります。
+
+* 3.6beta11以前からのバージョンアップ時にメンバーの設定画面(member/config)において下記の３つの項目が表示されなくなるため，使用する場合には管理画面(pc_backend.php/sns/config/category/general)より「使用する」を選択する必要があります。
+
+  * 言語とタイムゾーンの設定
+  * 外部サービスとの接続設定
+  * OpenID の設定
+
+
