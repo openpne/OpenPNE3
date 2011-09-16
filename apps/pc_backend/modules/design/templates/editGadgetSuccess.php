@@ -49,7 +49,7 @@ function deleteGadget(type, id)
 
 <dl>
 <dt>
-<?php echo $config['caption']['ja_JP'] ?><br />
+<?php echo __($config['caption']['ja_JP']) ?><br />
 <?php echo link_to_function(__('このガジェットを削除する'), 'deleteGadget(\''.$gadget->getType().'\', \''.$gadget->getId().'\')') ?>
 </dt>
 <dd><?php echo __($config['description']['ja_JP']) ?></dd>

@@ -52,10 +52,10 @@ function insertGadget(type, id, caption)
 <?php if ($config) : ?>
 <?php foreach ($config as $key => $value) : ?>
 <dt>
-<?php echo $value['caption']['ja_JP'] ?><br />
+<?php echo __($value['caption']['ja_JP']) ?><br />
 <?php echo link_to_function(__('このガジェットを追加する'), 'insertGadget(\''.$type.'\', \''.escape_javascript($key).'\', \'' . escape_javascript($value['caption']['ja_JP']) . '\')') ?>
 </dt>
-<dd><?php echo $value['description']['ja_JP'] ?></dd>
+<dd><?php echo __($value['description']['ja_JP']) ?></dd>
 <?php endforeach; ?>
 <?php else: ?>
 <dt><?php echo __('ガジェットがありません') ?></dt>
