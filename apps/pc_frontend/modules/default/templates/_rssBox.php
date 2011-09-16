@@ -4,7 +4,12 @@
 <div class="block">
 <ul class="articleList">
 <?php foreach ($result[1] as $entry): ?>
-<li><span class="date"><?php echo op_format_date($entry['date'], 'XShortDateJa') ?></span>
+<?php if ('' === $entry['date']): ?>
+<?php   $dateStr = __("Unknown Day");?>
+<?php else: ?>
+<?php   $dateStr = op_format_date($entry['date'], 'XShortDateJa');?>
+<?php endif; ?>
+<li><span class="date"><?php echo $dateStr ?></span>
 <?php echo link_to($entry['title'], $entry['link']) ?>
 </li>
 <?php endforeach; ?>
