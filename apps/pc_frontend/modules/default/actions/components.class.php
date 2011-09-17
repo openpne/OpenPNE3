@@ -98,7 +98,7 @@ class defaultComponents extends sfComponents
     try
     {
       $fetcher = new opRssFetcher('UTF-8');
-      $this->result = @$fetcher->fetch(sfOutputEscaper::unescape($this->gadget)->getConfig('url'), true);
+      $this->result = @$fetcher->fetch($this->gadget->getConfig('url'), true);
       if ($this->result)
       {
         $this->result[1] = array_slice($this->result[1], 0, 5);
