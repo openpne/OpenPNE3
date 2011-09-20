@@ -529,13 +529,12 @@
                 s = s.replace(re, str);
             };
 
-            if (!tinymce.isWebKit) {  // not safari
-                s = tinymce.trim(s);
-                rep('/<(\/?)strong>/gi', '<\1b>');
-                rep('/<(\/?)strike>/gi', '<\1s>');
-                rep('/<(\/?)em>/gi', '<\1i>');
-                editor.dom.setHTML(editor.getBody(), s);
-            }
+            // all browsers
+            s = tinymce.trim(s);
+            rep('/<(\/?)strong>/gi', '<\1b>');
+            rep('/<(\/?)strike>/gi', '<\1s>');
+            rep('/<(\/?)em>/gi', '<\1i>');
+            editor.dom.setHTML(editor.getBody(), s);
 
             function convertHtmlTagToDecoTag(doc, tagname)
             {
@@ -587,7 +586,7 @@
                             tagList = doc.getElementsByTagName(org_tagname);
                             continue;
                         }
-                    } else if (org_tagname == 'span') {  // for safari
+                    } else if (org_tagname == 'span') {
                         if (targetObj.style.fontWeight == 'bold') {
                             tagname = 'op:b';
                         } else if (targetObj.style.textDecoration == 'underline') {
