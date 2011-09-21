@@ -647,7 +647,7 @@
                 rep(/<(\/?):?op(b|u|s|i|font|large|small|color)/gi, '<$1op:$2');
             }
 
-            rep(/<br\s?\/?[^>]*>/gi,"\n\n");
+            rep(/<br\s?\/?[^>]*>/gi,"\n");
             rep(/&nbsp;/gi," ");
             rep(/&quot;/gi,"\"");
             rep(/&lt;/gi,"<");
