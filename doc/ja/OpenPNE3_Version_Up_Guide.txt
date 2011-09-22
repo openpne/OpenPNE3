@@ -55,7 +55,7 @@ OpenPNE.yml の設定値を環境に合わせて変更してください。特�
 
 ::
 
-  $ cp -au /path/to/old/OpenPNE3/plugins/. /path/to/new/OpenPNE3/plugins
+  $ cp -an /path/to/old/OpenPNE3/plugins/. /path/to/new/OpenPNE3/plugins
 
 モデルの再構築
 ~~~~~~~~~~~~~~
