@@ -51,7 +51,7 @@ OpenPNE 3.6 の config/ProjectConfiguration.class.php.sample を config/ProjectC
 
 ::
 
-  $ cp -au /path/tp/old/OpenPNE3/plugins/. /path/to/new/OpenPNE3/plugins
+  $ cp -au /path/to/old/OpenPNE3/plugins/. /path/to/new/OpenPNE3/plugins
 
 モデルの再構築
 ~~~~~~~~~~~~~~
