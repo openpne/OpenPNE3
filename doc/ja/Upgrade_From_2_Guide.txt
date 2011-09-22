@@ -62,7 +62,13 @@ config/ProjectConfiguration.class.php.sample を config/ProjectConfiguration.cla
 
   $ cp /path/to/OpenPNE3/config/ProjectConfiguration.class.php.sample /path/to/OpenPNE3/config/ProjectConfiguration.class.php
 
-次に、 OpenPNE2 の config.php を config/config.OpenPNE2.php としてコピーします::
+次に、config/OpenPNE.yml.sample を config/OpenPNE.yml としてコピーします。
+
+  $ cp /path/to/OpenPNE3/config/OpenPNE.yml.sample /path/to/OpenPNE3/config/OpenPNE.yml
+
+その際、 OpenPNE.yml の設定値は OpenPNE2 の config.php に合わせて変更してください。特に base_url と mail_domain はメール投稿、メール配信の際に利用されるので必ず設定をおこなってください。
+
+OpenPNE2 の config.php を config/config.OpenPNE2.php としてコピーします::
 
   $ cp /path/to/OpenPNE2/config.php /path/to/OpenPNE3/config/config.OpenPNE2.php
 
