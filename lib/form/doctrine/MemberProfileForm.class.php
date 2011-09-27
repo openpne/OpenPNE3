@@ -163,6 +163,9 @@ class MemberProfileForm extends BaseForm
       $this->widgetSchema[$profile->getName()] = new opWidgetFormProfile($widgetOptions);
       $this->validatorSchema[$profile->getName()] = new opValidatorProfile($validatorOptions);
 
+      $this->widgetSchema[$profile->getName()]->profile = $profile;
+      $this->validatorSchema[$profile->getName()]->profile = $profile;
+
       $this->widgetSchema->setHelp($profile->getName(), $profileWithI18n['info']);
       if ($profile->isPreset())
       {

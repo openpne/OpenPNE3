@@ -43,7 +43,7 @@ class opValidatorProfile extends sfValidatorBase
       {
         throw new sfValidatorError($this, 'invalid');
       }
-      $validator = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('Profile')->getPublicFlags())));
+      $validator = new sfValidatorChoice(array('choices' => array_keys($this->profile->getPublicFlags())));
       $clean['public_flag'] = $validator->clean($value['public_flag']);
     }
 
