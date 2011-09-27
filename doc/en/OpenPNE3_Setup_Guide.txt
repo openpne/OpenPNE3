@@ -1,48 +1,44 @@
-How to Install OpenPNE3.1
+=========================
+How to Setup OpenPNE3.6
 =========================
 
-Getting Started
----------------
+Introduction
+==============
 
-This document is for OpenPNE 3.1.
+This document is for OpenPNE 3.6.
 
 OpenPNE 3 should work under the following server environment.
 
 Web Server
   Apache
-    * The "mod_rewrite" module must be enabled
+    * The "mod_rewrite" module is available
 PHP
-  PHP version is >= 5.2.3
-    * The "mbstring" module must be enabled
-    * The "xml" module must be enabled
-    * The "PCRE" module must be enabled (That must be support UTF-8)
-    * The "PDO" module must be enabled (It must contains DBMS drivers that you want to use)
-    * The "JSON" module must be enabled
-    * The GD library must be usable from PHP (That must be support JPEG, GIF and PNG)
-    * The "mcrypt" module should be enabled
-    * The "APC" module should be enabled
+  PHP version 5.2.3 or later
+    * The "mbstring" module is available
+    * The "xml" module is available
+    * The "PCRE" module is available (That must be support UTF-8)
+    * The "PDO" module is available (containing DBMS drivers that you want to use)
+    * The "JSON" module is available
+    * The GD library is available from PHP (That must be support JPEG, GIF and PNG)
+    * The "mcrypt" module recommendation
+    * The "APC" module recommendation
 Database Server
-  MySQL4.1+ (Recommended 5.1)
+  MySQL4.1 or later (5.1 or greater recommended)
   
-  PostgreSQL and SQLite are not now supported (They will be supported in the future)
+  At this time, PostgreSQL and SQLite are not supported (They will be supported in the future)
 
-Download Package and Install It
--------------------------------
+Setup
+======
 
-Download
-~~~~~~~~
+Downloading OpenPNE 3
+-----------------------
 
-Please download a package of OpenPNE 3.1 from the following URL.
+Download a package of OpenPNE 3 from the following URL.
 
-3.1.0 - 3.1.2
-  https://sourceforge.net/project/showfiles.php?group_id=174268&package_id=307735
-3.1.3 +
-  http://github.com/openpne/OpenPNE3/downloads
-
-And unzip the zip file.
+http://www.openpne.jp/pne-downloads/
 
 Setting Files
-~~~~~~~~~~~~~
+------------
 
 Set the files to be the following structure:
 
@@ -62,189 +58,141 @@ Set the files to be the following structure:
   +-- symfony
   +-- test/
   
-  (It can be accessable from web browser)
-  +-- web/  (This directory name can be changed)
+  (You can access from web browser)
+  +-- web/ (This directory name can be changed)
       +-- index.php
       +-- js/
       +-- mobile_frontend.php
       +-- pc_backend.php
         :
 
-Setting the HTTP proxy
-~~~~~~~~~~~~~~~~~~~~~~
+Copying Config Files
+-------------------
 
-If you want to use HTTP proxy, change the "op_http_proxy" configuration in your config/ProjectConfiguration.class.php.
+Copy config files as follows
 
 ::
 
-  //HTTP proxy to use when downloading plugin packages
-  sfConfig::set('op_http_proxy', 'example.com:8080');
+  $ cd OpenPNE3
+  $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
+  $ cp config/OpenPNE.yml.sample config/OpenPNE.yml
+  
+Then you should change the config values in OpenPNE.yml as your environment.
+Make sure you set "base_url" and "mail_domain", because they are used for
+posting and delivering mail.
 
-Executing Install Command
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Install Command Execution
+-------------------------
 
 Execute the following command to begin installing process.
 
 ::
 
   $ ./symfony openpne:install
- 
-If you execute the command, you will be required inputing the following:
+  
+This command is deleting and rebuilding database. 
+Using the databases sharing the other system  (if you are not happy with deleting database), you should execute the following
 
-*  DBMS (mysql, pgsql or sqlite, but we are now only support MySQL)
-*  Database Username
-*  Database Password
-*  Database Hostname
-*  (If you inputed "MySQL" for the DBMS and "localhost" for the hostname, ) Database Socket Path
+::
 
-Installing will be started automatically based on your inputted information.
+  $ ./symfony openpne:install --non-recreate-db
+  
+This option attempts to remove the old tables in proper order by considering the new one.
+It is strongly recommended to set prefixes with the tables used by OpenPNE in "OpenPNE.yml" for avoiding deleting tables of other system unexpectedly or failing deleting tables.
 
-Delete the development files
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+※Take care with their prefixes that avoid conflicting table names shared with the other system.
+
+::
+
+  table_prefix: "op_"
+  
+After Running "openpne:install", you will be required inputing the following:
+
+* DBMS (mysql, pgsql or sqlite, but we are now only support MySQL)
+* Database Username
+* Database Password
+* Database Hostname
+* (If you inputed "MySQL" for the DBMS and "localhost" for the hostname, )
+* Database Socket Path
+
+After that OpenPNE automatically installed.
+
+Delete the Development Files
+------------------------------
 
 ::
 
   $ ./symfony project:clear-controllers
 
-Configuring mod_rewrite
-~~~~~~~~~~~~~~~~~~~~~~~
+mod_rewrite Configuration
+---------------------------
 
 Configure the RewriteBase setting in your web/.htaccess for your environment (It may not be needed).
 
 ::
 
-  RewriteBase /                            # Or /web
+  RewriteBase / # Or /web
 
-RewriteBase is must be absoulte path of URL.
+※Specify an absoulte path of URL in  the RewriteBase.
+
+Email Delivery Setting
+------------------------
+
+Set for the deliver of email. If you don't use this function, You can skip over this chapter.
+
+Setting Example
++++++++++++++++++
+
+Grant a privilege to cron file.
+
+::
+
+  $ chmod -R 0755 bin/*.cron
+
+In /etc/crontab, write:
+
+::
+
+  # Delivering the daily news /path/to/OpenPNE3 by running the script
+  # /path/to/OpenPNE3/bin/send_daily_news.cron on /path/to/php at 6.
+  00 6 * * * root sh /path/to/OpenPNE3/bin/send_daily_news.cron /path/to/OpenPNE3 /path/to/php
+  
+  # Delivering the birthday notification /path/to/OpenPNE3 by running the script /path/to/OpenPNE3/bin/birthday_mail.cron on /path/to/php at 6.
+  00 6 * * * root sh /path/to/OpenPNE3/bin/birthday_mail.cron /path/to/OpenPNE3 /path/to/php
+
+As well the contents of the daily news is nothing in default.
+
+Select contents provided by the plugin of the daily news in gadget settings within Administration page(http://example.com/pc_backend.php), when you use delivering email.
+
+Posting Email Setting
+-----------------------
+
+Set for posting email. If you don't use this function, You can skip over this chapter.
+
+Setting example (when Postfix is used)
+++++++++++++++++++++++++++++++++++++++++
+
+In /etc/postfix/virtual, set::
+
+  example.com anything
+  @example.com openpne_user
+
+In /etc/aliases, set::
+
+  openpne_user: "| php /path/to/openpne/symfony openpne:execute-mail-action"
 
 Access from Web Browser (PC)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 (1) Access http://example.com/index.php
 (2) Input sns@example.com / password to login form, and make sure you to log in
 
-You must change the default email address and password.
+※You have to change the default email address and password.
 
 Access form Web Browser (Backend)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 (1) Access http://example.com/pc_backend.php
 (2) Input admin / password to login form, and make sure you to log in
 
-You must change the default account and password.
-
-Getting from Git and Setup It (3.1.3 +)
----------------------------------------
-
-Clone OpenPNE3
-~~~~~~~~~~~~~~
-
-::
-
-  $ git clone git://github.com/openpne/OpenPNE3.git
-
-Copy the config/ProjectConfiguration.class.php
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-  $ cd OpenPNE3
-  $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
-
-Setting the HTTP proxy
-~~~~~~~~~~~~~~~~~~~~~~
-
-If you want to use HTTP proxy, change the "op_http_proxy" configuration in your config/ProjectConfiguration.class.php.
-
-::
-
-  //HTTP proxy to use when downloading plugin packages
-  sfConfig::set('op_http_proxy', 'example.com:8080');
-
-Installing
-~~~~~~~~~~
-
-Execute the following command.
-
-::
-
-  $ ./symfony openpne:install
-
-Access from Web Browser (PC)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-(1) Access http://example.com/index.php
-(2) Input sns@example.com / password to login form, and make sure you to log in
-
-You must change the default email address and password.
-
-Access form Web Browser (Backend)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-(1) Access http://example.com/pc_backend.php
-(2) Input admin / password to login form, and make sure you to log in
-
-You must change the default account and password.
-
-Check out from SVN and Setup It (3.1.0 - 3.1.2)
------------------------------------------------
-
-The following assumes the you have already installed symfony 1.2.
-
-Checkout OpenPNE3
-~~~~~~~~~~~~~~~~~
-
-::
-
-  $ svn co https://trac.openpne.jp/svn/OpenPNE3/tags/OpenPNE-3.1.0/
-
-Configure config/ProjectConfiguration.class.php
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-  $ cd OpenPNE-3.1.0
-  $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
-  $ vi config/ProjectConfiguration.class.php
-
-Replace ##SYMFONY_LIB_DIR## to the path to libraries of symfony.
-(e.g. /usr/share/php/data/symfony)
-
-::
-
-    require_once '##SYMFONY_LIB_DIR##/autoload/sfCoreAutoload.class.php';
-
-Setting the HTTP proxy
-~~~~~~~~~~~~~~~~~~~~~~
-
-If you want to use HTTP proxy, change the "op_http_proxy" configuration in your config/ProjectConfiguration.class.php.
-
-::
-
-  //HTTP proxy to use when downloading plugin packages
-  sfConfig::set('op_http_proxy', 'example.com:8080');
-
-Installing
-~~~~~~~~~~
-
-Execute the following command.
-
-::
-
-  $ ./symfony openpne:install
-
-Access from Web Browser (PC)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-(1) Access http://example.com/index.php
-(2) Input sns@example.com / password to login form, and make sure you to log in
-
-You must change the default email address and password.
-
-Access form Web Browser (Backend)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-(1) Access http://example.com/pc_backend.php
-(2) Input admin / password to login form, and make sure you to log in
-
-You must change the default account and password.
+※You have to change the default account and password.

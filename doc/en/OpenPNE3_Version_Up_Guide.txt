@@ -1,65 +1,76 @@
-How to Update OpenPNE3.3
-========================
+How to Update OpenPNE3.6
+==========================
 
-Getting Started
----------------
+Introduction
+--------------
 
-This document is for updating OpenPNE 3.2.0 + to OpenPNE 3.3.x.
+This document is for all of the version OpenPNE 3.2.0 or later to OpenPNE 3.6.x.
 
-You should backup database before your updating.
+※You should backup database before updating.
 
-Plan
-----
+Index
+-------
 
-The updating plan is the following:
+Update is the following way:
 
 (1) Setting files
 (2) Update the configuration file
 (3) Execute the updating command
 
-The Way to Work
----------------
+Update process
+----------------
 
 Setting Files
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 Set the OpenPNE 3.3 files to your web server.
 
-You must change the files from the old to avoid troubles by mixing the new with the old.
+Avoiding problems with mixing the old and new files, you have to change all of the files instead of overwriting.
 
-Update the configuration file
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Update the Configuration File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Copy config/ProjectConfiguration.class.php.sample to config/ProjectConfiguration.class.php.
-
-If you write your original configuration to your old config/ProjectConfiguration.class.php, you should change the new file.
-
-And copy the old config/database.yml to new config/database.yml.
-
-Copy the Plugin Directory
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Copy the contents in old plugins.
+Copy config files in OpenPNE 3.6 as follows:
 
 ::
 
-  $ cp -aur /path/to/old/OpenPNE3/plugins/* /path/to/new/OpenPNE3/plugins
-  $ cp -aur /path/to/old/OpenPNE3/plugins/.* /path/to/new/OpenPNE3/plugins
+  $ cd /path/to/new/OpenPNE3
+  $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
+  $ cp config/OpenPNE.yml.sample config/OpenPNE.yml
+
+※If you write your original configuration to your old config/ProjectConfiguration.class.php, you should change the new file referring to the old one.
+
+And copy the old config/database.yml to new config/database.yml.
+
+::
+
+  $ cp /path/to/old/OpenPNE3/config/databases.yml /path/to/new/OpenPNE3/config/databases.yml
+  
+Copy the Plugin Directory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Copy the old directory plugins to new.
+
+::
+
+  $ cp -an /path/to/old/OpenPNE3/plugins/. /path/to/new/OpenPNE3/plugins
 
 Re-build Models
-~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
-Execute the following command in the project root directory.
+In the project root directory, execute:
 
 ::
 
   $ ./symfony doctrine:build-model
   $ ./symfony cc
+  
+The next "Execute the Updating Command" requires these process.
 
 Execute the Updating Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Execute the following command in the project root directory.
+In the project root directory, execute:
 
 ::
 
@@ -68,7 +79,7 @@ Execute the following command in the project root directory.
 
 This command will update OpenPNE and plugins to newer version.
 
-Please execute the following command if your using version is less than or equal to OpenPNE 3.4.9, OpenPNE 3.2.7.2 or OpenPNE 3.6beta6.
+You have to execute the following command if your using version is earlier than or equal to OpenPNE 3.4.9, OpenPNE 3.2.7.2 or OpenPNE 3.6beta6.
 
 Please check the following blog post before performing the command.
 
@@ -78,4 +89,15 @@ http://www.openpne.jp/archives/5689/
 
   $ ./symfony openpne:fix-session-db
 
-Now, updating has been done.
+Now you are all updating.
+
+Note
+======
+
+Here are some notes in updating.
+
+* Updating from 3.6beta11 or earlier, you cannot get the followings. If you use them, you have to set "Use" in administration page(pc_backend.php/sns/config/category/general).
+
+  * Language and Time Zone Configuration
+  * Connecting with External Application
+  * OpenID Configuration
