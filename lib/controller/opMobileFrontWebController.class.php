@@ -68,6 +68,12 @@ class opMobileFrontWebController extends opFrontWebController
   */
   public function redirect($url, $delay = 0, $statusCode = 302)
   {
+    // absolute URL or symfony URL?
+    if (is_string($url) && preg_match('#^[a-z][a-z0-9\+.\-]*\://#i', $url))
+    {
+      return parent::redirect($url, $delay, $statusCode);
+    }
+
     $url = $this->genUrl($url, true);
 
     if (!$this->context->getRequest()->isCookie())
