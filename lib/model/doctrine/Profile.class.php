@@ -133,4 +133,15 @@ class Profile extends BaseProfile
       ->orderBy('sort_order')
       ->execute();
   }
+
+  public function getPublicFlags($isI18n = true)
+  {
+    $publicFlags = Doctrine::getTable('profile')->getPublicFlags($isI18n);
+    if (!$this['is_public_web'])
+    {
+      unset($publicFlags[ProfileTable::PUBLIC_FLAG_WEB]);
+    }
+
+    return $publicFlags;
+  }
 }
