@@ -113,7 +113,7 @@ After Running "openpne:install", you will be required inputing the following:
 * The Database Username
 * The Database Password(optional)
 * The Database Hostname(localhost, etc)
-* The Database Port Number
+* The Database Port Number(optional)
 * (If you inputed "MySQL" for the DBMS and "localhost" for the hostname, )The Database Socket Path(optional)
 
 After that OpenPNE automatically installed.
