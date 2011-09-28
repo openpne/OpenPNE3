@@ -100,7 +100,7 @@ Using the databases sharing the other system  (if you are not happy with deletin
 This option attempts to remove the old tables in proper order by considering the new one.
 It is strongly recommended to set prefixes with the tables used by OpenPNE in "OpenPNE.yml" for avoiding deleting tables of other system unexpectedly or failing deleting tables.
 
-※Take care with their prefixes that avoid conflicting table names shared with the other system.
+※Take care with their prefixes that avoid conflicting table names shared with the other system. And they are not for installing multiple OpenPNEs per identical database.
 
 ::
 
@@ -110,10 +110,9 @@ After Running "openpne:install", you will be required inputing the following:
 
 * DBMS (mysql, pgsql or sqlite, but we are now only support MySQL)
 * Database Username
-* Database Password
-* Database Hostname
-* (If you inputed "MySQL" for the DBMS and "localhost" for the hostname, )
-* Database Socket Path
+* Database Password(optional)
+* Database Hostname(localhost, etc)
+* (If you inputed "MySQL" for the DBMS and "localhost" for the hostname, )Database Socket Path(optional)
 
 After that OpenPNE automatically installed.
 
