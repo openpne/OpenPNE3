@@ -1,5 +1,5 @@
-How to Update OpenPNE3.6
-==========================
+OpenPNE3.6 Update Process
+=========================
 
 Introduction
 --------------
