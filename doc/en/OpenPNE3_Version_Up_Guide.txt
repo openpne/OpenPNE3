@@ -23,7 +23,7 @@ Update process
 Setting Files
 ~~~~~~~~~~~~~~~
 
-Set the OpenPNE 3.3 files to your web server.
+Set the OpenPNE 3.6 files to your web server.
 
 Avoiding problems with mixing the old and new files, you have to change all of the files instead of overwriting.
 
@@ -79,7 +79,7 @@ In the project root directory, execute:
 
 This command will update OpenPNE and plugins to newer version.
 
-You have to execute the following command if your using version is earlier than or equal to OpenPNE 3.4.9, OpenPNE 3.2.7.2 or OpenPNE 3.6beta6.
+You have to execute the following command if your using version is earlier than or equal to OpenPNE 3.2.7.2, OpenPNE 3.4.9 or OpenPNE 3.6beta6.
 
 Please check the following blog post before performing the command.
 
