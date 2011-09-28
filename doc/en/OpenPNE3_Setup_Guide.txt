@@ -108,11 +108,13 @@ It is strongly recommended to set prefixes with the tables used by OpenPNE in "O
   
 After Running "openpne:install", you will be required inputing the following:
 
-* DBMS (mysql, pgsql or sqlite, but we are now only support MySQL)
-* Database Username
-* Database Password(optional)
-* Database Hostname(localhost, etc)
-* (If you inputed "MySQL" for the DBMS and "localhost" for the hostname, )Database Socket Path(optional)
+* The DBMS (mysql, pgsql or sqlite, but we are now only support MySQL)
+* The Database Name
+* The Database Username
+* The Database Password(optional)
+* The Database Hostname(localhost, etc)
+* The Database Port Number
+* (If you inputed "MySQL" for the DBMS and "localhost" for the hostname, )The Database Socket Path(optional)
 
 After that OpenPNE automatically installed.
 
