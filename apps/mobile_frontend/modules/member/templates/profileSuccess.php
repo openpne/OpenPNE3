@@ -56,7 +56,7 @@ foreach ($member->getProfiles(true) as $profile)
     continue;
   }
 
-  if ($profile->getFormType() === 'textarea')
+  if ('textarea' === $profile->getFormType())
   {
     $value = op_auto_link_text_for_mobile((string)$profile);
   }
@@ -64,7 +64,7 @@ foreach ($member->getProfiles(true) as $profile)
   {
     $presetConfig = $profile->getProfile()->getPresetConfig();
     $caption = __($presetConfig['Caption']);
-    if ($profile->getFormType() === 'country_select')
+    if ('country_select' === $profile->getFormType())
     {
       $value = __($culture->getCountry((string)$profile));
     }
