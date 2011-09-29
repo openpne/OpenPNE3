@@ -50,15 +50,18 @@ foreach ($member->getProfiles(true) as $profile)
     $profileValue = __($profileValue);
   }
 
-  if ($member->getId() == $sf_user->getMemberId() && $profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_FRIEND)
+  if ($member->getId() == $sf_user->getMemberId())
   {
-    $profileValue .= ' ('.__('Only Open to %my_friend%', array(
-      '%my_friend%' => $op_term['my_friend']->titleize()->pluralize(),
-    )).')';
-  }
-  elseif ($member->getId() == $sf_user->getMemberId() && $profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_WEB)
-  {
-    $profileValue .= ' ('.__('All Users on the Web').')';
+    if ($profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_FRIEND)
+    {
+      $profileValue .= ' ('.__('Only Open to %my_friend%', array(
+        '%my_friend%' => $op_term['my_friend']->titleize()->pluralize(),
+      )).')';
+    }
+    elseif ($profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_WEB && $profile->Profile->is_public_web)
+    {
+      $profileValue .= ' ('.__('All Users on the Web').')';
+    }
   }
   $list[$caption] = $profileValue;
 }
