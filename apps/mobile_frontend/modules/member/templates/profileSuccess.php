@@ -78,13 +78,16 @@ foreach ($member->getProfiles(true) as $profile)
     }
   }
 
-  if ($member->getId() == $sf_user->getMemberId() && $profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_FRIEND)
+  if ($member->getId() == $sf_user->getMemberId())
   {
-    $value .= '<font color="'.$op_color["core_color_22"].'">('.__('Only Open to %my_friend%').')</font><br>';
-  }
-  elseif ($member->getId() == $sf_user->getMemberId() && $profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_WEB)
-  {
-    $value .= '<font color="'.$op_color["core_color_22"].'">('.__('All Users on the Web').')</font><br>';
+    if ($profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_FRIEND)
+    {
+      $value .= '<font color="'.$op_color["core_color_22"].'">('.__('Only Open to %my_friend%').')</font><br>';
+    }
+    elseif ($profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_WEB && $profile->Profile->is_public_web)
+    {
+      $value .= '<font color="'.$op_color["core_color_22"].'">('.__('All Users on the Web').')</font><br>';
+    }
   }
 
   $list[$caption] = $value;
