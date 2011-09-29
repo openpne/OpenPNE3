@@ -54,7 +54,7 @@ class MemberProfileForm extends BaseForm
 
       $memberProfile = Doctrine::getTable('MemberProfile')->retrieveByMemberIdAndProfileId($memberId, $profile->getId());
 
-      if (null === $value['value'])
+      if (is_null($value['value']))
       {
         if ($memberProfile)
         {
