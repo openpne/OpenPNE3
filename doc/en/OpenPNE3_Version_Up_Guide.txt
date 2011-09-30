@@ -2,14 +2,14 @@ OpenPNE3.6 Update Process
 =========================
 
 Introduction
---------------
+------------
 
 This document is for all of the version OpenPNE 3.2.0 or later to OpenPNE 3.6.x.
 
 ※You should backup database before updating.
 
 Index
--------
+-----
 
 Update is the following way:
 
@@ -18,17 +18,17 @@ Update is the following way:
 (3) Execute the updating command
 
 Update process
-----------------
+--------------
 
 Setting Files
-~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
 
 Set the OpenPNE 3.6 files to your web server.
 
 Avoiding problems with mixing the old and new files, you have to change all of the files instead of overwriting.
 
 Update the Configuration File
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Copy config files in OpenPNE 3.6 as follows:
 
@@ -38,16 +38,16 @@ Copy config files in OpenPNE 3.6 as follows:
   $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
   $ cp config/OpenPNE.yml.sample config/OpenPNE.yml
 
-※If you write your original configuration to your old config/ProjectConfiguration.class.php, you should change the new file referring to the old one.
+NOTE: If you write your original configuration to your old config/ProjectConfiguration.class.php, you should change the new file referring to the old one.
 
-And copy the old config/database.yml to new config/database.yml.
+And copy the old config/database.yml to new config/database.yml. Then you should change the config values in the OpenPNE.yml as your environment. Make sure you set "base_url" and "mail_domain", because they are used for posting and delivering mail.
 
 ::
 
   $ cp /path/to/old/OpenPNE3/config/databases.yml /path/to/new/OpenPNE3/config/databases.yml
   
 Copy the Plugin Directory
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Copy the old directory plugins to new.
 
@@ -56,7 +56,7 @@ Copy the old directory plugins to new.
   $ cp -an /path/to/old/OpenPNE3/plugins/. /path/to/new/OpenPNE3/plugins
 
 Re-build Models
-~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 In the project root directory, execute:
 
@@ -68,7 +68,7 @@ In the project root directory, execute:
 The next "Execute the Updating Command" requires these processes.
 
 Execute the Updating Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the project root directory, execute:
 
@@ -92,7 +92,7 @@ http://www.openpne.jp/archives/5689/
 Now you are all updating.
 
 Note
-======
+====
 
 Here are some notes in updating.
 
