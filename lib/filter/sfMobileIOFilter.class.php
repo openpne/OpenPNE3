@@ -144,13 +144,16 @@ class sfMobileIOFilter extends sfFilter
   {
     $response = $this->getContext()->getResponse();
     $content = $response->getContent();
-    $pattern_start_tag = array('/(<body.*?>)/', '/(<td.*?>)/');
-    $replacement_start_tag = '$1<font size="2">';
-    $pattern_end_tag = array('</body>', '</td>');
-    $replacement_end_tag = array('</font></body>', '</font></td>');
 
-    $content = preg_replace($pattern_start_tag, $replacement_start_tag, $content);
-    $content = str_replace($pattern_end_tag, $replacement_end_tag, $content);
+    $elements = array('body', 'td');
+    $elementsExpr = implode('|', $elements);
+    $pattern = array(
+      '#(<(?:'.$elementsExpr.')(?:\s[^>]*)?>)#i',
+      '#(</(?:'.$elementsExpr.')(?:\s[^>]*)?>)#i'
+    );
+    $replacement = array('$1<font size="2">', '</font>$1');
+
+    $content = preg_replace($pattern, $replacement, $content);
     $response->setContent($content);
   }
 }
