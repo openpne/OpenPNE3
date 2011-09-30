@@ -106,7 +106,7 @@ It is strongly recommended to set prefixes with the tables used by OpenPNE in "O
 
   table_prefix: "op_"
   
-After Running "openpne:install", you will be required inputing the following:
+After Running "openpne:install", you will be required inputting the following:
 
 * The DBMS (mysql, pgsql or sqlite, but we are now only support MySQL)
 * The Database Name
@@ -114,7 +114,7 @@ After Running "openpne:install", you will be required inputing the following:
 * The Database Password(optional)
 * The Database Hostname(localhost, etc)
 * The Database Port Number(optional)
-* (If you inputed "MySQL" for the DBMS and "localhost" for the hostname, )The Database Socket Path(optional)
+* (If you inputted "MySQL" for the DBMS and "localhost" for the hostname, )The Database Socket Path(optional)
 
 After that OpenPNE automatically installed.
 
@@ -134,12 +134,12 @@ Configure the RewriteBase setting in your web/.htaccess for your environment (It
 
   RewriteBase / # Or /web
 
-※Specify an absoulte path of URL in  the RewriteBase.
+※Specify an absolute path of URL in  the RewriteBase.
 
 Email Delivery Setting
 ------------------------
 
-Set for the deliver of email. If you don't use this function, You can skip over this chapter.
+Set for the deliver of email. If you don't use this function, you can skip over this chapter.
 
 Setting Example
 +++++++++++++++++
@@ -168,7 +168,7 @@ Select contents provided by the plugin of the daily news in gadget settings with
 Posting Email Setting
 -----------------------
 
-Set for posting email. If you don't use this function, You can skip over this chapter.
+Set for posting email. If you don't use this function, you can skip over this chapter.
 
 Setting example (when Postfix is used)
 ++++++++++++++++++++++++++++++++++++++++
@@ -196,4 +196,4 @@ Access form Web Browser (Backend)
 (1) Access http://example.com/pc_backend.php
 (2) Input admin / password to login form, and make sure you to log in
 
-※You have to change the default account and password.
+※You have to change the default account and password.※Take care with their prefixes that avoid conflicting table names shared with the other system.
