@@ -11,6 +11,7 @@
 <th><?php echo __('Identification name')?></th>
 <th><?php echo __('Required')?></th>
 <th><?php echo __('Public setting')?></th>
+<th><?php echo __('Make it public') ?></th>
 <th><?php echo __('Public default setting')?></th>
 <th><?php echo __('Duplication')?></th>
 <th><?php echo __('Input type')?></th>
@@ -34,6 +35,7 @@
 <td><?php echo $value->getName() ?></td>
 <td><?php echo ($value->getIsRequired() ? '○' : '×') ?></td>
 <td><?php echo ($value->getIsEditPublicFlag() ? '○' :'×') ?></td>
+<td><?php echo ($value->getIsPublicWeb() ? '○' : '×') ?></td>
 <td><?php echo (Doctrine::getTable('Profile')->getPublicFlag($value->getDefaultPublicFlag())) ?></td>
 <td><?php echo ($value->getIsUnique() ? '×' :'○') ?></td>
 <td><?php echo $value->getFormType() ?></td>
