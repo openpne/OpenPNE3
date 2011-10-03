@@ -30,6 +30,17 @@
 <?php echo __('There is no preset profile.') ?>
 <?php endif; ?>
 <?php else: ?>
+<h3><?
+$presetList = opToolkit::getPresetProfileList();
+foreach ($presetList as $k => $v)
+{
+  if ('op_preset_'.$v['Name'] === $profile['name'])
+  {
+    echo __($v['Caption']);
+    break;
+  }
+}
+?></h3>
 <form action="<?php echo url_for('profile/edit?type=preset&id='.$profile->getId()) ?>" method="post">
 <table style="width: 50%;">
 <?php echo $presetForm ?>
