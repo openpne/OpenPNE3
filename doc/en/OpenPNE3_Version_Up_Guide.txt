@@ -53,7 +53,15 @@ Copy the old directory plugins to new.
 
 ::
 
+Case of the system like CentOS or Ubuntu which has '-u' option
+
+  $ cp -au /path/to/old/OpenPNE3/plugins/. /path/to/new/OpenPNE3/plugins
+
+Case of the system like MacOSX or FreeBSD which has '-n' option
+
   $ cp -an /path/to/old/OpenPNE3/plugins/. /path/to/new/OpenPNE3/plugins
+
+NOTE: check your system using 'man cp' to execute above commands.
 
 Re-build Models
 ~~~~~~~~~~~~~~~
