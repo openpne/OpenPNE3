@@ -54,7 +54,7 @@ class opOpenIDSregProfileImport extends opProfileImport
     $sex = $this->getValue($data, 'gender');
     if ($sex)
     {
-      $this->setMemberProfile($this->member, 'op_preset_sex', ('M' === $sex ? 'Man' : 'Female'));
+      $this->setMemberProfile($this->member, 'op_preset_sex', ('M' === $sex ? 'Man' : 'Woman'));
     }
   }
 

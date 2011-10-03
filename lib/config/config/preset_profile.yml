@@ -20,7 +20,7 @@ sex:
   IsEditPublicFlag: true
   DefaultPublicFlag: 0
   Choices:
-    "F" : "Female"
+    "W" : "Woman"
     "M" : "Man"
 
 birthday:

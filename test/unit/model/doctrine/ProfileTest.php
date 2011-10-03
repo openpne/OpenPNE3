@@ -19,7 +19,7 @@ $profileCheckboxItem = $table->findOneByName('checkbox_item');
 $t->diag('Profile');
 $t->diag('Profile::getOptionsArray()');
 $result = $profileSex->getOptionsArray();
-$t->is($result, array('Female' => 'Female', 'Man' => 'Man'), 'getOptionsArray() returns array of genders');
+$t->is($result, array('Woman' => 'Woman', 'Man' => 'Man'), 'getOptionsArray() returns array of genders');
 
 $result = $profileSelfIntro->getOptionsArray();
 $t->is($result, array(), 'getOptionsArray() returns empty array');
@@ -30,7 +30,7 @@ $t->is($result, array(7 => 'い', 1 => 'あ'), 'getOptionsArray() returns array 
 //------------------------------------------------------------
 $t->diag('Profile::getPresetOptionsArray()');
 $result = $profileSex->getPresetOptionsArray();
-$t->is($result, array('Female' => 'Female', 'Man' => 'Man'), 'getPresetOptionsArray() returns array of genders');
+$t->is($result, array('Woman' => 'Woman', 'Man' => 'Man'), 'getPresetOptionsArray() returns array of genders');
 
 $result = $profileBirthday->getPresetOptionsArray();
 $t->is($result, array(), 'getPresetOptionsArray() returns empty array');

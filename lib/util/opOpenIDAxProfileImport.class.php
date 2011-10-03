@@ -103,7 +103,7 @@ class opOpenIDAxProfileImport extends opProfileImport
     {
       $sex = array_shift($sex);
 
-      $this->setMemberProfile($this->member, 'op_preset_sex', ('M' === $sex ? 'Man' : 'Female'));
+      $this->setMemberProfile($this->member, 'op_preset_sex', ('M' === $sex ? 'Man' : 'Woman'));
     }
   }
 
