@@ -76,7 +76,7 @@ foreach ($member->getProfiles(true) as $profile)
 
   if ('textarea' === $profile->getFormType())
   {
-    $value = op_auto_link_text_for_mobile($value);
+    $value = nl2br(op_auto_link_text_for_mobile($value));
   }
 
   if ($member->getId() == $sf_user->getMemberId())
