@@ -56,11 +56,7 @@ foreach ($member->getProfiles(true) as $profile)
     continue;
   }
 
-  if ('textarea' === $profile->getFormType())
-  {
-    $value = op_auto_link_text_for_mobile((string)$profile);
-  }
-  elseif ($profile->getProfile()->isPreset())
+  if ($profile->getProfile()->isPreset())
   {
     $presetConfig = $profile->getProfile()->getPresetConfig();
     $caption = __($presetConfig['Caption']);
@@ -76,6 +72,11 @@ foreach ($member->getProfiles(true) as $profile)
     {
       $value = __((string)$profile);
     }
+  }
+
+  if ('textarea' === $profile->getFormType())
+  {
+    $value = op_auto_link_text_for_mobile($value);
   }
 
   if ($member->getId() == $sf_user->getMemberId())
