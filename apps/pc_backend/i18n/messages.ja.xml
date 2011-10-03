@@ -1449,6 +1449,10 @@
         <source>Not allowed</source>
         <target>許可されていません。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Logged out.</source>
+        <target>ログアウトしました。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
