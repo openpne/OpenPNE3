@@ -30,7 +30,7 @@
 <?php echo __('There is no preset profile.') ?>
 <?php endif; ?>
 <?php else: ?>
-<h3><?
+<h3><?php
 $presetList = opToolkit::getPresetProfileList();
 foreach ($presetList as $k => $v)
 {
