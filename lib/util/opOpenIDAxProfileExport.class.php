@@ -76,7 +76,7 @@ class opOpenIDAxProfileExport extends opProfileExport
       return '';
     }
 
-    return ('Man' === $sex ? 'M' : 'F');
+    return ('Man' === $sex ? 'M' : 'W');
   }
 
   public function getPrefLanguage()
