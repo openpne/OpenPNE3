@@ -163,7 +163,7 @@ class MemberProfileTable extends opAccessControlDoctrineTable
 
       if ($item->isPreset())
       {
-        if ($item->getFormType() === 'date')
+        if ('date' === $item->getFormType())
         {
           $dateValue = $value;
           foreach ($dateValue as $k => $v)
@@ -174,7 +174,7 @@ class MemberProfileTable extends opAccessControlDoctrineTable
               continue;
             }
 
-            if ($dateValue !== 'year')
+            if ('year' !== $dateValue)
             {
               $dateValue[$k] = sprintf('%02d', $dateValue[$k]);
             }
@@ -183,7 +183,7 @@ class MemberProfileTable extends opAccessControlDoctrineTable
           $value = implode('-', $dateValue);
         }
       }
-      elseif ($item->getFormType() === 'date')
+      elseif ('date' === $item->getFormType())
       {
         $options = $item->getProfileOption();
         $i = 0;
@@ -239,7 +239,7 @@ class MemberProfileTable extends opAccessControlDoctrineTable
         $publicFlags[] = 4;
       }
 
-      if ($item->isMultipleSelect() && $item->getFormType() !== 'date')
+      if ($item->isMultipleSelect() && 'date' !== $item->getFormType())
       {
         $q->addFrom('MemberProfile pm')
           ->andWhere('m.tree_key = pm.id')
@@ -406,12 +406,12 @@ class opMemberProfilePublicFlagAssertion implements Zend_Acl_Assert_Interface
   {
     if (ProfileTable::PUBLIC_FLAG_FRIEND == $resource->getPublicFlag())
     {
-      return ($role->getRoleId() === 'self' || $role->getRoleId() === 'friend');
+      return ('self' === $role->getRoleId() || 'friend' === $role->getRoleId());
     }
 
     if (ProfileTable::PUBLIC_FLAG_PRIVATE == $resource->getPublicFlag())
     {
-      return ($role->getRoleId() === 'self');
+      return ('self' === $role->getRoleId());
     }
 
     return true;
