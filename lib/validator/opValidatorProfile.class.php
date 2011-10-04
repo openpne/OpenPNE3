@@ -47,6 +47,18 @@ class opValidatorProfile extends sfValidatorBase
       $clean['public_flag'] = $validator->clean($value['public_flag']);
     }
 
+    if ($this->profile->getIsUnique())
+    {
+      $profileId = $this->profile->getId();
+      $memberId = sfContext::getInstance()->getUser()->getMemberId();
+      $profiles = Doctrine::getTable('MemberProfile')->retrieveByProfileIdAndValueExceptMemberId($profileId, $value['value'], $memberId);
+
+      if (0 < count($profiles))
+      {
+        throw new sfValidatorError($this, 'Duplicate');
+      }
+    }
+
     return $clean;
   }
 }
