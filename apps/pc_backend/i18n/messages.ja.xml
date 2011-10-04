@@ -1182,10 +1182,6 @@
         <target>※この項目に対するメンバーの入力値も失われます。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Delete</source>
-        <target>削除する</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Option name (%language%)</source>
         <target>項目名 (%language%)</target>
       </trans-unit>
