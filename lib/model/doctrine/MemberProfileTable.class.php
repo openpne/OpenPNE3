@@ -93,6 +93,15 @@ class MemberProfileTable extends opAccessControlDoctrineTable
       ->fetchOne();
   }
 
+  public function retrieveByProfileIdAndValueExceptMemberId($profileId, $profileValue, $memberId)
+  {
+    return $this->createQuery()
+      ->where('profile_id = ?', $profileId)
+      ->andWhere('value = ?', $profileValue)
+      ->andWhereNotIn('member_id', array($memberId))
+      ->fetchArray();
+  }
+
   public function retrieveByMemberIdAndProfileName($memberId, $profileName, $hydrationMode = Doctrine::HYDRATE_RECORD)
   {
     static $queryCacheHash;
