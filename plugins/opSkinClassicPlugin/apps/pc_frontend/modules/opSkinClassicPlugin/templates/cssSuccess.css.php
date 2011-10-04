@@ -527,39 +527,40 @@ body.insecure_page #localNav {
 	position: absolute;
 }
 
-li#globalNav_member_search,
-li#globalNav_community_search,
+li#globalNav__member_search,
+li#globalNav__community_search,
 li#globalNav_3 {
 	top: 70px;
 	height: 18px;
 }
 li#globalNav__homepage,
-li#globalNav_member_invite,
+li#globalNav__member_invite,
 li#globalNav_diary_index,
-li#globalNav_7,
-li#globalNav_member_config,
-li#globalNav_member_logout {
+li#globalNav__ranking,
+li#globalNav__member_config,
+li#globalNav__member_logout {
 	top: 68px;
 	height: 20px;
 }
-li#globalNav_member_search { left:   2px; width: 88px; }
-li#globalNav_community_search { left:  90px; width: 90px; }
+li#globalNav__member_search { left:   2px; width: 88px; }
+li#globalNav__community_search { left:  90px; width: 90px; }
 li#globalNav_3 { left: 180px; width: 88px; }
 li#globalNav__homepage { left: 290px; width: 70px; }
-li#globalNav_member_invite { left: 360px; width: 72px; }
+li#globalNav__member_invite { left: 360px; width: 72px; }
 li#globalNav_diary_index { left: 432px; width: 72px; }
-li#globalNav_7 { left: 504px; width: 72px; }
-li#globalNav_member_config { left: 576px; width: 72px; }
-li#globalNav_member_logout { left: 648px; width: 70px; }
-li#globalNav_member_search a:hover, li#globalNav_member_search a:active { background-position:   -2px -70px; }
-li#globalNav_community_search a:hover, li#globalNav_community_search a:active { background-position:  -90px -70px; }
+li#globalNav__ranking { left: 504px; width: 72px; }
+li#globalNav__member_config { left: 576px; width: 72px; }
+li#globalNav__member_logout { left: 648px; width: 70px; }
+
+li#globalNav__member_search a:hover, li#globalNav__member_search a:active { background-position:   -2px -70px; }
+li#globalNav__community_search a:hover, li#globalNav__community_search a:active { background-position:  -90px -70px; }
 li#globalNav_3 a:hover, li#globalNav_3 a:active { background-position: -180px -70px; }
 li#globalNav__homepage a:hover, li#globalNav__homepage a:active { background-position: -290px -68px; }
-li#globalNav_member_invite a:hover, li#globalNav_member_invite a:active { background-position: -360px -68px; }
+li#globalNav__member_invite a:hover, li#globalNav__member_invite a:active { background-position: -360px -68px; }
 li#globalNav_diary_index a:hover, li#globalNav_diary_index a:active { background-position: -432px -68px; }
-li#globalNav_7 a:hover, li#globalNav_7 a:active { background-position: -504px -68px; }
-li#globalNav_member_config a:hover, li#globalNav_member_config a:active { background-position: -576px -68px; }
-li#globalNav_member_logout a:hover, li#globalNav_member_logout a:active { background-position: -648px -68px; }
+li#globalNav__ranking a:hover, li#globalNav__ranking a:active { background-position: -504px -68px; }
+li#globalNav__member_config a:hover, li#globalNav__member_config a:active { background-position: -576px -68px; }
+li#globalNav__member_logout a:hover, li#globalNav__member_logout a:active { background-position: -648px -68px; }
 
 #localNav .default li {
 	top: 0;
@@ -568,23 +569,24 @@ li#globalNav_member_logout a:hover, li#globalNav_member_logout a:active { backgr
 	left: -9999px;
 }
 #localNav .default li#default__homepage { left:   0px; }
-#localNav .default li#default_friend_list { left:  80px; }
+#localNav .default li#default__friend_list { left:  80px; }
 #localNav .default li#default_diary_listMember { left: 160px; }
 #localNav .default li#default_message_index { left: 240px; }
 #localNav .default li#default_ashiato_list { left: 320px; }
-#localNav .default #hLocalNav_6 { left: 400px; }
-#localNav .default #hLocalNav_7 { left: 480px; }
-#localNav .default li#default_member_profile { left: 560px; }
-#localNav .default li#default_member_editProfile { left: 640px; }
+#localNav .default li#default_favorite_list { left: 400px; }
+#localNav .default li#default_7 { left: 480px; }
+#localNav .default li#default__member_profile_mine { left: 560px; }
+#localNav .default li#default__member_editProfile { left: 640px; }
+
 #localNav .default li#default__homepage a:hover, #localNav .default li#default__homepage a:active { background-position:   -0px -29px; }
-#localNav .default li#default_friend_list a:hover, #localNav .default li#default_friend_list a:active { background-position:  -80px -29px; }
+#localNav .default li#default__friend_list a:hover, #localNav .default li#default__friend_list a:active { background-position:  -80px -29px; }
 #localNav .default li#default_diary_listMember a:hover, #localNav .default li#default_diary_listMember a:active { background-position: -160px -29px; }
 #localNav .default li#default_message_index a:hover, #localNav .default li#default_message_index a:active { background-position: -240px -29px; }
 #localNav .default li#default_ashiato_list a:hover, #localNav .default li#default_ashiato_list a:active { background-position: -320px -29px; }
-#localNav .default #hLocalNav_6 a:hover, #localNav .default #hLocalNav_6 a:active { background-position: -400px -29px; }
-#localNav .default #hLocalNav_7 a:hover, #localNav .default #hLocalNav_7 a:active { background-position: -480px -29px; }
-#localNav .default li#default_member_profile a:hover, #localNav .default li#default_member_profile a:active { background-position: -560px -29px; }
-#localNav .default li#default_member_editProfile a:hover, #localNav .default li#default_member_editProfile a:active { background-position: -640px -29px; }
+#localNav .default li#default_favorite_list a:hover, #localNav .default li#default_favorite_list a:active { background-position: -400px -29px; }
+#localNav .default li#default_7 a:hover, #localNav .default li#default_7 a:active { background-position: -480px -29px; }
+#localNav .default li#default__member_profile_mine a:hover, #localNav .default li#default__member_profile_mine a:active { background-position: -560px -29px; }
+#localNav .default li#default__member_editProfile a:hover, #localNav .default li#default__member_editProfile a:active { background-position: -640px -29px; }
 
 #localNav .friend li {
 	top: 0;
@@ -592,24 +594,25 @@ li#globalNav_member_logout a:hover, li#globalNav_member_logout a:active { backgr
 	height: 29px;
 	left: -9999px;
 }
-#localNav .friend li#friend_member_profile { left:   0px; }
-#localNav .friend li#friend_friend_list { left:  80px; }
+#localNav .friend li#friend__member_profile { left:   0px; }
+#localNav .friend li#friend__friend_list { left:  80px; }
 #localNav .friend li#friend_diary_listMember { left: 160px; }
 #localNav .friend li#friend_message_sendToFriend { left: 240px; }
-#fLocalNav_5 { left: 320px; }
-#fLocalNav_6 { left: 400px; }
-#fLocalNav_7 { left: 480px; }
-#fLocalNav_8 { left: 560px; }
-#fLocalNav_9 { left: 640px; }
-#localNav .friend li#friend_member_profile a:hover, #localNav .friend li#friend_member_profile a:active { background-position:   -0px -29px; }
-#localNav .friend li#friend_friend_list a:hover, #localNav .friend li#friend_friend_list a:active { background-position:  -80px -29px; }
+#localNav .friend li#friend_favorite_add { left: 320px; }
+#localNav .friend li#friend_6 { left: 400px; }
+#localNav .friend li#friend_7 { left: 480px; }
+#localNav .friend li#friend_8 { left: 560px; }
+#localNav .friend li#friend__obj_member_introfriend { left: 640px; }
+
+#localNav .friend li#friend__member_profile a:hover, #localNav .friend li#friend__member_profile a:active { background-position:   -0px -29px; }
+#localNav .friend li#friend__friend_list a:hover, #localNav .friend li#friend__friend_list a:active { background-position:  -80px -29px; }
 #localNav .friend li#friend_diary_listMember a:hover, #localNav .friend li#friend_diary_listMember a:active { background-position: -160px -29px; }
 #localNav .friend li#friend_message_sendToFriend a:hover, #localNav .friend li#friend_message_sendToFriend a:active { background-position: -240px -29px; }
-#fLocalNav_5 a:hover, li#fLocalNav_5 a:active { background-position: -320px -29px; }
-#fLocalNav_6 a:hover, li#fLocalNav_6 a:active { background-position: -400px -29px; }
-#fLocalNav_7 a:hover, li#fLocalNav_7 a:active { background-position: -480px -29px; }
-#fLocalNav_8 a:hover, li#fLocalNav_8 a:active { background-position: -560px -29px; }
-#fLocalNav_9 a:hover, li#fLocalNav_9 a:active { background-position: -640px -29px; }
+#localNav .friend li#friend_favorite_add a:hover, #localNav .friend li#friend_favorite_add a:active { background-position: -320px -29px; }
+#localNav .friend li#friend_6 a:hover, #localNav .friend li#friend_6 a:active { background-position: -400px -29px; }
+#localNav .friend li#friend_7 a:hover, #localNav .friend li#friend_7 a:active { background-position: -480px -29px; }
+#localNav .friend li#friend_8 a:hover, #localNav .friend li#friend_8 a:active { background-position: -560px -29px; }
+#localNav .friend li#friend__obj_member_introfriend a:hover, #localNav .friend li#friend__obj_member_introfriend a:active { background-position: -640px -29px; }
 
 #localNav .community li {
 	top: 0;
@@ -617,18 +620,19 @@ li#globalNav_member_logout a:hover, li#globalNav_member_logout a:active { backgr
 	height: 29px;
 	left: -9999px;
 }
-#localNav .community li#community_community_home { left:   0px; }
+#localNav .community li#community__community_home { left:   0px; }
 #localNav .community li#community_communityTopic_listCommunity { left: 120px; }
-#localNav .community li#cLocalNav_3 { left: 240px; }
-#localNav .community li#community_community_join { left: 360px; }
-#localNav .community li#cLocalNav_5 { left: 480px; }
-#localNav .community li#community_community_quit { left: 600px; }
-#localNav .community li#community_community_home a:hover, #localNav .community li#community_community_home a:active { background-position:   -0px -29px; }
+#localNav .community li#community_3 { left: 240px; }
+#localNav .community li#community__community_join { left: 360px; }
+#localNav .community li#community_5 { left: 480px; }
+#localNav .community li#community__community_quit { left: 600px; }
+
+#localNav .community li#community__community_home a:hover, #localNav .community li#community__community_home a:active { background-position:   -0px -29px; }
 #localNav .community li#community_communityTopic_listCommunity a:hover, #localNav .community li#community_communityTopic_listCommunity a:active { background-position: -120px -29px; }
-#localNav .community li#cLocalNav_3 a:hover, #localNav .community li#cLocalNav_3 a:active { background-position: -240px -29px; }
-#localNav .community li#community_community_join a:hover, #localNav .community li#community_community_join a:active { background-position: -360px -29px; }
-#localNav .community li#cLocalNav_5 a:hover, #localNav .community li#cLocalNav_5 a:active { background-position: -480px -29px; }
-#localNav .community li#community_community_quit a:hover, #localNav .community li#community_community_quit a:active { background-position: -600px -29px; }
+#localNav .community li#community_3 a:hover, #localNav .community li#community_3 a:active { background-position: -240px -29px; }
+#localNav .community li#community__community_join a:hover, #localNav .community li#community__community_join a:active { background-position: -360px -29px; }
+#localNav .community li#community_5 a:hover, #localNav .community li#community_5 a:active { background-position: -480px -29px; }
+#localNav .community li#community__community_quit a:hover, #localNav .community li#community__community_quit a:active { background-position: -600px -29px; }
 
 /*==============================================================================
  * memberImageBox
