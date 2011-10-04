@@ -1087,11 +1087,11 @@
       </trans-unit>
       <trans-unit id="">
         <source>Allow</source>
-        <target>表示する</target>
+        <target>許可</target>
       </trans-unit>
       <trans-unit id="">
         <source>Deny</source>
-        <target>表示しない</target>
+        <target>禁止</target>
       </trans-unit>
       <trans-unit id="">
         <source>Fixed</source>
