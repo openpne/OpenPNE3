@@ -1,7 +1,7 @@
 <?php op_mobile_page_title($member->getName()) ?>
 <?php $culture = sfCultureInfo::getInstance($sf_user->getCulture()); ?>
 
-<?php if ($member == $sf_user->getMember()) : ?>
+<?php if ($member->id == $sf_user->getMember()->id) : ?>
 <font color="<?php echo $op_color["core_color_22"] ?>">
 <?php echo __('This is your page other member see.') ?><br>
 <?php echo __('If you edit profile, access %1%.', array('%1%' => link_to('「'. __('Edit profile') .'」', '@member_editProfile'))) ?>
