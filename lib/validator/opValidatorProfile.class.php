@@ -51,9 +51,9 @@ class opValidatorProfile extends sfValidatorBase
     {
       $profileId = $this->profile->getId();
       $memberId = sfContext::getInstance()->getUser()->getMemberId();
-      $profiles = Doctrine::getTable('MemberProfile')->retrieveByProfileIdAndValueExceptMemberId($profileId, $value['value'], $memberId);
 
-      if (0 < count($profiles))
+      $isDuplicate = Doctrine::getTable('MemberProfile')->isDuplicatedProfileValue($profileId, $value['value'], $memberId);
+      if ($isDuplicate)
       {
         throw new sfValidatorError($this, 'Duplicate');
       }

@@ -93,13 +93,13 @@ class MemberProfileTable extends opAccessControlDoctrineTable
       ->fetchOne();
   }
 
-  public function retrieveByProfileIdAndValueExceptMemberId($profileId, $profileValue, $memberId)
+  public function isDuplicatedProfileValue($profileId, $profileValue, $memberId)
   {
-    return $this->createQuery()
+    return (bool) $this->createQuery()
       ->where('profile_id = ?', $profileId)
       ->andWhere('value = ?', $profileValue)
-      ->andWhereNotIn('member_id', array($memberId))
-      ->fetchArray();
+      ->andWhere('member_id <> ? ' , $memberId)
+      ->fetchOne(null, Doctrine_Core::HYDRATE_NONE);
   }
 
   public function retrieveByMemberIdAndProfileName($memberId, $profileName, $hydrationMode = Doctrine::HYDRATE_RECORD)
