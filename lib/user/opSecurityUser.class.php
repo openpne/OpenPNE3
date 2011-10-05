@@ -248,13 +248,13 @@ class opSecurityUser extends opAdaptableUser
 
     $this->initializeUserStatus();
 
-    if ($this->getAuthAdapter()->getAuthForm()->getValue('is_remember_me'))
-    {
-      $this->setRememberLoginCookie();
-    }
-
     if ($this->isAuthenticated())
     {
+      if ($this->getAuthAdapter()->getAuthForm()->getValue('is_remember_me'))
+      {
+        $this->setRememberLoginCookie();
+      }
+
       $this->setCurrentAuthMode($this->getAuthAdapter()->getAuthModeName());
       $uri = $this->getAuthAdapter()->getAuthForm()->getValue('next_uri');
 
