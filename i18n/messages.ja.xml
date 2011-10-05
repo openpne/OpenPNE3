@@ -135,8 +135,8 @@
         <target>メールの送信に失敗しました。もう一度実行するか管理者に連絡して下さい。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Duplicate</source>
-        <target>すでに登録されています</target>
+        <source>The inputted value is already exist.</source>
+        <target>すでに登録されています。</target>
       </trans-unit>
     </body>
   </file>
