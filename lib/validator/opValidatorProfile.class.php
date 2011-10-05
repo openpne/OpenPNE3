@@ -55,7 +55,7 @@ class opValidatorProfile extends sfValidatorBase
       $isDuplicate = Doctrine::getTable('MemberProfile')->isDuplicatedProfileValue($profileId, $value['value'], $memberId);
       if ($isDuplicate)
       {
-        throw new sfValidatorError($this, 'Duplicate');
+        throw new sfValidatorError($this, 'The inputted value is already exist.');
       }
     }
 
