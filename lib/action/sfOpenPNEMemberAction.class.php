@@ -100,7 +100,7 @@ abstract class sfOpenPNEMemberAction extends sfActions
       && 'login' !== $routing->getCurrentRouteName()
     )
     {
-      $this->getUser()->setFlash('notice', 'Please login' false);
+      $this->getUser()->setFlash('notice', 'Please login', false);
     }
 
     return sfView::SUCCESS;
