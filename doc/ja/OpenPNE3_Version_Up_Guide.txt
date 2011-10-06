@@ -51,15 +51,15 @@ OpenPNE.yml の設定値を環境に合わせて変更してください。特�
 プラグインディレクトリのコピー
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-古いバージョンの plugins ディレクトリの中身をコピーします。
+独自で入れたプラグインや同梱されているプラグインのバージョンよりも新しいバージョンなどを新しい環境で用いるために、古いバージョンの plugins ディレクトリの中身をコピーします。
 
 ::
 
-CentOS や Ubuntu など、-uオプションがある場合。
+CentOS や Ubuntu など、 cp コマンドに -u オプションがある場合。
 
   $ cp -au /path/to/old/OpenPNE3/plugins/. /path/to/new/OpenPNE3/plugins
 
-MacOSX や FreeBSD など、-nオプションがある場合。
+MacOSX や FreeBSD など、 cp コマンドに -u オプションがなく -n オプションがある場合。
 
   $ cp -an /path/to/old/OpenPNE3/plugins/. /path/to/new/OpenPNE3/plugins
 

@@ -49,7 +49,7 @@ And copy the old config/database.yml to new config/database.yml. Then you should
 Copy the Plugin Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Copy the old directory plugins to new.
+Copy the old directory plugins to new one, so that to use the plugins which you install or newer version than bundled.
 
 ::
 
@@ -57,7 +57,7 @@ Case of the system like CentOS or Ubuntu which has '-u' option
 
   $ cp -au /path/to/old/OpenPNE3/plugins/. /path/to/new/OpenPNE3/plugins
 
-Case of the system like MacOSX or FreeBSD which has '-n' option
+Case of the system like MacOSX or FreeBSD which doesn't have '-u' but has '-n' option
 
   $ cp -an /path/to/old/OpenPNE3/plugins/. /path/to/new/OpenPNE3/plugins
 
