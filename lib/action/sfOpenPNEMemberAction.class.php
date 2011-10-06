@@ -320,9 +320,8 @@ abstract class sfOpenPNEMemberAction extends sfActions
       $this->form->bind($request->getParameter('member_config'));
       if ($this->form->isValid())
       {
-        $this->getUser()->setFlash('notice', $this->form->getCompleteMessage());
-
         $this->form->save($this->getUser()->getMemberId());
+        $this->getUser()->setFlash('notice', $this->form->getCompleteMessage());
         $this->redirect('member/config?category='.$this->categoryName);
       }
     }

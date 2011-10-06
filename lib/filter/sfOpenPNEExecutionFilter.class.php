@@ -85,6 +85,15 @@ class sfOpenPNEExecutionFilter extends sfExecutionFilter
 
       throw $e;
     }
+    catch (Zend_Mail_Protocol_Exception $e)
+    {
+      if (sfConfig::get('sf_logging_enabled'))
+      {
+        $this->context->getLogger()->err('Mail Send Error: '.$e->getMessage());
+      }
+
+      $this->forwardToMailErrorAction();
+    }
 
     self::notifyPostExecuteActionEvent($this, $dispatcher, $actionInstance, $result);
 
@@ -101,6 +110,13 @@ class sfOpenPNEExecutionFilter extends sfExecutionFilter
   protected function forwardToCSRFErrorAction()
   {
     $this->context->getController()->forward('default', 'csrfError');
+
+    throw new sfStopException();
+  }
+
+  protected function forwardToMailErrorAction()
+  {
+    $this->context->getController()->forward('default', 'mailError');
 
     throw new sfStopException();
   }
