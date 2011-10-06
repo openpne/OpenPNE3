@@ -9,9 +9,6 @@ enable_app:
 xrds_header:
   class: opAppendXRDSHeaderFilter
 
-remember_login:
-  class: opRememberLoginFilter
-
 security:  ~
 
 emoji:
