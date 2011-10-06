@@ -986,9 +986,15 @@ function op_format_last_login_time($from_time, $to_time = null)
   }
 }
 
-function op_url_to_id($uri)
+function op_url_to_id($uri, $isTrimDelimiter = false)
 {
-  return str_replace(array('/', ',', ';', '~', '?', '@', '&', '=', '+', '$', '%', '#', '!', '(', ')'), '_', $uri);
+  $str = str_replace(array('/', ',', ';', '~', '?', '@', '&', '=', '+', '$', '%', '#', '!', '(', ')'), '_', $uri);
+  if ($isTrimDelimiter)
+  {
+    $str = trim($str, '_');
+  }
+
+  return $str;
 }
 
 function op_replace_sns_term($string)
