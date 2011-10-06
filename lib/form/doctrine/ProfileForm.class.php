@@ -175,7 +175,7 @@ class ProfileForm extends BaseProfileForm
 
     $values = $this->getValues();
 
-    if ($values['form_type'] === 'date')
+    if ('date' === $values['form_type'])
     {
       if (!$profile->getProfileOption()->count())
       {
