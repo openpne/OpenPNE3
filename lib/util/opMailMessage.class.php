@@ -75,7 +75,7 @@ class opMailMessage extends Zend_Mail_Message
         $tmppath = tempnam(sys_get_temp_dir(), 'IMG');
 
         $fh = fopen($tmppath, 'w');
-        fwrite($fh, base64_decode($part->getContent(), true));
+        fwrite($fh, base64_decode(rtrim($part->getContent()), true));
         fclose($fh);
 
         $images[] = array(
