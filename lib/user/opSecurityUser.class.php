@@ -255,6 +255,13 @@ class opSecurityUser extends opAdaptableUser
         $this->setRememberLoginCookie();
       }
 
+      // set mobile_cookie_uid for easy login
+      $cookieUid = sfContext::getInstance()->getResponse()->generateMobileUidCookie();
+      if ($cookieUid)
+      {
+        $this->getMember()->setConfig('mobile_cookie_uid', $cookieUid);
+      }
+
       $this->setCurrentAuthMode($this->getAuthAdapter()->getAuthModeName());
       $uri = $this->getAuthAdapter()->getAuthForm()->getValue('next_uri');
 
