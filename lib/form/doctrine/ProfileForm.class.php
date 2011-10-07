@@ -102,6 +102,7 @@ class ProfileForm extends BaseProfileForm
     $this->widgetSchema->setHelps(array(
       'name' => 'Identification name can contain only underscore or alphanumeric characters. (must have at least one alphabet.)',
       'is_public_web' => 'Anyone in the world may view member profiles',
+      'is_unique' => 'This setting is applied only for Input type "Text" or "Paragraph text".',
     ));
   }
 
