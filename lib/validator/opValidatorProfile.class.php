@@ -47,7 +47,7 @@ class opValidatorProfile extends sfValidatorBase
       $clean['public_flag'] = $validator->clean($value['public_flag']);
     }
 
-    if ($this->profile->getIsUnique() && in_array($this->profile->getFormType(), array('text', 'textarea')))
+    if ($this->profile->getIsUnique() && in_array($this->profile->getFormType(), array('input', 'textarea')))
     {
       $profileId = $this->profile->getId();
       $memberId = sfContext::getInstance()->getUser()->getMemberId();
