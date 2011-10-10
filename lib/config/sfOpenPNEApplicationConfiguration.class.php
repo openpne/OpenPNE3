@@ -19,6 +19,8 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
 {
   static protected $zendLoaded = false;
 
+  protected $appRoutings = array();
+
   public function initialize()
   {
     mb_internal_encoding('UTF-8');
@@ -518,5 +520,86 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
     }
 
     parent::setCacheDir($newCacheDir);
+  }
+
+  public function generateAppUrl($application, $parameters = array(), $absolute = false)
+  {
+    list($route, $parameters) = sfContext::getInstance()->getController()
+      ->convertUrlStringToParameters($parameters);
+
+    return $this->getAppRouting($application)->generate($route, $parameters, $absolute);
+  }
+
+  protected function getAppRouting($application)
+  {
+    if (isset($this->appRoutings[$application]))
+    {
+      return $this->appRoutings[$application];
+    }
+
+    $context = sfContext::getInstance();
+    $configuration = $context->getConfiguration();
+
+    $config = new opRoutingConfigHandler();
+    $currentApp = sfConfig::get('sf_app');
+
+    sfConfig::set('sf_app', $application);
+    $configuration->setAppDir(sfConfig::get('sf_apps_dir').DIRECTORY_SEPARATOR.$application);
+
+    $settings = sfDefineEnvironmentConfigHandler::getConfiguration($configuration->getConfigPaths('config/settings.yml'));
+    $isNoScriptName = !empty($settings['.settings']['no_script_name']);
+
+    $options = $context->getRouting()->getOptions();
+    $url = sfConfig::get('op_base_url');
+    if ('http://example.com' !== $url)
+    {
+      $parts = parse_url($url);
+
+      $parts['path'] = isset($parts['path']) ? $parts['path'] : '';
+      $options['context']['prefix'] = $this->getAppScriptName($application, sfConfig::get('sf_environment'), $parts['path'], $isNoScriptName);
+
+      if (isset($parts['host']))
+      {
+        $options['context']['host'] = $parts['host'];
+      }
+    }
+    else
+    {
+      $path = preg_replace('#/[^/]+\.php$#', '', $options['context']['prefix']);
+      $options['context']['prefix'] = $this->getAppScriptName($application, sfConfig::get('sf_environment'), $path, $isNoScriptName);
+    }
+
+    $routing = new sfPatternRouting($context->getEventDispatcher(), null, $options);
+    $routing->setRoutes($config->evaluate($configuration->getConfigPaths('config/routing.yml')));
+    $context->getEventDispatcher()->notify(new sfEvent($routing, 'routing.load_configuration'));
+
+    sfConfig::set('sf_app', $currentApp);
+    $configuration->setAppDir(sfConfig::get('sf_apps_dir').DIRECTORY_SEPARATOR.$currentApp);
+
+    $this->appRoutings[$application] = $routing;
+
+    return $this->appRoutings[$application];
+  }
+
+  protected function getAppScriptName($application, $env, $prefix, $isNoScriptName = false)
+  {
+    if ($isNoScriptName)
+    {
+      return $prefix;
+    }
+
+    if ('/' === $prefix)
+    {
+      $prefix = '';
+    }
+
+    $name = $prefix.'/'.$application;
+    if ('prod' !== $env)
+    {
+      $name .= '_'.$env;
+    }
+    $name .= '.php';
+
+    return $name;
   }
 }
