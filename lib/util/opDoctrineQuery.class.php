@@ -17,6 +17,27 @@
  */
 class opDoctrineQuery extends Doctrine_Query
 {
+
+  /**
+   * constant for exact match
+   */
+  const MATCH_EXACT = 0;
+
+  /**
+   * constant for left-hand match
+   */
+  const MATCH_LEFT = 1;
+
+  /**
+   * constant for right-hand match
+   */
+  const MATCH_RIGHT = 2;
+
+   /**
+   * constant for broad match
+   */
+  const MATCH_BROAD = 3;
+
   protected static
     $detectedSlave = null;
 
@@ -124,5 +145,61 @@ class opDoctrineQuery extends Doctrine_Query
   public function preQuery()
   {
     $this->_conn = self::chooseConnection($this->shouldGoToMaster, $this->getType());
+  }
+
+  public function whereLike($expr, $param, $matchType = self::MATCH_BROAD, $not = false)
+  {
+    return $this->andWhereLike($expr, $param, $matchType, $not);
+  }
+
+  public function andWhereLike($expr, $param, $matchType = self::MATCH_BROAD, $not = false)
+  {
+    if (self::MATCH_EXACT != $matchType)
+    {
+      $param = $this->escapePattern($param);
+
+      switch ($matchType)
+      {
+        case self::MATCH_LEFT:
+          $param = $param.'%';
+          break;
+        case self::MATCH_RIGHT:
+          $param = '%'.$param;
+          break;
+        case self::MATCH_BROAD:
+          $param = '%'.$param.'%';
+          break;
+      }
+    }
+
+    if ($not)
+    {
+      $this->andWhere($expr.' NOT LIKE ?', $param);
+    }
+    else
+    {
+      $this->andWhere($expr.' LIKE ?', $param);
+    }
+
+    return $this;
+  }
+
+  public function escapePattern($text)
+  {
+    $conn = $this->getConnection();
+
+    if (!$conn->string_quoting['escape_pattern'])
+    {
+      return $text;
+    }
+    $tmp = $conn->string_quoting;
+
+    $text = str_replace($tmp['escape_pattern'], $tmp['escape_pattern'].$tmp['escape_pattern'], $text);
+
+    foreach ($conn->wildcards as $wildcard) {
+      $text = str_replace($wildcard, $tmp['escape_pattern'].$wildcard, $text);
+    }
+
+    return $text;
   }
 }
