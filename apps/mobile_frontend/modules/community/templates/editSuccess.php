@@ -21,7 +21,7 @@ else
   'align' => 'center',
 )) ?>
 
-<?php if (!$communityForm->isNew()): ?>
+<?php if (!$communityForm->isNew() && $isDeleteCommunity): ?>
 <?php
   op_include_parts('buttonBox', 'deleteForm', array(
     'title' => __('Delete this %community%'),
