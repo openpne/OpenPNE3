@@ -1,14 +1,15 @@
-<?php
-
-/**
- * This file is part of the OpenPNE package.
- * (c) OpenPNE Project (http://www.openpne.jp/)
- *
- * For the full copyright and license information, please view the LICENSE
- * file and the NOTICE file that were distributed with this source code.
- */
-
-if (!defined('OPENPNE_VERSION'))
-{
-  define('OPENPNE_VERSION', '3.4.16');
-}
+-dev<-dev?-devp-devh-devp-dev
+-dev-dev
+-dev-dev/-dev*-dev*-dev
+-dev-dev -dev*-dev -devT-devh-devi-devs-dev -devf-devi-devl-deve-dev -devi-devs-dev -devp-deva-devr-devt-dev -devo-devf-dev -devt-devh-deve-dev -devO-devp-deve-devn-devP-devN-devE-dev -devp-deva-devc-devk-deva-devg-deve-dev.-dev
+-dev-dev -dev*-dev -dev(-devc-dev)-dev -devO-devp-deve-devn-devP-devN-devE-dev -devP-devr-devo-devj-deve-devc-devt-dev -dev(-devh-devt-devt-devp-dev:-dev/-dev/-devw-devw-devw-dev.-devo-devp-deve-devn-devp-devn-deve-dev.-devj-devp-dev/-dev)-dev
+-dev-dev -dev*-dev
+-dev-dev -dev*-dev -devF-devo-devr-dev -devt-devh-deve-dev -devf-devu-devl-devl-dev -devc-devo-devp-devy-devr-devi-devg-devh-devt-dev -deva-devn-devd-dev -devl-devi-devc-deve-devn-devs-deve-dev -devi-devn-devf-devo-devr-devm-deva-devt-devi-devo-devn-dev,-dev -devp-devl-deve-deva-devs-deve-dev -devv-devi-deve-devw-dev -devt-devh-deve-dev -devL-devI-devC-devE-devN-devS-devE-dev
+-dev-dev -dev*-dev -devf-devi-devl-deve-dev -deva-devn-devd-dev -devt-devh-deve-dev -devN-devO-devT-devI-devC-devE-dev -devf-devi-devl-deve-dev -devt-devh-deva-devt-dev -devw-deve-devr-deve-dev -devd-devi-devs-devt-devr-devi-devb-devu-devt-deve-devd-dev -devw-devi-devt-devh-dev -devt-devh-devi-devs-dev -devs-devo-devu-devr-devc-deve-dev -devc-devo-devd-deve-dev.-dev
+-dev-dev -dev*-dev/-dev
+-dev-dev
+-dev-devi-devf-dev -dev(-dev!-devd-deve-devf-devi-devn-deve-devd-dev(-dev'-devO-devP-devE-devN-devP-devN-devE-dev_-devV-devE-devR-devS-devI-devO-devN-dev'-dev)-dev)-dev
+-dev-dev{-dev
+-dev-dev -dev -devd-deve-devf-devi-devn-deve-dev(-dev'-devO-devP-devE-devN-devP-devN-devE-dev_-devV-devE-devR-devS-devI-devO-devN-dev'-dev,-dev -dev'-dev3-dev.-dev4-dev.-dev1-dev6-dev'-dev)-dev;-dev
+-dev-dev}-dev
+-dev
