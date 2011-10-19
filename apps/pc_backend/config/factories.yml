@@ -92,13 +92,7 @@ all:
       debug:                false
       untranslated_prefix:  "[T]"
       untranslated_suffix:  "[/T]"
-      cache:
-        class: sfFileCache
-        param:
-          automatic_cleaning_factor: 0
-          cache_dir:                 %SF_I18N_CACHE_DIR%
-          lifetime:                  86400
-          prefix:                    %SF_APP_DIR%
+      cache: ~
 
   routing:
     class: sfPatternRouting
