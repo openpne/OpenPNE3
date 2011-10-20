@@ -1182,7 +1182,7 @@
         <target>本当に削除してもよろしいですか？</target>
       </trans-unit>
       <trans-unit id="">
-        <source>※All the member's data in this entry will be lost.</source>
+        <source>NOTE: All the member's data in this entry will be lost.</source>
         <target>※この項目に対するメンバーの入力値も失われます。</target>
       </trans-unit>
       <trans-unit id="">
