@@ -14,7 +14,7 @@ $csrfToken = '<input type="hidden" name="'.$form->getCSRFFieldName().'" value="'
 <form action="<?php url_for('community/delete?id='.$community->getId()) ?>" method="post">
 <?php include_partial('community/communityInfo', array(
   'community' => $community,
-  'moreInfo' => array($csrfToken.'<input type="submit" value="削除" />')
+  'moreInfo' => array($csrfToken.'<input type="submit" value="'.__('Delete').'" />')
 )); ?>
 </form>
 
