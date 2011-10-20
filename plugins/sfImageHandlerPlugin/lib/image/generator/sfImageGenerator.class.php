@@ -107,7 +107,7 @@ abstract class sfImageGenerator
       $currentUmask = umask(0000);
       if (false === @mkdir(dirname($outputFilename), 0777, true))
       {
-        throw new sfRuntimeException('Failed to make cache directory.');
+        throw new RuntimeException('Failed to make cache directory.');
       }
       umask($currentUmask);
     }
