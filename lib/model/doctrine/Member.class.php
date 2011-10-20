@@ -195,9 +195,10 @@ class Member extends BaseMember implements opAccessControlRecordInterface
 
   public function getImageFileName()
   {
-    if ($this->getImage())
+    $image = $this->getImage();
+    if ($image)
     {
-      return $this->getImage()->getFile();
+      return $image->getFile();
     }
 
     return false;
