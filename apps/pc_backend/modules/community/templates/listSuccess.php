@@ -15,7 +15,7 @@
 </form>
 
 <?php if (!$pager->getNbResults()): ?>
-<?php echo __('該当する%community%は存在しません。') ?></p>
+<?php echo __('There are no %community% matches search condition.') ?></p>
 <?php else: ?>
 <?php slot('pager') ?>
 <p><?php op_include_pager_navigation($pager, 'community/list?page=%d', array('use_current_query_string' => true)) ?></p>
