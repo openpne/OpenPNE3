@@ -91,14 +91,14 @@ class ProfileForm extends BaseProfileForm
 
   public function bind($params)
   {
-    if ($params['form_type'] === 'input' || $params['form_type'] === 'textarea')
+    if ('input' === $params['form_type'] || 'textarea' === $params['form_type'])
     {
       $validator = new sfValidatorInteger(array('required' => false));
       $this->setValidator('value_min', $validator);
       $validator = new sfValidatorInteger(array('required' => false));
       $this->setValidator('value_max', $validator);
     }
-    elseif ($params['form_type'] === 'date')
+    elseif ('date' === $params['form_type'])
     {
       $validator = new opValidatorDate(array('required' => false));
       $this->setValidator('value_min', $validator);
@@ -129,7 +129,7 @@ class ProfileForm extends BaseProfileForm
 
     $values = $this->getValues();
 
-    if ($values['form_type'] === 'date')
+    if ('date' === $values['form_type'])
     {
       if (!$profile->getProfileOption()->count())
       {
