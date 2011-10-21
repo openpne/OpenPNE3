@@ -108,6 +108,10 @@
         <source>%community% Description</source>
         <target>%community%説明文</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>There are no %community% matches search condition.</source>
+        <target>該当する%community%は存在しません。</target>
+      </trans-unit>
 
       <trans-unit id="">
         <source>Text Mode</source>
