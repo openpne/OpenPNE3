@@ -20,9 +20,18 @@ class ProfileTable extends Doctrine_Table
     self::PUBLIC_FLAG_PRIVATE => 'Private',
   );
 
-  public function getPublicFlags()
+  public function getPublicFlags($isI18n = true)
   {
-    return array_map(array(sfContext::getInstance()->getI18N(), '__'), $this->publicFlags);
+    if ($isI18m)
+    {
+      $publicFlags = array_map(array(sfContext::getInstance()->getI18N(), '__'), $this->publicFlags);
+    }
+    else
+    {
+      $publicFlags = $this->publicFlags;
+    }
+
+    return $publicFlags;
   }
 
   public function getPublicFlag($flag)

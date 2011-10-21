@@ -41,8 +41,8 @@
         <target>全員に公開</target>
       </trans-unit>
       <trans-unit id="">
-        <source>My Friends</source>
-        <target>マイフレンドまで公開</target>
+        <source>%my_friend%</source>
+        <target>%my_friend%まで公開</target>
       </trans-unit>
       <trans-unit id="">
         <source>Private</source>
