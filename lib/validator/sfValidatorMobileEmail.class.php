@@ -28,5 +28,6 @@ class sfValidatorMobileEmail extends sfValidatorEmail
     $str = join('|', array_filter(opToolkit::getMobileMailAddressDomains(), $filter));
 
     $this->setOption('pattern', '/^([^@\s]+)@('.$str.')$/i');
+    $this->setOption('max_length', 320);
   }
 }

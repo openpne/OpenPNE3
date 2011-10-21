@@ -17,6 +17,12 @@
  */
 class opValidatorPCEmail extends sfValidatorEmail
 {
+  protected function configure($options = array(), $messages = array())
+  {
+    parent::configure($options, $messages);
+    $this->setOption('max_length', 320);
+  }
+
   /**
    * @see sfValidatorString
    */
