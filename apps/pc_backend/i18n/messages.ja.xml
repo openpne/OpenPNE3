@@ -34,7 +34,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>%Community%'s admin authorization needed</source>
-        <target>%Community%参加者の承認が必要</target>
+        <target>%Community%管理者の承認が必要</target>
       </trans-unit>
       <trans-unit id="">
         <source>Public Flag for Profile Page</source>
