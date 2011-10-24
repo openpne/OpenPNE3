@@ -561,38 +561,6 @@
         <target>沖縄県</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Sex</source>
-        <target>性別</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Birthday</source>
-        <target>誕生日</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Country</source>
-        <target>国または地域</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Region</source>
-        <target>都市（都道府県や州など）</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Region in Japan</source>
-        <target>都道府県</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Postal Code</source>
-        <target>郵便番号</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Telephone Number</source>
-        <target>電話番号</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Self Introduction</source>
-        <target>自己紹介</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Term Configuration in this SNS</source>
         <target>SNS内名称設定</target>
       </trans-unit>
