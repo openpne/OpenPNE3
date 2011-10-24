@@ -54,7 +54,7 @@ general:
 
   enable_friend_link:
     Name:       "enable_friend_link"
-    Caption:    "フレンドリンク使用設定"
+    Caption:    "フレンド申請使用設定"
     FormType:   "radio"
     ValueType:  "text"
     IsRequired: true

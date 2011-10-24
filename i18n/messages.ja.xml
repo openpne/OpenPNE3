@@ -20,7 +20,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>Notification of Completion of Friend Link</source>
-        <target>フレンドリンク承認完了メール</target>
+        <target>フレンド承認完了メール</target>
       </trans-unit>
       <trans-unit id="">
         <source>Notification of Login URL</source>

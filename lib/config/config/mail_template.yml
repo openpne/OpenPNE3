@@ -139,11 +139,11 @@ pc:
           
           {{ member.name }} accepted your {{ op_term.friend }} link request.
       ja_JP:
-        - "{{ member.name }} さんがあなたの{{ op_term.friend }}リンクリクエストを承認しました"
+        - "{{ member.name }} さんがあなたの{{ op_term.friend }}申請を承認しました"
         - |
           こんにちは！{{ op_config.sns_name }} からのお知らせです。
           
-          {{ member.name }} さんがあなたの{{ op_term.friend }}リンクリクエストを承諾しました。
+          {{ member.name }} さんがあなたの{{ op_term.friend }}申請を承諾しました。
     variables:
       "op_config.sns_name": "SNS 名"
       "member.name": "メンバーのニックネーム"
@@ -398,14 +398,15 @@ mobile:
           
           {{ member.name }} accepted your {{ op_term.friend }} link request.
       ja_JP:
-        - "{{ member.name }} さんがあなたの{{ op_term.friend }}リンクリクエストを承認しました"
+        - "{{ member.name }} さんがあなたの{{ op_term.friend }}申請を承認しました"
         - |
           こんにちは！{{ op_config.sns_name }} からのお知らせです。
           
-          {{ member.name }} さんがあなたの{{ op_term.sns_name }}リンクリクエストを承諾しました。
+          {{ member.name }} さんがあなたの{{ op_term.friend }}申請を承諾しました。
     variables:
       "op_config.sns_name": "SNS 名"
       "member.name": "メンバーのニックネーム"
+      "op_term.friend": "「フレンド」の SNS 名称"
 
   reissuedPassword:
     caption: "Notification of Confirmation of Changing Password"
