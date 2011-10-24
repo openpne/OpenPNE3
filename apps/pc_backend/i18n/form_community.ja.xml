@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="1">
         <source>Name</source>
-        <target>コミュニティ名</target>
+        <target>%community%名</target>
       </trans-unit>
       <trans-unit id="2">
         <source>Photo</source>
@@ -12,11 +12,11 @@
       </trans-unit>
       <trans-unit id="3">
         <source>%community% Name</source>
-        <target>コミュニティ名</target>
+        <target>%community%名</target>
       </trans-unit>
       <trans-unit id="4">
         <source>%community% Category</source>
-        <target>コミュニティカテゴリ</target>
+        <target>%community%カテゴリ</target>
       </trans-unit>
       <trans-unit id="5">
         <source>Register policy</source>
@@ -24,7 +24,7 @@
       </trans-unit>
       <trans-unit id="6">
         <source>%community% Description</source>
-        <target>コミュニティ説明文</target>
+        <target>%community%説明文</target>
       </trans-unit>
       <trans-unit id="7">
         <source>All categories</source>
@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="8">
         <source>Is Allow Member %community%</source>
-        <target>メンバーのコミュニティ作成を許可</target>
+        <target>メンバーの%community%作成を許可</target>
       </trans-unit>
       <trans-unit id="9">
         <source>Category Name</source>
