@@ -27,7 +27,7 @@ class opDeprecatedRoute extends sfRoute
 
     $message = array(
       'This routing rule is deprecated. Please use other rules instead of this.',
-      'priority' => sfLogger::ERR,
+      'priority' => sfLogger::NOTICE,
     );
 
     if (sfContext::hasInstance())
