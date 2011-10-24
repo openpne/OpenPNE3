@@ -48,6 +48,7 @@
         <source>Private</source>
         <target>公開しない</target>
       </trans-unit>
+
       <trans-unit id="">
         <source>%community% Name</source>
         <target>%community%名</target>
@@ -1152,6 +1153,67 @@
       <trans-unit id="">
         <source>%sns% Administration</source>
         <target>%sns%管理画面</target>
+      </trans-unit>
+
+      <trans-unit id="">
+        <source>%community% List</source>
+        <target>%community%リスト</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%community% Category Configuration</source>
+        <target>%community%カテゴリ設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Default %community% Configuration</source>
+        <target>初期%community%設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete %community%</source>
+        <target>%community%削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Administrator</source>
+        <target>管理者</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You can set new members to join the following %community% automatically.</source>
+        <target>メンバー新規登録時に以下で設定した%community%に自動的に参加させることができます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Input the %community% ID you want new members to join and click "Add" button.</source>
+        <target>参加させたい%community%のIDを入力して「追加」ボタンを押してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Authority to Read Topic</source>
+        <target>トピック閲覧権限</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Authority to Create Topic</source>
+        <target>トピック作成権限</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Register policy</source>
+        <target>参加方針</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%community% Description</source>
+        <target>%community%説明文</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If you uncheck "Is allow Member %community%", only the member who has id 1 can make %community% of the category.</source>
+        <target>「メンバー作成%community%の許可」からチェックを外すと、 ID が 1 のメンバーしか、そのカテゴリ上で%community%の作成をおこなえなくなります。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Big Category</source>
+        <target>大カテゴリ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Small Category</source>
+        <target>小カテゴリ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Are you sure you want to delete this %community%?</source>
+        <target>本当にこの%community%を削除してもよろしいですか？</target>
       </trans-unit>
     </body>
   </file>
