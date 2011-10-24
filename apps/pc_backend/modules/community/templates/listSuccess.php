@@ -2,10 +2,10 @@
 <?php include_partial('submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', __('%community% List', array('%community%' => $op_term['community']->titleize()))); ?>
+<?php slot('title', __('%Community% List')); ?>
 
-<?php $form->getWidgetSchema()->setLabel("name", __('%community% Name', array('%community%' => $op_term['community']->titleize()))); ?>
-<?php $form->getWidgetSchema()->setLabel("community_category_id", __('%community% Category', array('%community%' => $op_term['community']->titleize()))); ?>
+<?php $form->getWidgetSchema()->setLabel("name", __('%Community% Name')); ?>
+<?php $form->getWidgetSchema()->setLabel("community_category_id", __('%Community% Category')); ?>
 <?php echo $form->renderFormTag(url_for('community/list'), array('method' => 'get')) ?>
 <table>
 <?php echo $form ?>
@@ -15,7 +15,7 @@
 </form>
 
 <?php if (!$pager->getNbResults()): ?>
-<?php echo __('該当する%community%は存在しません。', array('%community%' => $op_term['community'])) ?></p>
+<?php echo __('該当する%community%は存在しません。') ?></p>
 <?php else: ?>
 <?php slot('pager') ?>
 <p><?php op_include_pager_navigation($pager, 'community/list?page=%d', array('use_current_query_string' => true)) ?></p>

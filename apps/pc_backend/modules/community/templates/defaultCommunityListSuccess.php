@@ -2,10 +2,10 @@
 <?php include_partial('submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', __('Default %community% Configuration', array('%community%' => $op_term['community']->titleize()))); ?>
+<?php slot('title', __('Default %community% Configuration')); ?>
 
-<p><?php echo __('You can set new members to join the following %community% automatically.', array('%community%' => $op_term['community']->titleize())) ?></p>
-<p><?php echo __('Input the %community% ID you want new members to join and click "Add" button.', array('%community%' => $op_term['community'])) ?></p>
+<p><?php echo __('You can set new members to join the following %community% automatically.') ?></p>
+<p><?php echo __('Input the %community% ID you want new members to join and click "Add" button.') ?></p>
 
 <form action="<?php url_for('community/defaultCommunityList') ?>" method="post">
 <table>
@@ -19,7 +19,7 @@
 <table>
 <tr>
 <th>ID</th>
-<th><?php echo __('%community% Name', array('%community%' => $op_term['community']->titleize())) ?></th>
+<th><?php echo __('%Community% Name') ?></th>
 <th><?php echo __('Administrator') ?></th>
 <th><?php echo __('Operation') ?></th>
 </tr>

@@ -48,7 +48,6 @@
         <source>Private</source>
         <target>公開しない</target>
       </trans-unit>
-
       <trans-unit id="">
         <source>%community% Name</source>
         <target>%community%名</target>
@@ -58,16 +57,16 @@
         <target>%community%カテゴリ</target>
       </trans-unit>
       <trans-unit id="">
-        <source>%community% Administrator</source>
-        <target>%community%管理者</target>
+        <source>%Community% Administrator</source>
+        <target>%Community%管理者</target>
       </trans-unit>
       <trans-unit id="">
         <source>Date Created</source>
         <target>作成日</target>
       </trans-unit>
       <trans-unit id="">
-        <source>%community% Members</source>
-        <target>%community%メンバー数</target>
+        <source>%Community% Members</source>
+        <target>%Community%メンバー数</target>
       </trans-unit>
       <trans-unit id="">
         <source>%community% Description</source>
@@ -1156,12 +1155,12 @@
       </trans-unit>
 
       <trans-unit id="">
-        <source>%community% List</source>
-        <target>%community%リスト</target>
+        <source>%Community% List</source>
+        <target>%Community%リスト</target>
       </trans-unit>
       <trans-unit id="">
-        <source>%community% Category Configuration</source>
-        <target>%community%カテゴリ設定</target>
+        <source>%Community% Category Configuration</source>
+        <target>%Community%カテゴリ設定</target>
       </trans-unit>
       <trans-unit id="">
         <source>Default %community% Configuration</source>
