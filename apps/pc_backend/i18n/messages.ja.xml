@@ -1426,14 +1426,6 @@
         <target>参加させたい%community%のIDを入力して「追加」ボタンを押してください。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Authority to Read Topic</source>
-        <target>トピック閲覧権限</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Authority to Create Topic</source>
-        <target>トピック作成権限</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Register policy</source>
         <target>参加方針</target>
       </trans-unit>
