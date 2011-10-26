@@ -128,32 +128,46 @@ class sfOpenPNEWebRequest extends sfWebRequest
   *
   * @return string  mobile UID
   */
-  public function getMobileUID()
+  public function getMobileUID($allowFallback = true)
   {
     if (!$this->isMobile()) {
       return false;
     }
 
-    $uid = $this->getMobile()->getUID();
-    if (!$uid)
+    $uid = $this->hashMobileUid($this->getMobile()->getUID()));
+    if (!$uid && $allowFallback)
     {
-      if ($this->getMobile()->isSoftBank())
-      {
-        $uid = $this->getMobile()->getSerialNumber();
-      }
-      elseif ($this->getMobile()->isDoCoMo())
-      {
-        $uid = $this->getMobile()->getCardID();
-      }
+      // result of opWebRequest::getMobileFallbackUID() is already hashed
+      $uid = $this->getMobileFallbackUID();
     }
 
-    // OpenPNE doesn't need to know a plain mobile UID
-    if ($uid)
+    return $uid;
+  }
+
+  public function getMobileFallbackUID()
+  {
+    $uid = false;
+
+    if ($this->getMobile()->isSoftBank())
     {
-      return md5($uid);
+      $uid = $this->getMobile()->getSerialNumber();
+    }
+    elseif ($this->getMobile()->isDoCoMo())
+    {
+      $uid = $this->getMobile()->getCardID();
     }
 
-    return false;
+    return $this->hashMobileUid($uid);
+  }
+
+  protected function hashMobileUid($string)
+  {
+    if (!$string)
+    {
+      return false;
+    }
+
+    return md5($string);
   }
 
  /**
