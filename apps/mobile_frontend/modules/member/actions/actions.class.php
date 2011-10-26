@@ -105,7 +105,7 @@ class memberActions extends sfOpenPNEMemberAction
       {
         if ($request->hasParameter('update'))
         {
-          if (!$request->getMobileUID())
+          if (!$request->getMobileUID(false))
           {
             $this->getUser()->setFlash('error', 'Your mobile UID was not registered.');
             $this->redirect('member/configUID');
@@ -118,7 +118,7 @@ class memberActions extends sfOpenPNEMemberAction
             $memberConfig->setMember($this->getUser()->getMember());
             $memberConfig->setName('mobile_uid');
           }
-          $memberConfig->setValue($request->getMobileUID());
+          $memberConfig->setValue($request->getMobileUID(false));
           $memberConfig->save();
           $this->getUser()->setFlash('notice', 'Your mobile UID was set successfully.');
           $this->redirect('member/configUID');
