@@ -1362,8 +1362,8 @@
         <target>%Community%カテゴリ設定</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Default %community% Configuration</source>
-        <target>初期%community%設定</target>
+        <source>Default %Community% Configuration</source>
+        <target>初期%Community%設定</target>
       </trans-unit>
       <trans-unit id="">
         <source>Delete %community%</source>

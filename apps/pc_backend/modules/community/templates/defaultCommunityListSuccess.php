@@ -2,7 +2,7 @@
 <?php include_partial('submenu') ?>
 <?php end_slot() ?>
 
-<?php slot('title', __('Default %community% Configuration')); ?>
+<?php slot('title', __('Default %Community% Configuration')); ?>
 
 <p><?php echo __('You can set new members to join the following %community% automatically.') ?></p>
 <p><?php echo __('Input the %community% ID you want new members to join and click "Add" button.') ?></p>
