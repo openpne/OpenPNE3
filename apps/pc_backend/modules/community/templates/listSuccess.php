@@ -25,7 +25,7 @@
 <?php include_partial('community/communityInfo', array(
   'community' => $community, 
   'moreInfo' => array(
-    button_to(__('削除'), 'community/delete?id='.$community->getId())
+    button_to(__('Delete'), 'community/delete?id='.$community->getId())
   )
 )); ?>
 <?php endforeach; ?>
