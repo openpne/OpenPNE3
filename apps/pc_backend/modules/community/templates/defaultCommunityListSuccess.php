@@ -32,7 +32,7 @@ $csrfToken = '&'.$form->getCSRFFieldName().'='.$form->getCSRFToken();
 <td><?php echo $community->getId() ?></td>
 <td><?php echo $community->getName() ?></td>
 <td><?php echo $community->getAdminMember()->getName() ?></td>
-<td><?php echo link_to(__('Delete'), 'community/removeDefaultCommunity?id='.$community->getId().$csrfToken)) ?></td>
+<td><?php echo link_to(__('Delete'), 'community/removeDefaultCommunity?id='.$community->getId().$csrfToken) ?></td>
 </tr>
 <?php endforeach; ?>
 </table>
