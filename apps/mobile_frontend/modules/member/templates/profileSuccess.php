@@ -33,6 +33,9 @@
 <td valign="top">
 <?php
 $list = array();
+
+$list[__('%Nickname%')] = $member->getName();
+
 if ($member->getAge(true))
 {
   $ageValue = __('%1% years old', array('%1%' => $member->getAge()));

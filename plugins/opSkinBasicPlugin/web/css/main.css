@@ -831,7 +831,9 @@ div.operation ul.moreInfo li {
   width: 83px;
   background-color: #FFFFFF;
 }
-
+#profile th {
+  width: 89px;
+}
 .listBox th, .listBox td {
   padding: 5px;
 }
