@@ -134,7 +134,7 @@ class sfOpenPNEWebRequest extends sfWebRequest
       return false;
     }
 
-    $uid = $this->hashMobileUid($this->getMobile()->getUID()));
+    $uid = $this->hashMobileUid($this->getMobile()->getUID());
     if (!$uid && $allowFallback)
     {
       // result of opWebRequest::getMobileFallbackUID() is already hashed
