@@ -105,12 +105,16 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
 
   public function getCommunityIdsOfAdminByMemberId($memberId)
   {
-    $objects = Doctrine::getTable('CommunityMemberPosition')->findByMemberIdAndName($memberId, 'admin');
+    $objects = Doctrine::getTable('CommunityMemberPosition')->createQuery()
+      ->select('community_id')
+      ->where('member_id = ?', $memberId)
+      ->andWhere('name = ?', 'admin')
+      ->execute(array(), Doctrine_Core::HYDRATE_NONE);
 
     $results = array();
     foreach ($objects as $obj)
     {
-      $results[] = $obj->getCommunityId();
+      $results[] = $obj[0];
     }
     return $results;
   }
