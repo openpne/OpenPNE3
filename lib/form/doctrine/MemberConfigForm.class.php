@@ -52,6 +52,42 @@ class MemberConfigForm extends BaseForm
         $this->setMemberConfigWidget($key);
       }
     }
+
+    if ('mobile_frontend' === sfConfig::get('sf_app'))
+    {
+      $this->appendMobileInputMode();
+    }
+  }
+
+  protected function appendMobileInputMode()
+  {
+    parent::appendMobileInputMode();
+
+    foreach ($this as $k => $v)
+    {
+      $widget = $this->widgetSchema[$k];
+      $validator = $this->validatorSchema[$k];
+
+      if (!($widget instanceof sfWidgetFormInput))
+      {
+        continue;
+      }
+
+      if ($validator instanceof sfValidatorAnd)
+      {
+        foreach ($validator->getValidators() as $childValidator)
+        {
+          if ($childValidator instanceof sfValidatorEmail)
+          {
+            opToolkit::appendMobileInputModeAttributesForFormWidget($widget, 'alphabet');
+          }
+          elseif ($childValidator instanceof sfValidatorNumber)
+          {
+            opToolkit::appendMobileInputModeAttributesForFormWidget($widget, 'numeric');
+          }
+        }
+      }
+    }
   }
 
   public function setMemberConfigSettings()
