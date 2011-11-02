@@ -39,6 +39,11 @@ class InviteForm extends MemberConfigPcAddressForm
     {
       $this->embedForm('captcha', new opCaptchaForm());
     }
+
+    if ('mobile_frontend' === sfConfig::get('sf_app'))
+    {
+      opToolkit::appendMobileInputModeAttributesForFormWidget($this->getWidget('mail_address'), 'alphabet');
+    }
   }
 
   public function validate($validator, $values, $arguments = array())

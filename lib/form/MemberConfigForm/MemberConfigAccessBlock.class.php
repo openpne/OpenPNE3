@@ -34,7 +34,22 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
       }
     }
   }
+  
+  protected function appendMobileInputMode()
+  {
+    parent::appendMobileInputMode();
 
+    foreach ($this as $k => $v)
+    {
+      $widget = $this->widgetSchema[$k];
+      $validator = $this->validatorSchema[$k];
+
+      if ($widget instanceof opWidgetFormInputIncreased)
+      {
+        opToolkit::appendMobileInputModeAttributesForFormWidget($widget, 'numeric');
+      }
+    }
+  }
   public function saveConfig($name, $value)
   {
     if ($name !== 'access_block')
