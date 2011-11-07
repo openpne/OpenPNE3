@@ -334,19 +334,13 @@ class opSecurityUser extends opAdaptableUser
     $member = $this->getMember();
     opActivateBehavior::enable();
 
-    if ($member->getIsLoginRejected())
-    {
-      $this->logout();
-      $isSNSMember = false;
-    }
-    elseif ($memberId = $this->getRememberedMemberId())
+    if ($memberId = $this->getRememberedMemberId())
     {
       $this->setMemberId($memberId);
       $isSNSMember = true;
     }
     elseif ($member instanceof opAnonymousMember)
     {
-      $this->logout();
       $isSNSMember = false;
     }
     else
@@ -354,10 +348,19 @@ class opSecurityUser extends opAdaptableUser
       $isSNSMember = (bool)$member->getIsActive();
     }
 
+    if ($this->getMember()->getIsLoginRejected())
+    {
+      $isSNSMember = false;
+    }
+
     $this->setIsSNSMember($isSNSMember);
     if ($isSNSMember)
     {
       $member->updateLastLoginTime();
+    }
+    else
+    {
+      $this->logout();
     }
   }
 
