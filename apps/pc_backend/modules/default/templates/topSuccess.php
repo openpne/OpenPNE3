@@ -4,8 +4,8 @@ function getVersion(obj)
 {
   if (obj)
   {
-    var info = document.getElementById("versionInformation");
-    new Insertion.Top(info, "<p class=\""+obj.level+"\">"+obj.message+"</p>");
+    var info = $("#versionInformation");
+    info.before("<p class=\""+obj.level+"\">"+obj.message+"</p>");
     info.show();
   }
 }
@@ -14,8 +14,8 @@ function getDashboard(str)
 {
   if (str)
   {
-    var dashboard = document.getElementById("dashboard");
-    new Insertion.Top(dashboard, str);
+    var dashboard = $("#dashboard");
+    dashboard.before(str);
     dashboard.show();
   }
 }

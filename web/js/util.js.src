@@ -15,11 +15,11 @@
 
 function getCenterMuchScreen(element)
 {
-  var width  = $(element).getWidth();
-  var height = $(element).getHeight();
-  var screenWidth = document.viewport.getWidth();
-  var screenHeight = document.documentElement.clientHeight;
-  var screenTop = document.viewport.getScrollOffsets().top;
+  var width  = $(element).width();
+  var height = $(element).height();
+  var screenWidth = $(window).width();
+  var screenHeight = $(window).height();
+  var screenTop = $(window).scrollTop();
 
   var left = (screenWidth / 2) - (width / 2);
   var top = (screenHeight / 2 + screenTop) - (height / 2);
@@ -109,10 +109,10 @@ var opCookie = {
       var cookies = _cookie.split(';');
       for (var i = 0; i < cookies.length; i++)
       {
-        var _cookie = cookies[i].strip();
-        if (_cookie.startsWith(name + '='))
+        var _cookie = $.trim(cookies[i]);
+        if (_cookie.indexOf(name + '=') == 0)
         {
-          value = decodeURIComponent(_cookie.substr(name.length + 1)).strip();
+          value = $.trim(decodeURIComponent(_cookie.substr(name.length + 1)));
           break;
         }
       }
