@@ -28,18 +28,16 @@ function deleteGadget(type, id)
   var parentIframe = parent.document.getElementsByTagName('iframe')[0];
 
   var typeId = 'plot' + type.charAt(0).toUpperCase() + type.substr(1, type.length - 1);
-  Element.remove(parentIframe.contentWindow.document.getElementById(typeId + '_gadget_' + id));
+  $('#' + typeId + '_gadget_' + id, parentIframe.contentWindow.document).remove();
 
   var form = parent.document.getElementById('gadgetForm');
-  var hiddens = Element.select(form, '.' + type + 'Gadget');
-  for (var i = 0; i < hiddens.length; i++)
-  {
-    if (hiddens[i].value == id)
+  $('.' + type + 'Gadget', form).each(function(){
+    if (this.value == id)
     {
-      Element.remove(hiddens[i]);
-      break;
+      $(this).remove();
+      return false;
     }
-  }
+  });
 
   parentIframe.contentWindow.parent.adjustByIframeContens(parentIframe);
   parent.document.getElementById('modal').onclick();

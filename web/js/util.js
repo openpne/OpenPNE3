@@ -1,6 +1,6 @@
 
 function getCenterMuchScreen(element)
-{var width=$(element).getWidth();var height=$(element).getHeight();var screenWidth=document.viewport.getWidth();var screenHeight=document.documentElement.clientHeight;var screenTop=document.viewport.getScrollOffsets().top;var left=(screenWidth/2)-(width/2);var top=(screenHeight/2+screenTop)-(height/2);if(top<10)
+{var width=$(element).width();var height=$(element).height();var screenWidth=$(window).width();var screenHeight=$(window).height();var screenTop=$(window).scrollTop();var left=(screenWidth/2)-(width/2);var top=(screenHeight/2+screenTop)-(height/2);if(top<10)
 {top=10;}
 return{"left":left+"px","top":top+"px"};}
 var opCookie={set:function(name,value,expires,path,domain,secure,httponly)
@@ -21,8 +21,8 @@ if(httponly)
 document.cookie=result;},get:function(name)
 {var value=null;if(document.cookie&&document.cookie.length)
 {var _cookie=document.cookie;var cookies=_cookie.split(';');for(var i=0;i<cookies.length;i++)
-{var _cookie=cookies[i].strip();if(_cookie.startsWith(name+'='))
-{value=decodeURIComponent(_cookie.substr(name.length+1)).strip();break;}}}
+{var _cookie=$.trim(cookies[i]);if(_cookie.indexOf(name+'=')==0)
+{value=$.trim(decodeURIComponent(_cookie.substr(name.length+1)));break;}}}
 return value;}};function pne_url2a(url)
 {var urlstr;if(url.length>57)
 {var _url=url.replace("&amp;","&");if(_url.length>57)

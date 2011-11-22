@@ -1,5 +1,5 @@
 topSuccess:
-  javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
+  javascripts: [%OP_JQUERY_URL%]
 
 templateHelpSuccess:
   layout: plain

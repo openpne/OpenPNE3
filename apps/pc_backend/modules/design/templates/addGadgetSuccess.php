@@ -28,19 +28,19 @@ function insertGadget(type, id, caption)
   var parentIframe = parent.document.getElementsByTagName('iframe')[0];
 
   var typeId = 'plot' + type.charAt(0).toUpperCase() + type.substr(1, type.length - 1);
-  var target = parentIframe.contentWindow.document.getElementById(typeId).getElementsByClassName('emptyGadget')[0];
+  var target = $('#' + typeId + ' .emptyGadget', parentIframe.contentWindow.document);
   var contents = parentIframe.contentWindow.document.createElement('div');
   contents.setAttribute('class', 'gadget');
   contents.innerHTML = caption+'(<a href=\'#\' onclick=\'dropNewGadget(\"'+type+'\", \"'+id+'\", this.parentNode); return false;\'>".__('削除')."</a>)';
-  new Insertion.Before(target, contents);
+  $(contents).insertBefore(target);
 
-  var form = parent.document.getElementById('gadgetForm');
+  var form = $('#gadgetForm', parent.document);
   var hidden = parent.document.createElement('input');
   hidden.setAttribute('class', type + 'New');
   hidden.setAttribute('type', 'hidden');
   hidden.setAttribute('name', 'new[' + type + '][]');
   hidden.setAttribute('value', id);
-  new Insertion.Bottom(form, hidden);
+  $(hidden).appendTo(form);
 
   parentIframe.contentWindow.parent.adjustByIframeContens(parentIframe);
 }
