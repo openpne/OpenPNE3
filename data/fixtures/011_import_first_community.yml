@@ -1,0 +1,45 @@
+Community:
+  first_community:
+    name: "all"
+
+CommunityConfig:
+  public_flag:
+    community_id: 1
+    name: "public_flag"
+    value: "public"
+  topic_authority:
+    community_id: 1
+    name: "topic_authority"
+    value: "public"
+  register_policy:
+    community_id: 1
+    name: "register_policy"
+    value: "open"
+  description:
+    community_id: 1
+    name: "description"
+    value: "This community includes all member."
+  is_send_pc_joinCommunity_mail:
+    community_id: 1
+    name: "is_send_pc_joinCommunity_mail"
+    value: "1"
+  is_default:
+    community_id: 1
+    name: "is_default"
+    value: 1
+
+CommunityMember:
+  first_member:
+    community_id: 1
+    member_id: 1
+    is_pre: 0
+    is_receive_mail_pc: 0
+
+CommunityMemberPosition:
+  first_member:
+    community_id: 1
+    member_id: 1
+    community_member_id: 1
+    name: "admin"
+
+
