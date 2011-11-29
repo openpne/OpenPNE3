@@ -106,6 +106,7 @@ class communityActions extends sfOpenPNECommunityAction
     $this->forward404Unless($this->community, 'Undefined community.');
     $this->community_admin = Doctrine::getTable('CommunityMember')->getCommunityAdmin($this->id);
     $this->community_admin = Doctrine::getTable('Member')->find($this->community_admin->getMemberId());
+    $this->communitySubAdmins = $this->community->getSubAdminMembers();
 
     return sfView::SUCCESS;
   }

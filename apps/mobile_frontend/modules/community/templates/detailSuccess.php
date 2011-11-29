@@ -12,8 +12,17 @@ $list = array(
   __('%community% Category', array(), 'form_community') => $community->getCommunityCategory(),
   __('Date Created')       => op_format_date($community->getCreatedAt(), 'D'),
   __('Administrator')      => link_to($community_admin->getName(), 'member/profile?id='.$community_admin->getId()),
-  __('Count of Members')   => $community->countCommunityMembers()
 );
+$subAdminCaption = array();
+foreach ($communitySubAdmins as $m)
+{
+  $subAdminCaption[] = link_to($m->getName(), '@member_profile?id='.$m->getId());
+}
+if (count($subAdminCaption))
+{
+  $list[__('Sub Administrator')] = implode("<br>\n", $subAdminCaption);
+}
+$list[__('Count of Members')] = $community->countCommunityMembers();
 foreach ($community->getConfigs() as $key => $config)
 {
   $list[__($key, array(), 'form_community')] = $config;
