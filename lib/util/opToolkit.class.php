@@ -499,7 +499,7 @@ class opToolkit
    * @param  int    $length  Length of a hash
    * @return string
    */
-  public function getRandom($length = 64)
+  public static function getRandom($length = 64)
   {
     static $srand = false;
 

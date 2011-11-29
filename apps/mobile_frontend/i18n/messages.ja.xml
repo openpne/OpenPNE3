@@ -1005,11 +1005,11 @@
      </trans-unit>
       <trans-unit id="">
         <source>You have just accepted %friend% link request.</source>
-        <target>%friend%ﾘﾝｸを承認しました。</target>
+        <target>%friend%申請を承認しました。</target>
       </trans-unit>
       <trans-unit id="">
         <source>You have just rejected %friend% link request.</source>
-        <target>%friend%ﾘﾝｸを拒否しました。</target>
+        <target>%friend%申請を拒否しました。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Go to Confirmation Page</source>
@@ -1025,7 +1025,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>Pending %friend% link requests</source>
-        <target>%friend%ﾘﾝｸ承認待ち</target>
+        <target>%friend%承認待ち</target>
       </trans-unit>
       <trans-unit id="">
         <source>You've gotten %1% one's %community% joining requests</source>

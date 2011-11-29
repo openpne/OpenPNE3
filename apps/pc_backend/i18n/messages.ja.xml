@@ -34,7 +34,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>%Community%'s admin authorization needed</source>
-        <target>%Community%参加者の承認が必要</target>
+        <target>%Community%管理者の承認が必要</target>
       </trans-unit>
       <trans-unit id="">
         <source>Public Flag for Profile Page</source>
@@ -107,6 +107,10 @@
       <trans-unit id="">
         <source>%community% Description</source>
         <target>%community%説明文</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>There are no %community% matches search condition.</source>
+        <target>該当する%community%は存在しません。</target>
       </trans-unit>
 
       <trans-unit id="">
@@ -557,38 +561,6 @@
         <target>沖縄県</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Sex</source>
-        <target>性別</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Birthday</source>
-        <target>誕生日</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Country</source>
-        <target>国または地域</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Region</source>
-        <target>都市（都道府県や州など）</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Region in Japan</source>
-        <target>都道府県</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Postal Code</source>
-        <target>郵便番号</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Telephone Number</source>
-        <target>電話番号</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Self Introduction</source>
-        <target>自己紹介</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Term Configuration in this SNS</source>
         <target>SNS内名称設定</target>
       </trans-unit>
@@ -962,10 +934,6 @@
         <target>プロフィール項目登録</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Operation</source>
-        <target>操作</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Entry name</source>
         <target>項目名</target>
       </trans-unit>
@@ -1012,10 +980,6 @@
       <trans-unit id="">
         <source>Search</source>
         <target>検索</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Delete</source>
-        <target>削除</target>
       </trans-unit>
       <trans-unit id="">
         <source>List</source>
@@ -1178,7 +1142,7 @@
         <target>本当に削除してもよろしいですか？</target>
       </trans-unit>
       <trans-unit id="">
-        <source>※All the member's data in this entry will be lost.</source>
+        <source>NOTE: All the member's data in this entry will be lost.</source>
         <target>※この項目に対するメンバーの入力値も失われます。</target>
       </trans-unit>
       <trans-unit id="">
@@ -1398,8 +1362,8 @@
         <target>%Community%カテゴリ設定</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Default %community% Configuration</source>
-        <target>初期%community%設定</target>
+        <source>Default %Community% Configuration</source>
+        <target>初期%Community%設定</target>
       </trans-unit>
       <trans-unit id="">
         <source>Delete %community%</source>
@@ -1416,14 +1380,6 @@
       <trans-unit id="">
         <source>Input the %community% ID you want new members to join and click "Add" button.</source>
         <target>参加させたい%community%のIDを入力して「追加」ボタンを押してください。</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Authority to Read Topic</source>
-        <target>トピック閲覧権限</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Authority to Create Topic</source>
-        <target>トピック作成権限</target>
       </trans-unit>
       <trans-unit id="">
         <source>Register policy</source>

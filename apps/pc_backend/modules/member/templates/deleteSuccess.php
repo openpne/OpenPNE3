@@ -16,9 +16,15 @@
 <th><?php echo __('Nickname') ?></th><td><?php echo $member->getName() ?></td>
 </tr>
 <?php foreach ($member->getProfiles() as $profile): ?>
+<?php $profileObj = $profile->getProfile(); ?>
 <tr>
+<?php if ($profileObj->isPreset()): ?>
+<?php $config = $profileObj->getPresetConfig(); ?>
+<th><?php echo __($config['Caption']) ?></th>
+<?php else: ?>
 <th><?php echo $profile->getCaption() ?></th>
-<td><?php echo $member->getProfile($profile->getName()) ?></td>
+<?php endif; ?>
+<td><?php echo __($member->getProfile($profile->getName())) ?></td>
 </tr>
 <?php endforeach ?>
 <tr>

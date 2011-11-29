@@ -54,18 +54,6 @@ class MemberProfileForm extends BaseForm
 
       $memberProfile = Doctrine::getTable('MemberProfile')->retrieveByMemberIdAndProfileId($memberId, $profile->getId());
 
-      if (is_null($value['value']))
-      {
-        if ($memberProfile)
-        {
-          if ($profile->isMultipleSelect())
-          {
-            $memberProfile->clearChildren();
-          }
-          $memberProfile->delete();
-        }
-        continue;
-      }
       if (!$memberProfile)
       {
         $memberProfile = new MemberProfile();
@@ -82,27 +70,62 @@ class MemberProfileForm extends BaseForm
 
       if ($profile->isMultipleSelect())
       {
-        $ids = array();
-        $_values = array();
+        $children = $memberProfile->getNode()->getChildren();
+        if (count($children) < count($value['value']))
+        {
+          $n = count($value['value']) - count($children);
+          for ($i = 0; $i < $n; ++$i)
+          {
+            $childProfile = new MemberProfile();
+            $childProfile->setMemberId($memberId);
+            $childProfile->setProfileId($profile->getId());
+            $childProfile->getNode()->insertAsLastChildOf($memberProfile);
+            $childProfile->save();
+          }
+        }
+
+        $children = $memberProfile->getNode()->getChildren();
         if ('date' === $profile->getFormType())
         {
+          foreach ($children as $child)
+          {
+            $child->setValue(null);
+            $child->save();
+          }
           $_values = array_map('intval', explode('-', $value['value']));
           $options = $profile->getProfileOption();
-          foreach ($options as $option)
+          foreach ($_values as $i => $value)
           {
-            $ids[] = $option->getId();
+            $children[$i]->setValue($value);
+            $children[$i]->save();
           }
-          $memberProfile->setValue($value['value']);
         }
         else
         {
-          $ids = $value['value'];
+          foreach ($children as $child)
+          {
+            $child->setProfileOptionId(null);
+            $child->save();
+          }
+          foreach ($value['value'] as $i => $v)
+          {
+            $children[$i]->setProfileOptionId($v);
+            $children[$i]->save();
+          }
         }
-        Doctrine::getTable('MemberProfile')->createChild($memberProfile, $memberId, $profile->getId(), $ids, $_values);
       }
       else
       {
         $memberProfile->setValue($value['value']);
+      }
+
+      $children = $memberProfile->getNode()->getChildren();
+      foreach($children as $child)
+      {
+        if ('' === $child->_get('value') && is_null($child->get('profile_option_id')))
+        {
+          $child->getNode()->delete();
+        }
       }
 
       $memberProfile->save();

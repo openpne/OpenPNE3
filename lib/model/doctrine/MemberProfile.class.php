@@ -14,16 +14,23 @@ class MemberProfile extends BaseMemberProfile implements opAccessControlRecordIn
   {
     if ('date' !== $this->getFormType())
     {
-      if ($this->getProfileOptionId())
+      if ($this->Profile->isMultipleSelect())
+      {
+        $children = $this->getChildrenValues(true);
+        if ($children)
+        {
+          return implode(', ', $children);
+        }
+        else
+        {
+          return '';
+        }
+      }
+      if ($this->Profile->isSingleSelect() && $this->getProfileOptionId())
       {
         $option = Doctrine::getTable('ProfileOption')->find($this->getProfileOptionId());
-        return (string)$option->getValue();
-      }
 
-      $children = $this->getChildrenValues(true);
-      if ($children)
-      {
-        return implode(', ', $children);
+        return (string)$option->getValue();
       }
     }
 
@@ -68,17 +75,27 @@ class MemberProfile extends BaseMemberProfile implements opAccessControlRecordIn
       
       return $this->_get('value');
     }
-    elseif ('date' !== $this->getFormType() && $this->getProfileOptionId())
+    elseif ('date' !== $this->getFormType())
     {
-      return $this->getProfileOptionId();
-    }
-
-    $children = $this->getChildrenValues();
-    if ($children)
-    {
-      if ('date' === $this->getFormType())
+      if ($this->Profile->isMultipleSelect())
       {
-        if (count($children) == 3 && $children[0] && $children[1] && $children[2])
+        $children = $this->getChildrenValues();
+        if ($children)
+        {
+          return $children;
+        }
+      }
+      elseif ($this->Profile->isSingleSelect() && $this->getProfileOptionId())
+      {
+        return $this->getProfileOptionId();
+      }
+    }
+    else
+    {
+      $children = $this->getChildrenValues();
+      if ($children)
+      {
+        if (3 <= count($children) && $children[0] && $children[1] && $children[2])
         {
           $obj = new DateTime();
           $obj->setDate($children[0], $children[1], $children[2]);
@@ -86,7 +103,6 @@ class MemberProfile extends BaseMemberProfile implements opAccessControlRecordIn
         }
         return null;
       }
-      return $children;
     }
 
     return parent::rawGet('value');
