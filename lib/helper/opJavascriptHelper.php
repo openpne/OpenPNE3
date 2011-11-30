@@ -16,7 +16,7 @@
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
  */
 
-require_once sfConfig::get('sf_plugins_dir').'/sfProtoculousPlugin/lib/helper/JavascriptHelper.php';
+require_once sfConfig::get('sf_lib_dir').'/helper/JavascriptHelper.php';
 
 /**
  * Makes contents to be a modal box.
@@ -25,15 +25,15 @@ require_once sfConfig::get('sf_plugins_dir').'/sfProtoculousPlugin/lib/helper/Ja
  */
 function make_modal_box($id, $contents)
 {
-  sfContext::getInstance()->getResponse()->addJavascript(sfConfig::get('sf_prototype_web_dir').'/js/prototype');
+  sfContext::getInstance()->getResponse()->addJavascript(sfConfig::get('op_jquery_url'));
   sfContext::getInstance()->getResponse()->addJavascript('util');
-  $div = '<div id="'.$id.'" class="modalWall" style="display:none" onclick="this.style.display=\'none\'; $(\''.$id.'_contents\').style.display=\'none\'"></div>'
+  $div = '<div id="'.$id.'" class="modalWall" style="display:none" onclick="$(this).hide(); $(\'#'.$id.'_contents\').hide()"></div>'
        . '<div id="'.$id.'_contents" class="modalBox" style="display: none;">'
        . $contents
        . '</div>'
        . '<script type="text/javascript">'
        . 'var contents = $("'.$id.'_contents");'
-       . 'contents.setStyle(getCenterMuchScreen(contents))'
+       . 'contents.css(getCenterMuchScreen(contents))'
        . '</script>';
 
   return $div;

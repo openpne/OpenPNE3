@@ -8,7 +8,7 @@
 <?php endif; ?>
 <?php endforeach; ?>
 <?php end_slot() ?>
-<?php echo sortable_element('Top', array('tag' => 'div', 'handle' => 'partsHeading', 'onChange' => 'function(obj){storeSort(obj)}')) ?>
+<?php echo javascript_tag('$("#Top").sortable({ axis: "y", items: "> div", handle: "div.partsHeading", update: function(event,ui){storeSort(event, ui)} });') ?>
 <?php endif; ?>
 
 <?php if (isset($sideMenuGadgets)): ?>
@@ -19,7 +19,7 @@
 <?php endif; ?>
 <?php endforeach; ?>
 <?php end_slot() ?>
-<?php echo sortable_element('Left', array('tag' => 'div', 'handle' => 'partsHeading', 'onChange' => 'function(obj){storeSort(obj)}')) ?>
+<?php echo javascript_tag('$("#Left").sortable({ axis: "y", items: "> div", handle: "div.partsHeading", update: function(event,ui){storeSort(event, ui)} });') ?>
 <?php endif; ?>
 
 <?php if (isset($contentsGadgets)): ?>
@@ -28,7 +28,7 @@
 <?php include_component($gadget->getComponentModule(), $gadget->getComponentAction(), array('gadget' => $gadget)); ?>
 <?php endif; ?>
 <?php endforeach; ?>
-<?php echo sortable_element('Center', array('tag' => 'div', 'handle' => 'partsHeading', 'onChange' => 'function(obj){storeSort(obj)}')) ?>
+<?php echo javascript_tag('$("#Center").sortable({ axis: "y", items: "> div", handle: "div.partsHeading", update: function(event,ui){storeSort(event, ui)} });') ?>
 <?php endif; ?>
 
 <?php if (isset($bottomGadgets)): ?>
@@ -39,33 +39,34 @@
 <?php endif; ?>
 <?php endforeach; ?>
 <?php end_slot() ?>
-<?php echo sortable_element('Bottom', array('tag' => 'div', 'handle' => 'partsHeading')) ?>
+<?php echo javascript_tag('$("#Bottom").sortable({ item: "> div.partsHeading" });') ?>
 <?php endif; ?>
 
 <?php echo javascript_tag('
-function storeSort(obj)
+function storeSort(event, ui)
 {
   var result = "";
-  Element.childElements(obj.parentNode).each(function(child, index){
-    if (child.id && child.id.match(/_[0-9]+$/)) {
+  ui.item.parent().children().each(function(index){
+    if (this.id && this.id.match(/_[0-9]+$/)) {
       if (result) {
         result = result + ",";
       }
-      result = result + child.id;
+      result = result + this.id;
     }
   });
   var path = "'.($sf_request->getRelativeUrlRoot() ? $sf_request->getRelativeUrlRoot() : '/').'";
   var expires = new Date();
   expires.setTime((new Date()).getTime() + (10 * 12 * 30 * 24 * 60 * 60 * 1000));
-  var pos = obj.parentNode.id;
+  var pos = ui.item.parent().attr("id");
 
   opCookie.set("HomeGadget_" + pos + "_sort", result, expires, path);
 }
 
 function foldObj(obj, display)
 {
-  Element.childElements(obj.parentNode).each(function(child, index){
-    if (!child.hasClassName("partsHeading")) {
+  obj.parent().children().each(function(index){
+    var child = $(this);
+    if (!child.hasClass("partsHeading")) {
       if (display == null) {
         child.toggle();
       } else {
@@ -76,24 +77,25 @@ function foldObj(obj, display)
         }
       }
 
-      var size = Element.childElements(obj.parentNode).length;
+      var size = obj.parent().children().length;
       if (size == index + 1) {  // It is a last loop maybe
         var path = "'.($sf_request->getRelativeUrlRoot() ? $sf_request->getRelativeUrlRoot() : '/').'";
-        var id = child.parentNode.parentNode.id;
+        var id = child.parent().parent().attr("id");
         var expires = new Date();
         expires.setTime((new Date()).getTime() + (10 * 12 * 30 * 24 * 60 * 60 * 1000));
-        opCookie.set("HomeGadget_" + id + "_toggle", child.visible(), expires, path);
+        opCookie.set("HomeGadget_" + id + "_toggle", !child.is(":hidden"), expires, path);
       }
     }
   });
 }
 
-$$(".partsHeading").each(function(obj){
+$(".partsHeading").each(function(){
+  var obj = $(this);
   // folding
-  Event.observe(obj, "dblclick", function(e){
+  obj.dblclick(function(){
     foldObj(obj);
   });
-  var id = obj.parentNode.parentNode.id;
+  var id = obj.parent().parent().attr("id");
   var display = opCookie.get("HomeGadget_"+id+"_toggle");
   if (display != null) {
     foldObj(obj, display);
@@ -101,15 +103,14 @@ $$(".partsHeading").each(function(obj){
 
 });
 
-["Top", "Left", "Center"].each(function(type){
-  var sortInfo = opCookie.get("HomeGadget_" + type + "_sort");
+$.each(["Top", "Left", "Center"], function(){
+  var sortInfo = opCookie.get("HomeGadget_" + this + "_sort");
   if (sortInfo)
   {
-    var obj = document.getElementById(type);
-    sortInfo.split(",").each(function(value){
-      var gadget = document.getElementById(value);
-      Element.remove(gadget);
-      obj.appendChild(gadget);
+    var obj = $("#"+this);
+    $.each(sortInfo.split(","), function(){
+      var gadget = $("#"+this);
+      gadget.detach().appendTo(obj);
     });
   }
 });

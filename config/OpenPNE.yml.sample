@@ -218,6 +218,14 @@ supported_languages: ['en', 'ja_JP']
 # プラグインリストのベース URL
 # plugin_list_base_url: "http://plugins.openpne.jp/packages/"
 
+####################################
+# Ajax設定
+####################################
+
+# ロードする jQuery の URL
+jquery_url: "https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"
+jqueryui_url: "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"
+
 ###########################################
 # モバイル自動リンク設定 (Mobile Auto link)
 ###########################################
