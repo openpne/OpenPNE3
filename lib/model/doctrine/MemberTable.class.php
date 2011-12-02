@@ -153,21 +153,19 @@ class MemberTable extends opAccessControlDoctrineTable
     return $this->findInactive($config->getMemberId());
   }
 
-  public function findByValidRegisterToken($token)
+  public function findByValidRegisterToken($token, $configNames)
   {
     $member = $this->findByRegisterToken($token);
     if (!$member)
     {
       return false;
     }
-
     $configTable = Doctrine::getTable('MemberConfig');
 
-    $mailTypes = array("pc_address", "pc_address_pre", "mobile_address", "mobile_address_pre");
     $query = $configTable->createQuery('m');
-    foreach ($mailTypes as $mailType)
+    foreach ($configNames as $configName)
     {
-      $hash = $configTable->generateNameValueHash($mailType, $member->getConfig($mailType));
+      $hash = $configTable->generateNameValueHash($configName, $member->getConfig($configName));
       $query->orWhere('m.name_value_hash = ?', $hash);
     }
     $configs = $query->fetchArray();
