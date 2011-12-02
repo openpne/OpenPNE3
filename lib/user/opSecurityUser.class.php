@@ -400,7 +400,15 @@ class opSecurityUser extends opAdaptableUser
 
   public function setRegisterToken($token)
   {
-    $member = Doctrine::getTable('Member')->findByValidRegisterToken($token);
+    if ('MailAddress' === $this->getAuthAdapter()->getAuthModeName())
+    {
+      $mailTypes = array("pc_address", "pc_address_pre", "mobile_address", "mobile_address_pre");
+      $member = Doctrine::getTable('Member')->findByValidRegisterToken($token, $mailTypes);
+    }
+    else
+    {
+      $member = Doctrine::getTable('Member')->findByRegisterToken($token);
+    }
     if (!$member)
     {
       return false;
