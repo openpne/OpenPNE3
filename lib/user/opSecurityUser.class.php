@@ -320,41 +320,42 @@ class opSecurityUser extends opAdaptableUser
 
  /**
   * Initializes all credentials associated and status with this user.
+  * The user is one of the following:
+  *  - (U1) a user as a logged in member
+  *  - (U2) a user as a registering as a new member
+  *  - (U3) a user as a logged out member
   */
   public function initializeUserStatus()
   {
+    // Automatic Login
+    if ($memberId = $this->getRememberedMemberId())
+    {
+      $this->setMemberId($memberId);
+    }
+
+    // get a instance of Member or opAnonymousMember as the user
     opActivateBehavior::disable();
     $member = $this->getMember();
     opActivateBehavior::enable();
 
-    if ($memberId = $this->getRememberedMemberId())
+    // if user is (U3), or (U1) but rejected login
+    if ($member instanceof opAnonymousMember || $member->getIsLoginRejected())
     {
-      $this->setMemberId($memberId);
-      $isSNSMember = true;
-    }
-    elseif ($member instanceof opAnonymousMember)
-    {
+      $this->logout();
       $isSNSMember = false;
     }
     else
     {
+      // this value is true only if user is (U1)
       $isSNSMember = (bool)$member->getIsActive();
     }
 
-    if ($this->getMember()->getIsLoginRejected())
-    {
-      $isSNSMember = false;
-    }
-
-    $this->setIsSNSMember($isSNSMember);
     if ($isSNSMember)
     {
       $member->updateLastLoginTime();
     }
-    else
-    {
-      $this->logout();
-    }
+
+    $this->setIsSNSMember($isSNSMember);
   }
 
   public function isMember()
