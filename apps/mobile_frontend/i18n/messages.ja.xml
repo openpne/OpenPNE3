@@ -1199,6 +1199,10 @@
         <source>You can't access this page.</source>
         <target>このﾍﾟｰｼﾞにはｱｸｾｽできません｡</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>A mobile UID was already registered.</source>
+        <target>その携帯電話の個体識別番号はすでに登録されています。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -139,6 +139,10 @@ abstract class opAuthRegisterForm extends BaseForm
       {
         throw new sfValidatorError($validator, 'A mobile UID is invalid.');
       }
+      elseif (Doctrine::getTable('MemberConfig')->retrieveByNameAndValue('mobile_uid', $uid))
+      {
+        throw new sfValidatorError($validator, 'A mobile UID was already registered.');
+      }
 
       $values['mobile_uid'] = $uid;
     }
