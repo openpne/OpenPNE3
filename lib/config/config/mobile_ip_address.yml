@@ -1,3 +1,26 @@
+######################################
+# Copyright 2005-2011 OpenPNE Project (http://www.openpne.jp/)
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+# http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+######################################
+
+######################################
+# 2011/10/17 リリース版
+# ・au 2011年秋冬モデルの携帯電話IPアドレス帯域を追加
+# ・ファイルにライセンスを適用（Apache License Version 2.0)
+# ・ファイルの冒頭にバージョンと変更内容を記述
+######################################
+
 # DoCoMo (2010/06/24更新)
 # http://www.nttdocomo.co.jp/service/imode/make/content/ip/index.html
 docomo:
@@ -10,7 +33,7 @@ docomo:
   - 202.229.177.0/24
   - 202.229.178.0/24
 
-# au (2010/12/24更新)
+# au 2011年夏モデル以前 (2010/12/24更新)
 # http://www.au.kddi.com/ezfactory/tec/spec/ezsava_ip.html
 ezweb:
   - 210.230.128.224/28
@@ -55,6 +78,12 @@ ezweb:
   - 111.86.147.160/27
   - 111.86.147.192/27
   - 111.86.147.224/27
+
+# au 2011年秋冬モデル以降 (2011/10/17更新)
+# http://www.au.kddi.com/ezfactory/tec/spec/ezsava_ip.html
+  - 111.107.116.0/26
+  - 111.107.116.64/26
+  - 111.107.116.192/28
 
 # SoftBank (2011/2/10更新)
 # http://creation.mb.softbank.jp/web/web_ip.html
