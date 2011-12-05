@@ -439,22 +439,6 @@ abstract class opMemberAction extends sfActions
       }
     }
 
-    if (isset($categories['mail']))
-    {
-      if (sfConfig::get('sf_app') == 'pc_frontend')
-      {
-        $dailyNewsNotification = Doctrine::getTable('NotificationMail')->findOneByName('pc_dailyNews');
-      }
-      elseif (sfConfig::get('sf_app') == 'mobile_frontend')
-      {
-        $dailyNewsNotification = Doctrine::getTable('NotificationMail')->findOneByName('mobile_dailyNews');
-      }
-      if ($dailyNewsNotification && !$dailyNewsNotification->is_enabled)
-      {
-        unset($categories['mail']);
-      }
-    }
-
     foreach ($categories as $key => $value)
     {
       $title = $key;
