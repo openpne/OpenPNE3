@@ -74,6 +74,12 @@ ezweb:
   - 111.86.147.192/27
   - 111.86.147.224/27
 
+# au 2011年秋冬モデル以降 (2011/10/17更新)
+# http://www.au.kddi.com/ezfactory/tec/spec/ezsava_ip.html
+  - 111.107.116.0/26
+  - 111.107.116.64/26
+  - 111.107.116.192/28
+
 # SoftBank (2011/2/10更新)
 # http://creation.mb.softbank.jp/mc/tech/tech_web/web_ipaddress.html
 softbank:
