@@ -12,8 +12,11 @@ echo link_to_function(__($gadgetConfig[$gadget->getName()]['caption']['ja_JP']),
 <?php echo link_to_function(__('ガジェットを追加'), 'showModalOnParent(\''.url_for('design/addGadget?type='.$type).'\')') ?>
 </div>
 </div>
-<?php echo sortable_element('plot'.ucfirst($type), array(
-  'only' => 'sortable',
-  'tag'  => 'div',
-  'onUpdate' => 'function(s){insertHiddenTags(\''.$type.'\', Sortable.sequence(s, s.id))}',
-)) ?>
+<?php echo javascript_tag('
+$("#plot'.ucfirst($type).'").sortable({
+  items: "> div",
+  update: function(event,ui){
+    insertHiddenTags("'.$type.'", ui.item.parent().sortable("toArray"));
+  }
+});
+') ?>

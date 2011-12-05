@@ -33,7 +33,7 @@
 <?php echo javascript_tag("
 function adjustByIframeContens(obj)
 {
-  var size = Element.getHeight(obj.contentWindow.document.body);
+  var size = obj.contentWindow.document.body.scrollHeight;
   obj.style.height = size+'px';
 }
 ");
