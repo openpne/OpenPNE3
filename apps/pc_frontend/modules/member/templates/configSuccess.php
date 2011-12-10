@@ -19,6 +19,11 @@ if (opConfig::get('enable_connection'))
   $list[] = link_to(__('Connecting with External Application'), '@connection_list');
 }
 
+if (opConfig::get('enable_jsonapi'))
+{
+  $list[] = link_to(__('JSON API Configuration'), '@member_config_jsonapi');
+}
+
 if (opConfig::get('enable_openid'))
 {
   $list[] = link_to(__('OpenID Configuration'), '@openid_list');

@@ -378,4 +378,24 @@ class Member extends BaseMember implements opAccessControlRecordInterface
 
     return $cache;
   }
+
+  public function generateApiKey()
+  {
+    $apiKey = opToolkit::getRandom();
+    $this->setConfig('api_key', $apiKey);
+
+    return $apiKey;
+  }
+
+  public function getApiKey()
+  {
+    $apiKey = $this->getConfig('api_key');
+
+    if (null === $apiKey)
+    {
+      $apiKey = $this->generateApiKey();
+    }
+
+    return $apiKey;
+  }
 }
