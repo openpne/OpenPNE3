@@ -1449,6 +1449,14 @@
         <source>Are you sure you want to delete this account?</source>
         <target>このアカウントを本当に削除しますか？</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>This %community% is already the default.</source>
+        <target>この%community%はすでに登録されています。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Sub Administrator</source>
+        <target>副管理者</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
