@@ -334,7 +334,7 @@ function _op_url_cmd($matches)
   $url = $matches[2].$matches[3];
   $cmd = '';
 
-  if ($matches[2] == 'www.')
+  if ('www.' == $matches[2])
   {
     $cmd .= 'www.';
     $url = 'http://www.'.$url;
@@ -345,8 +345,8 @@ function _op_url_cmd($matches)
     $cmd .= $pmatch[1];
   }
 
-  $file = $cmd . '.js';
-  $path = './cmd/' . $file;
+  $file = $cmd.'.js';
+  $path = './cmd/'.$file;
 
   if (preg_match('/<a/', $matches[1]) || !is_readable($path))
   {
@@ -439,7 +439,7 @@ function op_truncate($string, $width = 80, $etc = '', $rows = 1, $is_html = true
       {
         $p_string = substr($p_string, strlen($result[$i - 1]));
       }
-      if (!$p_string && ($p_string !== '0'))
+      if (!$p_string && ('0' !== $p_string))
       {
         break;
       }
@@ -623,7 +623,7 @@ function op_decoration($string, $is_strip = false, $is_use_stylesheet = null, $i
   if (is_null($is_use_stylesheet))
   {
     $is_use_stylesheet = true;
-    if (sfConfig::get('sf_app') == 'mobile_frontend')
+    if ('mobile_frontend' == sfConfig::get('sf_app'))
     {
       $is_use_stylesheet = false;
     }
@@ -656,9 +656,8 @@ function op_is_accessible_url($uri)
  */
 function op_is_accessable_url($uri)
 {
- return op_is_accessible_url($uri);
+  return op_is_accessible_url($uri);
 }
-
 
 function op_distance_of_time_in_words($from_time, $to_time, $include_seconds = false, $format = '%s ago')
 {
