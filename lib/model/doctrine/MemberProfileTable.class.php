@@ -23,6 +23,8 @@ class MemberProfileTable extends opAccessControlDoctrineTable
       $memberProfile = $this->createQuery()
         ->where('member_id = ?', $memberId)
         ->andWhere('profile_id = ?', $profile->getId())
+        ->andWhere('level = 0')
+        ->orderBy('id')
         ->fetchOne();
 
       if ($memberProfile)
