@@ -22,7 +22,7 @@ class ProfileTable extends Doctrine_Table
 
   public function getPublicFlags($isI18n = true)
   {
-    if ($isI18m)
+    if ($isI18n)
     {
       $publicFlags = array_map(array(sfContext::getInstance()->getI18N(), '__'), $this->publicFlags);
     }
