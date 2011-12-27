@@ -31,3 +31,21 @@ configSuccess:
 
 loginSuccess:
   layout: layoutA
+
+smtHomeSuccess:
+  layout: smtLayoutHome
+
+smtProfileSuccess:
+  layout: smtLayoutMember
+
+smtEditProfileSuccess:
+  layout: smtLayoutHome
+
+smtConfigSuccess:
+  layout: smtLayoutHome
+
+smtConfigImageSuccess:
+  layout: smtLayoutHome
+
+smtInviteSuccess:
+  layout: smtLayoutHome

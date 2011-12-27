@@ -24,5 +24,10 @@ class privacyPolicyAction extends sfAction
   */
   public function execute($request)
   {
+    if ($request->isSmartphone())
+    {
+      $this->setLayout('smtLayoutSns');
+      $this->setTemplate('smtPrivacyPolicy');
+    }
   }
 }
