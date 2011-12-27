@@ -323,6 +323,10 @@
         <target>%friend%リスト</target>
       </trans-unit>
       <trans-unit id="">
+        <source>%1%'s %friend% List</source>
+        <target>%1%さんの%friend%リスト</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Other members look your page like this.</source>
         <target>※他のメンバーから見たあなたのページはこのようになります。</target>
       </trans-unit>
@@ -1354,6 +1358,14 @@
       <trans-unit id="">
         <source>Reset API key</source>
         <target>APIキーをリセットする</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Back to %member% profile page</source>
+        <target>%member% さんのページに戻る</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Back to %community% top page</source>
+        <target>%community% トップに戻る</target>
       </trans-unit>
     </body>
   </file>

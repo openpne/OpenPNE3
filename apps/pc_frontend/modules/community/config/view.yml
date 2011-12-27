@@ -1,2 +1,26 @@
 homeSuccess:
   layout: layoutA
+
+smtHomeSuccess:
+  layout: smtLayoutGroup
+
+smtEditSuccess:
+  layout: smtLayoutGroup
+
+smtMemberListSuccess:
+  layout: smtLayoutGroup
+
+smtJoinlistSuccess:
+  layout: smtLayoutMember
+
+smtJoinInput:
+  layout: smtLayoutGroup
+
+smtJoinError:
+  layout: smtLayoutSns
+
+smtQuitSuccess:
+  layout: smtLayoutGroup
+
+smtQuitError:
+  layout: smtLayoutSns
