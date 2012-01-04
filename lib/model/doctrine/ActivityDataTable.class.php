@@ -192,7 +192,7 @@ class ActivityDataTable extends Doctrine_Table
     return $flags;
   }
 
-  protected function getOrderdQuery()
+  public function getOrderdQuery()
   {
     return $this->createQuery()->orderBy('created_at DESC');
   }
@@ -216,7 +216,7 @@ class ActivityDataTable extends Doctrine_Table
     return $pager;
   }
 
-  protected function addFriendActivityQuery(Doctrine_Query $q, $memberId, $isCheckApp = true)
+  public function addFriendActivityQuery(Doctrine_Query $q, $memberId, $isCheckApp = true)
   {
     if (null === $memberId)
     {
@@ -274,7 +274,7 @@ class ActivityDataTable extends Doctrine_Table
     return $this->getPager($q, $page, $size);
   }
 
-  protected function addActivityQuery(Doctrine_Query $q, $memberId = null, $viewerMemberId = null, $isCheckApp = true)
+  public function addActivityQuery(Doctrine_Query $q, $memberId = null, $viewerMemberId = null, $isCheckApp = true)
   {
     if (null === $memberId)
     {
@@ -352,7 +352,7 @@ class ActivityDataTable extends Doctrine_Table
     return $this->getPager($q, $page, $size);
   }
 
-  protected function addAllMemberActivityQuery($q, $isCheckApp)
+  public function addAllMemberActivityQuery($q, $isCheckApp = true)
   {
     $q->whereIn('public_flag', array(self::PUBLIC_FLAG_OPEN, self::PUBLIC_FLAG_SNS));
 
