@@ -43,3 +43,28 @@ activity_delete:
   url: /activity/delete.json
   param: { module: activity, action: delete, sf_format: json }
   requirements: { sf_method: [get] }
+
+member_search:
+  url: /member/search.json
+  param: { module: member, action: search, sf_format: json }
+  requirements: { sf_method: [get] }
+
+member_list:
+  url: /member/list.json
+  param: { module: member, action: search, sf_format: json }
+  requirements: { sf_method: [get] }
+
+member_community:
+  url: /member/community.json
+  param: { module: member, action: community, sf_format: json }
+  requirements: { sf_method: [get] }
+
+member_friend_accept:
+  url: /member/friend_accept.json
+  param: { module: member, action: friendAccept, sf_format: json }
+  requirements: { sf_method: [get] }
+
+member_friend_reject:
+  url: /member/friend_reject.json
+  param: { module: member, action: friendAccept, sf_format: json, reject: 1 }
+  requirements: { sf_method: [get] }
