@@ -83,3 +83,45 @@ function op_api_force_escape($text)
 
   return $text;
 }
+
+function op_api_community($community)
+{
+  $viewMemberId = sfContext::getInstance()->getUser()->getMemberId();
+
+  $communityUrl = app_url_for('pc_frontend', array('sf_route' => 'community_home', 'id' => $community->getId()), true);
+
+  $communityImageFileName = $community->getImageFileName();
+  if (!$communityImageFileName)
+  {
+    $communityImage = op_image_path('no_image.gif', true);
+  }
+  else
+  {
+    $communityImage = sf_image_path($communityImageFileName, array('size' => '48x48'), true);
+  }
+
+  $communityMember = Doctrine::getTable('CommunityMember')
+    ->retrieveByMemberIdAndCommunityId($viewMemberId, $community->getId());
+
+  return array(
+    'id' => $community->getId(),
+    'name' => $community->getName(),
+    'category' => (string)$community->getCommunityCategory() ?: null,
+    'community_url' => $communityUrl,
+    'community_image_url' => $communityImage,
+    'joining' => $communityMember ? !$communityMember->getIsPre() : false,
+    'admin' => $communityMember ? $communityMember->hasPosition('admin') : false,
+    'sub_admin' => $communityMember ? $communityMember->hasPosition('sub_admin') : false,
+    'created_at' => op_api_date($community->getCreatedAt()),
+    'admin_member' => op_api_member($community->getAdminMember()),
+    'member_count' => $community->countCommunityMembers(),
+    'public_flag' => $community->getConfig('public_flag'),
+    'register_policy' => $community->getConfig('register_policy'),
+    'description' => $community->getConfig('description'),
+  );
+}
+
+function op_api_date($date)
+{
+  return gmdate('r', strtotime($date));
+}

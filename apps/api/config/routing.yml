@@ -68,3 +68,18 @@ member_friend_reject:
   url: /member/friend_reject.json
   param: { module: member, action: friendAccept, sf_format: json, reject: 1 }
   requirements: { sf_method: [get] }
+
+community_search:
+  url: /community/search.json
+  param: { module: community, action: search, sf_format: json }
+  requirements: { sf_method: [get] }
+
+community_list:
+  url: /community/list.json
+  param: { module: community, action: search, sf_format: json }
+  requirements: { sf_method: [get] }
+
+community_member:
+  url: /community/member.json
+  param: { module: community, action: member, sf_format: json }
+  requirements: { sf_method: [get] }
