@@ -213,4 +213,21 @@ class activityActions extends opJsonApiActions
 
     return $this->renderJSON(array('status' => 'success'));
   }
+
+  public function executeMentions(sfWebRequest $request)
+  {
+    $builder = opActivityQueryBuilder::create()
+      ->setViewerId($this->getUser()->getMemberId())
+      ->includeMentions();
+
+    $query = $builder->buildQuery()
+      ->andWhere('in_reply_to_activity_id IS NULL')
+      ->andWhere('foreign_table IS NULL')
+      ->andWhere('foreign_id IS NULL')
+      ->limit(20);
+
+    $this->activityData = $query->execute();
+
+    $this->setTemplate('array');
+  }
 }
