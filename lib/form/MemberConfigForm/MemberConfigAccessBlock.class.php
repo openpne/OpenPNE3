@@ -34,7 +34,7 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
       }
     }
   }
-  
+
   protected function appendMobileInputMode()
   {
     parent::appendMobileInputMode();
@@ -50,6 +50,7 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
       }
     }
   }
+
   public function saveConfig($name, $value)
   {
     if ($name !== 'access_block')
