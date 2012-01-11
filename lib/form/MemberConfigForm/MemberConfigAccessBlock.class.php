@@ -35,7 +35,7 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
       $this->blockedRelationshipId[] = $relation['id'];
     }
   }
-  
+
   protected function appendMobileInputMode()
   {
     parent::appendMobileInputMode();
@@ -51,6 +51,7 @@ class MemberConfigAccessBlockForm extends MemberConfigForm
       }
     }
   }
+
   public function saveConfig($name, $value)
   {
     if ('access_block' !== $name)
