@@ -1162,6 +1162,10 @@
         <target>ナビ設定</target>
       </trans-unit>
       <trans-unit id="">
+        <source>PC frontend (Smartphone)</source>
+        <target>スマートフォン版ナビ設定</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Mobile frontend</source>
         <target>携帯版ナビ設定</target>
       </trans-unit>

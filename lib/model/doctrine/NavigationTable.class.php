@@ -32,6 +32,11 @@ class NavigationTable extends Doctrine_Table
           'mobile_friend',
           'mobile_community',
         );
+      case 'smartphone' :
+        return array(
+          'smartphone_insecure',
+          'smartphone_default',
+        );
       case 'backend' :
         return array(
           'backend_side'

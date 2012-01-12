@@ -26,6 +26,8 @@ var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PR
 ?>
 <?php use_javascript('jquery.min.js') ?>
 <?php use_javascript('jquery.tmpl.min.js') ?>
+<?php use_javascript('smt_tosaka') ?>
+<?php use_javascript('smt_menu') ?>
 <?php include_javascripts() ?>
 </head>
 <body id="<?php printf('page_%s_%s', $this->getModuleName(), $this->getActionName()) ?>" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
@@ -42,6 +44,23 @@ var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PR
   <div class="span2 center"><?php echo link_to(op_image_tag('HomeIcon.png', array('height' => '48')), '@homepage') ?></div>
   <?php endif ?>
 </div>
+
+<?php if ($sf_user->hasFlash('error')): ?>
+<div id="global-error" class="row">
+  <div class="alert-message block-message error">
+    <?php echo __($sf_user->getFlash('error')); ?>
+  </div>
+</div>
+<?php endif; ?>
+
+<?php if ($sf_user->hasFlash('notice')): ?>
+<div id="global-error" class="row">
+  <div class="alert-message block-message info">
+    <?php echo __($sf_user->getFlash('notice')); ?>
+  </div>
+</div>
+<?php endif; ?>
+
 <?php echo $sf_content ?>
 </body>
 </html>

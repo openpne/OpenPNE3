@@ -1,0 +1,60 @@
+Navigation:
+  smartphone_default_navigation_home:
+    type: "smartphone_default"
+    uri: "@homepage"
+    sort_order: 0
+    Translation:
+      ja_JP:
+        caption: "マイホーム"
+      en:
+        caption: "My Home"
+
+  smartphone_default_navigation_profile_confirm:
+    type: "smartphone_default"
+    uri: "@member_profile_mine"
+    sort_order: 10
+    Translation:
+      ja_JP:
+        caption: "プロフィール確認"
+      en:
+        caption: "Profile"
+
+  smartphone_default_navigation_profile_edit:
+    type: "smartphone_default"
+    uri: "@member_editProfile"
+    sort_order: 20
+    Translation:
+      ja_JP:
+        caption: "プロフィール編集"
+      en:
+        caption: "Edit Profile"
+
+  smartphone_default_navigation_community_all:
+    type: "smartphone_default"
+    uri: "@community_home?id=1"
+    sort_order: 30
+    Translation:
+      ja_JP:
+        caption: "allコミュニティ"
+      en:
+        caption: "all Community"
+
+  smartphone_default_navigation_config:
+    type: "smartphone_default"
+    uri: "@member_config"
+    sort_order: 40
+    Translation:
+      ja_JP:
+        caption: "設定変更"
+      en:
+        caption: "Settings"
+
+  smartphone_default_navigation_logout:
+    type: "smartphone_default"
+    uri: "@member_logout"
+    sort_order: 50
+    Translation:
+      ja_JP:
+        caption: "ログアウト"
+      en:
+        caption: "Logout"
