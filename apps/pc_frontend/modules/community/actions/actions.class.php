@@ -36,11 +36,13 @@ class communityActions extends opCommunityAction
   */
   public function executeSmtHome(opWebRequest $request)
   {
-    $result = parent::executeHome($request);
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('smartphoneCommunity');
+    $this->contentsGadgets = $gadgets['smartphoneCommunityContents'];
 
+    $this->community = Doctrine::getTable('Community')->find($this->id);
     $this->getResponse()->setDisplayCommunity($this->community);
 
-    return $result;
+    return sfView::SUCCESS;
   }
 
  /**

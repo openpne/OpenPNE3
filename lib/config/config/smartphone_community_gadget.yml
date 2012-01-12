@@ -1,0 +1,36 @@
+freeArea:
+  caption:
+    ja_JP: "フリーエリア"
+  description:
+    ja_JP: "フリーエリアを設置できます"
+  component: [default, freeAreaBox]
+  viewable_privilege: 4
+  config:
+    title:
+      Name:       "title"
+      Caption:    "タイトル"
+      FormType:   "input"
+      ValueType:  "text"
+      IsRequired: false
+    value:
+      Name:       "value"
+      Caption:    "内容"
+      FormType:   "rich_textarea"
+      ValueType:  "text"
+      IsRequired: false
+
+communityListBox:
+  caption:
+    ja_JP: "コミュニティ"
+  description:
+    ja_JP: "コミュニティ情報のリストを表示します"
+  viewable_privilege: 4
+  component: [community, smtCommunityListBox]
+
+communityMemberJoinListBox:
+  caption:
+    ja_JP: "コミュニティ参加者一覧"
+  description:
+    ja_JP: "コミュニティの参加者一覧を表示します"
+  component: [community, smtCommunityMemberJoinListBox]
+

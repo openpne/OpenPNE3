@@ -56,6 +56,11 @@ class memberActions extends opMemberAction
   */
   public function executeSmtHome(opWebRequest $request)
   {
+    $this->gadgetConfig = sfConfig::get('op_smartphone_gadget_list');
+
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('smartphone');
+    $this->contentsGadgets = $gadgets['smartphoneContents'];
+
     return sfView::SUCCESS;
   }
 
@@ -73,6 +78,9 @@ class memberActions extends opMemberAction
 
     if ($request->isSmartphone())
     {
+      $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('smartphoneLogin');
+      $this->contentsGadgets = $gadgets['smartphoneLoginContents'];
+
       $this->setLayout('smtLayoutSns');
       $this->setTemplate('smtLogin');    
     }
@@ -140,6 +148,9 @@ class memberActions extends opMemberAction
   */
   public function executeSmtProfile(opWebRequest $request)
   {
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('smartphoneProfile');
+    $this->contentsGadgets = $gadgets['smartphoneProfileContents'];
+
     $result = parent::executeProfile($request);
 
     $this->getResponse()->setDisplayMember($this->member);
