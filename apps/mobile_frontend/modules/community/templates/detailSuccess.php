@@ -37,4 +37,4 @@ $list[__('%community% Description', array(), 'form_community')] = op_auto_link_t
 
 <hr color="<?php echo $op_color['core_color_11'] ?>">
 
-<?php echo link_to(__('Community Top'), '@community_home?id='.$community->getId()) ?>
+<?php echo link_to(__('%Community% Top'), '@community_home?id='.$community->getId()) ?>
