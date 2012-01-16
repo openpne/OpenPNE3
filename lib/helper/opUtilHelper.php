@@ -307,7 +307,8 @@ if (!defined('SF_AUTO_LINK_RE'))
     (                       # leading text
       <\w+.*?>|             #   leading HTML tag, or
       [^=!:\'"/]|           #   leading punctuation, or
-      ^                     #   beginning of line
+      ^|                    #   beginning of line, or
+      \s?                   #   leading whitespaces
     )
     (
       (?:https?://)|        # protocol spec, or
