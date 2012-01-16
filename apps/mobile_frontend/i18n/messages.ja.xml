@@ -507,6 +507,10 @@
         <target>ｺﾐｭﾆﾃｨ検索</target>
       </trans-unit>
       <trans-unit id="">
+        <source>%Community% Top</source>
+        <target>%Community% ﾄｯﾌﾟ</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Categories</source>
         <target>ｶﾃｺﾞﾘ</target>
       </trans-unit>
