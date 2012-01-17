@@ -321,10 +321,10 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
   {
     $dirs = array();
 
-    $dirs = array_merge($dirs, array(sfConfig::get('sf_root_dir').'/i18n'));
     $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/i18n'));
     $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/i18n'));
     $dirs = array_merge($dirs, parent::getI18NDirs($moduleName));
+    $dirs = array_merge($dirs, array(sfConfig::get('sf_root_dir').'/i18n'));
 
     return $dirs;
   }
