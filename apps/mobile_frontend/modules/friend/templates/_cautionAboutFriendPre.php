@@ -7,5 +7,5 @@ echo __('You\'ve gotten %1% %friend% requests', array(
 ?>
 &nbsp;
 <?php echo link_to(__('Go to Confirmation Page'), '@confirmation_list?category=friend_confirm') ?>
-</font>
+</font><br>
 <?php endif; ?>
