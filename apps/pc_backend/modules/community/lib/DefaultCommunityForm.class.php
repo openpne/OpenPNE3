@@ -24,7 +24,7 @@ class DefaultCommunityForm extends sfForm
     ));
 
     $validatorCallback = new sfValidatorCallback(array('callback' => array($this, 'checkCommunityId')));
-    $validatorCallback->addMessage('already_default', 'This community is already the default.');
+    $validatorCallback->addMessage('already_default', 'This %community% is already the default.');
     $validator = new sfValidatorAnd(array(new sfValidatorInteger(), $validatorCallback));
 
     $this->setValidators(array(
