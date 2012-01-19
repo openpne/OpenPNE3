@@ -28,6 +28,15 @@ class activityActions extends opJsonApiActions
       {
         $builder->includeFriends($request['target_id'] ? $request['target_id'] : null);
       }
+      elseif ('community' === $request['target'])
+      {
+        $this->forward400Unless($request['target_id'], 'target_id parameter not specified.');
+        $builder
+          ->includeSelf()
+          ->includeFriends()
+          ->includeSns()
+          ->setCommunityId($request['target_id']);
+      }
       else
       {
         $this->forward400('target parameter is invalid.');
@@ -112,6 +121,28 @@ class activityActions extends opJsonApiActions
     $this->forward('activity', 'search');
   }
 
+  public function executeCommunity(sfWebRequest $request)
+  {
+    $request['target'] = 'community';
+
+    if (isset($request['community_id']))
+    {
+      $request['target_id'] = $request['community_id'];
+      unset($request['community_id']);
+    }
+    elseif (isset($request['id']))
+    {
+      $request['target_id'] = $request['id'];
+      unset($request['id']);
+    }
+    else
+    {
+      $this->forward400('community_id parameter not specified.');
+    }
+
+    $this->forward('activity', 'search');
+  }
+
   public function executePost(sfWebRequest $request)
   {
     $this->forward400Unless(isset($request['body']), 'body parameter not specified.');
@@ -137,6 +168,17 @@ class activityActions extends opJsonApiActions
     elseif (isset($request['url']))
     {
       $options['uri'] = $request['url'];
+    }
+
+    if (isset($request['target']) && 'community' === $request['target'])
+    {
+      if (isset($request['target_id']))
+      {
+        $this->forward400('target_id parameter not specified.');
+      }
+
+      $options['foreign_table'] = 'community';
+      $options['foreign_id'] = $request['target_id'];
     }
 
     $options['source'] = 'API';
