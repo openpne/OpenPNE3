@@ -20,6 +20,7 @@ class opActivityQueryBuilder
   protected
     $table,
     $viewerId = null,
+    $communityId = null,
     $inactiveIds,
     $include;
 
@@ -42,6 +43,12 @@ class opActivityQueryBuilder
     return $this;
   }
 
+  public function setCommunityId($community_id)
+  {
+    $this->communityId = $community_id;
+    return $this;
+  }
+
   public function resetInclude()
   {
     $this->include = array(
@@ -49,6 +56,7 @@ class opActivityQueryBuilder
       'friend' => false,
       'sns' => false,
       'member' => false,
+      'community' => false,
     );
 
     return $this;
@@ -107,10 +115,21 @@ class opActivityQueryBuilder
 
     $subQuery = array_map(array($this, 'trimSubqueryWhere'), $subQuery);
 
-    $query->andWhere(implode(' OR ', $subQuery))
-      ->orderBy('id DESC');
+    $query->andWhere(implode(' OR ', $subQuery));
 
-    return $query;
+    if (null === $this->communityId)
+    {
+      $query->addWhere('a.foreign_table IS NULL OR a.foreign_table <> "community"');
+    }
+    else
+    {
+      $query
+        ->addWhere('a.foreign_table = "community"')
+        ->addWhere('a.foreign_id = ?', $this->communityId)
+        ->addWhere('EXISTS (FROM CommunityMember cm WHERE cm.member_id = a.member_id AND cm.community_id = ?)', $this->communityId);
+    }
+
+    return $query->orderBy('id DESC');
   }
 
   protected function buildSelfQuery($query)

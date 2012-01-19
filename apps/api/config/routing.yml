@@ -34,6 +34,11 @@ activity_friends:
   param: { module: activity, action: friends, sf_format: json }
   requirements: { sf_method: [get] }
 
+activity_community:
+  url: /activity/community.json
+  param: { module: activity, action: community, sf_format: json }
+  requirements: { sf_method: [get] }
+
 activity_post:
   url: /activity/post.json
   param: { module: activity, action: post, sf_format: json }
