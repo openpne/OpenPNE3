@@ -24,4 +24,24 @@ class ActivityData extends BaseActivityData
   {
     return $this->getTable()->publicFlagToCaption($this->getPublicFlag());
   }
+
+  public function getReplies($publicFlag = ActivityDataTable::PUBLIC_FLAG_SNS, $limit = 10)
+  {
+    $query = $this->getTable()->createQuery('a')
+      ->leftJoin('a.Member')
+      ->addWhere('a.in_reply_to_activity_id = ?', $this->getId())
+      ->orderBy('a.id')
+      ->limit($limit);
+
+    if (is_array($publicFlag))
+    {
+      $query->andWhereIn('a.public_flag', $publicFlag);
+    }
+    else
+    {
+      $query->andWhere('a.public_flag = ?', $publicFlag);
+    }
+
+    return $query->execute();
+  }
 }
