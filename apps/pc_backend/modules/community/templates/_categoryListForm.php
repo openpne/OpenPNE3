@@ -8,9 +8,9 @@
 </tr>
 
 <?php if ($categories): ?>
+<tbody>
 <?php foreach ($categories as $category): ?>
-<tbody id="type_<?php echo $type ?>_<?php echo $category->getId() ?>" class="sortable" style="position: relative;">
-<tr>
+<tr id="type_<?php echo $type ?>_<?php echo $category->getId() ?>" class="sortable" style="position: relative;">
 <form action="<?php echo url_for('community/categoryEdit?id='.$category->getId()) ?>" method="post">
 <?php echo $category->getForm()->renderGlobalErrors() ?>
 <?php foreach ($category->getForm() as $key => $row) : ?>
@@ -35,8 +35,8 @@
 </form>
 </td>
 </tr>
-</tbody>
 <?php endforeach; ?>
+</tbody>
 <?php endif; ?>
 
 <form action="<?php echo url_for('community/categoryList') ?>" method="post">
@@ -62,9 +62,18 @@
 </table>
 
 <?php $form = new BaseForm() ?>
-<?php echo sortable_element('type_'.$type, array(
-  'tag'  => 'tbody',
-  'only' => 'sortable',
-  'url'  => 'community/categorySort',
-  'with' => 'Sortable.serialize("type_'.$type.'")+"&'.urlencode($form->getCSRFFieldName()).'='.urlencode($form->getCSRFToken()).'"',
-)) ?>
+<?php echo javascript_tag('
+$("#type_'.$type.' tbody").sortable({
+  items: "> .sortable",
+  update: function (event, ui) {
+    var postData = $(this).sortable("serialize", { expression: /(type_'.$type.')_(.+)/ });
+    postData += "&'.urlencode($form->getCSRFFieldName()).'='.urlencode($form->getCSRFToken()).'";
+
+    $.ajax({
+      url: "'.url_for('community/categorySort').'",
+      type: "POST",
+      data: postData
+    });
+  }
+});
+'); ?>

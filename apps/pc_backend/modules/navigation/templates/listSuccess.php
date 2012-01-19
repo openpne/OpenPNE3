@@ -18,9 +18,9 @@
 <?php endforeach; ?>
 <th colspan="2"><?php echo __('Operation') ?></th>
 </tr>
+<tbody>
 <?php foreach ($nav as $form) : ?>
-<tbody id="type_<?php echo str_replace(' ', '_', $type) ?>_<?php echo $form->getObject()->getId() ?>"<?php if (!$form->isNew()) : ?> class="sortable"<?php endif; ?>>
-<tr>
+<tr id="type_<?php echo str_replace(' ', '_', $type) ?>_<?php echo $form->getObject()->getId() ?>"<?php if (!$form->isNew()) : ?> class="sortable"<?php endif; ?>>
 <form action="<?php echo url_for('navigation/edit?app='.$sf_request->getParameter('app', 'pc')) ?>" method="post">
 <td>
 <?php echo $form->renderHiddenFields() ?>
@@ -47,15 +47,24 @@
 </td>
 <?php endif; ?>
 </tr>
-</tbody>
 <?php endforeach; ?>
+</tbody>
 </table>
 
-<?php echo sortable_element('type_'.str_replace(' ', '_', $type), array(
-  'tag'  => 'tbody',
-  'only' => 'sortable',
-  'url'  => 'navigation/sort',
-  'with' => 'Sortable.serialize("type_'.str_replace(' ', '_', $type).'")+"&'.urlencode($sortForm->getCSRFFieldName()).'='.urlencode($sortForm->getCSRFToken()).'"',
-)) ?>
+<?php echo javascript_tag('
+$("#type_'.str_replace(' ', '_', $type).' tbody").sortable({
+  items: "> .sortable",
+  update: function (event, ui) {
+    var postData = $(this).sortable("serialize", { expression: /(type_'.str_replace(' ', '_', $type).')_(.+)/ });
+    postData += "&'.urlencode($sortForm->getCSRFFieldName()).'='.urlencode($sortForm->getCSRFToken()).'";
+
+    $.ajax({
+      url: "'.url_for('navigation/sort').'",
+      type: "POST",
+      data: postData
+    });
+  }
+});
+') ?>
 
 <?php endforeach; ?>

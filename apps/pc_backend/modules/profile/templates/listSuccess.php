@@ -20,9 +20,9 @@
 <th><?php echo __('Change')?></th>
 <th><?php echo __('Search')?></th>
 </tr></thead>
+<tbody>
 <?php foreach ($profiles as $value): ?>
-<tbody id="profile_<?php echo $value->getId() ?>" class="sortable">
-<tr>
+<tr id="profile_<?php echo $value->getId() ?>" class="sortable">
 <td><?php echo link_to(__('Edit'), 'profile/edit?id=' . $value->getId()) ?></td>
 <td><?php echo link_to(__('Delete'), 'profile/delete?id=' . $value->getId()) ?></td>
 <td><?php echo $value->getId() ?></td>
@@ -50,14 +50,24 @@
 <td><?php echo ($value->getIsDispConfig() ? '○' :'×') ?></td>
 <td><?php echo ($value->getIsDispSearch() ? '○' : '') ?></td>
 </tr>
-</tbody>
 <?php endforeach; ?>
+</tbody>
 </table>
-<?php echo sortable_element('profiles',array(
-  'tag'  => 'tbody',
-  'url'  => 'profile/sortProfile',
-  'with' => 'Sortable.serialize("profiles")+"&'.urlencode($tokenForm->getCSRFFieldName()).'='.urlencode($tokenForm->getCSRFToken()).'"'
-)) ?>
+<?php echo javascript_tag('
+$("#profiles tbody").sortable({
+  items: "> .sortable",
+  update: function (event, ui) {
+    var postData = $(this).sortable("serialize", { expression: /(profile)_(.+)/ });
+    postData += "&'.urlencode($tokenForm->getCSRFFieldName()).'='.urlencode($tokenForm->getCSRFToken()).'";
+
+    $.ajax({
+      url: "'.url_for('profile/sortProfile').'",
+      type: "POST",
+      data: postData
+    });
+  }
+});
+') ?>
 
 <h3><?php echo __('Option list')?></h3>
 <?php $selectionCount = 0; ?>
@@ -74,11 +84,12 @@
 <?php endforeach; ?>
 <th colspan="2"><?php echo __('Operation')?></th>
 </tr></thead>
+<tbody>
 <?php foreach ($option_form[$value->getId()] as $form) : ?>
 <?php if (!$form->getObject()->isNew()) : ?>
-<tbody id="profile_option_<?php echo $form->getObject()->getId() ?>" class="sortable">
+<tr id="profile_option_<?php echo $form->getObject()->getId() ?>" class="sortable">
 <?php else: ?>
-<tbody>
+<tr>
 <?php endif; ?>
 <tr>
 <form action="<?php echo url_for('profile/editOption?id='.$form->getObject()->getId()) ?>" method="post">
@@ -111,15 +122,24 @@
 </form>
 <?php endif; ?>
 </tr>
-</tbody>
 <?php endforeach; ?>
+</tbody>
 </table>
-<?php echo sortable_element('profile_options_'.$value->getId(),array(
-  'tag'  => 'tbody',
-  'only' => 'sortable',
-  'url'  => 'profile/sortProfileOption',
-  'with' => 'Sortable.serialize("profile_options_'.$value->getId().'")+"&'.urlencode($tokenForm->getCSRFFieldName()).'='.urlencode($tokenForm->getCSRFToken()).'"'
-)) ?>
+<?php echo javascript_tag('
+$("#profile_options_'.$value->getId().' tbody").sortable({
+  items: "> .sortable",
+  update: function (event, ui) {
+    var postData = $(this).sortable("serialize", { expression: /(profile_options_'.$value->getId().')_(.+)/ });
+    postData += "&'.urlencode($tokenForm->getCSRFFieldName()).'='.urlencode($tokenForm->getCSRFToken()).'";
+
+    $.ajax({
+      url: "'.url_for('profile/sortProfileOption').'",
+      type: "POST",
+      data: postData
+    });
+  }
+});
+') ?>
 <?php endif; ?>
 <?php endforeach; ?>
 <?php if (!$selectionCount): ?>
