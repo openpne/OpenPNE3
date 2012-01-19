@@ -65,12 +65,38 @@ function op_api_activity($activity)
     'id' => $activity->getId(),
     'member' => op_api_member($member),
     'body' => $activity->getBody(),
-    'body_html' => op_auto_link_text(nl2br(op_api_force_escape($activity->getBody()))),
+    'body_html' => op_activity_linkification(nl2br(op_api_force_escape($activity->getBody()))),
     'uri' => $activity->getUri(),
     'source' => $activity->getSource(),
     'source_uri' => $activity->getSourceUri(),
     'created_at' => date('r', strtotime($activity->getCreatedAt())),
   );
+}
+
+function op_activity_linkification($body, $options = array())
+{
+  $body = op_auto_link_text($body);
+
+  return preg_replace_callback('/(@+)([-._0-9A-Za-z]+)/', 'op_activity_linkification_callback', $body);
+}
+
+function op_activity_linkification_callback($matches)
+{
+  $at = $matches[1];
+  $screenName = $matches[2];
+  $screenNameConfig = Doctrine::getTable('MemberConfig')->createQuery()
+    ->select('member_id')
+    ->addWhere('name = "op_screen_name"')
+    ->addWhere('value = ?', $screenName)
+    ->fetchOne(array(), Doctrine::HYDRATE_NONE);
+
+  if ($screenNameConfig)
+  {
+    $memberId = $screenNameConfig[0];
+    return link_to($at.$screenName, op_api_member_profile_url($memberId), array('target' => '_blank'));
+  }
+
+  return $matches[0];
 }
 
 function op_api_force_escape($text)
