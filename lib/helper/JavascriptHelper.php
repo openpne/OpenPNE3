@@ -18,4 +18,5 @@ require_once sfConfig::get('sf_symfony_lib_dir').'/helper/JavascriptBaseHelper.p
  * @author     Kimura Youichi <kim.upsilon@bucyou.net>
  */
 
+use_helper('Protoculous');
 
