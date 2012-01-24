@@ -125,3 +125,44 @@ function op_api_date($date)
 {
   return gmdate('r', strtotime($date));
 }
+
+function op_api_notification($notification)
+{
+  if ($notification['icon_url'])
+  {
+    $iconUrl = $notification['icon_url'];
+  }
+  else
+  {
+    if ('link' === $notification['category'])
+    {
+      $fromMember = Doctrine::getTable('Member')->find($notification['member_id_from']);
+      $fromMemberImageFileName = $fromMember ? $fromMember->getImageFileName() : null;
+
+      if ($fromMemberImageFileName)
+      {
+        $iconUrl = sf_image_path($fromMemberImageFileName, array('size' => '48x48'), true);
+      }
+    }
+  }
+
+  if (!$iconUrl)
+  {
+    $iconUrl = op_image_path('no_image.gif', true);
+  }
+  elseif (0 !== strpos('http://', $iconUrl))
+  {
+    $iconUrl = sf_image_path($iconUrl, array('size' => '48x48'), true);
+  }
+
+  return array(
+    'id' => $notification['id'],
+    'body' => $notification['body'],
+    'category' => $notification['category'],
+    'unread' => $notification['unread'],
+    'created_at' => date('r', strtotime($notification['created_at'])),
+    'icon_url' => $iconUrl,
+    'url' => $notification['url'] ? url_for($notification['url'], array('abstract' => true)) : null,
+    'member_id_from' => $notification['member_id_from'],
+  );
+}

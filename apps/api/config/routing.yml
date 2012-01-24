@@ -98,3 +98,23 @@ community_join:
   url: /community/join.json
   param: { module: community, action: join, sf_format: json }
   requirements: { sf_method: [get] }
+
+push_search:
+  url: /push/search.json
+  param: { module: push, action: search, sf_format: json }
+  requirements: { sf_method: [get] }
+
+push_list:
+  url: /push/list.json
+  param: { module: push, action: search, sf_format: json }
+  requirements: { sf_method: [get] }
+
+push_count:
+  url: /push/count.json
+  param: { module: push, action: count, sf_format: json }
+  requirements: { sf_method: [get] }
+
+push_read:
+  url: /push/read.json
+  param: { module: push, action: read, sf_format: json }
+  requirements: { sf_method: [get] }
