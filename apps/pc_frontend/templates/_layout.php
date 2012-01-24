@@ -8,6 +8,7 @@
 <?php if (Doctrine::getTable('SnsConfig')->get('customizing_css')): ?>
 <link rel="stylesheet" type="text/css" href="<?php echo url_for('@customizing_css') ?>" />
 <?php endif; ?>
+<?php if (Doctrine::getTable('SnsConfig')->get('enable_jsonapi')): ?>
 <?php
 use_helper('Javascript');
 
@@ -20,6 +21,7 @@ echo javascript_tag('
 var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PRINT : 0).';
 ');
 ?>
+<?php endif ?>
 <?php include_javascripts() ?>
 <?php echo $op_config->get('pc_html_head') ?>
 </head>

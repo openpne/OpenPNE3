@@ -1336,6 +1336,10 @@
         <target>日付非設定</target>
       </trans-unit>
       <trans-unit id="">
+        <source>JSON API Configuration</source>
+        <target>JSON API 設定</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>API Key</source>
         <target>APIキー</target>
       </trans-unit>

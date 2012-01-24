@@ -23,6 +23,8 @@ class opJsonApiActions extends sfActions
 
   public function execute($request)
   {
+    $this->forward404Unless(opConfig::get('enable_jsonapi'));
+
     $moduleName = strtolower($this->moduleName);
     sfConfig::set('mod_'.$moduleName.'_view_class', 'opJsonApi');
     $this->getResponse()->setContentType('application/json');
