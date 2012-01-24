@@ -238,6 +238,8 @@ class memberActions extends opMemberAction
   */
   public function executeConfigJsonApi($request)
   {
+    $this->forward404Unless(opConfig::get('enable_jsonapi'));
+
     $member = $this->getUser()->getMember();
 
     if (isset($request['reset_api_key']) && '1' === $request['reset_api_key'])
