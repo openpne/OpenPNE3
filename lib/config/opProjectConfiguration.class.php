@@ -35,7 +35,7 @@ class opProjectConfiguration extends sfProjectConfiguration
 
   public function setup()
   {
-    $this->enableAllPluginsExcept(array('sfPropelPlugin'));
+    $this->enableAllPluginsExcept();
     $this->setIncludePath();
 
     require_once dirname(__FILE__).'/../util/opToolkit.class.php';
