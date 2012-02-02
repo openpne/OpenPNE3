@@ -1335,6 +1335,22 @@
         <source>Unknown Day</source>
         <target>日付非設定</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>JSON API Configuration</source>
+        <target>JSON API 設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>API Key</source>
+        <target>APIキー</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You can provide this API key to third party applications.</source>
+        <target>APIキーはサードパーティアプリに設定することができます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Reset API key</source>
+        <target>APIキーをリセットする</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

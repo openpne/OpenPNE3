@@ -144,6 +144,28 @@ class memberActions extends opMemberAction
   }
 
  /**
+  * Executes configJsonApi action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeConfigJsonApi($request)
+  {
+    $this->forward404Unless(opConfig::get('enable_jsonapi'));
+
+    $member = $this->getUser()->getMember();
+
+    if (isset($request['reset_api_key']) && '1' === $request['reset_api_key'])
+    {
+      $request->checkCSRFProtection();
+      $member->generateApiKey();
+    }
+
+    $this->apiKey = $member->getApiKey();
+
+    return sfView::SUCCESS;
+  }
+
+ /**
   * Executes registerMobileToRegisterEnd action
   *
   * @param sfRequest $request A request object

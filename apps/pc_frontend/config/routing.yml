@@ -58,6 +58,10 @@ member_config_image:
   url: /member/image/config
   param: { module: member, action: configImage }
 
+member_config_jsonapi:
+  url: /member/config/jsonapi
+  param: { module: member, action: configJsonApi }
+
 member_config:
   url: /member/config
   param: { module: member, action: config }
