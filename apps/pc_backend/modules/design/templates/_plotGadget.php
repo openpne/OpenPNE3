@@ -14,7 +14,7 @@ echo link_to_function(__($gadgetConfig[$gadget->getName()]['caption']['ja_JP']),
 </div>
 <?php echo javascript_tag('
 $("#plot'.ucfirst($type).'").sortable({
-  items: "> div",
+  items: "> div.sortable",
   update: function(event,ui){
     insertHiddenTags("'.$type.'", ui.item.parent().sortable("toArray"));
   }
