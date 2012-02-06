@@ -248,6 +248,7 @@ pc:
   dailyNews:
     caption: "Daily News"
     configurable: true
+    member_configurable: true
     sample:
       en:
         - "Daily News"
@@ -577,6 +578,7 @@ mobile:
   dailyNews:
     caption: "Daily News"
     configurable: true
+    member_configurable: true
     sample:
       en:
         - "Daily News"

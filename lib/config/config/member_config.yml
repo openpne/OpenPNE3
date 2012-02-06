@@ -123,20 +123,6 @@ mail:
     enable_pc:     true
     enable_mobile: true 
   daily_news:
-    Name:       "daily_news"
-    Caption:    "Daily News"
-    FormType:   "radio"
-    ValueType:  "string"
-    IsRegist:   false
-    IsConfig:   true
-    IsUnique:   false
-    IsRequired: true
-    IsConfirm:  false
-    Default: 2
-    Choices:
-      - "Don't Send"
-      - "Send At Intervals"
-      - "Send Everyday"
 
 language:
   _attributes:
