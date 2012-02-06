@@ -41,8 +41,10 @@ op_include_parts('pageNav', 'navForDelete', array('list' => $list));
 ?>
 <?php end_slot(); ?>
 
-<?php if ($categoryName): ?>
+<?php if ($categoryName && $form->count() > 1): // except CSRF token field ?>
 <?php op_include_form($categoryName.'Form', $form, array('title' => __($categoryCaptions[$categoryName]), 'url' => url_for('@member_config?category='.$categoryName))) ?>
+<?php elseif ($categoryName && 1 === $form->count()) : ?>
+<?php op_include_box('configInformation', __('There is no available settings.'), array('title' => __($categoryCaptions[$categoryName]))); ?>
 <?php else: ?>
 <?php op_include_box('configInformation', __('Please select the item that wants to be set from the menu.'), array('title' => __('Change Settings'))); ?>
 <?php endif; ?>
