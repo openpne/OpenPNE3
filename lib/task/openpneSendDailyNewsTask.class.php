@@ -58,7 +58,7 @@ EOF;
       {
         foreach ($gadgets as $gadget)
         {
-          if ($gadget->isEnabled())
+          if ($gadget->isEnabled($member))
           {
             $filteredGadgets[] = array(
               'component' => array('module' => $gadget->getComponentModule(), 'action' => $gadget->getComponentAction()),
