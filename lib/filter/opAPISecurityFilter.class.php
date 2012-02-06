@@ -43,11 +43,9 @@ class opAPISecurityFilter extends sfBasicSecurityFilter
     $response = $this->getContext()->getResponse();
     $response->setStatusCode($statusCode);
 
-    header('HTTP/1.1 '. $response->getStatusCode().' '.$response->getStatusText());
-    foreach ($response->getHttpHeaders() as $name => $value)
-    {
-      header($name.': '.$value);
-    }
+    $response->sendHttpHeaders();
+
+    echo $response->getStatusCode().' '.$response->getStatusText();
 
     throw new sfStopException();
   }
