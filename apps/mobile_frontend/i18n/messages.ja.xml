@@ -227,6 +227,10 @@
         <target>ﾒﾆｭｰから設定したい項目を選択してください。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>There is no available settings.</source>
+        <target>利用可能な設定はありません。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Successful in invite.</source>
         <target>送信が完了しました。</target>
       </trans-unit>

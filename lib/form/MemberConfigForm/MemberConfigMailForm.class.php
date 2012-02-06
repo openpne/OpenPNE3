@@ -22,21 +22,6 @@ class MemberConfigMailForm extends MemberConfigForm
   public function __construct(Member $member = null, $options = array(), $CSRFSecret = null)
   {
     parent::__construct($member, $options, $CSRFSecret);
-
-    $count = count(opConfig::get('daily_news_day'));
-
-    $i18n = sfContext::getInstance()->getI18N();
-    $translated = $i18n->__('[1]Send once a week (%2%)|[2]Send twice a week (%2%)|(2,+Inf]Send %1% times a week (%2%)', array(
-      '%1%' => $count,
-      '%2%' => implode(',', $this->generateDayList()))
-    );
-
-    $choice = new sfChoiceFormat();
-    $retval = $choice->format($translated, $count);
-
-    $options = $this->widgetSchema['daily_news']->getOptions();
-    $options['choices'][1] = $retval;
-    $this->widgetSchema['daily_news']->setOptions($options);
   }
 
   public function configure()
@@ -59,15 +44,34 @@ class MemberConfigMailForm extends MemberConfigForm
       if (isset($value['member_configurable']) && $value['member_configurable'])
       {
         $notification = Doctrine::getTable('NotificationMail')->findOneByName($app.'_'.$key);
+        $name  = 'is_send_'.$app.'_'.$key.'_mail';
         if (!$notification || $notification->getIsEnabled())
         {
-          $name  = 'is_send_'.$app.'_'.$key.'_mail';
+          if ('dailyNews' !== $key)
+          {
+            $this->setWidget($name, new sfWidgetFormChoice(array('choices' => $choices, 'expanded' => true)));
+            $this->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices), 'required' => true)));
+            $this->widgetSchema->setLabel($name, $value['caption']);
 
-          $this->setWidget($name, new sfWidgetFormChoice(array('choices' => $choices, 'expanded' => true)));
-          $this->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices), 'required' => true)));
-          $this->widgetSchema->setLabel($name, $value['caption']);
+            $this->setDefault($name, $this->member->getConfig($name, 1));
+          }
+          else
+          {
+            $name = 'daily_news';
+            $i18n = sfContext::getInstance()->getI18N();
+            $choice = new sfChoiceFormat();
+            $count = count(opConfig::get('daily_news_day'));
+            $translated = $choice->format($i18n->__('[1]Send once a week (%2%)|[2]Send twice a week (%2%)|(2,+Inf]Send %1% times a week (%2%)', array(
+              '%1%' => $count,
+              '%2%' => implode(',', $this->generateDayList()))
+            ), $count);
+            $dailyNewsChoices = array("Don't Send", $translated, "Send Everyday");
+            $this->setWidget($name, new sfWidgetFormChoice(array('choices' => $dailyNewsChoices, 'expanded' => true)));
+            $this->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($dailyNewsChoices), 'required' => true)));
+            $this->widgetSchema->setLabel($name, $value['caption']);
 
-          $this->setDefault($name, $this->member->getConfig($name, 1));
+            $this->setDefault($name, $this->member->getConfig($name, 2));
+          }
         }
       }
     }
