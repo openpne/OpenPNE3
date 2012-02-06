@@ -3,4 +3,4 @@
 
 <hr color="<?php echo $op_color['core_color_11'] ?>">
 
-<?php echo link_to(__('Community Top'), '@community_home?id='.$community->getId()) ?>
+<?php echo link_to(__('%Community% Top'), '@community_home?id='.$community->getId()) ?>
