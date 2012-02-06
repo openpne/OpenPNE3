@@ -63,7 +63,7 @@ class Gadget extends BaseGadget implements opAccessControlRecordInterface
     return $list[$this->name]['component'][1];
   }
 
-  public function isEnabled()
+  public function isEnabled($member = null)
   {
     $list = $this->getGadgetConfigList();
     if (empty($list[$this->name]))
@@ -77,7 +77,10 @@ class Gadget extends BaseGadget implements opAccessControlRecordInterface
       return false;
     }
 
-    $member = sfContext::getInstance()->getUser()->getMember();
+    if (is_null($member))
+    {
+      $member = sfContext::getInstance()->getUser()->getMember();
+    }
     $isEnabled = $this->isAllowed($member, 'view');
 
     return $isEnabled;
