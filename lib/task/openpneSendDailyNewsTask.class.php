@@ -48,6 +48,7 @@ EOF;
       }
       $address = $member->getEmailAddress();
       $gadgets = $pcGadgets['dailyNewsContents'];
+      $context = $this->getContextByEmailAddress($address);
       if (opToolkit::isMobileEmailAddress($address))
       {
         $gadgets = $mobileGadgets['mobileDailyNewsContents'];
@@ -69,7 +70,6 @@ EOF;
         }
       }
 
-      $context = $this->getContextByEmailAddress($address);
       $params = array(
         'member'  => $member,
         'gadgets' => $filteredGadgets,
