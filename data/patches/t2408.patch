@@ -1,0 +1,14 @@
+diff --git a/lib/vendor/symfony/lib/helper/PartialHelper.php b/lib/vendor/symfony/lib/helper/PartialHelper.php
+index e5aac3d..9bfb4e1 100644
+--- a/lib/vendor/symfony/lib/helper/PartialHelper.php
++++ b/lib/vendor/symfony/lib/helper/PartialHelper.php
+@@ -213,7 +213,7 @@ function get_partial($templateName, $vars = array())
+
+   $class = sfConfig::get('mod_'.strtolower($moduleName).'_partial_view_class', 'sf').'PartialView';
+   $view = new $class($context, $moduleName, $actionName, '');
+-  $view->setPartialVars(true === sfConfig::get('sf_escaping_strategy') ? sfOutputEscaper::unescape($vars) : $vars);
++  $view->setPartialVars($vars);
+
+   return $view->render();
+ }
+
