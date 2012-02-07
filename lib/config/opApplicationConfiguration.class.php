@@ -571,8 +571,19 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
     $isNoScriptName = !empty($settings['.settings']['no_script_name']);
 
     $options = $context->getRouting()->getOptions();
-    $url = sfConfig::get('op_base_url');
-    if ('http://example.com' !== $url)
+    if ($options['context']['is_secure'])
+    {
+      $sslBaseUrls = sfConfig::get('op_ssl_base_url');
+      $url = $sslBaseUrls[$application];
+      $isDefault = 'https://example.com' === $url;
+    }
+    else
+    {
+      $url = sfConfig::get('op_base_url');
+      $isDefault = 'http://example.com' === $url;
+    }
+
+    if ($isDefault)
     {
       $parts = parse_url($url);
 
