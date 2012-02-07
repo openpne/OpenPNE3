@@ -578,9 +578,35 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
     sfConfig::set('sf_app', $application);
     $configuration->setAppDir(sfConfig::get('sf_apps_dir').DIRECTORY_SEPARATOR.$application);
 
-    $options = $context->getRouting()->getOptions();
+    $settings = sfDefineEnvironmentConfigHandler::getConfiguration($configuration->getConfigPaths('config/settings.yml'));
+    $isNoScriptName = !empty($settings['.settings']['no_script_name']);
 
-    $routing = new opPatternRouting($context->getEventDispatcher(), null, $options);
+    $options = $context->getRouting()->getOptions();
+    $url = sfConfig::get('op_base_url');
+    if ('http://example.com' !== $url)
+    {
+      $parts = parse_url($url);
+
+      $parts['path'] = isset($parts['path']) ? $parts['path'] : '';
+      $options['context']['prefix'] =
+        $this->getAppScriptName($application, sfConfig::get('sf_environment'), $parts['path'], $isNoScriptName);
+
+      if (isset($parts['host']))
+      {
+        $options['context']['host'] = $parts['host'];
+        if (isset($parts['port']))
+        {
+          $options['context']['host'] .= ':'.$parts['port'];
+        }
+      }
+    }
+    else
+    {
+      $path = preg_replace('#/[^/]+\.php$#', '', $options['context']['prefix']);
+      $options['context']['prefix'] = $this->getAppScriptName($application, sfConfig::get('sf_environment'), $path, $isNoScriptName);
+    }
+
+    $routing = new sfPatternRouting($context->getEventDispatcher(), null, $options);
     $routing->setRoutes($config->evaluate($configuration->getConfigPaths('config/routing.yml')));
     $context->getEventDispatcher()->notify(new sfEvent($routing, 'routing.load_configuration'));
 
