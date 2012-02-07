@@ -502,7 +502,7 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
 
     require_once 'Zend/Loader/Autoloader.php';
     Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
-    
+
     self::$zendLoaded = true;
   }
 
@@ -515,7 +515,7 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
 
     Zend_Loader_Autoloader::resetInstance();
     spl_autoload_unregister(array('Zend_Loader_Autoloader', 'autoload'));
-    
+
     self::$zendLoaded = false;
   }
 
@@ -582,8 +582,19 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
     $isNoScriptName = !empty($settings['.settings']['no_script_name']);
 
     $options = $context->getRouting()->getOptions();
-    $url = sfConfig::get('op_base_url');
-    if ('http://example.com' !== $url)
+    if ($options['context']['is_secure'])
+    {
+      $sslBaseUrls = sfConfig::get('op_ssl_base_url');
+      $url = $sslBaseUrls[$application];
+      $isDefault = 'https://example.com' === $url;
+    }
+    else
+    {
+      $url = sfConfig::get('op_base_url');
+      $isDefault = 'http://example.com' === $url;
+    }
+
+    if ($isDefault)
     {
       $parts = parse_url($url);
 
