@@ -561,6 +561,10 @@ abstract class sfOpenPNEApplicationConfiguration extends sfApplicationConfigurat
       if (isset($parts['host']))
       {
         $options['context']['host'] = $parts['host'];
+        if (isset($parts['port']))
+        {
+          $options['context']['host'] .= ':'.$parts['port'];
+        }
       }
     }
     else
