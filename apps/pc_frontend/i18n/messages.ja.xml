@@ -1307,6 +1307,10 @@
         <source>Search Members</source>
         <target>メンバー検索</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Unknown Day</source>
+        <target>日付非設定</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
