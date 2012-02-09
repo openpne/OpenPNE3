@@ -583,7 +583,7 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
       $isDefault = 'http://example.com' === $url;
     }
 
-    if ($isDefault)
+    if (!$isDefault)
     {
       $parts = parse_url($url);
 
