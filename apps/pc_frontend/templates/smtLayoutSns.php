@@ -26,6 +26,7 @@ var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PR
 ?>
 <?php use_javascript('jquery.min.js') ?>
 <?php use_javascript('jquery.tmpl.min.js') ?>
+<?php use_javascript('smt_notify') ?>
 <?php use_javascript('smt_tosaka') ?>
 <?php use_javascript('smt_menu') ?>
 <?php include_javascripts() ?>
