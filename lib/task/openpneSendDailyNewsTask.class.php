@@ -58,8 +58,8 @@ EOF;
 
   private function sendDailyNews($app)
   {
-    $isAppMobile = 'pc_frontend' !== $app;
-    $dailyNewsName = $isAppMobile ? 'dailyNews' : 'mobileDailyNews';
+    $isAppMobile = 'mobile_frontend' === $app;
+    $dailyNewsName = $isAppMobile ?  'mobileDailyNews' : 'dailyNews';
     $context = sfContext::createInstance($this->createConfiguration($app, 'prod'), $app);
 
     $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName($dailyNewsName);
