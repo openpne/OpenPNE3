@@ -47,7 +47,8 @@ EOF;
         throw new Exception('invalid option');
       }
     }
-    else{
+    else
+    {
       $php = $this->findPhpBinary();
       foreach ($expectedOptions as $app)
       {
@@ -145,8 +146,10 @@ EOF;
       }
     }
 
-    if ($php = getenv('PHP_PEAR_PHP_BIN')) {
-      if (is_executable($php)) {
+    if ($php = getenv('PHP_PEAR_PHP_BIN'))
+    {
+      if (is_executable($php))
+      {
         return $php;
       }
     }
