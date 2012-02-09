@@ -123,6 +123,7 @@ mail:
     enable_pc:     true
     enable_mobile: true 
   daily_news:
+    Default: 2
 
 language:
   _attributes:
