@@ -2,4 +2,4 @@ editSuccess:
   javascripts: [%SF_PROTOTYPE_WEB_DIR%/js/prototype]
 
 listSuccess:
-  javascripts: [%OP_JQUERY_URL%, %OP_JQUERYUI_URL%]
+  javascripts: [jquery.min.js, jquery-ui.min.js]

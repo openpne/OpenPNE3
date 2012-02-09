@@ -1,18 +1,18 @@
 gadgetSuccess:
   javascripts:
-    - %OP_JQUERY_URL%
+    - jquery.min.js
 
 gadgetPlotSuccess:
   layout: plain
   stylesheets: [-backend, gadgetPlot]
-  javascripts: [%OP_JQUERY_URL%, %OP_JQUERYUI_URL%]
+  javascripts: [jquery.min.js, jquery-ui.min.js]
 
 addGadgetSuccess:
   layout: plain
   stylesheets: [-backend]
-  javascripts: [%OP_JQUERY_URL%]
+  javascripts: [jquery.min.js]
 
 editGadgetSuccess:
   layout: plain
   stylesheets: [-backend]
-  javascripts: [%OP_JQUERY_URL%]
+  javascripts: [jquery.min.js]
