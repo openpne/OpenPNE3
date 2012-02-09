@@ -30,16 +30,27 @@ EOF;
     );
   }
 
+
   protected function execute($arguments = array(), $options = array())
   {
     parent::execute($arguments, $options);
+
+    $expectedOptions = array('pc_frontend', 'mobile_frontend');
+
     if (isset($options['app']))
     {
-      $this->sendDailyNews($options['app']);
+      if (in_array($options['app'], $expectedOptions))
+      {
+        $this->sendDailyNews($options['app']);
+      }
+      else
+      {
+        throw new Exception('invalid option');
+      }
     }
     else{
       $php = $this->findPhpBinary();
-      foreach (array('pc_frontend', 'mobile_frontend') as $app)
+      foreach ($expectedOptions as $app)
       {
         exec($php.' '.sfConfig::get('sf_root_dir').'/symfony openpne:send-daily-news --app='.$app);
       }
@@ -48,8 +59,8 @@ EOF;
 
   private function sendDailyNews($app)
   {
-    $isPc = 'pc_frontend' === $app;
-    $dailyNewsName = $isPc ? 'dailyNews' : 'mobileDailyNews';
+    $isAppMobile = 'pc_frontend' !== $app;
+    $dailyNewsName = $isAppMobile ? 'dailyNews' : 'mobileDailyNews';
     $context = sfContext::createInstance($this->createConfiguration($app, 'prod'), $app);
 
     $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName($dailyNewsName);
@@ -59,7 +70,7 @@ EOF;
     foreach ($targetMembers as $member)
     {
       $address = $member->getEmailAddress();
-      if (!($isPc ^ opToolkit::isMobileEmailAddress($address)))
+      if ($isAppMobile !== opToolkit::isMobileEmailAddress($address))
       {
         continue;
       }
