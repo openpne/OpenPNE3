@@ -55,4 +55,61 @@ class communityActions extends opJsonApiActions
 
     $this->setTemplate('array', 'member');
   }
+
+  public function executeJoin(sfWebRequest $request)
+  {
+    $memberId = $this->getUser()->getMemberId();
+
+    if (isset($request['community_id']))
+    {
+      $communityId = $request['community_id'];
+    }
+    elseif (isset($request['id']))
+    {
+      $communityId = $request['id'];
+    }
+    else
+    {
+      $this->forward400('community_id parameter not specified.');
+    }
+
+    $community = Doctrine::getTable('Community')->find($communityId);
+    if (!$community)
+    {
+      $this->forward404('This community does not exist.');
+    }
+
+    $communityJoinPolicy = $community->getConfig('register_policy');
+
+    $communityMember = Doctrine::getTable('CommunityMember')
+      ->retrieveByMemberIdAndCommunityId($viewMemberId, $community->getId());
+
+    if ($request['leave'])
+    {
+      if (!$communityMember || $communityMember->hasPosition('admin'))
+      {
+        $this->forward400('You can\'t leave this community.');
+      }
+
+      Doctrine::getTable('CommunityMember')->quit($memberId, $communityId);
+    }
+    else
+    {
+      if ($communityMember)
+      {
+        if ($communityMember->getIsPre())
+        {
+          $this->forward400('You are already sent request to join this community.');
+        }
+        else
+        {
+          $this->forward400('You are already this community\'s member.');
+        }
+      }
+
+      Doctrine::getTable('CommunityMember')->join($memberId, $communityId, $communityJoinPolicy);
+    }
+
+    return $this->renderJSON(array('status' => 'success'));
+  }
 }
