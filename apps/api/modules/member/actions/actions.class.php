@@ -111,4 +111,66 @@ class memberActions extends opJsonApiActions
 
     return $this->renderJSON(array('status' => 'success'));
   }
+
+  public function executeFriendRequest(sfWebRequest $request)
+  {
+    $memberId = $this->getUser()->getMemberId();
+
+    if (isset($request['member_id']))
+    {
+      $targetMemberId = $request['member_id'];
+    }
+    elseif (isset($request['id']))
+    {
+      $targetMemberId = $request['id'];
+    }
+    else
+    {
+      $this->forward400('member_id parameter not specified.');
+    }
+
+    if ($memberId === $targetMemberId)
+    {
+      $this->forward400('Friend request to myself is not allowed.');
+    }
+
+    $relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($memberId, $targetMemberId);
+    if (!$relation)
+    {
+      $relation = new MemberRelationship();
+      $relation->setMemberIdFrom($memberId);
+      $relation->setMemberIdTo($targetMemberId);
+    }
+
+    if (isset($request['unlink']))
+    {
+      if (!$relation->isFriend())
+      {
+        $this->forward400('This member is not your friend.');
+      }
+
+      $relation->removeFriend();
+    }
+    else
+    {
+      if ($relation->isAccessBlocked())
+      {
+        $this->forward403('Friend request is blocked.');
+      }
+      if ($relation->isFriend())
+      {
+        $this->forward400('This member already belongs to your friend.');
+      }
+      if ($relation->isFriendPreFrom())
+      {
+        $this->forward400('Friend request is already sent.');
+      }
+
+      $relation->setFriendPre();
+    }
+
+    $relation->free(true);
+
+    return $this->renderJSON(array('status' => 'success'));
+  }
 }
