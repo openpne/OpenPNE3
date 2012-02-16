@@ -14,7 +14,7 @@
   margin: 4px 0;
 }
 
-.ncform, .menuform {
+.postform, .ncform, .menuform {
   background: #555;
 }
 .white{
@@ -25,6 +25,24 @@
   padding-top: 4px;
   padding-bottom: 8px;
   border-bottom: 6px solid #909090;
+}
+
+.postface {
+  height: 52px;
+  background: #eee;
+  padding: 4px 0 0 0;
+}
+
+.postform {
+  padding-top: 4px;
+  padding-bottom: 52px;
+  border-bottom: 6px solid #909090;
+}
+.postform .posttextarea {
+  margin: 4px 0;
+}
+.postform .posttextarea textarea {
+  margin: 0;
 }
 
 .tosaka_margin, .right_margin, .left_margin, .center_margin {
