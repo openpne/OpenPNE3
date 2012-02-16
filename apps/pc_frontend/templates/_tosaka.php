@@ -15,6 +15,25 @@
 
 <?php include_component('default', 'smtMenu') ?>
 
+<!-- POSTFORM TMPL -->
+<div class="postform hide toggle1">
+  <div class="row">
+    <div class="span10 offset1 center white font14 toggle1_close">
+      投稿フォーム
+    </div>
+    <div class="span1">
+      <?php echo op_image_tag('UPARROW', array('class' => 'toggle1_close')) ?>
+    </div>
+  </div>
+  <div class="row posttextarea">
+    <textarea id="tosaka_postform_body" class="span12" rows="4"></textarea>
+  </div>
+  <div class="row">
+    <button id="tosaka_postform_submit" class="span10 offset1 btn small primary">POST</button>
+  </div>
+</div>
+<!-- POSTFORM TMPL -->
+
 <div id="slot_tosaka">
   <div class="row">
     <div class="span12">
