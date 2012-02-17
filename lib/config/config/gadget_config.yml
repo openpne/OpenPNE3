@@ -55,6 +55,30 @@ mobileFooter:
     default: layoutD
   plot_action: [design, mobileFooterGadgetPlot]
 
+smartphone:
+  name: "スマートフォン版ホーム画面"
+  layout:
+    default: layoutD
+  plot_action: [design, smartphoneHomeGadgetPlot]
+
+smartphoneProfile:
+  name: "スマートフォン版プロフィール画面"
+  layout:
+    default: layoutD
+  plot_action: [design, smartphoneProfileGadgetPlot]
+
+smartphoneCommunity:
+  name: "スマートフォン版コミュニティ画面"
+  layout:
+    default: layoutD
+  plot_action: [design, smartphoneCommunityGadgetPlot]
+
+smartphoneLogin:
+  name: "スマートフォン版ログイン画面"
+  layout:
+    default: layoutD
+  plot_action: [design, smartphoneLoginGadgetPlot]
+
 dailyNews:
   name: "デイリーニュース（PCメールアドレス向け）"
   layout:

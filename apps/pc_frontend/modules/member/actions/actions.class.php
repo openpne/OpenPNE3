@@ -20,10 +20,12 @@ class memberActions extends opMemberAction
  /**
   * Executes home action
   *
-  * @param sfRequest $request A request object
+  * @param opWebRequest $request A request object
   */
   public function executeHome($request)
   {
+    $this->forwardIf($request->isSmartphone(), 'member', 'smtHome');
+
     $this->topGadgets = null;
     $this->sideMenuGadgets = null;
 
@@ -48,9 +50,24 @@ class memberActions extends opMemberAction
   }
 
  /**
+  * Execute smtHome action
+  *
+  * @param opWebRequest $request A request object
+  */
+  public function executeSmtHome(opWebRequest $request)
+  {
+    $this->gadgetConfig = sfConfig::get('op_smartphone_gadget_list');
+
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('smartphone');
+    $this->contentsGadgets = $gadgets['smartphoneContents'];
+
+    return sfView::SUCCESS;
+  }
+
+ /**
   * Executes login action
   *
-  * @param sfRequest $request A request object
+  * @param opWevRequest $request A request object
   */
   public function executeLogin($request)
   {
@@ -59,32 +76,46 @@ class memberActions extends opMemberAction
       $this->redirect(opConfig::get('external_pc_login_url'));
     }
 
-    $this->gadgetConfig = sfConfig::get('op_login_gadget_list');
-    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('login');
-    $layout = Doctrine::getTable('SnsConfig')->get('login_layout', 'layoutA');
-    $this->setLayout($layout);
-
-    switch($layout)
+    if ($request->isSmartphone())
     {
-      case 'layoutA' :
-        $this->topGadgets = $gadgets['loginTop'];
-      case 'layoutB' :
-        $this->sideMenuGadgets = $gadgets['loginSideMenu'];
-    }
+      $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('smartphoneLogin');
+      $this->contentsGadgets = $gadgets['smartphoneLoginContents'];
 
-    $this->contentsGadgets = $gadgets['loginContents'];
-    $this->bottomGadgets = $gadgets['loginBottom'];
+      $this->setLayout('smtLayoutSns');
+      $this->setTemplate('smtLogin');    
+    }
+    else
+    {
+      $this->gadgetConfig = sfConfig::get('op_login_gadget_list');
+      $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('login');
+      $layout = Doctrine::getTable('SnsConfig')->get('login_layout', 'layoutA');
+      $this->setLayout($layout);
+
+      switch($layout)
+      {
+        case 'layoutA' :
+          $this->topGadgets = $gadgets['loginTop'];
+        case 'layoutB' :
+          $this->sideMenuGadgets = $gadgets['loginSideMenu'];
+      }
+
+      $this->contentsGadgets = $gadgets['loginContents'];
+      $this->bottomGadgets = $gadgets['loginBottom'];
+    }
 
     return parent::executeLogin($request);
   }
 
+
  /**
   * Executes profile action
   *
-  * @param sfRequest $request A request object
+  * @param opWebRequest $request A request object
   */
   public function executeProfile($request)
   {
+    $this->forwardIf($request->isSmartphone(), 'member', 'smtProfile');
+
     $id = $request->getParameter('id', $this->getUser()->getMemberId());
     if ($id != $this->getUser()->getMemberId())
     {
@@ -111,11 +142,66 @@ class memberActions extends opMemberAction
   }
 
  /**
+  * Executes smtProfile action
+  *
+  * @param opWebRequest $request A request object
+  */
+  public function executeSmtProfile(opWebRequest $request)
+  {
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('smartphoneProfile');
+    $this->contentsGadgets = $gadgets['smartphoneProfileContents'];
+
+    $result = parent::executeProfile($request);
+
+    $this->getResponse()->setDisplayMember($this->member);
+
+    return $result;
+  }
+
+ /**
   * Executes configImage action
   *
-  * @param sfRequest $request A request object
+  * @param opWebRequest $request A request object
   */
   public function executeConfigImage($request)
+  {
+    $this->forwardIf($request->isSmartphone(), 'member', 'smtConfigImage');
+
+    $options = array('member' => $this->getUser()->getMember());
+    $this->form = new MemberImageForm(array(), $options);
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      try
+      {
+        if (!$this->form->bindAndSave($request->getParameter('member_image'), $request->getFiles('member_image')))
+        {
+          $errors = $this->form->getErrorSchema()->getErrors();
+          if (isset($errors['file']))
+          {
+            $error = $errors['file'];
+            $i18n = $this->getContext()->getI18N();
+            $this->getUser()->setFlash('error', $i18n->__($error->getMessageFormat(), $error->getArguments()));
+          }
+        }
+      }
+      catch (opRuntimeException $e)
+      {
+        $this->getUser()->setFlash('error', $e->getMessage());
+      }
+      $this->redirect('@member_config_image');
+    }
+
+  }
+
+
+ /**
+  * Executes smtCofigImage action
+  *
+  * @param opWebRequest $request A request object
+  */
+
+  public function executeSmtConfigImage(opWebRequest $request)
   {
     $options = array('member' => $this->getUser()->getMember());
     $this->form = new MemberImageForm(array(), $options);
@@ -141,6 +227,8 @@ class memberActions extends opMemberAction
       }
       $this->redirect('@member_config_image');
     }
+
+    return parent::executeConfigImage($request);
   }
 
  /**
@@ -208,5 +296,75 @@ class memberActions extends opMemberAction
       }
     }
     $this->redirect('@homepage');
+  }
+
+
+ /**
+  * Executes editConfig action
+  *
+  * @param opWebRequest $request a request object
+  */
+  public function executeConfig($request)
+  {
+    $this->forwardIf($request->isSmartphone(), 'member', 'smtConfig');
+
+    return parent::executeConfig($request);
+  }
+
+ /**
+  * Executes editSmtConfig action
+  *
+  * @param opWebRequest $request a request object
+  */
+  public function executeSmtConfig(opWebRequest $request)
+  {
+    return parent::executeConfig($request);
+  }
+
+
+ /**
+  * Executes invite action
+  *
+  * @param opWebRequest $request a request object
+  */
+  public function executeInvite($request)
+  {
+    $this->forwardIf($request->isSmartphone(), 'member', 'smtInvite');
+
+    return parent::executeInvite($request);
+  }
+
+
+ /**
+  * Executes editSmtConfig action
+  *
+  * @param opWebRequest $request a request object
+  */
+  public function executeSmtInvite(opWebRequest $request)
+  {
+    return parent::executeInvite($request);
+  }
+
+
+ /**
+  * Executes editProfile action
+  *
+  * @param opWebRequest $request a request object
+  */
+  public function executeEditProfile($request)
+  {
+    $this->forwardIf($request->isSmartphone(), 'member', 'smtEditProfile');
+
+    return parent::executeEditProfile($request);
+  }
+
+ /**
+  * Executes smtEditProfile action
+  *
+  * @param opWebRequest $request a request object
+  */
+  public function executeSmtEditProfile(opWebRequest $request)
+  {
+    return parent::executeEditProfile($request);
   }
 }

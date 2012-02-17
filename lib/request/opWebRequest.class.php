@@ -415,4 +415,21 @@ class opWebRequest extends sfWebRequest
 
     sfContext::getInstance()->getController()->redirect($url);
   }
+
+  public function isSmartphone($checkCookie = true)
+  {
+    if ($checkCookie && '1' === $this->getCookie('disable_smt', false))
+    {
+      return false;
+    }
+
+    $userAgent = $this->getHttpHeader('User-Agent');
+
+    if (!$userAgent)
+    {
+      return false;
+    }
+
+    return preg_match('/iPhone/', $userAgent) || preg_match('/iPad/', $userAgent) || preg_match('/Android/', $userAgent);
+  }
 }

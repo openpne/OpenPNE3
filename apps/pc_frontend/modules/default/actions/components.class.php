@@ -39,6 +39,13 @@ class defaultComponents extends sfComponents
     }
   }
 
+  public function executeSmtMenu()
+  {
+    $type = opToolkit::isSecurePage() ? 'smartphone_default' : 'smartphone_insecure';
+
+    $this->navs = Doctrine::getTable('Navigation')->retrieveByType($type);
+  }
+
   public function executeSideBannerGadgets()
   {
     $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('sideBanner');
@@ -85,6 +92,11 @@ class defaultComponents extends sfComponents
   }
 
   public function executeLoginFormBox()
+  {
+    $this->forms = $this->getUser()->getAuthForms();
+  }
+
+  public function executeSmtLoginFormBox()
   {
     $this->forms = $this->getUser()->getAuthForms();
   }

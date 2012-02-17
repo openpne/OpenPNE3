@@ -21,9 +21,14 @@ class errorAction extends sfAction
  /**
   * Executes error action
   *
-  * @param sfRequest $request A request object
+  * @param opWebRequest $request A request object
   */
   public function execute($request)
   {
+    if ($request->isSmartphone())
+    {
+      $this->setLayout('smtLayoutSns');
+      $this->setTemplate('smtError');
+    }
   }
 }
