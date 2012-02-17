@@ -1363,6 +1363,14 @@
         <source>Back to %community% top page</source>
         <target>%community% トップに戻る</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>View this page on smartphone style</source>
+        <target>このページをスマートフォン版で表示</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>View this page on regular style</source>
+        <target>このページをPC版で表示</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
