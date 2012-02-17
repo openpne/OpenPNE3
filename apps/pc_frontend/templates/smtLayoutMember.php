@@ -26,6 +26,7 @@ var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PR
 ?>
 <?php use_javascript('jquery.min.js') ?>
 <?php use_javascript('jquery.tmpl.min.js') ?>
+<?php use_javascript('smt_main') ?>
 <?php use_javascript('smt_notify') ?>
 <?php use_javascript('smt_tosaka') ?>
 <?php use_javascript('smt_menu') ?>
@@ -69,5 +70,10 @@ var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PR
 <?php endif; ?>
 
 <?php echo $sf_content ?>
+
+<div id="smt-switch" class="row" style="display: none">
+<a class="btn info"><?php echo __('View this page on regular style') ?></a>
+</div>
+
 </body>
 </html>

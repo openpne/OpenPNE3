@@ -248,6 +248,17 @@ hr.white2 {
   text-align: left;
 }
 
+#smt-switch {
+  border-top: 1px solid #ccc;
+  padding: 8px 0;
+  margin-top: 20px;
+  text-align: center;
+}
+#smt-switch .btn {
+  padding-top: 4px;
+  padding-bottom: 5px;
+}
+
 /*----------------------------------------------
  * Override bootstrap.css rules
  *--------------------------------------------*/
