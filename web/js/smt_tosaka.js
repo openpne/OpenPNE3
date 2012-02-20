@@ -7,13 +7,13 @@ $(document).ready(function(){
       if(json.status=='success')
       {
         $pushHtml = $("#pushListTemplate").tmpl(json.data);
-        $('.divlink', $pushHtml).pushLink();
 	$('.friend-accept', $pushHtml).friendLink({ buttonElement: '.friend-notify-button', ncfriendloadingElement: '#ncfriendloading', ncfriendresultmessageElement: '#ncfriendresultmessage', });
 	$('.friend-reject', $pushHtml).friendUnlink({ buttonElement: '.friend-notify-button', ncfriendloadingElement: '#ncfriendloading', ncfriendresultmessageElement: '#ncfriendresultmessage', })
         $("#pushList").html($pushHtml);
       }else{
         alert(json.message);
       }
+      $('.nclink').pushLink();
       $('#pushList').show();
       $('#pushLoading').hide();
     });
