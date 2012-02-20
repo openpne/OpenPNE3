@@ -15,24 +15,24 @@
 <!-- NCFORM TMPL -->
 
 <script id="pushListTemplate" type="text/x-jquery-tmpl">
-    <div class="{{if unread==false}}isread {{/if}}{{if category=="message" || category=="other"}}divlink {{/if}}row push"  data-notify-id="${id}" data-location-url="${url}" data-member-id="${member_id_from}">
+    <div class="{{if unread==false}}isread {{/if}}{{if category=="message" || category=="other"}}nclink {{/if}}row push"  data-notify-id="${id}" data-location-url="${url}" data-member-id="${member_id_from}">
       <div class="span3 push_icon">
         <img style="margin-left: 5px;" src="${icon_url}" class="rad4" width="48" height="48">
       </div>
       <div class="span9 push_content">
         <div class="row">
           {{if category=="link" && unread==false}}
-          フレンドリンクが来ました。
+          <?php echo __('Friend link request has come.'); ?>
           {{else}}
           {{html body}}
           {{/if}}
         </div>
         {{if category=="link"}}
-        <div class="row">
+        <div class="row{{if unread==false}} hide{{/if}}">
             <button class="span2 btn primary small friend-notify-button friend-accept">YES</button>
             <button class="span2 btn small friend-notify-button friend-reject">NO</button>
-            <div class="center hide" id="ncfriendloading"><?php echo op_image_tag('ajax-loader.gif') ?></div>
-            <div class="center hide" id="ncfriendresultmessage"></div>
+            <div class="center hide ncfriendloading"><?php echo op_image_tag('ajax-loader.gif') ?></div>
+            <div class="center hide ncfriendresultmessage"></div>
         </div>
         {{/if}}
       </div>
