@@ -9,10 +9,33 @@
 <?php else: ?>
 <?php if (!$relation->isFriend() && opConfig::get('enable_friend_link') && $relation->isAllowed($sf_user->getRawValue()->getMember(), 'friend_link')): ?>
 <?php ob_start() ?>
+<script type="text/javascript">
+$(function(){
+  $('#addFriend').click(function(){
+    $('#addFriendLinkLoading').show();
+    $('#addFriendLink').hide();
+    $.ajax({
+      type: 'GET',
+      url: openpne.apiBase + 'member/friend_request.json',
+      data: 'member_id=<?php echo $member->getId() ?>&apiKey=' + openpne.apiKey,
+      success: function(json){
+        $('#addFriendLinkFinish').show();
+        $('#addFriendLinkLoading').hide();
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown){
+        $('#addFriendLinkError').show();
+        $('#addFriendLinkLoading').hide();
+      },
+    });
+  });
+});
+</script>
 <div class="alert-message block-message warning">
-<p><?php echo __('If %1% is your friend, let us add to %my_friend% it!', array('%1%' => $member->getName(), '%my_friend%' => $op_term['my_friend']->pluralize())) ?><br />
-<?php echo link_to(__('Add %my_friend%', array('%my_friend%' => $op_term['my_friend']->pluralize())), 'friend/link?id='.$member->getId()) ?>
-</p>
+<p><?php echo __('If %1% is your friend, let us add to %my_friend% it!', array('%1%' => $member->getName(), '%my_friend%' => $op_term['my_friend']->pluralize())) ?></p>
+<p id="addFriendLink"><a href="#" id="addFriend"><?php echo __('Add %my_friend%', array('%my_friend%' => $op_term['my_friend']->pluralize())) ?></a></p>
+<p id="addFriendLinkLoading" class="hide"><?php echo op_image_tag('ajax-loader.gif') ?></p>
+<p id="addFriendLinkFinish" class="hide"><?php echo __('You have requested %friend% link.', array('%friend%' => $op_term['friend'])) ?></p>
+<p id="addFriendLinkError" class="hide"><?php echo __('%Friend% request is already sent.', array('%Friend%' => $op_term['friend'])) ?></p>
 </div>
 <?php $content = ob_get_clean() ?>
 <?php op_include_parts('descriptionBox', 'informationAboutThisIsYourProfilePage', array('body' => $content)) ?>

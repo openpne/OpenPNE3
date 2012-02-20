@@ -59,12 +59,18 @@ foreach ($communitySubAdmins as $m)
   <?php endif; ?>
   <?php if (!$isAdmin) : ?>
   <?php if ($isCommunityMember) : ?>
-  <?php echo link_to(__('Leave this %community%', array('%community%' => $op_term['community']->titleize())), '@community_quit?id=' . $community->getId()) ?><br>
+  <p id="leaveCommunityLink"><a href="#" id="leaveCommunity"><?php echo __('Leave this %community%', array('%community%' => $op_term['community']->titleize())) ?></a></p>
+  <p id="leaveCommunityLoading" class="hide"><?php echo op_image_tag('ajax-loader.gif') ?></p>
+  <p id="leaveCommunityFinish" class="hide"><?php echo __('You have just quitted this %community%.') ?></p>
+  <p id="leaveCommunityError" class="hide"><?php echo __('You haven\'t joined this %community% yet.') ?></p>
   <?php else : ?>
   <?php if ($isCommunityPreMember) : ?>
   <?php echo __('You are waiting for the participation approval by %community%\'s administrator.', array('%community%' => $op_term['community']->titleize())) ?>
   <?php else: ?>
-  <?php echo link_to(__('Join this %community%', array('%community%' => $op_term['community']->titleize())), '@community_join?id=' . $community->getId()) ?><br>
+  <p id="joinCommunityLink"><a href="#" id="joinCommunity"><?php echo __('Join this %community%', array('%community%' => $op_term['community']->titleize())) ?></a></p>
+  <p id="joinCommunityLoading" class="hide"><?php echo op_image_tag('ajax-loader.gif') ?></p>
+  <p id="joinCommunityFinish" class="hide"><?php echo __('You have just joined to this %community%.') ?></p>
+  <p id="joinCommunityError" class="hide"><?php echo __('You are already joined to this %community%.') ?></p>
   <?php endif; ?>
   <?php endif; ?>
   <?php endif; ?>
@@ -72,3 +78,44 @@ foreach ($communitySubAdmins as $m)
 </tbody>
 </table>
 </div>
+<script type="text/javascript">
+$(function(){
+
+  $('#leaveCommunity').click(function(){
+    $('#leaveCommunityLoading').show();
+    $('#leaveCommunityLink').hide();
+    $.ajax({
+      type: 'GET',
+      url: openpne.apiBase + 'community/join.json',
+      data: 'community_id=<?php echo $community->getId() ?>&leave=true&apiKey=' + openpne.apiKey,
+      success: function(json){
+        $('#leaveCommunityFinish').show();
+        $('#leaveCommunityLoading').hide();
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown){
+        $('#leaveCommunityError').show();
+        $('#leaveCommunityLoading').hide();
+      },
+    });
+  });
+
+  $('#joinCommunity').click(function(){
+    $('#joinCommunityLoading').show();
+    $('#joinCommunityLink').hide();
+    $.ajax({
+      type: 'GET',
+      url: openpne.apiBase + 'community/join.json',
+      data: 'community_id=<?php echo $community->getId() ?>&apiKey=' + openpne.apiKey,
+      success: function(json){
+        $('#joinCommunityFinish').show();
+        $('#joinCommunityLoading').hide();
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown){
+        $('#joinCommunityError').show();
+        $('#joinCommunityLoading').hide();
+      },
+    });
+  });
+
+});
+</script>
