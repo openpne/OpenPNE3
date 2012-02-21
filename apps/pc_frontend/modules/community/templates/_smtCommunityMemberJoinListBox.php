@@ -9,6 +9,21 @@
 $(function(){
   $.getJSON( openpne.apiBase + 'member/search.json?target=community&target_id=<?php echo $community->getId() ?>&apiKey=' + openpne.apiKey, function(json) {
     $('#communityMemberJoinListTemplate').tmpl(json.data).appendTo('#communityMemberJoinList');
+    $('#communityMemberJoinList').show();
+    $('#communityMemberJoinListLoading').hide();
+  });
+  $('#communityMemberJoinListSearch').keyup(function(){
+    $('#communityMemberJoinListLoading').show();
+    $('#communityMemberJoinList').hide();
+    $('#communityMemberJoinList').empty();
+    var keyword = $('#communityMemberJoinListSearch').val();
+    var requestData = { target: 'community', target_id: <?php echo $community->getId(); ?>, keyword: keyword, apiKey: openpne.apiKey };
+    $.getJSON( openpne.apiBase + 'member/search.json', requestData, function(json) {
+      $result = $('#communityMemberJoinListTemplate').tmpl(json.data);
+      $('#communityMemberJoinList').html($result);
+      $('#communityMemberJoinList').show();
+      $('#communityMemberJoinListLoading').hide();
+    });
   });
 });
 </script>
@@ -18,5 +33,14 @@ $(function(){
   <div class="gadget_header span12"><?php echo __('%community% Members', array('%community%' => $op_term['community'])) ?></div>
 </div>
 <hr class="toumei" />
-<div class="row" id="communityMemberJoinList">
+<div class="row" id="communityMemberJoinListSearchBox">
+<div class="input-prepend span12">
+<span class="add-on"><i class="icon-search"></i></span>
+<input type="text" id="communityMemberJoinListSearch" class="realtime-searchbox" value="" />
+</div>
+</div>
+<div class="row hide" id="communityMemberJoinList">
+</div>
+<div class="row center" id="communityMemberJoinListLoading" style="margin-left: 0;">
+<?php echo op_image_tag('ajax-loader.gif') ?>
 </div>

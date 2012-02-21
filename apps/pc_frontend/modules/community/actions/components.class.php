@@ -56,4 +56,10 @@ class communityComponents extends opCommunityComponents
     $this->communityAdmin = $this->community->getAdminMember();
     $this->communitySubAdmins = $this->community->getSubAdminMembers();
   }
+
+  public function executeSmtCommunityMemberJoinListBox($request)
+  {
+    $this->id = $request->getParameter('id');
+    $this->community = Doctrine::getTable('Community')->find($this->id);
+  }
 }
