@@ -7,17 +7,17 @@
 </script>
 <script type="text/javascript">
 $(function(){
-  $.getJSON( openpne.apiBase + 'member/community.json?member_id=<?php echo $member->getId() ?>&apiKey=' + openpne.apiKey, function(json) {
+  $.getJSON( openpne.apiBase + 'member/community.json?apiKey=' + openpne.apiKey, function(json) {
     $('#joinCommunityListTemplate').tmpl(json.data).appendTo('#memberJoinCommunityList');
     $('#memberJoinCommunityList').show();
     $('#memberJoinCommunityListLoading').hide();
   });
-  $('#joinCommunitySearch').keyup(function(){
+  $('#joinCommunitySearch').keypress(function(){
     $('#memberJoinCommunityListLoading').show();
     $('#memberJoinCommunityList').hide();
     $('#memberKoinCommunityList').empty();
     var keyword = $('#joinCommunitySearch').val();
-    var requestData = { member_id: <?php echo $member->getId(); ?>, keyword: keyword, apiKey: openpne.apiKey };
+    var requestData = { keyword: keyword, apiKey: openpne.apiKey };
     $.getJSON( openpne.apiBase + 'member/community.json', requestData, function(json) {
       $result = $('#joinCommunityListTemplate').tmpl(json.data);
       $('#memberJoinCommunityList').html($result);
@@ -30,7 +30,7 @@ $(function(){
 
 <hr class="toumei" />
 <div class="row">
-  <div class="gadget_header span12"><?php echo __('%community% List', array('%community%' => $op_term['community'])) ?></div>
+  <div class="gadget_header span12"><?php echo __('Search %community%', array('%community%' => $op_term['community']->titleize()->pluralize())) ?></div>
 </div>
 <hr class="toumei" />
 <div class="row" id="joinCommunitySearchBox">
@@ -38,7 +38,7 @@ $(function(){
 <span class="add-on"><i class="icon-search"></i></span>
 <input type="text" id="joinCommunitySearch" class="realtime-searchbox" value="" />
 </div>
-</div> 
+</div>
 <div class="row hide" id="memberJoinCommunityList">
 </div>
 <div class="row" id="memberJoinCommunityListLoading" style="margin-left: 0; text-align: center;">

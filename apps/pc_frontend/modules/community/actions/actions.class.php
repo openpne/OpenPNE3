@@ -205,4 +205,26 @@ class communityActions extends opCommunityAction
 
     return $result;
   }
+
+ /**
+  * Executes search action
+  *
+  * @param opWebRequest $request A request object
+  */
+  public function executeSearch($request)
+  {
+    $this->forwardIf($request->isSmartphone(), 'community', 'smtSearch');
+
+    return parent::executeSearch($request);
+  }
+
+ /**
+  * Executes smtSearch action
+  *
+  * @param opWebRequest $request A request object
+  */
+  public function executeSmtSearch(opWebRequest $request)
+  {
+    return sfView::SUCCESS;
+  }
 }

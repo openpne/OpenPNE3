@@ -24,3 +24,6 @@ smtQuitSuccess:
 
 smtQuitError:
   layout: smtLayoutSns
+
+smtSearchSuccess:
+  layout: smtLayoutSns
