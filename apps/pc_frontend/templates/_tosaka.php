@@ -68,7 +68,7 @@
     </div>
   </div>
   <div class="row posttextarea">
-    <textarea id="tosaka_postform_body" class="span12" rows="4"></textarea>
+    <textarea id="tosaka_postform_body" class="span12" rows="4" placeholder="<?php echo __('What are you doing now?') ?>"></textarea>
   </div>
   <div class="row">
     <button id="tosaka_postform_submit" class="span10 offset1 btn small btn-primary"><?php echo __('%post_activity%') ?></button>
