@@ -26,7 +26,7 @@ foreach ($categories as $key => $value)
 <?php endif; ?>
 <?php if ($errors): ?>
 <div class="row">
-<div class="alert-message block-message error">
+<div class="alert alert-error">
 <?php foreach ($errors as $error): ?>
 <p><?php echo __($error) ?></p>
 <?php endforeach; ?>
@@ -44,7 +44,7 @@ foreach ($categories as $key => $value)
 </div>
 <?php endif; ?>
 <?php endforeach; ?>
-<input type="submit" name="submit" value="<?php echo __('Send') ?>" class="btn danger" />
+<input type="submit" name="submit" value="<?php echo __('Send') ?>" class="btn btn-danger" />
 <?php echo $form->renderHiddenFields(); ?>
 </form>
 </div>

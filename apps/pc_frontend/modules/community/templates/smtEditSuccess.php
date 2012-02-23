@@ -23,7 +23,7 @@
 <?php endif; ?>
 <?php if ($errors): ?>
 <div class="row">
-<div class="alert-message block-message error">
+<div class="alert alert-error">
 <a class="close" href="#">x</a>
 <?php foreach ($errors as $error): ?>
 <p><?php echo __($error) ?></p>
@@ -40,7 +40,7 @@
   </div>
   <div class="span12 <?php echo $cf->hasError() ? 'clearfix error' : '' ?>">
     <?php if ($cf->hasError()): ?>
-    <span class="label important"><?php echo __($cf->getError()) ?></span>
+    <span class="label label-important"><?php echo __($cf->getError()) ?></span>
     <?php endif ?>
     <?php echo $cf->render(array('class' => 'span12')) ?>
     <span class="help-block"><?php echo $cf->renderHelp() ?></span>
@@ -55,7 +55,7 @@
   <div class="span12"><?php echo $ccf->renderLabel() ?></div>
   <div class="<?php echo $ccf->hasError() ? 'clearfix error' : '' ?>">
     <?php if ($ccf->hasError()): ?>
-    <span class="label important"><?php echo __($ccf->getError()) ?></span>
+    <span class="label label-important"><?php echo __($ccf->getError()) ?></span>
     <?php endif ?>
     <?php echo $ccf->render(array('class' => 'span12')) ?>
     <span class="help-block"><?php echo $ccf->renderHelp() ?></span>
@@ -70,7 +70,7 @@
   <div class="span12"><?php echo $cff->renderLabel(); ?></div>
   <div class="span12 <? echo $cff->hasError() ? 'clearfix error' : '' ?>">
     <?php if ($cff->hasError()): ?>
-    <span class="label important"><?php echo __($cff->getError()) ?></span>
+    <span class="label label-important"><?php echo __($cff->getError()) ?></span>
     <?php endif ?>
     <?php echo $cff->render(array('class' => 'span12')) ?>
     <span class="help-block"><?php echo $cff->renderHelp() ?></span>
@@ -81,7 +81,7 @@
 
 <div class="row">
 <div class="span5">
-<input type="submit" name="submit" value="<?php echo __('Send') ?>" class="btn primary" />
+<input type="submit" name="submit" value="<?php echo __('Send') ?>" class="btn btn-primary" />
 <?php echo $communityForm->renderHiddenFields(); ?>
 <?php echo $communityConfigForm->renderHiddenFields(); ?>
 <?php echo $communityFileForm->renderHiddenFields(); ?>
@@ -91,7 +91,7 @@
 <div class="span5">
   <?php if (!$communityForm->isNew() && $isDeleteCommunity): ?>
   <?php echo form_tag(url_for('@community_delete?id='.$community->getId())) ?>
-  <span class="label important">DANGER</span>: <input type="submit" name="submit" value="<?php echo __('Delete'); ?>" class="btn danger" />
+  <span class="label label-important">DANGER</span>: <input type="submit" name="submit" value="<?php echo __('Delete'); ?>" class="btn btn-danger" />
   </form>
   <?php endif; ?>
 </div>

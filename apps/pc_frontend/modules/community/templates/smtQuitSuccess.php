@@ -17,7 +17,7 @@
     </div>
     <?php endif; ?>
     <?php endforeach; ?>
-    <input type="submit" name="submit" value="<?php echo __('Send') ?>" class="btn danger" />
+    <input type="submit" name="submit" value="<?php echo __('Send') ?>" class="btn btn-danger" />
     <?php echo $form->renderHiddenFields(); ?>
     </form>
   </div>

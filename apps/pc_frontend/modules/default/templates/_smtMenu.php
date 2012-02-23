@@ -1,8 +1,10 @@
 <!-- MENUFORM TMPL -->
 <div class="menuform hide toggle1">
   <div class="row">
-    <div class="span10 offset1 center white font14 toggle1_close">
-      MENU
+    <div class="span10 offset1 white font14 toggle1_close">
+      <div class="center">
+        MENU
+      </div>
     </div>
     <div class="span1">
       <?php echo op_image_tag('UPARROW', array('class' => 'toggle1_close')) ?>

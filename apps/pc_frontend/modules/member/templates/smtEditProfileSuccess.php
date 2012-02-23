@@ -13,7 +13,7 @@
 
 <?php if ($errors): ?>
 <div class="row">
-<div class="alert-message block-message error">
+<div class="alert alert-error">
 <a class="close" href="#">x</a>
 <?php foreach ($errors as $error): ?>
 <p><?php echo __($error) ?></p>
@@ -22,18 +22,18 @@
 </div>
 <?php endif; ?>
 
-<div class="row">
-<table class="zebra-striped">
+<div class="row" style="margin-left: 0px;">
+<table class="table-striped">
 <?php foreach ($memberForm as $mf): ?>
 <?php if (!$mf->isHidden()): ?>
 <tr>
-  <th><?php echo $mf->renderLabel(); ?></th>
   <td>
+  <div class="form-label span12"><?php echo $mf->renderLabel() ?></div>
   <div class="<?php echo $mf->hasError() ? 'clearfix error' : '' ?>">
     <?php if ($mf->hasError()): ?>
-    <span class="label important"><?php echo __($mf->getError()); ?></span>
+    <span class="label label-important"><?php echo __($mf->getError()); ?></span>
     <?php endif ?>
-    <?php echo $mf->render(array('class' => 'span16')) ?>
+    <?php echo $mf->render(array('class' => 'span12')) ?>
     <span class="help-block"><?php echo $mf->renderHelp(); ?></span>
   </div>
   </td>
@@ -43,16 +43,16 @@
 <?php foreach ($profileForm as $pf): ?>
 <?php if (!$pf->isHidden()): ?>
 <tr>
-  <th><?php echo $pf->renderLabel(); ?></th>
   <td>
+  <div class="form-label span12"><?php echo $pf->renderLabel() ?></div>
   <div class="<?php $mf->hasError() ? 'clearfix error' : '' ?>">
     <?php if ($mf->hasError()): ?>
-    <span class="label important"><?php echo __($pf->getError()); ?></span>
+    <span class="label label-important"><?php echo __($pf->getError()); ?></span>
     <?php endif ?>
     <?php if ($pf->getWidget()->getOption('widget') instanceof sfWidgetFormDate): ?>
     <?php echo $pf->render(array('class' => 'span8')) ?>
     <?php else: ?>
-    <?php echo $pf->render(array('class' => 'span16')) ?>
+    <?php echo $pf->render(array('class' => 'span12')) ?>
     <?php endif ?>
     <span class="help-block"><?php echo $pf->renderHelp() ?></span>
   </div>
@@ -63,6 +63,10 @@
 <?php echo $memberForm->renderHiddenFields(); ?>
 <?php echo $profileForm->renderHiddenFields(); ?>
 </table>
-<input type="submit" name="subtmi" value="<?php echo __('Send') ?>" class="btn primary" />
+<div class="center">
+<input type="submit" name="submit" value="<?php echo __('Send') ?>" class="btn btn-primary" />
+<input type="reset" name="reset" value="<?php echo __('Reset') ?>" class="btn btn-danger" />
+</div>
+
 </form>
 </div>
