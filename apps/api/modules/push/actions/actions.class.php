@@ -68,7 +68,7 @@ class pushActions extends opJsonApiActions
     }
     else
     {
-      return $this->renderJSON(array('status' => 'error'));
+      $this->forward404('Request parameter id does not exist.');
     }
   }
 
