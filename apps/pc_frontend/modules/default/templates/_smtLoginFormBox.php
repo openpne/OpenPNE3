@@ -8,7 +8,7 @@
 <?php endif; ?>
 <?php if ($errors): ?>
 <div class="row">
-<div class="alert-message block-message error">
+<div class="alert alert-error">
 <a class="close" href="#">x</a>
 <?php foreach ($errors as $error): ?>
 <p><?php echo __($error) ?></p>
@@ -27,7 +27,7 @@
   </div>
   <div class="span3 <?php echo $field->hasError() ? 'clearfix error' : '' ?>">
     <?php if ($field->hasError()): ?>
-    <span class="label important"><?php echo __($field->getError()); ?>
+    <span class="label label-important"><?php echo __($field->getError()); ?>
     <?php endif; ?>
     <?php echo $field->render(); ?>
     <span class="help-block"><?php echo $field->renderHelp(); ?></span>
@@ -41,7 +41,7 @@
   </div>
   <div class="span12 <?php echo $field->hasError() ? 'clearfix error' : '' ?>">
     <?php if ($field->hasError()): ?>
-    <span class="label important"><?php echo __($field->getError()) ?></span>
+    <span class="label label-important"><?php echo __($field->getError()) ?></span>
     <?php endif ?>
     <?php if (in_array($field->getWidget()->getOption('type'), array('text', 'password'))): ?>
     <?php echo $field->render(array('class' => 'span12')); ?>
@@ -57,7 +57,7 @@
 
 <div class="row">
 <div class="span12">
-<input type="submit" name="submit" value="<?php echo __('Login'); ?>" class="btn primary span12" />
+<input type="submit" name="submit" value="<?php echo __('Login'); ?>" class="btn btn-primary span12" />
 <?php echo $form->renderHiddenFields(); ?>
 </form>
 </div>

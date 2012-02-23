@@ -11,7 +11,7 @@
   </div>
 </div>
 <div class="row">
-<table class="zebra-striped">
+<table class="table-striped">
 <tbody>
 <tr>
   <td><?php echo __('Date Created') ?></td>

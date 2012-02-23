@@ -42,7 +42,7 @@ foreach ($member->getProfiles(true) as $profile)
   <div class="gadget_header span12"><?php echo __('Profile') ?></div>
 </div>
 <div class="row">
-<table class="zebra-striped">
+<table class="table-striped span12">
 <tbody>
 <tr><td><?php echo $op_term['nickname'] ?></td><td><?php echo $member->getName(); ?></td></tr>
 <?php foreach ($list as $k => $v): ?>

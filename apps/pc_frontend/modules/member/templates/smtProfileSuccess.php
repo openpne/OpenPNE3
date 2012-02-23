@@ -1,6 +1,6 @@
 <?php if ($relation->isSelf()): ?>
 <?php ob_start() ?>
-<div class="alert-message block-message info">
+<div class="alert alert-info">
 <p><?php echo __('Other members look your page like this.') ?></p>
 <p><?php echo link_to(__('Edit profile'), '@member_editProfile') ?></p>
 </div>
@@ -30,7 +30,7 @@ $(function(){
   });
 });
 </script>
-<div class="alert-message block-message warning">
+<div class="alert alert-warning">
 <p><?php echo __('If %1% is your friend, let us add to %my_friend% it!', array('%1%' => $member->getName(), '%my_friend%' => $op_term['my_friend']->pluralize())) ?></p>
 <p id="addFriendLink"><a href="#" id="addFriend"><?php echo __('Add %my_friend%', array('%my_friend%' => $op_term['my_friend']->pluralize())) ?></a></p>
 <p id="addFriendLinkLoading" class="hide"><?php echo op_image_tag('ajax-loader.gif') ?></p>

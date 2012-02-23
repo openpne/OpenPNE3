@@ -1,8 +1,10 @@
 <!-- NCFORM TMPL -->
 <div class="ncform hide toggle1">
   <div class="row">
-    <div class="span10 offset1 center white font14 toggle1_close">
-      通知センター
+    <div class="span10 offset1 white font14 toggle1_close">
+      <div class="center">
+      <?php echo __('Notification Center') ?>
+      </div>
     </div>
     <div class="span1">
       <?php echo op_image_tag('UPARROW', array('class' => 'toggle1_close')) ?>
@@ -29,7 +31,7 @@
         </div>
         {{if category=="link"}}
         <div class="row{{if unread==false}} hide{{/if}}">
-            <button class="span2 btn primary small friend-notify-button friend-accept">YES</button>
+            <button class="span2 btn btn-primary small friend-notify-button friend-accept">YES</button>
             <button class="span2 btn small friend-notify-button friend-reject">NO</button>
             <div class="center hide ncfriendloading"><?php echo op_image_tag('ajax-loader.gif') ?></div>
             <div class="center hide ncfriendresultmessage"></div>
@@ -40,13 +42,13 @@
 </script>
 <script id="pushCountTemplate" type="text/x-jquery-tmpl">
   {{if message!==0}}
-  <span class="nc_icon1 label important" id="nc_count1">${message}</span>
+  <span class="nc_icon1 label label-important" id="nc_count1">${message}</span>
   {{/if}}
   {{if link!==0}}
-  <span class="nc_icon2 label important" id="nc_count2">${link}</span>
+  <span class="nc_icon2 label label-important" id="nc_count2">${link}</span>
   {{/if}}
   {{if other!==0}}
-  <span class="nc_icon3 label important" id="nc_count3">${other}</span>
+  <span class="nc_icon3 label label-important" id="nc_count3">${other}</span>
   {{/if}}
 </script>
 
@@ -56,8 +58,10 @@
 <!-- POSTFORM TMPL -->
 <div class="postform hide toggle1">
   <div class="row">
-    <div class="span10 offset1 center white font14 toggle1_close">
-      投稿フォーム
+    <div class="span10 offset1 white font14 toggle1_close">
+      <div class="center">
+      <?php echo __('Post form') ?>
+      </div>
     </div>
     <div class="span1">
       <?php echo op_image_tag('UPARROW', array('class' => 'toggle1_close')) ?>
@@ -67,7 +71,8 @@
     <textarea id="tosaka_postform_body" class="span12" rows="4"></textarea>
   </div>
   <div class="row">
-    <button id="tosaka_postform_submit" class="span10 offset1 btn small primary">POST</button>
+    <button id="tosaka_postform_submit" class="span10 offset1 btn small btn-primary"><?php echo __('%post_activity%') ?></button>
+    <div class="center hide" id="timelinePostLoading"><?php echo op_image_tag('ajax-loader.gif') ?></div>
   </div>
 </div>
 <!-- POSTFORM TMPL -->
@@ -79,7 +84,7 @@
         <div class="span4"><?php echo op_image_tag('LOGO.png', array('height' => '32', 'class' => 'menubutton')); ?></div>
         <div id="notification_center" class="span4 center"><?php echo op_image_tag('NOTIFY_CENTER.png', array('height' => '32', 'class' => 'ncbutton')) ?>
         </div>
-        <div class="span3 offset1 center"><?php echo op_image_tag('POST.png', array('height' => '32', 'class' =>'postbutton')) ?></div>
+        <div class="span3 offset1"><?php echo op_image_tag('POST.png', array('height' => '32', 'class' =>'postbutton')) ?></div>
       </div>
     </div>
   </div>

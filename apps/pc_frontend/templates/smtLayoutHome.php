@@ -52,7 +52,7 @@ var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PR
 
 <?php if ($sf_user->hasFlash('error')): ?>
 <div id="global-error" class="row">
-  <div class="alert-message block-message error">
+  <div class="alert alert-error">
     <?php echo __($sf_user->getFlash('error')); ?>
   </div>
 </div>
@@ -60,7 +60,7 @@ var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PR
 
 <?php if ($sf_user->hasFlash('notice')): ?>
 <div id="global-error" class="row">
-  <div class="alert-message block-message info">
+  <div class="alert alert-info">
     <?php echo __($sf_user->getFlash('notice')); ?>
   </div>
 </div>

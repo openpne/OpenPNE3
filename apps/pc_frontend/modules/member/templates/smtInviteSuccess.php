@@ -8,7 +8,7 @@
 <?php endif; ?>
 <?php if ($errors): ?>
 <div class="row">
-<div class="alert-message block-message error">
+<div class="alert alert-error">
 <a class="close" href="#">x</a>
 <?php foreach ($errors as $error): ?>
 <p><?php echo __($error) ?></p>
@@ -25,7 +25,7 @@
 </div>
 <div class="span12 <?php echo $f->hasError() ? 'clearfix error' : '' ?>">
   <?php if ($f->hasError()): ?>
-  <span class="label important"><?php echo __($f->getError()) ?></span><br>
+  <span class="label label-important"><?php echo __($f->getError()) ?></span><br>
   <?php endif ?>
   <?php echo $f->render(array('class' => 'span12')) ?>
   <span class="help-block"><?php echo $f->renderHelp() ?></span>
@@ -33,6 +33,6 @@
 <?php endif; ?>
 <?php endforeach; ?>
 <?php echo $form->renderHiddenFields(); ?>
-<input type="submit" name="submit" value="<?php echo __('Send'); ?>" class="btn primary" />
+<input type="submit" name="submit" value="<?php echo __('Send'); ?>" class="btn btn-primary" />
 </form>
 </div>

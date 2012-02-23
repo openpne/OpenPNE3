@@ -1,3 +1,55 @@
+body {
+  margin: 0 auto;
+}
+
+.input-prepend input[class*="span"], .input-append input[class*="span"] {
+  width: auto;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  border: 1px solid #ccc;
+}
+
+.form-horizontal .control-group > label {
+  float: none;
+  width: auto;
+  padding-top: 0;
+  text-align: left;
+}
+
+.form-horizontal .controls {
+  margin-left: 0;
+}
+.form-horizontal .control-list {
+  padding-top: 0;
+}
+
+.form-horizontal .form-actions {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.modal {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  width: auto;
+  margin: 0;
+}
+
+.modal.fade.in {
+  top: auto;
+}
+.modal-header .close {
+  padding: 10px;
+  margin: -10px;
+}
+
+.carousel-caption {
+  position: static;
+}
+
 #slot_face .row {
   padding: 0 0 0 4px;
 }
