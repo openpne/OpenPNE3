@@ -1,3 +1,4 @@
+<?php if(opToolkit::isSecurePage()): ?>
 <!-- NCFORM TMPL -->
 <div class="ncform hide toggle1">
   <div class="row">
@@ -76,15 +77,18 @@
   </div>
 </div>
 <!-- POSTFORM TMPL -->
+<?php endif ?>
 
 <div id="slot_tosaka">
   <div class="row">
     <div class="span12">
       <div class="row">
         <div class="span4"><?php echo op_image_tag('LOGO.png', array('height' => '32', 'class' => 'menubutton')); ?></div>
+        <?php if (opToolkit::isSecurePage()): ?>
         <div id="notification_center" class="span4 center"><?php echo op_image_tag('NOTIFY_CENTER.png', array('height' => '32', 'class' => 'ncbutton')) ?>
         </div>
         <div class="span3 offset1"><?php echo op_image_tag('POST.png', array('height' => '32', 'class' =>'postbutton')) ?></div>
+        <?php endif ?>
       </div>
     </div>
   </div>
