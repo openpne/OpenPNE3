@@ -6,8 +6,6 @@
     <hr class="toumei" />
     <?php echo op_image_tag_sf_image($community->getImageFileName(), array('size' => '320x320', 'format' => 'jpg')) ?>
     <hr class="toumei" />
-    <?php if ($isAdmin) : ?>
-    <?php endif; ?>
   </div>
 </div>
 <div class="row">

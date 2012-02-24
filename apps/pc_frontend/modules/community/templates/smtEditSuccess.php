@@ -68,7 +68,7 @@
 <?php foreach ($communityFileForm as $cff): ?>
 <?php if (!$cff->isHidden()): ?>
   <div class="span12"><?php echo $cff->renderLabel(); ?></div>
-  <div class="span12 <? echo $cff->hasError() ? 'clearfix error' : '' ?>">
+  <div class="span12 <?php echo $cff->hasError() ? 'clearfix error' : '' ?>">
     <?php if ($cff->hasError()): ?>
     <span class="label label-important"><?php echo __($cff->getError()) ?></span>
     <?php endif ?>

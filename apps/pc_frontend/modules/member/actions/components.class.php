@@ -36,7 +36,7 @@ class memberComponents extends opMemberComponents
 
   public function executeSmtMemberFriendListBox($request)
   {
-    if ($request->hasParameter('id') && 'profile'!=sfContext::getInstance()->getActionName())
+    if ($request->hasParameter('id') && 'profile' !== sfContext::getInstance()->getActionName())
     {
       $this->member = Doctrine::getTable('Member')->find($request->getParameter('id'));
     }
@@ -48,7 +48,7 @@ class memberComponents extends opMemberComponents
 
   public function executeSmtMemberJoinCommunityListBox($request)
   {
-    if ($request->hasParameter('id') && 'profile'!=sfContext::getInstance()->getActionName())
+    if ($request->hasParameter('id') && 'profile' !== sfContext::getInstance()->getActionName())
     {
       $this->member = Doctrine::getTable('Member')->find($request->getParameter('id'));
     }
