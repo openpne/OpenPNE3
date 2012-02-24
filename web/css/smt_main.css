@@ -2,12 +2,34 @@ body {
   margin: 0 auto;
 }
 
+label {
+  display: inline;
+}
+
+.radio_list {
+  display: inline-block;
+}
+
+.radio_list li {
+  list-style: none;
+  margin-bottom: 5px;
+}
+
 .input-prepend input[class*="span"], .input-append input[class*="span"] {
   width: auto;
 }
 
 input[type="checkbox"], input[type="radio"] {
+  width: auto!important;
   border: 1px solid #ccc;
+}
+
+.input-prepend .add-on, .input-append .add-on {
+  padding: 0;
+}
+
+.realtime-searchbox {
+  padding: 0px; width: 300px;
 }
 
 .form-horizontal .control-group > label {
