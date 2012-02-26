@@ -138,6 +138,14 @@
         <source>The inputted value is already exist.</source>
         <target>すでに登録されています。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>"%value%" must be at most %max%.</source>
+        <target>"%value%" は %max% よりも小さくなければなりません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>"%value%" must be at least %min%.</source>
+        <target>"%value%" は %min% よりも大きくなければなりません。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
