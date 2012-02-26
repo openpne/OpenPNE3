@@ -503,16 +503,16 @@
         <target>%community%作成</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Search Communities</source>
-        <target>ｺﾐｭﾆﾃｨ検索</target>
+        <source>Search %Community%</source>
+        <target>%Community%検索</target>
       </trans-unit>
       <trans-unit id="">
         <source>Categories</source>
         <target>ｶﾃｺﾞﾘ</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Your search queries did not match any communities.</source>
-        <target>該当するｺﾐｭﾆﾃｨはありませんでした。</target>
+        <source>Your search queries did not match any %community%.</source>
+        <target>該当する%community%はありませんでした。</target>
       </trans-unit>
       <trans-unit id="">
         <source>All categories</source>
