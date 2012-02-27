@@ -344,7 +344,7 @@ function _op_url_cmd($matches)
   if ($matches[2] == 'www.')
   {
     $cmd .= 'www.';
-    $url = 'http://www.'.$url;
+    $url = 'http://'.$url;
   }
 
   if (preg_match('/([a-zA-Z0-9\-.]+)\/?(?:[a-zA-Z0-9_\-\/.,:;\~\?@&=+$%#!()])*/', $matches[3], $pmatch))
