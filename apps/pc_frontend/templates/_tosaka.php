@@ -72,7 +72,11 @@
     <textarea id="tosaka_postform_body" class="span12" rows="4" placeholder="<?php echo __('What are you doing now?') ?>"></textarea>
   </div>
   <div class="row">
+    <?php if ($community): ?>
+    <button id="tosaka_postform_submit" data-community-id="<?php echo $community->getId() ?>" class="span10 offset1 btn small btn-primary"><?php echo __('%post_activity%') ?></button>
+    <?php else: ?>
     <button id="tosaka_postform_submit" class="span10 offset1 btn small btn-primary"><?php echo __('%post_activity%') ?></button>
+    <?php endif; ?>
     <div class="center hide" id="timelinePostLoading"><?php echo op_image_tag('ajax-loader.gif') ?></div>
   </div>
 </div>
