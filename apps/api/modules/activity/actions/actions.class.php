@@ -172,7 +172,7 @@ class activityActions extends opJsonApiActions
 
     if (isset($request['target']) && 'community' === $request['target'])
     {
-      if (isset($request['target_id']))
+      if (!isset($request['target_id']))
       {
         $this->forward400('target_id parameter not specified.');
       }

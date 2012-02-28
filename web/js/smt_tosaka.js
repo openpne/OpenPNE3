@@ -45,6 +45,11 @@ $(document).ready(function(){
       apiKey: openpne.apiKey,
       body: body_text
     };
+    if ($('#tosaka_postform_submit').attr('data-community-id'))
+    {
+      params.target = 'community';
+      params.target_id = $('#tosaka_postform_submit').attr('data-community-id');
+    }
 
     $.getJSON(openpne.apiBase + 'activity/post.json', params, function(json) {
       if (json.status == 'success') {
