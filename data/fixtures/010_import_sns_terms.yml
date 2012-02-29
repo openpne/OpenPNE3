@@ -76,33 +76,33 @@ SnsTerm:
     application: "pc_frontend"
     Translation:
       ja_JP:
-        value: "アクティビティ"
+        value: "タイムライン"
       en:
-        value: "activity"
+        value: "Timeline"
 
   term_activity_mobile_frontend:
     name: "activity"
     application: "mobile_frontend"
     Translation:
       ja_JP:
-        value: "ｱｸﾃｨﾋﾞﾃｨ"
+        value: "ﾀｲﾑﾗｲﾝ"
       en:
-        value: "activity"
+        value: "Timeline"
 
   term_post_activity_pc_frontend:
     name: "post_activity"
     application: "pc_frontend"
     Translation:
       ja_JP:
-        value: "アクティビティ投稿"
+        value: "つぶやく"
       en:
-        value: "Post Activity"
+        value: "Tweet"
 
   term_post_activity_mobile_frontend:
     name: "post_activity"
     application: "mobile_frontend"
     Translation:
       ja_JP:
-        value: "投稿"
+        value: "つぶやく"
       en:
-        value: "Post Activity"
+        value: "Tweet"
