@@ -1383,6 +1383,10 @@
         <source>What are you doing now?</source>
         <target>今なにしてる？</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>%Friend% link request</source>
+        <target>%Friend%申請</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
