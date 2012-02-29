@@ -1,0 +1,4 @@
+SnsConfig:
+  json_api:
+    name: "enable_jsonapi"
+    value: 1
