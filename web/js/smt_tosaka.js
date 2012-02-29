@@ -54,6 +54,7 @@ $(document).ready(function(){
     $.getJSON(openpne.apiBase + 'activity/post.json', params, function(json) {
       if (json.status == 'success') {
         body_elem.val('');
+        $(".postform").toggle();
       }
     });
   });
