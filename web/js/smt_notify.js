@@ -56,7 +56,7 @@
 					dataType: 'json',
 					success: function(data) {
 						if(data.status=='success'){
-							$(this).parent().find('.ncfriendloading:first').hide();
+							$('.ncfriendloading').hide();
 							$(this).parent().find('.ncfriendresultmessage').text('フレンド申請を承認しました。');
 							$(this).parent().find('.ncfriendresultmessage').show();
 						}else{
@@ -64,7 +64,7 @@
 						}   
 					},
 					error: function(r, s, e){
-						$(this).parent().find('.ncfriendloading:first').hide();
+						$('.ncfriendloading').hide();
 						$(this).parent().find('.ncfriendresultmessage').text('既に承認済みか拒否済みです。');
 						$(this).parent().find('.ncfriendresultmessage').show(); 
                                         }
@@ -90,7 +90,7 @@
 					dataType: 'json',
 					success: function(data) {
 						if(data.status=='success'){
-							$(this).parent().find('.ncfriendloading:first').hide();
+							$('.ncfriendloading').hide();
 							$(this).parent().find('.ncfriendresultmessage').text('フレンド申請を拒否しました。');
 							$(this).parent().find('.ncfriendresultmessage').show();
 						}else{
@@ -98,7 +98,7 @@
 						}   
 					},
 					error: function(r, s, e){
-						$(this).parent().find('.ncfriendloading:first').hide();
+						$('.ncfriendloading').hide();
 						$(this).parent().find('.ncfriendresultmessage').text('既に承認済みか拒否済みです。');
 						$(this).parent().find('.ncfriendresultmessage').show(); 
                                         }
