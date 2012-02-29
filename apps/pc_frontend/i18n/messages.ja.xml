@@ -1369,11 +1369,11 @@
       </trans-unit>
       <trans-unit id="">
         <source>View this page on smartphone style</source>
-        <target>このページをスマートフォン版で表示</target>
+        <target>スマートフォン表示に切り替え</target>
       </trans-unit>
       <trans-unit id="">
         <source>View this page on regular style</source>
-        <target>このページをPC版で表示</target>
+        <target>PC表示に切り替え</target>
       </trans-unit>
       <trans-unit id="">
         <source>Post</source>
