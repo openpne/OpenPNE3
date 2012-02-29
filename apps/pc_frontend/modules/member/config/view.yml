@@ -45,7 +45,7 @@ smtConfigSuccess:
   layout: smtLayoutHome
 
 smtSearchSuccess:
-  layout: smtLayoutHome
+  layout: smtLayoutSns
 
 smtConfigImageSuccess:
   layout: smtLayoutHome
