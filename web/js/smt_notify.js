@@ -11,6 +11,11 @@
 	var _readyBound = false;
 
 	$.fn.pushLink = function(settings){
+
+		settings = $.extend({
+			isDisableRead: false,
+		}, settings);
+
 		return this.each(function(){
 			var linkUrl = $(this).attr('data-location-url');
 			var notifyId = $(this).attr('data-notify-id');
@@ -21,9 +26,16 @@
 				$(this).removeClass('hover');
 			})
 			$(this).click(function(){
-				$.getJSON( openpne.apiBase + 'push/read.json' , { 'id': notifyId, 'apiKey': openpne.apiKey }, function(d){
+				if ( false == settings.isDisableRead )
+                                {
+					$.getJSON( openpne.apiBase + 'push/read.json' , { 'id': notifyId, 'apiKey': openpne.apiKey }, function(d){
+						window.location = linkUrl;
+					});
+				}
+				else
+				{
 					window.location = linkUrl;
-				});
+				}
 			});
 		});
 	};
