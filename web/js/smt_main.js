@@ -3,6 +3,6 @@ $(function(){
     .show()
     .click(function() {
       document.cookie = "disable_smt=1";
-      location.reload();
+      location.href = $(this).attr('href');
     });
 });

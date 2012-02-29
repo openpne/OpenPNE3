@@ -23,6 +23,7 @@
       <?php endif ?>
       <?php endif ?>
       <?php endforeach ?>
+      <a href="<?php echo url_for('@homepage') ?>" id="smt-switch" class="btn btn-info"><?php echo __('View this page on regular style') ?></a>
       <?php endif ?>
     </div>
   </div>
