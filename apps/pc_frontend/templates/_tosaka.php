@@ -24,11 +24,13 @@
       </div>
       <div class="span9 push_content">
         <div class="row">
+          <div class="span9">
           {{if category=="link" && unread==false}}
-          <?php echo __('Friend link request has come.'); ?>
+          <?php echo __('%Friend% link request'); ?>
           {{else}}
           {{html body}}
           {{/if}}
+          </div>
         </div>
         {{if category=="link"}}
         <div class="row{{if unread==false}} hide{{/if}}">
