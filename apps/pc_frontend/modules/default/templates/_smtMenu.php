@@ -16,7 +16,11 @@
       <?php if ($navs): ?>
       <?php foreach ($navs as $nav): ?>
       <?php if (op_is_accessible_url($nav->uri)): ?>
+      <?php if('@member_profile_mine' === $nav->uri): ?>
+      <?php echo link_to($sf_user->getMember()->getName(), $nav->uri, array('class' => 'btn btn-info', 'id' => sprintf('smtMenu_%1', op_url_to_id($nav->uri, true)))) ?>
+      <?php else: ?>
       <?php echo link_to($nav->caption, $nav->uri, array('class' => 'btn', 'id' => sprintf('smtMenu_%1', op_url_to_id($nav->uri, true)))) ?>
+      <?php endif ?>
       <?php endif ?>
       <?php endforeach ?>
       <?php endif ?>
