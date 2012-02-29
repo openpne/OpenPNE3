@@ -28,7 +28,7 @@
           {{if category=="link" && unread==false}}
           <?php echo __('%Friend% link request'); ?>
           {{else}}
-          {{html body}}
+          フレンドリクエストを承認しますか？
           {{/if}}
           </div>
         </div>
