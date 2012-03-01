@@ -96,7 +96,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>The administrator doesn't leave the %community%.</source>
-        <target>管理者は退会できません。</target>
+        <target>%community%管理者は退会できません。</target>
       </trans-unit>
       <trans-unit id="">
         <source>You haven't joined this %community% yet.</source>
