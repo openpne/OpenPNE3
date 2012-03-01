@@ -144,11 +144,11 @@
       </trans-unit> 
       <trans-unit id="">
         <source>"%value%" must be at most %max%.</source>
-        <target>"%value%" は %max% よりも小さくなければなりません。</target>
+        <target>"%value%" は %max% 以下でなければなりません。</target>
       </trans-unit>
       <trans-unit id="">
         <source>"%value%" must be at least %min%.</source>
-        <target>"%value%" は %min% よりも大きくなければなりません。</target>
+        <target>"%value%" は %min% 以上でなければなりません。</target>
       </trans-unit>
     </body>
   </file>
