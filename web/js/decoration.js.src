@@ -122,10 +122,13 @@ function op_mce_show_color_table(id, tagname)
   Element.addClassName(table, 'disabledHideColorTable');
 
   button_container.appendChild(table);
+  button_container.style.position = "relative";
+  button.style.display = "inline-block";
 
+  var buttonContainerPosition = Position.cumulativeOffset(button_container);
   var buttonPosition = Position.cumulativeOffset(button);
-  table.style.left = buttonPosition[0] + "px";
-  table.style.top  = buttonPosition[1] + button.offsetHeight + "px";
+  table.style.left = buttonPosition[0] - buttonContainerPosition[0] + "px";
+  table.style.top  = buttonPosition[1] - buttonContainerPosition[1] + button.offsetHeight + "px";
 }
 
 function op_insert_str_to_selection(elm, str, start, end)

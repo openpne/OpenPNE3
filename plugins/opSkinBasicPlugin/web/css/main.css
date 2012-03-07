@@ -1333,6 +1333,7 @@ ol.activities li.activity .info {
  * toolbar of opWidgetFormRichTextareaOpenPNE
  *----------------------------------------------------------------------------*/
 div.parts table.mceToolbar {
+  table-layout: auto;
   width: auto;
 }
 
