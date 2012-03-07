@@ -1231,6 +1231,14 @@
         <source>A mobile UID was already registered.</source>
         <target>その携帯電話の個体識別番号はすでに登録されています。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>A mobile UID is required. Please check settings of your mobile phone and retry.</source>
+        <target>携帯電話の個体識別番号は必須です。携帯電話の個体識別番号設定を確認してもう一度お試しください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>A mobile UID is invalid.</source>
+        <target>その携帯電話の個体識別番号は無効です。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
