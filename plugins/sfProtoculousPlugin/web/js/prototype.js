@@ -3815,8 +3815,10 @@ Object.extend(Event, {
 
 Event.Methods = (function() {
   var isButton;
+  var IE_LEGACY_EVENT_SYSTEM = (window.attachEvent && !window.addEventListener);
 
-  if (Prototype.Browser.IE) {
+  if (IE_LEGACY_EVENT_SYSTEM) {
+    // IE's event system doesn't map left/right/middle the same way.
     var buttonMap = { 0: 1, 1: 4, 2: 2 };
     isButton = function(event, code) {
       return event.button == buttonMap[code];
