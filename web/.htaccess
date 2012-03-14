@@ -5,7 +5,7 @@ Options +FollowSymLinks +ExecCGI
 
   # uncomment the following line, if you are having trouble
   # getting no_script_name to work
-  #RewriteBase /
+  RewriteBase /
 
   # we skip all files with .something
   #RewriteCond %{REQUEST_URI} \..+$
