@@ -29,6 +29,11 @@ class AdminUserEditPasswordForm extends AdminUserForm
       'callback'  => array('AdminUserEditPasswordForm', 'validate'),
       'arguments' => array('object' => $this->getObject()),
     )));
+
+    $this->widgetSchema->setLabels(array(
+      'old_password' => 'Old password',
+      'new_password' => 'New password',
+    ));
   }
 
   public static function validate($validator, $values, $arguments = array())
