@@ -1387,6 +1387,10 @@
         <source>%Friend% link request</source>
         <target>%Friend%申請</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>There is no new notification.</source>
+        <target>新しい通知はありません</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
