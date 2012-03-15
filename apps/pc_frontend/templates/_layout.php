@@ -12,6 +12,10 @@
 <?php
 use_helper('Javascript');
 
+use_javascript('jquery.min.js');
+use_javascript('jquery.tmpl.min.js');
+use_javascript('jquery.notify.js');
+use_javascript('op_notify.js');
 $json = array(
   'apiKey' => $sf_user->getMemberApiKey(),
   'apiBase' => app_url_for('api', 'homepage'),
