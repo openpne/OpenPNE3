@@ -72,7 +72,7 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     $communityMember = new CommunityMember();
     $communityMember->setMemberId($memberId);
     $communityMember->setCommunityId($communityId);
-    if ($isRegisterPolicy == 'close')
+    if ('close' === $isRegisterPolicy)
     {
       $communityMember->setIsPre(true);
     }
