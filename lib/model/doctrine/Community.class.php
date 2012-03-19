@@ -212,7 +212,7 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
     $insertIds = $conn->fetchColumn($query, array($this->getId()));
     foreach ($insertIds as $memberId)
     {
-      Doctrine::getTable('CommunityMember')->join($memberId, $this->community->getId());
+      Doctrine::getTable('CommunityMember')->join($memberId, $this->getId());
     }
   }
 }
