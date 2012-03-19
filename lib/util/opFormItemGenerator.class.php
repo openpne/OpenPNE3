@@ -159,7 +159,7 @@ class opFormItemGenerator
   public static function generateValidator($field, $choices = array())
   {
     $field = self::arrayKeyCamelize($field);
-    $option = array('required' => $field['IsRequired'], 'trim' => $field['IsTrim']);
+    $option = array('required' => $field['IsRequired'], 'trim' => $field['IsRequired']);
 
     if (!$choices && !empty($field['Choices']))
     {
