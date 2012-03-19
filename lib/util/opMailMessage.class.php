@@ -50,45 +50,19 @@ class opMailMessage extends Zend_Mail_Message
 
       return $content;
     }
-    elseif ('text/plain' === strtok($this->getPart(0)->contentType, ';'))
-    {
-      return mb_convert_encoding(parent::getContent(), 'UTF-8', 'JIS');
-    }
-    else
-    {
-      return '';
-    }
-  }
 
-  private static function saveBase64ImageInTempDir($content)
-  {
-    $tmppath = tempnam(sys_get_temp_dir(), 'IMG');
-
-    $fh = fopen($tmppath, 'w');
-    fwrite($fh, base64_decode($content, true));
-    fclose($fh);
-
-    return $tmppath;
+    return mb_convert_encoding(parent::getContent(), 'UTF-8', 'JIS');
   }
 
   public function getImages()
   {
-    $images = array();
-    $allowTypes = array('image/jpeg', 'image/png', 'image/gif');
-
     if (!$this->isMultiPart())
     {
-      $type = strtok($this->getPart(0)->contentType, ';');
-      if (in_array($type, $allowTypes))
-      {
-        $image[] = array(
-          'tmp_name' => self::saveBase64ImageInTempDir(parent::getContent()),
-          'type'     => $type,
-        );
-      }
-
-      return $images;
+      return array();
     }
+
+    $images = array();
+    $allowTypes = array('image/jpeg', 'image/png', 'image/gif');
 
     $current = $this->key();
     $this->rewind();
@@ -98,8 +72,14 @@ class opMailMessage extends Zend_Mail_Message
       $tok = strtok($part->contentType, ';');
       if (in_array($tok, $allowTypes))
       {
+        $tmppath = tempnam(sys_get_temp_dir(), 'IMG');
+
+        $fh = fopen($tmppath, 'w');
+        fwrite($fh, base64_decode($part->getContent(), true));
+        fclose($fh);
+
         $images[] = array(
-          'tmp_name' => self::saveBase64ImageInTempDir($part->getContent()),
+          'tmp_name' => $tmppath,
           'type'    => $tok,
         );
       }
