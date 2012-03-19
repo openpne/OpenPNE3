@@ -552,16 +552,8 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
 
   public function generateAppUrl($application, $parameters = array(), $absolute = false)
   {
-    if (is_array($parameters) && isset($parameters['sf_route']))
-    {
-      $route = $parameters['sf_route'];
-      unset($parameters['sf_route']);
-    }
-    else
-    {
-      list($route, $parameters) = sfContext::getInstance()->getController()
-        ->convertUrlStringToParameters($parameters);
-    }
+    list($route, $parameters) = sfContext::getInstance()->getController()
+      ->convertUrlStringToParameters($parameters);
 
     return $this->getAppRouting($application)->generate($route, $parameters, $absolute);
   }
