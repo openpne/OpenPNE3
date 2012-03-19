@@ -233,7 +233,6 @@ class opFormItemGenerator
 
     if ($field['FormType'] === 'date')
     {
-      $option['date_format_range_error'] = 'Y-m-d';
       $obj = new opValidatorDate($option);
       return $obj;
     }
