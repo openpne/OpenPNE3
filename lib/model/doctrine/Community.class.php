@@ -202,4 +202,17 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
 
     return 'everyone';
   }
+
+  public function joinAllMembers()
+  {
+    $conn = Doctrine::getTable('Member')->getConnection();
+    $query = 'SELECT id FROM '.Doctrine::getTable('Member')->getTableName().' m'
+           . '  WHERE NOT EXISTS (SELECT * FROM '.Doctrine::getTable('CommunityMember')->getTableName().' cm WHERE m.id = cm.member_id AND cm.community_id = ?)'
+           . '        AND m.is_active = 1';
+    $insertIds = $conn->fetchColumn($query, array($this->getId()));
+    foreach ($insertIds as $memberId)
+    {
+      Doctrine::getTable('CommunityMember')->join($memberId, $this->community->getId());
+    }
+  }
 }
