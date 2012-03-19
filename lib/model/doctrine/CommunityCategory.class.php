@@ -43,12 +43,4 @@ class CommunityCategory extends BaseCommunityCategory
   {
     return new CommunityCategoryForm($this);
   }
-
-  public function getChildren()
-  {
-    $q = Doctrine::getTable('CommunityCategory')->getAllChildrenQuery();
-    $q->addWhere('tree_key = ?', $this->getId());
-
-    return $q->execute();
-  }
 }

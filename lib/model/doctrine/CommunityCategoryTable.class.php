@@ -17,20 +17,11 @@ class CommunityCategoryTable extends Doctrine_Table
   }
 
   //TODO: use getTree()->fetchRoots()
-  public function retrieveAllRoots($sort = true)
+  public function retrieveAllRoots()
   {
-    return $this->getAllRootsQuery($sort)->execute();
-  }
-
-  public function getAllRootsQuery($sort = true)
-  {
-    $q = $this->createQuery()->where('lft = 1');
-    if ($sort)
-    {
-      $q->orderBy('sort_order');
-    }
-
-    return $q;
+    return $this->createQuery()
+      ->where('lft = 1')
+      ->execute();
   }
 
   public function retrieveAllChildren($sort = true)
