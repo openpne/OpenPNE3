@@ -57,7 +57,7 @@
 $("#profiles tbody").sortable({
   items: "> .sortable",
   update: function (event, ui) {
-    var postData = $(this).sortable("serialize", { expression: /(profile)_(.+)/ });
+    var postData = $(this).sortable("serialize", { key: "profiles[]", expression: /profile_(.+)/ });
     postData += "&'.urlencode($tokenForm->getCSRFFieldName()).'='.urlencode($tokenForm->getCSRFToken()).'";
 
     $.ajax({

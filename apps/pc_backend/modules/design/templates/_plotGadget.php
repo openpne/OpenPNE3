@@ -16,7 +16,12 @@ echo link_to_function(__($gadgetConfig[$gadget->getName()]['caption']['ja_JP']),
 $("#plot'.ucfirst($type).'").sortable({
   items: "> div.sortable",
   update: function(event,ui){
-    insertHiddenTags("'.$type.'", ui.item.parent().sortable("toArray"));
+    var item_ids = ui.item.parent().sortable("toArray");
+    item_ids = $.map(item_ids, function (val) {
+      return val.replace(/^.+_(\d+)$/, "$1");
+    });
+
+    insertHiddenTags("'.$type.'", item_ids);
   }
 });
 ') ?>
