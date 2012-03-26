@@ -35,7 +35,8 @@ class opProjectConfiguration extends sfProjectConfiguration
 
   public function setup()
   {
-    $this->enableAllPluginsExcept(array('sfPropelPlugin'));
+    $this->configurePluginPath();
+    $this->enableAllPluginsExcept();
     $this->setIncludePath();
 
     require_once dirname(__FILE__).'/../util/opToolkit.class.php';
@@ -50,6 +51,21 @@ class opProjectConfiguration extends sfProjectConfiguration
     $this->dispatcher->connect('doctrine.filter_cli_config', array(__CLASS__, 'filterDoctrineCliConfig'));
 
     $this->setupProjectOpenPNE();
+  }
+
+  public function configurePluginPath()
+  {
+    // search for *Plugin directories representing plugins
+    // follow links and do not recurse. No need to exclude VC because they do not end with *Plugin
+    $finder = sfFinder::type('dir')->maxdepth(0)->ignore_version_control(false)->follow_link()->name('*Plugin');
+    $dirs = array(
+      sfConfig::get('sf_lib_dir').'/plugins',
+    );
+
+    foreach ($finder->in($dirs) as $path)
+    {
+      $this->setPluginPath(basename($path), $path);
+    }
   }
 
   protected function configureSessionStorage($name, $options = array())
