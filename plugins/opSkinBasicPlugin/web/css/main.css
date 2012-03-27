@@ -561,6 +561,8 @@ pre {
   text-align: right;
   width: 720px;
   float: right;
+  overflow: hidden;
+  height: 40px;
 }
 
 #globalNav li {
