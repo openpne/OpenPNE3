@@ -19,6 +19,12 @@ label {
   width: auto;
 }
 
+ul > li > input[type="text"], 
+ul > li > input[type="textarea"],
+ul > li > input[type="password"] {
+  width: 285px;
+}
+
 input[type="checkbox"], input[type="radio"] {
   width: auto!important;
   border: 1px solid #ccc;

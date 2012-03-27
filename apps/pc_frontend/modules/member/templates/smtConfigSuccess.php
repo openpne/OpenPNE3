@@ -34,7 +34,7 @@ foreach ($categories as $key => $value)
 </div>
 <?php endif; ?>
 
-<div class="row span12" style="margin-left: 5px;">
+<div class="row" style="margin-left: 0px;">
 <?php foreach ($form as $f): ?>
 <?php if (!$f->isHidden()): ?>
 <div class="clearfix <?php $f->hasError() ? 'error' : '' ?>">
