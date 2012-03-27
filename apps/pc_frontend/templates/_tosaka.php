@@ -25,10 +25,15 @@
       <div class="span9 push_content">
         <div class="row">
           <div class="span9">
-          {{if category=="link" && unread==false}}
-          <?php echo __('%Friend% link request'); ?>
+          {{if category=="link"}}
+            {{if unread==false}}
+              <?php echo __('%Friend% link request') ?>
+            {{/if}}
+            {{if unread==true}}
+              <?php echo __('Do you accept %friend% link request?') ?>
+            {{/if}}
           {{else}}
-          フレンドリクエストを承認しますか？
+            {{html body}}
           {{/if}}
           </div>
         </div>
