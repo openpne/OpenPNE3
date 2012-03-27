@@ -39,8 +39,8 @@
         </div>
         {{if category=="link"}}
         <div class="row{{if unread==false}} hide{{/if}}">
-            <button class="span2 btn btn-primary small friend-notify-button friend-accept">YES</button>
-            <button class="span2 btn small friend-notify-button friend-reject">NO</button>
+            <button class="span2 btn btn-primary small friend-notify-button friend-accept"<?php echo __('Accept') ?></button>
+            <button class="span2 btn small friend-notify-button friend-reject"><?php echo __('Reject') ?></button>
             <div class="center hide ncfriendloading"><?php echo op_image_tag('ajax-loader.gif') ?></div>
             <div class="center hide ncfriendresultmessage"></div>
         </div>
