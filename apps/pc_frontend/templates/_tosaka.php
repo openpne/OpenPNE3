@@ -18,7 +18,7 @@
 <!-- NCFORM TMPL -->
 
 <script id="pushListTemplate" type="text/x-jquery-tmpl">
-    <div class="{{if unread==false}}isread {{/if}}{{if category=="message" || category=="other"}}nclink {{/if}}row push"  data-notify-id="${id}" data-location-url="${url}" data-member-id="${member_id_from}">
+    <div class="{{if unread==false}}isread {{/if}}{{if category=="message" || category=="other"}}nclink {{/if}}row push marginl0"  data-notify-id="${id}" data-location-url="${url}" data-member-id="${member_id_from}">
       <div class="span3 push_icon">
         <img style="margin-left: 5px;" src="${icon_url}" class="rad4" width="48" height="48">
       </div>

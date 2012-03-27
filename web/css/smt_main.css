@@ -302,6 +302,10 @@ hr.white2 {
   line-height: 12px;
 }
 
+.marginl0 {
+  margin-left: 0px!important;
+}
+
 * {
   word-break: break-all;
 }
