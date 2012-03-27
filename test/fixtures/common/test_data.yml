@@ -897,37 +897,45 @@ SkinConfig:
 
 ActivityData:
   dummy_activity1:
+    id: 1
     Member: first_member
     body: "dummy1"
   dummy_activity2:
+    id: 2
     Member: first_member
     body: "dummy2"
     public_flag: 0
   dummy_activity3:
+    id: 3
     Member: first_member
     body: "dummy3"
     public_flag: 2
   dummy_activity4:
+    id: 4
     Member: first_member
     body: "dummy4"
     public_flag: 3
   dummy_activity5:
+    id: 5
     Member: first_member
     body: "dummy5"
     foreign_table: "member_relationship"
     foreign_id: 1
   dummy_activity6:
+    id: 6
     Member: first_member
     body: "dummy6"
     foreign_table: "member_relationship"
     foreign_id: 2
   dummy_activity7:
+    id: 7
     Member: first_member
     body: "dummy7"
     template: "test_template"
     template_param:
       "%foo%" : "bar"
   dummy_activity8:
+    id: 8
     Member: first_member
     body: "dummy8"
     template: "xxxx_template"
