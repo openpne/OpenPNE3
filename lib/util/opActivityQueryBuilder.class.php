@@ -60,7 +60,7 @@ class opActivityQueryBuilder
     return $this;
   }
 
-  public function includeFriends($target_member_id)
+  public function includeFriends($target_member_id = null)
   {
     $this->include['friend'] = $target_member_id ?: $this->viewerId;
     return $this;
