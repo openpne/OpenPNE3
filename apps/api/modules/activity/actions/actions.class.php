@@ -81,6 +81,11 @@ class activityActions extends opJsonApiActions
       $query->addWhere('id > ?', $request['since_id']);
     }
 
+    if (isset($request['activity_id']))
+    {
+      $query->addWhere('id = ?', $request['activity_id']);
+    }
+
     $this->activityData = $query
       ->andWhere('in_reply_to_activity_id IS NULL')
       ->execute();
