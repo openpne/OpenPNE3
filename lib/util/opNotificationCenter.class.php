@@ -75,4 +75,28 @@ class opNotificationCenter
 
     return $success;
   }
+
+  static public function getNotifications(Member $member = null)
+  {
+    if (null === $member)
+    {
+      $member = sfContext::getInstance()->getUser()->getMember();
+    }
+
+    $notificationObject = Doctrine::getTable('MemberConfig')
+      ->findOneByMemberIdAndName($member->getId(), 'notification_center');
+
+    if (!$notificationObject)
+    {
+      $notifications = array();
+    }
+    else
+    {
+      $notifications = unserialize($notificationObject->getValue());
+    }
+
+    $notificationObject->free(true);
+
+    return $notifications;
+  }
 }
