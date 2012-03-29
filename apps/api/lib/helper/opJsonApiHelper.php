@@ -183,7 +183,7 @@ function op_api_notification($notification)
 
   return array(
     'id' => $notification['id'],
-    'body' => $notification['body'],
+    'body' => __($notification['body']),
     'category' => $notification['category'],
     'unread' => $notification['unread'],
     'created_at' => date('r', strtotime($notification['created_at'])),
