@@ -19,14 +19,16 @@ class pushActions extends opJsonApiActions
 {
   public function executeSearch(sfWebRequest $request)
   {
-    $this->notifications = $this->getNotifications();
+    $member = $this->getUser()->getMember();
+    $notifications = opNotificationCenter::getNotifications($member);
 
     $this->setTemplate('array');
   }
 
   public function executeCount(sfWebRequest $request)
   {
-    $notifications = $this->getNotifications();
+    $member = $this->getUser()->getMember();
+    $notifications = opNotificationCenter::getNotifications($member);
 
     $this->count = array(
       'link'    => 0,
@@ -70,26 +72,5 @@ class pushActions extends opJsonApiActions
     {
       $this->forward404('Request parameter id does not exist.');
     }
-  }
-
-  protected function getNotifications(Member $member = null)
-  {
-    if (!$member)
-    {
-      $member = $this->getUser()->getMember();
-    }
-
-    $notifications = $member->getConfig('notification_center');
-
-    if (!$notifications)
-    {
-      $notifications = array();
-    }
-    else
-    {
-      $notifications = unserialize($notifications);
-    }
-
-    return $notifications;
   }
 }
