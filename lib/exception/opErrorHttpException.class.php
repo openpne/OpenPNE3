@@ -49,7 +49,7 @@ class opErrorHttpException extends sfError404Exception
 
       $response->setStatusCode($this->httpStatusCode);
 
-      return parent::printStackTrace();
+      return sfException::printStackTrace(); // skip sfError404Exception::printStackTrace()
     }
     else
     {
