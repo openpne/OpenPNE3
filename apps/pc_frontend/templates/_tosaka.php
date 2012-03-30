@@ -61,8 +61,6 @@
 </script>
 
 
-<?php include_component('default', 'smtMenu') ?>
-
 <!-- POSTFORM TMPL -->
 <div class="postform hide toggle1">
   <div class="row">
@@ -90,17 +88,29 @@
 <!-- POSTFORM TMPL -->
 <?php endif ?>
 
-<div id="slot_tosaka">
-  <div class="row">
-    <div class="span12">
-      <div class="row">
-        <div class="span4"><?php echo op_image_tag('LOGO.png', array('height' => '32', 'class' => 'menubutton')); ?></div>
-        <?php if (opToolkit::isSecurePage()): ?>
-        <div id="notification_center" class="span4 center"><?php echo op_image_tag('NOTIFY_CENTER.png', array('height' => '32', 'class' => 'ncbutton')) ?>
+<!-- new tosaka template -->
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <div class="nav-collapse toggle1">
+        <div class="row">
+          <div class="span10 offset1 white font14 toggle1_close">MENU</div>
+          <div class="span1">
+            <?php echo op_image_tag('UPARROW', array('class' => 'toggle1_close')) ?>
+          </div>
         </div>
-        <div class="span3 offset1"><?php echo op_image_tag('POST.png', array('height' => '32', 'class' =>'postbutton')) ?></div>
-        <?php endif ?>
+        <?php include_component('default', 'smtMenu') ?>
       </div>
+      <a class="btn btn-navbar brand" data-toggle="collapse" data-target=".nav-collapse"><?php echo $op_config['sns_name'] ?></a>
+      <?php if (opToolkit::isSecurePage()): ?>
+      <div id="notification_center" class="center">
+        <?php echo op_image_tag('NOTIFY_CENTER.png', array('height' => '32', 'class' => 'ncbutton')) ?>
+      </div>
+      <div class="right"><?php echo op_image_tag('POST.png', array('height' => '32', 'class' =>'postbutton')) ?></div>
+      <?php endif ?>
     </div>
   </div>
 </div>
+
+<!-- end tosaka template -->
