@@ -17,11 +17,13 @@ $(document).ready(function(){
       $('#pushList').show();
       $('#pushLoading').hide();
     });
+    collapse_toggle($('.nav-collapse'));
   });
 
-  $(".menubutton").click(function(){
-    $(".toggle1:not(.menuform)").hide();
-    $(".menuform").toggle();
+  $(".btn-navbar").click(function(){
+    $(".toggle1:not(.nav-collapse)").hide();
+    $('.nav-collapse').show();
+    collapse_toggle($('.nav-collapse'));
   });
 
   $(".postbutton").click(function(){
@@ -30,6 +32,7 @@ $(document).ready(function(){
     if($(".postform").is(":visible")){
       $(".posttextarea").focus();
     }
+    collapse_toggle($('.nav-collapse'));
   });
 
   $(".toggle1_close").click(function(){
@@ -69,3 +72,16 @@ $(document).ready(function(){
     }
   });
 });
+
+function collapse_toggle(elm)
+{
+  if (elm.hasClass('collapse'))
+  {
+    elm.removeClass('collapse');
+  }
+  else
+  {
+    elm.addClass('collapse');
+  }
+}
+
