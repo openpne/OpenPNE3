@@ -65,6 +65,9 @@ var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PR
 
 <?php echo $sf_content ?>
 
+<div id="smartphoneFooter">
+<?php include_component('default', 'smartphoneFooterGadgets') ?>
+</div>
 
 </body>
 </html>
