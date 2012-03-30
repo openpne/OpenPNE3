@@ -60,6 +60,11 @@
 <input type="submit" name="submit" value="<?php echo __('Login'); ?>" class="btn btn-primary span12 btn320" />
 <?php echo $form->renderHiddenFields(); ?>
 </form>
+<?php if ($form->getAuthAdapter()->getAuthConfig('invite_mode') == 2
+  && opToolkit::isEnabledRegistration('pc')
+  && $form->getAuthAdapter()->getAuthConfig('self_invite_action')) : ?>
+<?php echo link_to(__('Register'), $form->getAuthAdapter()->getAuthConfig('self_invite_action')) ?>
+<?php endif; ?>
 </div>
 
 <?php endforeach; ?>
