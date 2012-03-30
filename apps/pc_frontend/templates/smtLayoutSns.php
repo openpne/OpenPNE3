@@ -34,10 +34,7 @@ var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PR
 </head>
 <body id="<?php printf('page_%s_%s', $this->getModuleName(), $this->getActionName()) ?>" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
 
-<?php if (opToolkit::isSecurePage()): ?>
 <?php include_partial('global/tosaka') ?>
-
-<?php endif ?>
 
 <?php if ($sf_user->hasFlash('error')): ?>
 <div id="global-error" class="row">
