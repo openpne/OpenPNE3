@@ -79,6 +79,12 @@ smartphoneLogin:
     default: layoutD
   plot_action: [design, smartphoneLoginGadgetPlot]
 
+smartphoneFooter:
+  name: "スマートフォン版フッター"
+  layout:
+    default: layoutD
+  plot_action: [design, smartphoneFooterGadgetPlot]
+
 dailyNews:
   name: "デイリーニュース（PCメールアドレス向け）"
   layout:

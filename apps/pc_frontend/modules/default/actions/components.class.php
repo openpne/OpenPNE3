@@ -46,6 +46,12 @@ class defaultComponents extends sfComponents
     $this->navs = Doctrine::getTable('Navigation')->retrieveByType($type);
   }
 
+  public function executeSmartphoneFooterGadgets()
+  {
+    $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('smartphoneFooter');
+    $this->gadgets = $gadgets['smartphoneFooterContents'];
+  }
+
   public function executeSideBannerGadgets()
   {
     $gadgets = Doctrine::getTable('Gadget')->retrieveGadgetsByTypesName('sideBanner');
