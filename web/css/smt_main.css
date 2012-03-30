@@ -309,6 +309,10 @@ hr.white2 {
   margin-left: 0px!important;
 }
 
+input.btn320[type="submit"] {
+  width: 320px;
+}
+
 * {
   word-break: break-all;
 }
