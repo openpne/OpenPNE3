@@ -2,7 +2,7 @@
 <!-- NCFORM TMPL -->
 <div class="ncform hide toggle1">
   <div class="row">
-    <div class="span10 offset1 white font14 toggle1_close">
+    <div class="span11 white font14 toggle1_close">
       <div class="center">
       <?php echo __('Notification Center') ?>
       </div>
@@ -64,7 +64,7 @@
 <!-- POSTFORM TMPL -->
 <div class="postform hide toggle1">
   <div class="row">
-    <div class="span10 offset1 white font14 toggle1_close">
+    <div class="span11 white font14 toggle1_close">
       <div class="center">
       <?php echo __('Post form') ?>
       </div>
@@ -78,9 +78,9 @@
   </div>
   <div class="row">
     <?php if ($community): ?>
-    <button id="tosaka_postform_submit" data-community-id="<?php echo $community->getId() ?>" class="span10 offset1 btn small btn-primary"><?php echo __('%post_activity%') ?></button>
+    <button id="tosaka_postform_submit" data-community-id="<?php echo $community->getId() ?>" class="span12 btn small btn-primary"><?php echo __('%post_activity%') ?></button>
     <?php else: ?>
-    <button id="tosaka_postform_submit" class="span10 offset1 btn small btn-primary"><?php echo __('%post_activity%') ?></button>
+    <button id="tosaka_postform_submit" class="span12 btn small btn-primary"><?php echo __('%post_activity%') ?></button>
     <?php endif; ?>
     <div class="center hide" id="timelinePostLoading"><?php echo op_image_tag('ajax-loader.gif') ?></div>
   </div>
@@ -95,7 +95,7 @@
     <div class="container">
       <div class="nav-collapse toggle1">
         <div class="row">
-          <div class="span10 offset1 white font14 toggle1_close">MENU</div>
+          <div class="span11 white font14 toggle1_close">MENU</div>
           <div class="span1">
             <?php echo op_image_tag('UPARROW', array('class' => 'toggle1_close')) ?>
           </div>
