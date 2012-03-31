@@ -94,7 +94,7 @@ class opNotificationCenter
 
   static public function getNotifications(Member $member = null)
   {
-    if (null === $member)
+    if (is_null($member))
     {
       $member = sfContext::getInstance()->getUser()->getMember();
     }
