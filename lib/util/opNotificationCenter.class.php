@@ -93,9 +93,8 @@ class opNotificationCenter
     else
     {
       $notifications = unserialize($notificationObject->getValue());
+      $notificationObject->free(true);
     }
-
-    $notificationObject->free(true);
 
     return $notifications;
   }
