@@ -46,7 +46,7 @@ class activityActions extends opJsonApiActions
     {
       if (isset($request['member_id']))
       {
-        $builder->includeMember(explode(',', $request['member_id']));
+        $builder->includeMember($request['member_id']);
       }
       else
       {
