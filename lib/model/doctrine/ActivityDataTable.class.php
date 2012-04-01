@@ -141,6 +141,7 @@ class ActivityDataTable extends Doctrine_Table
   public function publicFlagToCaption($flag)
   {
     $i18n = sfContext::getInstance()->getI18N();
+
     return $i18n->__(self::$publicFlags[$flag]);
   }
 
@@ -187,6 +188,8 @@ class ActivityDataTable extends Doctrine_Table
       case self::PUBLIC_FLAG_OPEN:
         $flags[] = self::PUBLIC_FLAG_OPEN;
         break;
+      default: 
+        break;
     }
 
     return $flags;
@@ -203,6 +206,7 @@ class ActivityDataTable extends Doctrine_Table
     {
       return sfContext::getInstance()->getUser()->getMemberId();
     }
+
     return null;
   }
 
@@ -218,10 +222,10 @@ class ActivityDataTable extends Doctrine_Table
 
   public function addFriendActivityQuery(Doctrine_Query $q, $memberId, $isCheckApp = true)
   {
-    if (null === $memberId)
+    if (is_null($memberId))
     {
       $memberId = $this->getMyMemberId();
-      if (null === $memberId)
+      if (is_null($memberId))
       {
         throw new LogicException('The user is not login.');
       }
@@ -245,7 +249,7 @@ class ActivityDataTable extends Doctrine_Table
 
     if ($isCheckApp)
     {
-      if (sfConfig::get('sf_app') == 'mobile_frontend')
+      if ('mobile_frontend' == sfConfig::get('sf_app'))
       {
         $q->andWhere('is_mobile = ?', true);
       }
@@ -260,10 +264,11 @@ class ActivityDataTable extends Doctrine_Table
   {
     $q = $this->getOrderdQuery();
     $this->addFriendActivityQuery($q, $memberId, $isCheckApp);
-    if (null !== $limit)
+    if (!is_null($limit))
     {
       $q->limit($limit);
     }
+
     return $q->execute();
   }
 
@@ -271,26 +276,27 @@ class ActivityDataTable extends Doctrine_Table
   {
     $q = $this->getOrderdQuery();
     $this->addFriendActivityQuery($q, $memberId, $isCheckApp);
+
     return $this->getPager($q, $page, $size);
   }
 
   public function addActivityQuery(Doctrine_Query $q, $memberId = null, $viewerMemberId = null, $isCheckApp = true)
   {
-    if (null === $memberId)
+    if (is_null($memberId))
     {
       $memberId = $this->getMyMemberId();
-      if (null === $memberId)
+      if (is_null($memberId))
       {
         throw new LogicException('The user is not login.');
       }
     }
 
-    if (null === $viewerMemberId)
+    if (is_null($viewerMemberId))
     {
       $viewerMemberId = $this->getMyMemberId();
     }
 
-    if (null === $viewerMemberId)
+    if (is_null($viewerMemberId))
     {
       $flag = self::PUBLIC_FLAG_OPEN;
     }
@@ -338,10 +344,11 @@ class ActivityDataTable extends Doctrine_Table
   {
     $q = $this->getOrderdQuery();
     $this->addActivityQuery($q, $memberId, $viewerMemberId, $isCheckApp);
-    if (null !== $limit)
+    if (!is_null($limit))
     {
       $q->limit($limit);
     }
+
     return $q->execute();
   }
 
@@ -349,6 +356,7 @@ class ActivityDataTable extends Doctrine_Table
   {
     $q = $this->getOrderdQuery();
     $this->addActivityQuery($q, $memberId, $viewerMemberId, $isCheckApp);
+
     return $this->getPager($q, $page, $size);
   }
 
@@ -358,7 +366,7 @@ class ActivityDataTable extends Doctrine_Table
 
     if ($isCheckApp)
     {
-      if (sfConfig::get('sf_app') == 'mobile_frontend')
+      if ('mobile_frontend' == sfConfig::get('sf_app'))
       {
         $q->andWhere('is_mobile = ?', true);
       }
@@ -375,7 +383,7 @@ class ActivityDataTable extends Doctrine_Table
   {
     $q = $this->getOrderdQuery();
     $this->addAllMemberActivityQuery($q, $isCheckApp);
-    if (null !== $limit)
+    if (!is_null($limit))
     {
       $q->limit($limit);
     }
@@ -387,12 +395,13 @@ class ActivityDataTable extends Doctrine_Table
   {
     $q = $this->getOrderdQuery();
     $this->addAllMemberActivityQuery($q, $isCheckApp);
+
     return $this->getPager($q, $page, $size);
   }
 
   public function getTemplateConfig()
   {
-    if (null === $this->templateConfig)
+    if (is_null($this->templateConfig))
     {
       $this->templateConfig = include(sfContext::getInstance()->getConfigCache()->checkConfig('config/activity_template.yml'));
     }

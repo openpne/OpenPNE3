@@ -529,7 +529,7 @@ class opToolkit
         if ($fp != null)
         {
           $header = true;
-          while (feof($fp) === false)
+          while (!feof($fp))
           {
             $s = fgets($fp, 4096);
             if ($header)

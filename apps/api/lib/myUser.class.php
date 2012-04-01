@@ -43,7 +43,7 @@ class myUser extends sfBasicSecurityUser
 
   public function getMember()
   {
-    if (null !== $this->member)
+    if (!is_null($this->member))
     {
       return $this->member;
     }
@@ -58,7 +58,7 @@ class myUser extends sfBasicSecurityUser
     }
 
     $member = $this->getMemberByApiKey($apiKey);
-    if (null === $member)
+    if (is_null($member))
     {
       $exception = new opErrorHttpException('Invalid API key.');
       throw $exception->setHttpStatusCode(401);
