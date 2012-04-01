@@ -28,6 +28,7 @@ class opErrorHttpException extends sfError404Exception
   public function setHttpStatusCode($statusCode)
   {
     $this->httpStatusCode = $statusCode;
+
     return $this;
   }
 
@@ -36,12 +37,12 @@ class opErrorHttpException extends sfError404Exception
    */
   public function printStackTrace()
   {
-    $exception = null === $this->wrappedException ? $this : $this->wrappedException;
+    $exception = is_null($this->wrappedException) ? $this : $this->wrappedException;
 
     if (sfConfig::get('sf_debug'))
     {
       $response = sfContext::getInstance()->getResponse();
-      if (null === $response)
+      if (is_null($response))
       {
         $response = new sfWebResponse(sfContext::getInstance()->getEventDispatcher());
         sfContext::getInstance()->setResponse($response);

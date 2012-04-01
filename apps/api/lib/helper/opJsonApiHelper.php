@@ -19,7 +19,7 @@ function op_api_member($member)
 {
   $viewMemberId = sfContext::getInstance()->getUser()->getMemberId();
 
-  $memberImageFileName = $member->getImageFileName();
+  $memberImageFileName = $member->getImage();
   if (!$memberImageFileName)
   {
     $memberImage = op_image_path('no_image.gif', true);
@@ -51,9 +51,9 @@ function op_api_member($member)
   );
 }
 
-function op_api_member_profile_url($member_id)
+function op_api_member_profile_url($memberId)
 {
-  return app_url_for('pc_frontend', array('sf_route' => 'obj_member_profile', 'id' => $member_id), true);
+  return app_url_for('pc_frontend', array('sf_route' => 'obj_member_profile', 'id' => $memberId), true);
 }
 
 function op_api_activity($activity)

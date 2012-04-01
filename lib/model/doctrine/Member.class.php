@@ -392,7 +392,7 @@ class Member extends BaseMember implements opAccessControlRecordInterface
   {
     $apiKey = $this->getConfig('api_key');
 
-    if (null === $apiKey)
+    if (is_null($apiKey))
     {
       $apiKey = $this->generateApiKey();
     }
