@@ -327,8 +327,8 @@ if (!defined('SF_AUTO_LINK_RE'))
       \/?
       [a-zA-Z0-9_\-\/.,:;\~\?@&=+$%#!()]*
     )
-    ([[:punct:]]|\s|<|$)    # trailing text
-   ~x');
+    ([^a-zA-Z0-9_\-\/.,:;\~\?@&=+$%#!()]|\s|<|$)    # trailing text
+   ~xu');
 }
 
 function op_url_cmd($text)
