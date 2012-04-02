@@ -64,6 +64,12 @@ class myUser extends sfBasicSecurityUser
       throw $exception->setHttpStatusCode(401);
     }
 
+    if ($member->isOnBlackList() || $member->getIsLoginRejected())
+    {
+      $exception = new opErrorHttpException('You are not allowd to log in.');
+      throw $exception->setHttpStatusCode(403);
+    }
+
     $this->member = $member;
 
     return $member;
