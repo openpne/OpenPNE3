@@ -138,6 +138,10 @@
         <source>The inputted value is already exist.</source>
         <target>すでに登録されています。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Public flag</source>
+        <target>公開範囲</target>
+      </trans-unit> 
     </body>
   </file>
 </xliff>
