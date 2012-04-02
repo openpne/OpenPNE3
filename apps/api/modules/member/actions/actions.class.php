@@ -109,7 +109,7 @@ class memberActions extends opJsonApiActions
       $this->forward404('Invalid member_id.');
     }
 
-    if (!$request['reject'])
+    if (!isset($request['reject']))
     {
       $preRequest->setFriend();
     }
