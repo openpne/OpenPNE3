@@ -50,5 +50,11 @@ smtSearchSuccess:
 smtConfigImageSuccess:
   layout: smtLayoutHome
 
+smtInviteInput:
+  layout: smtLayoutSns
+
 smtInviteSuccess:
-  layout: smtLayoutHome
+  layout: smtLayoutSns
+
+smtInviteError:
+  layout: smtLayoutSns
