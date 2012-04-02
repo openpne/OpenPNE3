@@ -383,6 +383,10 @@
         <target>削除</target>
       </trans-unit>
       <trans-unit id="">
+        <source>More</source>
+        <target>もっと見る</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>You can upload 3 photos.</source>
         <target>写真は最大3枚までアップロードできます。</target>
       </trans-unit>
