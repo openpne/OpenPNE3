@@ -149,6 +149,13 @@ class opFormItemGenerator
         $list = opToolkit::arrayMapRecursive(array(sfContext::getInstance()->getI18N(), '__'), $list);
         $obj = new sfWidgetFormChoice(array('choices' => $list));
         break;
+      case 'image_size':
+        foreach (sfImageHandler::getAllowedSize() as $v)
+        {
+          $params['choices'][$v] = sfContext::getInstance()->getI18N()->__($v);
+        }
+        $obj = new sfWidgetFormChoice($params);
+        break;
       default:
         $obj = new sfWidgetFormInput($params);
         break;

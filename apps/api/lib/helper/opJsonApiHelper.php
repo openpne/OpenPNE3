@@ -19,7 +19,7 @@ function op_api_member($member)
 {
   $viewMemberId = sfContext::getInstance()->getUser()->getMemberId();
 
-  $memberImageFileName = $member->getImage();
+  $memberImageFileName = $member->getImageFileName();
   if (!$memberImageFileName)
   {
     $memberImage = op_image_path('no_image.gif', true);
