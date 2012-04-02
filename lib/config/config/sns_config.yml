@@ -273,7 +273,7 @@ mobile:
     Name:        "mobile_image_max_size"
     Caption:     "画像の最大サイズ設定"
     Help:        "許可されている画像サイズを\"横x縦\"で指定してください。<br />(空欄の場合フルサイズになります)"
-    FormType:    "input"
+    FormType:    "image_size"
     ValueType:   "image_size"
     IsRequired:  false
     Default:     "320x320"
