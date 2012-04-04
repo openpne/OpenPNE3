@@ -23,6 +23,13 @@ class opCustomCssForm extends sfForm
   public function save()
   {
     Doctrine::getTable('SnsConfig')->set('customizing_css', $this->getValue('css'));
-    opToolkit::clearCache();
+
+    $filesystem = new sfFilesystem();
+    $cssPath = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR
+             . 'css'.DIRECTORY_SEPARATOR.'customizing.css';
+    if (is_file($cssPath))
+    {
+      @$filesystem->remove($cssPath);
+    }
   }
 }

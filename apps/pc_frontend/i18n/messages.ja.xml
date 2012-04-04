@@ -96,7 +96,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>The administrator doesn't leave the %community%.</source>
-        <target>管理者は退会できません。</target>
+        <target>%community%管理者は退会できません。</target>
       </trans-unit>
       <trans-unit id="">
         <source>You haven't joined this %community% yet.</source>
@@ -259,6 +259,10 @@
         <target>メニューから設定したい項目を選択してください。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>There is no available settings.</source>
+        <target>利用可能な設定はありません。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Edit profile</source>
         <target>プロフィール変更</target>
       </trans-unit>
@@ -319,6 +323,10 @@
         <target>%friend%リスト</target>
       </trans-unit>
       <trans-unit id="">
+        <source>%1%'s %friend% List</source>
+        <target>%1%さんの%friend%リスト</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Other members look your page like this.</source>
         <target>※他のメンバーから見たあなたのページはこのようになります。</target>
       </trans-unit>
@@ -377,6 +385,10 @@
       <trans-unit id="">
         <source>Delete</source>
         <target>削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>More</source>
+        <target>もっと見る</target>
       </trans-unit>
       <trans-unit id="">
         <source>You can upload 3 photos.</source>
@@ -1334,6 +1346,62 @@
       <trans-unit id="">
         <source>Unknown Day</source>
         <target>日付非設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>JSON API Configuration</source>
+        <target>JSON API 設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>API Key</source>
+        <target>APIキー</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You can provide this API key to third party applications.</source>
+        <target>APIキーはサードパーティアプリに設定することができます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Reset API key</source>
+        <target>APIキーをリセットする</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Back to %member% profile page</source>
+        <target>%member% さんのページに戻る</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Back to %community% top page</source>
+        <target>%community% トップに戻る</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>View this page on smartphone style</source>
+        <target>スマートフォン表示に切り替え</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>View this page on regular style</source>
+        <target>PC表示に切り替え</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Post</source>
+        <target>投稿する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>What are you doing now?</source>
+        <target>今なにしてる？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%Friend% link request</source>
+        <target>%Friend%申請</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you accept %friend% link request?</source>
+        <target>%friend%申請を許可しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification Center</source>
+        <target>通知センター</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>There is no new notification.</source>
+        <target>新しい通知はありません</target>
       </trans-unit>
     </body>
   </file>

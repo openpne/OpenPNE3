@@ -17,27 +17,35 @@
 <th><?php echo __('Enabled') ?></th>
 </tr>
 </thead>
+<tbody>
 <?php foreach ($buttonConfigForm as $name => $button): ?>
 <?php if (!$button->isHidden()): ?>
-<tbody id="button_<?php echo $name ?>" class="sortable">
-<tr>
+<tr id="button_<?php echo $name ?>" class="sortable">
 <td><?php echo $name ?></td>
 <td><?php echo isset($buttonConfig[$name]['imageURL']) ? image_tag($buttonConfig[$name]['imageURL']) : '&nbsp;' ?></td>
 <td><?php echo isset($buttonConfig[$name]['caption']) ? __($buttonConfig[$name]['caption']) : '&nbsp;' ?></td>
 <td><?php echo $button ?></td>
 </tr>
-</tbody>
 <?php endif; ?>
 <?php endforeach; ?>
+</tbody>
 </table>
 <?php echo $buttonConfigForm->renderHiddenFields() ?>
 <input type="submit" value="<?php echo __('Edit') ?>" />
 </form>
 <?php use_helper('Javascript'); ?>
-<?php echo sortable_element('button', array(
-  'tag'  => 'tbody',
-  'only' => 'sortable',
-  'format' => '/^button_(.*)$/',
-  'url'  => 'sns/changeRichTextareaButtonOrder',
-  'with' => 'Sortable.serialize("button")+"&'.urlencode($sortForm->getCSRFFieldName()).'='.urlencode($sortForm->getCSRFToken()).'"',
-)) ?>
+<?php echo javascript_tag('
+$("#button tbody").sortable({
+  items: "> .sortable",
+  update: function (event, ui) {
+    var postData = $(this).sortable("serialize", { expression: /(button)_(.+)/ });
+    postData += "&'.urlencode($sortForm->getCSRFFieldName()).'='.urlencode($sortForm->getCSRFToken()).'";
+
+    $.ajax({
+      url: "'.url_for('sns/changeRichTextareaButtonOrder').'",
+      type: "POST",
+      data: postData
+    });
+  }
+});
+') ?>

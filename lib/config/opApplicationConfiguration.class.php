@@ -325,10 +325,10 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
   {
     $dirs = array();
 
-    $dirs = array_merge($dirs, array(sfConfig::get('sf_root_dir').'/i18n'));
-    $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/i18n'));
     $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/i18n'));
+    $dirs = array_merge($dirs, $this->globEnablePlugin('/apps/'.sfConfig::get('sf_app').'/i18n'));
     $dirs = array_merge($dirs, parent::getI18NDirs($moduleName));
+    $dirs = array_merge($dirs, array(sfConfig::get('sf_root_dir').'/i18n'));
 
     return $dirs;
   }
@@ -506,7 +506,7 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
 
     require_once 'Zend/Loader/Autoloader.php';
     Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
-    
+
     self::$zendLoaded = true;
   }
 
@@ -519,7 +519,7 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
 
     Zend_Loader_Autoloader::resetInstance();
     spl_autoload_unregister(array('Zend_Loader_Autoloader', 'autoload'));
-    
+
     self::$zendLoaded = false;
   }
 
@@ -586,8 +586,19 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
     $isNoScriptName = !empty($settings['.settings']['no_script_name']);
 
     $options = $context->getRouting()->getOptions();
-    $url = sfConfig::get('op_base_url');
-    if ('http://example.com' !== $url)
+    if ($options['context']['is_secure'])
+    {
+      $sslBaseUrls = sfConfig::get('op_ssl_base_url');
+      $url = $sslBaseUrls[$application];
+      $isDefault = 'https://example.com' === $url;
+    }
+    else
+    {
+      $url = sfConfig::get('op_base_url');
+      $isDefault = 'http://example.com' === $url;
+    }
+
+    if (!$isDefault)
     {
       $parts = parse_url($url);
 
@@ -598,6 +609,10 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
       if (isset($parts['host']))
       {
         $options['context']['host'] = $parts['host'];
+        if (isset($parts['port']))
+        {
+          $options['context']['host'] .= ':'.$parts['port'];
+        }
       }
     }
     else

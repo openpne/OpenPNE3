@@ -1,0 +1,50 @@
+Navigation:
+  smartphone_default_navigation_home:
+    type: "smartphone_default"
+    uri: "@homepage"
+    sort_order: 0
+    Translation:
+      ja_JP:
+        caption: "マイホーム"
+      en:
+        caption: "My Home"
+
+  smartphone_default_navigation_profile_confirm:
+    type: "smartphone_default"
+    uri: "@member_profile_mine"
+    sort_order: 10
+    Translation:
+      ja_JP:
+        caption: "プロフィール確認"
+      en:
+        caption: "Profile"
+
+  smartphone_default_navigation_member_search:
+    type: "smartphone_default"
+    uri: "@member_search"
+    sort_order: 20
+    Translation:
+      ja_JP:
+        caption: "メンバー検索"
+      en:
+        caption: "Member Search"
+
+  smartphone_default_navigation_community_search:
+    type: "smartphone_default"
+    uri: "@community_search"
+    sort_order: 30
+    Translation:
+      ja_JP:
+        caption: "コミュニティ検索"
+      en:
+        caption: "Community Search"
+
+  smartphone_default_navigation_logout:
+    type: "smartphone_default"
+    uri: "@member_logout"
+    sort_order: 40
+    Translation:
+      ja_JP:
+        caption: "ログアウト"
+      en:
+        caption: "Logout"

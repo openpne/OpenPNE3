@@ -19,7 +19,7 @@ class customizingCssAction extends sfAction
 {
   public function execute($request)
   {
-    $css = Doctrine::getTable('SnsConfig')->get('customizing_css');
+    $css = Doctrine::getTable('SnsConfig')->get('customizing_css', '');
     $this->getResponse()->setContent($css);
     $this->getResponse()->setContentType('text/css');
 
@@ -28,6 +28,8 @@ class customizingCssAction extends sfAction
     $dir = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.'css';
     @$filesystem->mkdirs($dir);
     file_put_contents($dir.DIRECTORY_SEPARATOR.'customizing.css', $css);
+
+    $this->getResponse()->setHttpHeader('Last-Modified', sfWebResponse::getDate(time()));
 
     return sfView::NONE;
   }

@@ -2,7 +2,7 @@
 <div class="cell">
 <dl>
 <dt class="day"><?php echo $image->getCreatedAt() ?></dt>
-<dd class="upImage"><a href="<?php echo sf_image_path($image->getName()) ?>"><?php echo image_tag_sf_image($image->getName(), $options = array('size' => '120x120')) ?></a></dd>
+<dd class="upImage"><a href="<?php echo sf_image_path($image) ?>"><?php echo image_tag_sf_image($image, $options = array('size' => '120x120')) ?></a></dd>
 <dd class="fileName"><?php echo $image->getName() ?></dd>
 <?php if ($deleteBtn): ?>
 <dd class="delete"> 

@@ -13,7 +13,6 @@ class NavigationTable extends Doctrine_Table
   public function retrieveByType($type)
   {
     return $this->createQuery()
-      ->leftJoinTranslation('Navigation')
       ->where('type = ?', $type)
       ->orderBy('sort_order')
       ->execute();
@@ -31,6 +30,11 @@ class NavigationTable extends Doctrine_Table
           'mobile_home_side',
           'mobile_friend',
           'mobile_community',
+        );
+      case 'smartphone' :
+        return array(
+          'smartphone_insecure',
+          'smartphone_default',
         );
       case 'backend' :
         return array(

@@ -486,4 +486,16 @@ class opSecurityUser extends opAdaptableUser
 
     return $sid;
   }
+
+  public function getMemberApiKey()
+  {
+    $member = $this->getMember();
+
+    if ($member instanceof opAnonymousMember)
+    {
+      return '';
+    }
+
+    return $member->getApiKey();
+  }
 }

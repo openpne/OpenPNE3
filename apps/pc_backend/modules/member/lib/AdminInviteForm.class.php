@@ -71,26 +71,33 @@ class AdminInviteForm extends InviteForm
     $authMode = $authModes[$this->getValue('auth_mode')];
     $this->setOption('authMode', $authMode);
 
+    $memberConfigTable = Doctrine::getTable('MemberConfig');
     foreach ($this->getValue('pc') as $value)
     {
-      if (!$this->validateAddress('pc_address', $value))
+      if ($this->validateAddress('pc_address', $value))
       {
-        $this->member = Doctrine::getTable('Member')->createPre();
+        if (!$memberConfigTable->retrieveByNameAndValue('pc_address_pre', $value))
+        {
+          $this->member = Doctrine::getTable('Member')->createPre();
+        }
+        $this->saveConfig('pc_address', $value);
+        $this->member->setConfig('register_auth_mode', $authMode);
+        $this->member->setConfig('is_admin_invited', true);
       }
-      $this->saveConfig('pc_address', $value);
-      $this->member->setConfig('register_auth_mode', $authMode);
-      $this->member->setConfig('is_admin_invited', true);
     }
 
     foreach ($this->getValue('mobile') as $value)
     {
-      if (!$this->validateAddress('mobile_address', $value))
+      if ($this->validateAddress('mobile_address', $value))
       {
-        $this->member = Doctrine::getTable('Member')->createPre();
+        if (!$memberConfigTable->retrieveByNameAndValue('mobile_address_pre', $value))
+        {
+          $this->member = Doctrine::getTable('Member')->createPre();
+        }
+        $this->saveConfig('mobile_address', $value);
+        $this->member->setConfig('register_auth_mode', $authMode);
+        $this->member->setConfig('is_admin_invited', true);
       }
-      $this->saveConfig('mobile_address', $value);
-      $this->member->setConfig('register_auth_mode', $authMode);
-      $this->member->setConfig('is_admin_invited', true);
     }
 
     return true;

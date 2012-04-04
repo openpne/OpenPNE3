@@ -21,12 +21,16 @@ class opI18N extends sfI18N
     parent::initialize($configuration, $cache, $options);
 
     $application = sfConfig::get('sf_app');
-    if ($application == 'pc_backend')
+    if ('pc_backend' == $application)
     {
         $application = 'pc_frontend';
     }
     $this->terms = Doctrine::getTable('SnsTerm');
     $this->terms->configure($this->culture, $application);
+    if (!$this->terms['member'])
+    {
+      $this->terms->configure('en', $application);
+    }
   }
 
   public function generateApplicationMessages($dirs)
@@ -73,7 +77,7 @@ class opI18N extends sfI18N
     {
       $this->generateApplicationMessages($dirs);
 
-      if (null === $dirs)
+      if (!is_null($dirs))
       {
         $this->messageSource = $this->createMessageSource();
       }
@@ -83,12 +87,12 @@ class opI18N extends sfI18N
       }
     }
 
-    if (null !== $this->cache)
+    if (!is_null($this->cache))
     {
       $this->messageSource->setCache($this->cache);
     }
 
-    if (null !== $culture)
+    if (!is_null($culture))
     {
       $this->setCulture($culture);
     }

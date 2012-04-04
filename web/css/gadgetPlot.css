@@ -99,6 +99,11 @@ body
 #plotMobileProfileBottom div,
 #plotMobileHeaderContents div,
 #plotMobileFooterContents div,
+#plotSmartphoneContents div,
+#plotSmartphoneProfileContents div,
+#plotSmartphoneCommunityContents div,
+#plotSmartphoneLoginContents div,
+#plotSmartphoneFooterContents div,
 #plotDailyNewsContents div,
 #plotMobileDailyNewsContents div
 {
@@ -132,6 +137,11 @@ body
 #plotMobileLoginContents div.emptyGadget,
 #plotMobileHeaderContents div.emptyGadget,
 #plotMobileFooterContents div.emptyGadget,
+#plotSmartphoneContents div.emptyGadget,
+#plotSmartphoneProfileContents div.emptyGadget,
+#plotSmartphoneCommunityContents div.emptyGadget,
+#plotSmartphoneLoginContents div.emptyGadget,
+#plotSmartphoneFooterContents div.emptyGadget,
 #plotDailyNewsContents div.emptyGadget,
 #plotMobileDailyNewsContents div.emptyGadget
 {

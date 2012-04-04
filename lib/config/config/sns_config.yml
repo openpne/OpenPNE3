@@ -170,6 +170,17 @@ general:
       - "使用しない"
       - "使用する"
 
+  enable_jsonapi:
+    Name:      "enable_jsonapi"
+    Caption:   "JSON API 使用設定"
+    FormType:  "radio"
+    ValueType: "text"
+    IsRequired: true
+    Default:    0
+    Choices:
+      - "使用しない"
+      - "使用する"
+
   enable_openid:
     Name:      "enable_openid"
     Caption:   "OpenID Provider 使用設定"
@@ -262,7 +273,7 @@ mobile:
     Name:        "mobile_image_max_size"
     Caption:     "画像の最大サイズ設定"
     Help:        "許可されている画像サイズを\"横x縦\"で指定してください。<br />(空欄の場合フルサイズになります)"
-    FormType:    "input"
+    FormType:    "image_size"
     ValueType:   "image_size"
     IsRequired:  false
     Default:     "320x320"

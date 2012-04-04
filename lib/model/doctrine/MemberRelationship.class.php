@@ -20,6 +20,14 @@ class MemberRelationship extends BaseMemberRelationship implements opAccessContr
     }
   }
 
+  public function postSave($event)
+  {
+    if ($this->isFriendPreFrom())
+    {
+      opNotificationCenter::notify($this->getMemberRelatedByMemberIdFrom(), $this->getMember(), 'Do you accept friend request?', array('category' => 'link',));
+    }
+  }
+
   public function isFriend()
   {
     return (bool)$this->getIsFriend();
@@ -89,18 +97,21 @@ class MemberRelationship extends BaseMemberRelationship implements opAccessContr
 
   public function getToInstance()
   {
-    if ($this->toInstance) {
+    if ($this->toInstance) 
+    {
       return $this->toInstance;
     }
 
     $relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($this->getMemberIdTo(), $this->getMemberIdFrom());
-    if (!$relation) {
+    if (!$relation) 
+    {
       $relation = new MemberRelationship();
       $relation->setMemberIdFrom($this->getMemberIdTo());
       $relation->setMemberIdTo($this->getMemberIdFrom());
     }
 
     $this->toInstance = $relation;
+
     return $this->toInstance;
   }
 

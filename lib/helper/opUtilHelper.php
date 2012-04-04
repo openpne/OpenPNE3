@@ -38,13 +38,13 @@ function op_link_to_for_pager($name, $internal_uri, $page_no, $options)
     $absolute = (boolean) $html_options['absolute'];
     unset($html_options['absolute_url']);
   }
-  
+
   $internal_uri = sprintf($internal_uri, $page_no);
   $html_options['href'] = url_for($internal_uri, $absolute);
 
   if (isset($html_options['query_string']))
   {
-    if (strpos($html_options['href'], '?') !== false)
+    if (false !== strpos($html_options['href'], '?'))
     {
       $html_options['href'] .= '&'.$html_options['query_string'];
     }
@@ -59,7 +59,7 @@ function op_link_to_for_pager($name, $internal_uri, $page_no, $options)
   {
     $name = $html_options['href'];
   }
- 
+
   return content_tag('a', $name, $html_options);
 }
 
@@ -137,6 +137,7 @@ function pager_navigation($pager, $link_to, $is_total = true, $query_string = ''
       'query_string' => $query_string
     )
   ));
+
   return get_partial('global/pagerNavigation', $params);
 }
 
@@ -216,7 +217,7 @@ function _app_url_for_internal_uri($application, $internal_uri, $absolute = fals
 function _create_script_name($application, $environment)
 {
   $script_name = $application;
-  if ($environment !== 'prod')
+  if ('prod' !== $environment)
   {
     $script_name .= '_'.$environment;
   }
@@ -313,7 +314,8 @@ if (!defined('SF_AUTO_LINK_RE'))
     (                       # leading text
       <\w+.*?>|             #   leading HTML tag, or
       [^=!:\'"/]|           #   leading punctuation, or
-      ^                     #   beginning of line
+      ^|                    #   beginning of line, or
+      \s?                   #   leading whitespaces
     )
     (
       (?:https?://)|        # protocol spec, or
@@ -326,8 +328,8 @@ if (!defined('SF_AUTO_LINK_RE'))
       \/?
       [a-zA-Z0-9_\-\/.,:;\~\?@&=+$%#!()]*
     )
-    ([[:punct:]]|\s|<|$)    # trailing text
-   ~x');
+    ([^a-zA-Z0-9_\-\/.,:;\~\?@&=+$%#!()]|\s|<|$)    # trailing text
+   ~xu');
 }
 
 function op_url_cmd($text)
@@ -340,10 +342,10 @@ function _op_url_cmd($matches)
   $url = $matches[2].$matches[3];
   $cmd = '';
 
-  if ($matches[2] == 'www.')
+  if ('www.' == $matches[2])
   {
     $cmd .= 'www.';
-    $url = 'http://www.'.$url;
+    $url = 'http://'.$url;
   }
 
   if (preg_match('/([a-zA-Z0-9\-.]+)\/?(?:[a-zA-Z0-9_\-\/.,:;\~\?@&=+$%#!()])*/', $matches[3], $pmatch))
@@ -371,6 +373,7 @@ url2cmd('{$url}', '{$googlemapsUrl}');
 //-->
 </script>
 EOD;
+
   return $result.$matches[4];
 }
 
@@ -380,6 +383,7 @@ EOD;
 function op_auto_link_text($text, $link = 'urls', $href_options = array('target' => '_blank'), $truncate = true, $truncate_len = 57, $pad = '...')
 {
   use_helper('Text');
+
   return auto_link_text($text, $link, $href_options, $truncate, $truncate_len, $pad);
 }
 
@@ -812,7 +816,7 @@ function op_decoration($string, $is_strip = false, $is_use_stylesheet = null, $i
   if (is_null($is_use_stylesheet))
   {
     $is_use_stylesheet = true;
-    if (sfConfig::get('sf_app') == 'mobile_frontend')
+    if ('mobile_frontend' == sfConfig::get('sf_app'))
     {
       $is_use_stylesheet = false;
     }
@@ -851,7 +855,7 @@ function op_is_accessable_url($uri)
 
 function op_distance_of_time_in_words($from_time, $to_time, $include_seconds = false, $format = '%s ago')
 {
-  $to_time = $to_time? $to_time: time();
+  $to_time = $to_time ? $to_time: time();
 
   $distance_in_minutes = floor(abs($to_time - $from_time) / 60);
   $distance_in_seconds = floor(abs($to_time - $from_time));
@@ -1065,6 +1069,7 @@ function op_get_gadget_type($type1, $type2)
   }
   $type = sfInflector::camelize($type1.'_'.$type2);
   $type = strtolower(substr($type, 0, 1)).substr($type, 1);
+
   return $type;
 }
 

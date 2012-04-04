@@ -71,7 +71,7 @@ class opFormItemGenerator
 
     if (in_array($field['FormType'], self::$choicesType))
     {
-      if ($field['FormType'] === 'select')
+      if ('select' === $field['FormType'])
       {
         if (!$field['IsRequired'])
         {
@@ -149,8 +149,16 @@ class opFormItemGenerator
         $list = opToolkit::arrayMapRecursive(array(sfContext::getInstance()->getI18N(), '__'), $list);
         $obj = new sfWidgetFormChoice(array('choices' => $list));
         break;
+      case 'image_size':
+        foreach (sfImageHandler::getAllowedSize() as $v)
+        {
+          $params['choices'][$v] = sfContext::getInstance()->getI18N()->__($v);
+        }
+        $obj = new sfWidgetFormChoice($params);
+        break;
       default:
         $obj = new sfWidgetFormInput($params);
+        break;
     }
 
     return $obj;
@@ -166,22 +174,24 @@ class opFormItemGenerator
       $choices = array_keys($field['Choices']);
     }
 
-    if ($field['FormType'] === 'checkbox')
+    if ('checkbox' === $field['FormType'])
     {
       $option['choices'] = $choices;
       $option['multiple'] = true;
       $obj = new sfValidatorChoice($option);
+
       return $obj;
     }
-    if ($field['FormType'] === 'select' || $field['FormType'] === 'radio')
+    if ('select' === $field['FormType'] || 'radio' === $field['FormType'])
     {
       $option = array('choices' => $choices);
       $option['required'] = $field['IsRequired'];
       $obj = new sfValidatorChoice($option);
+
       return $obj;
     }
 
-    if ($field['ValueType'] === 'integer')
+    if ('integer' === $field['ValueType'])
     {
       if (isset($field['ValueMin']) && is_numeric($field['ValueMin']))
       {
@@ -197,7 +207,7 @@ class opFormItemGenerator
         }
       }
     }
-    elseif ($field['FormType'] === 'date')
+    elseif ('date' === $field['FormType'])
     {
       if (isset($field['ValueMin']) && false !== strtotime($field['ValueMin']))
       {
@@ -231,10 +241,11 @@ class opFormItemGenerator
       }
     }
 
-    if ($field['FormType'] === 'date')
+    if ('date' === $field['FormType'])
     {
       $option['date_format_range_error'] = 'Y-m-d';
       $obj = new opValidatorDate($option);
+
       return $obj;
     }
 
@@ -270,6 +281,7 @@ class opFormItemGenerator
         break;
       default:
         $obj = new opValidatorString($option);
+        break;
     }
 
     return $obj;
@@ -334,6 +346,7 @@ class opFormItemGenerator
       // text and something else
       default:
         $obj = new sfWidgetFormInput($params);
+        break;
     }
 
     return $obj;
@@ -376,6 +389,7 @@ class opFormItemGenerator
       // text and something else
       default:
         $q->andWhereLike($column, $value);
+        break;
     }
 
     return $q;

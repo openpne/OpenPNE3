@@ -4,11 +4,9 @@
 <?php include_http_metas() ?>
 <?php include_metas() ?>
 <title><?php echo ($op_config['sns_title']) ? $op_config['sns_title'] : $op_config['sns_name'] ?></title>
+<?php use_stylesheet('/cache/css/customizing.css') ?>
 <?php include_stylesheets() ?>
 <?php include_javascripts() ?>
-<?php if (Doctrine::getTable('SnsConfig')->get('customizing_css')): ?>
-<link rel="stylesheet" type="text/css" href="<?php echo url_for('@customizing_css') ?>" />
-<?php endif; ?>
 </head>
 <body>
 

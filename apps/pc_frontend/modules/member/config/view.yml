@@ -1,5 +1,5 @@
 homeSuccess:
-  javascripts: [%OP_JQUERY_URL%, %OP_JQUERYUI_URL%, util]
+  javascripts: [jquery.min.js, jquery-ui.min.js, util]
   layout: layoutA
   customize:
     cautionAboutFriendPre:
@@ -31,3 +31,30 @@ configSuccess:
 
 loginSuccess:
   layout: layoutA
+
+smtHomeSuccess:
+  layout: smtLayoutHome
+
+smtProfileSuccess:
+  layout: smtLayoutMember
+
+smtEditProfileSuccess:
+  layout: smtLayoutHome
+
+smtConfigSuccess:
+  layout: smtLayoutHome
+
+smtSearchSuccess:
+  layout: smtLayoutSns
+
+smtConfigImageSuccess:
+  layout: smtLayoutHome
+
+smtInviteInput:
+  layout: smtLayoutSns
+
+smtInviteSuccess:
+  layout: smtLayoutSns
+
+smtInviteError:
+  layout: smtLayoutSns

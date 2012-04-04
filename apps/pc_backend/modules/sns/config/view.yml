@@ -1,0 +1,4 @@
+richTextareaSuccess:
+  javascripts:
+    - jquery.min.js
+    - jquery-ui.min.js

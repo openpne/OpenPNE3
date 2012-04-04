@@ -144,22 +144,18 @@ class communityActions extends sfActions
     $this->community = Doctrine::getTable('Community')->find($request->getParameter('id'));
     $this->forward404Unless($this->community);
 
-    if ($request->isMethod(sfWebRequest::POST))
+    if ($request->isMethod(sfWebRequest::POST) || $request->hasParameter('continue'))
     {
       $request->checkCSRFProtection();
-      $conn = Doctrine::getTable('Member')->getConnection();
-      $insertIds = $conn->fetchColumn('SELECT id FROM '.Doctrine::getTable('Member')->getTableName());
-      $ids = Doctrine::getTable('CommunityMember')->getMemberIdsByCommunityId($this->community->getId());
-      if (count($ids))
+      $this->remaining = $this->community->joinAllMembers(10);
+
+      if (0 === $this->remaining)
       {
-        $insertIds = array_diff($insertIds, $ids);
+        $this->getUser()->setFlash('notice', 'All member joined.');
+        $this->redirect('community/list');
       }
-      foreach ($insertIds as $id)
-      {
-        Doctrine::getTable('CommunityMember')->join($id, $this->community->getId());
-      }
-      $this->getUser()->setFlash('notice', 'All member joined.');
-      $this->redirect('community/list');
+
+      return sfView::SUCCESS;
     }
 
     return sfView::INPUT;
