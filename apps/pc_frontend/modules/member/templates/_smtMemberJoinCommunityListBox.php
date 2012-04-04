@@ -12,10 +12,12 @@ $(function(){
     $('#memberJoinCommunityList').show();
     $('#memberJoinCommunityListLoading').hide();
   });
-  $('#joinCommunitySearch').keyup(function(){
+  $('#joinCommunitySearch').keypress(function(){
     $('#memberJoinCommunityListLoading').show();
     $('#memberJoinCommunityList').hide();
     $('#memberKoinCommunityList').empty();
+  });
+  $('#joinCommunitySearch').blur(function(){
     var keyword = $('#joinCommunitySearch').val();
     var requestData = { member_id: <?php echo $member->getId(); ?>, keyword: keyword, apiKey: openpne.apiKey };
     $.getJSON( openpne.apiBase + 'member/community.json', requestData, function(json) {
