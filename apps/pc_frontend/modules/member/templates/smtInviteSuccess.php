@@ -10,15 +10,15 @@
 <div class="row">
 <?php foreach ($form as $f): ?>
 <?php if (!$f->isHidden()): ?>
-<div class="span12" style="text-align: left;">
-<?php echo $f->renderLabel(); ?>
-</div>
-<div class="span12 <?php echo $f->hasError() ? 'clearfix error' : '' ?>">
-  <?php if ($f->hasError()): ?>
-  <span class="label label-important"><?php echo __($f->getError()) ?></span><br />
-  <?php endif ?>
-  <?php echo $f->render(array('class' => 'span12')) ?>
-  <span class="help-block"><?php echo $f->renderHelp() ?></span>
+<div class="control-group<?php echo $f->hasError()? ' error' : '' ?>">
+  <label class="control-label"><?php echo $f->renderLabel() ?></label>
+  <div class="controls">
+    <?php if ($f->hasError()): ?>
+    <span class="label label-important label-block"><?php echo __($f->getError()); ?></span>
+    <?php endif ?>
+    <?php echo $f->render(array('class' => 'span12')) ?>
+    <span class="help-block"><?php echo $f->renderHelp(); ?></span>    
+  </div>
 </div>
 <?php endif; ?>
 <?php endforeach; ?>
