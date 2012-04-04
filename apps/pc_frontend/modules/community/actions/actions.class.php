@@ -40,6 +40,8 @@ class communityActions extends opCommunityAction
     $this->contentsGadgets = $gadgets['smartphoneCommunityContents'];
 
     $this->community = Doctrine::getTable('Community')->find($this->id);
+    $this->forward404Unless($this->community);
+
     $this->getResponse()->setDisplayCommunity($this->community);
 
     return sfView::SUCCESS;
