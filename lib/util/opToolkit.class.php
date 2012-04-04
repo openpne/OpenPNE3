@@ -383,15 +383,6 @@ class opToolkit
     return true;
   }
 
-  public static function setIsSecure($action)
-  {
-    $security = $action->getSecurityConfiguration();
-
-    $security[$action->getActionName()]['is_secure'] = true;
-
-    $action->setSecurityConfiguration($security);
-  }
-
   public static function clearCache()
   {
     $filesystem = new sfFilesystem();
