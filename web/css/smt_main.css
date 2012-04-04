@@ -6,6 +6,10 @@ label {
   display: inline;
 }
 
+.label-block {
+  display: block;
+}
+
 .radio_list {
   display: inline-block;
 }
