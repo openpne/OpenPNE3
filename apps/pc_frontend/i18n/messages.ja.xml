@@ -1389,7 +1389,11 @@
       </trans-unit>
       <trans-unit id="">
         <source>Do you accept %friend% link request?</source>
-        <target>%Friend%申請を許可しますか？</target>
+        <target>%friend%申請を許可しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification Center</source>
+        <target>通知センター</target>
       </trans-unit>
       <trans-unit id="">
         <source>There is no new notification.</source>

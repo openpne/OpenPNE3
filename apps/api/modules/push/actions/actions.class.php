@@ -20,7 +20,7 @@ class pushActions extends opJsonApiActions
   public function executeSearch(sfWebRequest $request)
   {
     $member = $this->getUser()->getMember();
-    $notifications = opNotificationCenter::getNotifications($member);
+    $this->notifications = opNotificationCenter::getNotifications($member);
 
     $this->setTemplate('array');
   }
