@@ -183,7 +183,7 @@ function op_api_notification($notification)
 
   return array(
     'id' => $notification['id'],
-    'body' => __($notification['body']),
+    'body' => sfContext::getInstance()->getI18N()->__($notification['body']),
     'category' => $notification['category'],
     'unread' => $notification['unread'],
     'created_at' => date('r', strtotime($notification['created_at'])),
