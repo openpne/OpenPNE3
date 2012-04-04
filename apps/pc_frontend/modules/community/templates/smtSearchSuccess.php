@@ -15,7 +15,9 @@ $(function(){
   $('#joinCommunitySearch').keypress(function(){
     $('#memberJoinCommunityListLoading').show();
     $('#memberJoinCommunityList').hide();
-    $('#memberKoinCommunityList').empty();
+    $('#memberJoinCommunityList').empty();
+  });
+  $('#joinCommunitySearch').blur(function(){
     var keyword = $('#joinCommunitySearch').val();
     var requestData = { keyword: keyword, apiKey: openpne.apiKey };
     $.getJSON( openpne.apiBase + 'member/community.json', requestData, function(json) {
