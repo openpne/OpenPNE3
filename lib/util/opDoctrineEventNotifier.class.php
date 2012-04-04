@@ -25,7 +25,7 @@ class opDoctrineEventNotifier extends Doctrine_Record_Listener
     }
 
     $dispatcher = sfContext::getInstance()->getEventDispatcher();
-    $dispatcher->notify(new sfEvent(null, sprintf('op_doctrine.%s_%s_%s', $when, $action, get_class($doctrineEvent->getInvoker()))));
+    $dispatcher->notify(new sfEvent(null, sprintf('op_doctrine.%s_%s_%s', $when, $action, get_class($doctrineEvent->getInvoker())), array('object' => $doctrineEvent->getInvoker())));
   }
 
   public function preSave(Doctrine_Event $event)
