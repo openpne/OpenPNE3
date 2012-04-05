@@ -9,7 +9,7 @@
   </div>
 </div>
 <div class="row">
-<table class="table-striped">
+<table class="table table-striped span12">
 <tbody>
 <tr>
   <td><?php echo __('Date Created') ?></td>
