@@ -84,7 +84,7 @@
 </div>
 
 <div class="row">
-<div class="span12">
+<div class="span12 center">
 <input type="submit" name="submit" value="<?php echo __('Send') ?>" class="btn btn-primary" />
 <?php echo $communityForm->renderHiddenFields(); ?>
 <?php echo $communityConfigForm->renderHiddenFields(); ?>
