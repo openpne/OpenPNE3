@@ -84,20 +84,12 @@
 </div>
 
 <div class="row">
-<div class="span5">
+<div class="span12">
 <input type="submit" name="submit" value="<?php echo __('Send') ?>" class="btn btn-primary" />
 <?php echo $communityForm->renderHiddenFields(); ?>
 <?php echo $communityConfigForm->renderHiddenFields(); ?>
 <?php echo $communityFileForm->renderHiddenFields(); ?>
 </form>
-</div>
-
-<div class="span5">
-  <?php if (!$communityForm->isNew() && $isDeleteCommunity): ?>
-  <?php echo form_tag(url_for('@community_delete?id='.$community->getId())) ?>
-  <span class="label label-important">DANGER</span>: <input type="submit" name="submit" value="<?php echo __('Delete'); ?>" class="btn btn-danger" />
-  </form>
-  <?php endif; ?>
 </div>
 </div>
 
