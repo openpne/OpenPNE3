@@ -8,7 +8,7 @@
 <?php endif; ?>
 <?php endforeach; ?>
 <?php end_slot() ?>
-<?php echo javascript_tag('$("#Top").sortable({ axis: "y", items: "> div", handle: "div.partsHeading", update: function(event,ui){storeSort(event, ui)} });') ?>
+<?php echo javascript_tag('$("#Top").sortable({ axis: "y", items: "> div", handle: "div.sortHandle, div.partsHeading", update: function(event,ui){storeSort(event, ui)} });') ?>
 <?php endif; ?>
 
 <?php if (isset($sideMenuGadgets)): ?>
@@ -19,7 +19,7 @@
 <?php endif; ?>
 <?php endforeach; ?>
 <?php end_slot() ?>
-<?php echo javascript_tag('$("#Left").sortable({ axis: "y", items: "> div", handle: "div.partsHeading", update: function(event,ui){storeSort(event, ui)} });') ?>
+<?php echo javascript_tag('$("#Left").sortable({ axis: "y", items: "> div", handle: "div.sortHandle, div.partsHeading", update: function(event,ui){storeSort(event, ui)} });') ?>
 <?php endif; ?>
 
 <?php if (isset($contentsGadgets)): ?>
@@ -28,7 +28,7 @@
 <?php include_component($gadget->getComponentModule(), $gadget->getComponentAction(), array('gadget' => $gadget)); ?>
 <?php endif; ?>
 <?php endforeach; ?>
-<?php echo javascript_tag('$("#Center").sortable({ axis: "y", items: "> div", handle: "div.partsHeading", update: function(event,ui){storeSort(event, ui)} });') ?>
+<?php echo javascript_tag('$("#Center").sortable({ axis: "y", items: "> div", handle: "div.sortHandle, div.partsHeading", update: function(event,ui){storeSort(event, ui)} });') ?>
 <?php endif; ?>
 
 <?php if (isset($bottomGadgets)): ?>
@@ -39,7 +39,7 @@
 <?php endif; ?>
 <?php endforeach; ?>
 <?php end_slot() ?>
-<?php echo javascript_tag('$("#Bottom").sortable({ item: "> div.partsHeading" });') ?>
+<?php echo javascript_tag('$("#Bottom").sortable({ item: "div.sortHandle, div.partsHeading" });') ?>
 <?php endif; ?>
 
 <?php echo javascript_tag('
