@@ -48,7 +48,7 @@ foreach ($communitySubAdmins as $m)
 </tr>
 <tr>
   <td><?php echo __('%community% Description', array('%community%' => $op_term['community']->titleize()), 'form_community') ?></td>
-  <td><?php echo $community->getConfig('description'); ?></td>
+  <td><?php echo nl2br($community->getConfig('description')) ?></td>
 </tr>
 <tr>
   <td></td>
