@@ -39,7 +39,7 @@ class friendActions extends opFriendAction
   public function executeSmtList(opWebRequest $request)
   {
     $this->member = Doctrine::getTable('Member')->find($this->id);
-    sfConfig::set('op_smartphone_header', $this->member);
+    $this->getResponse()->setDisplayMember($this->member);
 
     return sfView::SUCCESS;
   }
@@ -55,7 +55,7 @@ class friendActions extends opFriendAction
   {
     $result = parent::executeLink($request);
 
-    sfConfig::set('op_smartphone_header', $this->member);
+    $this->getResponse()->setDisplayMember($this->member);
 
     return $result;
   }
