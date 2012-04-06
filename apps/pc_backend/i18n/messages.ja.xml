@@ -1461,6 +1461,10 @@
         <source>This setting is applied only for Input type "Text" or "Paragraph text".</source>
         <target>この設定はフォームタイプが「テキスト」または「テキスト（複数行）」の場合のみ適用されます。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Full Size</source>
+        <target>フルサイズ</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
