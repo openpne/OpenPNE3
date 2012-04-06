@@ -45,8 +45,8 @@ foreach ($member->getProfiles(true) as $profile)
 <table class="table-striped span12">
 <tbody>
 <tr><td><?php echo $op_term['nickname'] ?></td><td><?php echo $member->getName(); ?></td></tr>
-<?php foreach ($list as $k => $v): ?>
-<tr><td><?php echo __($k); ?></td><td><?php echo $v; ?></td></tr>
+<?php foreach ($list as $profileKey => $profileValue): ?>
+<tr><td><?php echo __($profileKey); ?></td><td><?php echo $profileValue; ?></td></tr>
 <?php endforeach; ?>
 </tbody>
 </table>
