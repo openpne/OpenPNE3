@@ -153,7 +153,7 @@ class memberActions extends opMemberAction
 
     $result = parent::executeProfile($request);
 
-    $this->getResponse()->setDisplayMember($this->member);
+    opSmartphoneLayoutUtil::setLayoutParameters(array('member' => $this->member));
 
     return $result;
   }
