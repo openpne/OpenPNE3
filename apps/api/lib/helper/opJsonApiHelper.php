@@ -176,7 +176,7 @@ function op_api_notification($notification)
   {
     $iconUrl = op_image_path('no_image.gif', true);
   }
-  elseif (0 !== strpos('http://', $iconUrl))
+  elseif (false !== strpos('http://', $iconUrl))
   {
     $iconUrl = sf_image_path($iconUrl, array('size' => '48x48'), true);
   }
