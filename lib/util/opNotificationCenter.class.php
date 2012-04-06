@@ -48,10 +48,11 @@ class opNotificationCenter
     }
 
     array_unshift($notifications, $notificationItem);
+    $notificationLimit = sfConfig::get('op_notification_limit', 20);
 
-    if (sfConfig::get('op_notification_limit', 20) > count($notifications))
+    if ($notificationLimit < count($notifications))
     {
-      array_slice($notifications, 0, sfConfig::get('op_notification_limit', 20));
+      $notifications = array_slice($notifications, 0, $notificationLimit);
     }
 
     $notificationObject->setValue(serialize($notifications));
