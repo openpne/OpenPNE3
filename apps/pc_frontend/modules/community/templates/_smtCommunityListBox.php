@@ -29,7 +29,7 @@ foreach ($communitySubAdmins as $m)
 <?php if (count($subAdminCaption)): ?>
 <tr>
   <td><?php echo __('Sub Administrator') ?></td>
-  <td><?php echo implode("<br>\n", $subAdminCaption) ?></td>
+  <td><?php echo implode("<br />\n", $subAdminCaption) ?></td>
 </tr>
 <?php endif; ?>
 <?php if ($community->community_category_id): ?>
