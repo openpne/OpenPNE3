@@ -154,6 +154,7 @@ class opFormItemGenerator
         {
           $params['choices'][$v] = sfContext::getInstance()->getI18N()->__($v);
         }
+        $params['choices'] = $params['choices'] + array('' => sfContext::getInstance()->getI18N()->__('Full Size'));
         $obj = new sfWidgetFormChoice($params);
         break;
       default:
