@@ -42,7 +42,7 @@ class communityActions extends opCommunityAction
     $this->community = Doctrine::getTable('Community')->find($this->id);
     $this->forward404Unless($this->community);
 
-    $this->getResponse()->setDisplayCommunity($this->community);
+    sfConfig::set('op_smartphone_header', $this->community);
 
     return sfView::SUCCESS;
   }
@@ -82,7 +82,7 @@ class communityActions extends opCommunityAction
     }
     else
     {
-      $this->getResponse()->setDisplayCommunity($this->community);
+      sfConfig::set('op_smartphone_header', $this->community);
     }
 
     return $result;
@@ -109,7 +109,7 @@ class communityActions extends opCommunityAction
   {
     $result = parent::executeMemberList($request);
 
-    $this->getResponse()->setDisplayCommunity($this->community);
+    sfConfig::set('op_smartphone_header', $this->community);
 
     return $result;
   }
@@ -151,7 +151,7 @@ class communityActions extends opCommunityAction
       $this->targetMember = $this->getUser()->getMember();
     }
 
-    $this->getResponse()->setDisplayMember($this->targetMember);
+    sfConfig::set('op_smartphone_header', $this->targetMember);
 
     return $result;
   }
@@ -177,7 +177,7 @@ class communityActions extends opCommunityAction
   {
     $result = parent::executeJoin($request);
 
-    $this->getResponse()->setDisplayCommunity($this->community);
+    sfConfig::set('op_smartphone_header', $this->community);
 
     return $result;
   }
@@ -203,7 +203,7 @@ class communityActions extends opCommunityAction
   {
     $result = parent::executeQuit($request);
 
-    $this->getResponse()->setDisplayCommunity($this->community);
+    sfConfig::set('op_smartphone_header', $this->community);
 
     return $result;
   }

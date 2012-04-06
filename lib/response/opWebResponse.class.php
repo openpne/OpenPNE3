@@ -31,26 +31,6 @@ class opWebResponse extends sfWebResponse
     return $result;
   }
 
-  public function getDisplayMember()
-  {
-    return $this->displayMember;
-  }
-
-  public function setDisplayMember(Member $member)
-  {
-    $this->displayMember = $member;
-  }
-
-  public function getDisplayCommunity()
-  {
-    return $this->displayCommunity;
-  }
-
-  public function setDisplayCommunity(Community $community)
-  {
-    $this->displayCommunity = $community;
-  }
-
   public function generateMobileUidCookie()
   {
     $request = sfContext::getInstance()->getRequest();

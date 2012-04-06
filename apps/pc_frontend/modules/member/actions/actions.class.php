@@ -153,7 +153,7 @@ class memberActions extends opMemberAction
 
     $result = parent::executeProfile($request);
 
-    $this->getResponse()->setDisplayMember($this->member);
+    sfConfig::set('op_smartphone_header', $this->member);
 
     return $result;
   }

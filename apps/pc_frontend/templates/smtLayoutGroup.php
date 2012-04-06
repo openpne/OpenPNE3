@@ -33,7 +33,7 @@ var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PR
 <?php include_javascripts() ?>
 </head>
 <body id="<?php printf('page_%s_%s', $this->getModuleName(), $this->getActionName()) ?>" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
-<?php $community = $sf_response->getDisplayCommunity() ?>
+<?php $community = sfConfig::get('op_smartphone_header', false) ?>
 <?php include_partial('global/tosaka', array('community' => $community)) ?>
 <div id="face" class="row">
   <?php if ($community): ?>

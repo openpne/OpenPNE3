@@ -35,7 +35,7 @@ var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PR
 <body id="<?php printf('page_%s_%s', $this->getModuleName(), $this->getActionName()) ?>" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
 <?php include_partial('global/tosaka') ?>
 <div id="face" class="row">
-  <?php $member = $sf_response->getDisplayMember() ?>
+  <?php $member = sfConfig::get('op_smartphone_header', $sf_user) ?>
   <?php if ($member): ?>
   <div class="span2">
     <?php echo op_image_tag_sf_image($member->getImageFileName(), array('size' => '48x48')) ?>
