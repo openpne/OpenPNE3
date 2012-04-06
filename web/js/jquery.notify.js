@@ -17,7 +17,7 @@
         else
         {
           window.location = linkUrl;
-	}
+        }
       });
     });
   };
@@ -39,16 +39,16 @@
           success: function(data) {
             if(data.status=='success'){
               $('.ncfriendloading').hide();
-              $(this).parent().find('.ncfriendresultmessage').text('リクエストを承認しました');
-              $(this).parent().find('.ncfriendresultmessage').show();
+              $('.push_yesno .ncfriendresultmessage').text('リクエストを承認しました');
+              $('.push_yesno .ncfriendresultmessage').show();
             }else{
               alert(data.message);
             }
           },
           error: function(r, s, e){
             $('.ncfriendloading').hide();
-            $(this).parent().find('.ncfriendresultmessage').text('既に承認済みです');
-            $(this).parent().find('.ncfriendresultmessage').show(); 
+            $('.push_yesno .ncfriendresultmessage').text('既に承認済みです');
+            $('.push_yesno .ncfriendresultmessage').show(); 
           }
         });
       });
@@ -72,16 +72,16 @@
           success: function(data) {
             if(data.status=='success'){
               $('.ncfriendloading').hide();
-              $('.ncfrinedresultmessage', $(this).parent()).text('リクエストを拒否しました');
-              $('.ncfrinedresultmessage', $(this).parent()).show();
-             }else{
+              $('.push_yesno .ncfriendresultmessage').text('リクエストを拒否しました');
+              $('.push_yesno .ncfriendresultmessage').show();
+            }else{
               alert(data.message);
             }   
           },
           error: function(r, s, e) {
             $('.ncfriendloading').hide();
-            $(this).parent().find('.ncfriendresultmessage').text('既に拒否済みです');
-            $(this).parent().find('.ncfriendresultmessage').show(); 
+            $('.push_yesno .ncfriendresultmessage').text('既に拒否済みです');
+            $('.push_yesno .ncfriendresultmessage').show(); 
           }
         });
       });
