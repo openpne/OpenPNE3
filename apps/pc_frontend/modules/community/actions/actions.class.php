@@ -22,7 +22,7 @@ class communityActions extends opCommunityAction
   *
   * @param opWebRequest $request A request object
   */
-  public function executeHome($request)
+  public function executeHome(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'community', 'smtHome');
 
@@ -52,7 +52,7 @@ class communityActions extends opCommunityAction
   *
   * @param opWebRequest $request A request object
   */
-  public function executeEdit($request)
+  public function executeEdit(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'community', 'smtEdit');
 
@@ -119,7 +119,7 @@ class communityActions extends opCommunityAction
   *
   * @param opWebRequest $request A request object
   */
-  public function executeJoinlist($request)
+  public function executeJoinlist(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'community', 'smtJoinlist');
 
@@ -213,7 +213,7 @@ class communityActions extends opCommunityAction
   *
   * @param opWebRequest $request A request object
   */
-  public function executeSearch($request)
+  public function executeSearch(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'community', 'smtSearch');
 
