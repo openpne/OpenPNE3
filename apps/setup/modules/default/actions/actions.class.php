@@ -52,11 +52,6 @@ class defaultActions extends sfActions
           file_put_contents(sfConfig::get('sf_config_dir').'/plugins.yml', sfYaml::dump($pergedPlugins));
         }
         
-        //PENDING: reflect first administrator settings. update fixture
-        
-        //PENDING: reflect first user settings. update fixture
-        
-        //PENDING: run fast-install command here
         $settings = array();
         $settings['dbms'] = $install['dbms'];
         $settings['dbuser'] = $install['dbuser'];
@@ -70,13 +65,21 @@ class defaultActions extends sfActions
         $dispatcher = $configuration->getEventDispatcher();
         $task = new OpenPNEFastInstallTask($dispatcher, new sfFormatter());
         $task->run(array(), $settings);
+
+        //merge first administrator settings
+        $firstAdmin = Doctrine::getTable('AdminUser')->find(1);
+        $firstAdmin->setUsername($install['first_admin_username']);
+        $firstAdmin->setPassword($install['first_admin_password']);
+        $firstAdmin->save();
+        
+        //PENDING: reflect first user settings. update fixture
+        
         
         $this->getUser()->setAttribute('setup_install', null);
         
-        //PENDING: remove web/setup.php here
         $fileSystem->remove(sfConfig::get('sf_web_dir').'/setup.php');
         
-        $this->redirect('/pc_backend.php');
+        $this->redirect($snsUrl.'/pc_backend.php');
       }
       
       $this->form->bind($request->getParameter($this->form->getName()));
