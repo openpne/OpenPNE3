@@ -58,6 +58,7 @@ class defaultActions extends sfActions
         $settings['dbpassword'] = $install['dbpass'];
         $settings['dbhost'] = $install['dbhost'];
         $settings['dbname'] = $install['dbname'];
+        $settings['internet'] = count($selectedPlugins) > 0;
         
         chdir(sfConfig::get('sf_root_dir'));
         

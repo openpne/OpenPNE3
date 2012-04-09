@@ -96,13 +96,13 @@ EOF;
 
   protected function doInstall($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options)
   {
+    $this->configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options);
     if ($options['internet'])
     {
       $this->installPlugins();
     }
     @$this->fixPerms();
     @$this->clearCache();
-    $this->configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options);
     $this->buildDb($options);
   }
 
