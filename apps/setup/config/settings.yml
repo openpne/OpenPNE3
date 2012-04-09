@@ -37,4 +37,4 @@ all:
     i18n: on
     
   .action:
-    standard_helpers:       [Partial, Cache, I18N, sfImage, opUtil]
+    standard_helpers:       [Partial, Cache, I18N]
