@@ -72,8 +72,10 @@ class defaultActions extends sfActions
         $firstAdmin->setPassword($install['first_admin_password']);
         $firstAdmin->save();
         
-        //PENDING: reflect first user settings. update fixture
-        
+        //merge first user settings. update fixture
+        $firstMember = Doctrine::getTable('Member')->find(1);
+        $firstMember->setConfig('pc_address', $install['first_user_email']);
+        $firstMember->setConfig('password', md5($install['first_user_password']));
         
         $this->getUser()->setAttribute('setup_install', null);
         
