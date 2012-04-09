@@ -7,7 +7,7 @@
         <target>入力内容の確認</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Do install</source>
+        <source>Install</source>
         <target>インストール実行</target>
       </trans-unit>
       <trans-unit id="">

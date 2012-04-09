@@ -13,5 +13,6 @@
 <?php endforeach; ?>
 </table>
 <?php echo $confirmForm; ?>
-<input type="submit" value="<?php echo __('Install', array(), 'form_install'); ?>" />
+<input type="submit" value="<?php echo __('Install', array(), 'form_install'); ?>" class="input_submit" />
+<?php echo button_to(__('Back'), 'default/install', 'class=input_submit'); ?>
 </form>

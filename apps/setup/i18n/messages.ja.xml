@@ -14,6 +14,10 @@
         <source>Confirm your server info and preferences</source>
         <target>サーバー情報と設定の確認</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Back</source>
+        <target>戻る</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

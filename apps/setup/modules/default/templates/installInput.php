@@ -6,5 +6,5 @@
   <table>
     <?php echo $form; ?>
 </table>
-<input type="submit" value="<?php echo __('Confirm', array(), 'form_install'); ?>" />
+<input type="submit" value="<?php echo __('Confirm', array(), 'form_install'); ?>" class="input_submit" />
 </form>
