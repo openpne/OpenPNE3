@@ -80,6 +80,10 @@
         <source>CSRF attack detected.</source>
         <target>前のページに戻り、フォームをリロードしてから送信し直してください。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Specified database was unavailable.</source>
+        <target>入力された設定でデータベースに接続できませんでした。データベース設定が正しいかどうか確認してください。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

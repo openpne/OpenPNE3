@@ -64,7 +64,43 @@ class OpenPNEInstallForm extends BaseForm
   
   public function validateConnection($validator, $values, $arguments = array())
   {
-    //PENDING: validate connection here
+    if(isset($values['dbms']))
+    {
+      //FIXME: use Doctrine instead of raw PDO
+      if($values['dbms']=='sqlite')
+      {
+        $dsn = 'sqlite:'.$values['dbname'];
+        $user = null;
+        $password = null;
+      }
+      else
+      {
+        $dsn = $values['dbms'].':';
+        if('' != $values['dbsock'])
+        {
+          $dsn .= 'unix_socket='.$values['dbsock'];
+        }
+        else
+        {
+          $dsn .= 'host='.$values['dbhost'].';dbname='.$values['dbname'];
+          if('' != $values['dbport'])
+          {
+            $dsn .= ';port='.$values['dbport'];
+          }
+        }
+        $user = $values['dbuser'];
+        $password = $values['dbpass'];
+      }
+      
+      try
+      {
+        $pdo = new PDO($dsn, $user, $password);
+      }
+      catch(Exception $e)
+      {
+        throw new sfValidatorErrorSchema($validator, array('dbms' => new sfValidatorError($validator, 'Specified database was unavailable.')));
+      }
+    }
     return $values;
   }
   
