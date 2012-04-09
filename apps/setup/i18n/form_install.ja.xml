@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>Are you sure?</source>
-        <target>インストールを実行します。宜しいですか？</target>
+        <target>インストールを実行します（全てのSNS設定が初期化され、データベースの既存のテーブルは削除されます）。宜しいですか？</target>
       </trans-unit>
 
       <trans-unit id="">

@@ -13,6 +13,6 @@
 <?php endforeach; ?>
 </table>
 <?php echo $confirmForm; ?>
-<input type="submit" value="<?php echo __('Install', array(), 'form_install'); ?>" class="input_submit" />
+<input type="submit" value="<?php echo __('Install', array(), 'form_install'); ?>" class="input_submit" onclick="return confirm('<?php echo __('Are you sure?', array(), 'form_install'); ?>');" />
 <?php echo button_to(__('Back'), 'default/install', 'class=input_submit'); ?>
 </form>
