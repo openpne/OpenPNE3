@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Setup SNS</source>
+        <target>SNSをインストール</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Input your server info and preferences</source>
+        <target>サーバー情報と設定の入力</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Confirm your server info and preferences</source>
+        <target>サーバー情報と設定の確認</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

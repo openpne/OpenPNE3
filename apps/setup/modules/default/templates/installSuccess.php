@@ -1,4 +1,4 @@
-<?php slot('title', __('Confirm installation')); ?>
+<?php slot('title', __('Confirm your server info and preferences')); ?>
 
 <form action="<?php echo url_for('default/install'); ?>" method="post">
 <?php //PENDING: confirm layout ?>

@@ -1,4 +1,4 @@
-<?php slot('title', __('Welcome to installation')); ?>
+<?php slot('title', __('Input your server info and preferences')); ?>
 
 
 <form action="<?php echo url_for('default/install'); ?>" method="post">

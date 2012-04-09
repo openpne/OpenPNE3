@@ -1,0 +1,73 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Confirm</source>
+        <target>入力内容の確認</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do install</source>
+        <target>インストール実行</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Are you sure?</source>
+        <target>インストールを実行します。宜しいですか？</target>
+      </trans-unit>
+
+      <trans-unit id="">
+        <source>Dbms</source>
+        <target>データベース種類</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Dbhost</source>
+        <target>データベースホスト名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Dbname</source>
+        <target>データベース名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Dbuser</source>
+        <target>データベース接続ユーザー名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Dbpass</source>
+        <target>データベース接続パスワード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>First admin username</source>
+        <target>最初の管理者のログイン名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>First admin password</source>
+        <target>最初の管理者のパスワード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>First user email</source>
+        <target>最初のユーザーのメールアドレス</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>First user password</source>
+        <target>最初のユーザーのパスワード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Plugins</source>
+        <target>インストールするプラグイン</target>
+      </trans-unit>
+
+      <trans-unit id="">
+        <source>Required.</source>
+        <target>必須項目です。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Invalid.</source>
+        <target>正しい値を入力してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>CSRF attack detected.</source>
+        <target>前のページに戻り、フォームをリロードしてから送信し直してください。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

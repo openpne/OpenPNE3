@@ -38,3 +38,5 @@ all:
     
   .action:
     standard_helpers:       [Partial, Cache, I18N]
+    
+    default_culture: ja_JP
