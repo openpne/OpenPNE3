@@ -15,11 +15,17 @@ class OpenPNEInstallForm extends BaseForm
     $this->setWidget('dbuser', new sfWidgetFormInput(array('default'=>'openpne')));
     $this->setValidator('dbuser', new sfValidatorString());
     
-    $this->setWidget('dbpass', new sfWidgetFormInput(array('default'=>'password')));
-    $this->setValidator('dbpass', new sfValidatorString());
+    $this->setWidget('dbpass', new sfWidgetFormInput(array()));
+    $this->setValidator('dbpass', new sfValidatorString(array('required' => false)));
     
     $this->setWidget('dbname', new sfWidgetFormInput(array('default'=>'openpne')));
     $this->setValidator('dbname', new sfValidatorString());
+
+    $this->setWidget('dbport', new sfWidgetFormInput());
+    $this->setValidator('dbport', new sfValidatorString(array('required' => false)));
+
+    $this->setWidget('dbsock', new sfWidgetFormInput());
+    $this->setValidator('dbsock', new sfValidatorString(array('required' => false)));
     
     //validate database settings
     $this->mergePostValidator(new sfValidatorCallback(array('callback'=>array($this, 'validateConnection'))));

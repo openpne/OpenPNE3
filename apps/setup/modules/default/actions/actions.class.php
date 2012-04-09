@@ -25,7 +25,7 @@ class defaultActions extends sfActions
         }
         catch(Exception $e)
         {
-          $this->getUser()->setAttribute('setup_install');
+          $this->getUser()->setAttribute('setup_install', null);
           $this->redirect('@homepage');
         }
         
@@ -33,8 +33,7 @@ class defaultActions extends sfActions
         
         $fileSystem = new sfFileSystem();
         $root = sfConfig::get('sf_root_dir');
-        //PENDING: receive manual setting and reflect it to config/OpenPNE.yml
-        $fileSystem->copy($root.'/config/OpenPNE.yml.sample', $root.'/config/OpenPNE.yml');
+        
         $fileSystem->copy($root.'/config/ProjectConfiguration.class.php.sample', $root.'/config/ProjectConfiguration.class.php');
         
         $plugins = $this->form->getAllPluginList();
@@ -58,6 +57,8 @@ class defaultActions extends sfActions
         $settings['dbpassword'] = $install['dbpass'];
         $settings['dbhost'] = $install['dbhost'];
         $settings['dbname'] = $install['dbname'];
+        $settings['dbport'] = $install['dbport'];
+        $settings['dbsock'] = $install[''];
         $settings['internet'] = count($selectedPlugins) > 0;
         
         chdir(sfConfig::get('sf_root_dir'));

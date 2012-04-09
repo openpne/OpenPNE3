@@ -36,6 +36,14 @@
         <target>データベース接続パスワード</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Dbport</source>
+        <target>データベース接続ポート</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Dbsock</source>
+        <target>データベース接続ソケット</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>First admin username</source>
         <target>最初の管理者のログイン名</target>
       </trans-unit>
