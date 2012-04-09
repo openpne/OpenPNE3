@@ -20,6 +20,7 @@ class openpneInstallTask extends sfDoctrineBaseTask
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'prod'),
       new sfCommandOption('redo', null, sfCommandOption::PARAMETER_NONE, 'Executes a reinstall'),
       new sfCommandOption('non-recreate-db', null, sfCommandOption::PARAMETER_NONE, 'Non recreate DB'),
+      new sfCommandOption('internet', null, sfCommandOption::PARAMETER_NONE, 'Connect Internet Option to download plugins list.'),
     ));
 
     $this->briefDescription = 'Install OpenPNE';
@@ -136,7 +137,10 @@ EOF;
     {
       $this->logSection('installer', 'start clean install');
     }
-    $this->installPlugins();
+    if ($options['internet'])
+    {
+      $this->installPlugins();
+    }
     @$this->fixPerms();
     @$this->clearCache();
     if (!$options['redo'])
