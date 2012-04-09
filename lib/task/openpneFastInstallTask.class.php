@@ -31,6 +31,7 @@ class openpneFastInstallTask extends sfDoctrineBaseTask
       new sfCommandOption('dbport', null, sfCommandOption::PARAMETER_OPTIONAL, 'A port number for database conection.'),
       new sfCommandOption('dbname', null, sfCommandOption::PARAMETER_REQUIRED, 'A database name for database connection.'),
       new sfCommandOption('dbsock', null, sfCommandOption::PARAMETER_OPTIONAL, 'A database socket path for database connection.'),
+      new sfCommandOption('internet', null, sfCommandOption::PARAMETER_NONE, 'Connect Internet Option to download plugins list.'),
     ));
 
     $this->briefDescription = 'Install OpenPNE';
@@ -38,7 +39,7 @@ class openpneFastInstallTask extends sfDoctrineBaseTask
 The [openpne:fast-install] task installs and configures OpenPNE.
 Call it with:
 
-  [./symfony openpne:fast-install --dbms=mysql --dbuser=your-username --dbpassword=your-password --dbname=your-dbname --dbhost=localhost]
+  [./symfony openpne:fast-install --dbms=mysql --dbuser=your-username --dbpassword=your-password --dbname=your-dbname --dbhost=localhost --internet]
 
 EOF;
   }
@@ -95,7 +96,10 @@ EOF;
 
   protected function doInstall($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options)
   {
-    $this->installPlugins();
+    if ($options['internet'])
+    {
+      $this->installPlugins();
+    }
     @$this->fixPerms();
     @$this->clearCache();
     $this->configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options);
