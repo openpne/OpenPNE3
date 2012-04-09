@@ -13,10 +13,12 @@ $(function(){
     $('#memberFriendList').show();
     $('#memberFriendListLoading').hide();
   });
-  $('#memberFriendSearch').keyup(function(){
+  $('#memberFriendSearch').keypress(function(){
     $('#memberFriendListLoading').show();
     $('#memberFriendList').hide();
     $('#memberFriendList').empty();
+  });
+  $('#memberFriendSearch').blur(function(){
     var keyword = $('#memberFriendSearch').val();
     var requestData = { target: 'friend', target_id: <?php echo $member->getId(); ?>, keyword: keyword, apiKey: openpne.apiKey };
     $.getJSON( openpne.apiBase + 'member/search.json', requestData, function(json) {

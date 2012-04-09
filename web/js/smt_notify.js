@@ -71,8 +71,7 @@
 				});
 			});
 		});
-        };
-
+  };
 
 	$.fn.friendUnlink = function(settings){
 		return this.each(function(){
@@ -105,6 +104,6 @@
 				});
 			});
 		});
-        };
+  };
 
 })(jQuery);

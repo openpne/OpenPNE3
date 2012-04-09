@@ -35,16 +35,16 @@
 <div class="row">
 <?php foreach ($communityForm as $cf): ?>
 <?php if (!$cf->isHidden()): ?>
-  <div class="span12">
-  <?php echo $cf->renderLabel(); ?>
-  </div>
-  <div class="span12 <?php echo $cf->hasError() ? 'clearfix error' : '' ?>">
+<div class="control-group<?php echo $cf->hasError()? ' error' : '' ?>">
+  <label class="control-label"><?php echo $cf->renderLabel() ?></label>
+  <div class="controls">
     <?php if ($cf->hasError()): ?>
-    <span class="label label-important"><?php echo __($cf->getError()) ?></span>
+    <span class="label label-important label-block"><?php echo __($cf->getError()); ?></span>
     <?php endif ?>
     <?php echo $cf->render(array('class' => 'span12')) ?>
-    <span class="help-block"><?php echo $cf->renderHelp() ?></span>
+    <span class="help-block"><?php echo $cf->renderHelp(); ?></span>    
   </div>
+</div>
 <?php endif; ?>
 <?php endforeach; ?>
 </div>
@@ -52,14 +52,16 @@
 <div class="row">
 <?php foreach ($communityConfigForm as $ccf): ?>
 <?php if (!$ccf->isHidden()): ?>
-  <div class="span12"><?php echo $ccf->renderLabel() ?></div>
-  <div class="<?php echo $ccf->hasError() ? 'clearfix error' : '' ?>">
+<div class="control-group<?php echo $ccf->hasError()? ' error' : '' ?>">
+  <label class="control-label"><?php echo $ccf->renderLabel() ?></label>
+  <div class="controls">
     <?php if ($ccf->hasError()): ?>
-    <span class="label label-important"><?php echo __($ccf->getError()) ?></span>
+    <span class="label label-important label-block"><?php echo __($ccf->getError()); ?></span>
     <?php endif ?>
     <?php echo $ccf->render(array('class' => 'span12')) ?>
-    <span class="help-block"><?php echo $ccf->renderHelp() ?></span>
+    <span class="help-block"><?php echo $ccf->renderHelp(); ?></span>    
   </div>
+</div>
 <?php endif; ?>
 <?php endforeach; ?>
 </div>
@@ -67,33 +69,27 @@
 <div class="row">
 <?php foreach ($communityFileForm as $cff): ?>
 <?php if (!$cff->isHidden()): ?>
-  <div class="span12"><?php echo $cff->renderLabel(); ?></div>
-  <div class="span12 <?php echo $cff->hasError() ? 'clearfix error' : '' ?>">
+<div class="control-group<?php echo $cff->hasError()? ' error' : '' ?>">
+  <label class="control-label"><?php echo $cff->renderLabel() ?></label>
+  <div class="controls">
     <?php if ($cff->hasError()): ?>
-    <span class="label label-important"><?php echo __($cff->getError()) ?></span>
+    <span class="label label-important label-block"><?php echo __($cff->getError()); ?></span>
     <?php endif ?>
     <?php echo $cff->render(array('class' => 'span12')) ?>
-    <span class="help-block"><?php echo $cff->renderHelp() ?></span>
+    <span class="help-block"><?php echo $cff->renderHelp(); ?></span>    
   </div>
+</div>
 <?php endif; ?>
 <?php endforeach; ?>
 </div>
 
 <div class="row">
-<div class="span5">
+<div class="span12 center">
 <input type="submit" name="submit" value="<?php echo __('Send') ?>" class="btn btn-primary" />
 <?php echo $communityForm->renderHiddenFields(); ?>
 <?php echo $communityConfigForm->renderHiddenFields(); ?>
 <?php echo $communityFileForm->renderHiddenFields(); ?>
 </form>
-</div>
-
-<div class="span5">
-  <?php if (!$communityForm->isNew() && $isDeleteCommunity): ?>
-  <?php echo form_tag(url_for('@community_delete?id='.$community->getId())) ?>
-  <span class="label label-important">DANGER</span>: <input type="submit" name="submit" value="<?php echo __('Delete'); ?>" class="btn btn-danger" />
-  </form>
-  <?php endif; ?>
 </div>
 </div>
 

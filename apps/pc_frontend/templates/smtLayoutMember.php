@@ -35,15 +35,14 @@ var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PR
 <body id="<?php printf('page_%s_%s', $this->getModuleName(), $this->getActionName()) ?>" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
 <?php include_partial('global/tosaka') ?>
 <div id="face" class="row">
-  <?php $member = $sf_response->getDisplayMember() ?>
-  <?php if ($member): ?>
+  <?php if (isset($op_layout['member'])): ?>
   <div class="span2">
-    <?php echo op_image_tag_sf_image($member->getImageFileName(), array('size' => '48x48')) ?>
+    <?php echo op_image_tag_sf_image($op_layout['member']->getImageFileName(), array('size' => '48x48')) ?>
   </div>
   <div class="span8">
-    <div class="row face-name"><?php echo $member->getName() ?></div>
+    <div class="row face-name"><?php echo $op_layout['member']->getName() ?></div>
     <div class="row screen-name">
-      <?php $screenName = $member->getConfig('op_screen_name') ?>
+      <?php $screenName = $op_layout['member']->getConfig('op_screen_name') ?>
       <?php if ($screenName): ?>
       <a href="#">@<?php echo $screenName ?></a>
       <?php endif ?>

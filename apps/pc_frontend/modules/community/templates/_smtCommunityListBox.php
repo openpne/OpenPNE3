@@ -9,7 +9,7 @@
   </div>
 </div>
 <div class="row">
-<table class="table-striped">
+<table class="table table-striped span12">
 <tbody>
 <tr>
   <td><?php echo __('Date Created') ?></td>
@@ -29,7 +29,7 @@ foreach ($communitySubAdmins as $m)
 <?php if (count($subAdminCaption)): ?>
 <tr>
   <td><?php echo __('Sub Administrator') ?></td>
-  <td><?php echo implode("<br>\n", $subAdminCaption) ?></td>
+  <td><?php echo implode("<br />\n", $subAdminCaption) ?></td>
 </tr>
 <?php endif; ?>
 <?php if ($community->community_category_id): ?>
@@ -48,7 +48,7 @@ foreach ($communitySubAdmins as $m)
 </tr>
 <tr>
   <td><?php echo __('%community% Description', array('%community%' => $op_term['community']->titleize()), 'form_community') ?></td>
-  <td><?php echo $community->getConfig('description'); ?></td>
+  <td><?php echo nl2br($community->getConfig('description')) ?></td>
 </tr>
 <tr>
   <td></td>

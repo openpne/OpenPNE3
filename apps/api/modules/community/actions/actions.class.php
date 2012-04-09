@@ -82,7 +82,7 @@ class communityActions extends opJsonApiActions
     $communityJoinPolicy = $community->getConfig('register_policy');
 
     $communityMember = Doctrine::getTable('CommunityMember')
-      ->retrieveByMemberIdAndCommunityId($viewMemberId, $community->getId());
+      ->retrieveByMemberIdAndCommunityId($memberId, $community->getId());
 
     if ($request['leave'])
     {

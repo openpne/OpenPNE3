@@ -1,6 +1,7 @@
 <?php $options->setDefault('single', true) ?>
 <?php $options->setDefault('name_method', 'getNameAndCount') ?>
 
+<div class="sortHandle">
 <p class="photo">
 <?php $imgParam = array('size' => '180x180', 'alt' => $options->object->getName()) ?>
 <?php $nameMethod = $options->name_method ?>
@@ -11,3 +12,4 @@
 <?php endif; ?>
 </p>
 <p class="text"><?php echo $options->object->$nameMethod() ?></p>
+</div>

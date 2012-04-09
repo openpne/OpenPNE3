@@ -6,6 +6,10 @@ label {
   display: inline;
 }
 
+.label-block {
+  display: block;
+}
+
 .radio_list {
   display: inline-block;
 }
@@ -154,19 +158,19 @@ input[type="checkbox"], input[type="radio"] {
 }
 .nc_icon1 {
   position:absolute;
-  top: 18px;
+  top: 2px;
   left: 24px;
   line-height: 10px;
 }
 .nc_icon2 {
   position:absolute;
-  top: 18px;
+  top: 2px;
   left: 58px;
   line-height: 10px;
 }
 .nc_icon3 {
   position:absolute;
-  top: 18px;
+  top: 2px;
   left: 90px;
   line-height: 10px;
 }

@@ -1,5 +1,6 @@
 <?php $options->setDefault('single', true) ?>
 
+<div class="sortHandle">
 <form action="<?php echo url_for('@global_search') ?>" method="get">
 <ul>
 <li><?php echo op_image_tag('icon_search.gif', array('alt' => 'search')) ?></li>
@@ -21,3 +22,4 @@
 </li>
 </ul>
 </form>
+</div>

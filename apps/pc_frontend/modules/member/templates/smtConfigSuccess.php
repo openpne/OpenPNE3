@@ -37,10 +37,15 @@ foreach ($categories as $key => $value)
 <div class="row" style="margin-left: 0px;">
 <?php foreach ($form as $f): ?>
 <?php if (!$f->isHidden()): ?>
-<div class="clearfix <?php $f->hasError() ? 'error' : '' ?>">
-<label for="xlInput3" class="span12"><?php echo $f->renderLabel() ?></label>
-<?php echo $f->render(array('class' => 'span12')) ?>
-<span class="help-block"><?php echo $f->renderHelp() ?></span>
+<div class="control-group<?php echo $f->hasError()? ' error' : '' ?>">
+  <label class="control-label"><?php echo $f->renderLabel() ?></label>
+  <div class="controls">
+    <?php if ($f->hasError()): ?>
+    <span class="label label-important label-block"><?php echo __($f->getError()); ?></span>
+    <?php endif ?>
+    <?php echo $f->render(array('class' => 'span12')) ?>
+    <span class="help-block"><?php echo $f->renderHelp(); ?></span>    
+  </div>
 </div>
 <?php endif; ?>
 <?php endforeach; ?>

@@ -60,7 +60,7 @@ abstract class sfImageGeneratorImageTransform extends sfImageGenerator
     $srcHeight = $this->transform->getImageHeight();
     if ($srcWidth > $srcHeight)
     {
-      $srcX = ceil(($srcWidth - $srcHeight) / 2);
+      $srcX = (int)ceil(($srcWidth - $srcHeight) / 2);
       $srcY = 0;
       $srcW = $srcHeight;
       $srcH = $srcHeight;
@@ -68,7 +68,7 @@ abstract class sfImageGeneratorImageTransform extends sfImageGenerator
     else
     {
       $srcX = 0;
-      $srcY = ceil(($srcHeight - $srcWidth) / 2);
+      $srcY = (int)ceil(($srcHeight - $srcWidth) / 2);
       $srcW = $srcWidth;
       $srcH = $srcWidth;
     }

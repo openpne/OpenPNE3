@@ -7,18 +7,25 @@
   <div class="span8"><?php echo link_to($community->getName(), '@community_home?id='.$id) ?></div>
   <div class="span12 center"><?php echo __('Do you really quit the following %community%?') ?></div>
   <div class="span12 center">
+    <div class="row">
     <?php echo form_tag($sf_request->getCurrentUri()); ?>
     <?php foreach ($form as $field): ?>
     <?php if (!$field->isHidden()): ?>
-    <div class="clearfix <?php $field->hasError() ? 'error' : '' ?>">
-    <label for="xlInput3" class="span12"><?php echo $field->renderLabel() ?></label>
-    <?php echo $field->render(array('class' => 'span12')) ?>
-    <span class="help-block"><?php echo $field->renderHelp() ?></span>
-    </div>
+      <div class="control-group<?php echo $field->hasError()? ' error' : '' ?>">
+        <label class="control-label"><?php echo $field->renderLabel() ?></label>
+        <div class="controls">
+        <?php if ($field->hasError()): ?>
+        <span class="label label-important label-block"><?php echo __($field->getError()); ?></span>
+        <?php endif ?>
+        <?php echo $field->render(array('class' => 'span12')) ?>
+        <span class="help-block"><?php echo $field->renderHelp(); ?></span>    
+        </div>
+      </div>
     <?php endif; ?>
     <?php endforeach; ?>
     <input type="submit" name="submit" value="<?php echo __('Send') ?>" class="btn btn-danger" />
     <?php echo $form->renderHiddenFields(); ?>
     </form>
+    </div>
   </div>
 </div>

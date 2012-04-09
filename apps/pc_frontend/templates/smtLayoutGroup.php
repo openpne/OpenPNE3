@@ -33,15 +33,18 @@ var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PR
 <?php include_javascripts() ?>
 </head>
 <body id="<?php printf('page_%s_%s', $this->getModuleName(), $this->getActionName()) ?>" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
-<?php $community = $sf_response->getDisplayCommunity() ?>
-<?php include_partial('global/tosaka', array('community' => $community)) ?>
+<?php if (isset($op_layout['community'])): ?>
+<?php include_partial('global/tosaka', array('community' => $op_layout['community'])) ?>
+<?php else: ?>
+<?php include_partial('global/tosaka') ?>
+<?php endif ?>
 <div id="face" class="row">
-  <?php if ($community): ?>
+  <?php if (isset($op_layout['community'])): ?>
   <div class="span2">
-    <?php echo op_image_tag_sf_image($community->getImageFileName(), array('size' => '48x48')) ?>
+    <?php echo op_image_tag_sf_image($op_layout['community']->getImageFileName(), array('size' => '48x48')) ?>
   </div>
   <div class="span8">
-    <div class="row face-name"><?php echo $community->getName() ?></div>
+    <div class="row face-name"><?php echo $op_layout['community']->getName() ?></div>
   </div>
   <div class="span2 center"><?php echo link_to(op_image_tag('HomeIcon.png', array('height' => '48')), '@homepage') ?></div>
   <?php endif ?>

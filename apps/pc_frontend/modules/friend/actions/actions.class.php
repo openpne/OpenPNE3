@@ -27,7 +27,7 @@ class friendActions extends opFriendAction
     }
   }
 
-  public function executeList(sfWebRequest $request)
+  public function executeList(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'friend', 'smtList');
 
@@ -36,10 +36,10 @@ class friendActions extends opFriendAction
     return parent::executeList($request);
   }
 
-  public function executeSmtList($request)
+  public function executeSmtList(opWebRequest $request)
   {
     $this->member = Doctrine::getTable('Member')->find($this->id);
-    $this->getResponse()->setDisplayMember($this->member);
+    opSmartphoneLayoutUtil::setLayoutParameters(array('member' => $this->member));
 
     return sfView::SUCCESS;
   }
@@ -55,7 +55,7 @@ class friendActions extends opFriendAction
   {
     $result = parent::executeLink($request);
 
-    $this->getResponse()->setDisplayMember($this->member);
+    opSmartphoneLayoutUtil::setLayoutParameters(array('member' => $this->member));
 
     return $result;
   }

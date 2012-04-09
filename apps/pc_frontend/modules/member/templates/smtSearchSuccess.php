@@ -17,6 +17,8 @@ $(function(){
     $('#memberFriendListLoading').show();
     $('#memberFriendList').hide();
     $('#memberFriendList').empty();
+  });
+  $('#memberFriendSearch').blur(function(){
     var keyword = $('#memberFriendSearch').val();
     var requestData = { keyword: keyword, apiKey: openpne.apiKey };
     $.getJSON( openpne.apiBase + 'member/search.json', requestData, function(json) {

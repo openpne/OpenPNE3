@@ -7,7 +7,7 @@
 </script>
 <script type="text/javascript">
 $(function(){
-  $.getJSON( openpne.apiBase + 'member/community.json?apiKey=' + openpne.apiKey, function(json) {
+  $.getJSON( openpne.apiBase + 'community/search.json?apiKey=' + openpne.apiKey, function(json) {
     $('#joinCommunityListTemplate').tmpl(json.data).appendTo('#memberJoinCommunityList');
     $('#memberJoinCommunityList').show();
     $('#memberJoinCommunityListLoading').hide();
@@ -15,10 +15,12 @@ $(function(){
   $('#joinCommunitySearch').keypress(function(){
     $('#memberJoinCommunityListLoading').show();
     $('#memberJoinCommunityList').hide();
-    $('#memberKoinCommunityList').empty();
+    $('#memberJoinCommunityList').empty();
+  });
+  $('#joinCommunitySearch').blur(function(){
     var keyword = $('#joinCommunitySearch').val();
     var requestData = { keyword: keyword, apiKey: openpne.apiKey };
-    $.getJSON( openpne.apiBase + 'member/community.json', requestData, function(json) {
+    $.getJSON( openpne.apiBase + 'community/search.json', requestData, function(json) {
       $result = $('#joinCommunityListTemplate').tmpl(json.data);
       $('#memberJoinCommunityList').html($result);
       $('#memberJoinCommunityList').show();

@@ -22,7 +22,7 @@ class communityActions extends opCommunityAction
   *
   * @param opWebRequest $request A request object
   */
-  public function executeHome($request)
+  public function executeHome(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'community', 'smtHome');
 
@@ -40,7 +40,9 @@ class communityActions extends opCommunityAction
     $this->contentsGadgets = $gadgets['smartphoneCommunityContents'];
 
     $this->community = Doctrine::getTable('Community')->find($this->id);
-    $this->getResponse()->setDisplayCommunity($this->community);
+    $this->forward404Unless($this->community);
+
+    opSmartphoneLayoutUtil::setLayoutParameters(array('community' => $this->community));
 
     return sfView::SUCCESS;
   }
@@ -50,7 +52,7 @@ class communityActions extends opCommunityAction
   *
   * @param opWebRequest $request A request object
   */
-  public function executeEdit($request)
+  public function executeEdit(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'community', 'smtEdit');
 
@@ -80,7 +82,7 @@ class communityActions extends opCommunityAction
     }
     else
     {
-      $this->getResponse()->setDisplayCommunity($this->community);
+      opSmartphoneLayoutUtil::setLayoutParameters(array('community' => $this->community));
     }
 
     return $result;
@@ -107,7 +109,7 @@ class communityActions extends opCommunityAction
   {
     $result = parent::executeMemberList($request);
 
-    $this->getResponse()->setDisplayCommunity($this->community);
+    opSmartphoneLayoutUtil::setLayoutParameters(array('community' => $this->community));
 
     return $result;
   }
@@ -117,7 +119,7 @@ class communityActions extends opCommunityAction
   *
   * @param opWebRequest $request A request object
   */
-  public function executeJoinlist($request)
+  public function executeJoinlist(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'community', 'smtJoinlist');
 
@@ -149,7 +151,7 @@ class communityActions extends opCommunityAction
       $this->targetMember = $this->getUser()->getMember();
     }
 
-    $this->getResponse()->setDisplayMember($this->targetMember);
+    opSmartphoneLayoutUtil::setLayoutParameters(array('member' => $this->member)); 
 
     return $result;
   }
@@ -175,7 +177,7 @@ class communityActions extends opCommunityAction
   {
     $result = parent::executeJoin($request);
 
-    $this->getResponse()->setDisplayCommunity($this->community);
+    opSmartphoneLayoutUtil::setLayoutParameters(array('community' => $this->community));
 
     return $result;
   }
@@ -201,7 +203,7 @@ class communityActions extends opCommunityAction
   {
     $result = parent::executeQuit($request);
 
-    $this->getResponse()->setDisplayCommunity($this->community);
+    opSmartphoneLayoutUtil::setLayoutParameters(array('community' => $this->community));
 
     return $result;
   }
@@ -211,7 +213,7 @@ class communityActions extends opCommunityAction
   *
   * @param opWebRequest $request A request object
   */
-  public function executeSearch($request)
+  public function executeSearch(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'community', 'smtSearch');
 

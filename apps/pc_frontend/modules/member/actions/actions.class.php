@@ -22,7 +22,7 @@ class memberActions extends opMemberAction
   *
   * @param opWebRequest $request A request object
   */
-  public function executeHome($request)
+  public function executeHome(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'member', 'smtHome');
 
@@ -69,7 +69,7 @@ class memberActions extends opMemberAction
   *
   * @param opWevRequest $request A request object
   */
-  public function executeLogin($request)
+  public function executeLogin(opWebRequest $request)
   {
     if (opConfig::get('external_pc_login_url') && $request->isMethod(sfWebRequest::GET))
     {
@@ -112,7 +112,7 @@ class memberActions extends opMemberAction
   *
   * @param opWebRequest $request A request object
   */
-  public function executeProfile($request)
+  public function executeProfile(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'member', 'smtProfile');
 
@@ -153,7 +153,7 @@ class memberActions extends opMemberAction
 
     $result = parent::executeProfile($request);
 
-    $this->getResponse()->setDisplayMember($this->member);
+    opSmartphoneLayoutUtil::setLayoutParameters(array('member' => $this->member));
 
     return $result;
   }
@@ -163,7 +163,7 @@ class memberActions extends opMemberAction
   *
   * @param opWebRequest $request A request object
   */
-  public function executeConfigImage($request)
+  public function executeConfigImage(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'member', 'smtConfigImage');
 
@@ -236,7 +236,7 @@ class memberActions extends opMemberAction
   *
   * @param sfRequest $request A request object
   */
-  public function executeConfigJsonApi($request)
+  public function executeConfigJsonApi(opWebRequest $request)
   {
     $this->forward404Unless(opConfig::get('enable_jsonapi'));
 
@@ -256,9 +256,9 @@ class memberActions extends opMemberAction
  /**
   * Executes registerMobileToRegisterEnd action
   *
-  * @param sfRequest $request A request object
+  * @param opWebRequest $request A request object
   */
-  public function executeRegisterMobileToRegisterEnd(sfWebRequest $request)
+  public function executeRegisterMobileToRegisterEnd(opWebRequest $request)
   {
     opActivateBehavior::disable();
     $this->form = new registerMobileForm($this->getUser()->getMember());
@@ -276,16 +276,16 @@ class memberActions extends opMemberAction
     return sfView::SUCCESS;
   }
 
-  public function executeRegisterMobileToRegisterEndFinish(sfWebRequest $request)
+  public function executeRegisterMobileToRegisterEndFinish(opWebRequest $request)
   {
   }
 
   /**
    * Executes changeLanguage action
    *
-   * @param sfWebRequest $request a request object
+   * @param opWebRequest $request a request object
    */
-  public function executeChangeLanguage(sfWebRequest $request)
+  public function executeChangeLanguage(opWebRequest $request)
   {
     if ($request->isMethod(sfWebRequest::POST))
     {
@@ -304,7 +304,7 @@ class memberActions extends opMemberAction
   *
   * @param opWebRequest $request a request object
   */
-  public function executeConfig($request)
+  public function executeConfig(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'member', 'smtConfig');
 
@@ -326,7 +326,7 @@ class memberActions extends opMemberAction
   *
   * @param opWebRequest $request a request object
   */
-  public function executeSearch($request)
+  public function executeSearch(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'member', 'smtSearch');
 
@@ -348,7 +348,7 @@ class memberActions extends opMemberAction
   *
   * @param opWebRequest $request a request object
   */
-  public function executeInvite($request)
+  public function executeInvite(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'member', 'smtInvite');
 
@@ -372,7 +372,7 @@ class memberActions extends opMemberAction
   *
   * @param opWebRequest $request a request object
   */
-  public function executeEditProfile($request)
+  public function executeEditProfile(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'member', 'smtEditProfile');
 
