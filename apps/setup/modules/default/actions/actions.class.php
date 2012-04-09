@@ -81,7 +81,12 @@ class defaultActions extends sfActions
         
         $fileSystem->remove(sfConfig::get('sf_web_dir').'/setup.php');
         
-        $this->redirect($snsUrl.'/pc_backend.php');
+        //FIXME: ugly way to find redirect destination
+        sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
+        $scriptName = sfConfig::get('sf_debug') ? 'setup_dev.php/' : 'setup.php/';
+        $url = str_replace($scriptName, 'pc_backend.php', url_for('@homepage', true));
+        
+        $this->redirect($url);
       }
       
       $this->form->bind($request->getParameter($this->form->getName()));
