@@ -179,6 +179,9 @@ EOF;
     }
 
     file_put_contents($file, sfYaml::dump($config, 4));
+    
+    sfConfig::set('sf_use_database', true);
+    sfContext::getInstance()->set('databaseManager', new sfDatabaseManager($this->configuration));
   }
 
   protected function clearCache()
