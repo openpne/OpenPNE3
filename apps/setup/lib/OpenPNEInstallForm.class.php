@@ -27,6 +27,9 @@ class OpenPNEInstallForm extends BaseForm
     $this->setWidget('dbsock', new sfWidgetFormInput());
     $this->setValidator('dbsock', new sfValidatorString(array('required' => false)));
     
+    $this->setWidget('non_recreate_db', new sfWidgetFormInputCheckbox());
+    $this->setValidator('non_recreate_db', new sfValidatorBoolean(array('required' => false)));
+    
     //validate database settings
     $this->mergePostValidator(new sfValidatorCallback(array('callback'=>array($this, 'validateConnection'))));
     
