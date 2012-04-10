@@ -7,7 +7,13 @@
 <?php if('_csrf_token' != $name): ?>
 <tr>
 <th><?php echo $form[$name]->renderLabel(); ?></th>
-<td><?php echo is_array($form->getValue($name)) ? implode('<br />', $form->getValue($name, ESC_RAW)) : $form->getValue($name); ?></td>
+<td>
+  <?php if('non_recreate_db' == $name): ?>
+    <?php echo $form->getValue($name) ? __('Non recreate db', array(), 'form_install') : ''; ?>
+  <?php else: ?>
+    <?php echo is_array($form->getValue($name)) ? implode('<br />', $form->getValue($name, ESC_RAW)) : $form->getValue($name); ?>
+  <?php endif; ?>
+</td>
 </tr>
 <?php endif; ?>
 <?php endforeach; ?>
