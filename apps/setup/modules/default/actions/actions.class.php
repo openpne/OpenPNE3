@@ -58,8 +58,9 @@ class defaultActions extends sfActions
         $settings['dbhost'] = $install['dbhost'];
         $settings['dbname'] = $install['dbname'];
         $settings['dbport'] = $install['dbport'];
-        $settings['dbsock'] = $install[''];
+        $settings['dbsock'] = $install['dbsock'];
         $settings['internet'] = count($selectedPlugins) > 0;
+        $settings['non-recreate-db'] = (bool)$install['non_recreate_db'];
         
         chdir(sfConfig::get('sf_root_dir'));
         
