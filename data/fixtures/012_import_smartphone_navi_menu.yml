@@ -48,3 +48,14 @@ Navigation:
         caption: "ログアウト"
       en:
         caption: "Logout"
+
+  smartphone_insecure_navigation_privacy_policy:
+    type: "smartphone_insecure"
+    uri: "@global_privacy_policy"
+    sort_order: 30
+    Translation:
+      ja_JP:
+        caption: "プライバシーポリシー"
+      en:
+        caption: "Privacy Policy"
+
