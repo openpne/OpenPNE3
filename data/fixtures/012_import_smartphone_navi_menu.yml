@@ -59,3 +59,13 @@ Navigation:
       en:
         caption: "Privacy Policy"
 
+  smartphone_insecure_navigation_user_agreement:
+    type: "smartphone_insecure"
+    uri: "@global_user_agreement"
+    sort_order: 40
+    Translation:
+      ja_JP:
+        caption: "利用規約"
+      en:
+        caption: "User Agreement"
+
