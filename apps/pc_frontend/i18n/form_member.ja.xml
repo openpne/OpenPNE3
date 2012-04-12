@@ -14,10 +14,6 @@
         <source>"%value%" is too long (%max_length% characters max).</source>
         <target>%max_length%文字以内で入力してください。</target>
       </trans-unit>
-      <trans-unit id="">
-        <source>CSRF attack detected.</source>
-        <target>前の画面を読み直して、操作をやり直してください。</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>
