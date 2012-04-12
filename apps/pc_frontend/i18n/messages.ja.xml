@@ -1395,6 +1395,10 @@
         <source>Reset</source>
         <target>リセット</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>%Community% does not exist.</source>
+        <target>%Community%がありません。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
