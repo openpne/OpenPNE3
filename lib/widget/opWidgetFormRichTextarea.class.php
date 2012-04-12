@@ -80,28 +80,28 @@ class opWidgetFormRichTextarea extends sfWidgetFormTextarea
     $onId  = $id.'_changer_2';
     if (self::$isFirstRender)
     {
-      sfContext::getInstance()->getResponse()->addJavascript('/sfProtoculousPlugin/js/prototype');
+      sfContext::getInstance()->getResponse()->addJavascript('jquery.min.js');
       sfContext::getInstance()->getResponse()->addJavascript('tiny_mce/tiny_mce');
       $js .= <<<EOF
   function op_toggle_mce_editor(id)
   {
-    var textmode_checked    = $(id + "_changer_1").checked;
-    var previewmode_checked = $(id + "_changer_2").checked;
-    var relational_objects  = $$("." + id);
+    var textmode_checked    = $("#" + id + "_changer_1").is(":checked");
+    var previewmode_checked = $("#" + id + "_changer_2").is(":checked");
+    var relational_objects  = $("." + id);
     var editor = tinyMCE.get(id);
     if (!editor) {
       if (previewmode_checked) {
         tinyMCE.execCommand('mceAddControl', false, id);
-        relational_objects.each(function(object){ object.style.display = "none"; });
+        relational_objects.each(function(object){ object.hide(); });
       }
       return true;
     }
     if (editor.isHidden() && previewmode_checked) {
       editor.show();
-      relational_objects.each(function(object){ object.style.display = "none"; });
+      relational_objects.each(function(object){ object.hide(); });
     } else if (!editor.isHidden() && textmode_checked) {
       editor.hide();
-      relational_objects.each(function(object){ object.style.display = "block"; });
+      relational_objects.each(function(object){ object.show(); });
     }
   }
 
