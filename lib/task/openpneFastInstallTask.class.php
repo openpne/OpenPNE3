@@ -61,6 +61,13 @@ EOF;
       return 1;
     }
 
+    if (empty($dbname))
+    {
+      $this->logSection('installer', 'task aborted: empty dbname');
+
+      return 1;
+    }
+
     if ('sqlite' !== $dbms)
     {
       if(empty($username))
