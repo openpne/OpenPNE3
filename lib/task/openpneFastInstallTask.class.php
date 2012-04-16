@@ -112,7 +112,10 @@ EOF;
   {
     parent::configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options);
     
-    sfConfig::set('sf_use_database', true);
-    sfContext::getInstance()->set('databaseManager', new sfDatabaseManager($this->configuration));
+    if(sfConfig::get('sf_app') == 'setup')
+    {
+      sfConfig::set('sf_use_database', true);
+      sfContext::getInstance()->set('databaseManager', new sfDatabaseManager($this->configuration));
+    }
   }
 }
