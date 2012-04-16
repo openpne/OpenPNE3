@@ -57,14 +57,16 @@ EOF;
     if (empty($dbms))
     {
       $this->logSection('installer', 'task aborted: empty dbms');
+
       return 1;
     }
 
-    if ($dbms !== 'sqlite')
+    if ('sqlite' !== $dbms)
     {
       if(empty($username))
       {
         $this->logSection('installer', 'task aborted: dbuser is empty');
+
         return 1;
       }
       
@@ -81,7 +83,7 @@ EOF;
     unset($options['dbms'], $options['dbuser'], $options['dbpassword'], $options['dbname'], $options['dbhost'], $options['dbport'], $options['dbsock']);
     $this->doInstall($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options);
 
-    if ($dbms === 'sqlite')
+    if ('sqlite' === $dbms)
     {
       $this->getFilesystem()->chmod($dbname, 0666);
     }
@@ -114,7 +116,7 @@ EOF;
 
     if ($dbname)
     {
-      if ($dbms === 'sqlite')
+      if ('sqlite' === $dbms)
       {
         $data[] = $dbname;
       }
@@ -140,6 +142,7 @@ EOF;
     }
 
     $result .= implode(';', $data);
+
     return $result;
   }
 
