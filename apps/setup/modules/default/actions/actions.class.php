@@ -31,11 +31,6 @@ class defaultActions extends sfActions
         
         $install = $this->getUser()->getAttribute('setup_install');
         
-        $fileSystem = new sfFileSystem();
-        $root = sfConfig::get('sf_root_dir');
-        
-        $fileSystem->copy($root.'/config/ProjectConfiguration.class.php.sample', $root.'/config/ProjectConfiguration.class.php');
-        
         $plugins = $this->form->getAllPluginList();
         $selectedPlugins = (array)$install['plugins'];
         $pergedPlugins = array();
@@ -50,6 +45,9 @@ class defaultActions extends sfActions
         {
           file_put_contents(sfConfig::get('sf_config_dir').'/plugins.yml', sfYaml::dump($pergedPlugins));
         }
+        
+        //preserve original environment before executing task
+        $env = sfConfig::get('sf_environment');
         
         $settings = array();
         $settings['dbms'] = $install['dbms'];
@@ -82,13 +80,13 @@ class defaultActions extends sfActions
         
         $this->getUser()->setAttribute('setup_install', null);
         
+        $fileSystem = new sfFileSystem();
         $fileSystem->remove(sfConfig::get('sf_web_dir').'/setup.php');
         
         //FIXME: ugly way to find redirect destination
         sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
-        $scriptName = sfConfig::get('sf_debug') ? 'setup_dev.php/' : 'setup.php/';
+        $scriptName = $env == 'prod' ? 'setup.php' : 'setup_'.$env.'.php';
         $url = str_replace($scriptName, 'pc_backend.php', url_for('@homepage', true));
-        
         $this->redirect($url);
       }
       
