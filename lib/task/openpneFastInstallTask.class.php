@@ -24,7 +24,7 @@ class openpneFastInstallTask extends sfDoctrineBaseTask
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'prod'),
-      new sfCommandOption('dbms', 'mysql', sfCommandOption::PARAMETER_OPTIONAL, 'The dbms for database connection. mysql or sqlite'),
+      new sfCommandOption('dbms', null, sfCommandOption::PARAMETER_OPTIONAL, 'The dbms for database connection. mysql or sqlite', 'mysql'),
       new sfCommandOption('dbuser', null, sfCommandOption::PARAMETER_OPTIONAL, 'A username for database connection.'),
       new sfCommandOption('dbpassword', null, sfCommandOption::PARAMETER_OPTIONAL, 'A password for database connection.'),
       new sfCommandOption('dbhost', null, sfCommandOption::PARAMETER_OPTIONAL, 'A hostname for database connection.'),
