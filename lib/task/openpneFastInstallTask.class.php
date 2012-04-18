@@ -24,7 +24,7 @@ class openpneFastInstallTask extends sfDoctrineBaseTask
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'prod'),
-      new sfCommandOption('dbms', 'mysql', sfCommandOption::PARAMETER_OPTIONAL, 'The dbms for database connection. mysql or sqlite'),
+      new sfCommandOption('dbms', null, sfCommandOption::PARAMETER_OPTIONAL, 'The dbms for database connection. mysql or sqlite', 'mysql'),
       new sfCommandOption('dbuser', null, sfCommandOption::PARAMETER_OPTIONAL, 'A username for database connection.'),
       new sfCommandOption('dbpassword', null, sfCommandOption::PARAMETER_OPTIONAL, 'A password for database connection.'),
       new sfCommandOption('dbhost', null, sfCommandOption::PARAMETER_OPTIONAL, 'A hostname for database connection.'),
@@ -57,14 +57,23 @@ EOF;
     if (empty($dbms))
     {
       $this->logSection('installer', 'task aborted: empty dbms');
+
       return 1;
     }
 
-    if ($dbms !== 'sqlite')
+    if (empty($dbname))
+    {
+      $this->logSection('installer', 'task aborted: empty dbname');
+
+      return 1;
+    }
+
+    if ('sqlite' !== $dbms)
     {
       if(empty($username))
       {
         $this->logSection('installer', 'task aborted: dbuser is empty');
+
         return 1;
       }
       
@@ -81,7 +90,7 @@ EOF;
     unset($options['dbms'], $options['dbuser'], $options['dbpassword'], $options['dbname'], $options['dbhost'], $options['dbport'], $options['dbsock']);
     $this->doInstall($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options);
 
-    if ($dbms === 'sqlite')
+    if ('sqlite' === $dbms)
     {
       $this->getFilesystem()->chmod($dbname, 0666);
     }
@@ -114,7 +123,7 @@ EOF;
 
     if ($dbname)
     {
-      if ($dbms === 'sqlite')
+      if ('sqlite' === $dbms)
       {
         $data[] = $dbname;
       }
@@ -140,6 +149,7 @@ EOF;
     }
 
     $result .= implode(';', $data);
+
     return $result;
   }
 

@@ -57,8 +57,10 @@ foreach ($categories as $key => $value)
 <?php echo __('Please select the item that wants to be set from the menu.'); ?>
 <?php endif; ?>
 
-<div class="row span12" style="margin-left: 5px;">
+<div class="row">
+<ul class="nav nav-tabs nav-stacked">
 <?php foreach ($lists as $list): ?>
-<div class="span6" style="margin: 0px;"><?php echo $list; ?></div>
+<li><?php echo $list ?></li>
 <?php endforeach; ?>
+</ul>
 </div>

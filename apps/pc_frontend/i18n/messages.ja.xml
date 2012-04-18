@@ -1403,6 +1403,14 @@
         <source>There is no new notification.</source>
         <target>新しい通知はありません</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>%Community% does not exist.</source>
+        <target>%Community%がありません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Reset</source>
+        <target>リセット</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
