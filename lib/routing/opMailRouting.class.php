@@ -26,4 +26,14 @@ class opMailRouting extends sfPatternRouting
 
     return $url.'@'.sfConfig::get('op_mail_domain');
   }
+  
+  public function parse($url)
+  {
+    $separator = sfConfig::get('op_mail_route_separator');
+    if ('.' != $separator)
+    {
+      $url = str_replace($separator, '.', $url);
+    }
+    return parent::parse($url);
+  }
 }

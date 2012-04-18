@@ -19,7 +19,8 @@ class opMailRoute extends sfRoute
 {
   protected
     $member = null,
-    $nonAuth = false;
+    $nonAuth = false,
+    $separator = '.';
 
   public function __construct($pattern, array $defaults = array(), array $requirements = array(), array $options = array())
   {
@@ -29,6 +30,7 @@ class opMailRoute extends sfRoute
     {
       $this->nonAuth = $this->options['non_auth'];
     }
+    $this->separator = sfConfig::get('op_mail_route_separator', '.');
   }
 
   public function getMember()
@@ -86,6 +88,11 @@ class opMailRoute extends sfRoute
     foreach ($variables as $variable => $value)
     {
       $url = str_replace($value, urlencode($tparams[$variable]), $url);
+    }
+
+    if ('.' !== $this->separator)
+    {
+      $url = str_replace('.', $this->separator, $url);
     }
 
     return $url;

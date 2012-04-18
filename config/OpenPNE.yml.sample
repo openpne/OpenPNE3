@@ -22,6 +22,9 @@ is_mail_address_contain_hash: true
 # Length of hash for an e-mail address for posting
 mail_address_hash_length: 12
 
+#メールアドレスの区切り文字
+mail_route_separator: "."
+
 # SNS から送信するメールの Envelope From (Return-Path ヘッダ) に指定するアドレス (PHP の safe_mode が有効な環境では指定できません)
 # Envelope From (Return-Path header) address for sending e-mail from the SNS (cannot use if your PHP's safe_mode setting is on)
 #mail_envelope_from: "return@example.com"
