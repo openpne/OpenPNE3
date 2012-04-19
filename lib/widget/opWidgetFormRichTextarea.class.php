@@ -92,16 +92,16 @@ class opWidgetFormRichTextarea extends sfWidgetFormTextarea
     if (!editor) {
       if (previewmode_checked) {
         tinyMCE.execCommand('mceAddControl', false, id);
-        relational_objects.each(function(object){ object.hide(); });
+        relational_objects.hide();
       }
       return true;
     }
     if (editor.isHidden() && previewmode_checked) {
       editor.show();
-      relational_objects.each(function(object){ object.hide(); });
+      relational_objects.hide();
     } else if (!editor.isHidden() && textmode_checked) {
       editor.hide();
-      relational_objects.each(function(object){ object.show(); });
+      relational_objects.show();
     }
   }
 

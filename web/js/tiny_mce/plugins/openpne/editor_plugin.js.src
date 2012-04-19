@@ -154,12 +154,8 @@
                     });
 
                     // Emoji input action.
-                    Event.add(n, 'mousedown', function(e) {
-                        if (Prototype.Browser.IE) {
-                            tinyMCE.execCommand("mceInsertContent", false, e.srcElement.getAttribute("alt"));
-                        } else {
-                            tinyMCE.execCommand("mceInsertContent", false, e.element().getAttribute("alt"));
-                        }
+                    $(n).bind('mousedown', function(e) {
+                      tinyMCE.execCommand("mceInsertContent", false, $(this).attr("alt"));
                     });
                 }
             }
@@ -397,7 +393,7 @@
 
         _getTagName : function(elm) {
             var tagname = elm.nodeName.toLowerCase();
-            if (Prototype.Browser.WebKit && tagname == "span") {
+            if ($.browser.webkit && tagname == "span") {
                 if (elm.style.fontWeight == 'bold') { return 'b'; }
                 if (elm.style.textDecoration == 'underline') { return 'u'; }
                 if (elm.style.textDecoration == 'line-through') { return 's'; }
@@ -643,7 +639,7 @@
 
             rep(/<\/?div>/gi,"");  // for Safari
 
-            if (Prototype.Browser.IE) {
+            if ($.browser.msie) {
                 rep(/<(\/?):?op(b|u|s|i|font|large|small|color)/gi, '<$1op:$2');
             }
 

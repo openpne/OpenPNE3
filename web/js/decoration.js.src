@@ -10,6 +10,7 @@
  * decoration.js
  * 
  * @author Shogo Kawahara <kawahara@tejimaya.net>
+ * @author Kimura Youichi <kim.upsilon@bucyou.net>
  */
 
 function op_mce_insert_tagname(id, tagname, opt, start, end)
@@ -34,29 +35,29 @@ function op_mce_insert_tagname(id, tagname, opt, start, end)
 
 function op_mce_show_color_table(id, tagname)
 {
-  var table = document.getElementById(id + "_color_table");
-  var button = document.getElementById(id + "_button_op_color");
-  var button_container = document.getElementById(id + "_buttonmenu");
+  var table = $("#" + id + "_color_table");
+  var button = $("#" + id + "_button_op_color");
+  var button_container = $("#" + id + "_buttonmenu");
 
   function close_color_table(e)
   {
-    if (e && Element.hasClassName(e.element(), 'disabledHideColorTable')) {
+    if (e && $(this).hasClass('disabledHideColorTable')) {
       return;
     }
 
     table.hide();
-    Event.stopObserving(document, 'mousedown', close_color_table);
+    $(document).unbind('mousedown', close_color_table);
   }
 
-  if (table) {
-    if (!table.visible()) {
-      table.style.display = 'block';
-      Event.observe(document, 'mousedown', close_color_table);
+  if (table.length > 0) {
+    if (table.is(':hidden')) {
+      table.show();
+      $(document).bind('mousedown', close_color_table);
     }
     return;
   }
 
-  Event.observe(document, 'mousedown', close_color_table);
+  $(document).bind('mousedown', close_color_table);
 
   var color = null;
   var settings = {
@@ -65,8 +66,7 @@ function op_mce_show_color_table(id, tagname)
     default_color : "#888888"
   };
 
-  var tbody = document.createElement("tbody");
-  Element.addClassName(tbody, 'disabledHideColorTable');
+  var tbody = $("<tbody>", { "class": "disabledHideColorTable" });
 
   var tr;
 
@@ -74,61 +74,70 @@ function op_mce_show_color_table(id, tagname)
     var code = "#" + settings.colors[i];
 
     if (i === 0 || i % settings.grid_width === 0) {
-      tr = document.createElement("tr");
-      Element.addClassName(tr, 'disabledHideColorTable');
-      tbody.appendChild(tr);
+      tr = $("<tr>", { "class": "disabledHideColorTable" });
+      tbody.append(tr);
     }
 
-    var td = document.createElement("td");
-    td.style.border = "0 none";
-    td.style.width = "12px";
-    td.style.padding = "2px";
-    td.style.margin = "0";
-    Element.addClassName(td, 'disabledHideColorTable');
+    var td = $("<td>", {
+      "class": "disabledHideColorTable",
+      css: {
+        border: "0 none",
+        width: "12px",
+        padding: "2px",
+        margin: "0"
+      }
+    });
 
-    var a = document.createElement("a");
-    a.setAttribute("href", "#");
-    a.colorCode = code;
-    a.style.width = "9px";
-    a.style.height = "9px";
-    a.style.display = "block";
-    a.style.overflow = "hidden";
-    a.style.border = "1px solid #808080";
-    a.style.backgroundColor = "#" + settings.colors[i];
-    Element.addClassName(a, 'disabledHideColorTable');
-    a.onmousedown = function() {
-      op_mce_insert_tagname(id, tagname, ' color="' + this.colorCode + '"');
+    var a = $("<a>", {
+      href: "#",
+      data: { colorCode: code },
+      "class": "disabledHideColorTable",
+      css: {
+        width: "9px",
+        height: "9px",
+        display: "block",
+        overflow: "hidden",
+        border: "1px solid #808080",
+        backgroundColor: "#" + settings.colors[i]
+      }
+    });
+    a.mousedown(function() {
+      op_mce_insert_tagname(id, tagname, ' color="' + $(this).data('colorCode') + '"');
       close_color_table();
       return false;
-    };
+    });
 
-    var span = document.createElement("span");
-    span.style.display = "none";
-    span.appendChild(document.createTextNode(code));
+    var span = $("<span>", {
+      css: { display: "none" }
+    });
+    span.append(document.createTextNode(code));
 
-    a.appendChild(span);
-    td.appendChild(a);
-    tr.appendChild(td);
+    a.append(span);
+    td.append(a);
+    tr.append(td);
   }
 
-  table = document.createElement("table");
-  table.id = id + "_color_table";
-  table.style.width = "auto";
-  table.style.position = "absolute";
-  table.style.zIndex = 150;
-  table.style.border = "1px solid gray";
-  table.style.backgroundColor = "#fff";
-  table.appendChild(tbody);
-  Element.addClassName(table, 'disabledHideColorTable');
+  table = $("<table>", {
+    id: id + "_color_table",
+    "class": "disabledHideColorTable",
+    css: {
+      width: "auto",
+      position: "absolute",
+      zIndex: 150,
+      border: "1px solid gray",
+      backgroundColor: "#fff"
+    }
+  });
+  table.append(tbody);
 
-  button_container.appendChild(table);
-  button_container.style.position = "relative";
-  button.style.display = "inline-block";
+  button_container.append(table);
+  button_container.css("position", "relative");
+  button.css("display", "inline-block");
 
-  var buttonContainerPosition = Position.cumulativeOffset(button_container);
-  var buttonPosition = Position.cumulativeOffset(button);
-  table.style.left = buttonPosition[0] - buttonContainerPosition[0] + "px";
-  table.style.top  = buttonPosition[1] - buttonContainerPosition[1] + button.offsetHeight + "px";
+  var buttonContainerPosition = button_container.offset();
+  var buttonPosition = button.offset();
+  table.css("left", buttonPosition.left - buttonContainerPosition.left + "px");
+  table.css("top",  buttonPosition.top - buttonContainerPosition.top + button.offsetHeight + "px");
 }
 
 function op_insert_str_to_selection(elm, str, start, end)
