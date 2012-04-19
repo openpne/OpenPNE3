@@ -39,7 +39,7 @@
   <label class="control-label"><?php echo $cf->renderLabel() ?></label>
   <div class="controls">
     <?php if ($cf->hasError()): ?>
-    <span class="label label-important label-block"><?php echo __($cf->getError()); ?></span>
+    <span class="label label-important label-block"><?php echo __($cf->renderError()); ?></span>
     <?php endif ?>
     <?php echo $cf->render(array('class' => 'span12')) ?>
     <span class="help-block"><?php echo $cf->renderHelp(); ?></span>    
@@ -56,7 +56,7 @@
   <label class="control-label"><?php echo $ccf->renderLabel() ?></label>
   <div class="controls">
     <?php if ($ccf->hasError()): ?>
-    <span class="label label-important label-block"><?php echo __($ccf->getError()); ?></span>
+    <span class="label label-important label-block"><?php echo __($ccf->renderError()); ?></span>
     <?php endif ?>
     <?php echo $ccf->render(array('class' => 'span12')) ?>
     <span class="help-block"><?php echo $ccf->renderHelp(); ?></span>    
@@ -73,7 +73,7 @@
   <label class="control-label"><?php echo $cff->renderLabel() ?></label>
   <div class="controls">
     <?php if ($cff->hasError()): ?>
-    <span class="label label-important label-block"><?php echo __($cff->getError()); ?></span>
+    <span class="label label-important label-block"><?php echo __($cff->renderError()); ?></span>
     <?php endif ?>
     <?php echo $cff->render(array('class' => 'span12')) ?>
     <span class="help-block"><?php echo $cff->renderHelp(); ?></span>    

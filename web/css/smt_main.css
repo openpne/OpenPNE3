@@ -19,6 +19,11 @@ label {
   margin-bottom: 5px;
 }
 
+ul.error_list {
+  list-style: none;
+  margin: 0px;
+}
+
 .input-prepend input[class*="span"], .input-append input[class*="span"] {
   width: auto;
 }
