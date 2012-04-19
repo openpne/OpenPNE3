@@ -32,7 +32,7 @@
       <label class="control-label"><?php echo $mf->renderLabel() ?></label>
       <div class="controls">
         <?php if ($mf->hasError()): ?>
-        <span class="label label-important label-block"><?php echo __($mf->getError()); ?></span>
+        <span class="label label-important label-block"><?php echo __($mf->renderError()); ?></span>
         <?php endif ?>
         <?php echo $mf->render(array('class' => 'span12')) ?>
         <span class="help-block"><?php echo $mf->renderHelp(); ?></span>    
@@ -50,7 +50,7 @@
       <label class="control-label"><?php echo $pf->renderLabel() ?></label>
       <div class="controls">
         <?php if ($pf->hasError()): ?>
-        <span class="label label-important label-block"><?php echo __($pf->getError()); ?></span>
+        <span class="label label-important label-block"><?php echo __($pf->renderError()); ?></span>
         <?php endif ?>
         <?php if ($pf->getWidget()->getOption('widget') instanceof sfWidgetFormDate): ?>
         <?php echo $pf->render(array('class' => 'span4')) ?>

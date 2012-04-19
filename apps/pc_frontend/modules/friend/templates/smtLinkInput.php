@@ -13,7 +13,7 @@
         <label class="control-label"><?php echo $field->renderLabel() ?></label>
         <div class="controls">
         <?php if ($field->hasError()): ?>
-        <span class="label label-important label-block"><?php echo __($field->getError()); ?></span>
+        <span class="label label-important label-block"><?php echo __($field->renderError()); ?></span>
         <?php endif ?>
         <?php echo $field->render(array('class' => 'span12')) ?>
         <span class="help-block"><?php echo $field->renderHelp(); ?></span>    

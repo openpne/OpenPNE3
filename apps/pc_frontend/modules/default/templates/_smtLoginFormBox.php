@@ -27,7 +27,7 @@
   </div>
   <div class="span3 <?php echo $field->hasError() ? 'clearfix error' : '' ?>">
     <?php if ($field->hasError()): ?>
-    <span class="label label-important"><?php echo __($field->getError()); ?>
+    <span class="label label-important"><?php echo __($field->renderError()); ?>
     <?php endif; ?>
     <?php echo $field->render(); ?>
     <span class="help-block"><?php echo $field->renderHelp(); ?></span>
@@ -41,7 +41,7 @@
   </div>
   <div class="span12 <?php echo $field->hasError() ? 'clearfix error' : '' ?>">
     <?php if ($field->hasError()): ?>
-    <span class="label label-important"><?php echo __($field->getError()) ?></span>
+    <span class="label label-important"><?php echo __($field->renderError()) ?></span>
     <?php endif ?>
     <?php if (in_array($field->getWidget()->getOption('type'), array('text', 'password'))): ?>
     <?php echo $field->render(array('class' => 'span12')); ?>
