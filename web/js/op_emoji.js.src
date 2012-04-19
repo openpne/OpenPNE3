@@ -1,8 +1,10 @@
-var opEmoji = Class.create();
-opEmoji.prototype = {
-  id : null,
-  useAu : false,
-  useSb : false,
+(function($) {
+
+$.widget("openpne.opEmoji", {
+  options: {
+    useAu: false,
+    useSb: false
+  },
   
   palletList : {
     docomo : {
@@ -22,19 +24,14 @@ opEmoji.prototype = {
     }
   },
 
-  initialize: function(id)
+  _create: function()
   {
-    this.id = id;
-  },
-
-  createEmojiPallet: function()
-  {
-    document.write('<div id="' + this.id + '_epDocomo" style="display:none;"></div>');
-    if (this.useAu) {
-      document.write('<div id="' + this.id + '_epAu" style="display:none"></div>');
+    this.element.before('<div id="' + this.element.attr('id') + '_epDocomo" style="display:none;"></div>');
+    if (this.options.useAu) {
+      this.element.before('<div id="' + this.element.attr('id') + '_epAu" style="display:none"></div>');
     }
-    if (this.useSb) {
-      document.write('<div id="' + this.id + '_epSb" style="display:none"></div>');
+    if (this.options.useSb) {
+      this.element.before('<div id="' + this.element.attr('id') + '_epSb" style="display:none"></div>');
     }
   },
 
@@ -42,11 +39,10 @@ opEmoji.prototype = {
   {
     var pl = this.palletList[carrier];
     var emoji_set = pl.emoji;
-    var textareaId = this.id;
-    var palletId   = this.id + '_' + pl.id;
-    var div = $(palletId);
+    var textarea = $('#' + this.element.attr('id'));
+    var pallet = $('#' + this.element.attr('id') + '_' + pl.id);
 
-    Element.addClassName(palletId, "isLoadEmojiImage");
+    pallet.addClass('isLoadEmojiImage');
 
     for (var num in emoji_set) {
       var emoji = emoji_set[num];
@@ -60,64 +56,51 @@ opEmoji.prototype = {
         img.setAttribute("alt", alt);
         img.onclick = function () {
             var emoji_code = this.getAttribute("alt");
-            op_insert_str_to_selection($(textareaId), emoji_code);
+            op_insert_str_to_selection(textarea, emoji_code);
         };
 
-        div.appendChild(img);
+        pallet.append(img);
       }
     }
 
-    Element.removeClassName(palletId, "processLoadEmojiImage");
+    pallet.removeClass('processLoadEmojiImage');
   },
 
-  togglePallet: function(pallet)
+  togglePallet: function(pallet_name)
   {
-    var id = this.id + '_' + pallet;
-    if ($(id).style.display == "none") {
-      if (!Element.hasClassName(id, 'isLoadEmojiImage')) {
-        Element.addClassName(id, "processLoadEmojiImage");
+    var pallet = $('#' + this.element.attr('id') + '_' + pallet_name);
+    if (pallet.is(':hidden')) {
+      if (pallet.is(':not(.isLoadEmojiImage)')) {
+        pallet.addClass('processLoadEmojiImage');
         var carrier = '';
-        if (pallet == 'epDocomo') {
+        if (pallet_name === 'epDocomo') {
             carrier = 'docomo';
         }
-        if (pallet == 'epAu') {
+        if (pallet_name === 'epAu') {
             carrier = 'au';
         }
-        if (pallet == 'epSb') {
+        if (pallet_name === 'epSb') {
             carrier = 'softbank';
         }
         this.renderEmojiPallet(carrier);
       }
-      if (Element.hasClassName(id, 'processLoadEmojiImage')) {
-        return this.togglePallet(pallet);
+      if (pallet.is('.processLoadEmojiImage')) {
+        return this.togglePallet(pallet_name);
       }
       this.closeAllEmojiPallet();
-      Element.show(id);
+      pallet.show();
     } else {
-      Element.hide(id);
+      pallet.hide();
     }
   },
 
   closeAllEmojiPallet: function()
   {
-    if ($(this.id + "_epDocomo")) {
-      Element.hide($(this.id + "_epDocomo"));
-    }
-    if ($(this.id + "_epAu")) {
-      Element.hide($(this.id + "_epAu"));
-    }
-    if ($(this.id + "epSb")) {
-      Element.hide($(this.id + "_epSb"));
-    }
+    var id = this.element.attr('id');
+    $('#' + id + '_epDocomo,' +
+      '#' + id + '_epAu,' +
+      '#' + id + '_epSb').hide();
   }
-}
-
-Object.extend(opEmoji, {
-    instances : {},
-    getInstance : function(id) {
-        if (!this.instances[id]) {
-            this.instances[id] = new opEmoji(id);
-        }
-        return this.instances[id];
-    }
 });
+
+})(jQuery);
