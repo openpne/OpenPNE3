@@ -14,6 +14,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo url_for('@customizing_css') ?>" />
 <?php endif ?>
 <meta name="viewport" content="width=320px,user-scalable=no" />
+<?php if (opConfig::get('enable_jsonapi') && opToolkit::isSecurePage()): ?>
 <?php
 $json = array(
   'apiKey' => opToolkit::isSecurePage() ? $sf_user->getMemberApiKey() : '',
@@ -24,6 +25,7 @@ echo javascript_tag('
 var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PRINT : 0).';
 ')
 ?>
+<?php endif ?>
 <?php use_javascript('jquery.min.js') ?>
 <?php use_javascript('jquery.tmpl.min.js') ?>
 <?php use_javascript('smt_main') ?>

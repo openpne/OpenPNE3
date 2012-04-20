@@ -18,7 +18,7 @@ CommunityConfig:
   description:
     community_id: 1
     name: "description"
-    value: "このコミュニティはSNSメンバー全員を含んでいます。"
+    value: "全員参加のコミュニティです。"
   is_send_pc_joinCommunity_mail:
     community_id: 1
     name: "is_send_pc_joinCommunity_mail"

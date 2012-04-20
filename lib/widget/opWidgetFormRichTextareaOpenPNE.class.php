@@ -36,7 +36,7 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
   static protected $useButtons = null;
 
   static protected $buttonOnclickActions = array(
-    'op_emoji_docomo' => 'opEmoji.getInstance("%id%").togglePallet("epDocomo");',
+    'op_emoji_docomo' => '$("#%id%").opEmoji("togglePallet", "epDocomo");',
     'op_large' => 'op_mce_insert_tagname("%id%", "op:font", \' size="5"\');',
     'op_small' => 'op_mce_insert_tagname("%id%", "op:font", \' size="1"\');',
     'op_color' => 'op_mce_show_color_table("%id%", "op:font");'
@@ -227,7 +227,8 @@ class opWidgetFormRichTextareaOpenPNE extends opWidgetFormRichTextarea
     if (self::$isFirstRenderOpenPNE)
     {
       sfProjectConfiguration::getActive()->loadHelpers('Partial');
-      sfContext::getInstance()->getResponse()->addJavascript('/sfProtoculousPlugin/js/prototype');
+      sfContext::getInstance()->getResponse()->addJavascript('jquery.min.js');
+      sfContext::getInstance()->getResponse()->addJavascript('jquery-ui.min.js');
       sfContext::getInstance()->getResponse()->addJavascript('op_emoji');
       sfContext::getInstance()->getResponse()->addJavascript('Selection');
       sfContext::getInstance()->getResponse()->addJavascript('decoration');

@@ -41,7 +41,7 @@ foreach ($categories as $key => $value)
   <label class="control-label"><?php echo $f->renderLabel() ?></label>
   <div class="controls">
     <?php if ($f->hasError()): ?>
-    <span class="label label-important label-block"><?php echo __($f->getError()); ?></span>
+    <span class="label label-important label-block"><?php echo __($f->renderError()); ?></span>
     <?php endif ?>
     <?php echo $f->render(array('class' => 'span12')) ?>
     <span class="help-block"><?php echo $f->renderHelp(); ?></span>    

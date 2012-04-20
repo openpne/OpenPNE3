@@ -22,3 +22,6 @@ registerMobileToRegisterEndFinish:
 
 profile:
   is_secure: both
+
+smtProfile:
+  is_secure: both

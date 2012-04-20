@@ -1,0 +1,102 @@
+Navigation:
+  smartphone_default_navigation_home:
+    type: "smartphone_default"
+    uri: "@homepage"
+    sort_order: 0
+    Translation:
+      ja_JP:
+        caption: "マイホーム"
+      en:
+        caption: "My Home"
+
+  smartphone_default_navigation_profile_confirm:
+    type: "smartphone_default"
+    uri: "@member_profile_mine"
+    sort_order: 10
+    Translation:
+      ja_JP:
+        caption: "プロフィール確認"
+      en:
+        caption: "Profile"
+
+  smartphone_default_navigation_member_search:
+    type: "smartphone_default"
+    uri: "@member_search"
+    sort_order: 20
+    Translation:
+      ja_JP:
+        caption: "メンバー検索"
+      en:
+        caption: "Member Search"
+
+  smartphone_default_navigation_community_search:
+    type: "smartphone_default"
+    uri: "@community_search"
+    sort_order: 30
+    Translation:
+      ja_JP:
+        caption: "コミュニティ検索"
+      en:
+        caption: "Community Search"
+
+  smartphone_default_navigation_logout:
+    type: "smartphone_default"
+    uri: "@member_logout"
+    sort_order: 40
+    Translation:
+      ja_JP:
+        caption: "ログアウト"
+      en:
+        caption: "Logout"
+
+  smartphone_insecure_navigation_privacy_policy:
+    type: "smartphone_insecure"
+    uri: "@global_privacy_policy"
+    sort_order: 30
+    Translation:
+      ja_JP:
+        caption: "プライバシーポリシー"
+      en:
+        caption: "Privacy Policy"
+
+  smartphone_insecure_navigation_user_agreement:
+    type: "smartphone_insecure"
+    uri: "@global_user_agreement"
+    sort_order: 40
+    Translation:
+      ja_JP:
+        caption: "利用規約"
+      en:
+        caption: "User Agreement"
+
+Gadget:
+  smartphone_profile_gadget_profile:
+    type: "smartphoneProfileContents"
+    name: "profileListBox"
+    sort_order: 10
+
+  smartphone_profile_member_list:
+    type: "smartphoneProfileContents"
+    name: "memberFriendListBox"
+    sort_order: 100
+
+  smartphone_profile_join_community_list:
+    type: "smartphoneProfileContents"
+    name: "memberJoinCommunityListBox"
+    sort_order: 110
+
+  smartphone_community_gadget_community:
+    type: "smartphoneCommunityContents"
+    name: "communityListBox"
+    sort_order: 10
+
+  smartphone_community_gadget_join_member_list:
+    type: "smartphoneCommunityContents"
+    name: "communityMemberJoinListBox"
+    sort_order: 100
+
+  smartphone_login_gadget_login_form_box:
+    type: "smartphoneLoginContents"
+    name: "loginForm"
+    sort_order: 10
+

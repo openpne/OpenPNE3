@@ -25,7 +25,7 @@
 </div>
 <div class="span12 <?php echo $f->hasError() ? 'clearfix error' : '' ?>">
   <?php if ($f->hasError()): ?>
-  <span class="label label-important"><?php echo __($f->getError()) ?></span><br />
+  <span class="label label-important"><?php echo __($f->renderError()) ?></span><br />
   <?php endif ?>
   <?php echo $f->render(array('class' => 'span12')) ?>
   <span class="help-block"><?php echo $f->renderHelp() ?></span>
