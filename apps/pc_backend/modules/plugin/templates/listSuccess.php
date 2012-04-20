@@ -37,8 +37,5 @@
 </form>
 <?php endif; ?>
 
-<h2><?php echo __('プラグインの追加') ?></h2>
-
-<p><?php echo __('プラグインはプラグイン配布ページからダウンロードすることができます。') ?></p>
-<p><?php echo __('ダウンロードしたファイルを解凍し、サーバ上の plugins ディレクトリにアップロードすることでプラグインがインストールできます。') ?></p>
-<p><?php echo __('また、 opPlugin:install コマンドを実行することでもインストール可能です。') ?></p>
+<h2><?php echo __('Install a plugin'); ?></h2>
+<?php include_component('plugin', 'install'); ?>
