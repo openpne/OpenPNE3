@@ -1429,6 +1429,35 @@
         <source>Full Size</source>
         <target>フルサイズ</target>
       </trans-unit>
+
+      <trans-unit id="">
+        <source>Install a plugin</source>
+        <target>プラグインの追加</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Uninstall a plugin</source>
+        <target>プラグインの削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The plugin was installed successfully.</source>
+        <target>プラグインの追加が完了しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The plugin was uninstalled successfully.</source>
+        <target>プラグインの削除が完了しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do uninstall</source>
+        <target>アンインストール実行</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do install</source>
+        <target>インストール実行</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Are you sure to uninstall %plugin% ?</source>
+        <target>本当に%plugin%を削除しますか？</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

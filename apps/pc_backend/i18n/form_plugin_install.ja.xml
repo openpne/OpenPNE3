@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Name</source>
+        <target>プラグイン名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Version</source>
+        <target>バージョン</target>
+      </trans-unit>
+
+
+      <trans-unit id="">
+        <source>Required.</source>
+        <target>必須項目です。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Plugin not found.</source>
+        <target>プラグインが見つかりません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>No stable version available. Please specify a version.</source>
+        <target>安定版が存在しません。非安定版をインストールする場合は、バージョン番号を指定してください。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
