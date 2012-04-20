@@ -83,7 +83,7 @@ class PluginActivationForm extends sfForm
         $widget->renderContentTag('td', $input['label']).
         $widget->renderContentTag('td', sfWidget::escapeOnce($plugin->getVersion())).
         $widget->renderContentTag('td', sfWidget::escapeOnce($plugin->getSummary())).
-        $widget->renderContentTag('td', ($plugin->hasBackend()) ? link_to(__('Setting'), $plugin->getName().'/index') : '')
+        $widget->renderContentTag('td', (($plugin->hasBackend()) ? link_to(__('Setting'), $plugin->getName().'/index').' | ' : '').link_to(__('Delete'), 'plugin/uninstall?name='.$plugin->getName()))
       );
     }
     return !$rows ? '' : implode($widget->getOption('separator'), $rows);
