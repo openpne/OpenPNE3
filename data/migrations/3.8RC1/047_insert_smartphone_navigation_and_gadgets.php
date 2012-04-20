@@ -8,7 +8,7 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-class Revision47_InsertSmaertphoneNavigation extends Doctrine_Migration_Base
+class Revision47_InsertSmaertphoneNavigationAndGadgets extends Doctrine_Migration_Base
 {
   public function up()
   {
