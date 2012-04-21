@@ -17,6 +17,10 @@
         <target>必須項目です。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>The plugin is already installed.</source>
+        <target>プラグインはすでにインストール済みです。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Plugin not found.</source>
         <target>プラグインが見つかりません。</target>
       </trans-unit>

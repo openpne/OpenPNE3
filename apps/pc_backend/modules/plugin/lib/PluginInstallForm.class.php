@@ -26,18 +26,28 @@ class PluginInstallForm extends BaseForm
   {
     if(isset($values['name']))
     {
-      $manager = new opPluginManager(sfContext::getInstance()->getEventDispatcher());
+      //whether the plugin is already installed
+      if(in_array($values['name'], sfContext::getInstance()->getConfiguration()->getAllPlugins()))
+      {
+        throw new sfValidatorErrorSchema($validator, array('name' => new sfValidatorError($validator, 'The plugin is already installed.')));
+      }
+      
+      $manager = new opPluginManager(sfContext::getInstance()->getEventDispatcher(), null, opPluginManager::getDefaultPluginChannelServerName());
+      $manager->getEnvironment()->getRest()->setChannel(opPluginManager::getDefaultPluginChannelServerName());
+      
+      //whether the plugin exists in channel
       $info = $manager->retrieveChannelXml('p/'.strtolower($values['name']).'/info.xml');
       if(!$info)
       {
         throw new sfValidatorErrorSchema($validator, array('name' => new sfValidatorError($validator, 'Plugin not found.')));
       }
       
+      //whether the plugin has stable release when no version specified
       if(empty($values['version']))
       {
         try
         {
-          $version = $manager->getPluginVersion($values['name']);
+          $manager->getPluginVersion($values['name'], 'stable');
         }
         catch(Exception $e)
         {
