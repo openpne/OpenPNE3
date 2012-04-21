@@ -38,4 +38,5 @@
 <?php endif; ?>
 
 <h2><?php echo __('Install a plugin'); ?></h2>
+<p><?php echo link_to('Find a plugin.', 'http://plugins.openpne.jp', 'target=_blank'); ?></p>
 <?php include_component('plugin', 'install'); ?>

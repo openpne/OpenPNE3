@@ -1458,6 +1458,10 @@
         <source>Are you sure to uninstall %plugin% ?</source>
         <target>本当に%plugin%を削除しますか？</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Find a plugin.</source>
+        <target>プラグインを探す</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
