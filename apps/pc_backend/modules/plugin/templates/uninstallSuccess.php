@@ -6,6 +6,6 @@
 <form action="<?php echo url_for('plugin/uninstall?name='.$name); ?>" method="post">
 <?php echo $form; ?>
 
-<input type="submit" value="<?php echo __('Uninstall'); ?>" class="input_submit" />
+<input type="submit" value="<?php echo __('Do uninstall'); ?>" class="input_submit" />
 <?php echo button_to(__('Back'), 'plugin/list', 'class=input_submit'); ?>
 </form>
