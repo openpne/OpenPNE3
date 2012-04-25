@@ -21,7 +21,7 @@ freeArea:
 
 communityListBox:
   caption:
-    ja_JP: "コミュニティ"
+    ja_JP: "プロフィール"
   description:
     ja_JP: "コミュニティ情報のリストを表示します"
   viewable_privilege: 4

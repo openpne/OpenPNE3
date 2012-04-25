@@ -29,14 +29,14 @@ profileListBox:
 
 memberFriendListBox:
   caption:
-    ja_JP: "メンバーフレンド一覧"
+    ja_JP: "フレンド一覧"
   description:
     ja_JP: "メンバーのフレンド一覧を表示します"
   component: [member, smtMemberFriendListBox]
 
 memberJoinCommunityListBox:
   caption:
-    ja_JP: "メンバーコミュニティ参加者一覧"
+    ja_JP: "コミュニティ一覧"
   description:
     ja_JP: "メンバーが参加しているコミュニティの一覧を表示します"
   component: [member, smtMemberJoinCommunityListBox]
