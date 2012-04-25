@@ -1,10 +1,10 @@
-OpenPNE3.6 Update Process
+OpenPNE3.8 Update Process
 =========================
 
 Introduction
 ------------
 
-This document is for all of the version OpenPNE 3.2.0 or later to OpenPNE 3.6.x.
+This document is for all of the version OpenPNE 3.2.0 or later to OpenPNE 3.8.x.
 
 ※You should backup database before updating.
 
@@ -23,14 +23,14 @@ Update process
 Setting Files
 ~~~~~~~~~~~~~
 
-Set the OpenPNE 3.6 files to your web server.
+Set the OpenPNE 3.8 files to your web server.
 
 Avoiding problems with mixing the old and new files, you have to change all of the files instead of overwriting.
 
 Update the Configuration File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Copy config files in OpenPNE 3.6 as follows:
+Copy config files in OpenPNE 3.8 as follows:
 
 ::
 
