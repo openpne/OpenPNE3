@@ -55,9 +55,9 @@ Gadget:
     sort_order: 30
 
   profile_gadget_profile:
-    type: "profileContents"
+    type: "profileSideMenu"
     name: "profileListBox"
-    sort_order: 10
+    sort_order: 15
 
   mobile_profile_gadget_friend_table:
     type: "mobileProfileBottom"
