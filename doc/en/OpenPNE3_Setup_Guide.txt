@@ -1,11 +1,11 @@
 ========================
-OpenPNE3.6 Setup Process
+OpenPNE3.8 Setup Process
 ========================
 
 Introduction
 ============
 
-This document is for OpenPNE 3.6.
+This document is for OpenPNE 3.8.
 
 OpenPNE 3 should work under the following server environment.
 
@@ -89,6 +89,12 @@ Execute the following command to begin installing process.
   $ ./symfony openpne:install
   
 This command deletes the database and rebuild it. 
+NOTE: The above command does not download and install bundled plugins. If you download and install these plugins, you should add --internet option as follows.
+
+::
+
+  $ ./symfony openpne:install --internet
+
 If you don't want to delete your specified database -- for example, OpenPNE will share the database with other systems, execute that command with the following option.
 
 ::
@@ -114,7 +120,17 @@ After Running "openpne:install", you will be required inputting the following:
 * The Database Port Number(optional)
 * (If you inputted "MySQL" for the DBMS and "localhost" for the hostname)The Database Socket Path(optional)
 
-After that OpenPNE automatically is installed.
+After that OpenPNE is installed automatically.
+
+You can also specify the above items of the database as the arguments and
+install OpenPNE.
+The following command is an usage example. So you should change to suitable items.
+
+::
+
+ $ ./symfony openpne:fast-install --dbms=mysql --dbuser=username --dbpassword=password --dbhost=localhost --dbport=10 --dbname=databasename --dbsock=/tmp/mysql.sock
+
+NOTE: The above command does not download and install bundled plugins. If you download and install these plugins, you should add '--internet' option.
 
 Delete the Development Files
 ----------------------------
