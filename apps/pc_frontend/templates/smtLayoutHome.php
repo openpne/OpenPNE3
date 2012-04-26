@@ -10,9 +10,6 @@
 <?php op_smt_use_stylesheet('bootstrap') ?>
 <?php op_smt_use_stylesheet('smt_main') ?>
 <?php op_smt_include_stylesheets() ?>
-<?php if (Doctrine::getTable('SnsConfig')->get('customizing_css')): ?>
-<link rel="stylesheet" type="text/css" href="<?php echo url_for('@customizing_css') ?>" />
-<?php endif ?>
 <meta name="viewport" content="width=320px,user-scalable=no" />
 <?php if (opConfig::get('enable_jsonapi') && opToolkit::isSecurePage()): ?>
 <?php
