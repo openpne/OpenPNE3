@@ -112,34 +112,4 @@ class snsActions extends sfActions
       $this->redirect('sns/cache');
     }
   }
-
-  public function executeRichTextarea(sfWebRequest $request)
-  {
-    $this->sortForm = new BaseForm();
-    $this->configForm = new opRichTextareaOpenPNEConfigForm();
-    $this->buttonConfigForm = new opRichTextareaOpenPNEButtonConfigForm();
-    $this->buttonConfig = opWidgetFormRichTextareaOpenPNE::getAllButtons();
-    if ($request->isMethod(sfWebRequest::POST))
-    {
-      $this->configForm->bind($request->getParameter('config'));
-      $this->buttonConfigForm->bind($request->getParameter('button'));
-      if ($this->configForm->isValid() && $this->buttonConfigForm->isValid())
-      {
-        $this->configForm->save();
-        $this->buttonConfigForm->save();
-      }
-    }
-  }
-
-  public function executeChangeRichTextareaButtonOrder(sfWebRequest $request)
-  {
-    if ($request->isXmlHttpRequest())
-    {
-      $request->checkCSRFProtection();
-
-      $buttons = $request->getParameter('button');
-      Doctrine::getTable('SnsConfig')->set('richtextarea_buttons_sort_order', serialize($buttons));
-    }
-    return sfView::NONE;
-  }
 }

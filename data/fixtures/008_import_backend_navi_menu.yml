@@ -89,10 +89,20 @@ Navigation:
       en:
         caption: "Plugins"
 
+  backend_side_advanced_config:
+    type: "backend_side"
+    uri:  "advanced/config"
+    sort_order: 90
+    Translation:
+      ja_JP:
+        caption: "上級者向け設定"
+      en:
+        caption: "Advanced Settings"
+
   backend_side_admin:
     type: "backend_side"
     uri:  "admin/index"
-    sort_order: 90
+    sort_order: 100
     Translation:
       ja_JP:
         caption: "管理画面設定"
