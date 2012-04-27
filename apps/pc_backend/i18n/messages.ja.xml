@@ -1469,6 +1469,10 @@
         <source>Full Size</source>
         <target>フルサイズ</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Advanced Settings</source>
+        <target>上級者向け設定</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
