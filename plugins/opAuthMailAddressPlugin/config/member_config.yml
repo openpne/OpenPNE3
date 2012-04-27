@@ -1,0 +1,32 @@
+secretQuestion:
+  _attributes:
+    caption:       "Secret Question Configuration"
+    enable_pc:     true
+    enable_mobile: true
+  secret_question:
+    Name:       "secret_question"
+    Caption:    "Secret Question"
+    FormType:   "select"
+    ValueType:  "integer"
+    IsRegist:   false
+    IsConfig:   true
+    IsUnique:   false
+    IsRequired: true
+    IsConfirm:  false
+    Choices:
+      1 : "What is your father's / mother's former name?"
+      2 : "What is last 5 digits of your driving license number?"
+      3 : "What is your first crush's name?"
+      4 : "What is your finished elementary school?"
+      5 : "What is region name of your domicile of origin?"
+
+  secret_answer:
+    Name:       "secret_answer"
+    Caption:    "Answer for Secret Question"
+    FormType:   "password"
+    ValueType:  "text"
+    IsRegist:   false
+    IsConfig:   true
+    IsUnique:   false
+    IsRequired: true
+    IsConfirm:  false
