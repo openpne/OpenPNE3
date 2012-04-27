@@ -1,0 +1,22 @@
+# dependencies.yml
+#
+# Definition of the dependency on this plugin (プラグインの依存性を定義します)
+#
+# Note: Dependency with OpenPNE is supported from OpenPNE 3.5.1. Before 3.5.1, OpenPNE can't install a plugin that defines such a dependency.
+# (注意: OpenPNE との依存性は 3.5.1 からサポートされました。 3.5.1 以前のバージョンでは、 OpenPNE はそのような依存性が定義されたプラグインをインストールできません)
+#
+# See:  http://pear.php.net/manual/en/guide.developers.package2.dependencies.php
+
+# PEAR installer dependency (PEAR インストーラの依存性)
+pearinstaller:
+  min: 1.4.0
+
+# PHP dependency (PHP の依存性)
+php:
+  min: 5.2.3
+
+# Package dependency (パッケージの依存性)
+package:
+  openpne: # The dependency with OpenPNE. (OpenPNE との依存性)
+    channel: plugins.openpne.jp
+    min: "3.5.2dev"
