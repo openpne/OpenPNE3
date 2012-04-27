@@ -141,6 +141,10 @@ EOF;
     {
       $this->installPlugins();
     }
+    else
+    {
+      $pluginManager = new opPluginManager($this->dispatcher, null, null);
+    }
     @$this->fixPerms();
     @$this->clearCache();
     if (!$options['redo'])
