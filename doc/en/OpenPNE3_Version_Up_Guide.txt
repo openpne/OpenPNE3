@@ -4,7 +4,7 @@ OpenPNE3.8 Update Process
 Introduction
 ------------
 
-This document is for all of the version OpenPNE 3.2.0 or later to OpenPNE 3.8.x.
+This document is for all of the version OpenPNE 3.4.0 or later to OpenPNE 3.8.x.
 
 ※You should backup database before updating.
 
