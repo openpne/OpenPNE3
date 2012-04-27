@@ -178,6 +178,7 @@ advanced:
   enable_jsonapi:
     Name:      "enable_jsonapi"
     Caption:   "JSON API 使用設定"
+    Help:      "JSON API を有効にするかを設定します。<br /><span style=\"color: #FF0000;\">【警告】この設定をOFFにするとPC版やスマートフォン版の一部機能が利用できなくなります。設定には十分注意してください。</span>"
     FormType:  "radio"
     ValueType: "text"
     IsRequired: true
