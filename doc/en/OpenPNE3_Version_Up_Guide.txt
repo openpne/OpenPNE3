@@ -115,7 +115,7 @@ Here are some notes in updating.
     - Activity Post
     - JSON API
     - OpenID Provider
-    - Daily News Incoming Frequency
+    - Daily News Receiving Frequency
     - Public Flag for Age to Entire Web settings
     - Public Flag for Member's Profile settings
     - Rich Text Area settings
