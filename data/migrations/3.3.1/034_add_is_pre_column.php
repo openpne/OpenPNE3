@@ -15,7 +15,7 @@ class Revision34_AddIsPreColumn extends Doctrine_Migration_Base
     $this->column($direction, 'community_member', 'is_pre', 'boolean', null, array(
       'default' => 0,
       'notnull' => true,
-      'comment' => 'Member\\\'s position in this community',
+      'comment' => 'Member\'\'s position in this community',
     ));
   }
 

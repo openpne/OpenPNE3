@@ -4,7 +4,7 @@ OpenPNE3.8 Update Process
 Introduction
 ------------
 
-This document is for all of the version OpenPNE 3.2.0 or later to OpenPNE 3.8.x.
+This document is for all of the version OpenPNE 3.4.0 or later to OpenPNE 3.8.x.
 
 ※You should backup database before updating.
 
@@ -109,3 +109,16 @@ Here are some notes in updating.
   * Language and Time Zone Configuration
   * Connecting with External Application
   * OpenID Configuration
+
+* Some features of the admin screen go to 'Advanced Settings' since OpenPNE 3.8.0. These features are:
+  * SNS > General Configuration
+    - Activity Post
+    - JSON API
+    - OpenID Provider
+    - Daily News Receiving Frequency
+    - Public Flag for Age to Entire Web settings
+    - Public Flag for Member's Profile settings
+    - Rich Text Area settings
+
+  * SNS > Mobile-related
+  * SNS > API Key
