@@ -109,10 +109,6 @@ http://www.openpne.jp/pne-downloads/
 
   table_prefix: "op_" 
 
-::
-
-  $ ./symfony openpne:install --internet
-
 openpne:install コマンドを実行すると、はじめに、以下の事項の入力を求められます。
 
 * 使用する DBMS （mysql, pgsql, sqlite から選択。ただし mysql
