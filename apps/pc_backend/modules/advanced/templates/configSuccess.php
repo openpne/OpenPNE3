@@ -11,7 +11,7 @@ $caption = !empty($categoryAttributes[$category]['Caption']) ? $categoryAttribut
 
 <p><?php echo __('※「設定変更」ボタンを押すと設定が反映されます。') ?></p>
 
-<?php if ($category === 'authentication') : ?>
+<?php if ('authentication' === $category) : ?>
 <p><?php echo __('※認証に関する個別の設定は、「プラグイン設定」からおこなってください。') ?></p>
 <?php endif; ?>
 
