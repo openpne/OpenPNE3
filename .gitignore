@@ -4,7 +4,6 @@ log/*
 plugins/op*
 !plugins/opAuthMailAddressPlugin
 !plugins/opSkinBasicPlugin
-!plugins/opSkinClassicPlugin
 plugins/.*
 lib/filter/doctrine/*
 cache/*
