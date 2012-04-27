@@ -17,8 +17,6 @@
 class opWebResponse extends sfWebResponse
 {
   protected
-    $displayMember = null,
-    $displayCommunity = null,
     $smtStylesheets = array(),
     $smtJavascripts = array();
 
