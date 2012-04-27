@@ -143,7 +143,7 @@ EOF;
     }
     else
     {
-      $pluginManager = new opPluginManager($this->dispatcher, null, null);
+      new opPluginManager($this->dispatcher, null, null);
     }
     @$this->fixPerms();
     @$this->clearCache();
