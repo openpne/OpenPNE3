@@ -18,10 +18,8 @@ $jsonData = array(
   'apiBase' => app_url_for('api', 'homepage'),
 );
 
-$json = defined('JSON_PRETTY_PRINT') ? json_encode($jsonData, JSON_PRETTY_PRINT) : json_encode($jsonData);
-
 echo javascript_tag('
-var openpne = '.$json.';
+var openpne = '.json_encode($jsonData).';
 ');
 ?>
 <?php endif ?>
