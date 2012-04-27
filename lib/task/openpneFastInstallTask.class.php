@@ -109,6 +109,10 @@ EOF;
     {
       $this->installPlugins();
     }
+    else
+    {
+      $pluginManager = new opPluginManager($this->dispatcher, null, null);
+    }
     @$this->fixPerms();
     @$this->clearCache();
     $this->configureDatabase($dbms, $username, $password, $hostname, $port, $dbname, $sock, $options);
