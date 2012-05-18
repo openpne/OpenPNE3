@@ -313,6 +313,12 @@ class Member extends BaseMember implements opAccessControlRecordInterface
       $adminCommunityMember = $communityMemberTable->retrieveByMemberIdAndCommunityId($this->getId(), $communityId);
       $adminCommunityMember->delete();
     }
+
+    foreach ($this->getMemberImage() as $memberImage)
+    {
+      $memberImage->delete();
+    }
+
     return parent::delete($conn);
   }
 
