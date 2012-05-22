@@ -1,4 +1,0 @@
-favorite:
-  strategy: SQLImport
-fix_community_topic_comment_image:
-  strategy: SQLImport

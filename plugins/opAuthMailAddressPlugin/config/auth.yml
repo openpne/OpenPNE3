@@ -1,0 +1,36 @@
+invite_mode:
+  Default: 1
+
+enable_mobile:
+  Default: 1
+
+enable_pc:
+  Default: 1
+
+self_invite_action:
+  Default: "opAuthMailAddress/requestRegisterURL"
+
+help_login_error_action:
+  Name: "self_invite_action"
+  Caption:   ""
+  FormType:  ""
+  ValueType: ""
+  IsConfig:   false
+  IsRequired: false
+  Default: "opAuthMailAddress/helpLoginError"
+
+is_check_multiple_address:
+  Name:      "is_check_multiple_address"
+  Caption:   "ログイン用メールアドレス設定"
+  FormType:  "radio"
+  ValueType: "text"
+  IsConfig:   true
+  IsRequired: true
+  Default:    0
+  Choices:
+    1: "PCメールアドレスと携帯メールアドレスの両方を受け付ける"
+    0: "PCメールアドレスと携帯メールアドレスのどちらか一方を受け付ける"
+
+auth_mode_caption:
+  IsConfig: 0
+  Default: "E-mail Address Login"

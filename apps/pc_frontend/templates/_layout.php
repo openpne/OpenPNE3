@@ -17,13 +17,13 @@ use_javascript('jquery.min.js');
 use_javascript('jquery.tmpl.min.js');
 use_javascript('jquery.notify.js');
 use_javascript('op_notify.js');
-$json = array(
+$jsonData = array(
   'apiKey' => $sf_user->getMemberApiKey(),
   'apiBase' => app_url_for('api', 'homepage'),
 );
 
 echo javascript_tag('
-var openpne = '.json_encode($json, defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PRINT : 0).';
+var openpne = '.json_encode($jsonData).';
 ');
 ?>
 <?php endif ?>

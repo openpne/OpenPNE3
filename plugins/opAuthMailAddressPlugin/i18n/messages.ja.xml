@@ -1,0 +1,115 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Do you forget your password?</source>
+        <target>パスワードを忘れた方</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please click the following button to start the password recovery process.</source>
+        <target>以下のボタンをクリックして、パスワード再発行手続きをおこなってください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Go to Password Recovery Page</source>
+        <target>パスワード再発行ページへ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Password Recovery</source>
+        <target>パスワード再発行</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>What is your father's / mother's former name?</source>
+        <target>母または父の旧姓は？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>What is last 5 digits of your driving license number?</source>
+        <target>運転免許証番号の下 5 桁は？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>What is your first crush's name?</source>
+        <target>初恋の人の名前は？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>What is your finished elementary school?</source>
+        <target>卒業した小学校の名前は？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>What is region name of your domicile of origin?</source>
+        <target>本籍地の都道府県名は？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your Secret Question</source>
+        <target>秘密の質問</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your Answer for the Question</source>
+        <target>秘密の質問への答え</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Sent you a mail for completing your password recovery. If you cannot receive the mail, please retry a password recovery process.</source>
+        <target>パスワード再発行メールを送信しました。もしメールが受け取れない場合は、パスワード再発行手続きをもう一度やりなおしてください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Secret Question Configuration</source>
+        <target>秘密の質問の設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Secret Question</source>
+        <target>秘密の質問</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Answer for Secret Question</source>
+        <target>秘密の質問への答え</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please input your e-mail address. Invitation for %1% will be sent to your e-mail address.</source>
+        <target>メールアドレスを入力してください。入力されたメールアドレス宛に %1% の招待状が送信されます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Sent you an invitation for %1%.</source>
+        <target>入力されたメールアドレス宛に %1% の招待状を送信しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Begin your registration from a URL in the mail.</source>
+        <target>招待状に記載されたURLから登録をおこなってください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>We accepted your recovering password request.</source>
+        <target>パスワード再設定の要求を受け付けました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please click the following URL and complete password recovery process.</source>
+        <target>下記の URL にアクセスし、パスワードの再設定をおこなってください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please input your new password.</source>
+        <target>新しいパスワードを入力してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your password is now changed.</source>
+        <target>パスワードを変更しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Hello! This is information from %1%.</source>
+        <target>こんにちは！ %1% からのお知らせです。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If you register(free) of member by the following URL,%br%you can participate in %1%.</source>
+        <target>下記のURLから、会員登録(無料)をおこなうと、%br%%1%に参加できます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>* Participate in %1%</source>
+        <target>■ %1% に参加する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Can access this registration URL with pc only.</source>
+        <target>この登録用URLはPC専用です。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Can access this registration URL with mobile only.</source>
+        <target>この登録用URLは携帯電話専用です。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Registration with your e-mail address</source>
+        <target>メールアドレスで登録する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You can go to the registration page by clicking the button below.</source>
+        <target>以下のボタンをクリックすると、招待されたメールアドレスで登録をおこないます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Go to the registration page</source>
+        <target>プロフィール入力ページへ</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

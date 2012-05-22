@@ -73,6 +73,54 @@ general:
     IsTrim:      true
     Default:     "300K"
 
+  is_use_captcha:
+    Name:       "is_use_captcha"
+    Caption:    "CAPTCHA 使用設定"
+    Help:       "CAPTCHA (画像のなかの文字列をメンバーに入力させる認証方式) を使用するかどうかを設定します"
+    FormType:   "radio"
+    ValueType:  "text"
+    IsRequired: true
+    Default:    1
+    Choices:
+      - "使用しない"
+      - "使用する"
+
+  nickname_of_member_who_does_not_have_credentials:
+    Name:       "nickname_of_member_who_does_not_have_credentials"
+    Caption:    "非SNSユーザー表示名設定"
+    Help:       "非SNSユーザー（退会したユーザーなど）の表示名を設定します"
+    FormType:   "text"
+    ValueType:  "string"
+    IsRequired: false
+    Default:    "-"
+
+  enable_language:
+    Name:      "enable_language"
+    Caption:   "言語とタイムゾーンの設定の使用設定"
+    FormType:  "radio"
+    ValueType: "text"
+    IsRequired: true
+    Default:    0
+    Choices:
+      - "使用しない"
+      - "使用する"
+
+  enable_connection:
+    Name:      "enable_connection"
+    Caption:   "外部サービスとの接続設定の使用設定"
+    FormType:  "radio"
+    ValueType: "text"
+    IsRequired: true
+    Default:    0
+    Choices:
+      - "使用しない"
+      - "使用する"
+
+advanced:
+  _attributes:
+    Caption: "Advanced Settings"
+    Advanced: true
+
   daily_news_day:
     Name:       "daily_news_day"
     Caption:    "デイリーニュース受信頻度の設定"
@@ -89,18 +137,6 @@ general:
       - "Fri"
       - "Sat"
       - "Sun"
-
-  is_use_captcha:
-    Name:       "is_use_captcha"
-    Caption:    "CAPTCHA 使用設定"
-    Help:       "CAPTCHA (画像のなかの文字列をメンバーに入力させる認証方式) を使用するかどうかを設定します"
-    FormType:   "radio"
-    ValueType:  "text"
-    IsRequired: true
-    Default:    1
-    Choices:
-      - "使用しない"
-      - "使用する"
 
   is_allow_post_activity:
     Name:       "is_allow_post_activity"
@@ -139,40 +175,10 @@ general:
       0: "メンバーの設定を許可しない"
       1: "メンバーの設定を許可する"
 
-  nickname_of_member_who_does_not_have_credentials:
-    Name:       "nickname_of_member_who_does_not_have_credentials"
-    Caption:    "非SNSユーザー表示名設定"
-    Help:       "非SNSユーザー（退会したユーザーなど）の表示名を設定します"
-    FormType:   "text"
-    ValueType:  "string"
-    IsRequired: false
-    Default:    "-"
-
-  enable_language:
-    Name:      "enable_language"
-    Caption:   "言語とタイムゾーンの設定の使用設定"
-    FormType:  "radio"
-    ValueType: "text"
-    IsRequired: true
-    Default:    0
-    Choices:
-      - "使用しない"
-      - "使用する"
-
-  enable_connection:
-    Name:      "enable_connection"
-    Caption:   "外部サービスとの接続設定の使用設定"
-    FormType:  "radio"
-    ValueType: "text"
-    IsRequired: true
-    Default:    0
-    Choices:
-      - "使用しない"
-      - "使用する"
-
   enable_jsonapi:
     Name:      "enable_jsonapi"
     Caption:   "JSON API 使用設定"
+    Help:      "JSON API を有効にするかを設定します。<br /><span style=\"color: #FF0000;\">【警告】この設定をOFFにするとPC版やスマートフォン版の一部機能が利用できなくなります。設定には十分注意してください。</span>"
     FormType:  "radio"
     ValueType: "text"
     IsRequired: true
@@ -236,6 +242,7 @@ authentication:
 mobile:
   _attributes:
     Caption: "Mobile Configuration"
+    Advanced: true
 
   retrieve_uid:
     Name:      "retrieve_uid"
@@ -321,6 +328,7 @@ permit_member_config:
 api_keys:
   _attributes:
     Caption: "API キーの設定"
+    Advanced: true
 
   google_maps_api_key:
     Name:       "google maps api key"
