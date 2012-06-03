@@ -4,8 +4,11 @@
 <?php $csrfToken = '&'.$form->getCSRFFieldName().'='.$form->getCSRFToken() ?>
 <?php for ($i = 0; $i < 3; $i++) : ?>
 <td>
+<?php $image = null; ?>
 <?php if (isset($options['images'][$i])) : ?>
 <?php $image = $options['images'][$i] ?>
+<?php endif; ?>
+<?php if (is_object($image) && ('' != $image->getFile()->getName())) : ?>
 <?php echo op_image_tag_sf_image($image->getFile(), array('size' => '180x180')) ?><br />
 <?php if (isset($options['form'])) : ?>
 [

@@ -4,7 +4,7 @@
 <p class="photo">
 <?php $imgParam = array('size' => '180x180', 'alt' => $options->object->getName()) ?>
 <?php $nameMethod = $options->name_method ?>
-<?php if ($options->object): ?>
+<?php if ($options->object && ('' != $options->object->getImageFileName())): ?>
 <?php echo op_image_tag_sf_image($options->object->getImageFileName(), $imgParam) ?>
 <?php else: ?>
 <?php echo op_image_tag('no_image.gif', $imgParam) ?>
