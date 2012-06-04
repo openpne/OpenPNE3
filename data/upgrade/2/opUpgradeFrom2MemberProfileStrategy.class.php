@@ -108,7 +108,7 @@ class opUpgradeFrom2MemberProfileStrategy extends opUpgradeAbstractStrategy
     $introId = $this->conn->lastInsertId();
     $this->conn->execute('INSERT INTO member_profile (id, member_id, profile_id, profile_option_id, value, value_datetime, public_flag, tree_key, lft, rgt, level, created_at, updated_at) (SELECT c_member_profile_id, c_member_id, c_profile_id, NULL, value, NULL, public_flag, c_member_profile_id, 1, 2, 0, NOW(), NOW() FROM c_member_profile WHERE c_profile_id = ?)', array($introId));
 
-    $this->conn->execute('INSERT INTO profile (id, name, is_required, is_unique, is_edit_public_flag, default_public_flag, form_type, value_type, is_disp_regist, is_disp_config, is_disp_search, value_regexp, value_min, value_max, sort_order, created_at, updated_at) VALUES (NULL, "op_preset_birthday", 1, 0, 0, 1, "date", "string", 1, 1, 1, NULL, NULL, NULL, 1, NOW(), NOW())');
+    $this->conn->execute('INSERT INTO profile (id, name, is_required, is_unique, is_edit_public_flag, default_public_flag, form_type, value_type, is_disp_regist, is_disp_config, is_disp_search, value_regexp, value_min, value_max, sort_order, created_at, updated_at) VALUES (NULL, "op_preset_birthday", 1, 0, 1, 1, "date", "string", 1, 1, 1, NULL, NULL, NULL, 1, NOW(), NOW())');
     $birthdayId = $this->conn->lastInsertId();
 
     $date = $this->conn->expression->concat('birth_year', '"-"', 'birth_month', '"-"' , 'birth_day');
