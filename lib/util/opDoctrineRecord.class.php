@@ -48,7 +48,9 @@ abstract class opDoctrineRecord extends sfDoctrineRecord implements Zend_Acl_Res
       'Album',
     ),
 
-    $nested = array();
+    $nested = array(),
+
+    $dispatcher = null;
 
   public function save(Doctrine_Connection $conn = null)
   {
@@ -196,5 +198,38 @@ abstract class opDoctrineRecord extends sfDoctrineRecord implements Zend_Acl_Res
     }
 
     parent::setTableName($tableName);
+  }
+
+  public function getEventDispatcher()
+  {
+    if ($this->dispatcher)
+    {
+      return $this->dispatcher;
+    }
+
+    return sfContext::getInstance()->getEventDispatcher();
+  }
+
+  public function setEventDispatcher(sfEventDispatcher $dispatcher)
+  {
+    $this->dispatcher = $dispatcher;
+  }
+
+  public function __call($method, $arguments)
+  {
+    try
+    {
+      return parent::__call($method, $arguments);
+    }
+    catch (Exception $e)
+    {
+      $event = $this->getEventDispatcher()->notifyUntil(new sfEvent($this, 'record.method_not_found', array('method' => $method, 'arguments' => $arguments)));
+      if (!$event->isProcessed())
+      {
+        throw $e;
+      }
+
+      return $event->getReturnValue();
+    }
   }
 }
