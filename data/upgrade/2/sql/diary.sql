@@ -7,7 +7,7 @@ INSERT INTO diary_image (diary_id, file_id, number) (SELECT c_diary_id, <?php ec
 
 INSERT INTO diary_comment_unread (diary_id, member_id) (SELECT c_diary_id, c_member_id FROM c_diary WHERE is_checked = 0);
 
-INSERT INTO diary_comment (id, diary_id, member_id, number, body, created_at, updated_at) (SELECT c_diary_comment_id, c_diary_id, c_member_id, number, body, r_datetime, r_datetime FROM c_diary_comment);
+INSERT INTO diary_comment (id, diary_id, member_id, number, body, created_at, updated_at, has_images) (SELECT c_diary_comment_id, c_diary_id, c_member_id, number, body, r_datetime, r_datetime, IF(image_filename_1 <> "" OR image_filename_2 <> "" OR image_filename_3 <> "", 1, 0) FROM c_diary_comment);
 <?php for ($i = 1; $i <= 3; $i++): ?>
 ALTER TABLE c_diary_comment CHANGE image_filename_<?php echo $i ?> image_filename_<?php echo $i ?> text CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 INSERT INTO diary_comment_image (diary_comment_id, file_id) (SELECT c_diary_comment_id, <?php echo $this->getSQLForFileId('image_filename_'.$i) ?> FROM c_diary_comment WHERE image_filename_<?php echo $i ?> <> "");
