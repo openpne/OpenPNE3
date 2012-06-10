@@ -13,7 +13,7 @@ ALTER TABLE c_diary_comment CHANGE image_filename_<?php echo $i ?> image_filenam
 INSERT INTO diary_comment_image (diary_comment_id, file_id) (SELECT c_diary_comment_id, <?php echo $this->getSQLForFileId('image_filename_'.$i) ?> FROM c_diary_comment WHERE image_filename_<?php echo $i ?> <> "");
 <?php endfor; ?>
 
-INSERT INTO diary_comment_update (member_id, diary_id, last_comment_time, my_last_comment_time) (SELECT c_member_id, c_diary_id, MAX(r_datetime), MAX(r_datetime) FROM c_diary_comment_log WHERE c_diary_id IN (SELECT diary.id FROM diary WHERE diary.id = c_diary_id) GROUP BY c_member_id, c_diary_id);
+INSERT INTO diary_comment_update (member_id, diary_id, last_comment_time, my_last_comment_time) (SELECT c_member_id, c_diary_id, MAX(r_datetime), MAX(r_datetime) FROM c_diary_comment_log WHERE c_diary_id IN (SELECT diary.id FROM diary WHERE diary.id = c_diary_id) and c_member_id IN (SELECT member.id FROM member WHERE member.id = c_member_id) GROUP BY c_member_id, c_diary_id);
 
 DROP TABLE c_diary;
 DROP TABLE c_diary_comment;
