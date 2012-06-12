@@ -37,6 +37,10 @@ profile:
 member_image:
   strategy: SQLImport
 
+member_image_cleanup:
+  strategy: opUpgradeFrom2MemberImageCleanupStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2MemberImageCleanupStrategy.class.php
+
 member_config:
   strategy: SQLImport
 
