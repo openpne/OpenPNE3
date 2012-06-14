@@ -36,6 +36,11 @@ class CommunityForm extends BaseCommunityForm
       {
         $choices[$category->id] = $category->name;
       }
+      $currentCategory = $this->object->CommunityCategory;
+      if (!is_null($currentCategory) && !isset($choices[$currentCategory->id]))
+      {
+        $choices[$currentCategory->id] = $currentCategory->name;
+      }
       $this->setWidget('community_category_id', new sfWidgetFormChoice(array('choices' => array('' => '') + $choices)));
       $this->widgetSchema->setLabel('community_category_id', '%community% Category');
     }
@@ -93,6 +98,11 @@ class CommunityForm extends BaseCommunityForm
     }
 
     if (1 == sfContext::getInstance()->getUser()->getMemberId())
+    {
+      return $value;
+    }
+
+    if ($this->object->community_category_id === $category->id)
     {
       return $value;
     }
