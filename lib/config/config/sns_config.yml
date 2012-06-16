@@ -239,6 +239,16 @@ authentication:
       1: "携帯からのみ登録可"
       0: "登録一時停止"
 
+  invitation_expire_days:
+    Name:      "invitation_expire_days"
+    Caption:   "招待状の有効期限(日数)"
+    FormType:  "input"
+    ValueType: "integer"
+    IsRequired: false
+    IsTrim:     true
+    Default:    30
+
+
 mobile:
   _attributes:
     Caption: "Mobile Configuration"
