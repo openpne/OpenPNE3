@@ -1,0 +1,16 @@
+Member:
+  first_member:
+    id: ~
+    name: "Member1"
+    is_active: true
+  invited_member:
+    id: ~
+    name: "Member2"
+    updated_at: "<?php echo date('Y-m-d H:i:s', time() - 60*60*24*31); ?>"
+    
+MemberConfig:
+  invited_member_register_token:
+    id: ~
+    Member: invited_member
+    name: register_token
+    value: test
