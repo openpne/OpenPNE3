@@ -188,6 +188,25 @@ class activityActions extends opJsonApiActions
 
     $options['source'] = 'API';
 
+    $imageFile = $request->getFiles('images');
+    if (!empty($imageFile))
+    {   
+      $validator = new opValidatorImageFile(array('required' => false));
+      try 
+      {   
+        $obj = $validator->clean($imageFile);
+      }   
+      catch (sfValidatorError $e) 
+      {   
+        $this->forward400('This image file is invalid.');
+      }   
+      $file = new File();
+      $file->setFromValidatedFile($obj);
+      $file->setName('ac_'.$this->getUser()->getMemberId().'_'.$file->getName());
+      $file->save();
+      $options['images'][] = array('file_id' => $file->getId());
+    }   
+
     $this->activity = Doctrine::getTable('ActivityData')->updateActivity($memberId, $body, $options);
 
     $this->setTemplate('object');
