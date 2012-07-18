@@ -46,12 +46,26 @@ class opPlugin
     }
     else
     {
-      $manager = new opPluginManager($dispatcher);
-      $package = $manager->getEnvironment()->getRegistry()->getPackage($pluginName, opPluginManager::getDefaultPluginChannelServerName());
-      if ($package)
+      try
       {
-        $this->version = $package->getVersion();
-        $this->summary = $package->getSummary();
+        $manager = new opPluginManager($dispatcher);
+        $package = $manager->getEnvironment()->getRegistry()->getPackage($pluginName, opPluginManager::getDefaultPluginChannelServerName());
+        if ($package)
+        {
+          $this->version = $package->getVersion();
+          $this->summary = $package->getSummary();
+        }
+      }
+      catch (Exception $e)
+      {
+        $message = array(
+          'fail to get plugin package information cause: '.get_class($e).' : '.$e->getMessage(),
+          'priority' => sfLogger::NOTICE
+        );
+        $dispatcher->notify(new sfEvent($this, 'application.log', $message));
+
+        $this->version = '';
+        $this->summary = '';
       }
     }
   }
