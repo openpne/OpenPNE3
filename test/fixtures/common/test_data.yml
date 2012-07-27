@@ -192,6 +192,10 @@ Member:
     id: 8
     name: "H"
     is_active: 1
+  inactive_member:
+    id: 9
+    name: "Inacive"
+    is_active: 0
 
 File:
   dummy_file1:
