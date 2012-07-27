@@ -155,8 +155,7 @@ class opActivityQueryBuilder
       ->select('r.member_id_to')
       ->from('MemberRelationship r')
       ->addWhere('r.member_id_from = ?', $member_id)
-      ->addWhere('r.is_friend = true')
-      ->andWhereNotIn('r.member_id_to', $this->inactiveIds);
+      ->addWhere('r.is_friend = true');
 
     return $this->buildMemberQuery($query, $friendsQuery, ActivityDataTable::PUBLIC_FLAG_FRIEND);
   }
