@@ -127,9 +127,7 @@ class opActivityQueryBuilder
 
     $subQuery = array_map(array($this, 'trimSubqueryWhere'), $subQuery);
 
-    $query
-      ->andWhere(implode(' OR ', $subQuery))
-      ->andWhereNotIn('a.member_id_to', $this->inactiveIds);
+    $query->andWhere(implode(' OR ', $subQuery));
 
     if (null === $this->communityId)
     {
@@ -157,7 +155,8 @@ class opActivityQueryBuilder
       ->select('r.member_id_to')
       ->from('MemberRelationship r')
       ->addWhere('r.member_id_from = ?', $member_id)
-      ->addWhere('r.is_friend = true');
+      ->addWhere('r.is_friend = true')
+      ->andWhereNotIn('r.member_id_to', $this->inactiveIds);
 
     return $this->buildMemberQuery($query, $friendsQuery, ActivityDataTable::PUBLIC_FLAG_FRIEND);
   }
