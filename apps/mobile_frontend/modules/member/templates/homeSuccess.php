@@ -57,7 +57,7 @@
 <?php
 $list = array(
   link_to(__('Search Members'), '@member_search'),
-  link_to(__('Search Communities'), 'community/search'),
+  link_to(__('Search %Community%', array('%Community%' => $op_term['community']->pluralize())), 'community/search'),
 );
 op_include_list('search', $list, array('title' => __('Search')))
 ?>

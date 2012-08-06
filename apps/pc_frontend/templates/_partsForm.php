@@ -94,7 +94,14 @@ if ($options['mark_required_field']
   $hasRequiredField = true;
 }
 ?>
+<?php if ('captcha' === $field->getName()): ?>
+<tr>
+<th><?php echo $field->renderLabel($field->renderLabelName().$labelSuffix); ?></th>
+<td><?php echo $field->renderError(), $field->render($attributes); ?></td>
+</tr>
+<?php else: ?>
 <?php echo $field->renderRow($attributes, $field->renderLabelName().$labelSuffix) ?>
+<?php endif; ?>
 <?php endforeach; ?>
 <?php endforeach; ?>
 <?php echo $options->getRaw('lastRow') ?>
