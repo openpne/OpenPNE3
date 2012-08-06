@@ -238,7 +238,7 @@ abstract class opMemberAction extends sfActions
 
     $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_token', $memberId);
     $this->forward404Unless($memberConfig);
-    $this->forward404Unless((bool)$request->getParameter('token') !== $memberConfig->getValue());
+    $this->forward404Unless($request->getParameter('token') === $memberConfig->getValue());
 
     $option = array('member' => $memberConfig->getMember());
     $this->form = new opPasswordForm(array(), $option);
