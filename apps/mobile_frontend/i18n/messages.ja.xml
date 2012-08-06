@@ -503,16 +503,16 @@
         <target>%community%作成</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Search Communities</source>
-        <target>ｺﾐｭﾆﾃｨ検索</target>
+        <source>Search %Community%</source>
+        <target>%Community%検索</target>
       </trans-unit>
       <trans-unit id="">
         <source>Categories</source>
         <target>ｶﾃｺﾞﾘ</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Your search queries did not match any communities.</source>
-        <target>該当するｺﾐｭﾆﾃｨはありませんでした。</target>
+        <source>Your search queries did not match any %community%.</source>
+        <target>該当する%community%はありませんでした。</target>
       </trans-unit>
       <trans-unit id="">
         <source>All categories</source>
@@ -1230,6 +1230,14 @@
       <trans-unit id="">
         <source>A mobile UID was already registered.</source>
         <target>その携帯電話の個体識別番号はすでに登録されています。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>A mobile UID is required. Please check settings of your mobile phone and retry.</source>
+        <target>携帯電話の個体識別番号は必須です。携帯電話の個体識別番号設定を確認してもう一度お試しください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>A mobile UID is invalid.</source>
+        <target>その携帯電話の個体識別番号は無効です。</target>
       </trans-unit>
     </body>
   </file>
