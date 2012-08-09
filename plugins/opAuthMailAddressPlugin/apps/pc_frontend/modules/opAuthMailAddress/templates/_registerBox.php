@@ -1,9 +1,9 @@
-<?php if (!$pcAddressPre): ?>
+<?php if (!$addressPre): ?>
 <?php
 $options = array(
   'title' => __('Errors'),
 );
-op_include_box('registerError', __('Can access this registration URL with mobile only.'), $options);
+op_include_box('registerError', __('Your e-mail address is not registered.'), $options);
 ?>
 <?php else: ?>
 <?php op_include_parts('ButtonBox', 'opAuthMailAddressPluginRegisterBox', array(

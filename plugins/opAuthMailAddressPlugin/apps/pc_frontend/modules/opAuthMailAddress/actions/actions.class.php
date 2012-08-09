@@ -53,6 +53,7 @@ class opAuthMailAddressActions extends opAuthMailAddressPluginAction
     opActivateBehavior::disable();
     $authMode = $memberConfig->getMember()->getConfig('register_auth_mode');
     $pcAddressPre = $memberConfig->getMember()->getConfig('pc_address_pre');
+    $mobileAddressPre = $memberConfig->getMember()->getConfig('mobile_address_pre');
     opActivateBehavior::enable();
 
     if ('MobileUID' === $authMode)
@@ -61,9 +62,8 @@ class opAuthMailAddressActions extends opAuthMailAddressPluginAction
     }
     $this->forward404Unless($authMode === $this->getUser()->getCurrentAuthMode());
 
-    if (!$pcAddressPre)
+    if (!$pcAddressPre && !$mobileAddressPre)
     {
-      
       return sfView::ERROR;
     }
 

@@ -107,8 +107,8 @@
         <target>この登録用URLはPC専用です。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Can access this registration URL with mobile only.</source>
-        <target>この登録用URLは携帯電話専用です。</target>
+        <source>Your e-mail address is not registered.</source>
+        <target>メールアドレスが登録されていません。</target>
       </trans-unit>
     </body>
   </file>

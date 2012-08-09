@@ -49,42 +49,29 @@ class opAuthRegisterFormMailAddress extends opAuthRegisterForm
       return true;
     }
 
-    if (sfConfig::get('app_is_mobile', false))
+    foreach (array('mobile_address', 'pc_address') as $name)
     {
-      $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('mobile_address_pre', $this->getMember()->getId());
-      $memberConfig->setName('mobile_address');
-    }
-    else
-    {
-      $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('pc_address_pre', $this->getMember()->getId());
-      $memberConfig->setName('pc_address');
+      $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($name.'_pre', $this->getMember()->getId());
+      if ($memberConfig)
+      {
+        $memberConfig->setName($name);
+        $memberConfig->save();
+      }
     }
 
-    $memberConfig->save();
-
-    return $memberConfig;
+    return true;
   }
-  
+
   public function validateMemberConfig($validator, $values, $arguments = array())
   {
-    if (sfConfig::get('app_is_mobile', false))
+    $memberConfigMobile = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('mobile_address_pre', $this->getMember()->getId());
+    $memberConfigPc     = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('pc_address_pre', $this->getMember()->getId());
+
+    if (!$memberConfigMobile && !$memberConfigPc)
     {
-      $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('mobile_address_pre', $this->getMember()->getId());
-      if (!$memberConfig)
-      {
-        throw new sfValidatorError($validator, 'Can access this registration URL with pc only.');
-      }
-    }
-    else
-    {
-      $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId('pc_address_pre', $this->getMember()->getId());
-      if (!$memberConfig)
-      {
-        throw new sfValidatorError($validator, 'Can access this registration URL with mobile only.');
-      }
+      throw new sfValidatorError($validator, 'Your e-mail address is not registered.');
     }
 
     return $values;
   }
-
 }
