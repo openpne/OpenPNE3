@@ -28,15 +28,21 @@ class sfDenyFromNonMobileFilter extends sfFilter
    */
   public function execute($filterChain)
   {
-      $request = $this->context->getRequest();
+    $request = $this->context->getRequest();
 
-      if (!$request->isMobile()) {
-        if (!$this->isErrorAction()) {
-          $this->forwardToErrorAction();
-        }
+    if (!$request->isMobile() && !$this->isErrorAction())
+    {
+      if ($url = $this->generatePcFrontendUrl())
+      {
+        $this->redirect($url);
       }
+      else
+      {
+        $this->forwardToErrorAction();
+      }
+    }
 
-      $filterChain->execute();
+    $filterChain->execute();
   }
 
   private function isErrorAction()
@@ -49,5 +55,25 @@ class sfDenyFromNonMobileFilter extends sfFilter
     $this->context->getController()->forward($this->errorModule, $this->errorAction);
 
     throw new sfStopException();
+  }
+
+  private function generatePcFrontendUrl()
+  {
+    $parameters = $this->context->getRequest()->getParameterHolder()->getAll();
+    $parameters['sf_route'] = $this->context->getRouting()->getCurrentRouteName();
+
+    try
+    {
+      return $this->context->getConfiguration()->generateAppUrl('pc_frontend', $parameters, true);
+    }
+    catch (sfConfigurationException $e)
+    {
+      return false;
+    }
+  }
+
+  private function redirect($url)
+  {
+    $this->context->getController()->redirect($url);
   }
 }
