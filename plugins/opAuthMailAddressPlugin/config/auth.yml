@@ -26,7 +26,7 @@ is_check_multiple_address:
   ValueType: "text"
   IsConfig:   true
   IsRequired: true
-  Default:    0
+  Default:    1
   Choices:
     1: "PCメールアドレスと携帯メールアドレスの両方を受け付ける"
     0: "PCメールアドレスと携帯メールアドレスのどちらか一方を受け付ける"
