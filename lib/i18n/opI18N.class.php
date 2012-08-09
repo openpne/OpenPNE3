@@ -55,7 +55,7 @@ class opI18N extends sfI18N
       $messageSource = sfMessageSource::factory('OpenPNE', array());
       $data = $messageSource->loadData($file);
 
-      $catalogues[$name] = array_merge($catalogues[$name], $data);
+      $catalogues[$name] = array_merge($data, $catalogues[$name]);
     }
 
     $cacheDir = sfConfig::get('sf_app_cache_dir').DIRECTORY_SEPARATOR.'i18n';
