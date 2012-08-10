@@ -343,6 +343,10 @@
         <target>%1%に参加するには、携帯電話の登録が必要です。</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Please note that you cannot use smartphones.</source>
+        <target>スマートフォンからは登録することができませんのでご注意ください。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Register the mobile-phone</source>
         <target>携帯電話の登録</target>
       </trans-unit>
