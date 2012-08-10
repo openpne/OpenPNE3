@@ -17,13 +17,4 @@
  */
 class opAuthConfigFormMailAddress extends opAuthConfigForm
 {
-  public function setup()
-  {
-    parent::setup();
-
-    $this->widgetSchema->setHelp(
-      'is_check_multiple_address',
-      'どちらか一方を受け付ける設定とした場合、携帯メールアドレスを利用しているスマートフォンユーザーがログインできなくなります。'
-    );
-  }
 }
