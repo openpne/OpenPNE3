@@ -1,5 +1,6 @@
 <?php ob_start() ?>
-<p><?php echo __('It is necessary to register the mobile-phone information to entry in %1%.', array('%1%' => $op_config['sns_name'])) ?></p>
+<p><?php echo __('It is necessary to register the mobile-phone information to entry in %1%.', array('%1%' => $op_config['sns_name'])) ?><br />
+<strong><?php echo __('Please note that you cannot use smartphones.') ?></strong></p>
 <p><?php echo __('URL for mobile registration is send to the mobile mail address appropriating input here.') ?></p>
 <ul>
 <li><?php echo __('Other member can not view the mail address that was input here.') ?></li>
