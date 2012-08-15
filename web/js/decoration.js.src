@@ -17,20 +17,20 @@ function op_mce_insert_tagname(id, tagname, opt, start, end)
 {
   opt = opt || "";
 
-  var elm = document.getElementById(id);
+  var elm = $('#' + id);
 
-  var selection = new Selection(elm);
+  var selection = new Selection(elm[0]);
   var pos = selection.create();
   elm.focus();
 
   start = (start == null || start == undefined) ? pos.start : start;
   end   = (end == null || end == undefined)     ? pos.end   : end;
 
-  var replace = "<" + tagname + opt + ">" + elm.value.substring(start, end) + "</" + tagname + ">";
+  var replace = "<" + tagname + opt + ">" + elm.val().substring(start, end) + "</" + tagname + ">";
 
-  var head = elm.value.substring(0, start);
-  var tail = elm.value.substring(end, elm.value.length);
-  elm.value =  head + replace + tail;
+  var head = elm.val().substring(0, start);
+  var tail = elm.val().substring(end, elm.val().length);
+  elm.val(head + replace + tail);
 }
 
 function op_mce_show_color_table(id, tagname)
@@ -142,14 +142,14 @@ function op_mce_show_color_table(id, tagname)
 
 function op_insert_str_to_selection(elm, str, start, end)
 {
-  var selection = new Selection(elm);
+  var selection = new Selection(elm[0]);
   var pos = selection.create();
   elm.focus();
   
   start = (start == null || start == undefined) ? pos.start : start;
   end   = (end == null || end == undefined)     ? pos.end   : end;
 
-  var head = elm.value.substring(0, pos.start);
-  var tail = elm.value.substring(pos.end, elm.value.length);
-  elm.value = head + str + tail;
+  var head = elm.val().substring(0, pos.start);
+  var tail = elm.val().substring(pos.end, elm.val().length);
+  elm.val(head + str + tail);
 }
