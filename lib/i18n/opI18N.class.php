@@ -78,7 +78,7 @@ class opI18N extends sfI18N
     {
       $this->generateApplicationMessages($dirs);
 
-      if (!is_null($dirs))
+      if (is_null($dirs))
       {
         $this->messageSource = $this->createMessageSource();
       }
