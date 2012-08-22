@@ -112,6 +112,7 @@ ssl_base_url:
   pc_frontend: "https://example.com"
   mobile_frontend: "https://example.com"
   pc_backend: "https://example.com"
+  api: "https://example.com"
 
 # SSL が必須なアプリケーション
 # Applications that are SSL required
