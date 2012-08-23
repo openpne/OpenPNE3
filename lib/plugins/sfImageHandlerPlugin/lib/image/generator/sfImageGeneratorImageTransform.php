@@ -79,6 +79,8 @@ abstract class sfImageGeneratorImageTransform extends sfImageGenerator
       $this->disableInterlace();
     }
 
+    $this->configureImageHandle();
+
     if ($this->width && $this->height)
     {
       $this->transform->crop($srcW, $srcH, $srcX, $srcY);
@@ -97,4 +99,8 @@ abstract class sfImageGeneratorImageTransform extends sfImageGenerator
   abstract protected function creaateTransform();
 
   abstract protected function disableInterlace();
+
+  protected function configureImageHandle()
+  {
+  }
 }
