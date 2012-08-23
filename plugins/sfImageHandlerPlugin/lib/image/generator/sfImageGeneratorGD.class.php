@@ -20,7 +20,6 @@ class sfImageGeneratorGD extends sfImageGeneratorImageTransform
   protected function creaateTransform()
   {
     $transform = Image_Transform::factory('GD');
-    $transform->setOption('scaleMethod', 'pixel');
     
     return $transform;
   }
@@ -29,9 +28,19 @@ class sfImageGeneratorGD extends sfImageGeneratorImageTransform
   {
     imageinterlace($this->transform->getHandle(), 0);
   }
-  
+
+  protected function configureImageHandle()
+  {
+    if (!imageistruecolor($this->transform->getHandle()))
+    {
+      $this->transform->setOption('scaleMethod', 'pixel');
+    }
+  }
+
   protected function doSave($outputFilename, $type, $quality)
   {
+    $this->configureImageHandle();
+
     $result = $this->transform->crop($this->transform->new_x, $this->transform->new_y);
     if (PEAR::isError($result))
     {
