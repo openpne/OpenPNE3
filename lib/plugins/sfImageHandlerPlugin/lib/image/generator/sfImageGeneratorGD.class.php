@@ -41,10 +41,13 @@ class sfImageGeneratorGD extends sfImageGeneratorImageTransform
   {
     $this->configureImageHandle();
 
-    $result = $this->transform->crop($this->transform->new_x, $this->transform->new_y);
-    if (PEAR::isError($result))
+    if (!$this->transform->resized)
     {
-      throw new sfException($result->getMessage());
+      $result = $this->transform->crop($this->transform->new_x, $this->transform->new_y);
+      if (PEAR::isError($result))
+      {
+        throw new sfException($result->getMessage());
+      }
     }
 
     $result = $this->transform->save($outputFilename, $type, $quality);
