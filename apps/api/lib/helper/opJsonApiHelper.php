@@ -139,7 +139,7 @@ function op_api_community($community)
   return array(
     'id' => $community->getId(),
     'name' => $community->getName(),
-    'category' => (string)$community->getCommunityCategory() ?: null,
+    'category' => $community->getCommunityCategory() ? $community->getCommunityCategory()->getName() : null,
     'community_url' => $communityUrl,
     'community_image_url' => $communityImage,
     'joining' => $communityMember ? !$communityMember->getIsPre() : false,
