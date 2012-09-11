@@ -40,12 +40,14 @@ class opActivityQueryBuilder
   public function setViewerId($viewerId)
   {
     $this->viewerId = $viewerId;
+
     return $this;
   }
 
-  public function setCommunityId($community_id)
+  public function setCommunityId($communityId)
   {
-    $this->communityId = $community_id;
+    $this->communityId = $communityId;
+
     return $this;
   }
 
@@ -66,30 +68,35 @@ class opActivityQueryBuilder
   public function includeSelf()
   {
     $this->include['self'] = true;
+
     return $this;
   }
 
-  public function includeFriends($target_member_id = null)
+  public function includeFriends($targetMemberId = null)
   {
-    $this->include['friend'] = $target_member_id ? $target_member_id : $this->viewerId;
+    $this->include['friend'] = $targetMemberId ? $targetMemberId : $this->viewerId;
+
     return $this;
   }
 
   public function includeSns()
   {
     $this->include['sns'] = true;
+
     return $this;
   }
 
   public function includeMentions()
   {
     $this->include['mention'] = true;
+
     return $this;
   }
 
-  public function includeMember($member_id)
+  public function includeMember($memberId)
   {
-    $this->include['member'] = $member_id;
+    $this->include['member'] = $memberId;
+
     return $this;
   }
 
@@ -149,12 +156,12 @@ class opActivityQueryBuilder
     return $this->buildMemberQuery($query, $this->viewerId, ActivityDataTable::PUBLIC_FLAG_PRIVATE);
   }
 
-  protected function buildFriendQuery($query, $member_id)
+  protected function buildFriendQuery($query, $memberId)
   {
     $friendsQuery = $query->createSubquery()
       ->select('r.member_id_to')
       ->from('MemberRelationship r')
-      ->addWhere('r.member_id_from = ?', $member_id)
+      ->addWhere('r.member_id_from = ?', $memberId)
       ->addWhere('r.is_friend = true');
 
     return $this->buildMemberQuery($query, $friendsQuery, ActivityDataTable::PUBLIC_FLAG_FRIEND);
@@ -165,31 +172,31 @@ class opActivityQueryBuilder
     return $this->buildMemberQuery($query, null, ActivityDataTable::PUBLIC_FLAG_SNS);
   }
 
-  protected function buildMemberQuery($query, $member_id = null, $public_flag = ActivityDataTable::PUBLIC_FLAG_SNS)
+  protected function buildMemberQuery($query, $memberId = null, $publicFlag = ActivityDataTable::PUBLIC_FLAG_SNS)
   {
-    if (is_array($member_id))
+    if (is_array($memberId))
     {
-      $query->andWhereIn('a.member_id', $member_id);
+      $query->andWhereIn('a.member_id', $memberId);
     }
-    elseif ($member_id instanceof Doctrine_Query)
+    elseif ($memberId instanceof Doctrine_Query)
     {
-      $query->andWhere('a.member_id IN ('.$member_id->getDql().')');
+      $query->andWhere('a.member_id IN ('.$memberId->getDql().')');
     }
-    elseif (is_scalar($member_id))
+    elseif (is_scalar($memberId))
     {
-      $query->andWhere('a.member_id = ?', $member_id);
+      $query->andWhere('a.member_id = ?', $memberId);
     }
 
-    $query->andWhereIn('a.public_flag', $this->table->getViewablePublicFlags($public_flag));
+    $query->andWhereIn('a.public_flag', $this->table->getViewablePublicFlags($publicFlag));
 
     return $query;
   }
 
-  protected function buildMemberQueryWithCheckRel($query, $member_id = null)
+  protected function buildMemberQueryWithCheckRel($query, $memberId = null)
   {
     $subQuery = array();
 
-    foreach ((array)$member_id as $id)
+    foreach ((array)$memberId as $id)
     {
       if ($this->viewerId === $id)
       {
