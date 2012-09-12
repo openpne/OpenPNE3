@@ -2,23 +2,23 @@
 <?php include_partial('submenu') ?>
 <?php end_slot(); ?>
 
-<h2><?php echo __('アカウント管理') ?></h2>
+<h2><?php echo __('Account management') ?></h2>
 
-<p><?php echo __('管理用アカウントを設定します。') ?></p>
-<p><?php echo link_to(__('アカウントを追加する'), 'admin/addUser') ?></p>
+<p><?php echo __('Set administrator account.') ?></p>
+<p><?php echo link_to(__('Registering a new administrator account'), 'admin/addUser') ?></p>
 
 <table>
 <tr>
 <th><?php echo __('ID') ?></th>
-<th><?php echo __('ユーザ名') ?></th>
-<th><?php echo __('操作') ?></th>
+<th><?php echo __('User name') ?></th>
+<th><?php echo __('Operation') ?></th>
 </tr>
 <?php foreach ($users as $user) : ?>
 <tr>
 <th><?php echo $user->getId() ?></th>
 <td><?php echo $user->getUsername() ?></td>
 <td><?php if ($user->getId() != 1 && $user->getId() != $sf_user->getId()) : ?>
-<?php echo link_to(__('削除'), 'admin/deleteUser?id='.$user->getId()) ?>
+<?php echo link_to(__('Delete'), 'admin/deleteUser?id='.$user->getId()) ?>
 <?php endif; ?></td>
 </tr>
 <?php endforeach; ?>
