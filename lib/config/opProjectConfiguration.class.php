@@ -150,7 +150,7 @@ class opProjectConfiguration extends sfProjectConfiguration
       $config = sfYaml::load($path.'.sample');
       if (is_readable($path))
       {
-        $config = array_merge($config, sfYaml::load($path));
+        $config = sfToolkit::arrayDeepMerge($config, sfYaml::load($path));
       }
 
       if (isset($config['base_url']))
