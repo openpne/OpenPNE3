@@ -42,6 +42,7 @@ class AdminUserEditPasswordForm extends AdminUserForm
     {
       $values['username'] = $arguments['object']->getUsername();
       $values['password'] = $values['new_password'];
+
       return $values;
     }
 

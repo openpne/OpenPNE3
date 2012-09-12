@@ -17,7 +17,7 @@
 <tr>
 <th><?php echo $user->getId() ?></th>
 <td><?php echo $user->getUsername() ?></td>
-<td><?php if ($user->getId() != 1 && $user->getId() != $sf_user->getId()) : ?>
+<td><?php if (1 != $user->getId() && $user->getId() != $sf_user->getId()) : ?>
 <?php echo link_to(__('Delete'), 'admin/deleteUser?id='.$user->getId()) ?>
 <?php endif; ?></td>
 </tr>
