@@ -34,8 +34,8 @@ class AdminUserForm extends BaseAdminUserForm
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
     $this->widgetSchema->setLabels(array(
-      'username' => 'アカウント名',
-      'password' => 'パスワード',
+      'username' => 'User name',
+      'password' => 'Password',
     ));
 
     $this->mergePostValidator(new sfValidatorDoctrineUnique(array(

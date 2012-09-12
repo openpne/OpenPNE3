@@ -1469,6 +1469,54 @@
         <source>Advanced Settings</source>
         <target>上級者向け設定</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Old password</source>
+        <target>古いパスワード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>New password</source>
+        <target>新しいパスワード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Account management</source>
+        <target>アカウント管理</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Set administrator account.</source>
+        <target>管理用アカウントを設定します。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Registering a new administrator account</source>
+        <target>アカウント追加</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Add</source>
+        <target>追加</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>User name</source>
+        <target>ユーザ名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete account</source>
+        <target>アカウント削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Are you sure you want to delete this account?</source>
+        <target>このアカウントを本当に削除しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete account</source>
+        <target>アカウント削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Change language</source>
+        <target>言語変更</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Languages</source>
+        <target>言語</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

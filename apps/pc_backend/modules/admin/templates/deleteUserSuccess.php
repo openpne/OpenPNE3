@@ -2,9 +2,9 @@
 <?php include_partial('submenu') ?>
 <?php end_slot(); ?>
 
-<h2><?php echo __('アカウント削除') ?></h2>
+<h2><?php echo __('Delete account') ?></h2>
 
-<p><?php echo __('このアカウントを本当に削除しますか？') ?></p>
+<p><?php echo __('Are you sure you want to delete this account?') ?></p>
 
 <form action="<?php url_for('admin/deleteUser') ?>" method="post">
 <table>
@@ -12,12 +12,12 @@
 <th><?php echo __('ID') ?></th><td><?php echo $user->getId() ?></td>
 </tr>
 <tr>
-<th><?php echo __('ユーザ名') ?></th><td><?php echo $user->getUsername() ?></td>
+<th><?php echo __('User name') ?></th><td><?php echo $user->getUsername() ?></td>
 </tr>
 <tr>
 <td colspan="2">
 <?php echo $form ?>
-<input type="submit" value="<?php echo __('削除') ?>" />
+<input type="submit" value="<?php echo __('Delete') ?>" />
 </td>
 </tr>
 </table>
