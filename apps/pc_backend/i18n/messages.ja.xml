@@ -1465,6 +1465,10 @@
         <source>Languages</source>
         <target>言語</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Changed configuration for your culture.</source>
+        <target>言語環境を変更しました。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
