@@ -1442,7 +1442,7 @@
         <target>管理用アカウントを設定します。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Registering a new administrator account</source>
+        <source>Register new account</source>
         <target>アカウント追加</target>
       </trans-unit>
       <trans-unit id="">
