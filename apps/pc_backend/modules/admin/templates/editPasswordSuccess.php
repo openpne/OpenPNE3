@@ -2,7 +2,7 @@
 <?php include_partial('submenu') ?>
 <?php end_slot(); ?>
 
-<h2><?php echo __('Change password') ?></h2>
+<h2><?php echo __('Change Password') ?></h2>
 
 <form action="<?php url_for('admin/editPassword') ?>" method="post">
 <table>
