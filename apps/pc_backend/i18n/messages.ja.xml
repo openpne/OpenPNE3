@@ -1246,7 +1246,7 @@
         <target>%1%さんのパスワードを変更します。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Change password</source>
+        <source>Change Password</source>
         <target>パスワード変更</target>
       </trans-unit>
       <trans-unit id="">
@@ -1434,7 +1434,7 @@
         <target>新しいパスワード</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Account management</source>
+        <source>Account Management</source>
         <target>アカウント管理</target>
       </trans-unit>
       <trans-unit id="">
@@ -1458,7 +1458,7 @@
         <target>アカウント削除</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Change language</source>
+        <source>Change Language</source>
         <target>言語変更</target>
       </trans-unit>
       <trans-unit id="">

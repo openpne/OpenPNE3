@@ -2,7 +2,7 @@
 <?php include_partial('submenu') ?>
 <?php end_slot(); ?>
 
-<h2><?php echo __('Account management') ?></h2>
+<h2><?php echo __('Account Management') ?></h2>
 
 <p><?php echo __('Set administrator account.') ?></p>
 <p><?php echo link_to(__('Registering a new administrator account'), 'admin/addUser') ?></p>
