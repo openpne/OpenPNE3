@@ -10,7 +10,7 @@ foreach ($community->getSubAdminMembers() as $m)
   $subAdminCaption .= "<li>".$m->getName()."</li>\n";
 }?>
 <?php if ($subAdminCaption): ?>
-<tr><th><?php echo __('Sub Administrator') ?></th><td><ul><?php echo $subAdminCaption ?></ul></td></tr>
+<tr><th><?php echo __('%Community% Sub Administrator') ?></th><td><ul><?php echo $subAdminCaption ?></ul></td></tr>
 <?php endif; ?>
 <tr><th><?php echo __('%Community% Members') ?></th><td><?php echo $community->countCommunityMembers() ?></td></tr>
 <tr><th><?php echo __('Date Created') ?></th><td><?php echo $community->getCreatedAt() ?></td></tr>
