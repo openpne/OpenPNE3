@@ -5,7 +5,7 @@
 <h2><?php echo __('Account Management') ?></h2>
 
 <p><?php echo __('Set administrator account.') ?></p>
-<p><?php echo link_to(__('Registering a new administrator account'), 'admin/addUser') ?></p>
+<p><?php echo link_to(__('Register new account'), 'admin/addUser') ?></p>
 
 <table>
 <tr>
