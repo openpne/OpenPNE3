@@ -1469,6 +1469,10 @@
         <source>Changed configuration for your culture.</source>
         <target>言語環境を変更しました。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>%Community% Sub Administrator</source>
+        <target>%Community%副管理者</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
