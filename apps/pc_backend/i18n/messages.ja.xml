@@ -336,10 +336,6 @@
         <target>アクセス権限の剥奪</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Image</source>
-        <target>画像</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Application Name</source>
         <target>アプリケーション名</target>
       </trans-unit>
@@ -559,38 +555,6 @@
       <trans-unit id="">
         <source>Okinawa</source>
         <target>沖縄県</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Sex</source>
-        <target>性別</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Birthday</source>
-        <target>誕生日</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Country</source>
-        <target>国または地域</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Region</source>
-        <target>都市（都道府県や州など）</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Region in Japan</source>
-        <target>都道府県</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Postal Code</source>
-        <target>郵便番号</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Telephone Number</source>
-        <target>電話番号</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Self Introduction</source>
-        <target>自己紹介</target>
       </trans-unit>
       <trans-unit id="">
         <source>Term Configuration in this SNS</source>
@@ -966,10 +930,6 @@
         <target>プロフィール項目登録</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Operation</source>
-        <target>操作</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Entry name</source>
         <target>項目名</target>
       </trans-unit>
@@ -1010,16 +970,8 @@
         <target>変更</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Edit</source>
-        <target>変更</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Search</source>
         <target>検索</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Delete</source>
-        <target>削除</target>
       </trans-unit>
       <trans-unit id="">
         <source>List</source>
@@ -1490,16 +1442,8 @@
         <target>アカウント追加</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Add</source>
-        <target>追加</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>User name</source>
         <target>ユーザ名</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Delete account</source>
-        <target>アカウント削除</target>
       </trans-unit>
       <trans-unit id="">
         <source>Are you sure you want to delete this account?</source>
