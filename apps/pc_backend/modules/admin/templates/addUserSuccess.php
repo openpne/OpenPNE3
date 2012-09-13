@@ -2,7 +2,7 @@
 <?php include_partial('submenu') ?>
 <?php end_slot(); ?>
 
-<h2><?php echo __('Registering a new administrator account') ?></h2>
+<h2><?php echo __('Register new account') ?></h2>
 
 <form action="<?php url_for('admin/addUser') ?>" method="post">
 <table>
