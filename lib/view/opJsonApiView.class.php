@@ -20,6 +20,7 @@ class opJsonApiView extends sfPHPView
   public function configure()
   {
     $this->setExtension('.php');
+    $this->setDecorator(false);
 
     parent::configure();
   }

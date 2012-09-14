@@ -209,6 +209,13 @@ class activityActions extends opJsonApiActions
 
     $this->activity = Doctrine::getTable('ActivityData')->updateActivity($memberId, $body, $options);
 
+    if ('1' === $request['forceHtml'])
+    {
+      // workaround for some browsers (see #3201)
+      $this->getRequest()->setRequestFormat('html');
+      $this->getResponse()->setContentType('text/html');
+    }
+
     $this->setTemplate('object');
   }
 
