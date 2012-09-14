@@ -26,7 +26,7 @@ $tester
   ->postWithFiles(
     '/activity/post.json',
     array('apiKey' => $apiKeyMember1, 'body' => 'hogehoge'),
-    array('images' => dirname(__FILE__).'/uploads/dot.gif')
+    array('images[0]' => dirname(__FILE__).'/uploads/dot.gif')
   )
   ->with('response')->isStatusCode(200);
 
@@ -42,6 +42,6 @@ $tester
   ->postWithFiles(
     '/activity/post.json',
     array('apiKey' => $apiKeyMember1, 'body' => 'hogehoge'),
-    array('images' => dirname(__FILE__).'/uploads/plaintext.txt')
+    array('images[0]' => dirname(__FILE__).'/uploads/plaintext.txt')
   )
   ->with('response')->isStatusCode(400);
