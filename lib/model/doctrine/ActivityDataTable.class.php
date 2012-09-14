@@ -106,7 +106,13 @@ class ActivityDataTable extends Doctrine_Table
         $activityImage = new ActivityImage();
         if (isset($image['file_id']))
         {
-          $activityImage->setFileId($image['file_id']);
+          $file = Doctrine_Core::getTable('File')->find($image['file_id']);
+          if (!$file)
+          {
+            throw new LogicException('Invalid file_id.');
+          }
+          $activityImage->setFileId($file->getId());
+          $activityImage->setMimeType($file->getType());
         }
         elseif (isset($image['uri']) && isset($image['mime_type']))
         {
