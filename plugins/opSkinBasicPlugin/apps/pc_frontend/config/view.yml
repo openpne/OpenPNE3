@@ -1,2 +1,2 @@
 default:
-  stylesheets:    [/opSkinBasicPlugin/css/main.css]
+  stylesheets:    [/opSkinBasicPlugin/css/main.css, emoji.css]
