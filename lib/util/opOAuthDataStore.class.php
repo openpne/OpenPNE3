@@ -107,12 +107,7 @@ class opOAuthDataStore extends OAuthDataStore
     $tokenRecord = $this->getTokenTable()->findByKeyString($token, $token_type, $this->queryTemplate);
     if ($tokenRecord)
     {
-      $token = new OAuthToken($tokenRecord->getKeyString(), '');
-      if ('request' !== $token_type)
-      {
-        $token->secret = $tokenRecord->getSecret();
-      }
-      return $token;
+      return new OAuthToken($tokenRecord->getKeyString(), $tokenRecord->getSecret());
     }
 
     return null;
