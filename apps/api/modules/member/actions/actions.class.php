@@ -63,9 +63,17 @@ class memberActions extends opJsonApiActions
       {
         $query->andWhere('EXISTS (FROM MemberRelationship mr WHERE m.id = mr.member_id_to AND mr.member_id_from = ?)', $targetId);
       }
-      if ('community' === $request['target'])
+      elseif ('community' === $request['target'])
       {
         $query->andWhere('EXISTS (FROM CommunityMember cm WHERE m.id = cm.member_id AND cm.community_id = ?)', $targetId);
+      }
+      elseif ('member' === $request['target'])
+      {
+        $query->andWhere('m.id = ?', $targetId);
+      }
+      else
+      {
+        $this->forward400('target parameter is invalid.');
       }
     }
 
