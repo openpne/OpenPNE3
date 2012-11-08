@@ -109,7 +109,7 @@ class MemberConfigForm extends BaseForm
   public function setMemberConfigWidget($name)
   {
     $config = $this->memberConfigSettings[$name];
-    $this->widgetSchema[$name] = opFormItemGenerator::generateWidget($config);
+    $this->setWidget($name, opFormItemGenerator::generateWidget($config));
     $this->widgetSchema->setLabel($name, $config['Caption']);
     $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($name, $this->member->getId());
     if ($memberConfig) {
