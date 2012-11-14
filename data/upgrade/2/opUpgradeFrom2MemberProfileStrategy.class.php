@@ -59,8 +59,21 @@ class opUpgradeFrom2MemberProfileStrategy extends opUpgradeAbstractStrategy
       $valMin = (0 == $profile['val_min']) ? null : $profile['val_min'];
       $valMax = (0 == $profile['val_max']) ? null : $profile['val_max'];
 
+      switch ($profile['public_flag_default'])
+      {
+        case 'friend':
+          $publicFlagDefault = 2;
+          break;
+        case 'private':
+          $publicFlagDefault = 3;
+          break;
+        default:
+          $publicFlagDefault = 1;
+          break;
+      }
+
       $this->conn->execute('INSERT INTO profile (id, name, is_required, is_unique, is_edit_public_flag, default_public_flag, form_type, value_type, is_disp_regist, is_disp_config, is_disp_search, value_regexp, value_min, value_max, sort_order, created_at, updated_at) VALUES (?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())', array(
-        $profile['c_profile_id'] , $profile['name']     , $profile['is_required'] , $profile['public_flag_edit'] , $profile['public_flag_default'] ,
+        $profile['c_profile_id'] , $profile['name']     , $profile['is_required'] , $profile['public_flag_edit'] , $publicFlagDefault ,
         $profile['form_type']    , $profile['val_type'] , $profile['disp_regist'] , $profile['disp_config']      , $profile['disp_search']         ,
         $profile['val_regexp']   , $valMin              , $valMax                 , $profile['sort_order']
       ));
