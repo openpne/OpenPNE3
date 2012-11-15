@@ -150,6 +150,11 @@ class activityActions extends opJsonApiActions
 
   public function executePost(sfWebRequest $request)
   {
+    if (!opConfig::get('is_allow_post_activity'))
+    {
+      return $this->renderJSON(array('status' => 'error', 'message' => "you are not allowed this action."));
+    }
+
     $body = (string)$request['body'];
     $this->forward400If('' === $body, 'body parameter not specified.');
 
