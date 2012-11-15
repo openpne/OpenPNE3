@@ -155,6 +155,7 @@ class activityActions extends opJsonApiActions
   {
     $body = (string)$request['body'];
     $this->forward400If('' === $body, 'body parameter not specified.');
+    $this->forward400If(mb_strlen($body) > 140, 'The body text is too long.');
 
     $memberId = $this->getUser()->getMemberId();
     $options = array();
