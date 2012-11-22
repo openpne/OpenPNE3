@@ -8,7 +8,8 @@ create_tables:
   strategy: CreateTable
 
 member_basic:
-  strategy: SQLImport
+  strategy: opUpgradeFrom2MemberStrategy
+  file: %SF_DATA_DIR%/upgrade/2/opUpgradeFrom2MemberStrategy.class.php
 
 files:
   strategy: SQLImport
