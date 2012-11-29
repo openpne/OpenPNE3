@@ -154,6 +154,14 @@ class activityActions extends opJsonApiActions
     $this->forward400If('' === $body, 'body parameter not specified.');
 
     $memberId = $this->getUser()->getMemberId();
+
+    $lastactivity = Doctrine::getTable('ActivityData')->getActivityList($memberId, null, 1);
+    if ($request['body'] == $lastactivity[0]['body'])
+    {
+      sfContext::getInstance()->getConfiguration()->loadHelpers('I18N');
+      return $this->renderJSON(array('status' => 'error', 'message' => __('Can not post same message')));
+    }
+
     $options = array();
 
     if (isset($request['public_flag']))
