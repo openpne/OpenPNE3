@@ -11012,7 +11012,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				add_form_submit_trigger : 1,
 				submit_patch : 1,
 				add_unload_trigger : 1,
-				convert_urls : 1,
+				convert_urls : 0,
 				relative_urls : 1,
 				remove_script_host : 1,
 				table_inline_editing : 0,
