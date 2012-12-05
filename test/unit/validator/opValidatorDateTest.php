@@ -2,7 +2,7 @@
 
 include_once dirname(__FILE__) . '/../../bootstrap/unit.php';
 
-$t = new lime_test(42, new lime_output_color());
+$t = new lime_test(44, new lime_output_color());
 
 $v = new opValidatorDate();
 
@@ -47,7 +47,7 @@ $t->is($v->clean(array('year' => '2005', 'month' => '10', 'day' => '15')), '2005
 $t->is($v->clean(array('year' => 2008, 'month' => 02, 'day' => 29)), '2008-02-29', '->clean() recognises a leapyear');
 
 $v->setOption('required', false);
-$v->setOption('empty_value', new DateTime('1989-01-08')); 
+$v->setOption('empty_value', new DateTime('1989-01-08'));
 $t->is($v->clean(array('year' => '', 'month' => '', 'day' => '', 'hour' => '10')), '1989-01-08', '->clean() accepts an array as empty');
 $v->setOption('required', true);
 
@@ -211,3 +211,17 @@ catch (sfValidatorError $e)
 {
   $t->pass('->clean() throws an exception if the date is not within the range provided by the min/max options');
 }
+
+$t->diag('opValidatorDate zero year test');
+$v->setOption('required', false);
+try
+{
+  $v->clean(array('year' => '0', 'month' => '', 'day' => ''));
+  $t->fail('->clean() throws a sfValidatorError if the date is not valid');
+}
+catch (sfValidatorError $e)
+{
+  $t->pass('->clean() throws a sfValidatorError if the date is not valid');
+  $t->is($e->getCode(), 'invalid', '->clean() throws a sfValidatorError');
+}
+$v->setOption('required', true);
