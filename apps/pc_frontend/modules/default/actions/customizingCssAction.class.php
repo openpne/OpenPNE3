@@ -27,7 +27,10 @@ class customizingCssAction extends sfAction
     $filesystem = new sfFilesystem();
     $dir = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.'css';
     @$filesystem->mkdirs($dir);
-    file_put_contents($dir.DIRECTORY_SEPARATOR.'customizing.css', $css);
+    $filesystem->chmod($dir, 0777);
+    $cssPath = $dir.DIRECTORY_SEPARATOR.'customizing.css';
+    file_put_contents($cssPath, $css);
+    $filesystem->chmod($cssPath, 0666);
 
     $this->getResponse()->setHttpHeader('Last-Modified', sfWebResponse::getDate(time()));
 
