@@ -41,6 +41,9 @@ abstract class opDoctrineRecord extends sfDoctrineRecord implements Zend_Acl_Res
 
   const MAX_NESTING_LEVEL = 50;
 
+  // TODO: Move it to good place (e.g. create new "opDoctrine" class? read like: opDoctrine::ATTR_4BYTES_UTF8_READY)
+  const ATTR_4BYTES_UTF8_READY = 999;
+
   protected
     $roleList = array(),
 
@@ -81,12 +84,71 @@ abstract class opDoctrineRecord extends sfDoctrineRecord implements Zend_Acl_Res
     return 'datetime' === $definition['type'];
   }
 
+  protected function checkIsNonBinaryStringField($fieldName)
+  {
+    $definition = $this->_table->getColumnDefinition($fieldName);
+
+    return in_array($definition['type'], array(
+      'string', 'array', 'object', 'clob', 'char', 'varchar',
+    ), true);
+  }
+
+  protected function replace4BytesUtf8Characters($value)
+  {
+    if (is_array($value))
+    {
+      $result = array();
+      foreach ($value as $k => $v)
+      {
+        $result[$this->replace4BytesUtf8Characters($k)] = $this->replace4BytesUtf8Characters($v);
+      }
+
+      return $result;
+    }
+
+    if (!is_string($value))
+    {
+      return $value;
+    }
+
+    // See: RFC 3629 (section 4, Syntax of UTF-8 Byte Sequences)
+    // http://tools.ietf.org/html/rfc3629#section-4
+    return preg_replace('/(
+      \xF0[\x90-\xBF][\x80-\xBF]{2}| # %xF0 %x90-BF 2( UTF8-tail )
+      [\xF1-\xF3][\x80-\xBF]{3}|     # %xF1-F3 3( UTF8-tail )
+      \xF4[\x80-\x8F][\x80-\xBF]{2}  # %xF4 %x80-8F 2( UTF8-tail )
+    )/x', "\xEF\xBF\xBD", $value);
+  }
+
+  protected function isReadyFor4BytesUtf8()
+  {
+    $conn = $this->_table->getConnection();
+    if ($conn->getAttribute(self::ATTR_4BYTES_UTF8_READY))
+    {
+      return true;
+    }
+
+    return !($conn instanceof Doctrine_Connection_MySQL);
+  }
+
   protected function _set($fieldName, $value, $load = true)
   {
     // In setter, empty value must be handled as opDoctrineRecord::UNDEFINED_DATETIME
     if ($this->checkIsDatetimeField($fieldName) && empty($value))
     {
       $value = self::UNDEFINED_DATETIME;
+    }
+
+    $definition = $this->_table->getColumnDefinition($fieldName);
+
+    // "utf8", a type of character set in MySQL, can't handle 4 bytes utf8 characters
+    // so we replace such a character to "U+FFFD" (A unicode "REPLACEMENT CHARACTER").
+    if (!$this->isReadyFor4BytesUtf8())
+    {
+      if ($this->checkIsNonBinaryStringField($fieldName))
+      {
+        $value = $this->replace4BytesUtf8Characters($value);
+      }
     }
 
     return parent::_set($fieldName, $value, $load);
