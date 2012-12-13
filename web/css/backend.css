@@ -335,6 +335,12 @@ table.skin td.submit {
   color: #ff0000;
 }
 
+.description ul {
+  padding-left: 2em;
+  margin-bottom: 1em;
+  list-style-type: disc;
+}
+
 /* CLEAR FIX*/
 .clearfix:after {
   content: ".";
