@@ -187,7 +187,7 @@ class opActivityQueryBuilder
       $query->andWhere('a.member_id = ?', $memberId);
     }
 
-    $query->andWhereIn('a.public_flag', $this->table->getViewablePublicFlags($publicFlag));
+    $query->andWhere('a.public_flag <= ?', $publicFlag);
 
     return $query;
   }
