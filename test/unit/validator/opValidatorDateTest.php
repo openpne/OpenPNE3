@@ -2,7 +2,7 @@
 
 include_once dirname(__FILE__) . '/../../bootstrap/unit.php';
 
-$t = new lime_test(42, new lime_output_color());
+$t = new lime_test(84, new lime_output_color());
 
 $v = new opValidatorDate();
 
@@ -47,7 +47,7 @@ $t->is($v->clean(array('year' => '2005', 'month' => '10', 'day' => '15')), '2005
 $t->is($v->clean(array('year' => 2008, 'month' => 02, 'day' => 29)), '2008-02-29', '->clean() recognises a leapyear');
 
 $v->setOption('required', false);
-$v->setOption('empty_value', new DateTime('1989-01-08')); 
+$v->setOption('empty_value', new DateTime('1989-01-08'));
 $t->is($v->clean(array('year' => '', 'month' => '', 'day' => '', 'hour' => '10')), '1989-01-08', '->clean() accepts an array as empty');
 $v->setOption('required', true);
 
@@ -210,4 +210,137 @@ try
 catch (sfValidatorError $e)
 {
   $t->pass('->clean() throws an exception if the date is not within the range provided by the min/max options');
+}
+
+// required = true, isEmpty() = true
+$t->diag('required = true, isEmpty() = true');
+$v = new opValidatorDate();
+
+foreach (array(
+  array('year' => '', 'month' => '', 'day' => ''),
+  array('year' => null, 'month' => null, 'day' => null),
+  array('year' => false, 'month' => false, 'day' => false),
+  array('year' => array(), 'month' => array(), 'day' => array()),
+  array('year' => new SimpleXMLElement('<hoge />'), 'month' => new SimpleXMLElement('<hoge />'), 'day' => new SimpleXMLElement('<hoge />')),
+  '',
+  null,
+) as $input)
+{
+  try
+  {
+    $v->clean($input);
+    $t->fail('->clean() throws an exception if the date is empty and required is true');
+  }
+  catch (sfValidatorError $e)
+  {
+    $t->pass('->clean() throws an exception if the date is empty and required is true');
+    $t->is($e->getCode(), 'required', '->clean() throws a sfValidatorError');
+  }
+}
+
+// required = true, isEmpty() = false
+$t->diag('required = true, isEmpty() = false');
+foreach (array(
+  array('year' => 0, 'month' => 0, 'day' => 0),
+  array('year' => '0', 'month' => '0', 'day' => '0'),
+) as $input)
+{
+  try
+  {
+    $v->clean($input);
+    $t->fail('->clean() throws an exception if the date is not empty and required is true');
+  }
+  catch (sfValidatorError $e)
+  {
+    $t->pass('->clean() throws an exception if the date is not empty and required is true');
+    $t->is($e->getCode(), 'invalid', '->clean() throws a sfValidatorError');
+  }
+}
+
+// required = false, isEmpty() = true
+$t->diag('required = false, isEmpty() = true');
+$v = new opValidatorDate();
+$v->setOption('required', false);
+
+foreach (array(
+  array('year' => '', 'month' => '', 'day' => ''),
+  array('year' => null, 'month' => null, 'day' => null),
+  array('year' => false, 'month' => false, 'day' => false),
+  array('year' => array(), 'month' => array(), 'day' => array()),
+  array('year' => new SimpleXMLElement('<hoge />'), 'month' => new SimpleXMLElement('<hoge />'), 'day' => new SimpleXMLElement('<hoge />')),
+  '',
+  null,
+) as $input)
+{
+  try
+  {
+    $t->is($v->clean($input), null, '->clean() accepts an array as an input');
+  }
+  catch(sfValidatorError $e)
+  {
+    $t->fail('->clean() accepts an array as an input for \''.$e->getCode().'\'');
+  }
+}
+
+// required = false, isEmpty() = false
+$t->diag('required = false, isEmpty() = false');
+foreach (array(
+  array('year' => 0, 'month' => 0, 'day' => 0),
+  array('year' => '0', 'month' => '0', 'day' => '0'),
+  array('year' => 0.0, 'month' => 0.0, 'day' => 0.0),
+) as $input)
+{
+  try
+  {
+    $v->clean($input);
+    $t->fail('->clean() throws an exception if the date is not empty and required is false');
+  }
+  catch (sfValidatorError $e)
+  {
+    $t->pass('->clean() throws an exception if the date is not empty and required is false');
+    $t->is($e->getCode(), 'invalid', '->clean() throws a sfValidatorError');
+  }
+}
+
+// required = true, isEmpty() = false
+$t->diag('required = true, isEmpty() = false');
+$v = new opValidatorDate();
+$v->setOption('empty_value', new DateTime('1989-01-08'));
+
+foreach (array(
+  array('year' => '', 'month' => '', 'day' => '', 'hour' => 10),
+  array('year' => null, 'month' => null, 'day' => null, 'hour' => 10),
+  array('year' => false, 'month' => false, 'day' => false, 'hour' => 10),
+  array('year' => array(), 'month' => array(), 'day' => array(), 'hour' => 10),
+  array('year' => new SimpleXMLElement('<hoge />'), 'month' => new SimpleXMLElement('<hoge />'), 'day' => new SimpleXMLElement('<hoge />'), 'hour' => 10),
+) as $input)
+{
+  try
+  {
+    $t->is($v->clean($input), '1989-01-08', '->clean() accepts empty valus "Yms" and required is true');
+  }
+  catch(sfValidatorError $e)
+  {
+    $t->fail('->clean() accepts empty valus "Yms" and required is true');
+  }
+}
+
+// required = false, isEmpty() = false
+$t->diag('required = false, isEmpty() = false');
+foreach (array(
+  array('year' => 0, 'month' => 0, 'day' => 0, 'hour' => 10),
+  array('year' => '0', 'month' => '0', 'day' => '0', 'hour' => 10),
+  array('year' => 0.0, 'month' => 0.0, 'day' => 0.0, 'hour' => 10),
+) as $input)
+{
+  try
+  {
+    $v->clean($input);
+    $t->fail('->clean() accepts not empty valus "Yms" and required is true');
+  }
+  catch (sfValidatorError $e)
+  {
+    $t->pass('->clean() accepts not empty valus "Yms" and required is true');
+    $t->is($e->getCode(), 'invalid', '->clean() throws a sfValidatorError');
+  }
 }

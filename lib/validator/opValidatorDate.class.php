@@ -91,7 +91,7 @@ class opValidatorDate extends sfValidatorDate
     // all elements must be empty or a number
     foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
     {
-      if (isset($value[$key]) && !preg_match('#^\d+$#', $value[$key]) && !empty($value[$key]))
+      if (isset($value[$key]) && !empty($value[$key]) && !preg_match('#^\d+$#', $value[$key]))
       {
         throw new sfValidatorError($this, 'invalid', array('value' => $value));
       }
@@ -99,9 +99,9 @@ class opValidatorDate extends sfValidatorDate
 
     // if one date value is empty, all others must be empty too
     $empties =
-      (!isset($value['year']) || !$value['year'] ? 1 : 0) +
-      (!isset($value['month']) || !$value['month'] ? 1 : 0) +
-      (!isset($value['day']) || !$value['day'] ? 1 : 0);
+      (!isset($value['year']) || !is_numeric($value['year']) ? 1 : 0) +
+      (!isset($value['month']) || !is_numeric($value['month']) ? 1 : 0) +
+      (!isset($value['day']) || !is_numeric($value['day']) ? 1 : 0);
 
     if ($empties > 0 && $empties < 3)
     {
@@ -152,4 +152,23 @@ class opValidatorDate extends sfValidatorDate
 
     return $clean;
   }
+
+  protected function isEmpty($value)
+  {
+    if (!is_array($value))
+    {
+      return parent::isEmpty($value);
+    }
+
+    foreach ($value as $v)
+    {
+      if ($v || is_numeric($v))
+      {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
 }
