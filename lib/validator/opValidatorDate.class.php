@@ -99,7 +99,7 @@ class opValidatorDate extends sfValidatorDate
 
     // if one date value is empty, all others must be empty too
     $empties =
-      (!isset($value['year']) || !$value['year'] ? 1 : 0) +
+      (!isset($value['year']) || ('0' != $value['year'] && !$value['year']) ? 1 : 0) +
       (!isset($value['month']) || !$value['month'] ? 1 : 0) +
       (!isset($value['day']) || !$value['day'] ? 1 : 0);
 
@@ -151,5 +151,13 @@ class opValidatorDate extends sfValidatorDate
     }
 
     return $clean;
+  }
+
+  /**
+   * @see sfValidatorBase
+   */
+  protected function isEmpty($value)
+  {
+    return in_array($value, array(null, '', array()), true);
   }
 }
