@@ -152,4 +152,23 @@ class opValidatorDate extends sfValidatorDate
 
     return $clean;
   }
+
+  protected function isEmpty($value)
+  {
+    if (!is_array($value))
+    {
+      return parent::isEmpty($value);
+    }
+
+    foreach ($value as $v)
+    {
+      if ($v || is_numeric($v))
+      {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
 }
