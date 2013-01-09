@@ -78,6 +78,44 @@ abstract class opMemberAction extends sfActions
   {
     $this->getUser()->logout();
 
+    $routing = sfContext::getInstance()->getRouting();
+    if (!$request->isSecure())
+    {
+      $app = sfConfig::get('sf_app');
+      $sslRequiredList = sfConfig::get('op_ssl_required_actions', array(
+        $app => array(),
+      ));
+
+      $moduleName = sfConfig::get('sf_login_module');
+      $actionName = sfConfig::get('sf_login_action');
+      if (in_array($moduleName.'/'.$actionName, $sslRequiredList[$app]))
+      {
+        $nextUri = $routing->getCurrentInternalUri();
+        if ($_SERVER['QUERY_STRING'])
+        {
+          if (false !== strpos($nextUri, '?'))
+          {
+            $nextUri .= '&';
+          }
+          else
+          {
+            $nextUri .= '?';
+          }
+
+          $nextUri .= $_SERVER['QUERY_STRING'];
+        }
+
+        $nextUriParam = array(
+          'next_uri' => $nextUri
+        );
+
+        $loginUrl = $this->generateUrl('login', array(), true);
+        $loginUrl .= '?'.http_build_query($nextUriParam, '', '&');
+
+        $this->redirect($loginUrl);
+      }
+    }
+
     $this->forms = $this->getUser()->getAuthForms();
 
     if ($request->hasParameter('authMode'))
@@ -95,7 +133,6 @@ abstract class opMemberAction extends sfActions
       return sfView::ERROR;
     }
 
-    $routing = sfContext::getInstance()->getRouting();
     if ('homepage' !== $routing->getCurrentRouteName()
       && 'login' !== $routing->getCurrentRouteName()
     )
