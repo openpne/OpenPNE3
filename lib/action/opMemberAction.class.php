@@ -78,6 +78,38 @@ abstract class opMemberAction extends sfActions
   {
     $this->getUser()->logout();
 
+    $this->redirectToLoginIfSslRequired($request);
+
+    $this->forms = $this->getUser()->getAuthForms();
+
+    if ($request->hasParameter('authMode'))
+    {
+      $uri = $this->getUser()->login();
+
+      $this->redirectIf($this->getUser()->isRegisterBegin(), $this->getUser()->getRegisterInputAction());
+      $this->redirectIf($this->getUser()->isRegisterFinish(), $this->getUser()->getRegisterEndAction());
+
+      if ($uri)
+      {
+        $this->redirectIf($this->getUser()->isMember(), $uri);
+      }
+
+      return sfView::ERROR;
+    }
+
+    $routing = sfContext::getInstance()->getRouting();
+    if ('homepage' !== $routing->getCurrentRouteName()
+      && 'login' !== $routing->getCurrentRouteName()
+    )
+    {
+      $this->getUser()->setFlash('notice', 'Please login to visit this page', false);
+    }
+
+    return sfView::SUCCESS;
+  }
+
+  private function redirectToLoginIfSslRequired($request)
+  {
     $routing = sfContext::getInstance()->getRouting();
     if (sfConfig::get('op_use_ssl', false) && !$request->isSecure())
     {
@@ -119,32 +151,6 @@ abstract class opMemberAction extends sfActions
         $this->redirect($loginUrl);
       }
     }
-
-    $this->forms = $this->getUser()->getAuthForms();
-
-    if ($request->hasParameter('authMode'))
-    {
-      $uri = $this->getUser()->login();
-
-      $this->redirectIf($this->getUser()->isRegisterBegin(), $this->getUser()->getRegisterInputAction());
-      $this->redirectIf($this->getUser()->isRegisterFinish(), $this->getUser()->getRegisterEndAction());
-
-      if ($uri)
-      {
-        $this->redirectIf($this->getUser()->isMember(), $uri);
-      }
-
-      return sfView::ERROR;
-    }
-
-    if ('homepage' !== $routing->getCurrentRouteName()
-      && 'login' !== $routing->getCurrentRouteName()
-    )
-    {
-      $this->getUser()->setFlash('notice', 'Please login to visit this page', false);
-    }
-
-    return sfView::SUCCESS;
   }
 
   public function executeLogout($request)
