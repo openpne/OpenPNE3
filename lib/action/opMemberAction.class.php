@@ -79,7 +79,7 @@ abstract class opMemberAction extends sfActions
     $this->getUser()->logout();
 
     $routing = sfContext::getInstance()->getRouting();
-    if (!$request->isSecure())
+    if (sfConfig::get('op_use_ssl', false) && !$request->isSecure())
     {
       $app = sfConfig::get('sf_app');
       $sslRequiredList = sfConfig::get('op_ssl_required_actions', array(
