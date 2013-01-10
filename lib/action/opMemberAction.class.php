@@ -110,7 +110,10 @@ abstract class opMemberAction extends sfActions
         );
 
         $baseUrl = sfConfig::get('op_ssl_base_url');
-        $loginUrl = $baseUrl[$app].$this->generateUrl('login');
+        $scriptName = basename($request->getScriptName());
+        $replacement = (false !== strpos($request->getPathInfoPrefix(), $scriptName)) ? '/'.$scriptName : '';
+        $loginPath = str_replace($request->getPathInfoPrefix(), $replacement, $this->generateUrl('login'));
+        $loginUrl = $baseUrl[$app].$loginPath;
         $loginUrl .= '?'.http_build_query($nextUriParam, '', '&');
 
         $this->redirect($loginUrl);
