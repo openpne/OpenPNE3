@@ -109,7 +109,8 @@ abstract class opMemberAction extends sfActions
           'next_uri' => $nextUri
         );
 
-        $loginUrl = $this->generateUrl('login', array(), true);
+        $baseUrl = sfConfig::get('op_ssl_base_url');
+        $loginUrl = $baseUrl[$app].$this->generateUrl('login');
         $loginUrl .= '?'.http_build_query($nextUriParam, '', '&');
 
         $this->redirect($loginUrl);
