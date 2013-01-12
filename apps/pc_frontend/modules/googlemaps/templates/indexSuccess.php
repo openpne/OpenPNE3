@@ -29,7 +29,7 @@ for (var i = 0; i < params.length; i++) {
 var MapType = %s;  // It is not user-inputed values
 function load()
 {
-  var latlng = new google.maps.LatLng(request.y, request.x);
+  var latlng = new google.maps.LatLng(request.x, request.y);
   var mapOptions = {
     zoom: request.z,
     center: latlng,
