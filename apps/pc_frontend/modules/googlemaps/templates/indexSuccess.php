@@ -6,9 +6,8 @@
 <?php include_metas() ?>
 <title><?php echo ($op_config['sns_title']) ? $op_config['sns_title'] : $op_config['sns_name'] ?></title>
 <?php echo $op_config->get('pc_html_head') ?>
-<?php if (isset($op_config['google_AJAX_search_api_key']) && isset($op_config['google_maps_api_key'])): ?>
-<?php use_javascript('http://www.google.co.jp/uds/api?file=uds.js&v=1.0&key='.$op_config['google_AJAX_search_api_key']) ?>
-<?php use_javascript('http://maps.google.co.jp/maps?file=api&v=2.x&key='.$op_config['google_maps_api_key']) ?>
+<?php include_stylesheets() ?>
+<?php include_javascripts() ?>
 <?php
 $googlemaps_script = <<<EOM
 // parse request parameters
@@ -28,55 +27,20 @@ for (var i = 0; i < params.length; i++) {
   request[n] = v;
 }
 var MapType = %s;  // It is not user-inputed values
-
-var gls;
-var gMap;
-function OnLocalSearch() {
-    if (!gls.results) return;
-    var first = gls.results[0];
-    var point = new GLatLng(parseFloat(first.lat), parseFloat(first.lng));
-    var zoom = request.z;
-    gMap.addControl(new GSmallMapControl());
-    gMap.addControl(new GMapTypeControl());
-    gMap.setMapType(MapType);
-    gMap.setCenter(point, zoom);
-    var marker = new GMarker(point);
-    gMap.addOverlay(marker);
-    geocoder = new GClientGeocoder();
-}
-function load() {
-    if (GBrowserIsCompatible()) {
-        if ((request.x == 0) && (request.y == 0)){
-            gMap = new GMap2(document.getElementById('map'));
-            gMap.addControl(new GSmallMapControl());
-            gMap.addControl(new GMapTypeControl());
-            gMap.setCenter(new GLatLng(0, 0));
-            gls = new GlocalSearch();
-            gls.setCenterPoint(gMap);
-            gls.setSearchCompleteCallback(null, OnLocalSearch);
-            var q = request.q;
-            gls.execute(q);
-        } else {
-            var point = new GLatLng(request.x, request.y);
-            var zoom = request.z;
-            gMap = new GMap2(document.getElementById('map'));
-            gMap.addControl(new GSmallMapControl());
-            gMap.addControl(new GMapTypeControl());
-            gMap.setCenter(point, zoom);
-            gMap.setMapType(MapType);
-            var marker = new GMarker(point);
-            gMap.addOverlay(marker);
-            geocoder = new GClientGeocoder();
-        }
-    }
+function load()
+{
+  var latlng = new google.maps.LatLng(request.y, request.x);
+  var mapOptions = {
+    zoom: request.z,
+    center: latlng,
+    mapTypeId: MapType,
+  };
+  var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
 EOM;
 echo javascript_tag(sprintf($googlemaps_script, $mapType)); ?>
-<?php endif; ?>
-<?php include_stylesheets() ?>
-<?php include_javascripts() ?>
 </head>
-<body onload="load()" onunload="GUnload()" id="page_googlemaps_index" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
+<body onload="load()" id="page_googlemaps_index" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
 <div id="map" style="width: 300px; height: 320px"></div>
 </body>
 </html>
