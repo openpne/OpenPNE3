@@ -36,6 +36,11 @@ function load()
     mapTypeId: MapType,
   };
   var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  
+  var maker = new google.maps.Marker({
+    position: latlng,
+    map: map,
+  });
 }
 EOM;
 echo javascript_tag(sprintf($googlemaps_script, $mapType)); ?>
