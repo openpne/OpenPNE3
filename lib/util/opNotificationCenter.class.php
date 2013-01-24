@@ -60,7 +60,7 @@ class opNotificationCenter
     $notificationObject->free(true);
   }
 
-  public function setRead(Member $target, $notificationId)
+  static public function setRead(Member $target, $notificationId)
   {
     $notificationObject = Doctrine::getTable('MemberConfig')
       ->findOneByMemberIdAndName($target->getId(), 'notification_center');
