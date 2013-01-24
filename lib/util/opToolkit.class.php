@@ -582,10 +582,8 @@ class opToolkit
     @fclose($fp);
     if (!@rename($tmpFile, $pathToCacheFile))
     {
-      if ($filesystem->copy($tmpFile, $pathToCacheFile, array('override' => true)))
-      {
-        $filesystem->remove($tmpFile);
-      }
+      $filesystem->copy($tmpFile, $pathToCacheFile, array('override' => true));
+      $filesystem->remove($tmpFile);
     }
 
     $filesystem->chmod($pathToCacheFile, 0666);
