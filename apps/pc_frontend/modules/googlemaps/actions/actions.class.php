@@ -17,14 +17,14 @@ class googlemapsActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->mapType = 'G_NORMAL_MAP';
+    $this->mapType = 'google.maps.MapTypeId.ROADMAP';
     switch ($request->getParameter('t'))
     {
       case 'k':
-        $this->mapType = 'G_SATELLITE_MAP';
+        $this->mapType = 'google.maps.MapTypeId.SATELLITE';
         break;
       case 'h':
-        $this->mapType = 'G_HYBRID_MAP';
+        $this->mapType = 'google.maps.MapTypeId.HYBRID';
         break;
     }
   }
