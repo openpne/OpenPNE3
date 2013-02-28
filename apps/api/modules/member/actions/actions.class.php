@@ -61,7 +61,7 @@ class memberActions extends opJsonApiActions
 
       if ('friend' === $request['target'])
       {
-        $query->andWhere('EXISTS (FROM MemberRelationship mr WHERE m.id = mr.member_id_to AND mr.member_id_from = ?)', $targetId);
+        $query->andWhere('EXISTS (FROM MemberRelationship mr WHERE m.id = mr.member_id_to AND mr.member_id_from = ? AND mr.is_friend = true)', $targetId);
       }
       if ('community' === $request['target'])
       {
