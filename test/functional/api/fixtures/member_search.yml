@@ -1,0 +1,27 @@
+Member:
+  first_member:
+    name: "First member"
+    is_active: 1
+  blocking_member:
+    name: "Blocked-by-me"
+    is_active: 1
+  prefriend_member:
+    name: "Want-to-be-friend"
+    is_active: 1
+  friend_member:
+    name: "Already-friend"
+    is_active: 1
+
+MemberRelationship:
+  block_blocking_member:
+    MemberRelatedByMemberIdFrom: first_member
+    Member: blocking_member
+    is_access_block: true
+  friend_request_prefriend_member:
+    MemberRelatedByMemberIdFrom: first_member
+    Member: prefriend_member
+    is_friend_pre: true
+  friend_with_friend_member:
+    MemberRelatedByMemberIdFrom: first_member
+    Member: friend_member
+    is_friend: true
