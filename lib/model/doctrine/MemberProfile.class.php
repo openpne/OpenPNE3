@@ -204,7 +204,11 @@ class MemberProfile extends BaseMemberProfile implements opAccessControlRecordIn
     if ($this->getTreeKey() && $this->getNode()->hasChildren())
     {
       $children = $this->getNode()->getChildren();
-      $children->delete();
+      for ($i = $children->count(); $i-- > 0;)
+      {
+        $children[$i]->getNode()->delete();
+      }
+      $this->refresh();
     }
   }
 
