@@ -36,7 +36,7 @@ class memberActions extends sfActions
   {
     $params = $request->getParameter('member', array());
 
-    $this->form = new opMemberProfileSearchForm(array(), array('use_id' => true, 'is_check_public_flag' => false));
+    $this->form = new opMemberProfileSearchForm(array(), array('is_use_id' => true, 'is_check_public_flag' => false));
     $this->form->getWidgetSchema()->setLabel('name', 'Nickname');
     $this->form->bind($params);
 
