@@ -3,7 +3,8 @@
 <?php echo __('Mobile UID is already setting.') ?>
 <hr color="<?php echo $op_color["core_color_11"] ?>">
 <?php endif; ?>
-<?php echo __('Setting mobile UID.'); echo __('Prease input your password, press "%1%" button.', array('%1%' => __('Save'))) ?>
+<?php echo __('Setting mobile UID.'); ?><br>
+<?php echo __('Please input your password, and press "%1%" button.', array('%1%' => __('Save'))) ?>
 <form action="<?php echo url_for('member/configUID').'?guid=on' ?>" method="post" utn>
 <?php echo $passwordForm ?>
 <center>
