@@ -40,7 +40,7 @@ if (!isset($isOperation) || $isOperation)
   {
     $operationItems[] = array(
       'class' => 'delete',
-      'body'  => link_to(__('Delete'), 'member/deleteActivity?id='.$activity->getId(), array('title' => __('Delete this activity of %time%', array('%time%' => $time)))),
+      'body'  => link_to(__('Delete'), 'member/deleteActivity?id='.$activity->getId(), array('title' => __('Delete this %activity% of %time%', array('%time%' => $time)))),
     );
   }
 }
