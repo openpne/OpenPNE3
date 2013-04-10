@@ -116,9 +116,9 @@ class MemberTable extends opAccessControlDoctrineTable
       ->allow('self', $resource, 'edit')
       ->deny('blocked');
 
-    if (Doctrine::getTable('SnsConfig')->get('is_allow_config_public_flag_profile_page'))
+    if (opConfig::get('is_allow_config_public_flag_profile_page'))
     {
-      $config = Doctrine::getTable('SnsConfig')->get('is_allow_config_public_flag_profile_page');
+      $config = opConfig::get('is_allow_config_public_flag_profile_page');
     }
     elseif ($resource)
     {
