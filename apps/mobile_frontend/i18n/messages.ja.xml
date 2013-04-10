@@ -311,7 +311,7 @@
         <target>携帯電話を登録します。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Prease input your password, press "%1%" button.</source>
+        <source>Please input your password, and press "%1%" button.</source>
         <target>ﾊﾟｽﾜｰﾄﾞを入力して、「%1%」ﾎﾞﾀﾝを押してください。</target>
       </trans-unit>
       <trans-unit id="">
