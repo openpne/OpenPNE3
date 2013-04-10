@@ -23,12 +23,12 @@ class MemberConfigPublicFlagForm extends MemberConfigForm
   {
     parent::__construct($member, $options, $CSRFSecret);
 
-    if (Doctrine::getTable('SnsConfig')->get('is_allow_config_public_flag_profile_page'))
+    if (opConfig::get('is_allow_config_public_flag_profile_page'))
     {
       unset($this['profile_page_public_flag']);
     }
 
-    if (!Doctrine::getTable('SnsConfig')->get('is_allow_web_public_flag_age'))
+    if (!opConfig::get('is_allow_web_public_flag_age'))
     {
       $widget = $this->widgetSchema['age_public_flag'];
 
