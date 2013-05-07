@@ -42,7 +42,6 @@ class opJsonApiActions extends sfActions
   public function renderJSON(array $data)
   {
     $json = json_encode($data, $this->doEscape);
-    $this->getResponse()->setContentType('application/json');
 
     return $this->renderText($json);
   }
