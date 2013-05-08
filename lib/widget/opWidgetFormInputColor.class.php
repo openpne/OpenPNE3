@@ -28,6 +28,11 @@ class opWidgetFormInputColor extends sfWidgetFormInputText
 
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
+    if ($errors)
+    {
+      $value = '';
+    }
+
     $colorAttributes = array('style' => 'background-color:'.$value, 'id' => 'preview_'.$name, 'class' => 'color');
 
     $result = $this->renderContentTag('dd', parent::render($name, $value, $attributes, $errors));
