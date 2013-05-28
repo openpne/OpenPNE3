@@ -72,6 +72,15 @@ class opUpgradeFrom2MemberProfileStrategy extends opUpgradeAbstractStrategy
           break;
       }
 
+      if ('text' === $profile['form_type'])
+      {
+        $profile['form_type'] = 'input';
+      }
+      elseif ('textlong' === $profile['form_type'])
+      {
+        $profile['form_type'] = 'textarea';
+      }
+
       $this->conn->execute('INSERT INTO profile (id, name, is_required, is_unique, is_edit_public_flag, default_public_flag, form_type, value_type, is_disp_regist, is_disp_config, is_disp_search, value_regexp, value_min, value_max, sort_order, created_at, updated_at) VALUES (?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())', array(
         $profile['c_profile_id'] , $profile['name']     , $profile['is_required'] , $profile['public_flag_edit'] , $publicFlagDefault ,
         $profile['form_type']    , $profile['val_type'] , $profile['disp_regist'] , $profile['disp_config']      , $profile['disp_search']         ,
