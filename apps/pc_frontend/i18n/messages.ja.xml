@@ -1331,6 +1331,10 @@
         <source>Unknown Day</source>
         <target>日付非設定</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Save</source>
+        <target>確定</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
