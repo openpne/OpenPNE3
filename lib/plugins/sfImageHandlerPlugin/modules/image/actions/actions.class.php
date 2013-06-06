@@ -27,6 +27,7 @@ class imageActions extends sfActions
       'format'   => $request->getParameter('format', null),
       'width'    => str_replace('w', '', $request->getParameter('width', null)),
       'height'   => str_replace('h', '', $request->getParameter('height', null)),
+      'suffix'   => $request->getParameter('suffix', null),
     );
 
     try

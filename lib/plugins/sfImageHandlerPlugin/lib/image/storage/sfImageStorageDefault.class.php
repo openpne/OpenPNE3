@@ -35,7 +35,7 @@ class sfImageStorageDefault
     return $instance;
   }
 
-  static public function getUrlToImage($filename, $size, $format, $absolute = false)
+  static public function getUrlToImage($filename, $size, $format, $absolute = false, $square = false)
   {
     sfContext::getInstance()->getConfiguration()->loadHelpers('Asset');
 
@@ -46,7 +46,9 @@ class sfImageStorageDefault
       $sizeDirName = 'w'.$width.'_h'.$height;
     }
 
-    $filepath = 'img/'.$format.'/'.$sizeDirName.'/'.$filename.'.'.$format;
+    $squareSuffix = $square ? '_sq' : '';
+
+    $filepath = 'img/'.$format.'/'.$sizeDirName.$squareSuffix.'/'.$filename.'.'.$format;
 
     return _compute_public_path($filepath, 'cache', $format, $absolute);
   }

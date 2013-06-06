@@ -20,12 +20,13 @@ abstract class sfImageGenerator
   const ERROR_NOT_ALLOWED_SIZE = 101;
 
   protected
-    $quality     = 75,
-    $width       = 0,
-    $height      = 0,
-    $format      = 'jpg',
-    $allowedSize = null,
-    $tmpfilename = null;
+    $quality      = 75,
+    $width        = 0,
+    $height       = 0,
+    $format       = 'jpg',
+    $allowedSize  = null,
+    $tmpfilename  = null,
+    $cropToSquare = false;
 
   public function __construct(array $options = array())
   {
@@ -48,6 +49,11 @@ abstract class sfImageGenerator
     if (isset($options['format']))
     {
       $this->format = $options['format'];
+    }
+
+    if (isset($options['square']))
+    {
+      $this->cropToSquare = $options['square'];
     }
   }
 

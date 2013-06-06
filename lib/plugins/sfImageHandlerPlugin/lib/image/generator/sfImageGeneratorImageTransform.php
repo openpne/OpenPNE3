@@ -56,32 +56,33 @@ abstract class sfImageGeneratorImageTransform extends sfImageGenerator
       throw new sfException($result->getMessage());
     }
 
-    $srcWidth = $this->transform->getImageWidth();
-    $srcHeight = $this->transform->getImageHeight();
-    if ($srcWidth > $srcHeight)
-    {
-      $srcX = (int)ceil(($srcWidth - $srcHeight) / 2);
-      $srcY = 0;
-      $srcW = $srcHeight;
-      $srcH = $srcHeight;
-    }
-    else
-    {
-      $srcX = 0;
-      $srcY = (int)ceil(($srcHeight - $srcWidth) / 2);
-      $srcW = $srcWidth;
-      $srcH = $srcWidth;
-    }
- 
     // for mobile phone
     if ('jpg' === $this->format)
     {
       $this->disableInterlace();
     }
 
-    if ($this->width && $this->height)
+    if ($this->cropToSquare)
     {
+      $srcWidth = $this->transform->getImageWidth();
+      $srcHeight = $this->transform->getImageHeight();
+      if ($srcWidth > $srcHeight)
+      {
+        $srcX = (int)ceil(($srcWidth - $srcHeight) / 2);
+        $srcY = 0;
+        $srcW = $srcHeight;
+        $srcH = $srcHeight;
+      }
+      else
+      {
+        $srcX = 0;
+        $srcY = (int)ceil(($srcHeight - $srcWidth) / 2);
+        $srcW = $srcWidth;
+        $srcH = $srcWidth;
+      }
+
       $this->transform->crop($srcW, $srcH, $srcX, $srcY);
+
       $tmpoutputfilename = tempnam(sys_get_temp_dir(), 'IGITF');
       $result = $this->transform->save($tmpoutputfilename);
       if (PEAR::isError($result))
@@ -89,8 +90,12 @@ abstract class sfImageGeneratorImageTransform extends sfImageGenerator
         throw new sfException($result->getMessage());
       }
       $this->transform->load($tmpoutputfilename);
-      $this->transform->fit($this->width, $this->height);
       unlink($tmpoutputfilename);     
+    }
+
+    if ($this->width && $this->height)
+    {
+      $this->transform->fit($this->width, $this->height);
     }
   }
 
