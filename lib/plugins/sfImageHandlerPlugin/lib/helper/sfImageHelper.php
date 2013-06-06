@@ -46,21 +46,14 @@ function image_tag_sf_image($filename, $options = array())
   }
 
   $filepath = sf_image_path($filename, $options);
-  if (isset($options['size']))
+
+  // strip options for sf_image_path()
+  foreach (array('size', 'no_image', 'f', 'format', 'square') as $optionName)
   {
-    unset($options['size']);
-  }
-  if (isset($options['no_image']))
-  {
-    unset($options['no_image']);
-  }
-  if (isset($options['f']))
-  {
-    unset($options['f']);
-  }
-  if (isset($options['format']))
-  {
-    unset($options['format']);
+    if (isset($options[$optionName]))
+    {
+      unset($options[$optionName]);
+    }
   }
 
   return image_tag($filepath, $options);
@@ -97,7 +90,15 @@ function sf_image_path($filename, $options = array(), $absolute = false)
     $size = $options['size'];
   }
 
+  if (!isset($options['square']) && (0 === strpos($filename, 'm_') || 0 === strpos($filename, 'c_')))
+  {
+    // member image / community image
+    $options['square'] = true;
+  }
+
+  $square = isset($options['square']) ? (bool)$options['square'] : false;
+
   $class = sfImageHandler::getStorageClassName();
 
-  return  call_user_func(array($class, 'getUrlToImage'), $filename, $size, $f, $absolute);
+  return  call_user_func(array($class, 'getUrlToImage'), $filename, $size, $f, $absolute, $square);
 }

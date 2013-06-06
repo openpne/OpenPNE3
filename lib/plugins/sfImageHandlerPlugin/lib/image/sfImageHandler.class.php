@@ -78,6 +78,11 @@ class sfImageHandler
       throw new RuntimeException(sprintf('The specified image handler, %s is not found', $className));
     }
 
+    if ('sq' === $options['suffix'])
+    {
+      $options['square'] = true;
+    }
+
     $this->generator = new $className($options);
     $this->options = $options;
 
@@ -94,7 +99,7 @@ class sfImageHandler
 
     $info = $this->generator->resize($contents, $this->storage->getFormat());
 
-    $filename = self::getPathToFileCache($info['f'], $info['w'], $info['h'], $this->options['filename']);
+    $filename = self::getPathToFileCache($info['f'], $info['w'], $info['h'], $this->options['filename'], $this->options['square']);
 
     return $this->generator->output($filename);
   }
@@ -130,9 +135,9 @@ class sfImageHandler
     return 'sfImageStorage'.sfConfig::get('op_image_storage', 'Default');
   }
 
-  static public function getPathToFileCache($format, $width, $height, $filename)
+  static public function getPathToFileCache($format, $width, $height, $filename, $square = false)
   {
-    return sprintf('%s/cache/img/%s/w%s_h%s/%s.%2$s', sfConfig::get('sf_web_dir'), $format, $width, $height, $filename);
+    return sprintf('%s/cache/img/%s/w%s_h%s%s/%s.%2$s', sfConfig::get('sf_web_dir'), $format, $width, $height, $square ? '_sq' : '', $filename);
   }
 
   static public function clearFileCache($filename)
