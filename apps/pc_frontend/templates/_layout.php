@@ -20,6 +20,7 @@ use_javascript('op_notify.js');
 $jsonData = array(
   'apiKey' => $sf_user->getMemberApiKey(),
   'apiBase' => app_url_for('api', 'homepage'),
+  'baseUrl' => $sf_request->getRelativeUrlRoot().'/',
 );
 
 echo javascript_tag('
