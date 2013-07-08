@@ -6,13 +6,13 @@ include dirname(__FILE__).'/../../bootstrap/functional.php';
 
 $task = new sfDoctrineBuildTask($configuration->getEventDispatcher(), new sfFormatter());
 $task->setConfiguration($configuration);
-/*$task->run(array(), array(
+$task->run(array(), array(
   'no-confirmation' => true,
   'db'              => true,
   'and-load'        => dirname(__FILE__).'/fixtures/member_search.yml',
   'application'     => $app,
   'env'             => 'test',
-));*/
+));
 
 $browser = new opTestFunctional(new opBrowser(), new lime_test(null, new lime_output_color()));
 
