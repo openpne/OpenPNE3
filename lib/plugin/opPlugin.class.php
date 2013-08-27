@@ -125,7 +125,11 @@ class opPlugin
     {
       return false;
     }
-    return simplexml_load_file($xmlPath);
+    $content = file_get_contents($xmlPath);
+
+    return opToolkit::loadXmlString($content, array(
+      'return' => 'SimpleXMLElement',
+    ));
   }
 
   public function setIsActive($isActive)
