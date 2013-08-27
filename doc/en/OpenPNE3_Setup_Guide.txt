@@ -12,7 +12,7 @@ Web Server
   Apache
     * The "mod_rewrite" module must be enabled
 PHP
-  PHP version is >= 5.2.3
+  PHP version 5.2.11 or later (if you want to use with earlier than PHP 5.2.11, you should build PHP with libxml 2.9+)
     * The "mbstring" module must be enabled
     * The "xml" module must be enabled
     * The "PCRE" module must be enabled (That must be support UTF-8)
