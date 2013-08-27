@@ -47,7 +47,11 @@ EOF;
       throw new sfException(sprintf('Plugin "%s" dosen\'t have a definition file.', $pluginName));
     }
 
-    $infoXml = simplexml_load_file($packagePath.'/package.xml');
+    $content = file_get_contents($packagePath.'/package.xml');
+    $infoXml = opToolkit::loadXmlString($content, array(
+      'return' => 'SimpleXMLElement',
+    ));
+
     $filename = sprintf('%s-%s.tgz', (string)$infoXml->name, (string)$infoXml->version->release);
     $dirPath = sfConfig::get('sf_plugins_dir').'/'.$pluginName;
 
