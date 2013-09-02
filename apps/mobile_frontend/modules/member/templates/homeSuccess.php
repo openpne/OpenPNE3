@@ -79,7 +79,10 @@ foreach ($categories as $key => $value)
   }
 }
 $list[] = link_to(__('Setting easy login'), 'member/configUID');
-$list[] = link_to(__('Delete your %1% account', array('%1%' => $op_config['sns_name'])), 'member/delete');
+if (opConfig::get('enable_leave'))
+{
+  $list[] = link_to(__('Delete your %1% account', array('%1%' => $op_config['sns_name'])), 'member/delete');
+}
 op_include_list('configEdit', $list, array('title' => __('Settings')));
 ?>
 
