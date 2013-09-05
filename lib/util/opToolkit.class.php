@@ -186,11 +186,12 @@ class opToolkit
    * @param array $options The options to use.
    * @return SimpleXmlElement|DOMDocument
    */
-  static public function loadXmlString($input, $options = array())
+  public static function loadXmlString($input, $options = array())
   {
     $hasDisable = function_exists('libxml_disable_entity_loader');
     $internalErrors = libxml_use_internal_errors(true);
-    if ($hasDisable && empty($options['loadEntities']))
+    $isDisableEntityLoader = ($hasDisable && empty($options['loadEntities']));
+    if ($isDisableEntityLoader)
     {
       $entityLoaderConfig = libxml_disable_entity_loader(true);
     }
@@ -207,7 +208,7 @@ class opToolkit
       $xml->loadXML($input);
     }
 
-    if ($hasDisable && empty($options['loadEntities']))
+    if ($isDisableEntityLoader)
     {
       libxml_disable_entity_loader($entityLoaderConfig);
     }
