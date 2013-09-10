@@ -27,7 +27,10 @@ class opPearRest extends sfPearRest
   public function retrieveXml($url)
   {
     $content = $this->downloadHttp($url);
-    $result = @simplexml_load_string($content);
+    $result = @opToolkit::loadXmlString($content, array(
+      'return' => 'SimpleXMLElement',
+    ));
+
     return $result;
   }
 

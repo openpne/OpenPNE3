@@ -582,4 +582,48 @@ class opToolkit
     $filesystem->chmod($pathToCacheFile, 0666);
     umask($currentUmask);
   }
+
+  /**
+   * Parse the input data and create either a SimpleXmlElement object or a DOMDocument (from CakePHP 2.3.9)
+   *
+   * This method is based Xml::_loadXmlString() in CakePHP 2.3.9 with many our arranged
+   *
+   * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+   * @link http://cakephp.org CakePHP(tm) Project
+   * @license http://www.opensource.org/licenses/mit-license.php MIT License
+   *
+   * @param string $input The input to load.
+   * @param array $options The options to use.
+   * @return SimpleXmlElement|DOMDocument
+   */
+  public static function loadXmlString($input, $options = array())
+  {
+    $hasDisable = function_exists('libxml_disable_entity_loader');
+    $internalErrors = libxml_use_internal_errors(true);
+    $isDisableEntityLoader = ($hasDisable && empty($options['loadEntities']));
+    if ($isDisableEntityLoader)
+    {
+      $entityLoaderConfig = libxml_disable_entity_loader(true);
+    }
+
+    $returnClass = isset($options['return']) ? strtolower($options['return']) : '';
+
+    if ('simplexml' === $returnClass || 'simplexmlelement' === $returnClass)
+    {
+      $xml = simplexml_load_string($input);
+    }
+    else
+    {
+      $xml = new DOMDocument();
+      $xml->loadXML($input);
+    }
+
+    if ($isDisableEntityLoader)
+    {
+      libxml_disable_entity_loader($entityLoaderConfig);
+    }
+    libxml_use_internal_errors($internalErrors);
+
+    return $xml;
+  }
 }
