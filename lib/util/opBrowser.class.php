@@ -12,6 +12,7 @@
  * @package    OpenPNE
  * @subpackage util
  * @author     Kousuke Ebihara <ebihara@tejimaya.com>
+ * @author     Kimura Youichi <kim.upsilon@bucyou.net>
  */
 class opBrowser extends sfBrowser
 {
@@ -202,5 +203,36 @@ class opBrowser extends sfBrowser
 
       return array($url.($queryString ? $sep.$queryString : ''), 'get', array());
     }
+  }
+
+  /**
+   * Posts a uri with file upload.
+   *
+   * @param string    $uri          The URI to fetch
+   * @param string[]  $parameters   The Request parameters
+   * @param string[]  $filenames    The Request files
+   * @param bool      $changeStack  Change the browser history stack?
+   *
+   * @return sfBrowserBase
+   */
+  public function postWithFiles($uri, array $parameters, array $filenames, $changeStack = true)
+  {
+    foreach ($filenames as $key => $filename)
+    {
+      $this->setUploadFile($key, $filename);
+    }
+
+    return $this->call($uri, 'post', $parameters, $changeStack);
+  }
+
+  protected function setUploadFile($fieldname, $filename)
+  {
+    $this->parseArgumentAsArray($fieldname, array(
+      'name' => basename($filename),
+      'type' => '',
+      'tmp_name' => $filename,
+      'error' => UPLOAD_ERR_OK,
+      'size' => filesize($filename),
+    ), $this->files);
   }
 }
