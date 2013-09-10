@@ -1,0 +1,20 @@
+diff --git a/lib/vendor/php-openid/Auth/Yadis/XML.php b/lib/vendor/php-openid/Auth/Yadis/XML.php
+index 2704c78..f5e80a5 100644
+--- a/lib/vendor/php-openid/Auth/Yadis/XML.php
++++ b/lib/vendor/php-openid/Auth/Yadis/XML.php
+@@ -234,7 +234,14 @@ function setXML($xml_string)
+             return false;
+         }
+ 
+-        if (!@$this->doc->loadXML($xml_string)) {
++        // disable external entities and libxml errors
++        $loader = libxml_disable_entity_loader(true);
++        $errors = libxml_use_internal_errors(true);
++        $parse_result = @$this->doc->loadXML($xml_string);
++        libxml_disable_entity_loader($loader);
++        libxml_use_internal_errors($errors);
++
++        if (!$parse_result) {
+             return false;
+         }
+ 
