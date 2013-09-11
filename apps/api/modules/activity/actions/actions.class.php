@@ -208,13 +208,13 @@ class activityActions extends opJsonApiActions
         }
         if (is_null($obj))
         {
-          continue;
+          continue; // empty value
         }
         $file = new File();
         $file->setFromValidatedFile($obj);
         $file->setName('ac_'.$this->getUser()->getMemberId().'_'.$file->getName());
         $file->save();
-        $options['images'][] = array('file_id' => $file->getId());
+        $options['images'][]['file_id'] = $file->getId();
       }
     }
 
