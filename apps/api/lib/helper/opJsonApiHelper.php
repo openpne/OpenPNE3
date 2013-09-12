@@ -60,7 +60,25 @@ function op_api_activity($activity)
 {
   $viewMemberId = sfContext::getInstance()->getUser()->getMemberId();
   $member = $activity->getMember();
-  $images = $activity->getImages();
+
+  $images = array();
+  foreach ($activity->getImages() as $activityImage)
+  {
+    if (!is_null($activityImage->file_id))
+    {
+      $images[] = array(
+        'small_uri' => sf_image_path($activityImage->getFile(), array('size' => '48x48'), true),
+        'full_uri' => sf_image_path($activityImage->getFile(), array(), true),
+      );
+    }
+    else
+    {
+      $images[] = array(
+        'small_uri' => $activityImage->uri,
+        'full_uri' => $activityImage->uri,
+      );
+    }
+  }
 
   return array(
     'id' => $activity->getId(),
@@ -70,8 +88,7 @@ function op_api_activity($activity)
     'uri' => $activity->getUri(),
     'source' => $activity->getSource(),
     'source_uri' => $activity->getSourceUri(),
-    'image_url' => count($images) ? sf_image_path($images[0]->getFile(), array('size' => '48x48'), true) : null,
-    'image_large_url' => count($images) ? sf_image_path($images[0]->getFile(), array(), true) : null,
+    'images' => $images,
     'created_at' => date('r', strtotime($activity->getCreatedAt())),
   );
 }

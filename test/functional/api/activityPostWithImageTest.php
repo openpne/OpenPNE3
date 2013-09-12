@@ -4,7 +4,7 @@ $executeLoader = false;
 include dirname(__FILE__).'/../../bootstrap/functional.php';
 include dirname(__FILE__).'/../../bootstrap/database.php';
 
-$numOfTests = 9;
+$numOfTests = 15;
 $tester = new opTestFunctional(
   new opBrowser(),
   new lime_test($numOfTests, new lime_output_color())
@@ -36,8 +36,9 @@ $t->is($response['status'], 'success');
 
 $activityImage = Doctrine_Core::getTable('ActivityImage')->findByActivityDataId($response['data']['id']);
 $t->is(count($activityImage), 1);
-$t->is($response['data']['image_url'], 'http://localhost/cache/img/gif/w48_h48/'.$activityImage[0]->File->name.'.gif');
-$t->is($response['data']['image_large_url'], 'http://localhost/cache/img/gif/w_h/'.$activityImage[0]->File->name.'.gif');
+$t->is(count($response['data']['images']), 1);
+$t->is($response['data']['images'][0]['small_uri'], 'http://localhost/cache/img/gif/w48_h48/'.$activityImage[0]->File->name.'.gif');
+$t->is($response['data']['images'][0]['full_uri'], 'http://localhost/cache/img/gif/w_h/'.$activityImage[0]->File->name.'.gif');
 
 $tester
   ->info('/activity/post.json - invalid image')
@@ -62,4 +63,8 @@ $t->is($response['status'], 'success');
 
 $activityImage = Doctrine_Core::getTable('ActivityImage')->findByActivityDataId($response['data']['id']);
 $t->is(count($activityImage), 2);
-// retrieving multiple image_url via JSON API is not available yet
+$t->is(count($response['data']['images']), 2);
+$t->is($response['data']['images'][0]['small_uri'], 'http://localhost/cache/img/gif/w48_h48/'.$activityImage[0]->File->name.'.gif');
+$t->is($response['data']['images'][0]['full_uri'], 'http://localhost/cache/img/gif/w_h/'.$activityImage[0]->File->name.'.gif');
+$t->is($response['data']['images'][1]['small_uri'], 'http://localhost/cache/img/jpg/w48_h48/'.$activityImage[1]->File->name.'.jpg');
+$t->is($response['data']['images'][1]['full_uri'], 'http://localhost/cache/img/jpg/w_h/'.$activityImage[1]->File->name.'.jpg');
