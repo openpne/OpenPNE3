@@ -13,7 +13,7 @@ include_once dirname(__FILE__) . '/../model/doctrine/fixtures/TestActivityTempla
 include_once sfConfig::get('sf_lib_dir').'/vendor/symfony/lib/helper/HelperHelper.php';
 use_helper('I18N', 'Tag', 'Url', 'opUtil', 'opActivity');
 
-$t = new lime_test(8, new lime_output_color());
+$t = new lime_test(18, new lime_output_color());
 
 $t->diag('op_activity_body_filter()');
 $activity1 = new ActivityData();
@@ -51,3 +51,45 @@ function test_filter(sfEvent $event, $value)
 
 sfContext::getInstance()->getEventDispatcher()->connect('op_activity.filter_body', 'test_filter');
 $t->is(op_activity_body_filter($activity1),  '', 'op_activity_body_filter() returns ""');
+
+$t->diag('op_activity_image_uri() [file_id]');
+
+$activityImage = new ActivityImage();
+$activityImage->File->fromArray(array(
+  'name' => 'ac_hogehoge_png',
+  'type' => 'image/png',
+));
+$t->is(op_activity_image_uri($activityImage), '/cache/img/png/w_h/ac_hogehoge_png.png');
+$t->is(op_activity_image_uri($activityImage, array('size' => '48x48')), '/cache/img/png/w48_h48/ac_hogehoge_png.png');
+$t->is(op_activity_image_uri($activityImage, array(), true), 'http://sns.example.com/cache/img/png/w_h/ac_hogehoge_png.png');
+
+$t->diag('op_activity_image_uri() [uri]');
+
+$activityImage = new ActivityImage();
+$activityImage->fromArray(array(
+  'uri' => 'http://example.com/images/hogehoge.png',
+  'mimetype' => 'image/png',
+));
+$t->is(op_activity_image_uri($activityImage), 'http://example.com/images/hogehoge.png');
+$t->is(op_activity_image_uri($activityImage, array('size' => '48x48')), 'http://example.com/images/hogehoge.png');
+$t->is(op_activity_image_uri($activityImage, array(), true), 'http://example.com/images/hogehoge.png');
+
+$t->diag('op_activity_image_tag() [file_id]');
+
+$activityImage = new ActivityImage();
+$activityImage->File->fromArray(array(
+  'name' => 'ac_hogehoge_png',
+  'type' => 'image/png',
+));
+$t->is(op_activity_image_tag($activityImage), '<img alt="" src="/cache/img/png/w_h/ac_hogehoge_png.png" />');
+$t->is(op_activity_image_tag($activityImage, array('size' => '48x48')), '<img alt="" src="/cache/img/png/w48_h48/ac_hogehoge_png.png" />');
+
+$t->diag('op_activity_image_tag() [uri]');
+
+$activityImage = new ActivityImage();
+$activityImage->fromArray(array(
+  'uri' => 'http://example.com/images/hogehoge.png',
+  'mimetype' => 'image/png',
+));
+$t->is(op_activity_image_tag($activityImage), '<img src="http://example.com/images/hogehoge.png" />');
+$t->is(op_activity_image_tag($activityImage, array('size' => '48x48')), '<img src="http://example.com/images/hogehoge.png" height="48" width="48" />');

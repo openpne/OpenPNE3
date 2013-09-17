@@ -14,6 +14,7 @@
  * @package    OpenPNE
  * @subpackage helper
  * @author     Shogo Kawahara <kawahara@bucyou.net>
+ * @author     Kimura Youichi <kim.upsilon@bucyou.net>
  */
 
 
@@ -64,4 +65,47 @@ function op_activity_body_filter($activity, $is_auto_link = true)
   }
 
   return $body;
+}
+
+/**
+ * Returns a url for the activity image
+ *
+ * @param   ActivityImage $activityImage
+ * @param   mixed[]       $options
+ * @param   bool          $absolute
+ * @return  string
+ */
+function op_activity_image_uri($activityImage, $options = array(), $absolute = false)
+{
+  use_helper('sfImage');
+
+  if ($activityImage->relatedExists('File'))
+  {
+    return sf_image_path($activityImage->File, $options, $absolute);
+  }
+  else
+  {
+    return $activityImage->uri;
+  }
+}
+
+/**
+ * Returns an <img> tag for the activity image
+ *
+ * @param   ActivityImage $activityImage
+ * @param   mixed[]       $options
+ * @return  string
+ */
+function op_activity_image_tag($activityImage, $options = array())
+{
+  use_helper('sfImage');
+
+  if ($activityImage->relatedExists('File'))
+  {
+    return op_image_tag_sf_image($activityImage->File, $options);
+  }
+  else
+  {
+    return op_image_tag($activityImage->uri, $options);
+  }
 }
