@@ -67,8 +67,8 @@ function op_api_activity($activity)
   foreach ($activity->getImages() as $activityImage)
   {
     $images[] = array(
-      'small_uri' => op_activity_image_uri($activityImage, array('size' => '48x48'), true),
-      'full_uri' => op_activity_image_uri($activityImage, array(), true),
+      'small_size' => op_activity_image_uri($activityImage, array('size' => '48x48'), true),
+      'full_size' => op_activity_image_uri($activityImage, array(), true),
     );
   }
 
@@ -80,7 +80,7 @@ function op_api_activity($activity)
     'uri' => $activity->getUri(),
     'source' => $activity->getSource(),
     'source_uri' => $activity->getSourceUri(),
-    'images' => $images,
+    'image_uris' => $images,
     'created_at' => date('r', strtotime($activity->getCreatedAt())),
   );
 }

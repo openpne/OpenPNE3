@@ -36,9 +36,9 @@ $t->is($response['status'], 'success');
 
 $activityImage = Doctrine_Core::getTable('ActivityImage')->findByActivityDataId($response['data']['id']);
 $t->is(count($activityImage), 1);
-$t->is(count($response['data']['images']), 1);
-$t->is($response['data']['images'][0]['small_uri'], 'http://localhost/cache/img/gif/w48_h48/'.$activityImage[0]->File->name.'.gif');
-$t->is($response['data']['images'][0]['full_uri'], 'http://localhost/cache/img/gif/w_h/'.$activityImage[0]->File->name.'.gif');
+$t->is(count($response['data']['image_uris']), 1);
+$t->is($response['data']['image_uris'][0]['small_size'], 'http://localhost/cache/img/gif/w48_h48/'.$activityImage[0]->File->name.'.gif');
+$t->is($response['data']['image_uris'][0]['full_size'], 'http://localhost/cache/img/gif/w_h/'.$activityImage[0]->File->name.'.gif');
 
 $tester
   ->info('/activity/post.json - invalid image')
@@ -63,8 +63,8 @@ $t->is($response['status'], 'success');
 
 $activityImage = Doctrine_Core::getTable('ActivityImage')->findByActivityDataId($response['data']['id']);
 $t->is(count($activityImage), 2);
-$t->is(count($response['data']['images']), 2);
-$t->is($response['data']['images'][0]['small_uri'], 'http://localhost/cache/img/gif/w48_h48/'.$activityImage[0]->File->name.'.gif');
-$t->is($response['data']['images'][0]['full_uri'], 'http://localhost/cache/img/gif/w_h/'.$activityImage[0]->File->name.'.gif');
-$t->is($response['data']['images'][1]['small_uri'], 'http://localhost/cache/img/jpg/w48_h48/'.$activityImage[1]->File->name.'.jpg');
-$t->is($response['data']['images'][1]['full_uri'], 'http://localhost/cache/img/jpg/w_h/'.$activityImage[1]->File->name.'.jpg');
+$t->is(count($response['data']['image_uris']), 2);
+$t->is($response['data']['image_uris'][0]['small_size'], 'http://localhost/cache/img/gif/w48_h48/'.$activityImage[0]->File->name.'.gif');
+$t->is($response['data']['image_uris'][0]['full_size'], 'http://localhost/cache/img/gif/w_h/'.$activityImage[0]->File->name.'.gif');
+$t->is($response['data']['image_uris'][1]['small_size'], 'http://localhost/cache/img/jpg/w48_h48/'.$activityImage[1]->File->name.'.jpg');
+$t->is($response['data']['image_uris'][1]['full_size'], 'http://localhost/cache/img/jpg/w_h/'.$activityImage[1]->File->name.'.jpg');
