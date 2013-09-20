@@ -93,7 +93,7 @@ class communityActions extends opCommunityAction
   *
   * @param opWebRequest $request A request object
   */
-  public function executeMemberList($request)
+  public function executeMemberList(opWebRequest $request)
   {
     $this->forwardIf($request->isSmartphone(), 'community', 'smtMemberList');
 

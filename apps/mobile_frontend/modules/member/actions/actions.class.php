@@ -17,7 +17,7 @@
  */
 class memberActions extends opMemberAction
 {
-  public function executeHome($request)
+  public function executeHome(opWebRequest $request)
   {
     $this->gadgetConfig = sfConfig::get('op_mobile_gadget_list');
 
@@ -33,7 +33,7 @@ class memberActions extends opMemberAction
     return parent::executeHome($request);
   }
 
-  public function executeLogin($request)
+  public function executeLogin(opWebRequest $request)
   {
     if (opConfig::get('external_mobile_login_url') && $request->isMethod(sfWebRequest::GET))
     {
@@ -46,14 +46,14 @@ class memberActions extends opMemberAction
     return parent::executeLogin($request);
   }
 
-  public function executeSearch($request)
+  public function executeSearch(opWebRequest $request)
   {
     $this->size = 10;
 
     return parent::executeSearch($request);
   }
 
-  public function executeProfile($request)
+  public function executeProfile(opWebRequest $request)
   {
     $this->friendsSize = 5;
     $this->communitiesSize = 5;
@@ -66,7 +66,7 @@ class memberActions extends opMemberAction
     return parent::executeProfile($request);
   }
 
-  public function executeConfigUID($request)
+  public function executeConfigUID(opWebRequest $request)
   {
     $option = array('member' => $this->getUser()->getMember());
     $this->passwordForm = new opPasswordForm(array(), $option);
@@ -112,7 +112,7 @@ class memberActions extends opMemberAction
     return sfView::SUCCESS;
   }
 
-  public function executeRegisterMobileToRegisterEnd(sfWebRequest $request)
+  public function executeRegisterMobileToRegisterEnd(opWebRequest $request)
   {
 
     $id = $request->getParameter('id');
@@ -149,7 +149,7 @@ class memberActions extends opMemberAction
     return sfView::SUCCESS;
   }
 
-  public function executeDeleteImage($request)
+  public function executeDeleteImage(opWebRequest $request)
   {
     $this->image = Doctrine::getTable('MemberImage')->find($request->getParameter('member_image_id'));
     $this->forward404Unless($this->image);
@@ -165,14 +165,14 @@ class memberActions extends opMemberAction
     }
   }
 
-  public function executeShowActivity($request)
+  public function executeShowActivity(opWebRequest $request)
   {
     $this->size = 10;
 
     parent::executeShowActivity($request);
   }
 
-  public function executeSetSid($request)
+  public function executeSetSid(opWebRequest $request)
   {
     $this->forward404Unless(isset($request['sid']));
     $this->forward404Unless(isset($request['ts']) && abs(time() - $request['ts']) <= strtotime('30 minutes'));
@@ -199,9 +199,9 @@ class memberActions extends opMemberAction
  /**
   * Execute show all member activities action
   *
-  * @param sfWebRequest $request a request object
+  * @param opWebRequest $request a request object
   */
-  public function executeShowAllMemberActivity(sfWebRequest $request)
+  public function executeShowAllMemberActivity(opWebRequest $request)
   {
     $this->size = 10;
 

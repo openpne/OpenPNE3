@@ -74,7 +74,7 @@ abstract class opMemberAction extends sfActions
     }
   }
 
-  public function executeLogin($request)
+  public function executeLogin(opWebRequest $request)
   {
     $this->getUser()->logout();
 
@@ -108,7 +108,7 @@ abstract class opMemberAction extends sfActions
     return sfView::SUCCESS;
   }
 
-  private function redirectToLoginIfSslRequired($request)
+  private function redirectToLoginIfSslRequired(opWebRequest $request)
   {
     $routing = sfContext::getInstance()->getRouting();
     if (sfConfig::get('op_use_ssl', false) && !$request->isSecure())
@@ -153,13 +153,13 @@ abstract class opMemberAction extends sfActions
     }
   }
 
-  public function executeLogout($request)
+  public function executeLogout(opWebRequest $request)
   {
     $this->getUser()->logout();
     $this->redirect('member/login');
   }
 
-  public function executeRegister($request)
+  public function executeRegister(opWebRequest $request)
   {
     $this->getUser()->clearSessionData();
     $member = $this->getUser()->setRegisterToken($request['token']);
@@ -167,7 +167,7 @@ abstract class opMemberAction extends sfActions
     $this->forward404Unless($member && !$this->getUser()->isSNSMember() && $this->getUser()->isInvited());
   }
 
-  public function executeRegisterInput($request)
+  public function executeRegisterInput(opWebRequest $request)
   {
     $this->forward404Unless(opToolkit::isEnabledRegistration((sfConfig::get('app_is_mobile') ? 'mobile' : 'pc')));
 
@@ -194,12 +194,12 @@ abstract class opMemberAction extends sfActions
     return sfView::SUCCESS;
   }
 
-  public function executeHome($request)
+  public function executeHome(opWebRequest $request)
   {
     return sfView::SUCCESS;
   }
 
-  public function executeSearch($request)
+  public function executeSearch(opWebRequest $request)
   {
     $params = $request->getParameter('member', array());
     if ($request->hasParameter('search_query'))
@@ -224,7 +224,7 @@ abstract class opMemberAction extends sfActions
     return sfView::SUCCESS;
   }
 
-  public function executeProfile($request)
+  public function executeProfile(opWebRequest $request)
   {
     $id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
     if ('member_profile_mine' === sfContext::getInstance()->getRouting()->getCurrentRouteName())
@@ -253,7 +253,7 @@ abstract class opMemberAction extends sfActions
     return sfView::SUCCESS;
   }
 
-  public function executeEditProfile($request)
+  public function executeEditProfile(opWebRequest $request)
   {
     $this->memberForm = new MemberForm($this->getUser()->getMember());
 
@@ -276,7 +276,7 @@ abstract class opMemberAction extends sfActions
     return sfView::SUCCESS;
   }
 
-  public function executeConfigComplete($request)
+  public function executeConfigComplete(opWebRequest $request)
   {
     $type = $request->getParameter('type');
     $this->forward404Unless($type);
@@ -320,7 +320,7 @@ abstract class opMemberAction extends sfActions
     return sfView::SUCCESS;
   }
 
-  public function executeConfig($request)
+  public function executeConfig(opWebRequest $request)
   {
     $filteredCategory = $this->filterConfigCategory();
     $this->categories = $filteredCategory['category'];
@@ -348,7 +348,7 @@ abstract class opMemberAction extends sfActions
     return sfView::SUCCESS;
   }
 
-  public function executeInvite($request)
+  public function executeInvite(opWebRequest $request)
   {
     if (
       !$this->getUser()->getAuthAdapter()->getAuthConfig('invite_mode')
@@ -391,7 +391,7 @@ abstract class opMemberAction extends sfActions
     return sfView::INPUT;
   }
 
-  public function executeDelete($request)
+  public function executeDelete(opWebRequest $request)
   {
     if (1 == $this->getUser()->getMemberId())
     {
@@ -416,12 +416,12 @@ abstract class opMemberAction extends sfActions
     return sfView::INPUT;
   }
 
-  public function executeConfigImage($request)
+  public function executeConfigImage(opWebRequest $request)
   {
     return sfView::SUCCESS;
   }
 
-  public function executeDeleteImage($request)
+  public function executeDeleteImage(opWebRequest $request)
   {
     $request->checkCSRFProtection();
     $image = Doctrine::getTable('MemberImage')->find($request->getParameter('member_image_id'));
@@ -433,7 +433,7 @@ abstract class opMemberAction extends sfActions
     $this->redirect('member/configImage');
   }
 
-  public function executeChangeMainImage($request)
+  public function executeChangeMainImage(opWebRequest $request)
   {
     $request->checkCSRFProtection();
     $image = Doctrine::getTable('MemberImage')->find($request->getParameter('member_image_id'));
@@ -532,7 +532,7 @@ abstract class opMemberAction extends sfActions
     return array('category' => $categories, 'captions' => $categoryCaptions);
   }
 
-  public function executeShowActivity($request)
+  public function executeShowActivity(opWebRequest $request)
   {
     $this->forward404Unless($this->id);
     $this->forward404If($this->relation->isAccessBlocked());
@@ -546,7 +546,7 @@ abstract class opMemberAction extends sfActions
     $this->pager = Doctrine::getTable('ActivityData')->getActivityListPager($this->id, null, $request->getParameter('page', 1), $this->size);
   }
 
-  public function executeDeleteActivity($request)
+  public function executeDeleteActivity(opWebRequest $request)
   {
     $this->forward404Unless($request->hasParameter('id'));
 
@@ -565,7 +565,7 @@ abstract class opMemberAction extends sfActions
     return sfView::INPUT;
   }
 
-  public function executeUpdateActivity($request)
+  public function executeUpdateActivity(opWebRequest $request)
   {
     if ($request->isMethod(sfWebRequest::POST))
     {
@@ -609,7 +609,7 @@ abstract class opMemberAction extends sfActions
     return sfView::NONE;
   }
 
-  public function executeShowAllMemberActivity(sfWebRequest $request)
+  public function executeShowAllMemberActivity(opWebRequest $request)
   {
     if (!isset($this->size))
     {

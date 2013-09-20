@@ -10,7 +10,7 @@
 
 class communityComponents extends opCommunityComponents
 {
-  public function executeJoinListBox($request)
+  public function executeJoinListBox(opWebRequest $request)
   {
     if ($request->hasParameter('id') && $request->getParameter('module') == 'member' && $request->getParameter('action') == 'profile')
     {
@@ -26,7 +26,7 @@ class communityComponents extends opCommunityComponents
     $this->communities = Doctrine::getTable('Community')->retrievesByMemberId($this->member->getId(), $this->row * $this->col, true);
   }
 
-  public function executeSmtCommunityListBox($request)
+  public function executeSmtCommunityListBox(opWebRequest $request)
   {
     $this->id = $request->getParameter('id');
 
@@ -57,7 +57,7 @@ class communityComponents extends opCommunityComponents
     $this->communitySubAdmins = $this->community->getSubAdminMembers();
   }
 
-  public function executeSmtCommunityMemberJoinListBox($request)
+  public function executeSmtCommunityMemberJoinListBox(opWebRequest $request)
   {
     $this->id = $request->getParameter('id');
     $this->community = Doctrine::getTable('Community')->find($this->id);
