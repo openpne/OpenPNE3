@@ -35,7 +35,7 @@ abstract class opCommunityAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeHome($request)
+  public function executeHome(opWebRequest $request)
   {
     $this->community = Doctrine::getTable('Community')->find($this->id);
     $this->forward404Unless($this->community, 'Undefined community.');
@@ -54,7 +54,7 @@ abstract class opCommunityAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeEdit($request)
+  public function executeEdit(opWebRequest $request)
   {
     $this->forward404If($this->id && !$this->isEditCommunity);
 
@@ -100,7 +100,7 @@ abstract class opCommunityAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeSearch($request)
+  public function executeSearch(opWebRequest $request)
   {
     sfConfig::set('sf_nav_type', 'default');
 
@@ -130,7 +130,7 @@ abstract class opCommunityAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeDelete($request)
+  public function executeDelete(opWebRequest $request)
   {
     $this->forward404If($this->id && !$this->isDeleteCommunity);
 
@@ -159,7 +159,7 @@ abstract class opCommunityAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeJoinlist($request)
+  public function executeJoinlist(opWebRequest $request)
   {
     $memberId = $request->getParameter('id', $this->getUser()->getMemberId());
 
@@ -188,7 +188,7 @@ abstract class opCommunityAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeMemberList($request)
+  public function executeMemberList(opWebRequest $request)
   {
     $this->community = Doctrine::getTable('Community')->find($this->id);
     $this->forward404Unless($this->community);
@@ -213,7 +213,7 @@ abstract class opCommunityAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeJoin($request)
+  public function executeJoin(opWebRequest $request)
   {
     $this->community = Doctrine::getTable('Community')->find($this->id);
     $this->forward404Unless($this->community);
@@ -249,7 +249,7 @@ abstract class opCommunityAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeQuit($request)
+  public function executeQuit(opWebRequest $request)
   {
     if (!$this->isCommunityMember || $this->isAdmin)
     {
@@ -275,7 +275,7 @@ abstract class opCommunityAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeMemberManage($request)
+  public function executeMemberManage(opWebRequest $request)
   {
     $this->redirectUnless($this->isAdmin || $this->isSubAdmin, '@error');
 
@@ -293,7 +293,7 @@ abstract class opCommunityAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeChangeAdminRequest($request)
+  public function executeChangeAdminRequest(opWebRequest $request)
   {
     $this->forward404Unless($this->isAdmin);
 
@@ -325,7 +325,7 @@ abstract class opCommunityAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeSubAdminRequest($request)
+  public function executeSubAdminRequest(opWebRequest $request)
   {
     $this->forward404Unless($this->isAdmin);
 
@@ -352,7 +352,7 @@ abstract class opCommunityAction extends sfActions
     return sfView::INPUT;
   }
 
-  public function executeRemoveSubAdmin($request)
+  public function executeRemoveSubAdmin(opWebRequest $request)
   {
     $this->forward404Unless($this->isAdmin);
 
@@ -381,7 +381,7 @@ abstract class opCommunityAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeDropMember($request)
+  public function executeDropMember(opWebRequest $request)
   {
     $this->redirectUnless($this->isAdmin || $this->isSubAdmin, '@error');
     $member = Doctrine::getTable('Member')->find($request->getParameter('member_id'));

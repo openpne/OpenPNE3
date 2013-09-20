@@ -21,9 +21,9 @@ class communityActions extends opCommunityAction
   /**
    * Executes home action
    *
-   * @param sfWebRequest $request a request object
+   * @param opWebRequest $request a request object
    */
-  public function executeHome(sfWebRequest $request)
+  public function executeHome(opWebRequest $request)
   {
     $this->membersSize = 5;
 
@@ -33,9 +33,9 @@ class communityActions extends opCommunityAction
   /**
    * Executes joinlist action
    *
-   * @param sfWebRequest $request a request object
+   * @param opWebRequest $request a request object
    */
-  public function executeJoinlist(sfWebRequest $request)
+  public function executeJoinlist(opWebRequest $request)
   {
     $this->size = 10;
 
@@ -45,9 +45,9 @@ class communityActions extends opCommunityAction
   /**
    * Executes memberList action
    *
-   * @param sfWebRequest $request a request object
+   * @param opWebRequest $request a request object
    */
-  public function executeMemberList(sfWebRequest $request)
+  public function executeMemberList(opWebRequest $request)
   {
     $this->size = 10;
 
@@ -57,9 +57,9 @@ class communityActions extends opCommunityAction
   /**
    * Executes search action
    *
-   * @param sfWebRequest $request a request object
+   * @param opWebRequest $request a request object
    */
-  public function executeSearch(sfWebRequest $request)
+  public function executeSearch(opWebRequest $request)
   {
     sfConfig::set('sf_nav_type', 'default');
 
@@ -98,9 +98,9 @@ class communityActions extends opCommunityAction
   /**
    * Executes detail action
    *
-   * @param sfWebRequest $request a request object
+   * @param opWebRequest $request a request object
    */
-  public function executeDetail(sfWebRequest $request)
+  public function executeDetail(opWebRequest $request)
   {
     $this->community = Doctrine::getTable('Community')->find($this->id);
     $this->forward404Unless($this->community, 'Undefined community.');
@@ -114,9 +114,9 @@ class communityActions extends opCommunityAction
   /**
    * Executes configImage action
    *
-   * @param sfWebRequest $request a request object
+   * @param opWebRequest $request a request object
    */
-  public function executeConfigImage(sfWebRequest $request)
+  public function executeConfigImage(opWebRequest $request)
   {
     $this->forward404Unless($this->id && $this->isEditCommunity);
     $this->community = Doctrine::getTable('Community')->find($this->id);
@@ -125,9 +125,9 @@ class communityActions extends opCommunityAction
   /**
    * Executes deleteImage action
    *
-   * @param sfWebRequest $request a request object
+   * @param opWebRequest $request a request object
    */
-  public function executeDeleteImage($request)
+  public function executeDeleteImage(opWebRequest $request)
   {
     $this->forward404Unless($this->id && $this->isEditCommunity);
 

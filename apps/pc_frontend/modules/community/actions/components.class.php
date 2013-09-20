@@ -10,7 +10,7 @@
 
 class communityComponents extends opCommunityComponents
 {
-  public function executeJoinListBox($request)
+  public function executeJoinListBox(opWebRequest $request)
   {
     if ($request->hasParameter('id') && $request->getParameter('module') == 'member' && $request->getParameter('action') == 'profile')
     {

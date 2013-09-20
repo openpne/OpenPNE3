@@ -20,9 +20,9 @@ class communityActions extends opCommunityAction
  /**
   * Executes edit action
   *
-  * @param sfRequest $request A request object
+  * @param opWebRequest $request A request object
   */
-  public function executeEdit($request)
+  public function executeEdit(opWebRequest $request)
   {
     $this->enableImage = true;
     $result = parent::executeEdit($request);
@@ -38,9 +38,9 @@ class communityActions extends opCommunityAction
  /**
   * Executes joinlist action
   *
-  * @param sfRequest $request A request object
+  * @param opWebRequest $request A request object
   */
-  public function executeJoinlist($request)
+  public function executeJoinlist(opWebRequest $request)
   {
     sfConfig::set('sf_nav_type', 'default');
 

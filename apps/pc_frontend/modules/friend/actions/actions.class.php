@@ -27,7 +27,7 @@ class friendActions extends opFriendAction
     }
   }
 
-  public function executeList(sfWebRequest $request)
+  public function executeList(opWebRequest $request)
   {
     $this->size = 50;
 

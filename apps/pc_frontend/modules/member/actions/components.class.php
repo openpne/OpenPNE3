@@ -10,7 +10,7 @@
 
 class memberComponents extends opMemberComponents
 {
-  public function executeProfileListBox($request)
+  public function executeProfileListBox(opWebRequest $request)
   {
     if ($request->hasParameter('id'))
     {

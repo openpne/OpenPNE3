@@ -20,9 +20,9 @@ class memberActions extends opMemberAction
  /**
   * Executes home action
   *
-  * @param sfRequest $request A request object
+  * @param opWebRequest $request A request object
   */
-  public function executeHome($request)
+  public function executeHome(opWebRequest $request)
   {
     $this->topGadgets = null;
     $this->sideMenuGadgets = null;
@@ -50,9 +50,9 @@ class memberActions extends opMemberAction
  /**
   * Executes login action
   *
-  * @param sfRequest $request A request object
+  * @param opWebRequest $request A request object
   */
-  public function executeLogin($request)
+  public function executeLogin(opWebRequest $request)
   {
     if (opConfig::get('external_pc_login_url') && $request->isMethod(sfWebRequest::GET))
     {
@@ -81,9 +81,9 @@ class memberActions extends opMemberAction
  /**
   * Executes profile action
   *
-  * @param sfRequest $request A request object
+  * @param opWebRequest $request A request object
   */
-  public function executeProfile($request)
+  public function executeProfile(opWebRequest $request)
   {
     $id = $request->getParameter('id', $this->getUser()->getMemberId());
     if ($id != $this->getUser()->getMemberId())
@@ -113,9 +113,9 @@ class memberActions extends opMemberAction
  /**
   * Executes configImage action
   *
-  * @param sfRequest $request A request object
+  * @param opWebRequest $request A request object
   */
-  public function executeConfigImage($request)
+  public function executeConfigImage(opWebRequest $request)
   {
     $options = array('member' => $this->getUser()->getMember());
     $this->form = new MemberImageForm(array(), $options);
@@ -146,9 +146,9 @@ class memberActions extends opMemberAction
  /**
   * Executes registerMobileToRegisterEnd action
   *
-  * @param sfRequest $request A request object
+  * @param opWebRequest $request A request object
   */
-  public function executeRegisterMobileToRegisterEnd(sfWebRequest $request)
+  public function executeRegisterMobileToRegisterEnd(opWebRequest $request)
   {
     opActivateBehavior::disable();
     $this->form = new registerMobileForm($this->getUser()->getMember());
@@ -166,16 +166,16 @@ class memberActions extends opMemberAction
     return sfView::SUCCESS;
   }
 
-  public function executeRegisterMobileToRegisterEndFinish(sfWebRequest $request)
+  public function executeRegisterMobileToRegisterEndFinish(opWebRequest $request)
   {
   }
 
   /**
    * Executes changeLanguage action
    *
-   * @param sfWebRequest $request a request object
+   * @param opWebRequest $request a request object
    */
-  public function executeChangeLanguage(sfWebRequest $request)
+  public function executeChangeLanguage(opWebRequest $request)
   {
     if ($request->isMethod(sfWebRequest::POST))
     {
