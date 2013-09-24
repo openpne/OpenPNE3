@@ -26,7 +26,13 @@ class opMobileUserAgent
     require_once 'Net/UserAgent/Mobile.php';
     require_once 'Net/UserAgent/Mobile/NonMobile.php';
 
+    // ignore `Non-static method Net_UserAgent_Mobile::factory()' error
+    $oldErrorLevel = error_reporting(error_reporting() & ~E_STRICT);
+
     self::$mobile = Net_UserAgent_Mobile::factory();
+
+    error_reporting($oldErrorLevel);
+
     if (self::$mobile instanceof Net_UserAgent_Mobile_Error)
     {
       self::$mobile = new Net_UserAgent_Mobile_NonMobile('');
