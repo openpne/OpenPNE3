@@ -22,11 +22,6 @@ $browser
   ->post('/community/edit')
   ->checkCSRF()
 
-  ->info('/config/communityTopicNotificationMail/1 - CSRF')
-  ->post('/config/communityTopicNotificationMail/1', array('topic_notify' => array()))
-  ->followRedirect()
-  ->checkCSRF()
-
   ->info('/community/dropMember/id/1/member_id/2 - CSRF')
   ->post('/community/dropMember/id/1/member_id/2')
   ->checkCSRF()
