@@ -2,7 +2,7 @@
 
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-$browser = new sfTestFunctional(new sfBrowser(), new lime_test(null, new lime_output_color()));
+$browser = new opTestFunctional(new sfBrowser(), new lime_test(null, new lime_output_color()));
 $params = array('admin_user' => array(
 ));
 $browser
