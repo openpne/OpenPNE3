@@ -48,7 +48,7 @@ class opI18N extends sfI18N
         $catalogues[$name] = array();
       }
 
-      $messageSource = sfMessageSource::factory('OpenPNE', array());
+      $messageSource = sfMessageSource::factory('OpenPNE');
       $data = $messageSource->loadData($file);
 
       $catalogues[$name] = array_merge($data, $catalogues[$name]);
