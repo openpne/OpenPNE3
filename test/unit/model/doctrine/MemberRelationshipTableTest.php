@@ -4,6 +4,9 @@ include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 sfContext::createInstance($configuration);
 
+opMailSend::initialize();
+Zend_Mail::setDefaultTransport(new opZendMailTransportMock());
+
 $t = new lime_test(16, new lime_output_color());
 $table = Doctrine::getTable('MemberRelationship');
 
