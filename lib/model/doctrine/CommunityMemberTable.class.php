@@ -12,14 +12,10 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
 {
   public function retrieveByMemberIdAndCommunityId($memberId, $communityId)
   {
-    $query = $this->createQuery()
+    return $this->createQuery()
         ->where('member_id = ?', $memberId)
-        ->andWhere('community_id = ?', $communityId);
-
-    $object = $query->fetchOne();
-    $query->free();
-
-    return $object;
+        ->andWhere('community_id = ?', $communityId)
+        ->fetchOne();
   }
 
   protected function isPosition($memberId, $communityId, $position)
@@ -27,21 +23,15 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     $object = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
     if ($object)
     {
-      $result = $object->hasPosition($position);
-      $object->free(true);
-
-      return $result;
+      return $object->hasPosition($position);
     }
     return false;
   }
 
   public function isMember($memberId, $communityId)
   {
-    $object = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
-    if ($object)
+    if ($this->retrieveByMemberIdAndCommunityId($memberId, $communityId))
     {
-      $object->free(true);
-
       return !$this->isPreMember($memberId, $communityId);
     }
     return false;
@@ -52,8 +42,6 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
     $object = $this->retrieveByMemberIdAndCommunityId($memberId, $communityId);
     if ($object && $object->getIsPre())
     {
-      $object->free(true);
-
       return true;
     }
     return false;
