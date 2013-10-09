@@ -203,7 +203,7 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
     return 'everyone';
   }
 
-  public function joinAllMembers()
+  public function joinAllMembers($free = false)
   {
     $conn = Doctrine::getTable('Member')->getConnection();
     $query = 'SELECT id FROM '.Doctrine::getTable('Member')->getTableName().' m'
@@ -212,7 +212,11 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
     $insertIds = $conn->fetchColumn($query, array($this->getId()));
     foreach ($insertIds as $memberId)
     {
-      Doctrine::getTable('CommunityMember')->join($memberId, $this->getId());
+      $communityMember = Doctrine_Core::getTable('CommunityMember')->join($memberId, $this->getId());
+      if ($free)
+      {
+        $communityMember->free(true);
+      }
     }
   }
 }

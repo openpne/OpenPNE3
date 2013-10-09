@@ -59,25 +59,28 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
 
   public function join($memberId, $communityId, $isRegisterPolicy = 'open')
   {
-    if ($this->isPreMember($memberId, $communityId))
+    $communityMember = $this->findOneByMemberIdAndCommunityId($memberId, $communityId);
+    if ($communityMember)
     {
-      throw new Exception('This member has already applied this community.');
+      if ($communityMember->is_pre)
+      {
+        throw new Exception('This member has already applied this community.');
+      }
+      else
+      {
+        throw new Exception('This member has already joined this community.');
+      }
     }
 
-    if ($this->isMember($memberId, $communityId))
-    {
-      throw new Exception('This member has already joined this community.');
-    }
+    $communityMember = $this->create(array(
+      'member_id' => $memberId,
+      'community_id' => $communityId,
+      'is_pre' => 'close' === $isRegisterPolicy,
+    ));
 
-    $communityMember = new CommunityMember();
-    $communityMember->setMemberId($memberId);
-    $communityMember->setCommunityId($communityId);
-    if ('close' === $isRegisterPolicy)
-    {
-      $communityMember->setIsPre(true);
-    }
     $communityMember->save();
-    $communityMember->free(true);
+
+    return $communityMember;
   }
 
   public function quit($memberId, $communityId)

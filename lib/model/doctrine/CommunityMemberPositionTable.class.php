@@ -19,16 +19,18 @@ class CommunityMemberPositionTable extends Doctrine_Table
 {
   public function getPositionsByMemberIdAndCommunityId($memberId, $communityId)
   {
-    $objects = $this->createQuery()
+    $query = $this->createQuery()
       ->where('member_id = ?', $memberId)
-      ->andWhere('community_id = ?', $communityId)
-      ->execute();
+      ->andWhere('community_id = ?', $communityId);
 
     $results = array();
-    foreach ($objects as $obj)
+    foreach ($query->fetchArray() as $position)
     {
-      $results[] = $obj->getName();
+      $results[] = $position['name'];
     }
+
+    $query->free();
+
     return $results;
   }
 }

@@ -147,7 +147,7 @@ class communityActions extends sfActions
     if ($request->isMethod(sfWebRequest::POST))
     {
       $request->checkCSRFProtection();
-      $this->community->joinAllMembers();
+      $this->community->joinAllMembers(true);
       $this->getUser()->setFlash('notice', 'All member joined.');
       $this->redirect('community/list');
     }
