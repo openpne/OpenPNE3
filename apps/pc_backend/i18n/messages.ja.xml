@@ -1414,10 +1414,6 @@
         <target>入力されたEメールアドレスはすべて無効です。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Processing... (Remaining %num% records)</source>
-        <target>処理中...（残り%num%件）</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Full Size</source>
         <target>フルサイズ</target>
       </trans-unit>

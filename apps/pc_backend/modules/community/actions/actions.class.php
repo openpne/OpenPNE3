@@ -144,18 +144,12 @@ class communityActions extends sfActions
     $this->community = Doctrine::getTable('Community')->find($request->getParameter('id'));
     $this->forward404Unless($this->community);
 
-    if ($request->isMethod(sfWebRequest::POST) || $request->hasParameter('continue'))
+    if ($request->isMethod(sfWebRequest::POST))
     {
       $request->checkCSRFProtection();
-      $this->remaining = $this->community->joinAllMembers(10);
-
-      if (0 === $this->remaining)
-      {
-        $this->getUser()->setFlash('notice', 'All member joined.');
-        $this->redirect('community/list');
-      }
-
-      return sfView::SUCCESS;
+      $this->community->joinAllMembers();
+      $this->getUser()->setFlash('notice', 'All member joined.');
+      $this->redirect('community/list');
     }
 
     return sfView::INPUT;
