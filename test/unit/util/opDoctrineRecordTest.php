@@ -12,6 +12,8 @@ $t = new lime_test(null, new lime_output_color());
 
 // --
 
+$zlibEnabled = extension_loaded('zlib');
+
 class MyRecord extends opDoctrineRecord
 {
   public function __construct()
@@ -19,8 +21,14 @@ class MyRecord extends opDoctrineRecord
     parent::__construct();
 
     $types = array(
-      'string', 'array', 'object', 'blob', 'clob', 'gzip', 'char', 'varchar',
+      'string', 'array', 'object', 'blob', 'clob', 'char', 'varchar',
     );
+
+    global $zlibEnabled;
+    if ($zlibEnabled)
+    {
+      $types[] = 'gzip';
+    }
 
     foreach ($types as $type)
     {
@@ -37,9 +45,12 @@ $r->setColumnString($strRaw);
 $r->setColumnArray(array($strRaw => $strRaw, $strRaw => array($strRaw)));
 $r->setColumnBlob($strRaw);
 $r->setColumnClob($strRaw);
-$r->setColumnGzip($strRaw);
 $r->setColumnChar($strRaw);
 $r->setColumnVarchar($strRaw);
+if ($zlibEnabled)
+{
+  $r->setColumnGzip($strRaw);
+}
 
 $result = $r->getPrepared();
 
@@ -49,6 +60,13 @@ $t->is($result['column_string'], $strConverted, '4 bytes UTF-8 characters in a s
 $t->is($result['column_array'], serialize(array($strConverted => $strConverted, $strConverted => array($strConverted))), '4 bytes UTF-8 characters in an array are replaced');
 $t->is($result['column_blob'], $strRaw, '4 bytes UTF-8 characters in a blob are NOT replaced');
 $t->is($result['column_clob'], $strConverted, '4 bytes UTF-8 characters in a clob are replaced');
-$t->is($result['column_gzip'], gzcompress($strRaw, 5), '4 bytes UTF-8 characters in a gzip are NOT replaced');
 $t->is($result['column_char'], $strConverted, '4 bytes UTF-8 characters in a char are replaced');
 $t->is($result['column_varchar'], $strConverted, '4 bytes UTF-8 characters in a varchar are replaced');
+if ($zlibEnabled)
+{
+  $t->is($result['column_gzip'], gzcompress($strRaw, 5), '4 bytes UTF-8 characters in a gzip are NOT replaced');
+}
+else
+{
+  $t->skip('the test for gzip type column (missing zlib extention)');
+}
