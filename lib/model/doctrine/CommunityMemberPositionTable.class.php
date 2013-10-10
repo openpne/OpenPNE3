@@ -14,23 +14,15 @@
  * @package    OpenPNE
  * @subpackage model
  * @author     Shogo Kawahara <kawahara@tejimaya.net>
+ * @author     Kimura Youichi <kim.upsilon@bucyou.net>
  */
 class CommunityMemberPositionTable extends Doctrine_Table
 {
   public function getPositionsByMemberIdAndCommunityId($memberId, $communityId)
   {
-    $query = $this->createQuery()
-      ->where('member_id = ?', $memberId)
-      ->andWhere('community_id = ?', $communityId);
+    $tableName = $this->getTableName();
+    $query = 'SELECT name FROM '.$tableName.' WHERE member_id = ? AND community_id = ?';
 
-    $results = array();
-    foreach ($query->fetchArray() as $position)
-    {
-      $results[] = $position['name'];
-    }
-
-    $query->free();
-
-    return $results;
+    return $this->getConnection()->fetchArray($query, array($memberId, $communityId));
   }
 }
