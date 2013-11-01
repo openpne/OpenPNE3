@@ -20,9 +20,9 @@ class friendActions extends opFriendAction
   /**
    * Executes list action
    *
-   * @param sfWebRequest $request a request object
+   * @param opWebRequest $request a request object
    */
-  public function executeList(sfWebRequest $request)
+  public function executeList(opWebRequest $request)
   {
     $this->size = 10;
 
@@ -32,9 +32,9 @@ class friendActions extends opFriendAction
  /**
   * Execute show activities action
   *
-  * @param sfWebRequest $request a request object
+  * @param opWebRequest $request a request object
   */
-  public function executeShowActivity(sfWebRequest $request)
+  public function executeShowActivity(opWebRequest $request)
   {
     $this->size = 10;
 
