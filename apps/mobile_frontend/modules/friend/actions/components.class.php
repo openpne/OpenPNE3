@@ -10,7 +10,7 @@
 
 class friendComponents extends opFriendComponents
 {
-  public function executeFriendListBox($request)
+  public function executeFriendListBox(opWebRequest $request)
   {
     $memberId = $this->getUser()->getMemberId();
     if ($request->hasParameter('id'))

@@ -17,7 +17,7 @@
  */
 abstract class opFriendComponents extends sfComponents
 {
-  public function executeActivityBox()
+  public function executeActivityBox(opWebRequest $request)
   {
     $this->activities = Doctrine::getTable('ActivityData')->getFriendActivityList(null, $this->gadget->getConfig('row'));
     if (opConfig::get('is_allow_post_activity'))

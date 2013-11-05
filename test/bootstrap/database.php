@@ -1,14 +1,20 @@
 <?php
 
-$_app = 'pc_frontend';
-$_env = 'test';
+if (!isset($configuration) || !($configuration instanceof sfApplicationConfiguration))
+{
+  if (!isset($app))
+  {
+    $app = 'pc_frontend';
+  }
+
+  $configuration = ProjectConfiguration::getApplicationConfiguration($app, 'test', true);
+}
 
 if (!isset($fixture))
 {
   $fixture = 'common';
 }
 
-$configuration = ProjectConfiguration::getApplicationConfiguration($_app, $_env, true);
 new sfDatabaseManager($configuration);
 
 $conn = opDoctrineQuery::getMasterConnectionDirect();
@@ -20,8 +26,8 @@ $task->run(array(), array(
   'no-confirmation' => true,
   'db'              => true,
   'and-load'        => dirname(__FILE__).'/../fixtures/'.$fixture,
-  'application'     => $_app,
-  'env'             => $_env,
+  'application'     => $configuration->getApplication(),
+  'env'             => $configuration->getEnvironment(),
 ));
 
 $conn = Doctrine_Manager::getInstance()->getCurrentConnection();

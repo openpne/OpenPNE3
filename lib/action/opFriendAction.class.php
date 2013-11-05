@@ -35,7 +35,7 @@ abstract class opFriendAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeList($request)
+  public function executeList(opWebRequest $request)
   {
     $this->redirectIf($this->relation->isAccessBlocked(), '@error');
 
@@ -58,7 +58,7 @@ abstract class opFriendAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeLink($request)
+  public function executeLink(opWebRequest $request)
   {
     $this->redirectUnless(opConfig::get('enable_friend_link'), '@error');
     $this->redirectIf($this->relation->isAccessBlocked(), '@error');
@@ -101,7 +101,7 @@ abstract class opFriendAction extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeUnlink($request)
+  public function executeUnlink(opWebRequest $request)
   {
     $this->redirectToHomeIfIdIsNotValid();
     if (!$this->relation->isFriend())
@@ -134,7 +134,7 @@ abstract class opFriendAction extends sfActions
  /**
   * Executes manage action
   */
-  public function executeManage($request)
+  public function executeManage(opWebRequest $request)
   {
     $this->pager = Doctrine::getTable('MemberRelationship')->getFriendListPager($this->getUser()->getMemberId(), $request->getParameter('page', 1));
 
@@ -150,7 +150,7 @@ abstract class opFriendAction extends sfActions
    * 
    * @param sfRequest $request A request object
    */
-  public function executeShowImage($request)
+  public function executeShowImage(opWebRequest $request)
   {
     $this->forward404Unless($this->id);
 
@@ -163,9 +163,9 @@ abstract class opFriendAction extends sfActions
  /**
   * Executes show friend activities action
   * 
-  * @param sfWebRequest $request A request object
+  * @param opWebRequest $request A request object
   */
-  public function executeShowActivity($request)
+  public function executeShowActivity(opWebRequest $request)
   {
     if (!isset($this->size))
     {

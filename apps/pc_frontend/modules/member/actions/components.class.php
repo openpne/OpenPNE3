@@ -10,7 +10,7 @@
 
 class memberComponents extends opMemberComponents
 {
-  public function executeProfileListBox($request)
+  public function executeProfileListBox(opWebRequest $request)
   {
     if ($request->hasParameter('id'))
     {
@@ -22,7 +22,7 @@ class memberComponents extends opMemberComponents
     }
   }
 
-  public function executeSmtProfileListBox($request)
+  public function executeSmtProfileListBox(opWebRequest $request)
   {
     if ($request->hasParameter('id'))
     {
@@ -34,7 +34,7 @@ class memberComponents extends opMemberComponents
     }
   }
 
-  public function executeSmtMemberFriendListBox($request)
+  public function executeSmtMemberFriendListBox(opWebRequest $request)
   {
     if ($request->hasParameter('id') && 'profile' !== sfContext::getInstance()->getActionName())
     {
@@ -46,7 +46,7 @@ class memberComponents extends opMemberComponents
     }
   }
 
-  public function executeSmtMemberJoinCommunityListBox($request)
+  public function executeSmtMemberJoinCommunityListBox(opWebRequest $request)
   {
     if ($request->hasParameter('id') && 'profile' !== sfContext::getInstance()->getActionName())
     {

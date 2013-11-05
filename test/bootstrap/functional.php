@@ -26,15 +26,7 @@ new sfDatabaseManager($configuration);
 
 if (!isset($executeLoader) || $executeLoader)
 {
-  $task = new sfDoctrineBuildTask($configuration->getEventDispatcher(), new sfFormatter());
-  $task->setConfiguration($configuration);
-  $task->run(array(), array(
-    'no-confirmation' => true,
-    'db'              => true,
-    'and-load'        => dirname(__FILE__).'/../fixtures',
-    'application'     => $app,
-    'env'             => 'test',
-  ));
+  require_once dirname(__FILE__).'/database.php';
 }
 
 // remove all cache

@@ -23,7 +23,7 @@ class opConfirmationAction extends sfActions
     $this->config = include(sfContext::getInstance()->getConfigCache()->checkConfig('config/confirmation.yml'));
   }
 
-  public function executeList(sfWebRequest $request)
+  public function executeList(opWebRequest $request)
   {
     $this->checkCategory();
 
@@ -46,7 +46,7 @@ class opConfirmationAction extends sfActions
     $this->form = new sfForm();
   }
 
-  public function executeDecision(sfWebRequest $request)
+  public function executeDecision(opWebRequest $request)
   {
     $request->checkCSRFProtection();
     $this->checkCategory();
