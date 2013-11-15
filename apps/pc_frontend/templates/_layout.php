@@ -9,13 +9,12 @@
 <?php if (Doctrine::getTable('SnsConfig')->get('customizing_css')): ?>
 <link rel="stylesheet" type="text/css" href="<?php echo url_for('@customizing_css') ?>" />
 <?php endif; ?>
+<?php use_helper('Javascript') ?>
+<?php use_javascript('jquery.min.js') ?>
+<?php use_javascript('jquery.tmpl.min.js') ?>
+<?php use_javascript('jquery.notify.js') ?>
 <?php if (opConfig::get('enable_jsonapi') && opToolkit::isSecurePage()): ?>
 <?php
-use_helper('Javascript');
-
-use_javascript('jquery.min.js');
-use_javascript('jquery.tmpl.min.js');
-use_javascript('jquery.notify.js');
 use_javascript('op_notify.js');
 $jsonData = array(
   'apiKey' => $sf_user->getMemberApiKey(),
