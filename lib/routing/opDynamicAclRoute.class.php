@@ -29,6 +29,11 @@ class opDynamicAclRoute extends sfDoctrineRoute
   {
     $result = parent::getObject();
 
+    if (is_null($result))
+    {
+      return $result;
+    }
+
     if (!$role = $this->getCurrentMemberId())
     {
       $role = 'alien';
