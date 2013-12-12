@@ -1,6 +1,6 @@
 function url2cmd(url, googlemapsUrl) {
-  var maps_google_co_jp_maps = url.match(/^http:\/\/maps\.google\.co\.jp\/maps\?(.+)/);
-  var maps_google_co_jp = url.match(/^http:\/\/maps\.google\.co\.jp\/\?(.+)/);
+  var maps_google_co_jp_maps = url.match(/^https?:\/\/maps\.google\.co\.jp\/maps\?(.+)/);
+  var maps_google_co_jp = url.match(/^https?:\/\/maps\.google\.co\.jp\/\?(.+)/);
 
   if (maps_google_co_jp_maps || maps_google_co_jp) {
      var id = RegExp.$1;
