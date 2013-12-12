@@ -423,6 +423,8 @@ class opSecurityUser extends opAdaptableUser
 
   public function setRegisterToken($token)
   {
+    $this->logout();
+
     if ('MailAddress' === $this->getAuthAdapter()->getAuthModeName())
     {
       $mailTypes = array("pc_address", "pc_address_pre", "mobile_address", "mobile_address_pre");
