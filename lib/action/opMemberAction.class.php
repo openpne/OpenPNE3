@@ -392,6 +392,11 @@ abstract class opMemberAction extends sfActions
 
   public function executeDelete(opWebRequest $request)
   {
+    if ($request->isSmartphone())
+    {
+      $this->setLayout('smtLayoutSns');
+    }
+
     if (1 == $this->getUser()->getMemberId())
     {
       return sfView::ERROR;
