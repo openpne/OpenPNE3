@@ -7,6 +7,7 @@ foreach ($categories as $key => $value)
     $lists[$key] = link_to(__($categoryCaptions[$key]), '@member_config?category='.$key);
   }
 }
+$lists['leave'] = link_to(__('Delete your %1% account', array('%1%' => $op_config['sns_name'])), '@member_delete');
 ?>
 <?php if($categoryName): ?>
 <div class="row">
