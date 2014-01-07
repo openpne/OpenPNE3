@@ -82,10 +82,10 @@ $(function(){
   $('#leaveCommunity').click(function(){
     $('#leaveCommunityLoading').show();
     $('#leaveCommunityLink').hide();
-    $.ajax({
+    op.api.ajax({
       type: 'GET',
-      url: openpne.apiBase + 'community/join.json',
-      data: 'community_id=<?php echo $community->getId() ?>&leave=true&apiKey=' + openpne.apiKey,
+      url: 'community/join.json',
+      data: {community_id: <?php echo $community->getId() ?>, leave: true},
       success: function(json){
         $('#leaveCommunityFinish').show();
         $('#leaveCommunityLoading').hide();
@@ -100,10 +100,10 @@ $(function(){
   $('#joinCommunity').click(function(){
     $('#joinCommunityLoading').show();
     $('#joinCommunityLink').hide();
-    $.ajax({
+    op.api.ajax({
       type: 'GET',
-      url: openpne.apiBase + 'community/join.json',
-      data: 'community_id=<?php echo $community->getId() ?>&apiKey=' + openpne.apiKey,
+      url: 'community/join.json',
+      data: {community_id: <?php echo $community->getId() ?>},
       success: function(json){
         $('#joinCommunityFinish').show();
         $('#joinCommunityLoading').hide();
@@ -114,6 +114,5 @@ $(function(){
       },
     });
   });
-
 });
 </script>
