@@ -145,7 +145,7 @@ class opSecurityUser extends opAdaptableUser
     $key = md5(sfContext::getInstance()->getRequest()->getHost());
     if ($value = sfContext::getInstance()->getRequest()->getCookie($key))
     {
-      $value = unserialize(base64_decode($value));
+      $value = json_decode(base64_decode($value));
 
       return $value;
     }
@@ -187,7 +187,7 @@ class opSecurityUser extends opAdaptableUser
       }
       $this->getMember()->setConfig('remember_key', $rememberKey);
 
-      $value = base64_encode(serialize(array($this->getMemberId(), $rememberKey)));
+      $value = base64_encode(json_encode(array($this->getMemberId(), $rememberKey)));
       $expire = time() + sfConfig::get('op_remember_login_limit', 60*60*24*30);
     }
 
