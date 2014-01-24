@@ -140,7 +140,7 @@ ssl_selectable_actions:
 
   # PC 版設定
   # for pc_frontend
-  pc_frontend: []
+  pc_frontend: ["default/customizingCss"]
 
   # 携帯版設定
   # for mobile_frontend
