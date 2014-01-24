@@ -49,6 +49,8 @@ class opSecurityUser extends opAdaptableUser
 
   public function setMemberId($memberId)
   {
+    $this->serializedMember = null;
+
     return $this->setAttribute('member_id', $memberId, 'opSecurityUser');
   }
 
