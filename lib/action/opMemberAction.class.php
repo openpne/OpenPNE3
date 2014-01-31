@@ -161,7 +161,6 @@ abstract class opMemberAction extends sfActions
 
   public function executeRegister(opWebRequest $request)
   {
-    $this->getUser()->clearSessionData();
     $member = $this->getUser()->setRegisterToken($request['token']);
 
     $this->forward404Unless($member && !$this->getUser()->isSNSMember() && $this->getUser()->isInvited());
