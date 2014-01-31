@@ -17,15 +17,5 @@ class googlemapsActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->mapType = 'G_NORMAL_MAP';
-    switch ($request->getParameter('t'))
-    {
-      case 'k':
-        $this->mapType = 'G_SATELLITE_MAP';
-        break;
-      case 'h':
-        $this->mapType = 'G_HYBRID_MAP';
-        break;
-    }
   }
 }

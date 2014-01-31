@@ -4,13 +4,12 @@
 <head>
 <?php include_http_metas() ?>
 <?php include_metas() ?>
-<title><?php echo ($op_config['sns_title']) ? $op_config['sns_title'] : $op_config['sns_name'] ?></title>
-<?php echo $op_config->get('pc_html_head') ?>
-<?php if (isset($op_config['google_AJAX_search_api_key']) && isset($op_config['google_maps_api_key'])): ?>
-<?php use_javascript('http://www.google.co.jp/uds/api?file=uds.js&v=1.0&key='.$op_config['google_AJAX_search_api_key']) ?>
-<?php use_javascript('http://maps.google.co.jp/maps?file=api&v=2.x&key='.$op_config['google_maps_api_key']) ?>
-<?php
-$googlemaps_script = <<<EOM
+<?php include_title() ?>
+<?php $apiKey = !empty($op_config['google_maps_api_key']) ? '&amp;'.$op_config['google_maps_api_key'] : '' ?>
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false<?php echo $apiKey ?>"></script>
+<script type="text/javascript">
+//<![CDATA[
+
 // parse request parameters
 var request = {
   x: "", y: "", z: "", q: ""
@@ -27,56 +26,57 @@ for (var i = 0; i < params.length; i++) {
   }
   request[n] = v;
 }
-var MapType = %s;  // It is not user-inputed values
 
-var gls;
-var gMap;
-function OnLocalSearch() {
-    if (!gls.results) return;
-    var first = gls.results[0];
-    var point = new GLatLng(parseFloat(first.lat), parseFloat(first.lng));
-    var zoom = request.z;
-    gMap.addControl(new GSmallMapControl());
-    gMap.addControl(new GMapTypeControl());
-    gMap.setMapType(MapType);
-    gMap.setCenter(point, zoom);
-    var marker = new GMarker(point);
-    gMap.addOverlay(marker);
-    geocoder = new GClientGeocoder();
-}
-function load() {
-    if (GBrowserIsCompatible()) {
-        if ((request.x == 0) && (request.y == 0)){
-            gMap = new GMap2(document.getElementById('map'));
-            gMap.addControl(new GSmallMapControl());
-            gMap.addControl(new GMapTypeControl());
-            gMap.setCenter(new GLatLng(0, 0));
-            gls = new GlocalSearch();
-            gls.setCenterPoint(gMap);
-            gls.setSearchCompleteCallback(null, OnLocalSearch);
-            var q = request.q;
-            gls.execute(q);
-        } else {
-            var point = new GLatLng(request.x, request.y);
-            var zoom = request.z;
-            gMap = new GMap2(document.getElementById('map'));
-            gMap.addControl(new GSmallMapControl());
-            gMap.addControl(new GMapTypeControl());
-            gMap.setCenter(point, zoom);
-            gMap.setMapType(MapType);
-            var marker = new GMarker(point);
-            gMap.addOverlay(marker);
-            geocoder = new GClientGeocoder();
-        }
-    }
-}
-EOM;
-echo javascript_tag(sprintf($googlemaps_script, $mapType)); ?>
-<?php endif; ?>
-<?php include_stylesheets() ?>
-<?php include_javascripts() ?>
+google.maps.event.addDomListener(window, 'load', function() {
+  'use strict';
+
+  var mapCenter = new google.maps.LatLng(request.x, request.y)
+  var mapType = google.maps.MapTypeId.ROADMAP
+
+  switch (request.t) {
+    case 'k':
+      mapType = google.maps.MapTypeId.SATELLITE
+      break
+    case 'h':
+      mapType = google.maps.MapTypeId.HYBRID
+      break
+  }
+
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: request.z,
+    center: mapCenter,
+    mapTypeId: mapType
+  })
+
+  if ('' === request.q) {
+    var marker = new google.maps.Marker({
+      map: map,
+      position: mapCenter
+    })
+  }
+  else {
+    // Geocoding
+    var geocoder = new google.maps.Geocoder()
+    geocoder.geocode({'address': request.q}, function(results, status) {
+      if (status !== google.maps.GeocoderStatus.OK) {
+        alert('ジオコーディングに失敗しました: ' + status)
+        return
+      }
+
+      var resultPos = results[0].geometry.location
+      map.setCenter(resultPos)
+      var marker = new google.maps.Marker({
+        map: map,
+        position: resultPos
+      })
+    })
+  }
+})
+
+//]]>
+</script>
 </head>
-<body onload="load()" onunload="GUnload()" id="page_googlemaps_index" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
+<body id="page_googlemaps_index" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
 <div id="map" style="width: 300px; height: 320px"></div>
 </body>
 </html>
