@@ -4,7 +4,7 @@
 
 # SNS の URL
 # URL of the SNS
-base_url: "http://example.com"
+base_url: "http://38resize2.akobayashi.dazai2.pne.jp"
 
 ######################################
 # メール (Mail)
@@ -12,7 +12,7 @@ base_url: "http://example.com"
 
 # SNS からのメール送信に使うドメイン
 # Domain to use for sending e-mail from the SNS
-mail_domain: "example.com"
+mail_domain: "38resize2.akobayashi.dazai2.pne.jp"
 
 # メール投稿アドレスにメンバー毎にユニークなハッシュを含める
 # Contain an individual hash for an e-mail address that is used to post something to the SNS
@@ -24,11 +24,11 @@ mail_address_hash_length: 12
 
 # SNS から送信するメールの Envelope From (Return-Path ヘッダ) に指定するアドレス (PHP の safe_mode が有効な環境では指定できません)
 # Envelope From (Return-Path header) address for sending e-mail from the SNS (cannot use if your PHP's safe_mode setting is on)
-#mail_envelope_from: "return@example.com"
+#mail_envelope_from: "return@38resize2.akobayashi.dazai2.pne.jp"
 
 # SNS から SMTP 経由でメールを送信する場合の SMTP サーバのホスト名
 # Hostname of the SMTP server for sending e-mail via SMTP
-#mail_smtp_host: "smtp.example.com"
+#mail_smtp_host: "smtp.38resize2.akobayashi.dazai2.pne.jp"
 
 # SNS から SMTP 経由でメールを送信する場合の SMTP の設定
 # Config of the SMTP for sending e-mail via SMTP
@@ -109,10 +109,10 @@ use_ssl: false
 # SSL用URL (Cookie の値を引き継ぐため、 base_url と同一ドメイン・パスである必要があります)
 # Base URL for SSL (Set same domain and same path with "base_url" configuration to take over a value of Cookie)
 ssl_base_url:
-  pc_frontend: "https://example.com"
-  mobile_frontend: "https://example.com"
-  pc_backend: "https://example.com"
-  api: "https://example.com"
+  pc_frontend: "https://38resize2.akobayashi.dazai2.pne.jp"
+  mobile_frontend: "https://38resize2.akobayashi.dazai2.pne.jp"
+  pc_backend: "https://38resize2.akobayashi.dazai2.pne.jp"
+  api: "https://38resize2.akobayashi.dazai2.pne.jp"
 
 # SSL が必須なアプリケーション
 # Applications that are SSL required
@@ -140,7 +140,7 @@ ssl_selectable_actions:
 
   # PC 版設定
   # for pc_frontend
-  pc_frontend: []
+  pc_frontend: ["default/customizingCss"]
 
   # 携帯版設定
   # for mobile_frontend
@@ -161,6 +161,9 @@ ssl_selectable_actions:
 #   1: on  - GIF のみ ImageMagick を使う (Use ImageMagick only for GIF)
 #   2: on  - JEPG,PNG,GIF に ImageMagick を使う (ただし、 GD も必要) (Use ImageMagick for JPEG,PNG,GIF)
 use_imagemagick: 0
+
+# DBに置くことができる画像の最大容量(byte)
+resize_limit_size: 8192
 
 # ImageMagick コマンドのパス
 # Path to ImageMagick binary
