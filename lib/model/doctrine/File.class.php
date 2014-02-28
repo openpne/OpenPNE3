@@ -59,17 +59,46 @@ class File extends BaseFile
 
   public function save(Doctrine_Connection $conn = null)
   {
-    $this->setFilesize(strlen($this->FileBin->bin));
-
     if ($this->isImage())
     {
       $class = sfImageHandler::getStorageClassName();
       $this->setName(call_user_func(array($class, 'getFilenameToSave'), $this->getName()), $class);
-
       $storage = call_user_func(array($class, 'create'), $this, $class);
+      $type = $this->getType();
+      if ($type === 'image/jpeg')
+      {
+        $cls = exif_read_data("data://image/jpeg;base64,".base64_encode($this->FileBin->bin));
+        $exif = $cls['Orientation'];
+        $image = imagecreatefromstring($this->FileBin->bin);
+        switch ($exif)
+        {
+          case 3:
+            $image = imagerotate($image, 180, 0);
+            break;
+          case 6:
+            $imagewidth = imagesy($image);
+            $imageheight = imagesx($image);
+            $image = imagerotate($image, -90, 0);
+            imagecopyresampled ($image, $image, 0, 0, (imagesx($image) - $imagewidth)/2, (imagesy($image) - $imageheight)/2, $imagewidth, $imageheight, $imagewidth, $imageheight);
+            break;
+          case 8:
+            $imagewidth = imagesy($image);
+            $imageheight = imagesx($image);
+            $image = imagerotate($image, 90, 0);
+            imagecopyresampled ($image, $image, 0, 0, (imagesx($image) - $imagewidth)/2, (imagesy($image) - $imageheight)/2, $imagewidth, $imageheight, $imagewidth, $imageheight);
+            break;
+          default:
+            break;
+        }
+        ob_start();
+        imagejpeg($image);
+        $ei = ob_get_contents();
+        ob_end_clean();
+        $this->getFileBin()->setBin($ei);
+      }
       $storage->saveBinary($this->getFileBin());
     }
-
+    $this->setFilesize(strlen($this->FileBin->bin));
     return parent::save($conn);
   }
 
@@ -81,7 +110,6 @@ class File extends BaseFile
       $storage = call_user_func(array($class, 'create'), $this, $class);
       $storage->deleteBinary();
     }
-
     return parent::delete($conn);
   }
 }
