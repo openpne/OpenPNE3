@@ -66,6 +66,9 @@ class File extends BaseFile
       $this->setName(call_user_func(array($class, 'getFilenameToSave'), $this->getName()), $class);
       $storage = call_user_func(array($class, 'create'), $this, $class);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 29cecef20c23361d85d3f8165ca42fc038f85344
       $filesize = strlen($this->FileBin->bin);
       if ($filesize > $uploadimage)
       {
@@ -100,6 +103,7 @@ class File extends BaseFile
             imagecopyresampled($resize, $image, 0, 0, 0, 0, $resizex, $resizey, $x, $y);
             ob_start();
             imagepng($resize);
+<<<<<<< HEAD
 =======
       $type = $this->getType();
       if ($type === 'image/jpeg')
@@ -124,16 +128,22 @@ class File extends BaseFile
             $image = imagerotate($image, 90, 0);
             imagecopyresampled ($image, $image, 0, 0, (imagesx($image) - $imagewidth)/2, (imagesy($image) - $imageheight)/2, $imagewidth, $imageheight, $imagewidth, $imageheight);
 >>>>>>> f20e9a37a32f26ceb8d17e7a05443ac584562b91
+=======
+>>>>>>> 29cecef20c23361d85d3f8165ca42fc038f85344
             break;
           default:
             break;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 29cecef20c23361d85d3f8165ca42fc038f85344
         $ei = ob_get_contents();
         ob_end_clean();
         $this->getFileBin()->setBin($ei);
         imagedestroy($image);
         imagedestroy($resize);
+<<<<<<< HEAD
 =======
         ob_start();
         imagejpeg($image);
@@ -141,11 +151,16 @@ class File extends BaseFile
         ob_end_clean();
         $this->getFileBin()->setBin($ei);
 >>>>>>> f20e9a37a32f26ceb8d17e7a05443ac584562b91
+=======
+>>>>>>> 29cecef20c23361d85d3f8165ca42fc038f85344
       }
       $storage->saveBinary($this->getFileBin());
     }
     $this->setFilesize(strlen($this->FileBin->bin));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 29cecef20c23361d85d3f8165ca42fc038f85344
 
 =======
 >>>>>>> f20e9a37a32f26ceb8d17e7a05443ac584562b91
