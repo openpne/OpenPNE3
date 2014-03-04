@@ -59,16 +59,59 @@ class File extends BaseFile
 
   public function save(Doctrine_Connection $conn = null)
   {
-    $this->setFilesize(strlen($this->FileBin->bin));
-
     if ($this->isImage())
     {
+      $uploadimage = sfConfig::get('op_resize_limit_size', 1024);
       $class = sfImageHandler::getStorageClassName();
       $this->setName(call_user_func(array($class, 'getFilenameToSave'), $this->getName()), $class);
-
       $storage = call_user_func(array($class, 'create'), $this, $class);
+      $filesize = strlen($this->FileBin->bin);
+      if ($filesize > $uploadimage)
+      {
+        $ratio = sqrt($uploadimage/$filesize)/1.5;
+        $type = $this->getType();
+        $image = imagecreatefromstring($this->FileBin->bin);
+        $x = imagesx($image);
+        $y = imagesy($image);
+        $resizex = $x*$ratio;
+        $resizey = $y*$ratio;
+        $resize = imagecreatetruecolor($resizex, $resizey);
+        switch($type)
+        {
+          case 'image/jpeg':
+            imagecopyresampled($resize, $image, 0, 0, 0, 0, $resizex, $resizey, $x, $y);
+            ob_start();
+            imagejpeg($resize);
+            break;
+          case 'image/gif':
+            $alpha = imagecolortransparent($image);
+            $trnprt_color = imagecolorsforindex($image, $alpha);
+            $alpha = imagecolorallocate($resize, $trnprt_color['red'], $trnprt_color['green'], $trnprt_color['blue']);
+            imagefill($resize, 0, 0, $alpha);
+            imagecolortransparent($resize, $alpha);
+            imagecopyresampled($resize, $image, 0, 0, 0, 0, $resizex, $resizey, $x, $y);
+            ob_start();
+            imagegif($resize);
+            break;
+          case 'image/png':
+            imagealphablending($resize, false);
+            imagesavealpha($resize, true);
+            imagecopyresampled($resize, $image, 0, 0, 0, 0, $resizex, $resizey, $x, $y);
+            ob_start();
+            imagepng($resize);
+            break;
+          default:
+            break;
+        }
+        $ei = ob_get_contents();
+        ob_end_clean();
+        $this->getFileBin()->setBin($ei);
+        imagedestroy($image);
+        imagedestroy($resize);
+      }
       $storage->saveBinary($this->getFileBin());
     }
+    $this->setFilesize(strlen($this->FileBin->bin));
 
     return parent::save($conn);
   }
