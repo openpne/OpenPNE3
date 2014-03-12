@@ -140,223 +140,223 @@
       </trans-unit>
       <trans-unit id="">
         <source>Request this %community%'s sub-administrator to this member</source>
-        <target>副管理者を依頼する</target>
+        <target>请求%community%群组副管理</target>
       </trans-unit>
       <trans-unit id="">
         <source>You are requesting this %community%'s sub-administrator to this member now.</source>
-        <target>副管理者依頼中</target>
+        <target>请求成为%community%群组的副管理</target>
       </trans-unit>
       <trans-unit id="">
         <source>Demote this member from this %community%'s sub-administrator</source>
-        <target>副管理者から降格</target>
+        <target>副管理员降为成员</target>
       </trans-unit>
       <trans-unit id="">
         <source>Request the sub-administrator of "%1%"</source>
-        <target>「%1%」の副管理者依頼</target>
+        <target>副管理员「%1%」的请求</target>
       </trans-unit>
       <trans-unit id="">
         <source>Do you demote %0% from this %community%'s sub-administrator?</source>
-        <target>%0%を副管理者から降格してもよろしいですか？</target>
+        <target>%0%降级为副管理员？</target>
       </trans-unit>
       <trans-unit id="">
         <source>Member</source>
-        <target>メンバー</target>
+        <target>成员</target>
       </trans-unit>
       <trans-unit id="">
         <source>You can't access this page.</source>
-        <target>このページにはアクセスできません。</target>
+        <target>没有权限访问该页。</target>
       </trans-unit>
       <trans-unit id="">
         <source>%1% sent %friend% request to you!</source>
-        <target>%1%さんから%friend%申請がきています！</target>
+        <target>%1% 发送 %friend% 好友请求！</target>
       </trans-unit>
       <trans-unit id="">
         <source>%1% send request for participation to %2%.</source>
-        <target>%1%さんが%2%への参加を希望しています。</target>
+        <target>%1% 发送 %2% 加入请求。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Permits</source>
-        <target>許可する</target>
+        <target>允许</target>
       </trans-unit>
       <trans-unit id="">
         <source>Refuses</source>
-        <target>拒否する</target>
+        <target>拒绝</target>
       </trans-unit>
       <trans-unit id="">
         <source>%my_friend% Setting</source>
-        <target>%my_friend%管理</target>
+        <target>%my_friend% 管理</target>
       </trans-unit>
       <trans-unit id="">
         <source>This member already belongs to %my_friend%.</source>
-        <target>既に%my_friend%です。</target>
+        <target>此成员已在%my_friend%中。</target>
       </trans-unit>
       <trans-unit id="">
         <source>%Friend% request is already sent.</source>
-        <target>現在%Friend%申請中です。</target>
+        <target>%Friend% 请求已发送。</target>
       </trans-unit>
       <trans-unit id="">
         <source>You have requested %friend% link.</source>
-        <target>%friend%申請が完了しました。</target>
+        <target>你已请求%friend%链接。</target>
       </trans-unit>
       <trans-unit id="">
         <source>You don't have any %friend%.</source>
-        <target>%friend%がいません。</target>
+        <target>你没有任何%friend%。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Delete from %my_friend%.</source>
-        <target>%my_friend%から外す</target>
+        <target>删除%my_friend%</target>
       </trans-unit>
       <trans-unit id="">
         <source>Do you delete %0% from %my_friend%?</source>
-        <target>本当に%0%を%my_friend%から外しますか？</target>
+        <target>确认删除%0%从%my_friend%？</target>
       </trans-unit>
       <trans-unit id="">
         <source>Add %my_friend%</source>
-        <target>%my_friend%に追加</target>
+        <target>添加%my_friend%</target>
       </trans-unit>
       <trans-unit id="">
         <source>This member is not your %friend%.</source>
-        <target>%friend%ではありません。</target>
+        <target>此成员不是你的%friend%。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Register Mobile phone</source>
-        <target>携帯登録</target>
+        <target>注册手机端</target>
       </trans-unit>
       <trans-unit id="">
         <source>When mobile information registration is done from following URL, the member registration is completed.</source>
-        <target>以下のURLから携帯登録をおこなうと、メンバー登録が完了します。</target>
+        <target>如果您从下面的URL做手机注册，会员注册完成。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Settings</source>
-        <target>設定</target>
+        <target>设置</target>
       </trans-unit>
       <trans-unit id="">
         <source>Change Settings</source>
-        <target>設定変更</target>
+        <target>变更设置</target>
       </trans-unit>
       <trans-unit id="">
         <source>Send</source>
-        <target>送信</target>
+        <target>发送</target>
       </trans-unit>
       <trans-unit id="">
         <source>Photo</source>
-        <target>写真</target>
+        <target>图片</target>
       </trans-unit>
       <trans-unit id="">
         <source>Edit Photo</source>
-        <target>写真を編集する</target>
+        <target>编辑图片</target>
       </trans-unit>
       <trans-unit id="">
         <source>Show more Photos</source>
-        <target>もっと写真を見る</target>
+        <target>显示更多图片</target>
       </trans-unit>
       <trans-unit id="">
         <source>%1%'s Photos</source>
-        <target>%1%さんの写真</target>
+        <target>%1%的图片</target>
       </trans-unit>
       <trans-unit id="">
         <source>Please select the item that wants to be set from the menu.</source>
-        <target>メニューから設定したい項目を選択してください。</target>
+        <target>请选择您想要从菜单设定的项目。</target>
       </trans-unit>
       <trans-unit id="">
         <source>There is no available settings.</source>
-        <target>利用可能な設定はありません。</target>
+        <target>没有可用的设置。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Edit profile</source>
-        <target>プロフィール変更</target>
+        <target>编辑资料</target>
       </trans-unit>
       <trans-unit id="">
         <source>Edit Profile</source>
-        <target>プロフィール編集</target>
+        <target>编辑资料</target>
       </trans-unit>
       <trans-unit id="">
         <source>Profile</source>
-        <target>プロフィール</target>
+        <target>资料</target>
       </trans-unit>
       <trans-unit id="">
         <source>Public Flag for Profile Page</source>
-        <target>プロフィールページの公開範囲</target>
+        <target>公开的资料</target>
       </trans-unit>
       <trans-unit id="">
         <source>All Users on the Web</source>
-        <target>Web全体に公開</target>
+        <target>所有人公开</target>
       </trans-unit>
       <trans-unit id="">
         <source>All Members</source>
-        <target>全員に公開</target>
+        <target>所有成员公开</target>
       </trans-unit>
       <trans-unit id="">
         <source>%my_friend%</source>
-        <target>%my_friend%まで公開</target>
+        <target>对%my_friend%公开</target>
       </trans-unit>
       <trans-unit id="">
         <source>Only Open to %my_friend%</source>
-        <target>%my_friend%まで公開</target>
+        <target>仅对%my_friend%公开</target>
       </trans-unit>
       <trans-unit id="">
         <source>Private</source>
-        <target>公開しない</target>
+        <target>隐私</target>
       </trans-unit>
       <trans-unit id="">
         <source>Invite a friend to %1%</source>
-        <target>友人を%1%に招待する</target>
+        <target>介绍个好友给%1%</target>
       </trans-unit>
       <trans-unit id="">
         <source>The invitation has not been permitted.</source>
-        <target>招待が許可されていません</target>
+        <target>邀请未授权</target>
       </trans-unit>
       <trans-unit id="">
         <source>Sent.</source>
-        <target>送信が完了しました。</target>
+        <target>已发送。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Failed in login.</source>
-        <target>ログインに失敗しました。</target>
+        <target>登录失败。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Last Login</source>
-        <target>最終ログイン</target>
+        <target>上次登录</target>
       </trans-unit>
       <trans-unit id="">
         <source>%friend% List</source>
-        <target>%friend%リスト</target>
+        <target>%friend% 列表</target>
       </trans-unit>
       <trans-unit id="">
         <source>%1%'s %friend% List</source>
-        <target>%1%さんの%friend%リスト</target>
+        <target>%1%的%friend%列表</target>
       </trans-unit>
       <trans-unit id="">
         <source>Other members look your page like this.</source>
-        <target>※他のメンバーから見たあなたのページはこのようになります。</target>
+        <target>※其他成员看到你的页面。</target>
       </trans-unit>
       <trans-unit id="">
         <source>If you teach your page to other members, please use following URL.</source>
-        <target>他のメンバーにあなたのページを教える場合は、以下のURLを使ってください。</target>
+        <target>如果发送你的页面给其他成员，请使用以下URL。</target>
       </trans-unit>
       <trans-unit id="">
         <source>If you edit this page, please visit %1%.</source>
-        <target>プロフィールを変更する場合は「%1%」よりおこなってください。</target>
+        <target>修改该页请访问%1%。</target>
       </trans-unit>
       <trans-unit id="">
         <source>It is necessary to register the mobile-phone information to entry in %1%.</source>
-        <target>%1%に参加するには、携帯電話の登録が必要です。</target>
+        <target>加入%1%,需要登记你的手机。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Please note that you cannot use smartphones.</source>
-        <target>スマートフォンからは登録することができませんのでご注意ください。</target>
+        <target>注意！不需要手机注册。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Register the mobile-phone</source>
-        <target>携帯電話の登録</target>
+        <target>注册手机</target>
       </trans-unit>
       <trans-unit id="">
         <source>URL for mobile registration is send to the mobile mail address appropriating input here.</source>
-        <target>ここで入力した携帯メールアドレス宛に、携帯登録用のURLを送信します。</target>
+        <target>为了您在此处输入手机E-mail地址，您可以发送手机注册的URL。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Please set your mobile phone to receive a mail from %1%.</source>
-        <target>ドメイン指定受信機能などをお使いの方は、携帯電話で「%1%」からのメールを受信できるように設定してください。</target>
+        <target>请设置你的手机以便接收%1%信息。</target>
       </trans-unit>
       <trans-unit id="">
         <source>%nickname%</source>
@@ -364,147 +364,147 @@
       </trans-unit>
       <trans-unit id="">
         <source>Your search queries did not match any members.</source>
-        <target>該当するメンバーはいませんでした。</target>
+        <target>有没有找到成员。</target>
       </trans-unit>
       <trans-unit id="">
         <source>When the mail address is registered, it is changed to a new mail address.</source>
-        <target>メールアドレスが登録されている場合、新しいメールアドレスに変更されます。</target>
+        <target>如果您的电子邮件地址被注册，请更改新的E-mail地址。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Click following URL, please. You can register in %1%.</source>
-        <target>以下のURLから%1%に登録してください。</target>
+        <target>点击以下URL你可以注册%1%。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Main Photo</source>
-        <target>メイン写真</target>
+        <target>主图集</target>
       </trans-unit>
       <trans-unit id="">
         <source>Upload</source>
-        <target>アップロードする</target>
+        <target>上传</target>
       </trans-unit>
       <trans-unit id="">
         <source>Register</source>
-        <target>新規登録</target>
+        <target>注册</target>
       </trans-unit>
       <trans-unit id="">
         <source>Delete</source>
-        <target>削除</target>
+        <target>删除</target>
       </trans-unit>
       <trans-unit id="">
         <source>More</source>
-        <target>もっと見る</target>
+        <target>更多</target>
       </trans-unit>
       <trans-unit id="">
         <source>You can upload 3 photos.</source>
-        <target>写真は最大3枚までアップロードできます。</target>
+        <target>你可以上传3张图。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Please make it to GIF･JPEG･PNG within %max_size% bytes.</source>
-        <target>%max_size% bytes 以内のGIF・JPEG・PNGにしてください。</target>
+        <target>请上传GIF・JPEG・PNG文件，并且大小控制在%max_size%字节以内。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Photograph that hits violation of copyright and portrait right and violence and obscene photograph and other members are seen and revolted a press ban. Please publish by the self-responsibility.</source>
-        <target>著作権や肖像権の侵害にあたる写真、暴力的・卑猥な写真、他のメンバーが見て不快に感じる写真の掲載は禁止しております。掲載はご自身の責任でお願いいたします。</target>
+        <target>我们已经严禁发布的照片感觉不舒服的照片，以违反肖像权和著作权，暴力，淫秽的图片，其他成员看到。请在您自己的风险邮给我。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Details</source>
-        <target>詳細を見る</target>
+        <target>详情</target>
       </trans-unit>
       <trans-unit id="">
         <source>Please beginning register from %1% to following URL.</source>
-        <target>以下のURLから%1%に登録してください。</target>
+        <target>请点击来自%1%的URL注册。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Please input a mail address.</source>
-        <target>メールアドレスを入力してください。</target>
+        <target>请填写邮箱地址。</target>
       </trans-unit>
       <trans-unit id="">
         <source>You can not delete your account.</source>
-        <target>IDが1のメンバーは退会することができません。</target>
+        <target>不能删除你的帐号。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Do you delete your %1% account?</source>
-        <target>本当に%1%から退会しますか？</target>
+        <target>确定删除你的%1%帐号？</target>
       </trans-unit>
       <trans-unit id="">
         <source>Please input your password if you want to delete your account.</source>
-        <target>退会する場合は、以下のフォームにパスワードを入力してください。</target>
+        <target>如果你想删除你的帐号，请输入你的密码。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Delete your %1% account</source>
-        <target>%1%を退会する</target>
+        <target>删除你的%1%帐号</target>
       </trans-unit>
       <trans-unit id="">
         <source>Back to previous page</source>
-        <target>前のページに戻る</target>
+        <target>返回前一页</target>
       </trans-unit>
       <trans-unit id="">
         <source>Show Profile</source>
-        <target>プロフィール確認</target>
+        <target>显示资料</target>
       </trans-unit>
       <trans-unit id="">
         <source>General Configuration</source>
-        <target>一般的な設定</target>
+        <target>常规设置</target>
       </trans-unit>
       <trans-unit id="">
         <source>Public Flag Configuration</source>
-        <target>公開範囲設定</target>
+        <target>公开设置</target>
       </trans-unit>
       <trans-unit id="">
         <source>PC E-mail Address Configuration</source>
-        <target>PCメールアドレス設定</target>
+        <target>PC端邮箱设置</target>
       </trans-unit>
       <trans-unit id="">
         <source>PC E-mail Address</source>
-        <target>PCメールアドレス</target>
+        <target>PC端邮箱地址</target>
       </trans-unit>
       <trans-unit id="">
         <source>PC E-mail Address (Confirm)</source>
-        <target>PCメールアドレス(確認)</target>
+        <target>PC端邮箱地址确认</target>
       </trans-unit>
       <trans-unit id="">
         <source>Mobile E-mail Address Configuration</source>
-        <target>携帯メールアドレス設定</target>
+        <target>手机端邮箱地址设置</target>
       </trans-unit>
       <trans-unit id="">
         <source>Mobile E-mail Address</source>
-        <target>携帯メールアドレス</target>
+        <target>手机端邮箱地址</target>
       </trans-unit>
       <trans-unit id="">
         <source>Mobile E-mail Address (Confirm)</source>
-        <target>携帯メールアドレス(確認)</target>
+        <target>手机端邮箱地址确认</target>
       </trans-unit>
       <trans-unit id="">
         <source>Password Configuration</source>
-        <target>パスワード設定</target>
+        <target>密码设置</target>
       </trans-unit>
       <trans-unit id="">
         <source>Password</source>
-        <target>パスワード</target>
+        <target>密码</target>
       </trans-unit>
       <trans-unit id="">
         <source>Password (Confirm)</source>
-        <target>パスワード(確認)</target>
+        <target>密码确认</target>
       </trans-unit>
       <trans-unit id="">
         <source>Password must be 6-12 characters.</source>
-        <target>パスワードは6～12文字の半角英数で入力してください。</target>
+        <target>密码必须为6-12个字符。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Access Block Configuration</source>
-        <target>アクセスブロック設定</target>
+        <target>访问块设置</target>
       </trans-unit>
       <trans-unit id="">
         <source>Access Block</source>
-        <target>アクセスブロック</target>
+        <target>访问块</target>
       </trans-unit>
       <trans-unit id="">
         <source>Your current password</source>
-        <target>現在のパスワード</target>
+        <target>当前密码</target>
       </trans-unit>
       <trans-unit id="">
         <source>not login yet</source>
-        <target>まだログインしていません</target>
+        <target>未登录</target>
       </trans-unit>
       <trans-unit id="">
         <source>less than 5 seconds ago</source>
@@ -536,27 +536,27 @@
       </trans-unit>
       <trans-unit id="">
         <source>about 1 hour ago</source>
-        <target>1時間前</target>
+        <target>1小时前</target>
       </trans-unit>
       <trans-unit id="">
         <source>about %hours% hours ago</source>
-        <target>%hours%時間前</target>
+        <target>%hours%小时前</target>
       </trans-unit>
       <trans-unit id="">
         <source>1 day ago</source>
-        <target>1日前</target>
+        <target>1天前</target>
       </trans-unit>
       <trans-unit id="">
         <source>%days% days ago</source>
-        <target>%days%日前</target>
+        <target>%days%天前</target>
       </trans-unit>
       <trans-unit id="">
         <source>about 1 month ago</source>
-        <target>1ヶ月前</target>
+        <target>1月前</target>
       </trans-unit>
       <trans-unit id="">
         <source>%months% months ago</source>
-        <target>%months%ヶ月前</target>
+        <target>%months%月前</target>
       </trans-unit>
       <trans-unit id="">
         <source>about 1 year ago</source>
@@ -564,35 +564,35 @@
       </trans-unit>
       <trans-unit id="">
         <source>over %years% years ago</source>
-        <target>%years%年以上前</target>
+        <target>%years%年前</target>
       </trans-unit>
       <trans-unit id="">
         <source>If %1% is your friend, let us add to %my_friend% it!</source>
-        <target>%1%さんと直接の知り合いの場合、%my_friend%に追加しましょう！</target>
+        <target>如果%1%是你朋友、请添加到%my_friend%！</target>
       </trans-unit>
       <trans-unit id="">
         <source>Mail address</source>
-        <target>メールアドレス</target>
+        <target>邮箱地址</target>
       </trans-unit>
       <trans-unit id="">
         <source>Languages</source>
-        <target>言語</target>
+        <target>语言</target>
       </trans-unit>
       <trans-unit id="">
         <source>Member Registration</source>
-        <target>メンバー登録</target>
+        <target>会员注册</target>
       </trans-unit>
       <trans-unit id="">
         <source>Cannot add an image any more.</source>
-        <target>これ以上画像を追加できません。</target>
+        <target>不能添加更多图片。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Message(Arbitrary)</source>
-        <target>メッセージ(任意)</target>
+        <target>留言（可选）</target>
       </trans-unit>
       <trans-unit id="">
         <source>Mail address list during invitation</source>
-        <target>招待中メールアドレス一覧</target>
+        <target>邀请的电子邮件地址列表</target>
       </trans-unit>
       <trans-unit id="">
         <source>Y/m/d</source>
@@ -600,51 +600,51 @@
       </trans-unit>
       <trans-unit id="">
         <source>Information About the Withdrawal Member</source>
-        <target>退会者データ</target>
+        <target>离开成员数据</target>
       </trans-unit>
       <trans-unit id="">
         <source>Remove the current photo</source>
-        <target>この写真を削除する</target>
+        <target>移除当前图片</target>
       </trans-unit>
       <trans-unit id="">
         <source>Everyone can see</source>
-        <target>Web全体に公開</target>
+        <target>所有人可见</target>
       </trans-unit>
       <trans-unit id="">
         <source>Only SNS members can see</source>
-        <target>SNS参加者のみ公開</target>
+        <target>网站成员可见</target>
       </trans-unit>
       <trans-unit id="">
         <source>Everyone can join</source>
-        <target>誰でも参加可能</target>
+        <target>任何人可加入</target>
       </trans-unit>
       <trans-unit id="">
         <source>%Community%'s admin authorization needed</source>
-        <target>%Community%管理者の承認が必要</target>
+        <target>%Community%管理员授权</target>
       </trans-unit>
       <trans-unit id="">
         <source>%community% Category</source>
-        <target>%community%カテゴリ</target>
+        <target>%community% 分类</target>
       </trans-unit>
       <trans-unit id="">
         <source>All categories</source>
-        <target>すべてのカテゴリ</target>
+        <target>所有分类</target>
       </trans-unit>
       <trans-unit id="">
         <source>delete this %community%.if you delete this %community% please to report in advance for all this %community% members.</source>
-        <target>この%community%を削除します。この%community%を削除する場合は、事前にこの%community%のメンバーに報告してください。</target>
+        <target>删除%community%。如果你想删除%community%，请向告知所有%community%成员。</target>
       </trans-unit>
       <trans-unit id="">
         <source>Delete</source>
-        <target>削除</target>
+        <target>删除</target>
       </trans-unit>
       <trans-unit id="">
         <source>Delete this %community%</source>
-        <target>%community%を削除する</target>
+        <target>删除%community%</target>
       </trans-unit>
       <trans-unit id="">
         <source>Do you delete this %community%?</source>
-        <target>削除してよろしいですか？</target>
+        <target>确认删除%community%？</target>
       </trans-unit>
       <trans-unit>
         <source>Do you drop %0% from this %community%?</source>
