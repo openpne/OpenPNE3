@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+        <source>Name</source>
+        <target>%community%名</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Photo</source>
+        <target>图片</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>%community% Name</source>
+        <target>%community%名</target>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>%community% Category</source>
+        <target>%community%分类</target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>Register policy</source>
+        <target>注册条款</target>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>%community% Description</source>
+        <target>%community% 描述</target>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>All categories</source>
+        <target>所有分类</target>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>Is Allow Member %community%</source>
+        <target>允许加入的%community%</target>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>Category Name</source>
+        <target>分类名</target>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>Required.</source>
+        <target>必填。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
