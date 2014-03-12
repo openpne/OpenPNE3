@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+        <source>Previous</source>
+        <target>上一页</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Next</source>
+        <target>下一页</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>%first% - %last% of %total%</source>
+        <target>第%first% 至 %last%页 共%total%页</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

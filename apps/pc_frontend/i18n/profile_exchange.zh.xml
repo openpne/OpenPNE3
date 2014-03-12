@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Name</source>
+        <target>名称</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Email</source>
+        <target>邮箱</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Language</source>
+        <target>语言</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Time zone</source>
+        <target>时区</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Image</source>
+        <target>图片</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
