@@ -3,6 +3,7 @@ cd ./OpenPNE3
 ./symfony openpne:install
 GIT_SSH=../tools/wrapper.sh git clone git@github.com:defyasdf/opSkinThemePlugin.git --depth=1 ./plugins/opSkinThemePlugin
 GIT_SSH=../tools/wrapper.sh git clone git@github.com:defyasdf/opTimelinePlugin.git --depth=1 ./plugins/opTimelinePlugin
+GIT_SSH=../tools/wrapper.sh git clone git@github.com:defyasdf/opMessagePlugin.git --depth=1 ./plugins/opMessagePlugin
 GIT_SSH=../tools/wrapper.sh git clone git@github.com:defyasdf/opDiaryPlugin.git --depth=1 ./plugins/opDiaryPlugin
 GIT_SSH=../tools/wrapper.sh git clone git://github.com/tejimaya/opSkinUnitedPlugin.git --depth=1 ./plugins/opSkinUnitedPlugin
 GIT_SSH=../tools/wrapper.sh git clone git://github.com/tejimaya/opUploadFilePlugin.git --depth=1 ./plugins/opUploadFilePlugin
