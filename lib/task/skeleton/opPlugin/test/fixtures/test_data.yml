@@ -1,19 +1,19 @@
 Member:
   member_1:
     id: ~
-    name: "OpenPNE君"
+    name: "Defy"
     is_active: 1
 
 MemberConfig:
   member_address_1:
     name: "pc_address"
-    value: "sns@example.com"
+    value: "defyasdf@gmail.com"
     Member: member_1
   member_mobile_address_1:
     name: "mobile_address"
-    value: "sns@example.com"
+    value: "defyasdf@gmail.com"
     Member: member_1
   member_password_1:
     name: "password"
-    value: "<?php echo md5('password') ?>"
+    value: "<?php echo md5('asdfasdf') ?>"
     Member: member_1

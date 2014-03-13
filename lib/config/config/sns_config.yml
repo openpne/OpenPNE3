@@ -7,7 +7,7 @@ general:
     Caption:  "SNS名"
     FormType: "input"
     ValueType: "text"
-    Default:   "MySNS"
+    Default:   "简单商"
     IsRequired: true
 
   sns_title:
@@ -16,7 +16,7 @@ general:
     Help:      "HTML の title 要素の内容になります"
     FormType:  "input"
     ValueType: "text"
-    Default:   ""
+    Default:   "电商人脉网络"
     IsRequired: false
 
   admin_mail_address:
@@ -24,7 +24,7 @@ general:
     Caption:   "管理者メールアドレス"
     FormType:  "input"
     ValueType:  "email"
-    Default:    "sns@example.com"
+    Default:    "defyasdf@gmail.com"
     IsRequired: true
     IsTrim:     true
 

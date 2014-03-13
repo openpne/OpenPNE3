@@ -44,7 +44,7 @@ $t->is($member1->getProfile('op_preset_region', true, 3), null, '->getProfile() 
 
 //------------------------------------------------------------
 $t->diag('Member::getConfig()');
-$t->is($member1->getConfig('pc_address'), 'sns@example.com');
+$t->is($member1->getConfig('pc_address'), 'defyasdf@gmail.com');
 $t->is($member1->getConfig('dummy'), null);
 $t->is($member1->getConfig('dummy', array()), array());
 $t->is($member1->getConfig('dummy', 11111111111111111111), 11111111111111111111);
@@ -138,7 +138,7 @@ $t->isa_ok($member2->getInviteMember(), 'Member');
 
 //------------------------------------------------------------
 $t->diag('Member::getEmailAddress()');
-$t->is($member1->getEmailAddress(), 'sns@example.com');
+$t->is($member1->getEmailAddress(), 'defyasdf@gmail.com');
 sfConfig::set('sf_app', 'mobile_frontend');
 $t->is($member1->getEmailAddress(), 'sns@m.example.com');
 $t->is($member1->getEmailAddress(true), 'sns@m.example.com');

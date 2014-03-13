@@ -61,6 +61,8 @@ SnsTerm:
         value: "ニックネーム"
       en:
         value: "nickname"
+      zh_CN:
+        value: "昵称"
 
   term_nickname_mobile_frontend:
     name: "nickname"
@@ -70,6 +72,8 @@ SnsTerm:
         value: "ﾆｯｸﾈｰﾑ"
       en:
         value: "nickname"
+      zh_CN:
+        value: "昵称"
 
   term_activity_pc_frontend:
     name: "activity"
@@ -79,6 +83,8 @@ SnsTerm:
         value: "タイムライン"
       en:
         value: "Timeline"
+      zh_CN:
+        value: "时间轴"
 
   term_activity_mobile_frontend:
     name: "activity"
@@ -88,6 +94,8 @@ SnsTerm:
         value: "ﾀｲﾑﾗｲﾝ"
       en:
         value: "Timeline"
+      zh_CN:
+        value: "时间轴"
 
   term_post_activity_pc_frontend:
     name: "post_activity"
@@ -97,6 +105,8 @@ SnsTerm:
         value: "つぶやく"
       en:
         value: "Tweet"
+      zh_CN:
+        value: "发送"
 
   term_post_activity_mobile_frontend:
     name: "post_activity"
@@ -106,3 +116,5 @@ SnsTerm:
         value: "つぶやく"
       en:
         value: "Tweet"
+      zh_CN:
+        value: "发送"

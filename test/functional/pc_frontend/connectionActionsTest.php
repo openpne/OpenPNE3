@@ -3,7 +3,7 @@
 $browser = new opTestFunctional(new opBrowser(), new lime_test(null, new lime_output_color()));
 $browser
   ->info('Login')
-  ->login('sns@example.com', 'password')
+  ->login('defyasdf@gmail.com', 'asdfasdf')
   ->isStatusCode(302)
 
 // XSS
