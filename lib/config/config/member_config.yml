@@ -140,7 +140,7 @@ language:
     IsUnique:   false
     IsRequired: false
     IsConfirm:  false
-    Default:    "ja_JP"
+    Default:    "zh_CN"
   time_zone:
     Name:       "time_zone"
     Caption:    "Time Zone"
