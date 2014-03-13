@@ -1,0 +1,17 @@
+GIT_SSH=./tools/wrapper.sh git clone git@github.com:defyasdf/OpenPNE3.git --depth=1
+cd ./OpenPNE3
+./symfony openpne:install
+GIT_SSH=../tools/wrapper.sh git clone git@github.com:defyasdf/opSkinThemePlugin.git --depth=1 ./plugins/opSkinThemePlugin
+GIT_SSH=../tools/wrapper.sh git clone git@github.com:defyasdf/opTimelinePlugin.git --depth=1 ./plugins/opTimelinePlugin
+GIT_SSH=../tools/wrapper.sh git clone git@github.com:defyasdf/opDiaryPlugin.git --depth=1 ./plugins/opDiaryPlugin
+GIT_SSH=../tools/wrapper.sh git clone git://github.com/tejimaya/opSkinUnitedPlugin.git --depth=1 ./plugins/opSkinUnitedPlugin
+GIT_SSH=../tools/wrapper.sh git clone git://github.com/tejimaya/opUploadFilePlugin.git --depth=1 ./plugins/opUploadFilePlugin
+GIT_SSH=../tools/wrapper.sh git clone git@github.com:tejima/opDropboxPlugin.git --depth=1 ./plugins/opDropboxPlugin
+GIT_SSH=../tools/wrapper.sh git clone git@github.com:tejima/opAuthSocialPlugin.git --depth=1 ./plugins/opAuthSocialPlugin
+GIT_SSH=../tools/wrapper.sh git clone git@github.com:ichikawatatsuya/opLikePlugin.git --depth=1 ./plugins/opLikePlugin
+GIT_SSH=../tools/wrapper.sh git clone git@github.com:tejimaya/opCommunityTopicPlugin.git --depth=1 ./plugins/opCommunityTopicPlugin
+./symfony opTimelinePlugin:install
+./symfony openpne:migrate
+./symfony plugin:publish-assets
+./symfony opLike:addtags
+./symfony cc

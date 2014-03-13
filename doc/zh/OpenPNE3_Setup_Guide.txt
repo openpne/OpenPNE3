@@ -1,0 +1,197 @@
+========================
+OpenPNE3.6 Setup Process
+========================
+
+Introduction
+============
+
+This document is for OpenPNE 3.6.
+
+OpenPNE 3 should work under the following server environment.
+
+Web Server
+  Apache
+    * The "mod_rewrite" module is available
+PHP
+  PHP version 5.2.11 or later (if you want to use with earlier than PHP 5.2.11, you should build PHP with libxml 2.9+)
+    * The "mbstring" module is available
+    * The "xml" module is available
+    * The "PCRE" module is available (That must be support UTF-8)
+    * The "PDO" module is available (containing DBMS drivers that you want to use)
+    * The "JSON" module is available
+    * The GD library is available from PHP (That must be support JPEG, GIF and PNG)
+    * The "mcrypt" module recommendation
+    * The "APC" module recommendation
+Database Server
+  MySQL4.1 or later (5.1 or greater recommended)
+  
+  At this time, PostgreSQL and SQLite are not supported (They will be supported in the future)
+
+Setup
+=====
+
+Downloading OpenPNE 3
+---------------------
+
+Download a package of OpenPNE 3 from the following URL.
+
+http://www.openpne.jp/pne-downloads/
+
+Setting Files
+-------------
+
+Set the files to be the following structure:
+
+::
+
+  ./
+  +-- LICENSE
+  +-- NOTICE
+  +-- apps/
+  +-- cache/
+  +-- config/
+  +-- data/
+  +-- doc/
+  +-- lib/
+  +-- log/
+  +-- plugins/
+  +-- symfony
+  +-- test/
+  
+  (You can access the following directories from web browser)
+  +-- web/ (This directory name can be changed)
+      +-- index.php
+      +-- js/
+      +-- mobile_frontend.php
+      +-- pc_backend.php
+        :
+
+Copying Config Files
+--------------------
+
+Copy config files as follows
+
+::
+
+  $ cd OpenPNE3
+  $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
+  $ cp config/OpenPNE.yml.sample config/OpenPNE.yml
+  
+Then you should change the config values in OpenPNE.yml as your environment. Make sure you set "base_url" and "mail_domain", because they are used for posting and delivering mail.
+
+Install Command Execution
+-------------------------
+
+Execute the following command to begin installing process.
+
+::
+
+  $ ./symfony openpne:install
+  
+This command deletes the database and rebuild it. 
+If you don't want to delete your specified database -- for example, OpenPNE will share the database with other systems, execute that command with the following option.
+
+::
+
+  $ ./symfony openpne:install --non-recreate-db
+  
+This option attempts to remove the old tables in proper order by considering the new one.
+It is strongly recommended to set prefixes with the tables used by OpenPNE in "OpenPNE.yml" for avoiding deleting tables of other system unexpectedly or failing deleting tables.
+
+NOTE: Take care with their prefixes that avoid conflicting table names shared with the other system. And they are not for installing multiple OpenPNEs per identical database.
+
+::
+
+  table_prefix: "op_"
+  
+After Running "openpne:install", you will be required inputting the following:
+
+* The DBMS (mysql, pgsql or sqlite, but we are now only support mysql)
+* The Database Name
+* The Database Username
+* The Database Password(optional)
+* The Database Hostname(localhost, etc)
+* The Database Port Number(optional)
+* (If you inputted "MySQL" for the DBMS and "localhost" for the hostname)The Database Socket Path(optional)
+
+After that OpenPNE automatically is installed.
+
+Delete the Development Files
+----------------------------
+
+::
+
+  $ ./symfony project:clear-controllers
+
+mod_rewrite Configuration
+-------------------------
+
+Configure the RewriteBase setting in your web/.htaccess for your environment (It may not be needed).
+
+::
+
+  RewriteBase / # Or /web
+
+NOTE: Specify an absolute path of URL in the RewriteBase.
+
+Email Delivery Setting
+----------------------
+
+Set for the delivery of email. If you don't use this function, you can skip over this chapter.
+
+Setting Example
++++++++++++++++
+
+Grant a privilege to cron file.
+
+::
+
+  $ chmod -R 0755 bin/*.cron
+
+In /etc/crontab, write:
+
+::
+
+  # Delivering the daily news /path/to/OpenPNE3 by running the script
+  # /path/to/OpenPNE3/bin/send_daily_news.cron on /path/to/php at 6.
+  00 6 * * * root sh /path/to/OpenPNE3/bin/send_daily_news.cron /path/to/OpenPNE3 /path/to/php
+  
+  # Delivering the birthday notification /path/to/OpenPNE3 by running the script /path/to/OpenPNE3/bin/birthday_mail.cron on /path/to/php at 6.
+  00 6 * * * root sh /path/to/OpenPNE3/bin/birthday_mail.cron /path/to/OpenPNE3 /path/to/php
+
+As well the contents of the daily news is nothing in default.
+
+Select contents provided by the plugin of the daily news in gadget settings within Administration page(http://example.com/pc_backend.php), when you use delivering email.
+
+Posting Email Setting
+---------------------
+
+Set for posting email. If you don't use this function, you can skip over this chapter.
+
+Setting example (when Postfix is used)
+++++++++++++++++++++++++++++++++++++++
+
+In /etc/postfix/virtual, set::
+
+  example.com anything
+  @example.com openpne_user
+
+In /etc/aliases, set::
+
+  openpne_user: "| php /path/to/openpne/symfony openpne:execute-mail-action"
+
+Access from Web Browser (PC)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(1) Access http://example.com/index.php
+(2) Input sns@example.com / password to login form, and make sure you to log in
+
+NOTE: You have to change the default email address and password.
+
+Access form Web Browser (Backend)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+(1) Access http://example.com/pc_backend.php
+(2) Input admin / password to login form, and make sure you to log in
+
+NOTE: You have to change the default account and password.
