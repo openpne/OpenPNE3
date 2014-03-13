@@ -57,24 +57,29 @@ class File extends BaseFile
     $this->setFileBin($bin);
   }
 
-  public function readOrientation(){
+  private function readOrientation()
+  {
     $cls = exif_read_data("data://image/jpeg;base64,".base64_encode($this->FileBin->bin));
     return $cls['Orientation'];
   }
 
-  public function createOrientedImage($exif){
+  private function createOrientedImage($exif)
+  {
     $image = imagecreatefromstring($this->FileBin->bin);
     switch ($exif)
     {
+      // rotate 180 degrees
       case 3:
         $image = imagerotate($image, 180, 0);
         break;
+      // rotate 90 degrees
       case 6:
         $imagewidth = imagesy($image);
         $imageheight = imagesx($image);
         $image = imagerotate($image, -90, 0);
         imagecopyresampled ($image, $image, 0, 0, (imagesx($image) - $imagewidth)/2, (imagesy($image) - $imageheight)/2, $imagewidth, $imageheight, $imagewidth, $imageheight);
         break;
+      // rotate 270 degrees
       case 8:
         $imagewidth = imagesy($image);
         $imageheight = imagesx($image);
@@ -92,9 +97,10 @@ class File extends BaseFile
     return $ei;
   }
 
-  public function setOrient(){
+  private function setOrient()
+  {
       $type = $this->getType();
-      if ($type === 'image/jpeg')
+      if ('image/jpeg' === $type)
       {
         $exif = $this->readOrientation();
         $ei = $this->createOrientedImage($exif);
