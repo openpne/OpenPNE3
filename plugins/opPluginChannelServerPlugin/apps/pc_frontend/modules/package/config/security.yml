@@ -1,0 +1,23 @@
+new:
+  is_secure: true
+
+create:
+  is_secure: true
+
+edit:
+  is_secure: true
+
+update:
+  is_secure: true
+
+toggleUsing:
+  is_secure: true
+
+addRelease:
+  is_secure: true
+
+join:
+  is_secure: true
+
+manageMember:
+  is_secure: true

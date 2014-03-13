@@ -1,0 +1,5 @@
+open_social_api:
+  url:   /social/:action
+  class: opOpenSocialRoute
+  param: { module: social }
+  requirements: { sf_method: [get, post] }

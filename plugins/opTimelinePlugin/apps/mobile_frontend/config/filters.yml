@@ -1,0 +1,27 @@
+rendering: ~
+
+cache_control:
+  class: opCacheControlFilter
+
+enable_app:
+  class: opCheckEnabledApplicationFilter
+  param:
+    app: mobile
+
+security:  ~
+
+deny:
+  class: sfDenyFromNonMobileFilter
+
+io:
+  class: sfMobileIOFilter
+
+emoji:
+  enabled: false
+
+cache:     ~
+
+execution:
+  class: opExecutionFilter
+  param:
+    type: execution

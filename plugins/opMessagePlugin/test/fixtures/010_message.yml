@@ -1,0 +1,85 @@
+MessageType:
+  message_type_default:
+    type_name: "message"
+    Translation:
+      ja_JP:
+        caption: "通常のメッセージ"
+
+SendMessageData:
+  send_message:
+    id: 1
+    Member: first_member
+    subject: "<&\"'>SendMessageData.subject ESCAPING HTML TEST DATA"
+    body: "<&\"'>SendMessageData.body ESCAPING HTML TEST DATA"
+    is_deleted: 0
+    is_send: 1
+    thread_message_id: 0
+    return_message_id: 0
+    MessageType: message_type_default
+    foreign_id: 0
+  receive_message:
+    id: 2
+    Member: second_member
+    subject: "<&\"'>SendMessageData.subject ESCAPING HTML TEST DATA"
+    body: "<&\"'>SendMessageData.body ESCAPING HTML TEST DATA"
+    is_deleted: 0
+    is_send: 1
+    thread_message_id: 0
+    return_message_id: 0
+    MessageType: message_type_default
+    foreign_id: 0
+  dust_message:
+    id: 3
+    Member: second_member
+    subject: "<&\"'>SendMessageData.subject ESCAPING HTML TEST DATA"
+    body: "<&\"'>SendMessageData.body ESCAPING HTML TEST DATA"
+    is_deleted: 0
+    is_send: 1
+    thread_message_id: 0
+    return_message_id: 0
+    MessageType: message_type_default
+    foreign_id: 0
+  draft_message:
+    id: 4
+    Member: first_member
+    subject: "<&\"'>SendMessageData.subject ESCAPING HTML TEST DATA"
+    body: "<&\"'>SendMessageData.body ESCAPING HTML TEST DATA"
+    is_deleted: 0
+    is_send: 0
+    thread_message_id: 0
+    return_message_id: 0
+    MessageType: message_type_default
+    foreign_id: 0
+
+MessageSendList:
+  send_message_send_list:
+    id: 1
+    Member: second_member
+    SendMessageData: send_message
+    is_read: 0
+    is_deleted: 0
+  receive_message_send_list:
+    id: 2
+    Member: first_member
+    SendMessageData: receive_message
+    is_read: 0
+    is_deleted: 0
+  dust_message_send_list:
+    id: 3
+    Member: first_member
+    SendMessageData: dust_message
+    is_read: 1
+    is_deleted: 1
+  draft_message_send_list:
+    id: 4
+    Member: second_member
+    SendMessageData: draft_message
+    is_read: 0
+    is_deleted: 0
+
+DeletedMessage:
+  dust_delete_mesage:
+    id: 1
+    Member: first_member
+    message_send_list_id: 3
+    is_deleted: 0

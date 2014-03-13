@@ -1,0 +1,11 @@
+sendToFriendInput:
+  layout: layoutC
+  customize:
+    sendDraftButton:
+      template: [message, sendDraftButton]
+      parts   : [formMessage]
+      target  : [formBottom]
+all:
+  has_layout:     on
+  layout:         layoutB
+  stylesheets: [/opMessagePlugin/css/message]

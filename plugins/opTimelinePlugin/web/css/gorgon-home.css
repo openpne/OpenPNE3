@@ -1,0 +1,42 @@
+@charset "UTF-8";
+.gorgon-textarea { border:1px solid #ccc; border-radius:4px; -moz-border-radius:4px; -webkit-border-radius:4px; padding:0px; -webkit-box-shadow:0 1px #fff; -moz-box-shadow:0 1px #fff; box-shadow:0 1px #fff; width:355px; height:22px; color:#222; font:14px/18px "Helvetica Neue", Arial, sans-serif; outline:none; _width:357px; overflow-x:hidden; overflow-y:auto; white-space:pre-wrap; word-wrap:break-word; }
+.expand {height: 66px!important;}
+.gorgon-button { font-size:14px; height: 20px; width: 42px; } 
+.comment-textarea { width: 285px; height: 18px; float: left; }
+.comment-button { font-size:12px; height: 18px; width: 36px;}
+.button { display: inline-block; zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */ *display: inline;
+vertical-align: top; margin: 0 2px; outline: none; cursor: pointer; text-align: center; text-decoration: none; font: Arial, Helvetica, sans-serif; padding: 0px 0px 0px 0px ; text-shadow: 0 1px 1px rgba(0,0,0,.3); -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2); -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2); box-shadow: 0 1px 2px rgba(0,0,0,.2); 
+color: #606060; border: solid 1px #b7b7b7; background: #fff; background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed)); background: -moz-linear-gradient(top, #fff, #ededed); filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');}
+.button:hover , .button:focus { text-decoration: none;  background: #ededed; background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc)); background: -moz-linear-gradient(top, #fff, #dcdcdc); filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');}
+.button:active { position: relative; top: 1px;  color: #999; background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#fff)); background: -moz-linear-gradient(top, #ededed, #fff); filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#ffffff');}
+* { margin:0; padding:0; }
+.comment-list { width: 330px; margin: 0px 0px 0px 58px; padding: 2px 2px 6px 4px; font-size: 12px; background: #ddd; }
+.comment { margin-left:38px; min-height:38px; }
+.comment-img { float: left; height: 32px; margin-top: 3px; overflow: hidden; width: 32px; }
+.comment-row { display:block; position:relative; line-height:15px; }
+.comment-screenname { font-weight:bold; color:#000 !important; }
+.comment-text { padding:0; font-family:Arial, "Helvetica Neue", sans-serif; line-height:19px; word-wrap:break-word; }
+.main-content { color:#444; }
+.main-content { width:440px; float:left; display:inline-block; z-index:4; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; box-shadow:0 3px 4px rgba(0,0,0,.5); -moz-box-shadow:0 3px 4px rgba(0,0,0,.5); -webkit-box-shadow:0 3px 4px rgba(0,0,0,.5); border-right:1px\9 solid #eee; position:relative; background:#fff; height:100%; min-height:700px; }
+.page-header { background:#ffffff; border-radius:5px 5px 0 0; -moz-border-radius:5px 5px 0 0; -webkit-border-top-left-radius:5px; -webkit-border-top-right-radius:5px; padding:15px 15px 0 15px; position:relative; z-index:2; zoom:1; }
+.gorgon-list { position:relative; min-height:70px; clear:both; display:block; outline:none; margin:5px 0px; border-top:1px solid transparent; }
+.gorgon a:hover { text-decoration:underline; }
+.gorgon { padding:0px 0px; font-size:15px; position:relative; zoom:1; }
+.gorgon-box textarea { resize:vertical; }
+.gorgon-box textarea:focus { -moz-box-shadow:0 0 8px rgba(82,168,236,0.5); -webkit-box-shadow:0 0 8px rgba(82,168,236,0.5); border-color:rgba(82,168,236,0.75)!important; }
+.gorgon-box textarea:hover { outline:none; border:1px solid #999; cursor:text!important; }
+.gorgon { margin-left:58px; min-height:52px; }
+.gorgon-img { float:left; height:48px; overflow:hidden; width:48px; margin-top:3px; }
+.gorgon-row { display:block; position:relative; line-height:18px; }
+.gorgon-screenname { font-weight:bold; color:#000 !important; }
+.gorgon-text { padding:0; font-family:Arial, "Helvetica Neue", sans-serif; line-height:19px; word-wrap:break-word; }
+.timestamp { color:#999!important; font-size:11px; margin-left: 12px;}
+.reply-link{ background: url(images/clock.png) no-repeat; }
+.delete-link { background: url(images/trash_can.png) no-repeat; }
+a { color:#2D76B9; text-decoration:none; }
+a:focus { outline:1px dotted; }
+a:hover { text-decoration:underline; }
+/* body { background-color: #333333; } */
+/* body { font:13px/1.5 Helvetica Neue, Arial, Helvetica, 'Liberation Sans', FreeSans, sans-serif; } */
+/* body { position:relative; } */
+/* img { border:0; } */

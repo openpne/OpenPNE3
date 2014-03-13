@@ -1,0 +1,44 @@
+activity_search:
+  url: /activity/search.json
+  param: { module: activity, action: search, sf_format: json }
+  requirements: { sf_method: [get] }
+
+activity_list:
+  url: /activity/list.json
+  param: { module: activity, action: search, sf_format: json }
+  requirements: { sf_method: [get] }
+
+activity_member:
+  url: /activity/member.json
+  param: { module: activity, action: member, sf_format: json }
+  requirements: { sf_method: [get] }
+
+activity_friends:
+  url: /activity/friends.json
+  param: { module: activity, action: friends, sf_format: json }
+  requirements: { sf_method: [get] }
+
+activity_community:
+  url: /activity/community.json
+  param: { module: activity, action: community, sf_format: json }
+  requirements: { sf_method: [get] }
+
+activity_mentions:
+  url: /activity/mentions.json
+  param: { module: activity, action: mentions, sf_format: json }
+  requirements: { sf_method: [get] }
+
+activity_post:
+  url: /activity/post.json
+  param: { module: activity, action: post, sf_format: json }
+  requirements: { sf_method: [post, get] }
+
+activity_delete:
+  url: /activity/delete.json
+  param: { module: activity, action: delete, sf_format: json }
+  requirements: { sf_method: [get] }
+  
+activity_comment_search:
+  url: /activity/commentSearch.json
+  param: { module: activity, action: commentSearch, sf_format: json }
+  requirements: { sf_method: [get] }

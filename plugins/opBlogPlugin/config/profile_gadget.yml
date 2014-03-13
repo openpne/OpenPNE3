@@ -1,0 +1,6 @@
+blogUser:
+  caption:
+    ja_JP: "最新ブログ"
+  description:
+    ja_JP: "最新のブログの一覧を表示します。"
+  component: [blog, blogUser]

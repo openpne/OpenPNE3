@@ -1,0 +1,4 @@
+SnsConfig:
+  is_check_mobile_ip:
+    name: "is_check_mobile_ip"
+    value: 0

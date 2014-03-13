@@ -1,0 +1,37 @@
+timelineAll:
+  caption:
+    ja_JP: "SNSメンバーのタイムライン"
+    en_US: "SNS member's timeline"
+  description:
+    ja_JP: "SNSメンバー全員のタイムラインが表示されます。"
+    en_US: "All SNS members' time line is displayed."
+  component: [timeline, timelineAll]
+  config:
+    limit:
+      Name:      "limit"
+      Caption:   "最大表示件数"
+      FormType:  "select"
+      ValueType:  "int"
+      IsRequired: true
+      Default:    20  
+      Choices:
+        5: 5
+        10: 10
+        15: 15
+        20: 20
+    row:
+      Name:     "row"
+      Caption:  "表示する行"
+      FormType: "select"
+      ValueType: "int"
+      IsRequired: true
+      Default:    5   
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 10: 10}
+    is_viewable_activity_form:
+      Name: "is_viewable_activity_form"
+      Caption: "投稿フォームを表示"
+      FormType: "radio"
+      ValueType: "int"
+      IsRequired: true
+      Default:    1   
+      Choices:    {0: "No", 1: "Yes"}

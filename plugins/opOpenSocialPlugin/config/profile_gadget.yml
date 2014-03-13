@@ -1,0 +1,15 @@
+applicationBoxes:
+  caption:
+    ja_JP: "アプリケーションボックス"
+  description:
+    ja_JP: "メンバーが所有するOpenSocialアプリケーションをプロフィールに設置します"
+  component: [application, renderProfileApplications]
+  config:
+    num:
+      Name:      "num"
+      Caption:   "表示可能なアプリケーション数"
+      FormType:  "select"
+      ValueType:  "int"
+      IsRequired: true
+      Default:    3
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}

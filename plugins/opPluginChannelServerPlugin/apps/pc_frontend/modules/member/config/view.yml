@@ -1,0 +1,7 @@
+homeSuccess:
+  customize:
+    cautionAboutPluginJoinRequest:
+      template    : [package, cautionAboutPluginJoinRequest]
+      parts       : [information]
+      target      : [bodyBottom]
+      is_component: true

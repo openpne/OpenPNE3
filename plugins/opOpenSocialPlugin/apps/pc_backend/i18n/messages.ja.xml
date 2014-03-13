@@ -1,0 +1,119 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>App Configuration</source>
+        <target>アプリ設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Allow the SNS members to add apps</source>
+        <target>SNSメンバーのアプリ追加を許可</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Container Configuration</source>
+        <target>コンテナ設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Token cipher key</source>
+        <target>トークン暗号化キー</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Token hmac key</source>
+        <target>トークンHMACキー</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Token max age (s)</source>
+        <target>トークン持続時間(秒)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Cache time (s)</source>
+        <target>キャッシュ時間(秒)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Use outer OpenSocial container (Recomended)</source>
+        <target>外部のOpenSocialコンテナを利用(推奨)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The OpenSocial container URL</source>
+        <target>OpenSocialコンテナURL</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Add App</source>
+        <target>アプリ追加</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete App</source>
+        <target>アプリ削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you delete this app?</source>
+        <target>このアプリを削除してよろしいですか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Manage Apps</source>
+        <target>アプリ管理</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Screenshot</source>
+        <target>スクリーンショット</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Last Updated</source>
+        <target>最終更新日</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The OpenSocial container is executed by the same domain as this SNS now.</source>
+        <target>現在OpenSocialコンテナは、このSNSと同じドメイン上で実行されています。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You should configure to outer domain container for reason of security when this SNS is production operation.</source>
+        <target>セキュリティ上の理由から実運用で利用する場合、外部コンテナの設定を行う必要があります。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>See document</source>
+        <target>ドキュメントを見る</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Copy the downloaded file to %config% directory of Shindig.</source>
+        <target>Shindigの%config%ディレクトリへこのファイルをコピーしてください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If you modify the profile item, you must update this file.</source>
+        <target>もしプロフィール項目を変更した場合は、このファイルを更新してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Inactive Apps</source>
+        <target>無効アプリ一覧</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Active</source>
+        <target>有効</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Activate</source>
+        <target>有効化</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Inactivate</source>
+        <target>無効化</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Inactive</source>
+        <target>無効</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>There are no app.</source>
+        <target>アプリがありません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>There are no inactive app.</source>
+        <target>無効なアプリがありません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The app can be installed from %0%.</source>
+        <target>アプリは %0% からインストールすることができます。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

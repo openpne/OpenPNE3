@@ -1,0 +1,8 @@
+homeSuccess:
+  customize:
+    unreadMessage:
+      template: [message, unreadMessage]
+      is_component: true
+      parts:    [information]
+      target:   [bodyBottom]
+

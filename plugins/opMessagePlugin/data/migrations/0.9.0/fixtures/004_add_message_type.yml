@@ -1,0 +1,14 @@
+MessageType:
+  message_type_taking_over_community:
+    type_name: "community_taking_over"
+    foreign_table: "community"
+    Translation:
+      ja_JP:
+        caption: "コミュニティ管理者交代メッセージ"
+
+  message_type_joining_community:
+    type_name: "community_joining_request"
+    foreign_table: "community_member"
+    Translation:
+      ja_JP:
+        caption: "コミュニティ参加申請メッセージ"

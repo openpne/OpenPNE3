@@ -1,0 +1,77 @@
+options:
+  charset: utf8
+actAs: [Timestampable]
+#メッセージタイプ
+MessageType:
+  actAs:
+    I18n:
+      fields: [caption, info, body, subject]
+      length: 5
+    Timestampable:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    #メッセージタイプ名（管理用）
+    type_name: { type: string(256), notnull: true }
+    #外部テーブル名（プラグインインストール時に自動で登録／管理画面にて編集不可）
+    foreign_table: { type: string }
+    is_deleted: { type: boolean, notnull: ture, default: 0 }
+    #デフォルト本文
+    body: { type: string }
+    #メッセージデフォルトタイトル
+    subject: { type: string }
+    #説明
+    caption: { type: string, notnull: true }
+    info: { type: string }
+#メッセージ本体（送信）
+SendMessageData:
+  tableName: message
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    #送信者
+    member_id: { type: integer(4) }
+    subject: { type: string }
+    body: { type: string }
+    is_deleted: { type: boolean, notnull: true, default: 0 }
+    is_send: { type: boolean, notnull: true, default: 0 }
+    #スレッドID（必ずしも直接の返信もとではない）
+    thread_message_id: { type: integer(4), default: 0 }
+    #返信元ID
+    return_message_id: { type: integer(4), default: 0 }
+    message_type_id: { type: integer(4) }
+    foreign_id: { type: integer(4), default: 0 }
+  relations:
+    Member: { local: member_id, foreign: id, onDelete: set null }
+    MessageType: { local: message_type_id, foreign: id }
+#メッセージ添付ファイル（画像など）
+MessageFile:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    message_id: { type: integer(4), notnull: true }
+    file_id: { type: integer(4), notnull: true }
+  relations:
+    SendMessageData: { class: SendMessageData, local: message_id, foreign: id, onDelete: cascade }
+    File: { local: file_id, foreign: id, onDelete: cascade }
+#メッセージ送信先
+MessageSendList:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    #受信者
+    member_id: { type: integer(4) }
+    message_id: { type: integer(4) }
+    is_read: { type: boolean, notnull: true, default: 0 }
+    is_deleted: { type: boolean, notnull: true, default: 0 }
+  relations:
+    Member: { local: member_id, foreign: id, onDelete: set null }
+    SendMessageData: { class: SendMessageData, local:message_id, foreign: id }
+#削除済み（DustBox）メッセージ
+DeletedMessage:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    #削除者
+    member_id: { type: integer(4) }
+    message_id: { type: integer(4), notnull: true }
+    message_send_list_id: { type: integer(4), notnull: true }
+    #完全削除
+    is_deleted: { type: boolean, notnull: true, default: 0 }
+  relations:
+    Member: { local: member_id, foreign: id, onDelete: cascade }

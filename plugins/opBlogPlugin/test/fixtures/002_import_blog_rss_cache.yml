@@ -1,0 +1,12 @@
+BlogRssCache:
+  member_11_blog_rss_cache:
+    Member: member_11
+    title: "<&\"'>BlogRssCache.title ESCAPING HTML TEST DATA"
+    description: "description"
+    link: "http://localhost/"
+
+  member_1_blog_rss_cache:
+    Member: member_1
+    title: "<&\"'>BlogRssCache.title ESCAPING HTML TEST DATA"
+    description: "description"
+    link: "http://localhost/"

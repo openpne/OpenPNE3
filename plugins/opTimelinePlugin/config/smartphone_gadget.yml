@@ -1,0 +1,17 @@
+smtTimeline:
+  caption:
+    ja_JP: "SNSメンバーのタイムライン"
+    en_US: "SNS member's timeline"
+  description:
+    ja_JP: "SNSメンバー全員のタイムラインが表示されます。"
+    en_US: "All SNS members' time line is displayed."
+  component: [timeline, smtTimeline]
+
+smtCommunityTimelineBy1:
+  caption:
+    ja_JP: "SNSメンバーのタイムライン(1行表示)"
+    en_US: "SNS member's timeline(one-line display)"
+  description:
+    ja_JP: "SNSメンバー全員のタイムラインが1行だけ表示されます。"
+    en_US: "The timeline of only one line of All SNS members is displayed."
+  component: [timeline, smtTimelineBy1]

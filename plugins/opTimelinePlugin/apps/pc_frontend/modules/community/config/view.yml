@@ -1,0 +1,15 @@
+homeSuccess:
+  customize:
+    timelineCommunity:
+      template: [timeline, timelineCommunity]
+      parts: [communityHome]
+      target: [before]
+      is_component: true
+
+smtHomeSuccess:
+  customize:
+    smtTimelineCommunity:
+      template: [timeline, smtTimelineCommunity] 
+      parts: [smtCommunityHomeTop]
+      target: [after]
+      is_component: true

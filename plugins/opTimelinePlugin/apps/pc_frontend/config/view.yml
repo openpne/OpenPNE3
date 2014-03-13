@@ -1,0 +1,7 @@
+smtLayoutHome:
+  customize:
+    smtTimelinePostButton:
+      template: [timeline, smtTimelinePostButton]
+      parts: [smtLayoutHome]
+      target: [after]
+      is_component: true

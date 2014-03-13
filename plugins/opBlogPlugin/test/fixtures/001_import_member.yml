@@ -1,0 +1,35 @@
+Member:
+<?php for ($i = 1; $i <= 10; $i++): ?>
+  member_<?php echo $i ?>:
+    id: <?php echo $i."\n" ?>
+    name: "OpenPNE<?php echo $i ?>"
+    is_active: 1
+<?php endfor ?>
+  member_11:
+    id: 11
+    name: "<&\"'>Member.name ESCAPING HTML TEST DATA"
+    is_active: 1
+
+MemberConfig:
+  member_1_pc_address:
+    name: "pc_address"
+    value: "sns@example.com"
+    Member: member_1
+
+  member_1_password:
+    name: "password"
+    value: <?php echo md5('password') . "\n"; ?>
+    Member: member_1
+
+MemberRelationship:
+  member_1_member_11:
+    Member: member_1
+    MemberRelatedByMemberIdFrom: member_11
+    is_friend: 1
+
+  member_11_member_1:
+    Member: member_11
+    MemberRelatedByMemberIdFrom: member_1
+    is_friend: 1
+
+

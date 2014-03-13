@@ -1,0 +1,17 @@
+smtCommunityTimelineBox:
+  caption:
+    ja_JP: "コミュニティタイムライン"
+    en_US: "Community timeline"
+  description:
+    ja_JP: "コミュニティのタイムラインを表示します。"
+    en_US: "The timeline of a community is displayed."
+  component: [timeline, smtTimelineCommunity]
+
+smtCommunityTimelineBy1:
+  caption:
+    ja_JP: "コミュニティのタイムライン(1行表示)"
+    en_US: "Timeline of a community (one-line display)"
+  description:
+    ja_JP: "コミュニティのタイムラインが1行だけ表示されます。"
+    en_US: "The timeline of only one line of a community is displayed."
+  component: [timeline, smtCommunityTimelineBy1]

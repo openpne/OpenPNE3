@@ -1,0 +1,14 @@
+all:
+  stylesheets:
+    - /opOpenSocialPlugin/css/opensocial
+
+settingSuccess:
+  layout: plain
+  javascripts:
+    - %SF_PROTOTYPE_WEB_DIR%/js/prototype
+
+infoSuccess:
+  layout: layoutA
+
+jsSuccess:
+  has_layout: off

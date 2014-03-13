@@ -1,0 +1,12 @@
+opOpenSocialPlugin
+Copyright 2005-2010 OpenPNE Project
+
+--------------------------------------------------------
+
+This product includes parts of software (Shindig 1.1 beta1) developed by
+The Apache Software Foundation (http://www.apache.org/).
+  - Apache License 2.0
+
+This product includes software (PEAR::Crypt_Blowfish 1.1.0RC2) by
+Philippe Jausions and Matthew Fonda (http://pear.php.net/package/Crypt_Blowfish).
+  - New BSD License

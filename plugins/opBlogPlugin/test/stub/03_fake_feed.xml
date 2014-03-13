@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+<channel>
+
+<title>Example Feed</title>
+<description>example feed</description>
+<link>http://example.com/</link>
+<lastBuildDate>Fri, 1 Jan 2010 09:00:00 GMT</lastBuildDate>
+
+<item>
+<title>title_1</title>
+<link>http://example.com/1</link>
+<pubDate>Fri, 1 Jan 2010 00:00:00 GMT</pubDate>
+<description>description_1</description>
+</item>
+
+<item>
+<title>title_2</title>
+<link>http://example.com/2</link>
+<pubDate>Fri, 1 Jan 2010 01:00:00 GMT</pubDate>
+<description>description_2</description>
+</item>
+
+<item>
+<title>title_3</title>
+<link>http://example.com/3</link>
+<pubDate>Fri, 1 Jan 2010 02:00:00 GMT</pubDate>
+<description>description_3</description>
+</item>
+
+<item>
+<title>title_4</title>
+<link>http://example.com/4</link>
+<pubDate>Fri, 1 Jan 2010 03:00:00 GMT</pubDate>
+<description>description_4</description>
+</item>
+
+<item>
+<title>title_5</title>
+<link>http://example.com/5</link>
+<pubDate>Fri, 1 Jan 2010 04:00:00 GMT</pubDate>
+<description>description_5</description>
+</item>
+
+<item>
+<title>title_6</title>
+<link>http://example.com/6</link>
+<pubDate>Fri, 1 Jan 2010 05:00:00 GMT</pubDate>
+<description>description_6</description>
+</item>
+
+<item>
+<title>title_7</title>
+<link>http://example.com/7</link>
+<pubDate>Fri, 1 Jan 2010 06:00:00 GMT</pubDate>
+<description>description_7</description>
+</item>
+
+<item>
+<title>title_8</title>
+<link>http://example.com/8</link>
+<pubDate>Fri, 1 Jan 2010 07:00:00 GMT</pubDate>
+<description>description_8</description>
+</item>
+
+<item>
+<title>title_9</title>
+<link>http://example.com/9</link>
+<pubDate>Fri, 1 Jan 2010 08:00:00 GMT</pubDate>
+<description>description_9</description>
+</item>
+
+<item>
+<title>title_10</title>
+<link>http://example.com/10</link>
+<pubDate>Fri, 1 Jan 2010 09:00:00 GMT</pubDate>
+<description>description_10</description>
+</item>
+
+</channel>
+</rss>

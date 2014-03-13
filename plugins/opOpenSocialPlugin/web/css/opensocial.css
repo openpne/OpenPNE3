@@ -1,0 +1,59 @@
+.applicationScreenShot {
+  overflow: hidden;
+  float: left;
+  width: 280px;
+}
+
+.applicationThumbnail {
+  float:left;
+  text-align: center;
+  height:76px;
+  overflow:hidden;
+  width:120px;
+}
+
+.applicationInfoBox .info {
+  width: 60%;
+  float: left;
+  padding: 0px 5px;
+}
+
+.applicationInfoBox .operation {
+  width: 8.5em;
+  float: right;
+  padding: 0 5px 0 0;
+}
+
+.applicationInfoBox .operation ul li {
+  background:transparent url(../../images/icon_arrow_1.gif) no-repeat scroll 0 0.4em;
+  padding:2px 0 2px 20px;
+}
+
+.applicationInfo div.moreInfo ul.moreInfo,
+.applicationList div.moreInfo ul.moreInfo {
+  margin: 0 5px 10px auto;
+  width: 13em;
+}
+
+.applicationImageBox 
+{
+  background:transparent url(../../images/bg_parts_photo_box.gif) repeat-x scroll 0 0;
+  border:1px solid #CCCCCC;
+  padding:7px;
+}
+
+.applicationImageBox * {
+  text-align:center;
+}
+
+.applicationImageBox p.photo {
+  background-color:#FFFFFF;
+  border:1px solid #CCCCCC;
+  padding:7px;
+}
+
+.applicationImageBox p.text {
+  margin-top:4px;
+}
+
+

@@ -1,0 +1,17 @@
+delete_timeline:
+  url: /timeline/deleteTimeline/:id
+  param: { module: timeline, action: deleteTimeline }
+  requirements: { id: \d+ }
+
+comment_timeline:
+  url: /timeline/comment/:id
+  param: { module: timeline, action: comment }
+  requirements: { id: \d+ }
+
+update_timeline:
+  url: /timeline/updateTimeline
+  param: { module: timeline, action: updateTimeline }
+
+sns_timeline:
+  url: /sns/timeline
+  param: { module: timeline, action: sns }

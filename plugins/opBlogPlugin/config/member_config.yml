@@ -1,0 +1,15 @@
+blogUrl:
+  _attributes:
+    caption:       "Blog URL Configuration"
+    enable_pc:     true
+    enable_mobile: false
+  blog_url:
+    Name:       "blog_url"
+    Caption:    "Blog URL"
+    FormType:   "input"
+    ValueType:  "blog_url"
+    IsRegist:   false
+    IsConfig:   true
+    IsUnique:   false
+    IsRequired: false
+    IsConfirm:  false
