@@ -57,18 +57,68 @@ class File extends BaseFile
     $this->setFileBin($bin);
   }
 
+  private function readOrientation()
+  {
+    $cls = exif_read_data("data://image/jpeg;base64,".base64_encode($this->FileBin->bin));
+    return $cls['Orientation'];
+  }
+
+  private function createOrientedImage($exif)
+  {
+    $image = imagecreatefromstring($this->FileBin->bin);
+    switch ($exif)
+    {
+      // rotate 180 degrees
+      case 3:
+        $image = imagerotate($image, 180, 0);
+        break;
+      // rotate 90 degrees
+      case 6:
+        $imagewidth = imagesy($image);
+        $imageheight = imagesx($image);
+        $image = imagerotate($image, -90, 0);
+        imagecopyresampled ($image, $image, 0, 0, (imagesx($image) - $imagewidth)/2, (imagesy($image) - $imageheight)/2, $imagewidth, $imageheight, $imagewidth, $imageheight);
+        break;
+      // rotate 270 degrees
+      case 8:
+        $imagewidth = imagesy($image);
+        $imageheight = imagesx($image);
+        $image = imagerotate($image, 90, 0);
+        imagecopyresampled ($image, $image, 0, 0, (imagesx($image) - $imagewidth)/2, (imagesy($image) - $imageheight)/2, $imagewidth, $imageheight, $imagewidth, $imageheight);
+        break;
+      default:
+        break;
+    }
+    ob_start();
+    imagejpeg($image);
+    $ei = ob_get_contents();
+    ob_end_clean();
+
+    return $ei;
+  }
+
+  private function setOrient()
+  {
+      $type = $this->getType();
+      if ('image/jpeg' === $type)
+      {
+        $exif = $this->readOrientation();
+        $ei = $this->createOrientedImage($exif);
+        $this->getFileBin()->setBin($ei);
+      }
+  }
+
   public function save(Doctrine_Connection $conn = null)
   {
-    $this->setFilesize(strlen($this->FileBin->bin));
-
     if ($this->isImage())
     {
       $class = sfImageHandler::getStorageClassName();
       $this->setName(call_user_func(array($class, 'getFilenameToSave'), $this->getName()), $class);
-
       $storage = call_user_func(array($class, 'create'), $this, $class);
+      $this->setOrient();
       $storage->saveBinary($this->getFileBin());
     }
+    $this->setFilesize(strlen($this->FileBin->bin));
 
     return parent::save($conn);
   }
@@ -81,7 +131,6 @@ class File extends BaseFile
       $storage = call_user_func(array($class, 'create'), $this, $class);
       $storage->deleteBinary();
     }
-
     return parent::delete($conn);
   }
 }
