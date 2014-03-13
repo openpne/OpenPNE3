@@ -26,3 +26,4 @@ data/*.lck
 /.settings
 /.buildpath
 /.project
+/cache
