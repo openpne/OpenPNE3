@@ -57,7 +57,8 @@ class File extends BaseFile
     $this->setFileBin($bin);
   }
 
-  public function resizeImage($ratio, $image, $x, $y){
+  private function resizeImage($ratio, $image, $x, $y)
+  {
     $type = $this->getType();
     $resizex = $x*$ratio;
     $resizey = $y*$ratio;
@@ -97,7 +98,8 @@ class File extends BaseFile
     return $ei;
   }
 
-  public function measuredImage($uploadimage, $filesize){
+  private function measuredImage($uploadimage, $filesize)
+  {
     $ratio = sqrt($uploadimage/$filesize)/1.5;
     $image = imagecreatefromstring($this->FileBin->bin);
     $x = imagesx($image);
@@ -107,7 +109,8 @@ class File extends BaseFile
     return $ei;
   }
 
-  public function contractedImage(){
+  private function contractedImage()
+  {
       $uploadimage = sfConfig::get('op_resize_limit_size', 1024);
       $filesize = strlen($this->FileBin->bin);
       if ($filesize > $uploadimage)
