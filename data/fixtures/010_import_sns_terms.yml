@@ -7,6 +7,8 @@ SnsTerm:
         value: "フレンド"
       en:
         value: "friend"
+      zh_CN:
+        value: "好友"
 
   term_friend_mobile_frontend:
     name: "friend"
@@ -16,6 +18,8 @@ SnsTerm:
         value: "ﾌﾚﾝﾄﾞ"
       en:
         value: "friend"
+      zh_CN:
+        value: "好友"
 
   term_my_friend_pc_frontend:
     name: "my_friend"
@@ -25,6 +29,8 @@ SnsTerm:
         value: "マイフレンド"
       en:
         value: "my friend"
+      zh_CN:
+        value: "我的好友"
 
   term_my_friend_mobile_frontend:
     name: "my_friend"
@@ -34,6 +40,8 @@ SnsTerm:
         value: "ﾏｲﾌﾚﾝﾄﾞ"
       en:
         value: "my friend"
+      zh_CN:
+        value: "我的好友"
 
   term_community_pc_frontend:
     name: "community"
@@ -43,6 +51,8 @@ SnsTerm:
         value: "コミュニティ"
       en:
         value: "community"
+      zh_CN:
+        value: "群组"
 
   term_community_mobile_frontend:
     name: "community"
@@ -52,6 +62,8 @@ SnsTerm:
         value: "ｺﾐｭﾆﾃｨ"
       en:
         value: "community"
+      zh_CN:
+        value: "群组"
 
   term_nickname_pc_frontend:
     name: "nickname"
