@@ -2,12 +2,17 @@ GIT_SSH=./tools/wrapper.sh git clone https://github.com/saoke/OpenPNE3.git --dep
 cd ./OpenPNE3
 ./symfony openpne:install
 
-GIT_SSH=../tools/wrapper.sh git clone https://github.com/saoke/opCommunityTopicPlugin.git --depth=1 ./plugins/opCommunityTopicPlugin
+./symfony opPlugin:install opLikePlugin -r 1.2.1
+./symfony opPlugin:install opDiaryPlugin -r 1.5.0
+./symfony openpne:migrate
+
 GIT_SSH=../tools/wrapper.sh git clone https://github.com/saoke/opMessagePlugin.git --depth=1 ./plugins/opMessagePlugin
 GIT_SSH=../tools/wrapper.sh git clone https://github.com/saoke/opLikePlugin.git --depth=1 ./plugins/opLikePlugin
 GIT_SSH=../tools/wrapper.sh git clone https://github.com/saoke/opDiaryPlugin.git --depth=1 ./plugins/opDiaryPlugin
+
 GIT_SSH=../tools/wrapper.sh git clone https://github.com/saoke/opTimelinePlugin.git --depth=1 ./plugins/opTimelinePlugin
 GIT_SSH=../tools/wrapper.sh git clone https://github.com/saoke/opSkinThemePlugin.git --depth=1 ./plugins/opSkinThemePlugin
+GIT_SSH=../tools/wrapper.sh git clone https://github.com/saoke/opCommunityTopicPlugin.git --depth=1 ./plugins/opCommunityTopicPlugin
 GIT_SSH=../tools/wrapper.sh git clone https://github.com/saoke/opBlogPlugin.git --depth=1 ./plugins/opBlogPlugin
 
 GIT_SSH=../tools/wrapper.sh git clone https://github.com/tejimaya/opSkinUnitedPlugin.git --depth=1 ./plugins/opSkinUnitedPlugin
@@ -16,7 +21,7 @@ GIT_SSH=../tools/wrapper.sh git clone https://github.com/tejima/opDropboxPlugin.
 GIT_SSH=../tools/wrapper.sh git clone https://github.com/tejima/opAuthSocialPlugin.git --depth=1 ./plugins/opAuthSocialPlugin
 
 ./symfony opTimelinePlugin:install
-./symfony openpne:migrate
 ./symfony plugin:publish-assets
 ./symfony opLike:addtags
 ./symfony cc
+
