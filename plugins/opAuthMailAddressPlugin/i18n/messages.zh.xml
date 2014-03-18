@@ -1,0 +1,115 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Do you forget your password?</source>
+        <target>忘记了密码？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please click the following button to start the password recovery process.</source>
+        <target>点击以下按钮，发送密码重置邮件。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Go to Password Recovery Page</source>
+        <target>进入密码找回页</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Password Recovery</source>
+        <target>密码找回</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>What is your father's / mother's former name?</source>
+        <target>你爸爸或妈妈的名字</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>What is last 5 digits of your driving license number?</source>
+        <target>你身份证或者驾驶证后4位？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>What is your first crush's name?</source>
+        <target>初恋的名字？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>What is your finished elementary school?</source>
+        <target>小学学校名称？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>What is region name of your domicile of origin?</source>
+        <target>你住在哪个省？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your Secret Question</source>
+        <target>密保问题</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your Answer for the Question</source>
+        <target>密保答案</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Sent you a mail for completing your password recovery. If you cannot receive the mail, please retry a password recovery process.</source>
+        <target>发了一封密码找回的邮件到你邮箱。如果没有收到电子邮件，请重试密码找回流程。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Secret Question Configuration</source>
+        <target>密保问题设置</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Secret Question</source>
+        <target>密保问题</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Answer for Secret Question</source>
+        <target>密保答案</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please input your e-mail address. Invitation for %1% will be sent to your e-mail address.</source>
+        <target>请输入邮件地址。邀请信息%1%将发送到你的邮箱。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Sent you an invitation for %1%.</source>
+        <target>发送了邀请%1%给你。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Begin your registration from a URL in the mail.</source>
+        <target>从邮件中的URL点击注册。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>We accepted your recovering password request.</source>
+        <target>我们接受你的密码找回请求。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please click the following URL and complete password recovery process.</source>
+        <target>点击以下地址完成密码找回。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please input your new password.</source>
+        <target>请输入新密码。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your password is now changed.</source>
+        <target>你的密码已修改。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Hello! This is information from %1%.</source>
+        <target>你好！有来自%1%的信息。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If you register(free) of member by the following URL,%br%you can participate in %1%.</source>
+        <target>点击%br%免费注册%1%。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>* Participate in %1%</source>
+        <target>■ %1% 加入</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Can access this registration URL with pc only.</source>
+        <target>你只能使用PC端注册。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your e-mail address is not registered.</source>
+        <target>邮箱未被注册。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
