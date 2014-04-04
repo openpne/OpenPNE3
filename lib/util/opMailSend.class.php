@@ -208,17 +208,19 @@ class opMailSend
 
     $subject = mb_convert_kana($subject, 'KV');
 
+    if ($envelopeFrom = sfConfig::get('op_mail_envelope_from'))
+    {
+      $envelopeFrom = '-f'.$envelopeFrom;
+      $tr = new Zend_Mail_Transport_Sendmail($envelopeFrom);
+      Zend_Mail::setDefaultTransport($tr);
+    }
+
     $mailer = new Zend_Mail('iso-2022-jp');
     $mailer->setHeaderEncoding(Zend_Mime::ENCODING_BASE64)
       ->setFrom($from)
       ->addTo($to)
       ->setSubject(mb_encode_mimeheader($subject, 'iso-2022-jp'))
       ->setBodyText(mb_convert_encoding($body, 'JIS', 'UTF-8'), 'iso-2022-jp', Zend_Mime::ENCODING_7BIT);
-
-    if ($envelopeFrom = sfConfig::get('op_mail_envelope_from'))
-    {
-      $mailer->setReturnPath($envelopeFrom);
-    }
 
     $result = $mailer->send();
 
