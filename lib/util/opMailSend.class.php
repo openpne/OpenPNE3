@@ -32,7 +32,7 @@ class opMailSend
         $tr = new Zend_Mail_Transport_Smtp($host, sfConfig::get('op_mail_smtp_config', array()));
         Zend_Mail::setDefaultTransport($tr);
       }
-      elseif ($envelopeFrom = sfConfig::get('op_mail_envelope_from') && !ini_get('safe_mode'))
+      elseif (($envelopeFrom = sfConfig::get('op_mail_envelope_from')) && !ini_get('safe_mode'))
       {
         $tr = new Zend_Mail_Transport_Sendmail('-f'.$envelopeFrom);
         Zend_Mail::setDefaultTransport($tr);
