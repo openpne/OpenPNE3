@@ -215,11 +215,6 @@ class opMailSend
       ->setSubject(mb_encode_mimeheader($subject, 'iso-2022-jp'))
       ->setBodyText(mb_convert_encoding($body, 'JIS', 'UTF-8'), 'iso-2022-jp', Zend_Mime::ENCODING_7BIT);
 
-    if ($envelopeFrom = sfConfig::get('op_mail_envelope_from'))
-    {
-      $mailer->setReturnPath($envelopeFrom);
-    }
-
     $result = $mailer->send();
 
     opApplicationConfiguration::unregisterZend();
