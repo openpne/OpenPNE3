@@ -57,18 +57,80 @@ class File extends BaseFile
     $this->setFileBin($bin);
   }
 
+  private function resizeImage($ratio, $image, $x, $y)
+  {
+    $type = $this->getType();
+    $resizex = $x*$ratio;
+    $resizey = $y*$ratio;
+    $resize = imagecreatetruecolor($resizex, $resizey);
+    switch($type)
+    {
+      case 'image/jpeg':
+        imagecopyresampled($resize, $image, 0, 0, 0, 0, $resizex, $resizey, $x, $y);
+        ob_start();
+        imagejpeg($resize);
+        break;
+      case 'image/gif':
+        $alpha = imagecolortransparent($image);
+        $trnprt_color = imagecolorsforindex($image, $alpha);
+        $alpha = imagecolorallocate($resize, $trnprt_color['red'], $trnprt_color['green'], $trnprt_color['blue']);
+        imagefill($resize, 0, 0, $alpha);
+        imagecolortransparent($resize, $alpha);
+        imagecopyresampled($resize, $image, 0, 0, 0, 0, $resizex, $resizey, $x, $y);
+        ob_start();
+        imagegif($resize);
+        break;
+      case 'image/png':
+        imagealphablending($resize, false);
+        imagesavealpha($resize, true);
+        imagecopyresampled($resize, $image, 0, 0, 0, 0, $resizex, $resizey, $x, $y);
+        ob_start();
+        imagepng($resize);
+        break;
+      default:
+        break;
+    }
+    $ei = ob_get_contents();
+    ob_end_clean();
+    imagedestroy($image);
+    imagedestroy($resize);
+
+    return $ei;
+  }
+
+  private function measuredImage($uploadimage, $filesize)
+  {
+    $ratio = sqrt($uploadimage/$filesize)/1.5;
+    $image = imagecreatefromstring($this->FileBin->bin);
+    $x = imagesx($image);
+    $y = imagesy($image);
+    $ei = $this->resizeImage($ratio, $image, $x, $y);
+
+    return $ei;
+  }
+
+  private function contractedImage()
+  {
+      $uploadimage = sfConfig::get('op_resize_limit_size', 1024);
+      $filesize = strlen($this->FileBin->bin);
+      if ($filesize > $uploadimage)
+      {
+        $ei = $this->measuredImage($uploadimage, $filesize);
+        $this->getFileBin()->setBin($ei);
+      }
+  }
+
   public function save(Doctrine_Connection $conn = null)
   {
-    $this->setFilesize(strlen($this->FileBin->bin));
-
     if ($this->isImage())
     {
       $class = sfImageHandler::getStorageClassName();
       $this->setName(call_user_func(array($class, 'getFilenameToSave'), $this->getName()), $class);
-
       $storage = call_user_func(array($class, 'create'), $this, $class);
+      $this->contractedImage();
       $storage->saveBinary($this->getFileBin());
     }
+    $this->setFilesize(strlen($this->FileBin->bin));
 
     return parent::save($conn);
   }
