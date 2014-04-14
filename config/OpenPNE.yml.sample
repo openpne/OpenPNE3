@@ -112,6 +112,7 @@ ssl_base_url:
   pc_frontend: "https://example.com"
   mobile_frontend: "https://example.com"
   pc_backend: "https://example.com"
+  api: "https://example.com"
 
 # SSL が必須なアプリケーション
 # Applications that are SSL required
@@ -160,6 +161,9 @@ ssl_selectable_actions:
 #   1: on  - GIF のみ ImageMagick を使う (Use ImageMagick only for GIF)
 #   2: on  - JEPG,PNG,GIF に ImageMagick を使う (ただし、 GD も必要) (Use ImageMagick for JPEG,PNG,GIF)
 use_imagemagick: 0
+
+# DBに置くことができる画像の最大容量(byte)
+resize_limit_size: 8192
 
 # ImageMagick コマンドのパス
 # Path to ImageMagick binary
