@@ -117,6 +117,7 @@ class defaultComponents extends sfComponents
     {
       $fetcher = new opRssFetcher('UTF-8');
       $this->result = @$fetcher->fetch($this->gadget->getConfig('url'), true);
+      $this->isNotShowDetail = $this->gadget->getConfig('is_not_show_detail');
       if ($this->result)
       {
         $this->result[1] = array_slice($this->result[1], 0, $this->gadget->getConfig('col'));

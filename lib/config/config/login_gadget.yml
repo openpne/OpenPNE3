@@ -47,6 +47,14 @@ rssBox:
       FormType:   "input"
       ValueType:  "text"
       IsRequired: false
+    is_not_show_detail:
+      Name: "detail"
+      Caption: "詳細表示を行わない"
+      FormType: "radio"
+      ValueType: "int"
+      IsRequired: true
+      Default: 1
+      Choices: {0: "No", 1: "Yes"}
     col:
       Name:      "col"
       Caption:   "表示件数"
