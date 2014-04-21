@@ -7,21 +7,55 @@
 </script>
 <script type="text/javascript">
 $(function(){
-  $.getJSON( openpne.apiBase + 'member/search.json?apiKey=' + openpne.apiKey, function(json) {
-    $result = $('#friendListTemplate').tmpl(json.data);
+  var pageInfo = {}
+  function getMember(callback) {
+    var param = {
+      apiKey: openpne.apiKey,
+        page: 1,
+    };
+    if (pageInfo.isNext) {
+      param.page = pageInfo.next;
+    }
+    var keyword = $('#memberFriendSearch').val();
+    if (keyword) {
+      param.keyword = keyword;
+    }
+    $.ajax({
+      url:  openpne.apiBase + 'member/search.json',
+      type: 'GET',
+      data: param,
+      dataType: 'json',
+      success: callback,
+      complete: function(data) {
+        var json = JSON.parse(data.responseText)
+        json.page.isNext ? $('#memberFriendLoadMore button').show() : $('#memberFriendLoadMore button').hide();
+        pageInfo = json.page
+      },
+    });
+  }
+
+  getMember(function(json) {
+    var $result = $('#friendListTemplate').tmpl(json.data);
     $('#memberFriendList').html($result);
     $('#memberFriendList').show();
     $('#memberFriendListLoading').hide();
   });
+
+  $('#memberFriendLoadMore button').on('click', function() {
+    getMember(function(json) {
+      $('#memberFriendList')
+        .append($('#friendListTemplate').tmpl(json.data));
+    });
+  });
+
   $('#memberFriendSearch').keypress(function(){
     $('#memberFriendListLoading').show();
     $('#memberFriendList').hide();
     $('#memberFriendList').empty();
   });
-  $('#memberFriendSearch').blur(function(){
-    var keyword = $('#memberFriendSearch').val();
-    var requestData = { keyword: keyword, apiKey: openpne.apiKey };
-    $.getJSON( openpne.apiBase + 'member/search.json', requestData, function(json) {
+
+  $('#memberFriendSearch').blur(function() {
+    getMember(function(json) {
       $result = $('#friendListTemplate').tmpl(json.data);
       $('#memberFriendList').html($result);
       $('#memberFriendList').show();
@@ -43,6 +77,9 @@ $(function(){
 </div>
 </div>
 <div class="row" id="memberFriendList">
+</div>
+<div class="row" id="memberFriendLoadMore">
+<button class="span12 btn small hide"><?php echo __('More') ?></button>
 </div>
 <div class="row" id="memberFriendListLoading" style="margin-left: 0; text-align: center;">
 <?php echo op_image_tag('ajax-loader.gif') ?>

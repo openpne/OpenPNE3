@@ -10,4 +10,10 @@ foreach ($members as $member)
 return array(
   'status' => 'success',
   'data' => $data,
+  'page' => array(
+    'current' => $pager->getPage(),
+    'isNext' => ($pager->getPage() < $pager->getLastPage()),
+    'next' => $pager->getNextPage(),
+    'last' => $pager->getLastPage(),
+  ),
 );

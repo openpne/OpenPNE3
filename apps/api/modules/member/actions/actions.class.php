@@ -74,9 +74,15 @@ class memberActions extends opJsonApiActions
       $query->andWhereLike('m.name', $request['keyword']);
     }
 
-    $this->members = $query
-      ->limit(sfConfig::get('op_json_api_limit', 20))
-      ->execute();
+    $size = 20;
+    $pager = new opNonCountQueryPager('Member', $size);
+    $query = $query->orderBy('id desc');
+    $pager->setQuery($query);
+    $pager->setPage($request->getParameter('page', 1));
+    $pager->init();
+
+    $this->members = $pager->getResults();
+    $this->pager = $pager;
 
     $this->setTemplate('array');
   }
