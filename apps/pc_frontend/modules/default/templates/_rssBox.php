@@ -3,7 +3,7 @@
 <div class="partsHeading"><h3><?php echo  $gadget->getConfig('title') ? $gadget->getConfig('title') : $result[0]; ?></h3></div>
 <div class="block">
 <ul class="articleList">
-<?php if (!$isNotShowDetail): ?>
+<?php if ($gadget->getConfig('is_show_detail')): ?>
 <?php $res = $sf_data->getRaw('result') ?>
 <?php else: ?>
 <?php $res = $result ?>
@@ -16,7 +16,7 @@
 <?php endif; ?>
 <li><span class="date"><?php echo $dateStr ?></span>
 <?php echo link_to($entry['title'], $entry['link']) ?>
-<?php if (!$isNotShowDetail): ?>
+<?php if ($gadget->getConfig('is_show_detail')): ?>
 <?php echo nl2br($entry['body']) ?>
 <?php endif; ?>
 </li>

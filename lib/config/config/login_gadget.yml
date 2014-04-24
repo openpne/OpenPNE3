@@ -47,9 +47,9 @@ rssBox:
       FormType:   "input"
       ValueType:  "text"
       IsRequired: false
-    is_not_show_detail:
+    is_show_detail:
       Name: "detail"
-      Caption: "詳細表示を行わない"
+      Caption: "詳細表示"
       FormType: "radio"
       ValueType: "int"
       IsRequired: true
