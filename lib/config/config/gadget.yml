@@ -143,6 +143,20 @@ rssBox:
       IsRequired: true
       Default: 1
       Choices: {0: "No", 1: "Yes"}
+    is_show_more:
+      Name:       "more"
+      Caption:    "もっと見る 表示"
+      FormType:   "radio"
+      ValueType:  "int"
+      IsRequired: true
+      Default:    1
+      Choices:    {0: "No", 1: "Yes"}
+    more_url:
+      Name:       "more url"
+      Caption:    "もっと見る URL"
+      FormType:   "input"
+      ValueType:  "text"
+      IsRequired: false
     col:
       Name:      "col"
       Caption:   "表示件数"

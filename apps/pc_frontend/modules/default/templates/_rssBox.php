@@ -22,6 +22,12 @@
 </li>
 <?php endforeach; ?>
 </ul>
+<?php if ($gadget->getConfig('is_show_more')): ?>
+<div class="more-rss-contents">
+<?php echo link_to(__("More"), $gadget->getConfig('more_url'), 'target=_blank') ?>
 </div>
-</div></div>
+<?php endif; ?>
+</div>
+</div>
+</div>
 <?php endif; ?>
