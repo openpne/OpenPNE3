@@ -56,8 +56,11 @@ abstract class opCommunityAction extends sfActions
   */
   public function executeEdit(opWebRequest $request)
   {
+    if ($request->isSmartphone())
+    {
+      $this->forward404();
+    }
     $this->forward404If($this->id && !$this->isEditCommunity);
-
     $this->community = Doctrine::getTable('Community')->find($this->id);
     if (!$this->community)
     {
