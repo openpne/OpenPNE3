@@ -24,14 +24,20 @@ class CommunityFormFilter extends BaseCommunityFormFilter
 
   public function configure()
   {
-    $q = Doctrine::getTable('CommunityCategory')->getAllChildrenQuery();
+    $choices = array();
+    $choices[''] = sfContext::getInstance()->getI18N()->__('All categories', array(), 'form_community');
+
+    $categories = Doctrine::getTable('CommunityCategory')->getAllChildren();
+    foreach ($categories as $category)
+    {
+      $choices[$category->getId()] = $category->getName();
+    }
+
     $widgets = array(
       'name'                  => new sfWidgetFormInput(),
-      'community_category_id' => new sfWidgetFormDoctrineChoice(array(
-        'model'       => 'CommunityCategory',
-        'add_empty'   => sfContext::getInstance()->getI18N()->__('All categories', array(), 'form_community'),
-        'query'    => $q,
-        'default' => 0)),
+      'community_category_id' => new sfWidgetFormChoice(array(
+        'choices'     => $choices,
+        'default'     => '')),
     );
 
     $validators = array(

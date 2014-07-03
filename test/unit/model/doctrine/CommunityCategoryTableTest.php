@@ -3,7 +3,7 @@
 include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 
-$t = new lime_test(13, new lime_output_color());
+$t = new lime_test(19, new lime_output_color());
 
 $table = Doctrine::getTable('CommunityCategory');
 
@@ -39,3 +39,17 @@ $t->diag('CommunityCategoryTable::getAllChildrenQuery()');
 $t->isa_ok($table->getAllChildrenQuery(), 'opDoctrineQuery');
 $t->is($table->getAllChildrenQuery(false)->getDql(), ' FROM CommunityCategory WHERE lft > 1');
 $t->is($table->getAllChildrenQuery(true)->getDql(), ' FROM CommunityCategory WHERE lft > 1 ORDER BY sort_order');
+
+//------------------------------------------------------------
+$t->diag('CommunityCategoryTable::getAllChildren()');
+$categories = $table->getAllChildren();
+$t->isa_ok($categories, 'Doctrine_Collection');
+$t->is(count($categories), 3);
+
+$categories = $table->getAllChildren(false);
+$t->isa_ok($categories, 'Doctrine_Collection');
+$t->is(count($categories), 3);
+
+$categories = $table->getAllChildren(true);
+$t->isa_ok($categories, 'Doctrine_Collection');
+$t->is(count($categories), 2);
