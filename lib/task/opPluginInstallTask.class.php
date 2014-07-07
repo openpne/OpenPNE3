@@ -60,7 +60,7 @@ EOF;
   {
     try
     {
-      if (class_exists('SnsConfigTable') && class_exists('BaseSnsConfigTable'))
+      if (class_exists('SnsConfigTable'))
       {
         return Doctrine_Manager::connection()
           ->import
