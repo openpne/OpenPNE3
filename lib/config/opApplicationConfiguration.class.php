@@ -624,14 +624,11 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
 
   protected function getAppScriptName($application, $env, $prefix, $isNoScriptName = false)
   {
+    $prefix = preg_replace('/(\/)$/', '', $prefix);
+
     if ($isNoScriptName)
     {
       return $prefix;
-    }
-
-    if ('/' === $prefix)
-    {
-      $prefix = '';
     }
 
     $name = $prefix.'/'.$application;
