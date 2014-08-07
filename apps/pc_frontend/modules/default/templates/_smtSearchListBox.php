@@ -11,3 +11,6 @@
 <div class="loadingImage row" style="text-align: center; display: none">
   <?php echo op_image_tag('ajax-loader.gif') ?>
 </div>
+<button class="loadMoreButton btn btn-block" style="display: none">
+  <?php echo __('More') ?>
+</button>

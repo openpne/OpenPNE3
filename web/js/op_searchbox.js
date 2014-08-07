@@ -12,8 +12,10 @@ var opSearchBox = (function () {
     function opSearchBox(baseElm, listItemTmpl, endpoint, params) {
         this.curSearchText = '';
         this.loading = 0; // 1 以上の時は読み込み中アイコンを表示し続ける
+        this.itemsPerPage = 20;
         this.searchBox = $('.searchBox', baseElm);
         this.loadingImage = $('.loadingImage', baseElm);
+        this.loadMoreButton = $('.loadMoreButton', baseElm);
         this.resultList = $('.resultList', baseElm);
         this.listItemTemplate = listItemTmpl;
 
@@ -30,8 +32,17 @@ var opSearchBox = (function () {
             if (searchText !== _this.curSearchText) {
                 _this.curSearchText = searchText;
                 _this.resultList.empty();
+                _this.loadMoreButton.hide();
                 _this.search(searchText);
             }
+        });
+
+        this.loadMoreButton.click(function () {
+            var lastResultBox = _this.resultList.children().last();
+            var lastId = lastResultBox.data('lastId');
+
+            _this.loadMoreButton.hide();
+            _this.search(_this.curSearchText, lastId);
         });
     };
 
@@ -42,7 +53,7 @@ var opSearchBox = (function () {
         return $.getJSON(openpne.apiBase + this.searchEndpoint, params);
     };
 
-    opSearchBox.prototype.search = function (keyword) {
+    opSearchBox.prototype.search = function (keyword, sinceId) {
         var _this = this;
 
         /*
@@ -62,10 +73,15 @@ var opSearchBox = (function () {
         this.loadingImage.show();
         this.loading++;
 
-        var params = {};
+        var params = {
+            count: this.itemsPerPage.toString()
+        };
 
         if (keyword !== undefined && keyword !== '')
             params['keyword'] = keyword;
+
+        if (sinceId !== undefined)
+            params['since_id'] = sinceId.toString();
 
         this.fetchSearchResults(params)
             .then(function (json) {
@@ -75,6 +91,11 @@ var opSearchBox = (function () {
 
                 _this.listItemTemplate.tmpl(results)
                     .appendTo(resultBox);
+
+                resultBox.data('lastId', results[results.length - 1].id);
+
+                if (results.length === _this.itemsPerPage)
+                    _this.loadMoreButton.show();
             })
             .always(function () {
                 if (--_this.loading < 1)
