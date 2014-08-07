@@ -26,9 +26,9 @@ class communityActions extends opJsonApiActions
       $query->andWhereLike('name', $request['keyword']);
     }
 
-    $this->communities = $query
-      ->limit(sfConfig::get('op_json_api_limit', 20))
-      ->execute();
+    self::addSearchCondition($query, $request);
+
+    $this->communities = $query->execute();
 
     $this->setTemplate('array');
   }
@@ -48,9 +48,10 @@ class communityActions extends opJsonApiActions
       $this->forward400('community_id parameter not specified.');
     }
 
+    self::addSearchCondition($query, $request);
+
     $this->members = Doctrine::getTable('Member')->createQuery('m')
       ->addWhere('EXISTS (FROM CommunityMember cm WHERE m.id = cm.member_id AND cm.is_pre = false AND cm.community_id = ?)', $communityId)
-      ->limit(sfConfig::get('op_json_api_limit', 20))
       ->execute();
 
     $this->setTemplate('array', 'member');

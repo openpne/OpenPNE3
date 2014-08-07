@@ -64,30 +64,12 @@ class activityActions extends opJsonApiActions
       $query->andWhereLike('body', $request['keyword']);
     }
 
-    $globalAPILimit = sfConfig::get('op_json_api_limit', 20);
-    if (isset($request['count']) && (int)$request['count'] < $globalAPILimit)
-    {
-      $query->limit($request['count']);
-    }
-    else
-    {
-      $query->limit($globalAPILimit);
-    }
-
-    if (isset($request['max_id']))
-    {
-      $query->addWhere('id <= ?', $request['max_id']);
-    }
-
-    if (isset($request['since_id']))
-    {
-      $query->addWhere('id > ?', $request['since_id']);
-    }
-
     if (isset($request['activity_id']))
     {
       $query->addWhere('id = ?', $request['activity_id']);
     }
+
+    self::addSearchCondition($query, $request);
 
     $this->activityData = $query
       ->andWhere('in_reply_to_activity_id IS NULL')

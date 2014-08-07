@@ -33,13 +33,14 @@ class memberActions extends opJsonApiActions
     }
 
     $query = Doctrine::getTable('Community')->createQuery('c')
-      ->innerJoin('c.CommunityMember cm WITH cm.is_pre = false AND cm.member_id = ?', $memberId)
-      ->limit(sfConfig::get('op_json_api_limit', 20));
+      ->innerJoin('c.CommunityMember cm WITH cm.is_pre = false AND cm.member_id = ?', $memberId);
 
     if (isset($request['keyword']))
     {
       $query->whereLike('c.name', $request['keyword']);
     }
+
+    self::addSearchCondition($query, $request);
 
     $this->communities = $query->execute();
 
@@ -82,9 +83,9 @@ class memberActions extends opJsonApiActions
       $query->andWhereLike('m.name', $request['keyword']);
     }
 
-    $this->members = $query
-      ->limit(sfConfig::get('op_json_api_limit', 20))
-      ->execute();
+    self::addSearchCondition($query, $request);
+
+    $this->members = $query->execute();
 
     $this->setTemplate('array');
   }
