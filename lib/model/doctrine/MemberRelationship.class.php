@@ -27,6 +27,18 @@ class MemberRelationship extends BaseMemberRelationship implements opAccessContr
       $fromMember = $this->getMemberRelatedByMemberIdFrom();
       opNotificationCenter::notify($fromMember, $this->getMember(), $fromMember->name, array('category' => 'link',));
     }
+    else
+    {
+      $notifications = opNotificationCenter::getNotifications($this->Member);
+      foreach ($notifications as $notification)
+      {
+        if ('link' === $notification['category']
+          && $this->member_id_from === $notification['member_id_from'])
+        {
+          opNotificationCenter::delete($this->Member, $notification['id']);
+        }
+      }
+    }
   }
 
   public function isFriend()
