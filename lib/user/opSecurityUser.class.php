@@ -279,8 +279,8 @@ class opSecurityUser extends opAdaptableUser
 
         $uri = '@member_setSid?next_uri='.$uri
              .'&is_remember_login='.(int)$this->getAuthAdapter()->getAuthForm()->getValue('is_remember_me')
-             .'&sid='.urlencode($item[0])
-             .'&ts='.urlencode($item[1]);
+             .'&sid='.rawurlencode($item[0])
+             .'&ts='.rawurlencode($item[1]);
       }
 
       $this->setCulture($this->getMember()->getConfig('language', sfConfig::get('sf_default_culture')));
