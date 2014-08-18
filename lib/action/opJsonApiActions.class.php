@@ -136,5 +136,7 @@ class opJsonApiActions extends sfActions
     {
       $query->limit($apiFetchLimit);
     }
+
+    $query->orderBy($alias.'.id');
   }
 }
