@@ -10,4 +10,5 @@ foreach ($pager as $member)
 return array(
   'status' => 'success',
   'data' => $data,
+  'hasNext' => !$pager->isLastPage(),
 );

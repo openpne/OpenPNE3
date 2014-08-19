@@ -74,7 +74,7 @@ class opCursorPager implements IteratorAggregate
       $query->addWhere($alias.'.id <= ?', $this->maxId);
     }
 
-    $query->limit($this->maxPerPage);
+    $query->limit($this->maxPerPage + 1);
     $query->orderBy($alias.'.id');
 
     $this->objects = $query->execute();
@@ -94,7 +94,7 @@ class opCursorPager implements IteratorAggregate
   {
     $this->checkFetched();
 
-    return $this->objects->getData();
+    return array_slice($this->objects->getData(), 0, $this->maxPerPage);
   }
 
   public function getIterator()
@@ -102,5 +102,12 @@ class opCursorPager implements IteratorAggregate
     $this->checkFetched();
 
     return new ArrayIterator($this->getResults());
+  }
+
+  public function isLastPage()
+  {
+    $this->checkFetched();
+
+    return count($this->objects) !== $this->maxPerPage + 1;
   }
 }

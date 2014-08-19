@@ -23,4 +23,5 @@ foreach ($pager as $activity)
 return array(
   'status' => 'success',
   'data' => $ac,
+  'hasNext' => !$pager->isLastPage(),
 );
