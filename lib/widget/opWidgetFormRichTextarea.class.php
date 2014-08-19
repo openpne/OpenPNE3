@@ -65,9 +65,8 @@ class opWidgetFormRichTextarea extends sfWidgetFormTextarea
   }
 
   /**
-   * HTML特殊文字を実体参照で設定後に記号に変換されてしまう不具合修正のため、
-   * fixDoubleEscape() を呼ばないようにする
-   *
+   * not call the fixDoubleEscape() to not convert the HTML special characters that set in the entity reference
+   * 
    * @see sfWidget::escapeOnce()
    */
   static public function escapeOnce($value)
