@@ -69,13 +69,15 @@ class activityActions extends opJsonApiActions
       $query->addWhere('id = ?', $request['activity_id']);
     }
 
-    self::addSearchCondition($query, $request);
+    $query->andWhere('in_reply_to_activity_id IS NULL');
 
-    $this->activityData = $query
-      ->andWhere('in_reply_to_activity_id IS NULL')
-      ->execute();
+    $pager = new opCursorPager($query);
+    self::addSearchCondition($pager, $request);
+    $pager->fetch();
 
-    $this->setTemplate('array');
+    $this->pager = $pager;
+
+    $this->setTemplate('page');
   }
 
   public function executeMember(sfWebRequest $request)
@@ -250,8 +252,12 @@ class activityActions extends opJsonApiActions
       ->andWhere('foreign_id IS NULL')
       ->limit(20);
 
-    $this->activityData = $query->execute();
+    $pager = new opCursorPager($query);
+    self::addSearchCondition($pager, $request);
+    $pager->fetch();
 
-    $this->setTemplate('array');
+    $this->pager = $pager;
+
+    $this->setTemplate('page');
   }
 }

@@ -2,7 +2,7 @@
 
 $data = array();
 
-foreach ($communities as $community)
+foreach ($pager as $community)
 {
   $data[] = op_api_community($community);
 }

@@ -112,31 +112,27 @@ class opJsonApiActions extends sfActions
     }
   }
 
-  static protected function addSearchCondition($query, $request)
+  static protected function addSearchCondition(opCursorPager $pager, $request)
   {
-    $alias = $query->getRootAlias();
-
     if (isset($request['max_id']))
     {
-      $query->addWhere($alias.'.id <= ?', (int)$request['max_id']);
+      $pager->setMaxId((int)$request['max_id']);
     }
 
     if (isset($request['since_id']))
     {
-      $query->addWhere($alias.'.id > ?', (int)$request['since_id']);
+      $pager->setSinceId((int)$request['since_id']);
     }
 
     $apiFetchLimit = (int)sfConfig::get('op_json_api_fetch_limit');
     if (isset($request['count']))
     {
       $limit = min((int)$request['count'], $apiFetchLimit);
-      $query->limit($limit);
+      $pager->setMaxPerPage($limit);
     }
     else
     {
-      $query->limit($apiFetchLimit);
+      $pager->setMaxPerPage($apiFetchLimit);
     }
-
-    $query->orderBy($alias.'.id');
   }
 }

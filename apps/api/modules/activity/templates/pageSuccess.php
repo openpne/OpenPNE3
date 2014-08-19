@@ -2,7 +2,7 @@
 
 $ac = array();
 
-foreach ($activityData as $activity)
+foreach ($pager as $activity)
 {
   $acEntity = op_api_activity($activity);
 

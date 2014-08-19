@@ -40,11 +40,13 @@ class memberActions extends opJsonApiActions
       $query->whereLike('c.name', $request['keyword']);
     }
 
-    self::addSearchCondition($query, $request);
+    $pager = new opCursorPager($query);
+    self::addSearchCondition($pager, $request);
+    $pager->fetch();
 
-    $this->communities = $query->execute();
+    $this->pager = $pager;
 
-    $this->setTemplate('array', 'community');
+    $this->setTemplate('page', 'community');
   }
 
   public function executeSearch(sfWebRequest $request)
@@ -83,11 +85,13 @@ class memberActions extends opJsonApiActions
       $query->andWhereLike('m.name', $request['keyword']);
     }
 
-    self::addSearchCondition($query, $request);
+    $pager = new opCursorPager($query);
+    self::addSearchCondition($pager, $request);
+    $pager->fetch();
 
-    $this->members = $query->execute();
+    $this->pager = $pager;
 
-    $this->setTemplate('array');
+    $this->setTemplate('page');
   }
 
   public function executeFriendAccept(sfWebRequest $request)

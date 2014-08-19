@@ -2,7 +2,7 @@
 
 $data = array();
 
-foreach ($members as $member)
+foreach ($pager as $member)
 {
   $data[] = op_api_member($member);
 }
