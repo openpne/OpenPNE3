@@ -94,7 +94,7 @@ var opSearchBox = (function () {
 
                 resultBox.data('lastId', results[results.length - 1].id);
 
-                if (results.length === _this.itemsPerPage)
+                if (json.hasNext)
                     _this.loadMoreButton.show();
             })
             .always(function () {
