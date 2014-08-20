@@ -966,10 +966,6 @@
         <target>プロフィール項目登録</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Operation</source>
-        <target>操作</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Entry name</source>
         <target>項目名</target>
       </trans-unit>
@@ -1016,10 +1012,6 @@
       <trans-unit id="">
         <source>Search</source>
         <target>検索</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Delete</source>
-        <target>削除</target>
       </trans-unit>
       <trans-unit id="">
         <source>List</source>
