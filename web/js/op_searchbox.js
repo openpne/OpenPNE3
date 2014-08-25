@@ -12,7 +12,6 @@ var opSearchBox = (function () {
     function opSearchBox(baseElm, listItemTmpl, endpoint, params) {
         this.curSearchText = '';
         this.loading = 0; // 1 以上の時は読み込み中アイコンを表示し続ける
-        this.itemsPerPage = 20;
         this.searchBox = $('.searchBox', baseElm);
         this.loadingImage = $('.loadingImage', baseElm);
         this.loadMoreButton = $('.loadMoreButton', baseElm);
@@ -73,9 +72,7 @@ var opSearchBox = (function () {
         this.loadingImage.show();
         this.loading++;
 
-        var params = {
-            count: this.itemsPerPage.toString()
-        };
+        var params = {};
 
         if (keyword !== undefined && keyword !== '')
             params['keyword'] = keyword;
