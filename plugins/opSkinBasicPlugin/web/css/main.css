@@ -982,6 +982,11 @@ div.operation ul.moreInfo li {
   width: 140px;
 }
 
+#pcAddressForm th,
+#mobileAddressForm th {
+  width: 175px;
+}
+
 .form textarea {
   width: 98%;
 }
