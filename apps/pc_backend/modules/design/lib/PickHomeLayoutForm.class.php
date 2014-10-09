@@ -69,7 +69,6 @@ class PickHomeLayoutForm extends sfForm
     }
     $value = $this->choices[$this->values['layout']];
     $snsConfig->setValue($value);
-
-    return (bool)$snsConfig->save();
+    $snsConfig->save();
   }
 }
