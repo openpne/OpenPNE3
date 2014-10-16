@@ -92,4 +92,6 @@ $t->is(op_auto_link_text('www.example.com'), '<a href="http://www.example.com" t
 $t->is(op_auto_link_text('http://example.com/#comment:1'), '<a href="http://example.com/#comment:1" target="_blank">http://example.com/#comment:1</a>');
 // see https://redmine.openpne.jp/issues/3289
 $t->is(op_auto_link_text('http://example.com/テキスト'), '<a href="http://example.com/" target="_blank">http://example.com/</a>テキスト');
+$t->is(op_auto_link_text('http://example.com/hogeテキスト'), '<a href="http://example.com/hoge" target="_blank">http://example.com/hoge</a>テキスト');
 $t->is(op_auto_link_text('http://example.comテキスト'), '<a href="http://example.com" target="_blank">http://example.com</a>テキスト');
+$t->is(op_auto_link_text('http://example.com:８０８０/'), '<a href="http://example.com:" target="_blank">http://example.com:</a>８０８０/'); // http://example.com:/ is valid URI.
