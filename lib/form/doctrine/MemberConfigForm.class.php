@@ -117,18 +117,37 @@ class MemberConfigForm extends BaseForm
     }
     $this->validatorSchema[$name] = opFormItemGenerator::generateValidator($config);
 
-    if (!empty($config['IsConfirm'])) {
+    if (!empty($config['IsUnique']))
+    {
+      $uniqueValidator = new sfValidatorCallback(array(
+        'callback'    => array($this, 'isUnique'),
+        'arguments'   => array('name' => $name),
+        'empty_value' => $this->validatorSchema[$name]->getOption('empty_value'),
+      ));
+
+      $this->validatorSchema[$name] = new sfValidatorAnd(array(
+        $this->validatorSchema[$name],
+        $uniqueValidator,
+      ), array(
+        'required'      => $this->validatorSchema[$name]->getOption('required'),
+        'empty_value'   => $this->validatorSchema[$name]->getOption('empty_value'),
+        'halt_on_error' => true,
+      ));
+    }
+
+    if (!empty($config['IsConfirm']))
+    {
       $this->validatorSchema[$name.'_confirm'] = $this->validatorSchema[$name];
       $this->widgetSchema[$name.'_confirm'] = $this->widgetSchema[$name];
       $this->widgetSchema->setLabel($name.'_confirm', $config['Caption'].' (Confirm)');
 
-      $this->mergePostValidator(new sfValidatorSchemaCompare($name, '==', $name.'_confirm'));
-    }
-
-    if (!empty($config['IsUnique'])) {
-      $this->mergePostValidator(new sfValidatorCallback(array(
-        'callback' => array($this, 'isUnique'),
+      $this->mergePreValidator(new sfValidatorCallback(array(
+        'callback'  => array($this, 'preValidateConfirmField'),
         'arguments' => array('name' => $name),
+      )));
+      $this->mergePostValidator(new sfValidatorCallback(array(
+        'callback'  => array($this, 'postValidateConfirmField'),
+        'arguments' => array('name' => $name, 'validator' => $this->validatorSchema[$name]),
       )));
     }
 
@@ -138,6 +157,66 @@ class MemberConfigForm extends BaseForm
     }
   }
 
+  /**
+   * IsConfirm: true のフィールド用の Pre Validator
+   *
+   * 個別フィールドのバリデーターを一旦 sfValidatorPass に置き換え、
+   * バリデーションは Post Validator でまとめておこなう
+   */
+  public function preValidateConfirmField($validator, $values, $arguments = array())
+  {
+    $name = $arguments['name'];
+
+    // 入力フォーム画面に「必須項目マーク(*)」を表示するためバリデーション直前で変更する
+    $this->validatorSchema[$name] = $this->validatorSchema[$name.'_confirm'] = new sfValidatorPass();
+
+    return $values;
+  }
+
+  /**
+   * IsConfirm: true のフィールド用の Post Validator
+   *
+   * 元フィールドと _confirm フィールドの個別バリデーションもこの中でおこない、
+   * エラーにならなかった場合のみ両者を比較することで、エラーが重複して表示されるのを防ぐ
+   */
+  public function postValidateConfirmField($validator, $values, $arguments = array())
+  {
+    $name = $arguments['name'];
+    $fieldValidator = $arguments['validator'];
+
+    // バリデーションエラー時のフォーム画面に「必須項目マーク(*)」を表示するためバリデーターを元に戻す
+    $this->validatorSchema[$name] = $this->validatorSchema[$name.'_confirm'] = $fieldValidator;
+
+    // 元フィールドのバリデーション
+    try
+    {
+      $values[$name] = $fieldValidator->clean($values[$name]);
+    }
+    catch (sfValidatorError $e)
+    {
+      throw new sfValidatorErrorSchema($validator, array($name => $e));
+    }
+
+    // _confirm フィールドのバリデーション
+    try
+    {
+      $values[$name.'_confirm'] = $fieldValidator->clean($values[$name.'_confirm']);
+    }
+    catch (sfValidatorError $e)
+    {
+      // _confirm だけエラーになる場合、2つのフィールドの値は一致していないので、
+      // sfValidatorSchemaCompare と同じ invalid エラーの例外を投げる
+      throw new sfValidatorErrorSchema($validator, array($name.'_confirm' => new sfValidatorError($validator, 'invalid')));
+    }
+
+    // 2つのフィールドが共にエラーでない場合のみ値を比較する
+    // validator の clean() は値を変更することがあるため、clean() 後の値を比較する
+    $compareValidator = new sfValidatorSchemaCompare($name.'_confirm', '===', $name);
+    $values = $compareValidator->clean($values);
+
+    return $values;
+  }
+
   public function isUnique($validator, $value, $arguments = array())
   {
     if (empty($arguments['name'])) {
@@ -145,7 +224,7 @@ class MemberConfigForm extends BaseForm
     }
 
     $name = $arguments['name'];
-    $data = Doctrine::getTable('MemberConfig')->retrieveByNameAndValue($name, $value[$name]);
+    $data = Doctrine::getTable('MemberConfig')->retrieveByNameAndValue($name, $value);
     if (!$data || !$data->getMember()->getIsActive() || $data->getMember()->getId() == $this->member->getId()) {
       return $value;
     }
