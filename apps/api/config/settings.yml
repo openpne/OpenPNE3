@@ -90,4 +90,4 @@ all:
 #    logging_enabled:        true
 #
 #    # i18n
-    default_culture:        ja        # Default user culture
+    default_culture:        ja_JP        # Default user culture
