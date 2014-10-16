@@ -108,7 +108,7 @@ include_component('default', 'localNav', $localNavOptions);
 <a href="javascript:void(0)" id="SmtSwitchLink"><?php echo __('View this page on smartphone style') ?></a>
 <?php echo javascript_tag('
 document.getElementById("SmtSwitchLink").addEventListener("click", function() {
-  opCookie.set("disable_smt", "0");
+  opCookie.set("disable_smt", "0", undefined, openpne.baseUrl);
   location.reload();
 }, false);
 ') ?>
