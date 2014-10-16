@@ -50,7 +50,10 @@ class activityActions extends opJsonApiActions
       }
       else
       {
-        $builder->includeSns();
+        $builder
+          ->includeSns()
+          ->includeFriends()
+          ->includeSelf();
       }
     }
 
