@@ -73,9 +73,7 @@ abstract class opCommunityAction extends sfActions
 
     $this->communityForm       = new CommunityForm($this->community);
     $this->communityConfigForm = new CommunityConfigForm(array(), array('community' => $this->community));
-    $this->communityFileForm = isset($this->enableImage) && $this->enableImage ?
-      new CommunityFileForm(array(), array('community' => $this->community)) :
-      new CommunityFileForm();
+    $this->communityFileForm = new CommunityFileForm(array(), array('community' => $this->community));
 
     if ($request->isMethod('post'))
     {
