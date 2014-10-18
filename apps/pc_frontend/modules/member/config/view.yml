@@ -1,5 +1,5 @@
 homeSuccess:
-  javascripts: [jquery.min.js, jquery-ui.min.js, util]
+  javascripts: [jquery.min.js, jquery-ui.min.js]
   layout: layoutA
   customize:
     cautionAboutFriendPre:
@@ -23,7 +23,6 @@ homeSuccess:
       is_component: true
 
 profileSuccess:
-  javascripts: [util]
   layout: layoutA
 
 configSuccess:
