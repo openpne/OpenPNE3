@@ -35,7 +35,7 @@ class MemberRelationship extends BaseMemberRelationship implements opAccessContr
         if ('link' === $notification['category']
           && $this->member_id_from === $notification['member_id_from'])
         {
-          opNotificationCenter::delete($this->Member, $notification['id']);
+          opNotificationCenter::setRead($this->Member, $notification['id']);
         }
       }
     }
