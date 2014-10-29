@@ -29,6 +29,14 @@ class opWidgetFormRichTextarea extends sfWidgetFormTextarea
     'theme_advanced_buttons2' => '',
     'theme_advanced_buttons3' => '',
     'convert_urls' => 0,
+    'valid_children' => 'div[*], *',
+    'valid_elements' => '*[*]',
+    'extended_valid_elements' => '*[*]',
+    'convert_fonts_to_spans' => false,
+    'forced_root_block' => false,
+    'force_p_newlines' => false,
+    'preformatted' => true,
+    'apply_source_formatting' => true,
   );
 
   public function __construct($options = array(), $attributes = array())
