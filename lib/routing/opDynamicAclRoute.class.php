@@ -29,16 +29,6 @@ class opDynamicAclRoute extends sfDoctrineRoute
   {
     $result = parent::getObject();
 
-    if (is_null($result))
-    {
-      return $result;
-    }
-
-    if (!$role = $this->getCurrentMemberId())
-    {
-      $role = 'alien';
-    }
-
     if ($result instanceof opAccessControlRecordInterface)
     {
       if (!$result->isAllowed($this->getCurrentMember(), $this->options['privilege']))
