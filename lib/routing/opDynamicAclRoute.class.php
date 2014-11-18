@@ -29,6 +29,19 @@ class opDynamicAclRoute extends sfDoctrineRoute
   {
     $result = parent::getObject();
 
+<<<<<<< HEAD
+=======
+    if (is_null($result))
+    {
+      return $result;
+    }
+
+    if (!$role = $this->getCurrentMemberId())
+    {
+      $role = 'alien';
+    }
+
+>>>>>>> b535a4d... fix opDynamicAclRoute throws fatal error when using allow_empty option (fixes #3507)
     if ($result instanceof opAccessControlRecordInterface)
     {
       if (!$result->isAllowed($this->getCurrentMember(), $this->options['privilege']))
