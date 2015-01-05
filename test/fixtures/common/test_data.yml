@@ -949,6 +949,14 @@ ActivityData:
     body: "dummy8"
     template: "xxxx_template"
 
+ActivityImage:
+  activity1_image:
+    ActivityData: dummy_activity1
+    File:
+      name: dummy_image
+      type: text/plain
+      FileBin: { bin: dummy }
+
 SnsTerm:
   term_friend_pc_frontend:
     name: "friend"

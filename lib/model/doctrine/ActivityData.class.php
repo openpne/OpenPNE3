@@ -44,4 +44,12 @@ class ActivityData extends BaseActivityData
 
     return $query->execute();
   }
+
+  public function preDelete($event)
+  {
+    foreach ($this->Images as $activityImage)
+    {
+      $activityImage->delete();
+    }
+  }
 }
