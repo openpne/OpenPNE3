@@ -747,6 +747,13 @@ OAuthConsumerInformation:
     Image: dummy_file1
     using_apis: ["webapi_member_get"]
     Member: first_member
+  consumer_information3:
+    name: test3
+    using_apis: [webapi_member_get]
+    Image:
+      name: dummy_consumer_information3_image
+      type: text/plain
+      FileBin: { bin: ~ }
 
 OAuthAdminToken:
   dummy_admin_token1:

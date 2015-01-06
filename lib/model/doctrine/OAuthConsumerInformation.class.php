@@ -19,6 +19,14 @@ class OAuthConsumerInformation extends BaseOAuthConsumerInformation
     }
   }
 
+  public function preDelete($event)
+  {
+    if ($this->relatedExists('Image'))
+    {
+      $this->Image->delete();
+    }
+  }
+
   public function getAPICaptions()
   {
     $apiList = array();

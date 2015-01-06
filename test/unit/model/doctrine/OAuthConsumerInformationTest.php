@@ -4,7 +4,7 @@ include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 sfContext::createInstance($configuration);
 
-$t = new lime_test(8, new lime_output_color());
+$t = new lime_test(11);
 
 $table = Doctrine::getTable('OAuthConsumerInformation');
 $oauthConsumer1 = $table->findOneByName('test1');
@@ -40,3 +40,18 @@ $t->isa_ok($result, 'OAuthMemberToken');
 //------------------------------------------------------------
 $t->diag('OAuthConsumerInformation::getImageFileName()');
 $t->is($oauthConsumer1->getImageFileName(), 'dummy_file');
+
+//------------------------------------------------------------
+$t->diag('OAuthConsumerInformation: Cascading Delete');
+$conn->beginTransaction();
+
+$oauthConsumer3 = $table->findOneByName('test3');
+$fileId = $oauthConsumer3->file_id;
+
+$oauthConsumer3->delete($conn);
+
+$t->ok(!Doctrine_Core::getTable('OAuthConsumerInformation')->find($oauthConsumer3->id), 'oauth_consumer is deleted.');
+$t->ok(!Doctrine_Core::getTable('File')->find($fileId), 'file is deleted.');
+$t->ok(!Doctrine_Core::getTable('FileBin')->find($fileId), 'file_bin is deleted.');
+
+$conn->rollback();
