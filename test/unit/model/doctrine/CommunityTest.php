@@ -4,10 +4,11 @@ include_once dirname(__FILE__) . '/../../../bootstrap/unit.php';
 include_once dirname(__FILE__) . '/../../../bootstrap/database.php';
 sfContext::createInstance($configuration);
 
-$t = new lime_test(36, new lime_output_color());
+$t = new lime_test(39);
 
 $community1 = Doctrine::getTable('Community')->findOneByName('CommunityA');
 $community2 = Doctrine::getTable('Community')->findOneByName('CommunityB');
+$community3 = Doctrine::getTable('Community')->findOneByName('CommunityC');
 $community4 = Doctrine::getTable('Community')->findOneByName('CommunityD');
 $community5 = Doctrine::getTable('Community')->findOneByName('CommunityE');
 
@@ -109,3 +110,16 @@ $t->is($community1->generateRoleId(Doctrine::getTable('Member')->find(1)), 'admi
 $t->is($community1->generateRoleId(Doctrine::getTable('Member')->find(2)), 'member', 'generateRoleId() returns "member"');
 $t->is($community1->generateRoleId(Doctrine::getTable('Member')->find(3)), 'everyone', 'generateRoleId() returns "everyone"');
 $t->is($community5->generateRoleId(Doctrine::getTable('Member')->find(2)), 'sub_admin', 'generateRoleId() returns "sub_admin"');
+
+//------------------------------------------------------------
+$t->diag('Community: Cascading Delete');
+$conn->beginTransaction();
+
+$fileId = $community3->file_id;
+$community3->delete($conn);
+
+$t->ok(!Doctrine_Core::getTable('Community')->find($community3->id), 'community is deleted.');
+$t->ok(!Doctrine_Core::getTable('File')->find($fileId), 'file is deleted.');
+$t->ok(!Doctrine_Core::getTable('FileBin')->find($fileId), 'file_bin is deleted.');
+
+$conn->rollback();

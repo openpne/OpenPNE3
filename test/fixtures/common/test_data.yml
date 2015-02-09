@@ -481,6 +481,10 @@ Community:
     name: "CommunityB"
   community_3:
     name: "CommunityC"
+    File:
+      name: dummy_image_community3
+      type: text/plain
+      FileBin: { bin: hogehoge }
   community_4:
     name: "CommunityD"
   community_5:
