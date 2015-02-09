@@ -18,7 +18,7 @@ if (!isset($fixture))
 new sfDatabaseManager($configuration);
 
 $conn = opDoctrineQuery::getMasterConnectionDirect();
-if ($conn instanceof Doctrine_Connection_Mysql)
+if ('fix_wrong_categorized_community' === $fixture && $conn instanceof Doctrine_Connection_Mysql)
 {
   $conn->exec('SET FOREIGN_KEY_CHECKS = 0');
 }

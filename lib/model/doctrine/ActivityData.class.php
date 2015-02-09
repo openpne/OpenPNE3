@@ -24,4 +24,12 @@ class ActivityData extends BaseActivityData
   {
     return $this->getTable()->publicFlagToCaption($this->getPublicFlag());
   }
+
+  public function preDelete($event)
+  {
+    foreach ($this->Images as $activityImage)
+    {
+      $activityImage->delete();
+    }
+  }
 }
