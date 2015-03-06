@@ -38,17 +38,17 @@
           dataType: 'json',
           success: function(data) {
             if(data.status=='success'){
-              $('.ncfriendloading').hide();
-              $('.push_yesno .ncfriendresultmessage').text('リクエストを承認しました');
-              $('.push_yesno .ncfriendresultmessage').show();
+              pushElement.find('.ncfriendloading').hide();
+              pushElement.find('.push_yesno .ncfriendresultmessage').text('リクエストを承認しました');
+              pushElement.find('.push_yesno .ncfriendresultmessage').show();
             }else{
               alert(data.message);
             }
           },
           error: function(r, s, e){
-            $('.ncfriendloading').hide();
-            $('.push_yesno .ncfriendresultmessage').text('既に承認済みです');
-            $('.push_yesno .ncfriendresultmessage').show(); 
+            pushElement.find('.ncfriendloading').hide();
+            pushElement.find('.push_yesno .ncfriendresultmessage').text('既に承認済みです');
+            pushElement.find('.push_yesno .ncfriendresultmessage').show(); 
           }
         });
       });
@@ -71,17 +71,17 @@
           dataType: 'json',
           success: function(data) {
             if(data.status=='success'){
-              $('.ncfriendloading').hide();
-              $('.push_yesno .ncfriendresultmessage').text('リクエストを拒否しました');
-              $('.push_yesno .ncfriendresultmessage').show();
+              pushElement.find('.ncfriendloading').hide();
+              pushElement.find('.push_yesno .ncfriendresultmessage').text('リクエストを拒否しました');
+              pushElement.find('.push_yesno .ncfriendresultmessage').show();
             }else{
               alert(data.message);
             }   
           },
           error: function(r, s, e) {
-            $('.ncfriendloading').hide();
-            $('.push_yesno .ncfriendresultmessage').text('既に拒否済みです');
-            $('.push_yesno .ncfriendresultmessage').show(); 
+            pushElement.find('.ncfriendloading').hide();
+            pushElement.find('.push_yesno .ncfriendresultmessage').text('既に拒否済みです');
+            pushElement.find('.push_yesno .ncfriendresultmessage').show(); 
           }
         });
       });
