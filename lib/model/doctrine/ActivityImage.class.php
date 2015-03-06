@@ -20,4 +20,8 @@
  */
 class ActivityImage extends BaseActivityImage
 {
+  public function preDelete($event)
+  {
+    $this->File->delete();
+  }
 }
