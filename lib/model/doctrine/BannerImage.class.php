@@ -9,14 +9,13 @@
  */
 class BannerImage extends BaseBannerImage
 {
-  public function delete(Doctrine_Connection $conn = null)
+  public function preDelete($event)
   {
-    $bannerUseImageList = Doctrine::getTable('BannerUseImage')->findByBannerImageId($this->getId());
-    foreach ($bannerUseImageList as $bannerUseImage)
+    foreach ($this->BannerUseImage as $bannerUseImage)
     {
       $bannerUseImage->delete();
     }
 
-    return parent::delete($conn);
+    $this->File->delete();
   }
 }
