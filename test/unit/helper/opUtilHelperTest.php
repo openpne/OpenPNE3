@@ -75,3 +75,23 @@ $t->is(op_link_to_member(null), '-', 'set null member');
 
 Doctrine::getTable('SnsConfig')->set('nickname_of_member_who_does_not_have_credentials', 'I am a pen.');
 $t->is(op_link_to_member(null), 'I am a pen.', 'set nickname_of_member_who_does_not_have_credentials original setting');
+
+//------------------------------------------------------------
+$t->diag('op_auto_link_text()');
+$t->is(op_auto_link_text('http://example.com/'), '<a href="http://example.com/" target="_blank">http://example.com/</a>');
+$t->is(op_auto_link_text('https://example.com/'), '<a href="https://example.com/" target="_blank">https://example.com/</a>', 'protocol');
+$t->is(op_auto_link_text('http://sub.example.com/'), '<a href="http://sub.example.com/" target="_blank">http://sub.example.com/</a>', 'subdomain');
+$t->is(op_auto_link_text('http://example.com/hoge'), '<a href="http://example.com/hoge" target="_blank">http://example.com/hoge</a>', 'path');
+$t->is(op_auto_link_text('http://example.com:8080/'), '<a href="http://example.com:8080/" target="_blank">http://example.com:8080/</a>', 'port');
+$t->is(op_auto_link_text('http://example.com/#foo'), '<a href="http://example.com/#foo" target="_blank">http://example.com/#foo</a>', 'anchor');
+$t->is(op_auto_link_text('http://example.com/?foo=1&bar=0'), '<a href="http://example.com/?foo=1&bar=0" target="_blank">http://example.com/?foo=1&bar=0</a>', 'query');
+$t->is(op_auto_link_text('https://sub.example.com:8080/hoge?foo=1&bar=0#foo'), '<a href="https://sub.example.com:8080/hoge?foo=1&bar=0#foo" target="_blank">https://sub.example.com:8080/hoge?foo=1&bar=0#foo</a>');
+$t->is(op_auto_link_text('http://example.com'), '<a href="http://example.com" target="_blank">http://example.com</a>');
+$t->is(op_auto_link_text('www.example.com'), '<a href="http://www.example.com" target="_blank">www.example.com</a>');
+// see https://trac.openpne.jp/ticket/3553
+$t->is(op_auto_link_text('http://example.com/#comment:1'), '<a href="http://example.com/#comment:1" target="_blank">http://example.com/#comment:1</a>');
+// see https://redmine.openpne.jp/issues/3289
+$t->is(op_auto_link_text('http://example.com/テキスト'), '<a href="http://example.com/" target="_blank">http://example.com/</a>テキスト');
+$t->is(op_auto_link_text('http://example.com/hogeテキスト'), '<a href="http://example.com/hoge" target="_blank">http://example.com/hoge</a>テキスト');
+$t->is(op_auto_link_text('http://example.comテキスト'), '<a href="http://example.com" target="_blank">http://example.com</a>テキスト');
+$t->is(op_auto_link_text('http://example.com:８０８０/'), '<a href="http://example.com:" target="_blank">http://example.com:</a>８０８０/'); // http://example.com:/ is valid URI.

@@ -311,24 +311,24 @@ if (!defined('SF_AUTO_LINK_RE'))
 {
   define('SF_AUTO_LINK_RE', '~
     (                       # leading text
-      <\w+.*?>|             #   leading HTML tag, or
+      <[0-9A-Za-z]+.*?>|    #   leading HTML tag, or
       [^=!:\'"/]|           #   leading punctuation, or
       ^|                    #   beginning of line, or
-      \s?                   #   leading whitespaces
+      \ ?                   #   leading whitespaces
     )
     (
       (?:https?://)|        # protocol spec, or
       (?:www\.)             # www.*
     )
     (
-      [-\w]+                   # subdomain or domain
-      (?:\.[-\w]+)*            # remaining subdomains or domain
-      (?::\d+)?                # port
+      [-0-9A-Za-z]+            # subdomain or domain
+      (?:\.[-0-9A-Za-z]+)*     # remaining subdomains or domain
+      (?::[0-9]+)?             # port
       \/?
       [a-zA-Z0-9_\-\/.,:;\~\?@&=+$%#!()]*
     )
-    ([[:punct:]]|\s|<|$)    # trailing text
-   ~x');
+    ([^a-zA-Z0-9_\-\/.,:;\~\?@&=+$%#!()]|\ |<|$)    # trailing text
+   ~xu');
 }
 
 function op_url_cmd($text)
