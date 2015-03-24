@@ -1335,6 +1335,10 @@
         <source>Save</source>
         <target>確定</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Private&lt;br /&gt;Member</source>
+        <target>非公開&lt;br /&gt;メンバー</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
