@@ -1407,6 +1407,10 @@
         <source>%Community% does not exist.</source>
         <target>%Community%がありません。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Private&lt;br /&gt;Member</source>
+        <target>非公開&lt;br /&gt;メンバー</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

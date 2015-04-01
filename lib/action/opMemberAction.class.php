@@ -228,6 +228,10 @@ abstract class opMemberAction extends sfActions
     $id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
     if ('member_profile_mine' === sfContext::getInstance()->getRouting()->getCurrentRouteName())
     {
+      if ($id !== $this->getUser()->getMemberId())
+      {
+        $this->redirect('member/profile?id='.$id);
+      }
       $this->forward404Unless($id);
       $this->member = $this->getUser()->getMember();
     }
