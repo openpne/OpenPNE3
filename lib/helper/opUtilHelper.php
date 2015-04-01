@@ -1014,9 +1014,10 @@ function op_replace_sns_term($string)
  * @value  mixed   $value (string or Member object)
  * @param  string  $options
  * @param  string  $routeName
+ * @param  bool    $isCheckPrivate
  * @return string
  */
-function op_link_to_member($value, $options = array(), $routeName = '@obj_member_profile')
+function op_link_to_member($value, $options = array(), $routeName = '@obj_member_profile', $isCheckPrivate = false)
 {
   $member = null;
   if ($value instanceof sfOutputEscaper || $value instanceof Member)
@@ -1030,6 +1031,15 @@ function op_link_to_member($value, $options = array(), $routeName = '@obj_member
 
   if ($member && $member->id)
   {
+    if ($isCheckPrivate && sfContext::hasInstance())
+    {
+      $user = sfContext::getInstance()->getUser();
+      if (!$user->isSNSMember() && ProfileTable::PUBLIC_FLAG_WEB !== (int)$member->getConfig('profile_page_public_flag'))
+      {
+        return isset($options['private_text']) ? $options['private_text'] : __('Private<br />Member');
+      }
+    }
+
     if (!($member instanceof sfOutputEscaper))
     {
       $member = sfOutputEscaper::escape(sfConfig::get('sf_escaping_method'), $member);

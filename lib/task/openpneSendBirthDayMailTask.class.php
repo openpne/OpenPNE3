@@ -38,6 +38,7 @@ EOF;
     $profiles = Doctrine::getTable('MemberProfile')->createQuery()
       ->where('profile_id = ?', $birthday->id)
       ->andWhere('DATE_FORMAT(value_datetime, ?) = ?', array('%m-%d', date('m-d', strtotime('+ 1 week'))))
+      ->andWhereNotIn('public_flag', ProfileTable::PUBLIC_FLAG_PRIVATE)
       ->execute();
     opApplicationConfiguration::registerZend();
 

@@ -75,3 +75,7 @@ $t->is(op_link_to_member(null), '-', 'set null member');
 
 Doctrine::getTable('SnsConfig')->set('nickname_of_member_who_does_not_have_credentials', 'I am a pen.');
 $t->is(op_link_to_member(null), 'I am a pen.', 'set nickname_of_member_who_does_not_have_credentials original setting');
+
+$t->is(op_link_to_member(1, array(), '@obj_member_profile', true), '非公開<br />メンバー', 'Displayed as Private Member');
+$t->is(op_link_to_member(1, array(), '@obj_member_profile', false), link_to('A', '@obj_member_profile?id=1'), 'link to member 1(Not Private)');
+$t->is(op_link_to_member(1, array('private_text' => 'private_text'), '@obj_member_profile', true), 'private_text', 'display of "private_text"');
