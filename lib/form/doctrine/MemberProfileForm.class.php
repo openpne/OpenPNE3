@@ -54,18 +54,6 @@ class MemberProfileForm extends BaseForm
 
       $memberProfile = Doctrine::getTable('MemberProfile')->retrieveByMemberIdAndProfileId($memberId, $profile->getId());
 
-      if (is_null($value['value']))
-      {
-        if ($memberProfile)
-        {
-          if ($profile->isMultipleSelect())
-          {
-            $memberProfile->clearChildren();
-          }
-          $memberProfile->delete();
-        }
-        continue;
-      }
       if (!$memberProfile)
       {
         $memberProfile = new MemberProfile();
