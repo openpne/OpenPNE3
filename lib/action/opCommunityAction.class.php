@@ -91,8 +91,11 @@ abstract class opCommunityAction extends sfActions
 
     $this->communityForm       = new CommunityForm($this->community);
     $this->communityConfigForm = new CommunityConfigForm(array(), array('community' => $this->community));
-    if (!$this->unusedFileForm){$this->communityFileForm = new CommunityFileForm(array(), array('community' => $this->community));}
-    
+    if (!sfConfig::get('app_is_mobile', false))
+    {
+      $this->communityFileForm = new CommunityFileForm(array(), array('community' => $this->community));
+    }
+
     if ($request->isMethod('post'))
     {
       $params = $request->getParameter('community');
