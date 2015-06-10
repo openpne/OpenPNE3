@@ -80,13 +80,13 @@ abstract class opCommunityAction extends sfActions
 
     if ($request->isMethod('post'))
     {
-      $params = $request->getParameter('community');
+      $params = $request->getParameter($this->communityForm->getName());
       $params['id'] = $this->id;
       $this->communityForm->bind($params);
-      $this->communityConfigForm->bind($request->getParameter('community_config'));
+      $this->communityConfigForm->bind($request->getParameter($this->communityConfigForm->getName()));
       if($this->communityFileForm)
       {
-        $this->communityFileForm->bind($request->getParameter('community_file'), $request->getFiles('community_file'));
+        $this->communityFileForm->bind($request->getParameter($this->communityFileForm->getName()), $request->getFiles('community_file'));
       }
       if ($this->communityForm->isValid() && $this->communityConfigForm->isValid() && (!$this->communityFileForm || $this->communityFileForm->isValid()))
       {
