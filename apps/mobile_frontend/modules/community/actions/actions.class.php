@@ -140,15 +140,4 @@ class communityActions extends opCommunityAction
       $this->redirect('community/configImage?id='.$this->id);
     }
   }
-  /**
-   * Executes edit action
-   *
-   * @param sfRequest $request A request object
-   */
-  public function executeEdit(opWebRequest $request)
-  {
-    $this->unusedFileForm = true;
-
-    return parent::executeEdit($request);
-  }
 }
