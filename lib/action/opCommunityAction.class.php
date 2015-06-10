@@ -87,19 +87,15 @@ abstract class opCommunityAction extends sfActions
       if($this->communityFileForm)
       {
         $this->communityFileForm->bind($request->getParameter('community_file'), $request->getFiles('community_file'));
-        if ($this->communityForm->isValid() && $this->communityConfigForm->isValid() && $this->communityFileForm->isValid())
-        {
-          $this->communityForm->save();
-          $this->communityConfigForm->save();
-          $this->communityFileForm->save();
-
-          $this->redirect('@community_home?id='.$this->community->getId());
-        }
       }
-      elseif ($this->communityForm->isValid() && $this->communityConfigForm->isValid())
+      if ($this->communityForm->isValid() && $this->communityConfigForm->isValid() && (!$this->communityFileForm || $this->communityFileForm->isValid()))
       {
         $this->communityForm->save();
         $this->communityConfigForm->save();
+        if ($this->communityFileForm)
+        {
+          $this->communityFileForm->save();
+        }
 
         $this->redirect('@community_home?id='.$this->community->getId());
       }
