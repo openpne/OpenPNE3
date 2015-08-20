@@ -173,14 +173,14 @@ class opFormItemGenerator
     {
       $option['choices'] = $choices;
       $option['multiple'] = true;
-      $obj = new sfValidatorChoice($option);
+      $obj = new opValidatorChoice($option);
       return $obj;
     }
     if ($field['FormType'] === 'select' || $field['FormType'] === 'radio')
     {
       $option = array('choices' => $choices);
       $option['required'] = $field['IsRequired'];
-      $obj = new sfValidatorChoice($option);
+      $obj = new opValidatorChoice($option);
       return $obj;
     }
 

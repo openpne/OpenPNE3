@@ -48,7 +48,7 @@ class PickHomeLayoutForm extends sfForm
       'image_prefix' => 'layout_selection_',
     )));
 
-    $this->setValidator('layout', new sfValidatorChoice(array(
+    $this->setValidator('layout', new opValidatorChoice(array(
       'choices' => array_keys($this->choices),
     )));
     $this->widgetSchema->setNameFormat('pick_home_layout[%s]');

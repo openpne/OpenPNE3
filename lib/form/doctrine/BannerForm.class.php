@@ -40,7 +40,7 @@ class BannerForm extends BaseBannerForm
       );
       $this->setValidator(
         $name,
-        new sfValidatorChoice(array('choices' => array('1', '0')))
+        new opValidatorChoice(array('choices' => array('1', '0')))
       );
     }
     // html
@@ -60,7 +60,7 @@ class BannerForm extends BaseBannerForm
     );
     $this->setValidator(
       'is_use_html',
-      new sfValidatorChoice(array('choices' => array('1', '0')))
+      new opValidatorChoice(array('choices' => array('1', '0')))
     );
 
     $this->widgetSchema->setNameFormat('banner[%s]');

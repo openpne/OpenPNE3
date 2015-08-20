@@ -63,7 +63,7 @@ class PluginActivationForm extends sfForm
     }
 
     $this->setWidget($this->pluginFieldKey, new sfWidgetFormChoice($widgetOptions));
-    $this->setValidator($this->pluginFieldKey, new sfValidatorChoice($validatorOptions, $validatorMessages));
+    $this->setValidator($this->pluginFieldKey, new opValidatorChoice($validatorOptions, $validatorMessages));
     $this->setDefault($this->pluginFieldKey, $pluginDefault);
 
     $this->widgetSchema->setNameFormat('plugin_activation[%s]');
