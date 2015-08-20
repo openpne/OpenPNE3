@@ -64,7 +64,7 @@ class ProfileForm extends BaseProfileForm
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateValueMin'))));
     $this->mergePostValidator(new sfValidatorCallback(array('callback' => array('ProfileForm', 'validateValueMax'))));
 
-    $this->setValidator('default_public_flag', new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('Profile')->getPublicFlags(false)))));
+    $this->setValidator('default_public_flag', new opValidatorChoice(array('choices' => array_keys(Doctrine::getTable('Profile')->getPublicFlags(false)))));
     $this->setValidator('value_min', new sfValidatorPass());
     $this->setValidator('value_max', new sfValidatorPass());
     $this->setValidator('value_type', new sfValidatorString(array('required' => false, 'empty_value' => 'string')));
