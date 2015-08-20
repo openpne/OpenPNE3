@@ -29,7 +29,7 @@ class ActivityDataForm extends BaseActivityDataForm
 
     $choices = $this->getObject()->getTable()->getPublicFlags();
     $this->setWidget('public_flag', new sfWidgetFormChoice(array('choices' => $choices)));
-    $this->setValidator('public_flag', new sfValidatorChoice(array('choices' => array_keys($choices))));
+    $this->setValidator('public_flag', new opValidatorChoice(array('choices' => array_keys($choices))));
 
     $this->setWidget('next_uri', new opWidgetFormInputHiddenNextUri());
     $this->setValidator('next_uri', new opValidatorNextUri());
