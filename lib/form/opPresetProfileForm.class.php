@@ -26,7 +26,7 @@ class opPresetProfileForm extends ProfileForm
     if ($this->isNew())
     {
       $this->setWidget('preset', new sfWidgetFormSelect(array('choices' => $this->getPresetChoiceList())));
-      $this->setValidator('preset', new sfValidatorChoice(array('choices' => array_keys($this->getPresetChoiceList()))));
+      $this->setValidator('preset', new opValidatorChoice(array('choices' => array_keys($this->getPresetChoiceList()))));
       $this->widgetSchema->setLabel('preset', 'Preset');
       $this->widgetSchema->moveField('preset', sfWidgetFormSchema::FIRST);
     }

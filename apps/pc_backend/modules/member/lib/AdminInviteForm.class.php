@@ -21,7 +21,7 @@ class AdminInviteForm extends InviteForm
   {
     $choice = $this->getOption('authModes', array());
     $this->setWidget('auth_mode', new sfWidgetFormChoice(array('choices' => $choice)));
-    $this->setValidator('auth_mode', new sfValidatorChoice(array('choices' => array_keys($choice))));
+    $this->setValidator('auth_mode', new opValidatorChoice(array('choices' => array_keys($choice))));
 
     $this->setWidget('mail_address', new sfWidgetFormTextarea());
     $this->setValidator('mail_address', new sfValidatorPass());

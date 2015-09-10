@@ -25,7 +25,7 @@ class opLanguageSelecterForm extends BaseForm
       'next_uri' => new opWidgetFormInputHiddenNextUri(),
     ));   
     $this->setValidators(array(
-      'culture' => new sfValidatorChoice(array('choices' => array_keys($choices))),
+      'culture' => new opValidatorChoice(array('choices' => array_keys($choices))),
       'next_uri' => new opValidatorNextUri(),
     ));
 

@@ -50,7 +50,7 @@ class MemberConfigMailForm extends MemberConfigForm
           if ('dailyNews' !== $key)
           {
             $this->setWidget($name, new sfWidgetFormChoice(array('choices' => $choices, 'expanded' => true)));
-            $this->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices), 'required' => true)));
+            $this->setValidator($name, new opValidatorChoice(array('choices' => array_keys($choices), 'required' => true)));
             $this->widgetSchema->setLabel($name, $value['caption']);
 
             $this->setDefault($name, $this->member->getConfig($name, 1));
@@ -67,7 +67,7 @@ class MemberConfigMailForm extends MemberConfigForm
             ), $count);
             $dailyNewsChoices = array("Don't Send", $translated, "Send Everyday");
             $this->setWidget($name, new sfWidgetFormChoice(array('choices' => $dailyNewsChoices, 'expanded' => true)));
-            $this->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($dailyNewsChoices), 'required' => true)));
+            $this->setValidator($name, new opValidatorChoice(array('choices' => array_keys($dailyNewsChoices), 'required' => true)));
             $this->widgetSchema->setLabel($name, $value['caption']);
 
             $this->setDefault($name, $this->member->getConfig($name, 2));
