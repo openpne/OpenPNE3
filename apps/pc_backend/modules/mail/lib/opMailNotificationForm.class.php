@@ -32,7 +32,7 @@ class opMailNotificationForm extends sfForm
         }
 
         $this->setWidget($fieldName, new sfWidgetFormChoice(array('choices' => $choices, 'expanded' => true)));
-        $this->setValidator($fieldName, new sfValidatorChoice(array('choices' => array_keys($choices))));
+        $this->setValidator($fieldName, new opValidatorChoice(array('choices' => array_keys($choices))));
         $this->setDefault($fieldName, !in_array($fieldName, $disabledList));
         $this->widgetSchema->setLabel($fieldName, $v['caption']);
       }
