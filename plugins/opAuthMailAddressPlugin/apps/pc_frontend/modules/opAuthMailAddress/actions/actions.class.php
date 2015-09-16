@@ -67,7 +67,6 @@ class opAuthMailAddressActions extends opAuthMailAddressPluginAction
       return sfView::ERROR;
     }
 
-    $this->getUser()->setMemberId($memberConfig->getMemberId());
     $this->getUser()->setIsSNSRegisterBegin(true);
 
     $this->redirect('member/registerInput?token='.$token);
