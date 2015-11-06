@@ -59,6 +59,11 @@ class opValidatorProfile extends sfValidatorBase
       }
     }
 
+    if ('op_preset_postal_code' === $this->profile->getName() && !preg_match("/^\d{3}-\d{4}$/", $value['value']))
+    {
+      throw new sfValidatorError($this, 'Unexpected extra form field named "%field%".');
+    }
+
     return $clean;
   }
 }
