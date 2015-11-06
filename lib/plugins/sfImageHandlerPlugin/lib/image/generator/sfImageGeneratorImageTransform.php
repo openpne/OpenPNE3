@@ -91,8 +91,9 @@ abstract class sfImageGeneratorImageTransform extends sfImageGenerator
       {
         throw new sfException($result->getMessage());
       }
-      $this->transform->load($tmpoutputfilename);
-      unlink($tmpoutputfilename);     
+      rename($tmpoutputfilename, $tmpfilename);
+      $this->transform->load($tmpfilename);
+      $this->transform->fit($this->width, $this->height);
     }
 
     if ($this->width && $this->height)
