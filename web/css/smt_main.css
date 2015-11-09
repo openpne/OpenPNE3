@@ -312,6 +312,7 @@ hr.white2 {
 .row_membername {
   height: 30px;
   line-height: 12px;
+  overflow: hidden;
 }
 
 .marginl0 {
