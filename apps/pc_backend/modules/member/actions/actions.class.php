@@ -100,6 +100,19 @@ class memberActions extends sfActions
     );
     $this->form = new AdminInviteForm(null, $options);
 
+    $adminInvitedMemberIds = Doctrine::getTable('MemberConfig')->getAdminInvitedMemberIds();
+    $query = Doctrine_Query::create()
+      ->from('MemberConfig')
+      ->where('(name = ? OR name =?)', array('pc_address', 'pc_address_pre'))
+      ->andWhereIn('member_id', $adminInvitedMemberIds)
+      ->orderBy('id desc');
+
+    $this->pager = new sfDoctrinePager('MemberConfig', 10);
+    $this->pager->setQuery($query);
+
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
+
     if ($request->isMethod(sfWebRequest::POST))
     {
       $this->form->bind($request->getParameter('member_config'));
