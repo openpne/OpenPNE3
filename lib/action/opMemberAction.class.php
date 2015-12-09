@@ -170,6 +170,9 @@ abstract class opMemberAction extends sfActions
   {
     $this->forward404Unless(opToolkit::isEnabledRegistration((sfConfig::get('app_is_mobile') ? 'mobile' : 'pc')));
 
+    $this->redirectIf($this->getUser()->isSNSMember(), array('sf_route' => 'homepage'));
+    $this->redirectIf($this->getUser()->isRegisterFinish(), $this->getUser()->getRegisterEndAction());
+
     $this->token = $request['token'];
     $member = $this->getUser()->setRegisterToken($this->token);
 
