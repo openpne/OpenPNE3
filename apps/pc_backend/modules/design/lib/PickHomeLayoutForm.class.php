@@ -71,6 +71,7 @@ class PickHomeLayoutForm extends sfForm
     $snsConfig->setValue($value);
 
     $snsConfig->save();
+
     return true;
   }
 }
