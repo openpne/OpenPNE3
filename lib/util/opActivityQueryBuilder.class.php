@@ -148,6 +148,9 @@ class opActivityQueryBuilder
         ->addWhere('EXISTS (FROM CommunityMember cm WHERE cm.member_id = a.member_id AND cm.community_id = ?)', $this->communityId);
     }
 
+    $blockedBy = Doctrine_Core::getTable('MemberRelationship')->getBlockedMemberIdsByTo($this->viewerId);
+    $query->whereNotIn('member_id', $blockedBy);
+
     return $query->orderBy('id DESC');
   }
 
