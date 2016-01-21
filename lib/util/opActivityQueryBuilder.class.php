@@ -149,7 +149,7 @@ class opActivityQueryBuilder
     }
 
     $blockedBy = Doctrine_Core::getTable('MemberRelationship')->getBlockedMemberIdsByTo($this->viewerId);
-    $query->whereNotIn('member_id', $blockedBy);
+    $query->whereNotIn('a.member_id', $blockedBy);
 
     return $query->orderBy('id DESC');
   }
