@@ -253,7 +253,7 @@ class ActivityDataTable extends Doctrine_Table
     $q->andWhere('('.$dql.')', $dqlParams);
     $q->andWhere('in_reply_to_activity_id IS NULL');
 
-    $viewerMemberId = sfContext::getInstance()->getUser()->getMemberId();
+    $viewerMemberId = $this->getMyMemberId();
     $blockedBy = Doctrine_Core::getTable('MemberRelationship')->getBlockedMemberIdsByTo($viewerMemberId);
     $q->whereNotIn('member_id', $blockedBy);
 
@@ -386,7 +386,7 @@ class ActivityDataTable extends Doctrine_Table
       }
     }
 
-    $viewerMemberId = sfContext::getInstance()->getUser()->getMemberId();
+    $viewerMemberId = $this->getMyMemberId();
     $blockedBy = Doctrine_Core::getTable('MemberRelationship')->getBlockedMemberIdsByTo($viewerMemberId);
     $q->whereNotIn('member_id', $blockedBy);
 
