@@ -25,14 +25,21 @@
   <span id="flashNotice" class="flash"><?php echo __('No members matching') ?></span>
 <?php else: ?>
   <h2><?php echo __('Send history') ?></h2>
-  <form action="<?php echo url_for('member/invite') ?>" method="post" class="form-horizontal" role="form">
+  <?php if ($deleteForm->hasGlobalErrors()): ?>
+    <?php foreach ($deleteForm->getGlobalErrors() as $name => $error): ?>
+        <?php echo __($error) ?>
+    <?php endforeach; ?>
+  <?php endif; ?>
+  <?php echo $deleteForm->renderFormTag(url_for('member/invite'), array('method' => 'post', 'class' => 'form-horizontal', 'role' => 'form')) ?>
+  <input type="hidden" name="page" value="<?php echo $pager->getPage() ?>"/>
   <div>
-    <table>
+    <table id="dynamic-table" class="table table-striped table-bordered table-hover">
       <caption>
         <?php op_include_pager_navigation($pager, 'member/invite?page=%d', array('use_current_query_string' => true)) ?>
       </caption>
       <thead>
       <tr>
+        <th><?php echo __('Delete') ?></th>
         <th><?php echo __('Send situation') ?></th>
         <th><?php echo __('Email') ?></th>
         <th><?php echo __('Send date') ?></th>
@@ -40,20 +47,39 @@
       </thead>
       <tbody>
       <?php foreach ($pager->getResults() as $value): ?>
-      <tr>
-        <td>
-          <?php echo __('Send completion') ?>
-        </td>
-        <td>
-          <?php echo $value['value'] ?>
-        </td>
-        <td>
-          <?php echo $value['created_at'] ?>
-        </td>
-      </tr>
+        <?php $field = $deleteForm[$value->id] ?>
+        <tr>
+          <td>
+            <?php echo $field ?>
+          </td>
+          <td>
+            <?php echo __('Send completion') ?>
+          </td>
+          <td>
+            <?php echo $field->renderLabel() ?>
+          </td>
+          <td>
+            <?php echo $value['created_at'] ?>
+          </td>
+        </tr>
       <?php endforeach; ?>
       </tbody>
     </table>
+  </div>
+  <div class="clearfix">
+    <div class="col-md-12 align-right">
+      <?php echo $deleteForm->renderHiddenFields() ?>
+      <button class="btn btn-sm btn-primary" type="submit">
+        <i class="ace-icon fa fa-check bigger-110"></i>
+        <?php echo __('Send') ?>
+      </button>
+
+      &nbsp; &nbsp; &nbsp;
+      <button class="btn btn-sm" type="reset">
+        <i class="ace-icon fa fa-undo bigger-110"></i>
+        <?php echo __('Reset') ?>
+      </button>
+    </div>
   </div>
   </form>
 <?php endif; ?>
