@@ -76,6 +76,21 @@ $user
   ->with('response')->isStatusCode(200)
 ;
 
+$user->login('sns5@example.com', 'password');
+$user
+->info('4. Testing `/community/joinList?id=*`')
+->get('/community/joinList?id=1')
+  ->info('4-1. Member E cannot view the list of communities joined by Member A (Access blocked)')
+  ->checkDispatch('community', 'joinlist')
+  ->isStatusCode(404)
+->get('/community/joinList?id=2')
+  ->info('4-2. Member E can view the list of communities joined by Member B (Normal behavior)')
+  ->checkDispatch('community', 'joinlist')
+  ->isStatusCode(200)
+  ->with('response')
+    ->checkElement('#communityList tr.text a', 5) // 5 communities
+;
+
 $user->login('sns@example.com', 'password');
 $user
   ->info('community/search')
