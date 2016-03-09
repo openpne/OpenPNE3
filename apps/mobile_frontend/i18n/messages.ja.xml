@@ -1255,6 +1255,10 @@
         <source>A mobile UID is invalid.</source>
         <target>その携帯電話の個体識別番号は無効です。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Invalid pc_address.</source>
+        <target>ﾒｰﾙｱﾄﾞﾚｽが無効です。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
