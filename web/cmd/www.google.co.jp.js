@@ -10,38 +10,40 @@ function url2cmd(url, googlemapsUrl) {
 }
 
 function main(id, googlemapsUrl) {
-  if (id.match(/@/)) {
-    var cmd = id.match(/@(.+)z/);
-    var param = cmd[1].split(",");
-    var lon = param[0];
-    var lat = param[1];
-    var z = param[2];
+  var param = { lon: 0, lat: 0, z: 15, t: '', q: '' };
+  var result = id.match(/@([0-9\.]*),([0-9\.]*),([0-9]*z)/);
 
-    var html = ''
-      + '<iframe marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" bordercolor="#000000" src="'+googlemapsUrl+'?x='+lon+'&y='+lat+'&z='+z+'" name="sample" height="350">'
-      + 'この部分はインラインフレームを使用しています。'
-      + '</iframe>';
+  if (result) {
+    param.lon = result[1];
+    param.lat = result[2];
+    param.z   = result[3];
   } else {
-    var cmd = id.split("&amp;");
-    var param = new Array();
-    param["z"] = "15";
-    param["ll"] = "0,0";
-    for (i=0; i<cmd.length; i++) {
-      var work = cmd[i].split("=");
-      if ( work.length == 2 ) {
-        param[work[0]] = work[1];
+    var query = id.split('&amp;');
+    for(i = 0; i < query.length; i++) {
+      var pair = query[i].split('=');
+      if (pair.length !== 2) {
+        continue;
+      }
+      var key = pair[0];
+      var value = pair[1];
+
+      if (param[key] !== undefined) {
+        param[key] = value;
+      } else if ('ll' === key) {
+        param.lon = value.split(',')[0];
+        param.lat = value.split(',')[1];
       }
     }
-    var ll = param["ll"].split(",");
-    var z = param["z"];
-    var t = param["t"];
-    var q = param["q"];
-
-    var html = ''
-      + '<iframe marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" bordercolor="#000000" src="'+googlemapsUrl+'?x='+ll[0]+'&y='+ll[1]+'&z='+z+'&t='+t+'&q='+q+'" name="sample" height="350">'
-      + 'この部分はインラインフレームを使用しています。'
-      + '</iframe>';
   }
+
+  var html = '<iframe marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" bordercolor="#000000"'
+           + 'src="' + googlemapsUrl
+           + '?x=' + param.lon
+           + '&y=' + param.lat
+           + '&z=' + param.z
+           + '&t=' + param.t
+           + '&q=' + param.q
+           + '" name="sample" height="350">この部分はインラインフレームを使用しています。</iframe>';
 
   document.write(html);
 }
