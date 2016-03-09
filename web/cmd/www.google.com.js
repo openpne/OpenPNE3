@@ -1,5 +1,5 @@
 function url2cmd(url, googlemapsUrl) {
-  var www_google_com_maps = url.match(/^http:\/\/www\.google\.com\/maps\?(.+)/);
+  var www_google_com_maps = url.match(/^https?:\/\/www\.google\.com\/maps[\?\/](.+)/);
 
   if (www_google_com_maps) {
     var id = RegExp.$1;
