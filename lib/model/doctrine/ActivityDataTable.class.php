@@ -253,6 +253,10 @@ class ActivityDataTable extends Doctrine_Table
     $q->andWhere('('.$dql.')', $dqlParams);
     $q->andWhere('in_reply_to_activity_id IS NULL');
 
+    $viewerMemberId = $this->getMyMemberId();
+    $blockedBy = Doctrine_Core::getTable('MemberRelationship')->getBlockedMemberIdsByTo($viewerMemberId);
+    $q->whereNotIn('member_id', $blockedBy);
+
     if ($isCheckApp)
     {
       if ('mobile_frontend' == sfConfig::get('sf_app'))
@@ -381,6 +385,10 @@ class ActivityDataTable extends Doctrine_Table
         $q->andWhere('is_pc = ?', true);
       }
     }
+
+    $viewerMemberId = $this->getMyMemberId();
+    $blockedBy = Doctrine_Core::getTable('MemberRelationship')->getBlockedMemberIdsByTo($viewerMemberId);
+    $q->whereNotIn('member_id', $blockedBy);
 
     return $q;
   }
