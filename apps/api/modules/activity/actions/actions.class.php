@@ -186,6 +186,8 @@ class activityActions extends opJsonApiActions
         $this->forward400('target_id parameter not specified.');
       }
 
+      $this->checkCommunityMember($request['target_id']);
+
       $options['foreign_table'] = 'community';
       $options['foreign_id'] = $request['target_id'];
     }
@@ -271,5 +273,13 @@ class activityActions extends opJsonApiActions
     $this->activityData = $query->execute();
 
     $this->setTemplate('array');
+  }
+
+  protected function checkCommunityMember($communityId)
+  {
+    $memberId = $this->getUser()->getMemberId();
+    $isCommunityMember = Doctrine_Core::getTable('CommunityMember')->isMember($memberId, $communityId);
+
+    $this->forward403Unless($isCommunityMember, 'You\'re not participate in this community.');
   }
 }
