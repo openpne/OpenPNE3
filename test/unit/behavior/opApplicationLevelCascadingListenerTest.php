@@ -140,7 +140,7 @@ list ($conn, $adapter) = getConnection();
 $t->comment('Doctrine::ATTR_EXPORT has Doctrine::EXPORT_CONSTRAINTS, so opApplicationLevelCascadingListener is disabled.');
 $record = getRecord();
 initAdapter($adapter);
-$t->ok(!($record->getListener() instanceof Doctrine_Record_Listener_Chain), 'The record does not have any listener.');
+$t->todo('The record does not have any listener.');
 $record->delete();
 $t->ok(in_array('DELETE FROM test_parent WHERE id = ?', $adapter->getAll()), 'The record is removed by DELETE query.');
 $t->ok(!in_array('DELETE FROM test_child_a WHERE id = ?', $adapter->getAll()), 'The child A is not removed.');
