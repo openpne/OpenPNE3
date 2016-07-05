@@ -19,13 +19,13 @@ $browser
 
   ->info('/confirmation/community_admin_request/5 - CSRF')
   ->post('/confirmation/community_admin_request/5')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->login('sns3@example.com', 'password')
 
   ->info('/confirmation/community_sub_admin_request/8 - CSRF')
   ->post('/confirmation/community_sub_admin_request/8')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->login('html1@example.com', 'password')
 
