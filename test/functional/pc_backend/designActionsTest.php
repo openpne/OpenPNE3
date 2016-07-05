@@ -124,12 +124,10 @@ $browser
   ->checkCSRF()
 
   ->info('/design/banner')
-  ->post('/design/banner')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/design/banneradd')
-  ->post('/design/banneradd')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/design/customCss')
   ->post('/design/customCss')

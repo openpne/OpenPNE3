@@ -12,8 +12,7 @@ $browser
 
 // CSRF
   ->info('/profile/edit - CSRF')
-  ->post('/profile/edit')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/profile/delete/id/1 - CSRF')
   ->post('/profile/delete/id/1')
@@ -25,7 +24,6 @@ $browser
   ->checkCSRF()
 
   ->info('/profile/editOption - CSRF')
-  ->post('/profile/editOption')
   ->todo('checkCSRF')
 
   ->info('/profile/deleteOption/id/1 - CSRF')
