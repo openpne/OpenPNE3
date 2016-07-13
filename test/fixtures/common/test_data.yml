@@ -364,11 +364,6 @@ MemberConfig:
     value: "sns2@example.com"
     Member: second_member
 
-  second_member_pc_address:
-    name: "pc_address"
-    value: "sns2@example.com"
-    Member: second_member
-
   second_member_password:
     name: "password"
     value: <?php echo md5('password') . "\n"; ?>
@@ -377,11 +372,6 @@ MemberConfig:
   third_member_pc_address_pre:
     name: "pc_address_pre"
     value: "sns2@example.com"
-    Member: third_member
-
-  third_member_pc_address:
-    name: "pc_address"
-    value: "sns3@example.com"
     Member: third_member
 
   third_member_password:
