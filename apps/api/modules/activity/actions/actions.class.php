@@ -280,6 +280,6 @@ class activityActions extends opJsonApiActions
     $memberId = $this->getUser()->getMemberId();
     $isCommunityMember = Doctrine_Core::getTable('CommunityMember')->isMember($memberId, $communityId);
 
-    $this->forward403Unless($isCommunityMember, 'You\'re not participate in this community.');
+    $this->forward403Unless($isCommunityMember, 'You don\'t participate in this community.');
   }
 }
