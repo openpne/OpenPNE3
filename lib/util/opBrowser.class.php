@@ -16,6 +16,14 @@
  */
 class opBrowser extends sfBrowser
 {
+  protected function doCall()
+  {
+    // Clear internal MemberConfig cache
+    Doctrine_Core::getTable('MemberConfig')->results = array();
+
+    parent::doCall();
+  }
+
   /**
    * @see sfBrowserBase::doClick()
    * @see http://trac.symfony-project.org/ticket/5748
