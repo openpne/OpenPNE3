@@ -1411,6 +1411,10 @@
         <source>Private&lt;br /&gt;Member</source>
         <target>非公開&lt;br /&gt;メンバー</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Does not match the Postal Code format (000-0000).</source>
+        <target>「000-0000」の形式で入力してください。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
