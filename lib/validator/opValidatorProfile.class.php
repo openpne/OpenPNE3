@@ -59,12 +59,6 @@ class opValidatorProfile extends sfValidatorBase
       }
     }
 
-    if ('op_preset_postal_code' === $this->profile->getName())
-    {
-      $validator = new sfValidatorRegex(array('pattern' => '/^\d{3}-\d{4}$/'), array('invalid' => 'Does not match the Postal Code format (000-0000).'));
-      $clean['value'] = $validator->clean($value['value']);
-    }
-
     return $clean;
   }
 }

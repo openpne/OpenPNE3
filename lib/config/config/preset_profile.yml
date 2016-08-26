@@ -162,7 +162,8 @@ postal_code:
   Name: "postal_code"
   Caption: "Postal Code"
   FormType: "text"
-  ValueType: "string"
+  ValueType: "regexp"
+  ValueRegexp: "/^\d{3}-\d{4}$/"
   IsRegist: true
   IsConfig: true
   IsSearch: true
