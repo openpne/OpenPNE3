@@ -83,10 +83,6 @@
         <target>上に表示されているキーワードを入力してください。</target>
       </trans-unit>
       <trans-unit id="">
-        <source>Invalid %name%.</source>
-        <target>不正な %name% です。</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Mon</source>
         <target>月</target>
       </trans-unit>
