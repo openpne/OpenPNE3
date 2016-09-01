@@ -93,6 +93,7 @@ class oauthActions extends opOAuthTokenAction
     $this->forward404Unless($this->information->getVerifier() === $authRequest->get_parameter('oauth_verifier'));
 
     $this->authorizedMemberId = $this->information->getMemberId();
+    $this->forward404Unless($this->authorizedMemberId !== null); // o_auth_member_token.member_id is nullable
 
     $token = $this->getServer()->fetch_access_token($authRequest);
 
