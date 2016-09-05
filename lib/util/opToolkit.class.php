@@ -343,7 +343,9 @@ class opToolkit
     }
     $original_filename = str_replace(array("\r", "\n"), '', $original_filename);
 
-    header('Content-Disposition: attachment; filename="'.$original_filename.'"');
+    $encoded_filename = rawurlencode($original_filename);
+    header('Content-Disposition: attachment; filename="' . $encoded_filename . '"; filename*=utf-8\'\'' . $encoded_filename);
+
     header('Content-Length: '.strlen($bin));
     header('Content-Type: application/octet-stream');
 
