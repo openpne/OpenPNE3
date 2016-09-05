@@ -19,14 +19,14 @@ class OpenPNE3_Sniffs_WhiteSpace_ControlSignatureSniff extends PHP_CodeSniffer_S
   protected function getPatterns()
   {
     return array(
-       'tryEOL *{EOL...}EOL *catch (...)EOL *{EOL',
-       'doEOL *{EOL...}EOL *while (...);EOL',
-       'while (...)EOL *{EOL',
-       'for (...)EOL *{EOL',
-       'if (...)EOL *{EOL',
-       'foreach (...)EOL *{EOL',
-       '} *EOLelseif (...)EOL *{EOL',
-       '} *EOLelseEOL *{EOL',
+       'tryEOL{EOL...}EOLcatch (...)EOL{EOL',
+       'doEOL{EOL...}EOLwhile (...);EOL',
+       'while (...)EOL{EOL',
+       'for (...)EOL{EOL',
+       'if (...)EOL{EOL',
+       'foreach (...)EOL{EOL',
+       '}EOLelseif (...)EOL{EOL',
+       '}EOLelseEOL{EOL',
     );
   }
 }
