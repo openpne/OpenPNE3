@@ -22,5 +22,10 @@
   <rule ref="Squiz.Scope.MethodScope"/>
   <rule ref="Squiz.Strings.DoubleQuoteUsage"/>
   <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+  <rule ref="Generic.WhiteSpace.ScopeIndent">
+    <properties>
+      <property name="indent" value="2"/>
+    </properties>
+  </rule>
   <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
 </ruleset>
