@@ -22,7 +22,7 @@ PHP
     * PHP から GD ライブラリを使用可能 (JPEG/GIF/PNG サポート)
     * PHP の exif 拡張モジュールを使用可能
     * PHP の mcrypt 拡張モジュールの使用を推奨
-    * PHP の APC 拡張モジュールの使用を推奨
+    * PHP の APC (または APCu) 拡張モジュールの使用を推奨
 データベースサーバ
   MySQL4.1以降（5.1 以降を推奨）
   
