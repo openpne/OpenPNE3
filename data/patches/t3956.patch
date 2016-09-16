@@ -11,3 +11,18 @@ index 35e54459..b1615adf 100644
            // TODO: this is a bit ugly, as it only works for sfWebRequest & sfWebResponse combination. see #3397
            $instances[] = sprintf("  if (\$this->factories['request'] instanceof sfWebRequest \n      && \$this->factories['response'] instanceof sfWebResponse \n      && 'HEAD' == \$this->factories['request']->getMethod())\n  {  \n    \$this->factories['response']->setHeaderOnly(true);\n  }\n");
            break;
+diff --git a/lib/vendor/symfony/lib/response/sfWebResponse.class.php b/lib/vendor/symfony/lib/response/sfWebResponse.class.php
+index 3aa15ea2..627b7223 100644
+--- a/lib/vendor/symfony/lib/response/sfWebResponse.class.php
++++ b/lib/vendor/symfony/lib/response/sfWebResponse.class.php
+@@ -796,9 +796,7 @@ class sfWebResponse extends sfResponse
+     $this->javascripts = $response->getJavascripts(self::RAW);
+     $this->slots       = $response->getSlots();
+ 
+-    // HTTP protocol must be from the current request
+-    // this fix is not nice but that's the only way to fix it and keep BC (see #9254)
+-    $this->options['http_protocol'] = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0';
++    $this->options['http_protocol'] = 'HTTP/1.1';
+   }
+ 
+   /**
