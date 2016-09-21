@@ -309,12 +309,11 @@ abstract class opMemberAction extends sfActions
         }
         $config->setValue($pre->getValue());
 
-        if ($config->save())
-        {
-          $pre->delete();
-          $token = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_token', $memberId);
-          $token->delete();
-        }
+        $config->save();
+
+        $pre->delete();
+        $token = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_token', $memberId);
+        $token->delete();
 
         $this->redirect('@homepage');
       }
