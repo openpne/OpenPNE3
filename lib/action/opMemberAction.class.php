@@ -286,11 +286,11 @@ abstract class opMemberAction extends sfActions
 
     $memberId = $request->getParameter('id');
 
-    $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_token', $memberId);
-    $this->forward404Unless($memberConfig);
-    $this->forward404Unless($request->getParameter('token') === $memberConfig->getValue());
+    $token = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_token', $memberId);
+    $this->forward404Unless($token);
+    $this->forward404Unless($request->getParameter('token') === $token->getValue());
 
-    $option = array('member' => $memberConfig->getMember());
+    $option = array('member' => $token->getMember());
     $this->form = new opPasswordForm(array(), $option);
 
     if ($request->isMethod('post'))
@@ -312,7 +312,6 @@ abstract class opMemberAction extends sfActions
         $config->save();
 
         $pre->delete();
-        $token = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_token', $memberId);
         $token->delete();
 
         $this->redirect('@homepage');
