@@ -309,6 +309,13 @@ abstract class opMemberAction extends sfActions
         }
         $config->setValue($pre->getValue());
 
+        if (!$config->checkUniqueness())
+        {
+          $this->getUser()->setFlash('error', 'The inputted value is already exist.');
+
+          return sfView::SUCCESS;
+        }
+
         $config->save();
 
         $pre->delete();
