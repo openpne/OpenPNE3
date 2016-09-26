@@ -290,6 +290,12 @@ abstract class opMemberAction extends sfActions
     $this->forward404Unless($token);
     $this->forward404Unless($request->getParameter('token') === $token->getValue());
 
+    $pre = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_pre', $memberId);
+
+    $settings = sfConfig::get('openpne_member_config');
+    $this->settings = $settings[$type];
+    $this->newValue = $pre->getValue();
+
     $option = array('member' => $token->getMember());
     $this->form = new opPasswordForm(array(), $option);
 
@@ -299,7 +305,6 @@ abstract class opMemberAction extends sfActions
       if ($this->form->isValid())
       {
         $config = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type, $memberId);
-        $pre = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_pre', $memberId);
 
         if (!$config)
         {
