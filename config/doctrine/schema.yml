@@ -484,8 +484,8 @@ BannerUseImage:
     banner_id: { type: integer(4), notnull: true, comment: "Banner id" }
     banner_image_id: { type: integer(4), notnull: true, comment: "BannerImage id" }
   relations:
-    Banner: { local: banner_id, foreign: id }
-    BannerImage: { local: banner_image_id, foreign: id }
+    Banner: { local: banner_id, foreign: id, onDelete: cascade }
+    BannerImage: { local: banner_image_id, foreign: id, onDelete: cascade }
   options:
     type: INNODB
     collate: utf8_unicode_ci
