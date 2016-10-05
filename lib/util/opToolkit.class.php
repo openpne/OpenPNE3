@@ -338,11 +338,12 @@ class opToolkit
  */
   static public function fileDownload($original_filename, $bin)
   {
+    $original_filename = str_replace(array("\r", "\n"), '', $original_filename);
+
     $filename = $original_filename;
     if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false) {
       $filename = mb_convert_encoding($filename, 'SJIS', 'UTF-8');
     }
-    $filename = str_replace(array("\r", "\n"), '', $filename);
 
     $encoded_filename = rawurlencode($original_filename);
     header('Content-Disposition: attachment; filename="' . $filename . '"; filename*=utf-8\'\'' . $encoded_filename);
