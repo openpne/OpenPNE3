@@ -9,3 +9,7 @@ editImage:
 fileList:
   caption: "Uploaded file list"
   url:     "monitoring/fileList"
+
+fileList:
+  caption: "%Activity% list"
+  url:     "monitoring/activityList"

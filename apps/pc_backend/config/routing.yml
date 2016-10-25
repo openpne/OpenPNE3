@@ -3,6 +3,17 @@ homepage:
   url:   /
   param: { module: default, action: top }
 
+monitoring_activity_list:
+  url: /monitoring/activityList
+  params: { module: monitoring, action: activityList }
+
+monitoring_activity_delete:
+  class: sfDoctrineRoute
+  url: /monitoring/activity/:id
+  params: { module: monitoring, action: activityDelete }
+  options: { model: ActivityData, type: object }
+  requirements: { sf_method: [delete], id: \d+ }
+
 # mail rules
 mail_config:
   url:  /mail

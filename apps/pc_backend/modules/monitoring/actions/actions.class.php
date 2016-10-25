@@ -132,4 +132,54 @@ class monitoringActions extends sfActions
       $file->getFileBin()->getBin()
     );
   }
+
+  /**
+   * Executes activityList action
+   *
+   * @param opWebRequest $request A request object
+   */
+  public function executeActivityList(opWebRequest $request)
+  {
+    $query = Doctrine_Core::getTable('ActivityData')->createQuery('r')
+      ->select('r.*, m.name')
+      ->innerJoin('r.Member m')
+      ->orderBy('r.id DESC');
+
+    $form = new ActivityDataFormFilter();
+    $form->setQuery($query);
+
+    if ($request->isMethod(sfWebRequest::POST))
+    {
+      $form->bind($request->getParameter($form->getName()));
+      if ($form->isValid())
+      {
+        $query = $form->getQuery();
+      }
+    }
+
+    $maxPerPage = 20;
+    $pager = new sfDoctrinePager('ActivityData', $maxPerPage);
+    $pager->setQuery($query);
+    $pager->setPage((int)$request->getParameter('page', 1));
+    $pager->init();
+
+    $this->form = $form;
+    $this->pager = $pager;
+  }
+
+  /**
+   * Executes activityDelete action
+   *
+   * @param opWebRequest $request A request object
+   */
+  public function executeActivityDelete(opWebRequest $request)
+  {
+    $request->checkCSRFProtection();
+
+    $activity = $this->getRoute()->getObject();
+    $activity->delete();
+
+    $this->getUser()->setFlash('notice', 'Deleted.');
+    $this->redirect(array('sf_route' => 'monitoring_activity_list'));
+  }
 }
