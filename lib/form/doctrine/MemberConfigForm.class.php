@@ -95,14 +95,16 @@ class MemberConfigForm extends BaseForm
     $categories = sfConfig::get('openpne_member_category');
     $configs = sfConfig::get('openpne_member_config');
 
-    if (!$this->category) {
-      $this->memberConfigSettings = $configs;
-      return true;
-    }
-
-    foreach ($categories[$this->category] as $value)
+    if (!$this->category)
     {
-      $this->memberConfigSettings[$value] = $configs[$value];
+      $this->memberConfigSettings = $configs;
+    }
+    else
+    {
+      foreach ($categories[$this->category] as $value)
+      {
+        $this->memberConfigSettings[$value] = $configs[$value];
+      }
     }
   }
 
