@@ -112,6 +112,24 @@ class MemberConfigForm extends BaseForm
         $this->memberConfigSettings[$value] = $configs[$value];
       }
     }
+
+    foreach ($this->memberConfigSettings as $configName => $configSettings)
+    {
+      if (null === $configSettings)
+      {
+        continue;
+      }
+
+      // Set default values if key not in array
+      $this->memberConfigSettings[$configName] = $configSettings + array(
+        'IsRegist' => false,
+        'IsConfig' => false,
+        'IsRequired' => false,
+        'IsUnique' => false,
+        'IsConfirm' => false,
+        'Info' => '',
+      );
+    }
   }
 
   public function setMemberConfigWidget($name)
