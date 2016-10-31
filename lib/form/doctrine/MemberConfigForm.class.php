@@ -137,7 +137,7 @@ class MemberConfigForm extends BaseForm
     }
     $this->validatorSchema[$name] = opFormItemGenerator::generateValidator($config);
 
-    if (!empty($config['IsUnique']))
+    if ($config['IsUnique'])
     {
       $uniqueValidator = new sfValidatorCallback(array(
         'callback'    => array($this, 'isUnique'),
@@ -155,7 +155,7 @@ class MemberConfigForm extends BaseForm
       ));
     }
 
-    if (!empty($config['IsConfirm']))
+    if ($config['IsConfirm'])
     {
       $this->validatorSchema[$name.'_confirm'] = $this->validatorSchema[$name];
       $this->widgetSchema[$name.'_confirm'] = $this->widgetSchema[$name];
@@ -171,7 +171,7 @@ class MemberConfigForm extends BaseForm
       )));
     }
 
-    if (!empty($config['Info']))
+    if ($config['Info'])
     {
       $this->widgetSchema->setHelp($name, $config['Info']);
     }
@@ -263,7 +263,7 @@ class MemberConfigForm extends BaseForm
 
     foreach ($this->getValues() as $key => $value)
     {
-      if (!empty($this->memberConfigSettings[$key]['IsUnique']))
+      if ($this->memberConfigSettings[$key]['IsUnique'])
       {
         $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndValue($key.'_pre', $value);
         if ($memberConfig)
