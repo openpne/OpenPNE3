@@ -77,6 +77,7 @@ class CommunityMemberTable extends opAccessControlDoctrineTable
       $communityMember->setIsPre(true);
     }
     $communityMember->save();
+    $communityMember->free(true);
   }
 
   public function quit($memberId, $communityId)
