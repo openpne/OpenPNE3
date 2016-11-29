@@ -27,6 +27,32 @@ Database Server
   
   At this time, PostgreSQL and SQLite are not supported (They will be supported in the future)
 
+Supported Client
+  OS
+    Windows
+      * Those that are within the support period of Microsoft
+    Mac OS (or OS X)
+      * (Current - 2) and Current
+    Android
+      * (Current - 2) and Current
+    iOS
+      * (Current - 2) and Current
+  Web browsers
+    Internet Explorer(Compatibility mode is invalid)
+      * Those that are within the support period of Microsoft
+    Microsoft Edge
+      * Those that are within the support period of Microsoft
+    Firefox
+      * Current
+    Google Chrome
+      * Current
+    Safari
+      * Current
+Supported Server
+  OS
+	  Debian
+      * Debian 8
+
 Setup
 =====
 
