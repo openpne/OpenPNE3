@@ -232,12 +232,8 @@ abstract class opMemberAction extends sfActions
       {
         $this->redirect('member/profile?id='.$id);
       }
+      $this->forwardUnless($id, sfConfig::get('sf_login_module'), sfConfig::get('sf_login_action'));
       $this->member = $this->getUser()->getMember();
-      if (!$this->getUser()->isSNSMember())
-      {
-        $this->forwardUnless($this->member && $this->member->id, sfConfig::get('sf_login_module'), sfConfig::get('sf_login_action'));
-      }
-      $this->forward404Unless($id);
     }
     else
     {
