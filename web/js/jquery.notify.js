@@ -6,7 +6,15 @@
 
     return this.each(function(){
       var dataLocationUrl = $(this).attr('data-location-url');
-      var linkUrl = openpne.baseUrl + dataLocationUrl.replace(/^\/*/g, '');
+      var linkUrl = '';
+      if (dataLocationUrl.match(/^\//))
+      {
+        linkUrl = dataLocationUrl;
+      }
+      else
+      {
+        linkUrl = openpne.baseUrl + dataLocationUrl;
+      }
       var notifyId = $(this).attr('data-notify-id');
       $(this).click(function(){
         if ( false == settings.isDisableRead )
