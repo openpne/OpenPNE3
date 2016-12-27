@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="gadget_header span12">コミュニティ情報</div>
+  <div class="gadget_header span12"><?php echo __('%community% Information') ?></div>
 </div>
 <div class="row">
   <div class="span12">
