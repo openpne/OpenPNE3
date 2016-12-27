@@ -1441,6 +1441,34 @@
         <source>All of the inputted E-mail addresses are invalid.</source>
         <target>入力されたEメールアドレスはすべて無効です。</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>When the following values are set in "Entry name", the setting value in "Term Configuration in this SNS" is reflected in the navigation.</source>
+        <target>「項目名」に下記の値が設定されている場合、SNS内名称設定の設定値がナビゲーションに反映されます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If it is not reflected, clear the caches in "Cache Clear" in "SNS".</source>
+        <target>反映されない場合は、SNS設定→キャッシュの削除にてキャッシュの削除を行ってください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Friend</source>
+        <target>フレンド</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>My Friend</source>
+        <target>マイフレンド</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Community</source>
+        <target>コミュニティ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Activity</source>
+        <target>アクティビティ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Post Activity</source>
+        <target>アクティビティ投稿</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
