@@ -1,5 +1,4 @@
 lib/form/doctrine/op*Plugin
-web/cache/*
 log/*
 plugins/op*
 !plugins/opAuthMailAddressPlugin
