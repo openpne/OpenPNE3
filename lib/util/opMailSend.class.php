@@ -208,6 +208,13 @@ class opMailSend
 
     $subject = mb_convert_kana($subject, 'KV');
 
+    if ($envelopeFrom = sfConfig::get('op_mail_envelope_from'))
+    {
+      $envelopeFrom = '-f'.$envelopeFrom;
+      $tr = new Zend_Mail_Transport_Sendmail($envelopeFrom);
+      Zend_Mail::setDefaultTransport($tr);
+    }
+
     $mailer = new Zend_Mail('iso-2022-jp');
     $mailer->setHeaderEncoding(Zend_Mime::ENCODING_BASE64)
       ->setFrom($from)
