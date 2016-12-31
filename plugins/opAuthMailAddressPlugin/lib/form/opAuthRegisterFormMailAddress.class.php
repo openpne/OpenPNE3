@@ -34,9 +34,12 @@ class opAuthRegisterFormMailAddress extends opAuthRegisterForm
     // this is just hack for limitation of MemberConfigForm
     if (isset($request['member_config']['secret_answer']))
     {
-      $memberConfig = $request['member_config'];
-      $memberConfig['secret_answer'] = md5($memberConfig['secret_answer']);
-      $request['member_config'] = $memberConfig;
+      if (!empty($request['member_config']['secret_answer']))
+      {
+        $memberConfig = $request['member_config'];
+        $memberConfig['secret_answer'] = md5($memberConfig['secret_answer']);
+        $request['member_config'] = $memberConfig;
+      }
     }
 
     parent::bindAll($request);
