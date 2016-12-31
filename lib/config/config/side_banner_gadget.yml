@@ -48,6 +48,22 @@ rssBox:
       FormType:   "input"
       ValueType:  "text"
       IsRequired: false
+    is_show_detail:
+      Name: "detail"
+      Caption: "詳細表示"
+      FormType: "radio"
+      ValueType: "int"
+      IsRequired: true
+      Default: 1
+      Choices: {0: "No", 1: "Yes"}
+    col:
+      Name:      "col"
+      Caption:   "表示件数"
+      FormType:  "select"
+      ValueType:  "int"
+      IsRequired: true
+      Default:    3
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9, 10: 10}
 
 linkListBox:
   caption:
