@@ -13,7 +13,7 @@ class NotificationMailTranslationForm extends BaseNotificationMailTranslationFor
   {
     unset($this['lang'], $this['id']);
 
-    $this->setValidator('title', new sfValidatorString(array('required' => false)));
+    $this->setValidator('title', new sfValidatorString(array('required' => false, 'max_length' => 64)));
     $this->setValidator('template', new sfValidatorString(array('required' => false)));
   }
 
