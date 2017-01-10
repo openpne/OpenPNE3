@@ -61,9 +61,9 @@ OpenPNE3 は以下のような環境での動作をサポートしています�
       * 最新版とその２バージョン前
   ブラウザ
     Internet Explorer (互換モードは無効の状態)
-      * Microsoftのサポート期間内であるもの
+      * Microsoft のサポート期間内であるもの
     Microsoft Edge
-      * Microsoftのサポート期間内であるもの
+      * Microsoft のサポート期間内であるもの
     Firefox
       * 最新版
     Google Chrome
