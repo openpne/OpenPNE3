@@ -22,7 +22,7 @@ MINIMUM REQUIREMENTS
       * The "JSON" module is available
       * The GD library is available from PHP (That must be support JPEG, GIF and PNG)
       * The "mcrypt" module recommendation
-      * The "APC" module recommendation
+      * The "APCu" module recommendation
   Database Server
     MySQL4.1 or later (5.1 or greater recommended)
 
