@@ -3,8 +3,8 @@
   <file orginal="global" source-language="en" datatype="plaintext">
     <body>
       <trans-unit id="">
-        <source>Nickname</source>
-        <target>ニックネーム</target>
+        <source>%nickname%</source>
+        <target>%nickname%</target>
       </trans-unit>
       <trans-unit id="">
         <source>Password</source>
