@@ -40,7 +40,7 @@
 <tr>
 <th colspan="4"><?php echo __('Operation') ?></th>
 <th><?php echo __('ID') ?></th>
-<th><?php echo __('Nickname') ?></th>
+<th><?php echo __('%nickname%') ?></th>
 <th><?php echo __('Invited by') ?></th>
 <th><?php echo __('Last login') ?></th>
 <?php foreach ($profiles as $profile) : ?>
