@@ -86,3 +86,16 @@ $t->isnt($keys['find_one_by_id_and_username'], $keys['find_by_username_and_passw
 $t->isnt($keys['find_one_by_id_and_username'], $keys['find_one_by_username_and_password'], '->findOneByIdAndUsername() and ->findOneByUsernameAndPassword() generates different query cache keys');
 
 $t->isnt($keys['find_by_username_and_password'], $keys['find_one_by_username_and_password'], '->findByUsernameAndPassword() and ->findOneByUsernameAndPassword() generates different query cache keys');
+
+$t->diag('opDoctrineQuery::execute() (#4131)');
+
+$whereInQuery = Doctrine_Core::getTable('AdminUser')->createQuery()
+  ->andWhere('id IN ?');
+
+$whereInQuery->execute(array(array(1)));
+$keys['where_in_one'] = myQuery::$lastQueryCacheHash;
+
+$whereInQuery->execute(array(array(1, 2)));
+$keys['where_in_two'] = myQuery::$lastQueryCacheHash;
+
+$t->isnt($keys['where_in_one'], $keys['where_in_two'], '->execute([[1]]) and ->execute([[1, 2]]) generates different query cache keys');
