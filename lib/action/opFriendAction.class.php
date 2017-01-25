@@ -153,6 +153,7 @@ abstract class opFriendAction extends sfActions
   public function executeShowImage(opWebRequest $request)
   {
     $this->forward404Unless($this->id);
+    $this->redirectIf($this->relation->isAccessBlocked(), '@error');
 
     $this->member = Doctrine::getTable('Member')->find($this->id);
     $this->forward404Unless($this->member, 'Undefined member.');
