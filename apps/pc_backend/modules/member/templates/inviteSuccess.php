@@ -20,23 +20,20 @@
 </table>
 </form>
 
+<h2><?php echo __('Send history') ?></h2>
 <?php if (!$pager->getNbResults()): ?>
-  <h2><?php echo __('Send history') ?></h2>
   <span id="flashNotice" class="flash"><?php echo __('No members matching') ?></span>
 <?php else: ?>
-  <h2><?php echo __('Send history') ?></h2>
   <?php if ($deleteForm->hasGlobalErrors()): ?>
     <?php foreach ($deleteForm->getGlobalErrors() as $name => $error): ?>
         <?php echo __($error) ?>
     <?php endforeach; ?>
   <?php endif; ?>
-  <?php echo $deleteForm->renderFormTag(url_for('member/invite'), array('method' => 'post', 'class' => 'form-horizontal', 'role' => 'form')) ?>
+  <?php echo $deleteForm->renderFormTag(url_for('member/invite'), array('method' => 'post')) ?>
   <input type="hidden" name="page" value="<?php echo $pager->getPage() ?>"/>
   <div>
-    <table id="dynamic-table" class="table table-striped table-bordered table-hover">
-      <caption>
-        <?php op_include_pager_navigation($pager, 'member/invite?page=%d', array('use_current_query_string' => true)) ?>
-      </caption>
+    <p><?php op_include_pager_navigation($pager, 'member/invite?page=%d', array('use_current_query_string' => true)) ?></p>
+    <table>
       <thead>
       <tr>
         <th><?php echo __('Delete') ?></th>
@@ -64,22 +61,16 @@
         </tr>
       <?php endforeach; ?>
       </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="4">
+          <?php echo $deleteForm->renderHiddenFields() ?>
+          <input value="<?php echo __('Delete') ?>" type="submit">
+          <input value="<?php echo __('Reset') ?>" type="reset">
+        </td>
+      </tr>
+      </tfoot>
     </table>
-  </div>
-  <div class="clearfix">
-    <div class="col-md-12 align-right">
-      <?php echo $deleteForm->renderHiddenFields() ?>
-      <button class="btn btn-sm btn-primary" type="submit">
-        <i class="ace-icon fa fa-check bigger-110"></i>
-        <?php echo __('Send') ?>
-      </button>
-
-      &nbsp; &nbsp; &nbsp;
-      <button class="btn btn-sm" type="reset">
-        <i class="ace-icon fa fa-undo bigger-110"></i>
-        <?php echo __('Reset') ?>
-      </button>
-    </div>
   </div>
   </form>
 <?php endif; ?>
