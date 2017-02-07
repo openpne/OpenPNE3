@@ -1,3 +1,71 @@
+CHANGELOG
+=========
+
+11/25/12: Versions 1.4.20
+-------------------------
+
+ * [33598] fixed the possibility to fake a file upload
+ * [33545] fixed sfPDOSessionStorage for Oracle (closes #10022)
+ * [33544] fixed sfWebRequest::splitHttpAcceptHeader incorrect result order (closes #10069, patch by Keri Henare)
+ * [33539] fixed exception format when using the PHP 5.4 built-in server (closes #10067, based on a patch from jgskin)
+ * [33486] fixed sfPDODatabase::call() method (closes #10044)
+
+10/09/12: Versions 1.4.19
+-------------------------
+
+ * [33545] fixed sfPDOSessionStorage for Oracle (closes #10022)
+ * [33544] fixed sfWebRequest::splitHttpAcceptHeader incorrect result order (closes #10069, patch by Keri Henare)
+ * [33539] fixed exception format when using the PHP 5.4 built-in server (closes #10067, based on a patch from jgskin)
+ * [33486] fixed sfPDODatabase::call() method (closes #10044)
+
+05/30/12: Versions 1.4.18
+-------------------------
+
+ * [33466] fixed a possible DB session fixation attack (patch from Dmitri Groutso)
+ * [33373] fixed test browser click function does not handle css selector without [ or ] (closes #9982, patch from mouette)
+
+03/08/12: Versions 1.4.17
+-------------------------
+
+ * [33363] added some tests (closes #3237, patch from Stephen.Ostrow)
+ * [33362] fixed a notice on PHP 5.4 (closes #9985, patch from bshaffer)
+ * [33358] fixed Notice with PHP 5.4 (closes #10003)
+ * [33309] fixed error in Debug mode from sfDebug.class.php when myUser implements sfSecurityUser (closes #9996)
+ * [33299] reverted [33226] because of side effects (refs #8348)
+ * [33292] fixed test for PHP 5.3 (patch from pylebecq)
+
+12/13/11: Version 1.4.16
+------------------------
+
+ * [33251] fixed sfChoiceFormat when a string to translate contains a valid range (closes #9973)
+ * [33250] fixed saving i18n fields in subforms (closes #7626, patch from yoshy71)
+ * [33249] fixed last modified date calculation in sfMessageSource_Aggregate (closes #9981, patch from jamiel)
+ * [33226] fixed merging problem for the routing configuration (closes #8348)
+ * [33214] fixed ob_start() behavior on CLI (closes #9970)
+ * [33208] fixed ob_start usage (to avoid warning in PHP 5.4, closes #9970)
+
+10/27/11: Version 1.4.15
+------------------------
+
+ * [33151] fixed usage of mb_strlen in tasks (closes #9940)
+ * [33149] added missing admin.delete_object event (closes #9943)
+ * [33137] fixed multiple database support in Propel plugin (for the generator and sfPropelData, closes #8345)
+ * [33125] fixed the possibility to include files included in an exclude rule in the deploy task (closes #9912)
+ * [33122] fixed include|get_component when sfPartialView class is customized (closes #9932)
+ * [33121] fixed protocol relative URL in the asset helper (closes #9936)
+ * [33053] fixed typo (closes #9927, based on a patch from pmallet)
+
+09/16/11: Version 1.4.14
+------------------------
+
+ * [33025] fixed sfCacheSessionStorage does not always check whether HTTP_USER_AGENT is set (closes #9921, patch from boutell)
+ * [33022] fixed auto_link_text() when an email address is already linked (closes #9915, based on a patch from klemens_u)
+ * [33021] fixed sfCacheSessionStorage does not serialize properly, also uses wrong option name for httponly (closes #9919, based on a patch from boutell)
+ * [32939] fixed memory leak in sfRoute::generate() (closes #9886 - patch from acf0)
+ * [32892] fixed Doctrine form generation when a schema has abstract tables (closes #9885 - patch from chok)
+ * [32891] fixed sfFinder bug when mirroring file with twice the path inside it (closes #9892 - based on a patch from shordeaux)
+ * [32890] fixed bad value of property 'list-style' in css of WebDebug toolbar (closes #9891 - patch from tomi)
+
 08/05/11: Version 1.4.13
 ------------------------
 
