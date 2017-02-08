@@ -389,6 +389,16 @@ MemberConfig:
     value: <?php echo md5('password') . "\n"; ?>
     Member: third_member
 
+  fifth_member_pc_address:
+    name: "pc_address"
+    value: "sns5@example.com"
+    Member: fifth_member
+
+  fifth_member_password:
+    name: "password"
+    value: <?php echo md5('password') . "\n"; ?>
+    Member: fifth_member
+
 AdminUser:
   first_admin:
     id: ~

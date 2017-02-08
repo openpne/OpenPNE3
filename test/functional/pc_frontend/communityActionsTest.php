@@ -136,3 +136,20 @@ $browser
     ->isAllEscapedData('Community', 'name')
   ->end()
 ;
+
+$browser
+  ->login('sns5@example.com', 'password')
+
+  ->info('Testing `/community/joinList?id=*`')
+  ->get('/community/joinList?id=1')
+  ->info('Member E cannot view the list of communities joined by Member A (Access blocked)')
+  ->checkDispatch('community', 'joinlist')
+  ->isStatusCode(404)
+
+  ->get('/community/joinList?id=2')
+  ->info('Member E can view the list of communities joined by Member B (Normal behavior)')
+  ->checkDispatch('community', 'joinlist')
+  ->isStatusCode(200)
+  ->with('response')
+    ->checkElement('#communityList tr.text a', 5) // 5 communities
+;
