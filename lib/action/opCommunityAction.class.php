@@ -172,6 +172,7 @@ abstract class opCommunityAction extends sfActions
 
     $this->member = Doctrine::getTable('Member')->find($memberId);
     $this->forward404Unless($this->member);
+    $this->forward404Unless($this->member->isAllowed($this->getUser()->getMember(), 'view'));
 
     if (!$this->size)
     {
