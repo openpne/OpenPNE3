@@ -95,14 +95,34 @@ class MemberConfigForm extends BaseForm
     $categories = sfConfig::get('openpne_member_category');
     $configs = sfConfig::get('openpne_member_config');
 
-    if (!$this->category) {
+    if (!$this->category)
+    {
       $this->memberConfigSettings = $configs;
-      return true;
+    }
+    else
+    {
+      foreach ($categories[$this->category] as $value)
+      {
+        $this->memberConfigSettings[$value] = $configs[$value];
+      }
     }
 
-    foreach ($categories[$this->category] as $value)
+    foreach ($this->memberConfigSettings as $configName => $configSettings)
     {
-      $this->memberConfigSettings[$value] = $configs[$value];
+      if (null === $configSettings)
+      {
+        continue;
+      }
+
+      // Set default values if key not in array
+      $this->memberConfigSettings[$configName] = $configSettings + array(
+        'IsRegist' => false,
+        'IsConfig' => false,
+        'IsRequired' => false,
+        'IsUnique' => false,
+        'IsConfirm' => false,
+        'Info' => '',
+      );
     }
   }
 
@@ -117,7 +137,7 @@ class MemberConfigForm extends BaseForm
     }
     $this->validatorSchema[$name] = opFormItemGenerator::generateValidator($config);
 
-    if (!empty($config['IsUnique']))
+    if ($config['IsUnique'])
     {
       $uniqueValidator = new sfValidatorCallback(array(
         'callback'    => array($this, 'isUnique'),
@@ -135,7 +155,7 @@ class MemberConfigForm extends BaseForm
       ));
     }
 
-    if (!empty($config['IsConfirm']))
+    if ($config['IsConfirm'])
     {
       $this->validatorSchema[$name.'_confirm'] = $this->validatorSchema[$name];
       $this->widgetSchema[$name.'_confirm'] = $this->widgetSchema[$name];
@@ -151,7 +171,7 @@ class MemberConfigForm extends BaseForm
       )));
     }
 
-    if (!empty($config['Info']))
+    if ($config['Info'])
     {
       $this->widgetSchema->setHelp($name, $config['Info']);
     }
@@ -243,7 +263,7 @@ class MemberConfigForm extends BaseForm
 
     foreach ($this->getValues() as $key => $value)
     {
-      if (!empty($this->memberConfigSettings[$key]['IsUnique']))
+      if ($this->memberConfigSettings[$key]['IsUnique'])
       {
         $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndValue($key.'_pre', $value);
         if ($memberConfig)
