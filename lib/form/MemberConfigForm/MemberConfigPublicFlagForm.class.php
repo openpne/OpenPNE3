@@ -27,16 +27,5 @@ class MemberConfigPublicFlagForm extends MemberConfigForm
     {
       unset($this['profile_page_public_flag']);
     }
-
-    if (!opConfig::get('is_allow_web_public_flag_age'))
-    {
-      $widget = $this->widgetSchema['age_public_flag'];
-
-      $choices = $widget->getOption('choices');
-      unset($choices[4]);
-      $widget->setOption('choices', $choices);
-
-      $this->validatorSchema['age_public_flag']->setOption('choices', array_keys($choices));
-    }
   }
 }
