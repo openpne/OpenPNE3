@@ -108,6 +108,11 @@ class opI18N extends sfI18N
 
   public function __($string, $args = array(), $catalogue = 'messages')
   {
+    if (null === $args)
+    {
+      $args = array();
+    }
+
     foreach ($args as $k => $v)
     {
       if ($v instanceof SnsTerm)
