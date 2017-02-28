@@ -84,13 +84,17 @@ foreach ($member->getProfiles(true) as $profile)
 
   if ($member->getId() == $sf_user->getMemberId())
   {
+    $i18n = sfContext::getInstance()->getI18N();
+    $termMyFriend = Doctrine::getTable('SnsTerm')->get('my_friend');
+    $terms = array('%my_friend%' => $termMyFriend->pluralize()->titleize());
+
     if ($profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_FRIEND)
     {
-      $value .= '<font color="'.$op_color["core_color_22"].'">('.__('Only Open to %my_friend%').')</font><br>';
+      $value .= '<font color="'.$op_color["core_color_22"].'">('.__('%my_friend%', $terms, 'publicFlags').')</font><br>';
     }
     elseif ($profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_WEB && $profile->Profile->is_public_web)
     {
-      $value .= '<font color="'.$op_color["core_color_22"].'">('.__('All Users on the Web').')</font><br>';
+      $value .= '<font color="'.$op_color["core_color_22"].'">('.__('All Users on the Web', $terms, 'publicFlags').')</font><br>';
     }
   }
 

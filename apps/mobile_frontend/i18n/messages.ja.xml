@@ -107,24 +107,8 @@
         <target>ﾌﾟﾛﾌｨｰﾙﾍﾟｰｼﾞの公開範囲</target>
       </trans-unit>
       <trans-unit id="">
-        <source>All Users on the Web</source>
-        <target>Web全体に公開</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>All Members</source>
-        <target>全員に公開</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>%my_friend%</source>
-        <target>%my_friend%まで公開</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Only Open to %my_friend%</source>
-        <target>%my_friend%まで公開</target>
-      </trans-unit>
-      <trans-unit id="">
-        <source>Private</source>
-        <target>公開しない</target>
+        <target>%my_friend%</target>
       </trans-unit>
       <trans-unit id="">
         <source>Register mobile</source>
