@@ -105,11 +105,7 @@ $browser
   ->checkCSRF()
 
   ->info('/member/config?category=accessBlock - CSRF')
-  ->post('/member/config?category=accessBlock', array('member_config' => array(
-    'ids'          => array(),
-    'access_block' => array(),
-  )))
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/member/config?category=mail - CSRF')
   ->post('/member/config?category=mail')
