@@ -147,8 +147,10 @@ class ActivityDataTable extends Doctrine_Table
   public function publicFlagToCaption($flag)
   {
     $i18n = sfContext::getInstance()->getI18N();
+    $termMyFriend = Doctrine::getTable('SnsTerm')->get('my_friend');
+    $terms = array('%my_friend%' => $termMyFriend->pluralize()->titleize());
 
-    return $i18n->__(self::$publicFlags[$flag]);
+    return $i18n->__(self::$publicFlags[$flag], $terms, 'publicFlags');
   }
 
   public function getPublicFlags($isI18n = true)
