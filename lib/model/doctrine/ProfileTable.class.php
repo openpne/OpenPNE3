@@ -33,7 +33,7 @@ class ProfileTable extends Doctrine_Table
 
       foreach ($this->publicFlags as $key => $publicFlag)
       {
-        $terms = array('%my_friend%' => $termMyFriend->titleize()->pluralize());
+        $terms = array('%my_friend%' => $termMyFriend->pluralize()->titleize());
         $publicFlags[$key] = $i18n->__($publicFlag, $terms, 'publicFlags');
       }
     }
@@ -49,7 +49,7 @@ class ProfileTable extends Doctrine_Table
   {
     $i18n = sfContext::getInstance()->getI18N();
     $termMyFriend = Doctrine::getTable('SnsTerm')->get('my_friend');
-    $terms = array('%my_friend%' => $termMyFriend->titleize()->pluralize());
+    $terms = array('%my_friend%' => $termMyFriend->pluralize()->titleize());
 
     return $i18n->__($this->publicFlags[$flag], $terms, 'publicFlags');
   }
