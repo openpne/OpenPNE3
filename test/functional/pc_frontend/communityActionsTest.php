@@ -107,7 +107,6 @@ $browser
   ->end()
 
   ->info('/community/1055 - XSS')
-  ->get('/community/1055')
   ->todo('html_escape')
 
   ->login('html2@example.com', 'password')

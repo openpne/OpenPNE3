@@ -42,9 +42,7 @@ $browser->test()->ok($textLink, 'text link exists');
 $browser
   ->info('links in a community list is a valid (ref. #3546)')
   ->info('photo link is a valid')
-  ->get($photoLink)
   ->todo()
   ->info('text link is a valid')
-  ->get($textLink)
   ->todo()
 ;
