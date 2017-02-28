@@ -28,7 +28,14 @@ class ProfileTable extends Doctrine_Table
   {
     if ($isI18n)
     {
-      $publicFlags = array_map(array(sfContext::getInstance()->getI18N(), '__'), $this->publicFlags);
+      $i18n = sfContext::getInstance()->getI18N();
+      $termMyFriend = Doctrine::getTable('SnsTerm')->get('my_friend');
+
+      foreach ($this->publicFlags as $key => $publicFlag)
+      {
+        $terms = array('%my_friend%' => $termMyFriend->titleize()->pluralize());
+        $publicFlags[$key] = $i18n->__($publicFlag, $terms, 'publicFlags');
+      }
     }
     else
     {
@@ -40,7 +47,11 @@ class ProfileTable extends Doctrine_Table
 
   public function getPublicFlag($flag)
   {
-    return sfContext::getInstance()->getI18N()->__($this->publicFlags[$flag]);
+    $i18n = sfContext::getInstance()->getI18N();
+    $termMyFriend = Doctrine::getTable('SnsTerm')->get('my_friend');
+    $terms = array('%my_friend%' => $termMyFriend->titleize()->pluralize());
+
+    return $i18n->__($this->publicFlags[$flag], $terms, 'publicFlags');
   }
 
   public function retrievesAll()

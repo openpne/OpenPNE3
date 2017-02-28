@@ -11,9 +11,11 @@ if ($member->getAge(true) !== false)
   $ageValue = __('%1% years old', array('%1%' => $member->getAge()));
   if ($member->getConfig('age_public_flag') == ProfileTable::PUBLIC_FLAG_FRIEND)
   {
-    $ageValue .= ' ('.__('Only Open to %my_friend%', array(
-      '%my_friend%' => $op_term['my_friend']->titleize()->pluralize(),
-    )).')';
+    $i18n = sfContext::getInstance()->getI18N();
+    $termMyFriend = Doctrine::getTable('SnsTerm')->get('my_friend');
+    $terms = array('%my_friend%' => $termMyFriend->pluralize()->titleize());
+
+    $ageValue .= ' ('.__('%my_friend%', $terms, 'publicFlags').')';
   }
 
   $list[__('Age')] = $ageValue;
@@ -55,15 +57,17 @@ foreach ($member->getProfiles(true) as $profile)
 
   if ($member->getId() == $sf_user->getMemberId())
   {
+    $i18n = sfContext::getInstance()->getI18N();
+    $termMyFriend = Doctrine::getTable('SnsTerm')->get('my_friend');
+    $terms = array('%my_friend%' => $termMyFriend->pluralize()->titleize());
+
     if ($profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_FRIEND)
     {
-      $profileValue .= ' ('.__('Only Open to %my_friend%', array(
-        '%my_friend%' => $op_term['my_friend']->titleize()->pluralize(),
-      )).')';
+      $profileValue .= ' ('.__('%my_friend%', $terms, 'publicFlags').')';
     }
     elseif ($profile->getPublicFlag() == ProfileTable::PUBLIC_FLAG_WEB && $profile->Profile->is_public_web)
     {
-      $profileValue .= ' ('.__('All Users on the Web').')';
+      $profileValue .= ' ('.__('All Users on the Web', $terms, 'publicFlags').')';
     }
   }
   $list[$caption] = $profileValue;
