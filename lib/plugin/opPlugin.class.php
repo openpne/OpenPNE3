@@ -48,8 +48,10 @@ class opPlugin
     {
       try
       {
-        $manager = new opPluginManager($dispatcher);
-        $package = $manager->getEnvironment()->getRegistry()->getPackage($pluginName, opPluginManager::getDefaultPluginChannelServerName());
+        $environment = opPluginManager::createPearEnvironment($dispatcher);
+        $channel = opPluginManager::getDefaultPluginChannelServerName();
+
+        $package = $environment->getRegistry()->getPackage($pluginName, $channel);
         if ($package)
         {
           $this->version = $package->getVersion();
