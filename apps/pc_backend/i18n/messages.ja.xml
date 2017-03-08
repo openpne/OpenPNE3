@@ -3,10 +3,6 @@
   <file orginal="global" source-language="en" datatype="plaintext">
     <body>
       <trans-unit id="">
-        <source>Nickname</source>
-        <target>ニックネーム</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Password</source>
         <target>パスワード</target>
       </trans-unit>
