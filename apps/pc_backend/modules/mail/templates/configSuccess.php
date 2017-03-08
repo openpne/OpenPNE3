@@ -5,6 +5,7 @@
 <h2><?php echo __('Configuration of E-mail Notifications') ?></h2>
 
 <?php echo $form->renderFormTag(url_for('@mail_config')); ?>
+<?php echo $form->renderGlobalErrors() ?>
 <?php echo $form->renderHiddenFields(); ?>
 <?php foreach ($config as $target => $mails): ?>
 
