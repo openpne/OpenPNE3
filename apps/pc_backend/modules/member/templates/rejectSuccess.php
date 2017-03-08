@@ -15,7 +15,7 @@
 <th><?php echo __('ID') ?></th><td><?php echo $member->getId() ?></td>
 </tr>
 <tr>
-<th><?php echo __('Nickname') ?></th><td><?php echo $member->getName() ?></td>
+<th><?php echo __('%Nickname%') ?></th><td><?php echo $member->getName() ?></td>
 </tr>
 <?php echo $form ?>
 <tr>
