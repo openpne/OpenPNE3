@@ -28,7 +28,6 @@ class mailActions extends sfActions
 
         $this->redirect('@mail_config');
       }
-      $this->getUser()->setFlash('error', (string)$this->form->getErrorSchema(), false);
     }
   }
 
