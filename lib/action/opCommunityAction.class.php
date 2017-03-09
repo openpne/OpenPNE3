@@ -91,9 +91,10 @@ abstract class opCommunityAction extends sfActions
 
     $this->communityForm       = new CommunityForm($this->community);
     $this->communityConfigForm = new CommunityConfigForm(array(), array('community' => $this->community));
-    $this->communityFileForm = isset($this->enableImage) && $this->enableImage ?
-      new CommunityFileForm(array(), array('community' => $this->community)) :
-      new CommunityFileForm();
+    if (!sfConfig::get('app_is_mobile', false))
+    {
+      $this->communityFileForm = new CommunityFileForm(array(), array('community' => $this->community));
+    }
 
     if ($request->isMethod('post'))
     {
@@ -101,12 +102,22 @@ abstract class opCommunityAction extends sfActions
       $params['id'] = $this->id;
       $this->communityForm->bind($params);
       $this->communityConfigForm->bind($request->getParameter('community_config'));
-      $this->communityFileForm->bind($request->getParameter('community_file'), $request->getFiles('community_file'));
-      if ($this->communityForm->isValid() && $this->communityConfigForm->isValid() && $this->communityFileForm->isValid())
+      if($this->communityFileForm)
+      {
+        $this->communityFileForm->bind($request->getParameter('community_file'), $request->getFiles('community_file'));
+        if ($this->communityForm->isValid() && $this->communityConfigForm->isValid() && $this->communityFileForm->isValid())
+        {
+          $this->communityForm->save();
+          $this->communityConfigForm->save();
+          $this->communityFileForm->save();
+
+          $this->redirect('@community_home?id='.$this->community->getId());
+        }
+      }
+      elseif ($this->communityForm->isValid() && $this->communityConfigForm->isValid())
       {
         $this->communityForm->save();
         $this->communityConfigForm->save();
-        $this->communityFileForm->save();
 
         $this->redirect('@community_home?id='.$this->community->getId());
       }
