@@ -531,3 +531,20 @@ table td {
   float: right;
 }
 
+.error_list {
+  color: red;
+}
+
+#page_member_delete ul {
+  list-style: none;
+}
+
+#page_member_delete .partsHeading h3 {
+  height: 20px;
+  font-weight: normal;
+  font-size: 13px;
+  background: #333;
+  color: #fff;
+  text-align: center;
+  width: 320px;
+}
