@@ -21,7 +21,7 @@ class opI18N extends sfI18N
     parent::initialize($configuration, $cache, $options);
 
     $application = sfConfig::get('sf_app');
-    if ('pc_backend' == $application)
+    if (in_array($application, array('pc_backend', 'api'), true))
     {
         $application = 'pc_frontend';
     }
