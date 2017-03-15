@@ -3,23 +3,18 @@
  * The File list plugin generator for both PEAR_PackageFileManager,
  * and PEAR_PackageFileManager2 classes.
  *
- * PHP versions 4 and 5
- *
- * LICENSE: This source file is subject to version 3.01 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
+ * PHP versions 5 and 7
  *
  * @category  PEAR
- * @package   PEAR_PackageFileManager
+ * @package   PEAR_PackageFileManager_Plugins
  * @author    Greg Beaver <cellog@php.net>
- * @copyright 2003-2007 The PHP Group
- * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version   CVS: $Id: File.php,v 1.29 2007/11/20 08:49:20 farell Exp $
- * @link      http://pear.php.net/package/PEAR_PackageFileManager
- * @since     File available since Release 0.1
+ * @copyright 2003-2015 The PEAR Group
+ * @license   New BSD, Revised
+ * @link      http://pear.php.net/package/PEAR_PackageFileManager_Plugins
+ * @since     File available since Release 1.0.0alpha1
  */
+
+require_once 'PEAR/PackageFileManager/Plugins.php';
 
 /**
  * Retrieve the files from a directory listing
@@ -30,36 +25,28 @@
  * repository when generating the package.xml
  *
  * @category  PEAR
- * @package   PEAR_PackageFileManager
+ * @package   PEAR_PackageFileManager_Plugins
  * @author    Greg Beaver <cellog@php.net>
- * @copyright 2003-2007 The PHP Group
- * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version   Release: 1.6.3
- * @link      http://pear.php.net/package/PEAR_PackageFileManager
- * @since     Class available since Release 0.1
+ * @copyright 2003-2015 The PEAR Group
+ * @license   New BSD, Revised
+ * @version   Release: 1.0.4
+ * @link      http://pear.php.net/package/PEAR_PackageFileManager_Plugins
+ * @since     Class available since Release 1.0.0alpha1
  */
-
-class PEAR_PackageFileManager_File
+class PEAR_PackageFileManager_File extends PEAR_PackageFileManager_Plugins
 {
-    /**
-     * @var array
-     * @access private
-     */
-    var $_options =
-            array(
-                 );
-
-    /**
-     * @access private
-     * @var PEAR_PackageFileManager
-     */
-    var $_parent;
-
     /**
      * @access private
      * @var array|false
      */
     var $ignore = false;
+
+    /**
+     * If we are on windows
+     * @access private
+     * @var boolean
+     */
+    var $windows = false;
 
     /**
      * Set up the File filelist generator
@@ -68,15 +55,14 @@ class PEAR_PackageFileManager_File
      * {@link PEAR_PackageFileManager::setOptions()} for
      * more information and formatting of this option
      *
-     * @param object &$parent PEAR_PackageFileManager
      * @param array  $options list of generation options
      *
      * @return void
      */
-    function PEAR_PackageFileManager_File(&$parent, $options)
+    function __construct($options)
     {
-        $this->_parent  = &$parent;
-        $this->_options = array_merge($this->_options, $options);
+        $this->windows = strtoupper(substr(PHP_OS, 0, 3)) == 'WIN';
+        $this->setOptions($options);
     }
 
     /**
@@ -98,45 +84,58 @@ class PEAR_PackageFileManager_File
             // ignore auto-generated package2.xml from PEAR 1.4.0
             $ignore[] = 'package2.xml';
         }
+
+        $dir = $package_directory;
+        if ($dir{strlen($dir) - 1} === DIRECTORY_SEPARATOR) {
+            $dir = substr($package_directory, 0, strlen($package_directory) - 1);
+        }
+
         $include = $this->_options['include'];
         $this->ignore = array(false, false);
         $this->_setupIgnore($ignore, 1);
         $this->_setupIgnore($include, 0);
-        $allfiles = $this->dirList(substr($package_directory, 0, strlen($package_directory) - 1));
+        $allfiles = $this->dirList($dir);
         if (PEAR::isError($allfiles)) {
             return $allfiles;
         }
+
         if (!count($allfiles)) {
-            return $this->_parent->raiseError(PEAR_PACKAGEFILEMANAGER_NO_FILES,
-                substr($package_directory, 0, strlen($package_directory) - 1));
+            return parent::raiseError(PEAR_PACKAGEFILEMANAGER_PLUGINS_NO_FILES, $dir);
         }
+
         $struc = array();
         $package_directory_realpath = realpath($package_directory);
         if (DIRECTORY_SEPARATOR != substr($package_directory_realpath, -1, 1)) {
             $package_directory_realpath .= DIRECTORY_SEPARATOR;
         }
+
         foreach ($allfiles as $file) {
-            $path = substr(dirname($file), strlen(str_replace(DIRECTORY_SEPARATOR,
-                                                              '/',
-                                                              $package_directory_realpath)));
+            $ps   = str_replace(DIRECTORY_SEPARATOR, '/', $package_directory_realpath);
+            $path = substr(dirname($file), strlen($ps));
             if (!$path) {
                 $path = '/';
             }
+
             $stupidassphp5_1 = explode('.', $file);
             $ext = array_pop($stupidassphp5_1);
-            if (strlen($ext) == strlen($file)) {
+            if (strlen($ext) === strlen($file)) {
                 $ext = '';
             }
-            $struc[$path][] = array('file' => basename($file),
-                                    'ext' => $ext,
-                                    'path' => (($path == '/') ? basename($file) : $path . '/' . basename($file)),
-                                    'fullpath' => $file);
+
+            $struc[$path][] = array(
+                'file' => basename($file),
+                'ext' => $ext,
+                'path' => (($path == '/') ? basename($file) : $path . '/' . basename($file)),
+                'fullpath' => $file
+            );
         }
+
         if (!count($struc)) {
             $newig = implode($this->_options['ignore'], ', ');
-            return PEAR_PackageFileManager::raiseError(PEAR_PACKAGEFILEMANAGER_IGNORED_EVERYTHING,
+            return parent::raiseError(PEAR_PACKAGEFILEMANAGER_PLUGINS_IGNORED_EVERYTHING,
                 substr($package_directory, 0, strlen($package_directory) - 1), $newig);
         }
+
         uksort($struc, 'strnatcasecmp');
         foreach ($struc as $key => $ind) {
             usort($ind, array($this, 'sortfiles'));
@@ -147,6 +146,7 @@ class PEAR_PackageFileManager_File
         if (!isset($tempstruc['/'])) {
             $tempstruc['/'] = array();
         }
+
         $struc = array('/' => $tempstruc['/']);
         $bv = 0;
         foreach ($tempstruc as $key => $ind) {
@@ -170,47 +170,47 @@ class PEAR_PackageFileManager_File
      *
      * @access protected
      * @return array list of files in a directory
-     * @throws PEAR_PACKAGEFILEMANAGER_DIR_DOESNT_EXIST
+     * @throws PEAR_PACKAGEFILEMANAGER_PLUGINS_DIR_DOESNT_EXIST
      */
     function dirList($directory)
     {
-        $ret = false;
-        if (@is_dir($directory)) {
-            $ret = array();
-            $d = @dir($directory); // thanks to Jason E Sweat (jsweat@users.sourceforge.net) for fix
-            while ($d && false !== ($entry = $d->read())) {
-                if ($this->_testFile($directory, $entry)) {
-                    if (is_file($directory . '/' . $entry)) {
-                        // if include option was set, then only pass included files
-                        if ($this->ignore[0]) {
-                            if ($this->_checkIgnore($entry, $directory . '/' . $entry, 0)) {
-                                continue;
-                            }
-                        }
-                        // if ignore option was set, then only pass included files
-                        if ($this->ignore[1]) {
-                            if ($this->_checkIgnore($entry, $directory . '/' . $entry, 1)) {
-                                continue;
-                            }
-                        }
-                        $ret[] = $directory . '/' . $entry;
+        if (!@is_dir($directory)) {
+            return parent::raiseError(PEAR_PACKAGEFILEMANAGER_PLUGINS_DIR_DOESNT_EXIST, $directory);
+        }
+
+        $ret = array();
+        $d = @dir($directory); // thanks to Jason E Sweat (jsweat@users.sourceforge.net) for fix
+        while ($d && false !== ($entry = $d->read())) {
+            if ($this->_testFile($directory, $entry)) {
+                $de = $directory . '/' . $entry;
+                if (is_file($de)) {
+                    // if include option was set, then only pass included files
+                    if ($this->ignore[0] && $this->_checkIgnore($entry, $de, 0)) {
+                        continue;
                     }
-                    if (is_dir($directory . '/' . $entry)) {
-                        $tmp = $this->dirList($directory . '/' . $entry);
-                        if (is_array($tmp)) {
-                            foreach ($tmp as $ent) {
-                                $ret[] = $ent;
-                            }
+                    // if ignore option was set, then only pass included files
+                    if ($this->ignore[1] && $this->_checkIgnore($entry, $de, 1)) {
+                        continue;
+                    }
+                    $ret[] = $de;
+                }
+
+                if (is_dir($de)) {
+                    $tmp = $this->dirList($de);
+                    if (is_array($tmp)) {
+                        foreach ($tmp as $ent) {
+                            $ret[] = $ent;
                         }
                     }
                 }
             }
-            if ($d) {
-                $d->close();
-            }
-        } else {
-            return PEAR_PackageFileManager::raiseError(PEAR_PACKAGEFILEMANAGER_DIR_DOESNT_EXIST, $directory);
         }
+
+        if ($d) {
+            $d->close();
+        }
+
+        usort($ret, array($this, 'mystrucsort'));
         return $ret;
     }
 
@@ -230,9 +230,9 @@ class PEAR_PackageFileManager_File
     {
         if ($this->_options['addhiddenfiles']) {
             return is_file($directory . '/' . $entry) || (is_dir($directory . '/' . $entry) && !in_array($entry, array('.', '..')));
-        } else {
-            return $entry{0} != '.';
         }
+
+        return $entry{0} != '.';
     }
 
     /**
@@ -251,19 +251,27 @@ class PEAR_PackageFileManager_File
      */
     function _checkIgnore($file, $path, $return = 1)
     {
-        if (file_exists($path)) {
+        if ($this->windows && file_exists($path)) {
             $path = realpath($path);
         }
+
+        if (DIRECTORY_SEPARATOR == '\\') {
+          $path = strtr($path, '/', '\\');
+        } else {
+          $path = strtr($path, '\\', '/');
+        }
+
         if (is_array($this->ignore[$return])) {
             foreach ($this->ignore[$return] as $match) {
                 // match is an array if the ignore parameter was a /path/to/pattern
                 if (is_array($match)) {
                     // check to see if the path matches with a path delimiter appended
-                    preg_match('/^' . strtoupper($match[0]).'$/', strtoupper($path) . '/', $find);
+                    preg_match('/^' . strtoupper($match[0]).'$/', strtoupper($path) . DIRECTORY_SEPARATOR, $find);
                     if (!count($find)) {
                         // check to see if it matches without an appended path delimiter
                         preg_match('/^' . strtoupper($match[0]).'$/', strtoupper($path), $find);
                     }
+
                     if (count($find)) {
                         // check to see if the file matches the file portion of the regex string
                         preg_match('/^' . strtoupper($match[1]).'$/', strtoupper($file), $find);
@@ -271,9 +279,21 @@ class PEAR_PackageFileManager_File
                             return $return;
                         }
                     }
+
                     // check to see if the full path matches the regex
                     preg_match('/^' . strtoupper($match[0]).'$/',
                                strtoupper($path . DIRECTORY_SEPARATOR . $file), $find);
+                    if (count($find)) {
+                        return $return;
+                    }
+
+                    // user is trying a regex with no glob, lets give him the full path to match against
+                    if (!isset($this->_options['packagedirectory'])) {
+                        return !$return;
+                    }
+
+                    $t = $this->_getRegExpableSearchString($this->_options['packagedirectory']);
+                    preg_match('/^' . strtoupper($t . $match[0]).'$/', strtoupper($path), $find);
                     if (count($find)) {
                         return $return;
                     }
@@ -284,6 +304,7 @@ class PEAR_PackageFileManager_File
                     if (count($find)) {
                         return $return;
                     }
+
                     // check it against the file only
                     preg_match('/^' . strtoupper($match).'$/', strtoupper($file), $find);
                     if (count($find)) {
@@ -292,6 +313,7 @@ class PEAR_PackageFileManager_File
                 }
             }
         }
+
         return !$return;
     }
 
@@ -306,33 +328,45 @@ class PEAR_PackageFileManager_File
      */
     function _setupIgnore($ignore, $index)
     {
-        $ig = array();
-        if (is_array($ignore)) {
-            for ($i=0; $i<count($ignore);$i++) {
-                $ignore[$i] = strtr($ignore[$i], "\\", "/");
-                $ignore[$i] = str_replace('//', '/', $ignore[$i]);
+        if (!is_array($ignore)) {
+            $this->ignore[$index] = false;
+            return;
+        }
 
-                if (!empty($ignore[$i])) {
-                    if (!is_numeric(strpos($ignore[$i], '/'))) {
+        $ig = array();
+        for ($i = 0, $ic = count($ignore); $i < $ic; $i++) {
+            $ignore[$i] = strtr($ignore[$i], '\\', '/');
+            $ignore[$i] = str_replace('//', '/', $ignore[$i]);
+
+            if (!empty($ignore[$i])) {
+                if (!is_numeric(strpos($ignore[$i], '/'))) {
+                    $ig[] = $this->_getRegExpableSearchString($ignore[$i]);
+                } else {
+                    /*
+                     People tend to forgot to add * when they want to ignore
+                     a whole dir so we try to discover it for them
+                     Make sure the char before the last / is not * as adding *
+                     after a / as well is not optimal
+                    */
+                    $one = strrpos($ignore[$i], '/');
+                    $len = strlen($ignore[$i]);
+                    if ($one !== false && $len-1 == $one &&
+                        ($len > 1 && $ignore[$i][$len-2] != '*')
+                    ) {
+                        $ignore[$i] .= '*';
+                    }
+
+                    if (basename($ignore[$i]) . '/' == $ignore[$i]) {
                         $ig[] = $this->_getRegExpableSearchString($ignore[$i]);
                     } else {
-                        if (basename($ignore[$i]) . '/' == $ignore[$i]) {
-                            $ig[] = $this->_getRegExpableSearchString($ignore[$i]);
-                        } else {
-                            $ig[] = array($this->_getRegExpableSearchString($ignore[$i]),
-                                      $this->_getRegExpableSearchString(basename($ignore[$i])));
-                        }
+                        $ig[] = array($this->_getRegExpableSearchString($ignore[$i]),
+                                  $this->_getRegExpableSearchString(basename($ignore[$i])));
                     }
                 }
             }
-            if (count($ig)) {
-                $this->ignore[$index] = $ig;
-            } else {
-                $this->ignore[$index] = false;
-            }
-        } else {
-            $this->ignore[$index] = false;
         }
+
+        $this->ignore[$index] = count($ig) ? $ig : false;
     }
 
     /**
@@ -349,13 +383,16 @@ class PEAR_PackageFileManager_File
         if (DIRECTORY_SEPARATOR == '\\') {
             $y = '\\\\';
         }
+
         $s = str_replace('/', DIRECTORY_SEPARATOR, $s);
         $x = strtr($s, array('?' => '.', '*' => '.*', '.' => '\\.', '\\' => '\\\\', '/' => '\\/',
                              '[' => '\\[', ']' => '\\]', '-' => '\\-'));
+
         if (strpos($s, DIRECTORY_SEPARATOR) !== false &&
               strrpos($s, DIRECTORY_SEPARATOR) === strlen($s) - 1) {
             $x = "(?:.*$y$x?.*|$x.*)";
         }
+
         return $x;
     }
 
@@ -379,26 +416,26 @@ class PEAR_PackageFileManager_File
     {
         if (!count($dir)) {
             foreach ($contents as $dir => $files) {
-                if (is_string($dir)) {
-                    if (strpos($dir, '/')) {
-                        $test = true;
-                        $a = $contents[$dir];
-                        unset($contents[$dir]);
-                        $b = explode('/', $dir);
-                        $c = array_shift($b);
-                        if (isset($contents[$c])) {
-                            $contents[$c] = $this->_setDir($contents[$c], $this->_setupDirs(array(), $b, $a));
-                        } else {
-                            $contents[$c] = $this->_setupDirs(array(), $b, $a);
-                        }
+                if (is_string($dir) && strpos($dir, '/')) {
+                    $a = $contents[$dir];
+                    unset($contents[$dir]);
+                    $b = explode('/', $dir);
+                    $c = array_shift($b);
+                    if (isset($contents[$c])) {
+                        $contents[$c] = $this->_setDir($contents[$c], $this->_setupDirs(array(), $b, $a));
+                    } else {
+                        $contents[$c] = $this->_setupDirs(array(), $b, $a);
                     }
                 }
             }
+
             return $contents;
         }
+
         $me = array_shift($dir);
         if (!isset($struc[$me])) {
             $struc[$me] = array();
+
         }
         $struc[$me] = $this->_setupDirs($struc[$me], $dir, $contents);
         return $struc;
@@ -452,4 +489,3 @@ class PEAR_PackageFileManager_File
     }
     /**#@-*/
 }
-?>

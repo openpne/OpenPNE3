@@ -3,23 +3,16 @@
  * The SVN list plugin generator for both PEAR_PackageFileManager,
  * and PEAR_PackageFileManager2 classes.
  *
- * PHP versions 4 and 5
- *
- * LICENSE: This source file is subject to version 3.01 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
+ * PHP versions 5 and 7
  *
  * @category  PEAR
- * @package   PEAR_PackageFileManager
+ * @package   PEAR_PackageFileManager_Plugins
  * @author    Arnaud Limbourg <arnaud@limbourg.com>
  * @author    Tim Jackson <tim@timj.co.uk>
- * @copyright 2005-2007 The PHP Group
- * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version   CVS: $Id: Svn.php,v 1.11 2007/11/19 22:44:00 farell Exp $
- * @link      http://pear.php.net/package/PEAR_PackageFileManager
- * @since     File available since Release 1.3.0
+ * @copyright 2003-2015 The PEAR Group
+ * @license   New BSD, Revised
+ * @link      http://pear.php.net/package/PEAR_PackageFileManager_Plugins
+ * @since     File available since Release 1.0.0alpha1
  */
 
 require_once 'PEAR/PackageFileManager/File.php';
@@ -34,31 +27,24 @@ require_once 'PEAR/PackageFileManager/File.php';
  * repository, only on a checked out Subversion module
  *
  * @category  PEAR
- * @package   PEAR_PackageFileManager
+ * @package   PEAR_PackageFileManager_Plugins
  * @author    Arnaud Limbourg <arnaud@limbourg.com>
  * @author    Tim Jackson <tim@timj.co.uk>
- * @copyright 2005-2007 The PHP Group
- * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version   Release: 1.6.3
- * @link      http://pear.php.net/package/PEAR_PackageFileManager
- * @since     Class available since Release 1.3.0
+ * @copyright 2003-2015 The PEAR Group
+ * @license   New BSD, Revised
+ * @version   Release: 1.0.4
+ * @link      http://pear.php.net/package/PEAR_PackageFileManager_Plugins
+ * @since     Class available since Release 1.0.0alpha1
  */
-
 class PEAR_PackageFileManager_Svn extends PEAR_PackageFileManager_File
 {
-    function PEAR_PackageFileManager_Svn(&$parent, $options)
+    function __construct($options)
     {
-        if (version_compare(phpversion(), '5.0.0', '>=')) {
-            if (!function_exists('simplexml_load_string')) {
-                die('PEAR_PackageFileManager_SVN Error: simplexml extension is required' .
-                    ' in PHP 5+.  PHP 4 uses XML_Tree');
-            }
-        }
-        parent::PEAR_PackageFileManager_File($parent, $options);
+        parent::__construct($options);
     }
 
     /**
-     * Return a list of all files in the CVS repository
+     * Return a list of all files in the SVN repository
      *
      * This function is like {@link parent::dirList()} except
      * that instead of retrieving a regular filelist, it first
@@ -79,22 +65,24 @@ class PEAR_PackageFileManager_Svn extends PEAR_PackageFileManager_File
     function dirList($directory)
     {
         static $in_recursion = false;
-        if (!$in_recursion) {
-            // include only .svn/entries files
-            // since subversion keeps its data in a hidden
-            // directory we must force PackageFileManager to
-            // consider hidden directories.
-            $this->_options['addhiddenfiles'] = true;
-            $this->_setupIgnore(array('*/.svn/entries'), 0);
-            $this->_setupIgnore(array(), 1);
-            $in_recursion = true;
-            $entries = parent::dirList($directory);
-            $in_recursion = false;
-        } else {
+        if ($in_recursion) {
             return parent::dirList($directory);
         }
+
+        // include only .svn/entries files
+        // since subversion keeps its data in a hidden
+        // directory we must force PackageFileManager to
+        // consider hidden directories.
+        $this->_options['addhiddenfiles'] = true;
+        $this->_setupIgnore(array('*/.svn/entries'), 0);
+        $this->_setupIgnore(array(), 1);
+        $in_recursion = true;
+        $entries = parent::dirList($directory);
+        $in_recursion = false;
+
         if (!$entries || !is_array($entries)) {
-            return $this->_parent->raiseError(PEAR_PACKAGEFILEMANAGER_NOSVNENTRIES, $directory);
+            $code = PEAR_PACKAGEFILEMANAGER_PLUGINS_NOSVNENTRIES;
+            return parent::raiseError($code, $directory);
         }
         return $this->_readSVNEntries($entries);
     }
@@ -115,33 +103,35 @@ class PEAR_PackageFileManager_Svn extends PEAR_PackageFileManager_File
         $ignore = $this->_options['ignore'];
         // implicitly ignore packagefile
         $ignore[] = $this->_options['packagefile'];
-        $include = $this->_options['include'];
+        $include  = $this->_options['include'];
         $this->ignore = array(false, false);
         $this->_setupIgnore($ignore, 1);
         $this->_setupIgnore($include, 0);
-        foreach ($entries as $cvsentry) {
-            $directory = @dirname(@dirname($cvsentry));
+        foreach ($entries as $entry) {
+            $directory = @dirname(@dirname($entry));
             if (!$directory) {
                 continue;
             }
-            $d = $this->_getSVNEntries($cvsentry);
+            $d = $this->_getSVNEntries($entry);
             if (!is_array($d)) {
                 continue;
             }
+
             foreach ($d as $entry) {
                 if ($ignore) {
                     if ($this->_checkIgnore($entry,
-                          $directory . '/' . $entry, 1)) {
+                          $directory . DIRECTORY_SEPARATOR . $entry, 1)) {
                         continue;
                     }
                 }
+
                 if ($include) {
                     if ($this->_checkIgnore($entry,
-                          $directory . '/' . $entry, 0)) {
+                          $directory . DIRECTORY_SEPARATOR . $entry, 0)) {
                         continue;
                     }
                 }
-                $ret[] = $directory . '/' . $entry;
+                $ret[] = $directory . DIRECTORY_SEPARATOR . $entry;
             }
         }
         return $ret;
@@ -161,82 +151,91 @@ class PEAR_PackageFileManager_Svn extends PEAR_PackageFileManager_File
      * @uses   PEAR::XML_Tree
      * @access private
      */
-    function _getSVNEntries($svnentriesfilename)
+    function _getSVNEntries($filename)
     {
-        $stuff = file_get_contents($svnentriesfilename);
-
-        if (substr($stuff, 0, 5) != '<?xml') {
+        $content = file_get_contents($filename);
+        if (substr($content, 0, 5) != '<?xml') {
             // Not XML; assume newer (>= SVN 1.4) SVN entries format
+            // http://svn.apache.org/repos/asf/subversion/trunk/subversion/libsvn_wc/README
 
             // The directory entries are seperated by #0c; look for the first #0c
             // The hex GUID (xxxx-xxxx-xxxx-xxxx-xxxx) may not always be set
             // The list of files follows this
-            if (preg_match('/\x0c\n(.*)$/ms', $stuff, $matches)) {
-                $file_list = $matches[1];
+            if (!preg_match('/\x0c\n(.*)$/ms', $content, $matches)) {
+                return false;
+            }
 
-                $files = explode("\x0c", trim($file_list));
+            // Each file entry seems to look something like this:
+            // [filename]
+            // [type of file e.g. "dir", "file"]
+            // [varying number of \n]
+            // [optional "deleted" string]
+            $files = explode("\x0c", trim($matches[1]));
+            foreach ($files as $file) {
+                $lines = explode("\n", trim($file));
+                if (isset($lines[1]) && $lines[1] == 'file') {
+                    $deleted = false;
+                    foreach ($lines as $line) {
+                        // 'deleted' means it's already gone
+                        // 'delete' means it's marked as ready to delete
+                        if ($line == 'deleted' || $line == 'delete') {
+                            $deleted = true;
+                        }
+                    }
 
-                // Each file entry seems to look something like this:
-                // [filename]
-                // [type of file e.g. "dir", "file"]
-                // [varying number of \n]
-                // [optional "deleted" string]
-                foreach ($files as $file) {
-                    $lines = explode("\n", trim($file));
-                    if (isset($lines[1]) && $lines[1] == 'file') {
-                        $deleted = false;
-                        foreach ($lines as $line) {
-                            // 'deleted' means it's already gone
-                            // 'delete' means it's marked as ready to delete
-                            if ($line == 'deleted' || $line == 'delete') {
-                                $deleted = true;
-                            }
-                        }
-                        if (!$deleted) {
-                            $entries[] = $lines[0];
-                        }
+                    if (!$deleted) {
+                        $entries[] = $lines[0];
                     }
                 }
             }
         } elseif (function_exists('simplexml_load_string')) {
             // this breaks simplexml because "svn:" is an invalid namespace, so strip it
-            $stuff = str_replace('xmlns="svn:"', '', file_get_contents($svnentriesfilename));
-            $all = simplexml_load_string($stuff);
+            $content = str_replace('xmlns="svn:"', '', $content);
+            $all     = simplexml_load_string($content);
             $entries = array();
             foreach ($all->entry as $entry) {
                 if ($entry['kind'] == 'file') {
-                    if (isset($entry['deleted'])) {
+                    // 'deleted' means it's already gone
+                    // 'delete' means it's marked as ready to delete
+                    if (isset($entry['deleted']) || isset($entry['delete'])) {
                         continue;
                     }
                     array_push($entries, $entry['name']);
                 }
             }
         } else {
-            unset($stuff);
-            include_once 'XML/Tree.php';
-            $parser  = &new XML_Tree($svnentriesfilename);
-            $tree    = &$parser->getTreeFromFile();
+            require_once 'XML/Unserializer.php';
+            $options = array(
+                XML_UNSERIALIZER_OPTION_ATTRIBUTES_PARSE    => true,
+                XML_UNSERIALIZER_OPTION_ATTRIBUTES_ARRAYKEY => false
+            );
+            $unserializer = new XML_Unserializer($options);
+            $status = $unserializer->unserialize($content);
+            if (PEAR::isError($status)) {
+                return false;
+            }
+            $tree = $unserializer->getUnserializedData();
 
             // loop through the xml tree and keep only valid entries being files
             $entries = array();
-            foreach ($tree->children as $entry) {
-                if ($entry->name == 'entry'
-                    && $entry->attributes['kind'] == 'file') {
-                    if (isset($entry->attributes['deleted'])) {
+            foreach ($tree['entry'] as $entry) {
+                if ($entry['kind'] == 'file') {
+                    // 'deleted' means it's already gone
+                    // 'delete' means it's marked as ready to delete
+                    if (isset($entry['deleted']) || isset($entry['delete'])) {
                         continue;
                     }
-                    array_push($entries, $entry->attributes['name']);
+                    array_push($entries, $entry['name']);
                 }
             }
 
-            unset($parser, $tree);
+            unset($unserializer, $tree);
         }
 
         if (isset($entries) && is_array($entries)) {
             return $entries;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }
-?>

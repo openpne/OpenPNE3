@@ -3,22 +3,15 @@
  * The Perforce plugin generator for both PEAR_PackageFileManager,
  * and PEAR_PackageFileManager2 classes.
  *
- * PHP versions 4 and 5
- *
- * LICENSE: This source file is subject to version 3.01 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
+ * PHP versions 5 and 7
  *
  * @category  PEAR
- * @package   PEAR_PackageFileManager
+ * @package   PEAR_PackageFileManager_Plugins
  * @author    Jon Parise <jon@php.net>
- * @copyright 2005-2007 The PHP Group
- * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version   CVS: $Id: Perforce.php,v 1.6 2007/11/19 22:44:00 farell Exp $
- * @link      http://pear.php.net/package/PEAR_PackageFileManager
- * @since     File available since Release 1.3.0
+ * @copyright 2003-2015 The PEAR Group
+ * @license   New BSD, Revised
+ * @link      http://pear.php.net/package/PEAR_PackageFileManager_Plugins
+ * @since     File available since Release 1.0.0alpha1
  */
 
 require_once 'PEAR/PackageFileManager/File.php';
@@ -32,15 +25,14 @@ require_once 'PEAR/PackageFileManager/File.php';
  * is used to determine which local files are under Perforce's control.
  *
  * @category  PEAR
- * @package   PEAR_PackageFileManager
+ * @package   PEAR_PackageFileManager_Plugins
  * @author    Jon Parise <jon@php.net>
- * @copyright 2003-2007 The PHP Group
- * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
- * @version   Release: 1.6.3
- * @link      http://pear.php.net/package/PEAR_PackageFileManager
- * @since     Class available since Release 1.3.0
+ * @copyright 2003-2015 The PEAR Group
+ * @license   New BSD, Revised
+ * @version   Release: 1.0.4
+ * @link      http://pear.php.net/package/PEAR_PackageFileManager_Plugins
+ * @since     Class available since Release 1.0.0alpha1
  */
-
 class PEAR_PackageFileManager_Perforce extends PEAR_PackageFileManager_File
 {
     /**
@@ -55,8 +47,7 @@ class PEAR_PackageFileManager_Perforce extends PEAR_PackageFileManager_File
     {
         /* Return an error if the directory does not exist. */
         if (@is_dir($directory) === false) {
-            return $this->_parent->raiseError(PEAR_PACKAGEFILEMANAGER_DIR_DOESNT_EXIST,
-                            $directory);
+            return parent::raiseError(PEAR_PACKAGEFILEMANAGER_PLUGINS_DIR_DOESNT_EXIST, $directory);
         }
 
         /* List the files below $directory that are under Perforce control. */
