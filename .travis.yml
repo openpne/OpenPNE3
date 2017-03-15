@@ -1,0 +1,36 @@
+language: php
+
+php:
+  - 5.5
+  - 5.6
+  - 7.0
+
+matrix:
+  allow_failures:
+    - php: 7.0
+
+services:
+  - mysql
+
+sudo: false
+
+install:
+  - echo 'date.timezone = "Asia/Tokyo"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+
+  # Disable Xdebug to avoid segfaults
+  - phpenv config-rm xdebug.ini
+
+  - cp config/ProjectConfiguration.class.php{.sample,}
+  - cp config/OpenPNE.yml{.sample,}
+
+  - git clone git://github.com/upsilon/opIgnoreKnownErrorsPlugin.git plugins/opIgnoreKnownErrorsPlugin
+
+  - DBTYPE=mysql DBUSER=root DBPASS= DBHOST=localhost DBPORT= DBNAME=openpne DBSOCK=
+  - for i in `seq 2`; do echo -e "$DBTYPE\n$DBUSER\n$DBPASS\n$DBHOST\n$DBPORT\n$DBNAME\n$DBSOCK\ny\n" | ./symfony openpne:install && break; done
+
+  - ./symfony cc
+
+  - yes '' | pecl install apcu-4.0.11
+
+script:
+  - ./symfony test:all
