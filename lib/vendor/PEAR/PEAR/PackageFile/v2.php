@@ -9,7 +9,6 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: v2.php 276383 2009-02-24 23:39:37Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -23,7 +22,7 @@ require_once 'PEAR/ErrorStack.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.0
+ * @version    Release: 1.10.3
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -129,10 +128,19 @@ class PEAR_PackageFile_v2
     /**
      * The constructor merely sets up the private error stack
      */
-    function PEAR_PackageFile_v2()
+    function __construct()
     {
         $this->_stack = new PEAR_ErrorStack('PEAR_PackageFile_v2', false, null);
         $this->_isValid = false;
+    }
+
+    /**
+     * PHP 4 style constructor for backwards compatibility.
+     * Used by PEAR_PackageFileManager2
+     */
+    public function PEAR_PackageFile_v2()
+    {
+        $this->__construct();
     }
 
     /**
@@ -145,7 +153,7 @@ class PEAR_PackageFile_v2
      */
     function &getPEARDownloader(&$i, $o, &$c)
     {
-        $z = &new PEAR_Downloader($i, $o, $c);
+        $z = new PEAR_Downloader($i, $o, $c);
         return $z;
     }
 
@@ -163,7 +171,7 @@ class PEAR_PackageFile_v2
         if (!class_exists('PEAR_Dependency2')) {
             require_once 'PEAR/Dependency2.php';
         }
-        $z = &new PEAR_Dependency2($c, $o, $p, $s);
+        $z = new PEAR_Dependency2($c, $o, $p, $s);
         return $z;
     }
 
@@ -564,7 +572,7 @@ class PEAR_PackageFile_v2
             $atts = $filelist[$name];
             foreach ($tasks as $tag => $raw) {
                 $task = $this->getTask($tag);
-                $task = &new $task($this->_config, $common, PEAR_TASK_INSTALL);
+                $task = new $task($this->_config, $common, PEAR_TASK_INSTALL);
                 if ($task->isScript()) {
                     $ret[] = $filelist[$name]['installed_as'];
                 }
@@ -610,22 +618,21 @@ class PEAR_PackageFile_v2
             $atts = $filelist[$name];
             foreach ($tasks as $tag => $raw) {
                 $taskname = $this->getTask($tag);
-                $task = &new $taskname($this->_config, $common, PEAR_TASK_INSTALL);
+                $task = new $taskname($this->_config, $common, PEAR_TASK_INSTALL);
                 if (!$task->isScript()) {
                     continue; // scripts are only handled after installation
                 }
                 $lastversion = isset($this->_packageInfo['_lastversion']) ?
                     $this->_packageInfo['_lastversion'] : null;
                 $task->init($raw, $atts, $lastversion);
-                $res = $task->startSession($this, $atts['installed_as']);
+                $res = $task->startSession($this, $atts['installed_as'], null);
                 if (!$res) {
                     continue; // skip this file
                 }
                 if (PEAR::isError($res)) {
                     return $res;
                 }
-                $assign = &$task;
-                $this->_scripts[] = &$assign;
+                $this->_scripts[] = $task;
             }
         }
         if (count($this->_scripts)) {
@@ -799,6 +806,10 @@ class PEAR_PackageFile_v2
     {
         unset($pinfo['old']);
         unset($pinfo['xsdversion']);
+        // If the changelog isn't an array then it was passed in as an empty tag
+        if (isset($pinfo['changelog']) && !is_array($pinfo['changelog'])) {
+          unset($pinfo['changelog']);
+        }
         $this->_incomplete = false;
         $this->_packageInfo = $pinfo;
     }
@@ -1173,6 +1184,9 @@ class PEAR_PackageFile_v2
                 $contents['dir']['file'] = array($contents['dir']['file']);
             }
             foreach ($contents['dir']['file'] as $file) {
+                if (!isset($file['attribs']['name'])) {
+                    continue;
+                }
                 $name = $file['attribs']['name'];
                 if (!$preserve) {
                     $file = $file['attribs'];
@@ -1850,7 +1864,7 @@ class PEAR_PackageFile_v2
                 return implode('', file($file));
             }
         } else { // tgz
-            $tar = &new Archive_Tar($this->_archiveFile);
+            $tar = new Archive_Tar($this->_archiveFile);
             $tar->pushErrorHandling(PEAR_ERROR_RETURN);
             if ($file != 'package.xml' && $file != 'package2.xml') {
                 $file = $this->getPackage() . '-' . $this->getVersion() . '/' . $file;
@@ -1889,7 +1903,7 @@ class PEAR_PackageFile_v2
         if (!class_exists('PEAR_PackageFile_Generator_v2')) {
             require_once 'PEAR/PackageFile/Generator/v2.php';
         }
-        $a = &new PEAR_PackageFile_Generator_v2($this);
+        $a = new PEAR_PackageFile_Generator_v2($this);
         return $a;
     }
 

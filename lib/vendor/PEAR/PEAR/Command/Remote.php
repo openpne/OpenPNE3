@@ -11,7 +11,6 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: Remote.php 287477 2009-08-19 14:19:43Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -31,7 +30,7 @@ require_once 'PEAR/REST.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.0
+ * @version    Release: 1.10.3
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -144,7 +143,7 @@ version of DB is 1.6.5, the downloaded file will be DB-1.6.5.tgz.',
             'shortcut' => 'cc',
             'options' => array(),
             'doc' => '
-Clear the XML-RPC/REST cache.  See also the cache_ttl configuration
+Clear the REST cache. See also the cache_ttl configuration
 parameter.
 ',
             ),
@@ -155,9 +154,9 @@ parameter.
      *
      * @access public
      */
-    function PEAR_Command_Remote(&$ui, &$config)
+    function __construct(&$ui, &$config)
     {
-        parent::PEAR_Command_Common($ui, $config);
+        parent::__construct($ui, $config);
     }
 
     function _checkChannelForStatus($channel, $chan)
@@ -579,7 +578,7 @@ parameter.
         if (!class_exists('PEAR_Downloader')) {
             require_once 'PEAR/Downloader.php';
         }
-        $a = &new PEAR_Downloader($this->ui, $options, $this->config);
+        $a = new PEAR_Downloader($this->ui, $options, $this->config);
         return $a;
     }
 
@@ -590,7 +589,7 @@ parameter.
 
         // eliminate error messages for preferred_state-related errors
         /* TODO: Should be an option, but until now download does respect
-           prefered state */
+           preferred state */
         /* $options['ignorepreferred_state'] = 1; */
         // eliminate error messages for preferred_state-related errors
 
@@ -668,13 +667,13 @@ parameter.
             $preferred_mirror = $this->config->get('preferred_mirror');
             if ($chan->supportsREST($preferred_mirror) &&
                 (
-                   //($base2 = $chan->getBaseURL('REST1.4', $preferred_mirror)) ||
-                   ($base  = $chan->getBaseURL('REST1.0', $preferred_mirror))
+                   ($base2 = $chan->getBaseURL('REST1.3', $preferred_mirror))
+                   || ($base  = $chan->getBaseURL('REST1.0', $preferred_mirror))
                 )
 
             ) {
                 if ($base2) {
-                    $rest = &$this->config->getREST('1.4', array());
+                    $rest = &$this->config->getREST('1.3', array());
                     $base = $base2;
                 } else {
                     $rest = &$this->config->getREST('1.0', array());
@@ -776,6 +775,7 @@ parameter.
         if ($verbose >= 1) {
             $output .= "reading directory $cache_dir\n";
         }
+
         $num = 0;
         while ($ent = readdir($dp)) {
             if (preg_match('/rest.cache(file|id)\\z/', $ent)) {

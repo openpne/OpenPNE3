@@ -9,7 +9,6 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: Package.php 287560 2009-08-21 22:36:18Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -50,7 +49,7 @@ define('PEAR_DOWNLOADER_PACKAGE_PHPVERSION', -1004);
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.0
+ * @version    Release: 1.10.3
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -130,7 +129,7 @@ class PEAR_Downloader_Package
     /**
      * @param PEAR_Downloader
      */
-    function PEAR_Downloader_Package(&$downloader)
+    function __construct(&$downloader)
     {
         $this->_downloader = &$downloader;
         $this->_config = &$this->_downloader->config;
@@ -397,9 +396,8 @@ class PEAR_Downloader_Package
     /**
      * Remove packages to be downloaded that are already installed
      * @param array of PEAR_Downloader_Package objects
-     * @static
      */
-    function removeInstalled(&$params)
+    public static function removeInstalled(&$params)
     {
         if (!isset($params[0])) {
             return;
@@ -415,7 +413,7 @@ class PEAR_Downloader_Package
                 if ($param->_installRegistry->packageExists($package, $channel)) {
                     $packageVersion = $param->_installRegistry->packageInfo($package, 'version', $channel);
                     if (version_compare($packageVersion, $param->getVersion(), '==')) {
-                        if (!isset($options['force'])) {
+                        if (!isset($options['force']) && !isset($options['packagingroot'])) {
                             $info = $param->getParsedPackage();
                             unset($info['version']);
                             unset($info['state']);
@@ -427,7 +425,7 @@ class PEAR_Downloader_Package
                             $params[$i] = false;
                         }
                     } elseif (!isset($options['force']) && !isset($options['upgrade']) &&
-                          !isset($options['soft'])) {
+                          !isset($options['soft']) && !isset($options['packagingroot'])) {
                         $info = $param->getParsedPackage();
                         $param->_downloader->log(1, 'Skipping package "' .
                             $param->getShortName() .
@@ -1243,7 +1241,7 @@ class PEAR_Downloader_Package
      * @param array $errorparams empty array
      * @return array array of stupid duplicated packages in PEAR_Downloader_Package obejcts
      */
-    function detectStupidDuplicates($params, &$errorparams)
+    public static function detectStupidDuplicates($params, &$errorparams)
     {
         $existing = array();
         foreach ($params as $i => $param) {
@@ -1281,9 +1279,8 @@ class PEAR_Downloader_Package
     /**
      * @param array
      * @param bool ignore install groups - for final removal of dupe packages
-     * @static
      */
-    function removeDuplicates(&$params, $ignoreGroups = false)
+    public static function removeDuplicates(&$params, $ignoreGroups = false)
     {
         $pnames = array();
         foreach ($params as $i => $param) {
@@ -1345,9 +1342,8 @@ class PEAR_Downloader_Package
     }
 
     /**
-     * @static
      */
-    function mergeDependencies(&$params)
+    public static function mergeDependencies(&$params)
     {
         $bundles = $newparams = array();
         foreach ($params as $i => $param) {
@@ -1376,20 +1372,22 @@ class PEAR_Downloader_Package
                     continue;
                 }
 
+                // FIXME do symlink check
+
                 fwrite($fp, $filecontents, strlen($filecontents));
                 fclose($fp);
                 if ($s = $params[$i]->explicitState()) {
                     $obj->setExplicitState($s);
                 }
 
-                $obj = &new PEAR_Downloader_Package($params[$i]->getDownloader());
+                $obj = new PEAR_Downloader_Package($params[$i]->getDownloader());
                 PEAR::pushErrorHandling(PEAR_ERROR_RETURN);
                 if (PEAR::isError($dir = $dl->getDownloadDir())) {
                     PEAR::popErrorHandling();
                     return $dir;
                 }
-
-                $e = $obj->_fromFile($a = $dir . DIRECTORY_SEPARATOR . $file);
+                $a = $dir . DIRECTORY_SEPARATOR . $file;
+                $e = $obj->_fromFile($a);
                 PEAR::popErrorHandling();
                 if (PEAR::isError($e)) {
                     if (!isset($options['soft'])) {
@@ -1398,10 +1396,9 @@ class PEAR_Downloader_Package
                     continue;
                 }
 
-                $j = &$obj;
-                if (!PEAR_Downloader_Package::willDownload($j,
-                      array_merge($params, $newparams)) && !$param->isInstalled($j)) {
-                    $newparams[] = &$j;
+                if (!PEAR_Downloader_Package::willDownload($obj,
+                      array_merge($params, $newparams)) && !$param->isInstalled($obj)) {
+                    $newparams[] = $obj;
                 }
             }
         }
@@ -1435,7 +1432,7 @@ class PEAR_Downloader_Package
             // convert the dependencies into PEAR_Downloader_Package objects for the next time around
             $params[$i]->_downloadDeps = array();
             foreach ($newdeps as $dep) {
-                $obj = &new PEAR_Downloader_Package($params[$i]->getDownloader());
+                $obj = new PEAR_Downloader_Package($params[$i]->getDownloader());
                 if ($s = $params[$i]->explicitState()) {
                     $obj->setExplicitState($s);
                 }
@@ -1457,8 +1454,7 @@ class PEAR_Downloader_Package
                     }
                 }
 
-                $j = &$obj;
-                $newparams[] = &$j;
+                $newparams[] = $obj;
             }
         }
 
@@ -1474,9 +1470,8 @@ class PEAR_Downloader_Package
 
 
     /**
-     * @static
      */
-    function willDownload($param, $params)
+    public static function willDownload($param, $params)
     {
         if (!is_array($params)) {
             return false;
@@ -1497,12 +1492,11 @@ class PEAR_Downloader_Package
      * @param int
      * @param string
      */
-    function &getPackagefileObject(&$c, $d, $t = false)
+    function &getPackagefileObject(&$c, $d)
     {
-        $a = &new PEAR_PackageFile($c, $d, $t);
+        $a = new PEAR_PackageFile($c, $d);
         return $a;
     }
-
 
     /**
      * This will retrieve from a local file if possible, and parse out
@@ -1527,16 +1521,7 @@ class PEAR_Downloader_Package
             if (@is_file($param)) {
                 $this->_type = 'local';
                 $options = $this->_downloader->getOptions();
-                if (isset($options['downloadonly'])) {
-                    $pkg = &$this->getPackagefileObject($this->_config,
-                        $this->_downloader->_debug);
-                } else {
-                    if (PEAR::isError($dir = $this->_downloader->getDownloadDir())) {
-                        return $dir;
-                    }
-                    $pkg = &$this->getPackagefileObject($this->_config,
-                        $this->_downloader->_debug, $dir);
-                }
+                $pkg = &$this->getPackagefileObject($this->_config, $this->_downloader->_debug);
                 PEAR::pushErrorHandling(PEAR_ERROR_RETURN);
                 $pf = &$pkg->fromAnyFile($param, PEAR_VALIDATE_INSTALLING);
                 PEAR::popErrorHandling();
@@ -1584,7 +1569,7 @@ class PEAR_Downloader_Package
 
             if ($this->_rawpackagefile) {
                 require_once 'Archive/Tar.php';
-                $tar = &new Archive_Tar($file);
+                $tar = new Archive_Tar($file);
                 $packagexml = $tar->extractInString('package2.xml');
                 if (!$packagexml) {
                     $packagexml = $tar->extractInString('package.xml');
@@ -1608,15 +1593,7 @@ class PEAR_Downloader_Package
             }
 
             // whew, download worked!
-            if (isset($options['downloadonly'])) {
-                $pkg = &$this->getPackagefileObject($this->_config, $this->_downloader->debug);
-            } else {
-                $dir = $this->_downloader->getDownloadDir();
-                if (PEAR::isError($dir)) {
-                    return $dir;
-                }
-                $pkg = &$this->getPackagefileObject($this->_config, $this->_downloader->debug, $dir);
-            }
+            $pkg = &$this->getPackagefileObject($this->_config, $this->_downloader->debug);
 
             PEAR::pushErrorHandling(PEAR_ERROR_RETURN);
             $pf = &$pkg->fromAnyFile($file, PEAR_VALIDATE_INSTALLING);

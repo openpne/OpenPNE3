@@ -12,7 +12,6 @@
  * @author     Martin Jansen <mj@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: Downloader.php 287109 2009-08-11 18:50:30Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.3.0
  */
@@ -21,6 +20,7 @@
  * Needed for constants, extending
  */
 require_once 'PEAR/Common.php';
+require_once 'PEAR/Proxy.php';
 
 define('PEAR_INSTALLER_OK',       1);
 define('PEAR_INSTALLER_FAILED',   0);
@@ -39,7 +39,7 @@ define('PEAR_INSTALLER_ERROR_NO_PREF_STATE', 2);
  * @author     Martin Jansen <mj@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.0
+ * @version    Release: 1.10.3
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.3.0
  */
@@ -141,26 +141,43 @@ class PEAR_Downloader extends PEAR_Common
     var $_downloadDir;
 
     /**
+     * List of methods that can be called both statically and non-statically.
+     * @var array
+     */
+    protected static $bivalentMethods = array(
+        'setErrorHandling' => true,
+        'raiseError' => true,
+        'throwError' => true,
+        'pushErrorHandling' => true,
+        'popErrorHandling' => true,
+        'downloadHttp' => true,
+    );
+
+    /**
      * @param PEAR_Frontend_*
      * @param array
      * @param PEAR_Config
      */
-    function PEAR_Downloader(&$ui, $options, &$config)
+    function __construct($ui = null, $options = array(), $config = null)
     {
-        parent::PEAR_Common();
+        parent::__construct();
         $this->_options = $options;
-        $this->config = &$config;
-        $this->_preferredState = $this->config->get('preferred_state');
+        if ($config !== null) {
+            $this->config = &$config;
+            $this->_preferredState = $this->config->get('preferred_state');
+        }
         $this->ui = &$ui;
         if (!$this->_preferredState) {
-            // don't inadvertantly use a non-set preferred_state
+            // don't inadvertently use a non-set preferred_state
             $this->_preferredState = null;
         }
 
-        if (isset($this->_options['installroot'])) {
-            $this->config->setInstallRoot($this->_options['installroot']);
+        if ($config !== null) {
+            if (isset($this->_options['installroot'])) {
+                $this->config->setInstallRoot($this->_options['installroot']);
+            }
+            $this->_registry = &$config->getRegistry();
         }
-        $this->_registry = &$config->getRegistry();
 
         if (isset($this->_options['alldeps']) || isset($this->_options['onlyreqdeps'])) {
             $this->_installed = $this->_registry->listAllPackages();
@@ -189,7 +206,8 @@ class PEAR_Downloader extends PEAR_Common
             require_once 'System.php';
         }
 
-        $tmp = System::mktemp(array('-d'));
+        $tmpdir = $this->config->get('temp_dir');
+        $tmp = System::mktemp('-d -t "' . $tmpdir . '"');
         $a   = $this->downloadHttp('http://' . $channel . '/channel.xml', $this->ui, $tmp, $callback, false);
         PEAR::popErrorHandling();
         if (PEAR::isError($a)) {
@@ -234,12 +252,12 @@ class PEAR_Downloader extends PEAR_Common
      * @param PEAR_Downloader
      * @return PEAR_Downloader_Package
      */
-    function &newDownloaderPackage(&$t)
+    function newDownloaderPackage(&$t)
     {
         if (!class_exists('PEAR_Downloader_Package')) {
             require_once 'PEAR/Downloader/Package.php';
         }
-        $a = &new PEAR_Downloader_Package($t);
+        $a = new PEAR_Downloader_Package($t);
         return $a;
     }
 
@@ -255,7 +273,7 @@ class PEAR_Downloader extends PEAR_Common
         if (!class_exists('PEAR_Dependency2')) {
             require_once 'PEAR/Dependency2.php';
         }
-        $z = &new PEAR_Dependency2($c, $i, $p, $s);
+        $z = new PEAR_Dependency2($c, $i, $p, $s);
         return $z;
     }
 
@@ -273,7 +291,7 @@ class PEAR_Downloader extends PEAR_Common
         $channelschecked = array();
         // convert all parameters into PEAR_Downloader_Package objects
         foreach ($params as $i => $param) {
-            $params[$i] = &$this->newDownloaderPackage($this);
+            $params[$i] = $this->newDownloaderPackage($this);
             PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
             $err = $params[$i]->initialize($param);
             PEAR::staticPopErrorHandling();
@@ -314,7 +332,7 @@ class PEAR_Downloader extends PEAR_Common
                             require_once 'System.php';
                         }
 
-                        $curchannel = &$this->_registry->getChannel($params[$i]->getChannel());
+                        $curchannel = $this->_registry->getChannel($params[$i]->getChannel());
                         if (PEAR::isError($curchannel)) {
                             PEAR::staticPopErrorHandling();
                             return $this->raiseError($curchannel);
@@ -330,7 +348,10 @@ class PEAR_Downloader extends PEAR_Common
                         $a = $this->downloadHttp($url, $this->ui, $dir, null, $curchannel->lastModified());
 
                         PEAR::staticPopErrorHandling();
-                        if (PEAR::isError($a) || !$a) {
+                        if ($a === false) {
+                            //channel.xml not modified
+                            break;
+                        } else if (PEAR::isError($a)) {
                             // Attempt fallback to https automatically
                             PEAR::pushErrorHandling(PEAR_ERROR_RETURN);
                             $a = $this->downloadHttp('https://' . $mirror .
@@ -493,14 +514,13 @@ class PEAR_Downloader extends PEAR_Common
      */
     function analyzeDependencies(&$params, $force = false)
     {
-        $hasfailed = $failed = false;
         if (isset($this->_options['downloadonly'])) {
             return;
         }
 
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
         $redo  = true;
-        $reset = false;
+        $reset = $hasfailed = $failed = false;
         while ($redo) {
             $redo = false;
             foreach ($params as $i => $param) {
@@ -553,7 +573,7 @@ class PEAR_Downloader extends PEAR_Common
                     }
 
                     $failed = false;
-                    if (isset($deps['required'])) {
+                    if (isset($deps['required']) && is_array($deps['required'])) {
                         foreach ($deps['required'] as $type => $dep) {
                             // note: Dependency2 will never return a PEAR_Error if ignore-errors
                             // is specified, so soft is needed to turn off logging
@@ -587,7 +607,7 @@ class PEAR_Downloader extends PEAR_Common
                             }
                         }
 
-                        if (isset($deps['optional'])) {
+                        if (isset($deps['optional']) && is_array($deps['optional'])) {
                             foreach ($deps['optional'] as $type => $dep) {
                                 if (!isset($dep[0])) {
                                     if (PEAR::isError($e =
@@ -698,6 +718,7 @@ class PEAR_Downloader extends PEAR_Common
                 }
             }
         }
+
         PEAR::staticPopErrorHandling();
         if ($hasfailed && (isset($this->_options['ignore-errors']) ||
               isset($this->_options['nodeps']))) {
@@ -718,6 +739,7 @@ class PEAR_Downloader extends PEAR_Common
         if (isset($this->_downloadDir)) {
             return $this->_downloadDir;
         }
+
         $downloaddir = $this->config->get('download_dir');
         if (empty($downloaddir) || (is_dir($downloaddir) && !is_writable($downloaddir))) {
             if  (is_dir($downloaddir) && !is_writable($downloaddir)) {
@@ -725,14 +747,17 @@ class PEAR_Downloader extends PEAR_Common
                     '" is not writeable.  Change download_dir config variable to ' .
                     'a writeable dir to avoid this warning');
             }
+
             if (!class_exists('System')) {
                 require_once 'System.php';
             }
+
             if (PEAR::isError($downloaddir = System::mktemp('-d'))) {
                 return $downloaddir;
             }
             $this->log(3, '+ tmp dir created at ' . $downloaddir);
         }
+
         if (!is_writable($downloaddir)) {
             if (PEAR::isError(System::mkdir(array('-p', $downloaddir))) ||
                   !is_writable($downloaddir)) {
@@ -741,6 +766,7 @@ class PEAR_Downloader extends PEAR_Common
                     'a writeable dir');
             }
         }
+
         return $this->_downloadDir = $downloaddir;
     }
 
@@ -761,7 +787,7 @@ class PEAR_Downloader extends PEAR_Common
         $this->config->set($key, $value, $layer, $channel);
         $this->_preferredState = $this->config->get('preferred_state', null, $channel);
         if (!$this->_preferredState) {
-            // don't inadvertantly use a non-set preferred_state
+            // don't inadvertently use a non-set preferred_state
             $this->_preferredState = null;
         }
     }
@@ -771,27 +797,11 @@ class PEAR_Downloader extends PEAR_Common
         $this->_options = $options;
     }
 
-    // }}}
-    // {{{ setOptions()
     function getOptions()
     {
         return $this->_options;
     }
 
-    /**
-     * For simpler unit-testing
-     * @param PEAR_Config
-     * @param int
-     * @param string
-     */
-    function &getPackagefileObject(&$c, $d, $t = false)
-    {
-        if (!class_exists('PEAR_PackageFile')) {
-            require_once 'PEAR/PackageFile.php';
-        }
-        $a = &new PEAR_PackageFile($c, $d, $t);
-        return $a;
-    }
 
     /**
      * @param array output of {@link parsePackageName()}
@@ -816,7 +826,7 @@ class PEAR_Downloader extends PEAR_Common
             } while (false);
         }
 
-        $chan = &$this->_registry->getChannel($parr['channel']);
+        $chan = $this->_registry->getChannel($parr['channel']);
         if (PEAR::isError($chan)) {
             return $chan;
         }
@@ -939,7 +949,7 @@ class PEAR_Downloader extends PEAR_Common
         $curchannel = $this->config->get('default_channel');
         if (isset($dep['uri'])) {
             $xsdversion = '2.0';
-            $chan = &$this->_registry->getChannel('__uri');
+            $chan = $this->_registry->getChannel('__uri');
             if (PEAR::isError($chan)) {
                 return $chan;
             }
@@ -964,7 +974,7 @@ class PEAR_Downloader extends PEAR_Common
                 } while (false);
             }
 
-            $chan = &$this->_registry->getChannel($remotechannel);
+            $chan = $this->_registry->getChannel($remotechannel);
             if (PEAR::isError($chan)) {
                 return $chan;
             }
@@ -979,7 +989,7 @@ class PEAR_Downloader extends PEAR_Common
         }
 
         if (isset($dep['uri'])) {
-            $info = &$this->newDownloaderPackage($this);
+            $info = $this->newDownloaderPackage($this);
             PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
             $err = $info->initialize($dep);
             PEAR::staticPopErrorHandling();
@@ -1000,9 +1010,20 @@ class PEAR_Downloader extends PEAR_Common
             }
             return $info;
         } elseif ($chan->supportsREST($this->config->get('preferred_mirror'))
-              && $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))
+              &&
+                (
+                  ($base2 = $chan->getBaseURL('REST1.3', $this->config->get('preferred_mirror')))
+                    ||
+                  ($base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror')))
+                )
         ) {
-            $rest = &$this->config->getREST('1.0', $this->_options);
+            if ($base2) {
+                $base = $base2;
+                $rest = &$this->config->getREST('1.3', $this->_options);
+            } else {
+                $rest = &$this->config->getREST('1.0', $this->_options);
+            }
+
             $url = $rest->getDepDownloadURL($base, $xsdversion, $dep, $parr,
                     $state, $version, $chan->getName());
             if (PEAR::isError($url)) {
@@ -1522,18 +1543,21 @@ class PEAR_Downloader extends PEAR_Common
      *                           use false to return the header values from this download
      * @param false|array $accept Accept headers to send
      * @param false|string $channel Channel to use for retrieving authentication
-     * @return string|array  Returns the full path of the downloaded file or a PEAR
-     *                       error on failure.  If the error is caused by
-     *                       socket-related errors, the error object will
-     *                       have the fsockopen error code available through
-     *                       getCode().  If caching is requested, then return the header
-     *                       values.
+     * @return mixed  Returns the full path of the downloaded file or a PEAR
+     *                error on failure.  If the error is caused by
+     *                socket-related errors, the error object will
+     *                have the fsockopen error code available through
+     *                getCode().  If caching is requested, then return the header
+     *                values.
+     *                If $lastmodified was given and the there are no changes,
+     *                boolean false is returned.
      *
      * @access public
      */
-    function downloadHttp($url, &$ui, $save_dir = '.', $callback = null, $lastmodified = null,
-                          $accept = false, $channel = false)
-    {
+    public static function _downloadHttp(
+        $object, $url, &$ui, $save_dir = '.', $callback = null, $lastmodified = null,
+        $accept = false, $channel = false
+    ) {
         static $redirect = 0;
         // always reset , so we are clean case of error
         $wasredirect = $redirect;
@@ -1555,26 +1579,16 @@ class PEAR_Downloader extends PEAR_Common
         $port = isset($info['port']) ? $info['port'] : null;
         $path = isset($info['path']) ? $info['path'] : null;
 
-        if (isset($this)) {
-            $config = &$this->config;
+        if ($object !== null) {
+            $config = $object->config;
         } else {
             $config = &PEAR_Config::singleton();
         }
 
-        $proxy_host = $proxy_port = $proxy_user = $proxy_pass = '';
-        if ($config->get('http_proxy') &&
-              $proxy = parse_url($config->get('http_proxy'))) {
-            $proxy_host = isset($proxy['host']) ? $proxy['host'] : null;
-            if (isset($proxy['scheme']) && $proxy['scheme'] == 'https') {
-                $proxy_host = 'ssl://' . $proxy_host;
-            }
-            $proxy_port = isset($proxy['port']) ? $proxy['port'] : 8080;
-            $proxy_user = isset($proxy['user']) ? urldecode($proxy['user']) : null;
-            $proxy_pass = isset($proxy['pass']) ? urldecode($proxy['pass']) : null;
+        $proxy = new PEAR_Proxy($config);
 
-            if ($callback) {
-                call_user_func($callback, 'message', "Using HTTP proxy $host:$port");
-            }
+        if ($proxy->isProxyConfigured() && $callback) {
+            call_user_func($callback, 'message', "Using HTTP proxy $host:$port");
         }
 
         if (empty($port)) {
@@ -1582,47 +1596,30 @@ class PEAR_Downloader extends PEAR_Common
         }
 
         $scheme = (isset($info['scheme']) && $info['scheme'] == 'https') ? 'https' : 'http';
+        $secure = ($scheme == 'https');
 
-        if ($proxy_host != '') {
-            $fp = @fsockopen($proxy_host, $proxy_port, $errno, $errstr);
-            if (!$fp) {
-                if ($callback) {
-                    call_user_func($callback, 'connfailed', array($proxy_host, $proxy_port,
-                                                                  $errno, $errstr));
-                }
-                return PEAR::raiseError("Connection to `$proxy_host:$proxy_port' failed: $errstr", $errno);
+        $fp = $proxy->openSocket($host, $port, $secure);
+        if (PEAR::isError($fp)) {
+            if ($callback) {
+                $errno = $fp->getCode();
+                $errstr = $fp->getMessage();
+                call_user_func($callback, 'connfailed', array($host, $port,
+                                                              $errno, $errstr));
             }
-
-            if ($lastmodified === false || $lastmodified) {
-                $request  = "GET $url HTTP/1.1\r\n";
-                $request .= "Host: $host:$port\r\n";
-            } else {
-                $request  = "GET $url HTTP/1.0\r\n";
-                $request .= "Host: $host\r\n";
-            }
-        } else {
-            $network_host = $host;
-            if (isset($info['scheme']) && $info['scheme'] == 'https') {
-                $network_host = 'ssl://' . $host;
-            }
-
-            $fp = @fsockopen($network_host, $port, $errno, $errstr);
-            if (!$fp) {
-                if ($callback) {
-                    call_user_func($callback, 'connfailed', array($host, $port,
-                                                                  $errno, $errstr));
-                }
-                return PEAR::raiseError("Connection to `$host:$port' failed: $errstr", $errno);
-            }
-
-            if ($lastmodified === false || $lastmodified) {
-                $request = "GET $path HTTP/1.1\r\n";
-                $request .= "Host: $host:$port\r\n";
-            } else {
-                $request = "GET $path HTTP/1.0\r\n";
-                $request .= "Host: $host\r\n";
-            }
+            return $fp;
         }
+
+        $requestPath = $path;
+        if ($proxy->isProxyConfigured()) {
+            $requestPath = $url;
+        }
+
+        if ($lastmodified === false || $lastmodified) {
+            $request  = "GET $requestPath HTTP/1.1\r\n";
+        } else {
+            $request  = "GET $requestPath HTTP/1.0\r\n";
+        }
+        $request .= "Host: $host\r\n";
 
         $ifmodifiedsince = '';
         if (is_array($lastmodified)) {
@@ -1638,9 +1635,9 @@ class PEAR_Downloader extends PEAR_Common
         }
 
         $request .= $ifmodifiedsince .
-            "User-Agent: PEAR/1.9.0/PHP/" . PHP_VERSION . "\r\n";
+            "User-Agent: PEAR/1.10.3/PHP/" . PHP_VERSION . "\r\n";
 
-        if (isset($this)) { // only pass in authentication for non-static calls
+        if ($object !== null) { // only pass in authentication for non-static calls
             $username = $config->get('username', null, $channel);
             $password = $config->get('password', null, $channel);
             if ($username && $password) {
@@ -1649,9 +1646,10 @@ class PEAR_Downloader extends PEAR_Common
             }
         }
 
-        if ($proxy_host != '' && $proxy_user != '') {
+        $proxyAuth = $proxy->getProxyAuth();
+        if ($proxyAuth) {
             $request .= 'Proxy-Authorization: Basic ' .
-                base64_encode($proxy_user . ':' . $proxy_pass) . "\r\n";
+                $proxyAuth . "\r\n";
         }
 
         if ($accept) {
@@ -1688,7 +1686,7 @@ class PEAR_Downloader extends PEAR_Common
             }
 
             $redirect = $wasredirect + 1;
-            return $this->downloadHttp($headers['location'],
+            return static::_downloadHttp($object, $headers['location'],
                     $ui, $save_dir, $callback, $lastmodified, $accept);
         }
 
@@ -1707,6 +1705,10 @@ class PEAR_Downloader extends PEAR_Common
         }
 
         $dest_file = $save_dir . DIRECTORY_SEPARATOR . $save_as;
+        if (is_link($dest_file)) {
+            return PEAR::raiseError('SECURITY ERROR: Will not write to ' . $dest_file . ' as it is symlinked to ' . readlink($dest_file) . ' - Possible symlink attack');
+        }
+
         if (!$wp = @fopen($dest_file, 'wb')) {
             fclose($fp);
             if ($callback) {
@@ -1759,4 +1761,3 @@ class PEAR_Downloader extends PEAR_Common
         return $dest_file;
     }
 }
-// }}}

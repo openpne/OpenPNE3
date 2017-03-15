@@ -12,7 +12,6 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: Package.php 287559 2009-08-21 22:33:10Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -160,7 +159,7 @@ of a specific release.
  Sets a SVN tag on all files in a package.  Use this command after you have
  packaged a distribution tarball with the "package" command to tag what
  revisions of what files were in that release.  If need to fix something
- after running cvstag once, but before the tarball is released to the public,
+ after running svntag once, but before the tarball is released to the public,
  use the "slide" option to move the release tag.
 
  to include files (such as a second package.xml, or tests not included in the
@@ -283,9 +282,9 @@ used for automated conversion or learning the format.
      *
      * @access public
      */
-    function PEAR_Command_Package(&$ui, &$config)
+    function __construct(&$ui, &$config)
     {
-        parent::PEAR_Command_Common($ui, $config);
+        parent::__construct($ui, $config);
     }
 
     function _displayValidationResults($err, $warn, $strict = false)
@@ -310,11 +309,11 @@ used for automated conversion or learning the format.
         if (!class_exists('PEAR_Packager')) {
             require_once 'PEAR/Packager.php';
         }
-        $a = &new PEAR_Packager;
+        $a = new PEAR_Packager;
         return $a;
     }
 
-    function &getPackageFile($config, $debug = false, $tmpdir = null)
+    function &getPackageFile($config, $debug = false)
     {
         if (!class_exists('PEAR_Common')) {
             require_once 'PEAR/Common.php';
@@ -322,7 +321,7 @@ used for automated conversion or learning the format.
         if (!class_exists('PEAR_PackageFile')) {
             require_once 'PEAR/PackageFile.php';
         }
-        $a = &new PEAR_PackageFile($config, $debug, $tmpdir);
+        $a = new PEAR_PackageFile($config, $debug);
         $common = new PEAR_Common;
         $common->ui = $this->ui;
         $a->setLogger($common);
@@ -372,7 +371,7 @@ used for automated conversion or learning the format.
             $info = $obj->fromPackageFile($params[0], PEAR_VALIDATE_NORMAL);
         } else {
             $archive = $info->getArchiveFile();
-            $tar = &new Archive_Tar($archive);
+            $tar = new Archive_Tar($archive);
             $tar->extract(dirname($info->getPackageFile()));
             $info->setPackageFile(dirname($info->getPackageFile()) . DIRECTORY_SEPARATOR .
                 $info->getPackage() . '-' . $info->getVersion() . DIRECTORY_SEPARATOR .
@@ -421,7 +420,7 @@ used for automated conversion or learning the format.
 
         $packageFile = realpath($params[0]);
         $dir = dirname($packageFile);
-        $dir = substr($dir, strrpos($dir, '/') + 1);
+        $dir = substr($dir, strrpos($dir, DIRECTORY_SEPARATOR) + 1);
         $obj  = &$this->getPackageFile($this->config, $this->_debug);
         $info = $obj->fromAnyFile($packageFile, PEAR_VALIDATE_NORMAL);
         if (PEAR::isError($info)) {
@@ -467,7 +466,7 @@ used for automated conversion or learning the format.
                 'name' => 'modified',
                 'type' => 'yesno',
                 'default' => 'no',
-                'prompt' => 'You have files in your SVN checkout (' . $path['from']  . ') that have been modified but not commited, do you still want to tag ' . $version . '?',
+                'prompt' => 'You have files in your SVN checkout (' . $path['from']  . ') that have been modified but not committed, do you still want to tag ' . $version . '?',
             ));
             $answers = $this->ui->confirmDialog($params);
 
@@ -481,7 +480,7 @@ used for automated conversion or learning the format.
         }
 
         // Check if tag already exists
-        $releaseTag = $path['local']['base'] . 'tags/' . $svntag;
+        $releaseTag = $path['local']['base'] . 'tags' . DIRECTORY_SEPARATOR . $svntag;
         $existsCommand = 'svn ls ' . $path['base'] . 'tags/';
 
         $fp = popen($existsCommand, "r");
@@ -491,9 +490,13 @@ used for automated conversion or learning the format.
         }
         pclose($fp);
 
-        if (in_array($svntag . '/', explode("\n", $out))) {
+        if (in_array($svntag . DIRECTORY_SEPARATOR, explode("\n", $out))) {
             $this->ui->outputData($this->output, $command);
             return $this->raiseError('SVN tag ' . $svntag . ' for ' . $package . ' already exists.');
+        } elseif (file_exists($path['local']['base'] . 'tags') === false) {
+            return $this->raiseError('Can not locate the tags directory at ' . $path['local']['base'] . 'tags');
+        } elseif (is_writeable($path['local']['base'] . 'tags') === false) {
+            return $this->raiseError('Can not write to the tag directory at ' . $path['local']['base'] . 'tags');
         } else {
             $makeCommand = 'svn mkdir ' . $releaseTag;
             $this->output .= "+ $makeCommand\n";
@@ -517,8 +520,18 @@ used for automated conversion or learning the format.
         $command .= ' copy --parents ';
 
         $dir   = dirname($packageFile);
-        $dir   = substr($dir, strrpos($dir, '/') + 1);
+        $dir   = substr($dir, strrpos($dir, DIRECTORY_SEPARATOR) + 1);
         $files = array_keys($info->getFilelist());
+        if (!in_array(basename($packageFile), $files)) {
+            $files[] = basename($packageFile);
+        }
+
+        array_shift($params);
+        if (count($params)) {
+            // add in additional files to be tagged (package files and such)
+            $files = array_merge($files, $params);
+        }
+
         $commands = array();
         foreach ($files as $file) {
             if (!file_exists($file)) {
@@ -569,10 +582,10 @@ used for automated conversion or learning the format.
         $path['from'] = substr($url, 0, strrpos($url, '/'));
         $path['base'] = substr($path['from'], 0, strrpos($path['from'], '/') + 1);
 
-        // Figure out the local paths
-        $pos = strpos($file, '/trunk/');
+        // Figure out the local paths - see http://pear.php.net/bugs/17463
+        $pos = strpos($file, DIRECTORY_SEPARATOR . 'trunk' . DIRECTORY_SEPARATOR);
         if ($pos === false) {
-            $pos = strpos($file, '/branches/');
+            $pos = strpos($file, DIRECTORY_SEPARATOR . 'branches' . DIRECTORY_SEPARATOR);
         }
         $path['local']['base'] = substr($file, 0, $pos + 1);
 
@@ -867,7 +880,7 @@ used for automated conversion or learning the format.
                         );
                     foreach ($deps as $type => $subd) {
                         $req = ($type == 'required') ? 'Yes' : 'No';
-                        if ($type == 'group') {
+                        if ($type == 'group' && isset($subd['attribs']['name'])) {
                             $group = $subd['attribs']['name'];
                         } else {
                             $group = '';
@@ -958,7 +971,9 @@ used for automated conversion or learning the format.
         }
 
         $tar = new Archive_Tar($params[0]);
-        $tmpdir = System::mktemp('-d pearsign');
+
+        $tmpdir = $this->config->get('temp_dir');
+        $tmpdir = System::mktemp(' -t "' . $tmpdir . '" -d pearsign');
         if (!$tar->extractList('package2.xml package.xml package.sig', $tmpdir)) {
             return $this->raiseError("failed to extract tar file");
         }
@@ -1015,7 +1030,7 @@ used for automated conversion or learning the format.
         if (!class_exists('PEAR_Installer')) {
             require_once 'PEAR/Installer.php';
         }
-        $a = &new PEAR_Installer($ui);
+        $a = new PEAR_Installer($ui);
         return $a;
     }
 
@@ -1032,7 +1047,7 @@ used for automated conversion or learning the format.
         }
 
         if (class_exists('PEAR_Command_Packaging')) {
-            $a = &new PEAR_Command_Packaging($ui, $config);
+            $a = new PEAR_Command_Packaging($ui, $config);
         } else {
             $a = null;
         }

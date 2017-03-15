@@ -10,7 +10,6 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: Config.php 287554 2009-08-21 21:16:25Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -29,7 +28,7 @@ require_once 'PEAR/Command/Common.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.0
+ * @version    Release: 1.10.3
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -133,9 +132,9 @@ and uninstall).
      *
      * @access public
      */
-    function PEAR_Command_Config(&$ui, &$config)
+    function __construct(&$ui, &$config)
     {
-        parent::PEAR_Command_Common($ui, $config);
+        parent::__construct($ui, $config);
     }
 
     function doConfigShow($command, $options, $params)
@@ -205,12 +204,13 @@ and uninstall).
                 return $this->raiseError("config-get expects 1 or 2 parameters");
         }
 
-        $channel = isset($options['channel']) ? $options['channel'] : $this->config->get('default_channel');
         $reg = &$this->config->getRegistry();
+        $channel = isset($options['channel']) ? $options['channel'] : $this->config->get('default_channel');
         if (!$reg->channelExists($channel)) {
             return $this->raiseError('Channel "' . $channel . '" does not exist');
         }
 
+        $channel = $reg->channelName($channel);
         $this->ui->outputData($this->config->get($config_key, $layer, $channel), $command);
         return true;
     }
@@ -337,7 +337,7 @@ and uninstall).
         }
 
         $params[1] = realpath($params[1]);
-        $config = &new PEAR_Config($params[1], '#no#system#config#', false, false);
+        $config = new PEAR_Config($params[1], '#no#system#config#', false, false);
         if ($root{strlen($root) - 1} == '/') {
             $root = substr($root, 0, strlen($root) - 1);
         }
@@ -354,6 +354,7 @@ and uninstall).
         $config->set('download_dir', $windows ? "$root\\pear\\download" : "$root/pear/download");
         $config->set('temp_dir', $windows ? "$root\\pear\\temp" : "$root/pear/temp");
         $config->set('bin_dir', $windows ? "$root\\pear" : "$root/pear");
+        $config->set('man_dir', $windows ? "$root\\pear\\man" : "$root/pear/man");
         $config->writeConfigFile();
         $this->_showConfig($config);
         $this->ui->outputData('Successfully created default configuration file "' . $params[1] . '"',
