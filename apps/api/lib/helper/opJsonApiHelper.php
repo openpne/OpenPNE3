@@ -202,7 +202,7 @@ function op_api_notification($notification)
       // Basically, those URLs begin with relative URL root (ex. "/subdir/member/1").
       $url = $notification['url'];
     }
-    elseif (0 === strpos($notification['url'], 'http://') || 0 === strpos($notification['url'], 'https://'))
+    elseif (preg_match('#^https?://#i', $notification['url']))
     {
       $url = $notification['url'];
     }
