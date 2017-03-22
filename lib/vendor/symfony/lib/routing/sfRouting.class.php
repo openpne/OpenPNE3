@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage routing
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfRouting.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 abstract class sfRouting
 {
@@ -130,6 +130,15 @@ abstract class sfRouting
    * @return array The route array
    */
   abstract public function getRoutes();
+
+  /**
+   * Gets route from given name
+   *
+   * @param  string $name The route name
+   *
+   * @return sfRoute
+   */
+  abstract public function getRoute($name);
 
   /**
    * Sets the compiled route array.

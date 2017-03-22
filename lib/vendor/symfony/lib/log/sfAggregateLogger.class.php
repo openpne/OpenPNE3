@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage log
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfAggregateLogger.class.php 14603 2009-01-11 10:35:17Z dwhittle $
+ * @version    SVN: $Id$
  */
 class sfAggregateLogger extends sfLogger
 {
@@ -36,7 +36,7 @@ class sfAggregateLogger extends sfLogger
   public function initialize(sfEventDispatcher $dispatcher, $options = array())
   {
     $this->dispatcher = $dispatcher;
-    
+
     if (isset($options['loggers']))
     {
       if (!is_array($options['loggers']))
@@ -78,7 +78,7 @@ class sfAggregateLogger extends sfLogger
    *
    * @param object $logger The Logger object
    */
-  public function addLogger(sfLogger $logger)
+  public function addLogger(sfLoggerInterface $logger)
   {
     $this->loggers[] = $logger;
 
@@ -106,7 +106,10 @@ class sfAggregateLogger extends sfLogger
   {
     foreach ($this->loggers as $logger)
     {
-      $logger->shutdown();
+      if ($logger instanceof sfLogger)
+      {
+        $logger->shutdown();
+      }
     }
 
     $this->loggers = array();

@@ -8,7 +8,7 @@
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: AuthorInheritanceConcrete.class.php 22748 2009-10-02 23:19:37Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class AuthorInheritanceConcrete extends BaseAuthorInheritanceConcrete
 {

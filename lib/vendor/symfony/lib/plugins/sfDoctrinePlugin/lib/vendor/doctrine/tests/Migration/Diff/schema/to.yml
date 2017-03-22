@@ -1,0 +1,31 @@
+---
+User:
+  columns:
+    username:
+      type: string(255)
+      unique: true
+      notnull: true
+    password: string(255)
+    is_active:
+      type: boolean
+      default: true
+
+Profile:
+  columns:
+    user_id: integer
+    name: string(255)
+    email_address: string(255)
+  relations:
+    User:
+      onDelete: CASCADE
+      foreignType: one
+
+BlogPost:
+  columns:
+    user_id: integer
+    title: string(255)
+    body: clob
+  relations:
+    User:
+      onDelete: CASCADE
+      foreignAlias: BlogPosts

@@ -16,7 +16,7 @@
  * @subpackage doctrine
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfValidatorDoctrineChoice.class.php 27736 2010-02-08 14:50:13Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfValidatorDoctrineChoice extends sfValidatorBase
 {
@@ -69,7 +69,7 @@ class sfValidatorDoctrineChoice extends sfValidatorBase
         $value = array($value);
       }
 
-      if (isset($value[0]) && !$value[0])
+      if (isset($value[0]) && '' === $value[0])
       {
         unset($value[0]);
       }

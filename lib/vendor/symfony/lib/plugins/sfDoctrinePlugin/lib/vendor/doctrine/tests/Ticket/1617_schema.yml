@@ -1,0 +1,32 @@
+---
+# Column Aggregation Inheritance
+# Single table, all children columns are stored in the parent, parent class has a type method
+# Which is used to determine which child the record in the db belonds to
+term:
+  columns:
+    name: string(255)
+    type: string(255)
+    language: 
+      name: lang as language
+      type: string(2)
+ 
+alternativeTerm:
+  inheritance:
+    type: column_aggregation
+    keyField: type
+    keyValue: 'alt'
+    extends: term
+
+preferdTerm:
+  inheritance:
+    type: column_aggregation
+    keyField: type
+    keyValue: 'pref'
+    extends: term
+
+currentLanguagePreferedTerm:
+  inheritance:
+    type: column_aggregation
+    keyField: language
+    keyValue: 'de'
+    extends: preferdTerm

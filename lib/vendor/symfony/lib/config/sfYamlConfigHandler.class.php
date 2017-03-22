@@ -15,7 +15,7 @@
  * @package    symfony
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfYamlConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 abstract class sfYamlConfigHandler extends sfConfigHandler
 {
@@ -36,7 +36,7 @@ abstract class sfYamlConfigHandler extends sfConfigHandler
     {
       // the first level is an environment and its value must be an array
       $values = array();
-      foreach (self::parseYaml($configFile) as $env => $value)
+      foreach (static::parseYaml($configFile) as $env => $value)
       {
         if (null !== $value)
         {
@@ -69,7 +69,7 @@ abstract class sfYamlConfigHandler extends sfConfigHandler
     }
 
     // parse our config
-    $config = sfYaml::load($configFile);
+    $config = sfYaml::load($configFile, sfConfig::get('sf_charset', 'UTF-8'));
 
     if ($config === false)
     {

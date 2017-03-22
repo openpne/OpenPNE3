@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+
+<!--
+    Doctrine build file.
+-->
+
+<project name="Doctrine" default="build" basedir=".">
+
+    <taskdef classname="phing.tasks.ext.d51PearPkg2Task" name="d51pearpkg2" />
+
+    <property file="build.properties" />
+
+    <!--
+        Fileset for artifacts shared across all distributed packages.
+    -->
+    <fileset id="shared-artifacts" dir=".">
+        <include name="LICENSE"/>
+    </fileset>
+
+    <!--
+        Fileset for the sources of the Doctrine Common dependency.
+    -->
+    <fileset id="sources" dir="./lib">
+        <include name="**"/>
+    </fileset>
+
+    <!--
+        Clean the directory for the next build.
+    -->
+    <target name="clean">
+        <available file="./build.properties" property="build_properties_exist" value="true"/>
+        <fail unless="build_properties_exist" message="The build.properties file is missing." />
+
+        <delete dir="${build.dir}" includeemptydirs="true" />
+        <delete dir="${dist.dir}" includeemptydirs="true" />
+        <delete dir="${report.dir}" includeemptydirs="true" />
+    </target>
+
+    <!--
+        Prepare the new build directories after cleaning
+    -->
+    <target name="prepare" depends="clean">
+        <echo msg="Creating build directory: ${build.dir}" />
+        <mkdir dir="${build.dir}" />
+        <echo msg="Creating distribution directory: ${dist.dir}" />
+        <mkdir dir="${dist.dir}" />
+        <echo msg="Creating report directory: ${report.dir}" />
+        <mkdir dir="${report.dir}" />
+        <mkdir dir="${build.dir}/logs"/>
+        <mkdir dir="${report.dir}/tests"/>
+    </target>
+
+    <!--
+        Builds ORM package, preparing it for distribution.
+    -->
+    <target name="build" depends="prepare">
+        <copy todir="${build.dir}">
+            <fileset refid="shared-artifacts"/>
+        </copy>
+        <copy todir="${build.dir}">
+            <fileset refid="sources"/>
+        </copy>
+    </target>
+
+    <!--
+        Builds distributable PEAR packages.
+    -->
+    <target name="build-packages" depends="build">
+        <d51pearpkg2 baseinstalldir="/" dir="${build.dir}">
+           <name>Doctrine</name>
+           <summary>PHP5 Database ORM</summary>
+           <channel>pear.doctrine-project.org</channel>
+           <description>
+Doctrine is an ORM (object relational mapper) for PHP 5.2.x+ that sits on top of
+a powerful DBAL (database abstraction layer). One of its key features is the
+ability to optionally write database queries in an OO (object oriented)
+SQL-dialect called DQL inspired by Hibernates HQL. This provides developers with
+a powerful alternative to SQL that maintains a maximum of flexibility without
+requiring needless code duplication.
+           </description>
+           <lead user="jwage" name="Jonathan H. Wage" email="jonwage@gmail.com" />
+           <license>LGPL</license>
+           <version release="${version}" api="${version}" />
+           <stability release="${stability}" api="${stability}" />
+           <notes>-</notes>
+           <dependencies>
+               <php minimum_version="5.2.3" />
+               <pear minimum_version="1.6.0" recommended_version="1.6.1" />
+           </dependencies>
+        </d51pearpkg2>
+        <exec command="pear package" dir="${build.dir}" passthru="true" />
+        <exec command="mv Doctrine-${version}.tgz ../dist" dir="${build.dir}" passthru="true" />
+    </target>
+</project>

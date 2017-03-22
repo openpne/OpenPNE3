@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage cache
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCache.class.php 28842 2010-03-29 08:18:46Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfCache
 {
@@ -57,7 +57,7 @@ abstract class sfCache
     $this->options = array_merge(array(
       'automatic_cleaning_factor' => 1000,
       'lifetime'                  => 86400,
-      'prefix'                    => md5(dirname(__FILE__)),
+      'prefix'                    => md5(__DIR__),
     ), $options);
 
     $this->options['prefix'] .= self::SEPARATOR;

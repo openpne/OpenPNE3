@@ -17,7 +17,7 @@
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfFactoryConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class sfFactoryConfigHandler extends sfYamlConfigHandler
 {
@@ -34,14 +34,14 @@ class sfFactoryConfigHandler extends sfYamlConfigHandler
   public function execute($configFiles)
   {
     // parse the yaml
-    $config = self::getConfiguration($configFiles);
+    $config = static::getConfiguration($configFiles);
 
     // init our data and includes arrays
     $includes  = array();
     $instances = array();
 
     // available list of factories
-    $factories = array('view_cache_manager', 'logger', 'i18n', 'controller', 'request', 'response', 'routing', 'storage', 'user', 'view_cache', 'mailer');
+    $factories = array('view_cache_manager', 'logger', 'i18n', 'controller', 'request', 'response', 'routing', 'storage', 'user', 'view_cache', 'mailer', 'service_container');
 
     // let's do our fancy work
     foreach ($factories as $factory)
@@ -95,7 +95,7 @@ class sfFactoryConfigHandler extends sfYamlConfigHandler
           break;
 
         case 'response':
-          $instances[] = sprintf("  \$class = sfConfig::get('sf_factory_response', '%s');\n  \$this->factories['response'] = new \$class(\$this->dispatcher, sfConfig::get('sf_factory_response_parameters', array_merge(array('http_protocol' => 'HTTP/1.1'), %s)));", $class, var_export($parameters, true));
+          $instances[] = sprintf("  \$class = sfConfig::get('sf_factory_response', '%s');\n  \$this->factories['response'] = new \$class(\$this->dispatcher, sfConfig::get('sf_factory_response_parameters', array_merge(array('http_protocol' => isset(\$_SERVER['SERVER_PROTOCOL']) ? \$_SERVER['SERVER_PROTOCOL'] : null), %s)));", $class, var_export($parameters, true));
           // TODO: this is a bit ugly, as it only works for sfWebRequest & sfWebResponse combination. see #3397
           $instances[] = sprintf("  if (\$this->factories['request'] instanceof sfWebRequest \n      && \$this->factories['response'] instanceof sfWebResponse \n      && 'HEAD' == \$this->factories['request']->getMethod())\n  {  \n    \$this->factories['response']->setHeaderOnly(true);\n  }\n");
           break;
@@ -217,12 +217,20 @@ class sfFactoryConfigHandler extends sfYamlConfigHandler
 
         case 'mailer':
           $instances[] = sprintf(
-                        "require_once sfConfig::get('sf_symfony_lib_dir').'/vendor/swiftmailer/classes/Swift.php';\n".
-                        "Swift::registerAutoload();\n".
-                        "sfMailer::initialize();\n".
+                        "if (!class_exists('Swift')) {\n".
+                        "  \$swift_dir = sfConfig::get('sf_swiftmailer_dir', sfConfig::get('sf_symfony_lib_dir').'/vendor/swiftmailer/lib');\n".
+                        "  require_once \$swift_dir.'/swift_required.php';\n".
+                        "}\n".
                         "\$this->setMailerConfiguration(array_merge(array('class' => sfConfig::get('sf_factory_mailer', '%s')), sfConfig::get('sf_factory_mailer_parameters', %s)));\n"
-                         , $class, var_export($parameters, true));
+                        , $class, var_export($parameters, true));
           break;
+
+        case 'service_container':
+          $instances[] = (
+                        "\$class = require \$this->configuration->getConfigCache()->checkConfig('config/services.yml', true);\n".
+                        "\$this->setServiceContainerConfiguration(array('class' => \$class));\n"
+                        );
+        break;
       }
     }
 
@@ -241,13 +249,13 @@ class sfFactoryConfigHandler extends sfYamlConfigHandler
    */
   static public function getConfiguration(array $configFiles)
   {
-    $config = self::replaceConstants(self::flattenConfigurationWithEnvironment(self::parseYamls($configFiles)));
+    $config = static::replaceConstants(static::flattenConfigurationWithEnvironment(static::parseYamls($configFiles)));
 
     foreach ($config as $factory => $values)
     {
       if (isset($values['file']))
       {
-        $config[$factory]['file'] = self::replacePath($values['file']);
+        $config[$factory]['file'] = static::replacePath($values['file']);
       }
     }
 

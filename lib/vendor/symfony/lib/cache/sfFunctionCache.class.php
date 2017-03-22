@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage cache
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfFunctionCache.class.php 23939 2009-11-14 17:46:14Z fabien $
+ * @version    SVN: $Id$
  */
 class sfFunctionCache
 {

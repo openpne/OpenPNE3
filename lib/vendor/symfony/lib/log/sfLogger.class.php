@@ -24,9 +24,9 @@
  * @package    symfony
  * @subpackage log
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfLogger.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
-abstract class sfLogger
+abstract class sfLogger implements sfLoggerInterface
 {
   const EMERG   = 0; // System is unusable
   const ALERT   = 1; // Immediate action required

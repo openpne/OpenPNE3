@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfBrowserBase.class.php 28702 2010-03-23 12:02:01Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfBrowserBase
 {
@@ -60,8 +60,7 @@ abstract class sfBrowserBase
    */
   public function initialize($hostname = null, $remote = null, $options = array())
   {
-    unset($_SERVER['argv']);
-    unset($_SERVER['argc']);
+    unset($_SERVER['argv'], $_SERVER['argc']);
 
     // setup our fake environment
     $this->hostname = null === $hostname ? 'localhost' : $hostname;
@@ -700,7 +699,10 @@ abstract class sfBrowserBase
     $query .= sprintf('|//input[((@type="submit" or @type="button") and @value="%s") or (@type="image" and @alt="%s")]', $name, $name);
     $query .= sprintf('|//button[.="%s" or @id="%s" or @name="%s"]', $name, $name, $name);
 
-    $list = $this->getResponseDomXpath()->query($query);
+    if (!$list = @$this->getResponseDomXpath()->query($query))
+    {
+      throw new InvalidArgumentException(sprintf('The name "%s" is not valid', $name));
+    }
 
     $position = isset($options['position']) ? $options['position'] - 1 : 0;
 
@@ -776,8 +778,11 @@ abstract class sfBrowserBase
     }
     else if ('button' == $item->nodeName || ('input' == $item->nodeName && in_array($item->getAttribute('type'), array('submit', 'button', 'image'))))
     {
-      // add the item's value to the arguments
-      $this->parseArgumentAsArray($item->getAttribute('name'), $item->getAttribute('value'), $arguments);
+      // add the item's value to the arguments if name is provided
+      if ($item->getAttribute('name'))
+      {
+        $this->parseArgumentAsArray($item->getAttribute('name'), $item->getAttribute('value'), $arguments);
+      }
 
       // use the ancestor form element
       do
@@ -796,7 +801,7 @@ abstract class sfBrowserBase
     {
       $url = $this->stack[$this->stackPosition]['uri'];
     }
-    $method = strtolower(isset($options['method']) ? $options['method'] : ($item->getAttribute('method') ? $item->getAttribute('method') : 'get'));
+    $method = strtolower(isset($options['method']) ? $options['method'] : ($item->getAttribute('method') ?: 'get'));
 
     // merge form default values and arguments
     $defaults = array();
@@ -1015,6 +1020,6 @@ abstract class sfBrowserBase
    */
   protected function newSession()
   {
-    $this->defaultServerArray['session_id'] = $_SERVER['session_id'] = md5(uniqid(rand(), true));
+    $this->defaultServerArray['session_id'] = $_SERVER['session_id'] = md5(uniqid(mt_rand(), true));
   }
 }

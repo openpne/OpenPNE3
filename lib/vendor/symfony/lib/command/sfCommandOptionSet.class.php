@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage command
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCommandOptionSet.class.php 17865 2009-05-02 09:23:55Z FabianLange $
+ * @version    SVN: $Id$
  */
 class sfCommandOptionSet
 {

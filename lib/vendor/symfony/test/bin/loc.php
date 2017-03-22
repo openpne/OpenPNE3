@@ -1,6 +1,6 @@
 <?php
 
-$root_dir = realpath(dirname(__FILE__).'/../..');
+$root_dir = realpath(__DIR__.'/../..');
 require_once($root_dir.'/lib/vendor/lime/lime.php');
 require_once($root_dir.'/lib/util/sfFinder.class.php');
 
@@ -26,8 +26,6 @@ foreach ($files as $file)
 // symfony tests LOC
 $total_tests_loc = 0;
 $files = sfFinder::type('file')->name('*Test.php')->in(array(
-  $root_dir.'/lib/plugins/sfPropelPlugin/test/unit',
-  $root_dir.'/lib/plugins/sfPropelPlugin/test/functional',
   $root_dir.'/lib/plugins/sfDoctrinePlugin/test/unit',
   $root_dir.'/lib/plugins/sfDoctrinePlugin/test/functional',
   $root_dir.'/test/unit',

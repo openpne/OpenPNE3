@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
+require_once(__DIR__.'/../../bootstrap/unit.php');
 
 $t = new lime_test(16);
 
@@ -63,7 +63,7 @@ $t->is($argument->getDefault(), 'default', '->getDefault() return the default va
 $t->diag('->setDefault()');
 $argument = new sfCommandArgument('foo', sfCommandArgument::OPTIONAL, '', 'default');
 $argument->setDefault(null);
-$t->ok(is_null($argument->getDefault()), '->setDefault() can reset the default value by passing null');
+$t->ok(null === $argument->getDefault(), '->setDefault() can reset the default value by passing null');
 $argument->setDefault('another');
 $t->is($argument->getDefault(), 'another', '->setDefault() changes the default value');
 

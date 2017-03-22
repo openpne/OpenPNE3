@@ -13,7 +13,7 @@
  * {@link http://prado.sourceforge.net/}
  *
  * @author     Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version    $Id: sfNumberFormatInfo.class.php 28725 2010-03-23 16:56:48Z FabianLange $
+ * @version    $Id$
  * @package    symfony
  * @subpackage i18n
  */

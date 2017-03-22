@@ -6,7 +6,7 @@
  * @package    symfony12
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: BlogAuthorForm.class.php 23668 2009-11-07 12:51:07Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class BlogAuthorForm extends BaseBlogAuthorForm
 {

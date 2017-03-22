@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetForm.class.php 24137 2009-11-18 13:12:40Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfWidgetForm extends sfWidget
 {
@@ -242,9 +242,9 @@ abstract class sfWidgetForm extends sfWidget
     }
 
     // check to see if we have an array variable for a field name
-    if (strstr($name, '['))
+    if (false !== strpos($name, '['))
     {
-      $name = str_replace(array('[]', '][', '[', ']'), array((null !== $value ? '_'.$value : ''), '_', '_', ''), $name);
+      $name = str_replace(array('[]', '][', '[', ']'), array((null !== $value && !is_array($value) ? '_'.$value : ''), '_', '_', ''), $name);
     }
 
     if (false !== strpos($this->getOption('id_format'), '%s'))
@@ -330,7 +330,7 @@ abstract class sfWidgetForm extends sfWidget
    * @param  array $parameters  The values to replace the placeholders
    *
    * @return array              The translated texts
-   * 
+   *
    * @see sfWidgetFormSchemaFormatter::translate()
    */
   protected function translateAll(array $texts, array $parameters = array())

@@ -15,7 +15,7 @@
  * @package    symfony
  * @subpackage response
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfResponse.class.php 14598 2009-01-11 09:32:32Z dwhittle $
+ * @version    SVN: $Id$
  */
 abstract class sfResponse implements Serializable
 {

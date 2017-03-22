@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfProjectConfiguration.class.php 27191 2010-01-26 13:38:49Z FabianLange $
+ * @version    SVN: $Id$
  */
 class sfProjectConfiguration
 {
@@ -44,8 +44,8 @@ class sfProjectConfiguration
       self::$active = $this;
     }
 
-    $this->rootDir = null === $rootDir ? self::guessRootDir() : realpath($rootDir);
-    $this->symfonyLibDir = realpath(dirname(__FILE__).'/..');
+    $this->rootDir = null === $rootDir ? static::guessRootDir() : realpath($rootDir);
+    $this->symfonyLibDir = realpath(__DIR__.'/..');
     $this->dispatcher = null === $dispatcher ? new sfEventDispatcher() : $dispatcher;
 
     ini_set('magic_quotes_runtime', 'off');
@@ -174,8 +174,9 @@ class sfProjectConfiguration
   public function setWebDir($webDir)
   {
     sfConfig::add(array(
-      'sf_web_dir'    => $webDir,
-      'sf_upload_dir' => $webDir.DIRECTORY_SEPARATOR.'uploads',
+      'sf_web_dir'         => $webDir,
+      'sf_upload_dir_name' => $uploadDirName = 'uploads',
+      'sf_upload_dir'      => $webDir.DIRECTORY_SEPARATOR.$uploadDirName,
     ));
   }
 
@@ -306,7 +307,7 @@ class sfProjectConfiguration
    * Sets the enabled plugins.
    *
    * @param array $plugins An array of plugin names
-   * 
+   *
    * @throws LogicException If plugins have already been loaded
    */
   public function setPlugins(array $plugins)
@@ -339,7 +340,7 @@ class sfProjectConfiguration
         $plugins = array($plugins);
       }
     }
-    
+
     $this->setPlugins(array_merge($this->plugins, $plugins));
   }
 
@@ -347,7 +348,7 @@ class sfProjectConfiguration
    * Disables a plugin.
    *
    * @param array|string $plugins A plugin name or a plugin list
-   * 
+   *
    * @throws LogicException If plugins have already been loaded
    */
   public function disablePlugins($plugins)
@@ -381,7 +382,7 @@ class sfProjectConfiguration
    * Enabled all installed plugins except the one given as argument.
    *
    * @param array|string $plugins A plugin name or a plugin list
-   * 
+   *
    * @throws LogicException If plugins have already been loaded
    */
   public function enableAllPluginsExcept($plugins = array())
@@ -467,7 +468,7 @@ class sfProjectConfiguration
 
   /**
    * Returns an array of paths for all available plugins.
-   * 
+   *
    * @return array
    */
   public function getAllPluginPaths()
@@ -497,11 +498,11 @@ class sfProjectConfiguration
 
   /**
    * Manually sets the location of a particular plugin.
-   * 
+   *
    * This method can be used to ease functional testing of plugins. It is not
    * intended to support sharing plugins between projects, as many plugins
    * save project specific code (to /lib/form/base, for example).
-   * 
+   *
    * @param string $plugin
    * @param string $path
    */
@@ -512,9 +513,9 @@ class sfProjectConfiguration
 
   /**
    * Returns the configuration for the requested plugin.
-   * 
+   *
    * @param   string $name
-   * 
+   *
    * @return  sfPluginConfiguration
    */
   public function getPluginConfiguration($name)
@@ -554,7 +555,7 @@ class sfProjectConfiguration
    */
   static public function getActive()
   {
-    if (!self::hasActive())
+    if (!static::hasActive())
     {
       throw new RuntimeException('There is no active configuration.');
     }
@@ -564,7 +565,7 @@ class sfProjectConfiguration
 
   /**
    * Returns true if these is an active configuration.
-   * 
+   *
    * @return boolean
    */
   static public function hasActive()
@@ -601,10 +602,10 @@ class sfProjectConfiguration
 
     if (null === $rootDir)
     {
-      $rootDir = self::guessRootDir();
+      $rootDir = static::guessRootDir();
     }
 
-    if (!file_exists($file = $rootDir.'/apps/'.$application.'/config/'.$class.'.class.php'))
+    if (!is_file($file = $rootDir.'/apps/'.$application.'/config/'.$class.'.class.php'))
     {
       throw new InvalidArgumentException(sprintf('The application "%s" does not exist.', $application));
     }

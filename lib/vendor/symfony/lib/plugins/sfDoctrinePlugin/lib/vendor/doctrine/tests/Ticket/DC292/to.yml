@@ -1,0 +1,5 @@
+Article:
+  actAs: [Timestampable]
+  columns:
+    title: string(255)
+    body: clob

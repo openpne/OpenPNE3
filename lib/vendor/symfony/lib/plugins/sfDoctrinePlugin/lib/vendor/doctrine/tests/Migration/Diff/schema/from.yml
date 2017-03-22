@@ -1,0 +1,27 @@
+---
+User:
+  columns:
+    username: string(255)
+    password: string(255)
+    homepage_id: integer
+    profile_id: integer
+    is_active:
+      type: boolean
+      default: true
+  relations:
+    Profile:
+      foreignType: one
+    Homepage:
+      foreignType: one
+  indexes:
+    is_active:
+      fields: [is_active]
+
+Homepage:
+  columns:
+    title: string(255)
+
+Profile:
+  columns:
+    name: string(255)
+    email_address: string(255)
