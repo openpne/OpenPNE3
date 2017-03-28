@@ -48,6 +48,7 @@ class opProjectConfiguration extends sfProjectConfiguration
     ));
 
     $this->dispatcher->connect('command.pre_command', array(__CLASS__, 'listenToPreCommandEvent'));
+    $this->dispatcher->connect('doctrine.configure', array($this, 'configureDoctrineEvent'));
     $this->dispatcher->connect('doctrine.filter_cli_config', array(__CLASS__, 'filterDoctrineCliConfig'));
 
     $this->setupProjectOpenPNE();
@@ -105,8 +106,10 @@ class opProjectConfiguration extends sfProjectConfiguration
     ));
   }
 
-  public function configureDoctrine($manager)
+  public function configureDoctrineEvent(sfEvent $event)
   {
+    $manager = $event->getSubject();
+
     spl_autoload_register(array('Doctrine', 'extensionsAutoload'));
     Doctrine::setExtensionsPath(sfConfig::get('sf_lib_dir').'/vendor/doctrine_extensions');
     $manager->registerExtension('ExtraFunctions');
