@@ -110,6 +110,12 @@ class opProjectConfiguration extends sfProjectConfiguration
   {
     $manager = $event->getSubject();
 
+    // for BC
+    if (!class_exists('Doctrine'))
+    {
+      class_alias('Doctrine_Core', 'Doctrine');
+    }
+
     spl_autoload_register(array('Doctrine', 'extensionsAutoload'));
     Doctrine::setExtensionsPath(sfConfig::get('sf_lib_dir').'/vendor/doctrine_extensions');
     $manager->registerExtension('ExtraFunctions');
