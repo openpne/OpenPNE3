@@ -43,12 +43,9 @@ class opProjectConfiguration extends sfProjectConfiguration
 
     $this->setOpenPNEConfiguration();
 
-    sfConfig::set('doctrine_model_builder_options', array(
-      'baseClassName' => 'opDoctrineRecord',
-    ));
-
     $this->dispatcher->connect('command.pre_command', array(__CLASS__, 'listenToPreCommandEvent'));
     $this->dispatcher->connect('doctrine.configure', array($this, 'configureDoctrineEvent'));
+    $this->dispatcher->connect('doctrine.filter_model_builder_options', array($this, 'filterDoctrineModelBuilderOptions'));
     $this->dispatcher->connect('doctrine.filter_cli_config', array(__CLASS__, 'filterDoctrineCliConfig'));
 
     $this->setupProjectOpenPNE();
@@ -144,6 +141,13 @@ class opProjectConfiguration extends sfProjectConfiguration
     $manager->registerConnectionDriver('sqlite', 'Doctrine_Connection_Sqlite_ExtraFunctions');
 
     $this->setupProjectOpenPNEDoctrine($manager);
+  }
+
+  public function filterDoctrineModelBuilderOptions(sfEvent $event, array $options)
+  {
+    return array_merge($options, array(
+      'baseClassName' => 'opDoctrineRecord',
+    ));
   }
 
   protected function setOpenPNEConfiguration()
