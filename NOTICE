@@ -24,8 +24,14 @@ This product includes also softwares developed by :
     - MIT License
   - Kousuke Ebihara (http://co3k.org/)
     - Apache License 2.0
+  - Stig Bakken, Gregory Beaver, Helgi Þormar Þorbjörnsson, Tomas V.V.Cox, Martin Jansen
+    - BSD 2-clause License (PEAR)
+  - Greg Beaver
+    - BSD 2-clause License (PEAR_PackageFileManager2)
   - Vincent Oostindie, Alan Knowles, Peter Bowyer, Philippe Jausions
-    - PHP License 3.0 (PEAR::Image_Transform)
+    - PHP License 3.0 (Image_Transform)
+  - Harry Fuecks, Lorenzo Alberton
+    - BSD 3-clause License (Calendar)
 
 This product needs the third-party softwares listed blow to run.
   - PHP: Hypertext Preprocessor (5.2.4 +)
@@ -49,4 +55,7 @@ This product includes dependent libraries listed blow:
   - PHP OAuth library
   - sfFormExtraPlugin 1.0.12
   - sfImageHandlerPlugin 1.0.0
-  - PEAR::Image_Transform 0.9.3
+  - PEAR 1.10.3
+  - PEAR_PackageFileManager2 1.0.4
+  - Image_Transform 0.9.5
+  - Calendar 0.5.5
