@@ -31,7 +31,7 @@ This product needs the third-party softwares listed blow to run.
   - PHP: Hypertext Preprocessor (5.2.4 +)
 
 This product includes dependent libraries listed blow:
-  - symfony 1.4.1
+  - LExpress/symfony1 1.5.9 (fork of symfony 1.4)
   - Zend Framework 1.10.8 (partly)
     - Zend_Acl
     - Zend_Exception
