@@ -71,6 +71,8 @@ class opRssFetcher
       return false;
     }
 
+    $feed->enable_order_by_date(false);
+
     if (!($items = $feed->get_items()))
     {
       return false;
@@ -173,8 +175,9 @@ class opRssFetcher
     }
     $file = @new SimplePie_File($url, 10, 5, null, null, false, $proxy);
     $locator = new SimplePie_Locator($file, 10, null, 'SimplePie_File', 10, $proxy);
-    $feedUrl = $locator->find();
-    if (SimplePie_Misc::is_a($feedUrl, 'SimplePie_File'))
+    $locator->set_registry(new SimplePie_Registry());
+    $feedUrl = $locator->find(SIMPLEPIE_LOCATOR_ALL, $all);
+    if ($feedUrl instanceof SimplePie_File)
     {
       $result = $feedUrl->url;
     }
