@@ -20,6 +20,8 @@ This product includes also softwares developed by :
     - Apache License 2.0
   - Andy Smith (http://term.ie/)
     - MIT License
+  - Ryan Parman, Geoffrey Sneddon
+    - BSD 3-clause License (SimplePie)
   - Fabien Potencier (http://fabien.potencier.org/)
     - MIT License
   - Kousuke Ebihara (http://co3k.org/)
@@ -47,6 +49,7 @@ This product includes dependent libraries listed blow:
     - Zend_Version
   - Auth OpenID 2.1.2
   - PHP OAuth library
+  - SimplePie 1.4.3
   - sfFormExtraPlugin 1.0.12
   - sfImageHandlerPlugin 1.0.0
   - PEAR::Image_Transform 0.9.3
