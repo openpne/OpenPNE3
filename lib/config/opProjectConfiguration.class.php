@@ -101,7 +101,6 @@ class opProjectConfiguration extends sfProjectConfiguration
     sfToolkit::addIncludePath(array(
       dirname(__FILE__).'/../vendor/PEAR/',
       dirname(__FILE__).'/../vendor/OAuth/',
-      dirname(__FILE__).'/../vendor/simplepie/',
     ));
   }
 
