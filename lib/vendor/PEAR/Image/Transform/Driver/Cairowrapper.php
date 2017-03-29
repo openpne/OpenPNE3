@@ -6,19 +6,13 @@
  *
  * PHP versions 4 and 5
  *
- * LICENSE: This source file is subject to version 3.0 of the PHP license
- * that is available through the world-wide-web at the following URI:
- * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
- * the PHP License and are unable to obtain it through the web, please
- * send a note to license@php.net so we can mail you a copy immediately.
- *
  * @category   Image
  * @package    Image_Transform
- * @subpackage Image_Transform_Driver_GD
+ * @subpackage Image_Transform_Driver_Cairowrapper
  * @author     Christian Weiske <cweiske@php.net>
  * @copyright  2008 The PHP Group
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: Cairowrapper.php 287351 2009-08-16 03:28:48Z clockwerx $
+ * @license    http://www.gnu.org/copyleft/lesser.html LGPL
+ * @version    CVS: $Id: Cairowrapper.php 288112 2009-09-06 21:02:37Z cweiske $
  * @link       http://pear.php.net/package/Image_Transform
  */
 require_once 'Image/Transform.php';
@@ -27,12 +21,14 @@ require_once 'Image/Transform.php';
  * Cairo implementation for Image_Transform package using pecl's cairo_wrapper
  * extension.
  *
+ * Supports png files only.
+ *
  * @category   Image
  * @package    Image_Transform
  * @subpackage Image_Transform_Driver_Cairowrapper
  * @author     Christian Weiske <cweiske@php.net>
  * @copyright  2008 The PHP Group
- * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @license    http://www.gnu.org/copyleft/lesser.html LGPL
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Image_Transform
  */
@@ -42,7 +38,8 @@ class Image_Transform_Driver_Cairowrapper extends Image_Transform
 
     /**
      * Supported image types
-     * @var array
+     *
+     * @var    array
      * @access protected
      */
     var $_supported_image_types = array(
@@ -60,16 +57,14 @@ class Image_Transform_Driver_Cairowrapper extends Image_Transform
 
 
     /**
-     * Check settings
-     *
-     * @since PHP 5
+     * Create object and check if cairo_wrapper is loaded
      */
     function __construct()
     {
         if (!PEAR::loadExtension('cairo_wrapper')) {
             $this->isError(
                 PEAR::raiseError(
-                    "cairo_wrapper extension is not available.",
+                    'cairo_wrapper extension is not available.',
                     IMAGE_TRANSFORM_ERROR_UNSUPPORTED
                 )
             );

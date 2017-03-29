@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------+
 // | Authors: Jason Rust <jrust@rustyparts.com>                           |
 // +----------------------------------------------------------------------+
-// $Id: Imlib.php 287351 2009-08-16 03:28:48Z clockwerx $
+// $Id: Imlib.php 258825 2008-04-30 23:00:13Z cweiske $
 // {{{ requires
 
 require_once 'Image/Transform.php';

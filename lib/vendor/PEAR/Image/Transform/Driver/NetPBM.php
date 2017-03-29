@@ -19,7 +19,7 @@
  * @author     Philippe Jausions <Philippe.Jausions@11abacus.com>
  * @copyright  2002-2005 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: NetPBM.php 287351 2009-08-16 03:28:48Z clockwerx $
+ * @version    CVS: $Id: NetPBM.php 236527 2007-05-28 16:36:09Z dufuz $
  * @link       http://pear.php.net/package/Image_Transform
  */
 

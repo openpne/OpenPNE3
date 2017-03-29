@@ -21,7 +21,7 @@
  * @author     Philippe Jausions <Philippe.Jausions@11abacus.com>
  * @copyright  2002-2005 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: GD.php 287351 2009-08-16 03:28:48Z clockwerx $
+ * @version    CVS: $Id: GD.php 322661 2012-01-24 12:02:59Z clockwerx $
  * @link       http://pear.php.net/package/Image_Transform
  */
 
@@ -106,7 +106,7 @@ class Image_Transform_Driver_GD extends Image_Transform
                 || function_exists('imagegif')) {
                 $this->_supported_image_types['gif'] = 'rw';
             } elseif (function_exists('imagecreatefromgif')) {
-                $this->_supported_image_types['gif'] = 'r';
+                $this->_supported_image_types['gif'] = 'rw';
             }
             if ($types & IMG_JPG) {
                 $this->_supported_image_types['jpeg'] = 'rw';
@@ -576,8 +576,12 @@ class Image_Transform_Driver_GD extends Image_Transform
         if ($createtruecolor
             && function_exists('ImageCreateTrueColor')) {
             $new_img = @ImageCreateTrueColor($width, $height);
-            imagealphablending($new_img, false);
-            imagesavealpha($new_img, true);
+            //GIF Transparent Patch
+            if ($this->type!='gif') {
+                imagealphablending($new_img, false);
+                imagesavealpha($new_img, true);
+            }
+            //End GIF Transparent Patch
         }
         if (!$new_img) {
             $new_img = ImageCreate($width, $height);
@@ -588,6 +592,23 @@ class Image_Transform_Driver_GD extends Image_Transform
                 imagefill($new_img, 0, 0, $color);
             }
         }
+        
+        //GIF Transparent Patch
+        if ($this->type=='gif') {
+            $transparencyIndex = imagecolortransparent($this->imageHandle);
+            $transparencyColor = array('red' => 255, 'green' => 255, 'blue' => 255);
+            
+            if ($transparencyIndex >= 0) {
+                $transparencyColor = imagecolorsforindex($this->imageHandle, $transparencyIndex);   
+            }
+           
+            $transparencyIndex = imagecolorallocate($new_img, $transparencyColor['red'], $transparencyColor['green'], $transparencyColor['blue']);
+            imagefill($new_img, 0, 0, $transparencyIndex);
+            imagecolortransparent($new_img, $transparencyIndex);
+        }
+        //End GIF Transparent Patch
+        
+        
         return $new_img;
     }
 }

@@ -22,7 +22,7 @@
  * @author    Philippe Jausions <Philippe.Jausions@11abacus.com>
  * @copyright 2002-2007 The PHP Group
  * @license   http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version   CVS: $Id: Transform.php 287350 2009-08-16 03:26:32Z clockwerx $
+ * @version   CVS: $Id: Transform.php 322659 2012-01-24 11:56:22Z clockwerx $
  * @link      http://pear.php.net/package/Image_Transform
  */
 
@@ -202,10 +202,14 @@ class Image_Transform
     {
         if ($driver == '') {
             $extensions = array(
-                'imagick' => 'Imagick2',
+                'imagick' => 'Imagick3',
                 'gd'      => 'GD',
                 'imlib'   => 'Imlib'
             );
+            if (version_compare(PHP_VERSION, '5.0.0', '<')) {
+                //Imagick2 driver for php < 5
+                $extensions['imagick'] = 'Imagick2';
+            }
 
             foreach ($extensions as $ext => $ext_driver) {
                 if (PEAR::loadExtension($ext)) {
@@ -226,7 +230,10 @@ class Image_Transform
                     $driver = 'GD';
                     break;
                 case 'imagick':
-                    $driver = 'Imagick2';
+                    $driver = 'Imagick3';
+                    if (version_compare(PHP_VERSION, '5.0.0', '<')) {
+                        $driver = 'Imagick2';
+                    }
                     break;
                 case 'imlib':
                     $driver = 'Imlib';
@@ -252,7 +259,7 @@ class Image_Transform
                 );
             }
         }
-        $obj =& new $classname();
+        $obj = new $classname();
 
         // Check startup error
         if ($error =& $obj->isError()) {

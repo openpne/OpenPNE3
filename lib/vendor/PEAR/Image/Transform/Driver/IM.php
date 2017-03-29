@@ -19,7 +19,7 @@
  * @author     Philippe Jausions <Philippe.Jausions@11abacus.com>
  * @copyright  2002-2005 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: IM.php 287351 2009-08-16 03:28:48Z clockwerx $
+ * @version    CVS: $Id: IM.php 266859 2008-09-30 22:28:47Z dufuz $
  * @link       http://pear.php.net/package/Image_Transform
  */
 
