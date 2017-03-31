@@ -24,8 +24,7 @@ class MemberRelationship extends BaseMemberRelationship implements opAccessContr
   {
     if ($this->isFriendPreFrom())
     {
-      $fromMember = $this->getMemberRelatedByMemberIdFrom();
-      opNotificationCenter::notify($fromMember, $this->getMember(), $fromMember->name, array('category' => 'link',));
+      opNotificationCenter::notify($this->getMemberRelatedByMemberIdFrom(), $this->getMember(), 'Do you accept friend request?', array('category' => 'link'));
     }
     else
     {
