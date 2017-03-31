@@ -24,9 +24,9 @@
       <div class="push_content">
       {{if category=="link"}}
         {{if unread==false}}
-        <?php echo __('%Friend% request from') ?>&nbsp;<a href="<?php echo $sf_request->getRelativeUrlRoot() ?>/member/${member_id_from}">${body}</a><br />
+        <?php echo __('%Friend% request from') ?>&nbsp;<a href="<?php echo $sf_request->getRelativeUrlRoot() ?>/member/${member_id_from}">${member_from.name}</a><br />
         {{else}}
-        <?php echo __('%Friend% request from') ?>&nbsp;<a href="<?php echo $sf_request->getRelativeUrlRoot() ?>/member/${member_id_from}">${body}</a><br />
+        <?php echo __('%Friend% request from') ?>&nbsp;<a href="<?php echo $sf_request->getRelativeUrlRoot() ?>/member/${member_id_from}">${member_from.name}</a><br />
         <?php echo __('Do you accept %friend% link request?') ?>
         <div class="push_yesno">
           <button class="friend-accept">YES</button>
