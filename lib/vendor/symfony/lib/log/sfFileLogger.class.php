@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage log
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfFileLogger.class.php 10964 2008-08-19 18:33:50Z fabien $
+ * @version    SVN: $Id$
  */
 class sfFileLogger extends sfLogger
 {
@@ -63,10 +63,11 @@ class sfFileLogger extends sfLogger
       $this->type = $options['type'];
     }
 
-    $dir = dirname($options['file']);
-    if (!is_dir($dir))
+    $dir     = dirname($options['file']);
+    $dirMode = isset($options['dir_mode']) ? $options['dir_mode'] : 0777;
+    if (!is_dir($dir) && !@mkdir($dir, $dirMode, true) && !is_dir($dir))
     {
-      mkdir($dir, isset($options['dir_mode']) ? $options['dir_mode'] : 0777, true);
+      throw new \RuntimeException(sprintf('Logger was not able to create a directory "%s"', $dir));
     }
 
     $fileExists = file_exists($options['file']);

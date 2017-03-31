@@ -6,7 +6,7 @@
  * @package    symfony12
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id: AuthorInheritanceConcreteFormFilter.class.php 22748 2009-10-02 23:19:37Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class AuthorInheritanceConcreteFormFilter extends BaseAuthorInheritanceConcreteFormFilter
 {

@@ -6,7 +6,7 @@
  * @package    project
  * @subpackage autoload
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: actions.class.php 2802 2006-11-24 11:10:03Z fabien $
+ * @version    SVN: $Id$
  */
 class autoloadActions extends sfActions
 {

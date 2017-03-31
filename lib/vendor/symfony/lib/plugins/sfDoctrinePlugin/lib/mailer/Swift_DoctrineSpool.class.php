@@ -21,7 +21,7 @@
  * @package    symfony
  * @subpackage mailer
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: Swift_DoctrineSpool.class.php 31249 2010-10-26 13:57:10Z fabien $
+ * @version    SVN: $Id$
  */
 class Swift_DoctrineSpool extends Swift_ConfigurableSpool
 {

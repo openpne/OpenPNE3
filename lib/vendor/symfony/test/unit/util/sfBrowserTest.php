@@ -8,9 +8,9 @@
  * file that was distributed with this source code.
  */
 
-require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
+require_once(__DIR__.'/../../bootstrap/unit.php');
 
-$t = new lime_test(73);
+$t = new lime_test(76);
 
 // ->click()
 $t->diag('->click()');
@@ -127,11 +127,21 @@ $html = <<<EOF
       </span></div>
     </form>
 
+    <form action="/myform7" method="post">
+      <input type="text" name="text_default_value" value="default" />
+      <input type="submit" value="submit7" />
+    </form>
+
     <a href="/myotherlink">test link</a>
     <a href="/submitlink">submit</a>
     <a href="/submitimagelink"><img src="myimage.gif" alt="submit" /></a>
 
     <input type="submit" id="orphaned-input-submit" />
+
+    <ul class="css-selector-test">
+      <li>my first <a href="myfirstlink">paragraph</a></li>
+      <li>my second <a href="mysecondlink">paragraph</a></li>
+    </ul>
 
   </body>
 </html>
@@ -311,6 +321,9 @@ catch(Exception $e)
   $t->pass('->deselect() cannot deselect radiobuttons');
 }
 
+list($method, $uri, $parameters) = $b->click('li:contains("first") a');
+$t->is($uri, 'myfirstlink', 'click accept css selectors without "[" or "]"');
+
 // ->call()
 $t->diag('->call()');
 $b->call('https://app-test/index.phpmain/index');
@@ -345,3 +358,9 @@ $t->diag('bug #7816');
 list($method, $uri, $parameters) = $b->click('submit6');
 $t->is($parameters['bar'], 'bar', '->click() overrides input elements defined several times');
 $t->is($parameters['foo']['bar'], 'bar', '->click() overrides input elements defined several times');
+
+// bug #106
+$t->diag('bug #106');
+list($method, $uri, $parameters) = $b->click('submit7');
+$t->is(isset($parameters['']), false, 'submit without name is not submitted');
+$t->is($parameters['text_default_value'], 'default', 'input field with name is still submitted');

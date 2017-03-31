@@ -6,7 +6,7 @@
  * @package    project
  * @subpackage cookie
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: actions.class.php 10831 2008-08-13 07:26:25Z fabien $
+ * @version    SVN: $Id$
  */
 class cookieActions extends sfActions
 {

@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
+require_once(__DIR__.'/../../bootstrap/unit.php');
 
 $t = new lime_test(47);
 
@@ -110,7 +110,7 @@ catch (sfValidatorError $e)
   $t->pass('->clean() throws a sfValidatorError exception if the data does not validate');
   $t->is($e->getCode(), 'required', '->clean() throws a sfValidatorError');
 }
-$t->is($v->clean('  foo  '), '  foo  ', '->clean() does not trim whitespaces by default');
+$t->is($v->clean('  foo  '), 'foo', '->clean() trim whitespaces by default');
 
 // ->isEmpty()
 $t->diag('->isEmpty()');

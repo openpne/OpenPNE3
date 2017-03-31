@@ -67,25 +67,23 @@ if (is_cli())
 
 // mandatory
 echo "\n** Mandatory requirements **\n\n";
-check(version_compare(phpversion(), '5.2.4', '>='), sprintf('PHP version is at least 5.2.4 (%s)', phpversion()), 'Current version is '.phpversion(), true);
+check(version_compare(phpversion(), '5.3.1', '>='), sprintf('PHP version is at least 5.3.1 (%s)', phpversion()), 'Current version is '.phpversion(), true);
 
 // warnings
 echo "\n** Optional checks **\n\n";
-check(class_exists('PDO'), 'PDO is installed', 'Install PDO (mandatory for Propel and Doctrine)', false);
+check(class_exists('PDO'), 'PDO is installed', 'Install PDO (mandatory for Doctrine)', false);
 if (class_exists('PDO'))
 {
   $drivers = PDO::getAvailableDrivers();
-  check(count($drivers), 'PDO has some drivers installed: '.implode(', ', $drivers), 'Install PDO drivers (mandatory for Propel and Doctrine)');
+  check(count($drivers), 'PDO has some drivers installed: '.implode(', ', $drivers), 'Install PDO drivers (mandatory for Doctrine)');
 }
-check(class_exists('DomDocument'), 'PHP-XML module is installed', 'Install and enable the php-xml module (required by Propel)', false);
-check(class_exists('XSLTProcessor'), 'XSL module is installed', 'Install and enable the XSL module (recommended for Propel)', false);
 check(function_exists('token_get_all'), 'The token_get_all() function is available', 'Install and enable the Tokenizer extension (highly recommended)', false);
 check(function_exists('mb_strlen'), 'The mb_strlen() function is available', 'Install and enable the mbstring extension', false);
 check(function_exists('iconv'), 'The iconv() function is available', 'Install and enable the iconv extension', false);
 check(function_exists('utf8_decode'), 'The utf8_decode() is available', 'Install and enable the XML extension', false);
 check(function_exists('posix_isatty'), 'The posix_isatty() is available', 'Install and enable the php_posix extension (used to colorized the CLI output)', false);
 
-$accelerator = 
+$accelerator =
   (function_exists('apc_store') && ini_get('apc.enabled'))
   ||
   function_exists('eaccelerator_put') && ini_get('eaccelerator.enable')
@@ -99,7 +97,7 @@ check(!ini_get('magic_quotes_gpc'), 'php.ini has magic_quotes_gpc set to off', '
 check(!ini_get('register_globals'), 'php.ini has register_globals set to off', 'Set it to off in php.ini', false);
 check(!ini_get('session.auto_start'), 'php.ini has session.auto_start set to off', 'Set it to off in php.ini', false);
 
-check(version_compare(phpversion(), '5.2.9', '!='), 'PHP version is not 5.2.9', 'PHP 5.2.9 broke array_unique() and sfToolkit::arrayDeepMerge(). Use 5.2.10 instead [Ticket #6211]', false);
+check(class_exists('Memcache'), 'Memcache is available', 'You must have memcache installed and enabled to use sfMemcacheCache class.', false);
 
 if (!is_cli())
 {

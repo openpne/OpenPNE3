@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-require_once(dirname(__FILE__).'/../../../bootstrap/unit.php');
+require_once(__DIR__.'/../../../bootstrap/unit.php');
 
 $t = new lime_test(8);
 
@@ -41,7 +41,7 @@ $t->is(count($css->matchAll('#country option[value="FR"][selected="selected"]')-
 // Test for ICU Upgrade and Ticket #7988
 // should be 0. Tests will break after ICU Update, which is fine. change count to 0
 $t->is(count($css->matchAll('#country option[value="ZZ"]')), 1, '->render() does not contain dummy data');
-$t->is(count($css->matchAll('#country option[value="419"]')), 1, '->render() does not contain region data');
+$t->is(count($css->matchAll('#country option[value="419"]')), 0, '->render() does not contain region data');
 
 // add_empty
 $t->diag('add_empty');

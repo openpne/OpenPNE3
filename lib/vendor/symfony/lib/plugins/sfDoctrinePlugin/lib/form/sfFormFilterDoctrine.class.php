@@ -21,7 +21,7 @@
  * @subpackage form
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Jonathan H. Wage <jonwage@gmail.com>
- * @version    SVN: $Id: sfFormFilterDoctrine.class.php 32740 2011-07-09 09:24:03Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfFormFilterDoctrine extends sfFormFilter
 {
@@ -64,7 +64,7 @@ abstract class sfFormFilterDoctrine extends sfFormFilter
 
   /**
    * Sets the query object to use.
-   * 
+   *
    * @param Doctrine_Query $query
    */
   public function setQuery($query)
@@ -290,11 +290,11 @@ abstract class sfFormFilterDoctrine extends sfFormFilter
 
   /**
    * Returns the name of the related model.
-   * 
+   *
    * @param string $alias A relation alias
-   * 
+   *
    * @return string
-   * 
+   *
    * @throws InvalidArgumentException If no relation with the supplied alias exists on the current model
    */
   protected function getRelatedModelName($alias)
@@ -323,7 +323,7 @@ abstract class sfFormFilterDoctrine extends sfFormFilter
 
   protected function camelize($text)
   {
-    return sfToolkit::pregtr($text, array('#/(.?)#e' => "'::'.strtoupper('\\1')", '/(^|_|-)+(.)/e' => "strtoupper('\\2')"));
+    return strtr(ucwords(strtr($text, array('/' => ':: ', '_' => ' ', '-' => ' '))), array(' ' => ''));
   }
 
   protected function getTable()

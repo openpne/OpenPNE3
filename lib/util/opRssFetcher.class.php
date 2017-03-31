@@ -5,8 +5,6 @@
  * @license   http://www.php.net/license/3_01.txt PHP License 3.01
  */
 
-require_once 'simplepie.inc';
-
 /**
  * This class is for fetching RSS / Atom feed
  *
@@ -72,6 +70,8 @@ class opRssFetcher
     {
       return false;
     }
+
+    $feed->enable_order_by_date(false);
 
     if (!($items = $feed->get_items()))
     {
@@ -175,8 +175,9 @@ class opRssFetcher
     }
     $file = @new SimplePie_File($url, 10, 5, null, null, false, $proxy);
     $locator = new SimplePie_Locator($file, 10, null, 'SimplePie_File', 10, $proxy);
-    $feedUrl = $locator->find();
-    if (SimplePie_Misc::is_a($feedUrl, 'SimplePie_File'))
+    $locator->set_registry(new SimplePie_Registry());
+    $feedUrl = $locator->find(SIMPLEPIE_LOCATOR_ALL, $all);
+    if ($feedUrl instanceof SimplePie_File)
     {
       $result = $feedUrl->url;
     }

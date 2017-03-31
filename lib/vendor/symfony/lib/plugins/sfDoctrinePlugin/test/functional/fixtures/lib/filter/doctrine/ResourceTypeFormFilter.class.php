@@ -6,7 +6,7 @@
  * @package    symfony12
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id: ResourceTypeFormFilter.class.php 27742 2010-02-08 15:46:35Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class ResourceTypeFormFilter extends BaseResourceTypeFormFilter
 {

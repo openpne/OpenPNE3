@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage cache
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfMemcacheCache.class.php 29490 2010-05-17 13:09:00Z fabien $
+ * @version    SVN: $Id$
  */
 class sfMemcacheCache extends sfCache
 {
@@ -92,7 +92,7 @@ class sfMemcacheCache extends sfCache
   {
     $value = $this->memcache->get($this->getOption('prefix').$key);
 
-    return false === $value ? $default : $value;
+    return (false === $value && false === $this->getMetadata($key)) ? $default : $value;
   }
 
   /**
@@ -100,7 +100,13 @@ class sfMemcacheCache extends sfCache
    */
   public function has($key)
   {
-    return !(false === $this->memcache->get($this->getOption('prefix').$key));
+    if (false === $this->memcache->get($this->getOption('prefix') . $key))
+    {
+      // if there is metadata, $key exists with a false value
+      return !(false === $this->getMetadata($key));
+    }
+
+    return true;
   }
 
   /**
@@ -232,7 +238,7 @@ class sfMemcacheCache extends sfCache
    */
   protected function setMetadata($key, $lifetime)
   {
-    $this->memcache->set($this->getOption('prefix').'_metadata'.self::SEPARATOR.$key, array('lastModified' => time(), 'timeout' => time() + $lifetime), false, $lifetime);
+    $this->memcache->set($this->getOption('prefix').'_metadata'.self::SEPARATOR.$key, array('lastModified' => time(), 'timeout' => time() + $lifetime), false, time() + $lifetime);
   }
 
   /**

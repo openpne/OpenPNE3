@@ -20,6 +20,8 @@ This product includes also softwares developed by :
     - Apache License 2.0
   - Andy Smith (http://term.ie/)
     - MIT License
+  - Ryan Parman, Geoffrey Sneddon
+    - BSD 3-clause License (SimplePie)
   - Fabien Potencier (http://fabien.potencier.org/)
     - MIT License
   - Kousuke Ebihara (http://co3k.org/)
@@ -37,7 +39,7 @@ This product needs the third-party softwares listed blow to run.
   - PHP: Hypertext Preprocessor (5.2.4 +)
 
 This product includes dependent libraries listed blow:
-  - symfony 1.4.1
+  - LExpress/symfony1 1.5.9 (fork of symfony 1.4)
   - Zend Framework 1.10.8 (partly)
     - Zend_Acl
     - Zend_Exception
@@ -53,6 +55,7 @@ This product includes dependent libraries listed blow:
     - Zend_Version
   - Auth OpenID 2.1.2
   - PHP OAuth library
+  - SimplePie 1.4.3
   - sfFormExtraPlugin 1.0.12
   - sfImageHandlerPlugin 1.0.0
   - PEAR 1.10.3

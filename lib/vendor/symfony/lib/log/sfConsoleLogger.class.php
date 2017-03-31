@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage log
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfConsoleLogger.class.php 10952 2008-08-19 15:04:33Z fabien $
+ * @version    SVN: $Id$
  */
 class sfConsoleLogger extends sfStreamLogger
 {

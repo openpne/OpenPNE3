@@ -39,13 +39,6 @@ class opJsonApiActions extends sfActions
     return parent::execute($request);
   }
 
-  public function renderJSON(array $data)
-  {
-    $json = json_encode($data, $this->doEscape);
-
-    return $this->renderText($json);
-  }
-
   public function forward400($message = null)
   {
     $exception = new opErrorHttpException($message);

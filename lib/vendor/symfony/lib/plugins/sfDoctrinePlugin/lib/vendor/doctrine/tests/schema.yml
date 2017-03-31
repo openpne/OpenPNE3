@@ -1,0 +1,216 @@
+---
+SchemaTestUser:
+  actAs: [Timestampable]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    username:
+      type: string(255)
+      charset: utf8
+      collation: utf8_general_ci
+    password:
+      type: string(255)
+
+SchemaTestProfile:
+  actAs: [Timestampable]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    schema_test_user_id:
+      type: integer(4)
+    schema_test_contact_id:
+      type: integer(4)
+    first_name:
+      type: string(255)
+    last_name:
+      type: string(255)
+  relations:
+    SchemaTestUser: 
+      foreignType: one
+    SchemaTestContact:
+      foreignType: one
+
+SchemaTestContact:
+  actAs: [Timestampable]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(255)
+
+SchemaTestPhonenumber:
+  actAs: [Timestampable]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    schema_test_contact_id:
+      type: integer(4)
+    phone_number:
+      type: integer(4)
+  relations:
+    SchemaTestContact:
+      foreignAlias: Phonenumbers
+
+SchemaTestInheritanceParent:
+  package: Parent
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(255)
+    type:
+      type: string(255)
+
+SchemaTestInheritanceChild1:
+  package: Child1
+  inheritance:
+    extends: SchemaTestInheritanceParent
+    keyField: type
+    keyValue: child1
+
+SchemaTestInheritanceChild2:
+  package: Child2
+  inheritance:
+    extends: SchemaTestInheritanceChild1
+    keyField: type
+    keyValue: child2
+
+# Simple Inheritance
+# All children share the columns of the parent
+SchemaTestSimpleInheritanceParent:
+  columns:
+    name: string(255)
+
+SchemaTestSimpleInheritanceChild:
+  inheritance:
+    type: simple
+    extends: SchemaTestSimpleInheritanceParent
+  columns:
+    description: string(255)
+
+# Class Table Inheritance
+# Individual tables, each model has its own columns, and they share id primary keys
+SchemaTestClassTableInheritanceParent:
+  columns:
+    name: string(255)
+
+SchemaTestClassTableInheritanceChild:
+  inheritance:
+    type: class_table
+    extends: SchemaTestClassTableInheritanceParent
+  columns:
+    title: string(255)
+    description: string(255)
+
+# Concrete Inheritance
+# Individual tables, all children share the columns of its parents
+SchemaTestConcreteInheritanceParent:
+  columns:
+    name: string(255)
+
+SchemaTestConcreteInheritanceChild:
+  inheritance:
+    type: concrete
+    extends: SchemaTestClassTableInheritanceParent
+  columns:
+    title: string(255)
+    description: string(255)
+
+# Column Aggregation Inheritance
+# Single table, all children columns are stored in the parent, parent class has a type method
+# Which is used to determine which child the record in the db belonds to
+SchemaTestColumnAggregationInheritanceParent:
+  columns:
+    name: string(255)
+    type: string(255)
+
+SchemaTestColumnAggregationInheritanceChild:
+  inheritance:
+    type: column_aggregation
+    keyField: type
+    keyValue: SchemaTestColumnAggregationInheritanceChild
+    extends: SchemaTestColumnAggregationInheritanceParent
+  columns:
+    title: string(255)
+    description: string(255)
+
+AliasTest:
+  columns:
+    test_col:
+      name: test_col as test_col_alias
+      type: string(255)
+      
+# App-level cascade delete
+AppCascadeDeleteTest:
+  columns: 
+    id: 
+      primary: true
+      autoincrement: true
+      type: integer(4)
+    alias_id:
+      type: integer(4)
+
+  relations:
+    AliasTest:
+      type: one
+      local: alias_id
+      foreign: id
+      cascade: [delete]
+      
+ListenerTestAsArray:
+  columns:
+    id: 
+      primary: true
+      autoincrement: true
+      type: integer(4)
+    name:
+      type: string(50)
+    slug:
+      type: string(60)
+  listeners: [Doctrine_Template_Listener_Sluggable]
+  
+ListenerTestWithParameters:
+  columns:
+    id: 
+      primary: true
+      autoincrement: true
+      type: integer(4)
+    name:
+      type: string(50)
+    slug:
+      type: string(60)
+  listeners: 
+    Sluggable:
+      useOptions: true
+      class: Doctrine_Template_Listener_Sluggable
+
+# Long identifier test on FK      
+sfUserEmailAddressType:
+  columns:
+    name:
+      type: string
+      length: 20
+
+sfUserEmailAddress:
+  actAs:
+    Timestampable:
+  columns:
+    email_address_type_id: integer
+    address:
+      type: string
+      length: 128
+      email: true
+  relations:
+    EmailAddressType:
+      class: sfUserEmailAddressType
+      local: email_address_type_id

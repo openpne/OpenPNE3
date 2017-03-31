@@ -6,7 +6,7 @@
  * @package    symfony12
  * @subpackage attachment
  * @author     Your name here
- * @version    SVN: $Id: actions.class.php 24971 2009-12-05 15:05:03Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class attachmentActions extends sfActions
 {

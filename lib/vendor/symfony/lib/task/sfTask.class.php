@@ -3,7 +3,7 @@
 /*
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTask.class.php 30773 2010-08-27 19:27:41Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 abstract class sfTask
 {
@@ -124,7 +124,7 @@ abstract class sfTask
         {
           if ($indexArguments[$name]->isArray())
           {
-            $value = join(' ', (array) $value);
+            $value = implode(' ', (array) $value);
             $arguments[$pos] = isset($arguments[$pos]) ? $arguments[$pos].' '.$value : $value;
           }
           else
@@ -157,7 +157,7 @@ abstract class sfTask
         }
 
         // convert associative array
-        $value = true === $value ? $name : sprintf('%s=%s', $name, isset($indexedOptions[$name]) && $indexedOptions[$name]->isArray() ? join(' --'.$name.'=', (array) $value) : $value);
+        $value = true === $value ? $name : sprintf('%s=%s', $name, isset($indexedOptions[$name]) && $indexedOptions[$name]->isArray() ? implode(' --'.$name.'=', (array) $value) : $value);
       }
 
       // add -- before each option if needed
@@ -304,7 +304,10 @@ abstract class sfTask
    */
   public function getDetailedDescription()
   {
-    return preg_replace('/\[(.+?)\|(\w+)\]/se', '$this->formatter->format("$1", "$2")', $this->detailedDescription);
+    $formatter = $this->getFormatter();
+    return preg_replace_callback('/\[(.+?)\|(\w+)\]/s', function ($match) use ($formatter) {
+      return $formatter->format($match['1'], $match['2']);
+    }, $this->detailedDescription);
   }
 
   /**
@@ -465,7 +468,7 @@ abstract class sfTask
 
     $ret = trim(fgets(STDIN));
 
-    return $ret ? $ret : $default;
+    return $ret ?: $default;
   }
 
   /**
@@ -571,7 +574,7 @@ abstract class sfTask
     $dom->formatOutput = true;
     $dom->appendChild($taskXML = $dom->createElement('task'));
     $taskXML->setAttribute('id', $this->getFullName());
-    $taskXML->setAttribute('namespace', $this->getNamespace() ? $this->getNamespace() : '_global');
+    $taskXML->setAttribute('namespace', $this->getNamespace() ?: '_global');
     $taskXML->setAttribute('name', $this->getName());
 
     $taskXML->appendChild($usageXML = $dom->createElement('usage'));
@@ -636,7 +639,7 @@ abstract class sfTask
       }
     }
 
-    return $dom->saveXml();
+    return $dom->saveXML();
   }
 
   /**
@@ -651,6 +654,14 @@ abstract class sfTask
 
    protected function strlen($string)
    {
-     return function_exists('mb_strlen') ? mb_strlen($string) : strlen($string);
+     if (!function_exists('mb_strlen')) {
+         return strlen($string);
+     }
+
+     if (false === $encoding = mb_detect_encoding($string)) {
+         return strlen($string);
+     }
+
+     return mb_strlen($string, $encoding);
    }
 }

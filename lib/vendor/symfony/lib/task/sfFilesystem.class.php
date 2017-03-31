@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfFilesystem.class.php 31247 2010-10-26 12:26:15Z fabien $
+ * @version    SVN: $Id$
  */
 class sfFilesystem
 {
@@ -65,14 +65,17 @@ class sfFilesystem
     {
       $statTarget = stat($targetFile);
       $stat_origin = stat($originFile);
-      $mostRecent = ($stat_origin['mtime'] > $statTarget['mtime']) ? true : false;
+      $mostRecent = ($stat_origin['mtime'] > $statTarget['mtime']);
     }
 
     if ($options['override'] || !file_exists($targetFile) || $mostRecent)
     {
       $this->logSection('file+', $targetFile);
-      copy($originFile, $targetFile);
+
+      return copy($originFile, $targetFile);
     }
+
+    return true;
   }
 
   /**
@@ -186,7 +189,8 @@ class sfFilesystem
     }
 
     $this->logSection('rename', $origin.' > '.$target);
-    rename($origin, $target);
+
+    return rename($origin, $target);
   }
 
   /**
@@ -402,7 +406,7 @@ class sfFilesystem
    * @param string $to   The target directory
    *
    * @return string
-   */ 
+   */
   protected function calculateRelativeDir($from, $to)
   {
     $from = $this->canonicalizePath($from);

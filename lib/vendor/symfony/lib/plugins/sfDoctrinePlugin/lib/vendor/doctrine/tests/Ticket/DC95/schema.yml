@@ -1,0 +1,8 @@
+Article:
+  columns:
+    title: string(255)
+    content: clob
+
+Article_Category:
+  columns:
+    name: string(255)

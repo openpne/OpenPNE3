@@ -16,7 +16,7 @@
  * @subpackage controller
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfWebController.class.php 30563 2010-08-06 11:22:44Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfWebController extends sfController
 {
@@ -120,7 +120,7 @@ abstract class sfWebController extends sfController
     }
 
     // routeName?
-    if ($url[0] == '@')
+    if ($url && $url[0] == '@')
     {
       $route = substr($url, 1);
     }

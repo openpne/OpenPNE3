@@ -6,7 +6,7 @@
  * @package    project
  * @subpackage i18n
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: actions.class.php 8645 2008-04-27 15:37:17Z fabien $
+ * @version    SVN: $Id$
  */
 class i18nActions extends sfActions
 {

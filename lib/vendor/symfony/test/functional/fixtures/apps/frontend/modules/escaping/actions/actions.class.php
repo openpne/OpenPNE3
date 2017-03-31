@@ -6,7 +6,7 @@
  * @package    project
  * @subpackage escaping
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: actions.class.php 27755 2010-02-08 20:51:02Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class escapingActions extends sfActions
 {

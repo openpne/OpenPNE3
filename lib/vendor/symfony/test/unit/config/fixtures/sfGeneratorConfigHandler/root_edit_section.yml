@@ -1,7 +1,7 @@
 generator:
-  class:              sfPropelAdminGenerator
+  class: sfAdminGenerator
   param:
-    model_class:      Article
-    theme:            default
+    model_class: Article
+    theme: default
   edit:
     title: test

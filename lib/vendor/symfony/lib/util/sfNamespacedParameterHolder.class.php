@@ -20,7 +20,7 @@
  * @subpackage util
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfNamespacedParameterHolder.class.php 29521 2010-05-19 11:47:56Z fabien $
+ * @version    SVN: $Id$
  */
 class sfNamespacedParameterHolder extends sfParameterHolder
 {

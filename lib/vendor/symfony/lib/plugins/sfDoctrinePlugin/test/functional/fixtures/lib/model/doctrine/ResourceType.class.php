@@ -8,7 +8,7 @@
  * @package    symfony12
  * @subpackage model
  * @author     Your name here
- * @version    SVN: $Id: ResourceType.class.php 27742 2010-02-08 15:46:35Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class ResourceType extends BaseResourceType
 {

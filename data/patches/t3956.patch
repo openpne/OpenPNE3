@@ -1,5 +1,5 @@
 diff --git a/lib/vendor/symfony/lib/config/sfFactoryConfigHandler.class.php b/lib/vendor/symfony/lib/config/sfFactoryConfigHandler.class.php
-index 35e54459..b1615adf 100644
+index 0c1f2a8..c70e2c1 100644
 --- a/lib/vendor/symfony/lib/config/sfFactoryConfigHandler.class.php
 +++ b/lib/vendor/symfony/lib/config/sfFactoryConfigHandler.class.php
 @@ -95,7 +95,7 @@ class sfFactoryConfigHandler extends sfYamlConfigHandler
@@ -12,10 +12,10 @@ index 35e54459..b1615adf 100644
            $instances[] = sprintf("  if (\$this->factories['request'] instanceof sfWebRequest \n      && \$this->factories['response'] instanceof sfWebResponse \n      && 'HEAD' == \$this->factories['request']->getMethod())\n  {  \n    \$this->factories['response']->setHeaderOnly(true);\n  }\n");
            break;
 diff --git a/lib/vendor/symfony/lib/response/sfWebResponse.class.php b/lib/vendor/symfony/lib/response/sfWebResponse.class.php
-index 3aa15ea2..627b7223 100644
+index dcac761..9947b93 100644
 --- a/lib/vendor/symfony/lib/response/sfWebResponse.class.php
 +++ b/lib/vendor/symfony/lib/response/sfWebResponse.class.php
-@@ -796,9 +796,7 @@ class sfWebResponse extends sfResponse
+@@ -850,9 +850,7 @@ class sfWebResponse extends sfResponse
      $this->javascripts = $response->getJavascripts(self::RAW);
      $this->slots       = $response->getSlots();
  

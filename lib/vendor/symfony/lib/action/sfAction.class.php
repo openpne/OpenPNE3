@@ -16,7 +16,7 @@
  * @subpackage action
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfAction.class.php 24279 2009-11-23 15:21:18Z fabien $
+ * @version    SVN: $Id$
  */
 abstract class sfAction extends sfComponent
 {
@@ -269,6 +269,23 @@ abstract class sfAction extends sfComponent
   }
 
   /**
+   * Convert the given data into a JSON response.
+   *
+   * <code>return $this->renderJson(array('username' => 'john'))</code>
+   *
+   * @param mixed $data Data to encode as JSON
+   *
+   * @return sfView::NONE
+   */
+  public function renderJson($data)
+  {
+    $this->getResponse()->setContentType('application/json');
+    $this->getResponse()->setContent(json_encode($data));
+
+    return sfView::NONE;
+  }
+
+  /**
    * Returns the partial rendered content.
    *
    * If the vars parameter is omitted, the action's internal variables
@@ -436,7 +453,8 @@ abstract class sfAction extends sfComponent
 
     if (null !== $module)
     {
-      $name = sfConfig::get('sf_app_dir').'/modules/'.$module.'/templates/'.$name;
+      $dir = $this->context->getConfiguration()->getTemplateDir($module, $name.sfView::SUCCESS.'.php');
+      $name = $dir.'/'.$name;
     }
 
     sfConfig::set('symfony.view.'.$this->getModuleName().'_'.$this->getActionName().'_template', $name);

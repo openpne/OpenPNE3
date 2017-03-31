@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
+require_once(__DIR__.'/../../bootstrap/unit.php');
 
 $t = new lime_test(34);
 
@@ -20,7 +20,7 @@ class TestConfiguration extends sfApplicationConfiguration
 {
   public function getI18NGlobalDirs()
   {
-    return array(dirname(__FILE__).'/fixtures');
+    return array(__DIR__.'/fixtures');
   }
 }
 
@@ -35,7 +35,7 @@ $dispatcher->notify(new sfEvent(null, 'user.change_culture', array('culture' => 
 $t->is($i18n->getCulture(), 'fr', '->initialize() connects to the user.change_culture event');
 
 // passing a "culture" option to initialize() should set PHP locale
-if (class_exists('Locale') && ($en = Locale::lookup(array('en-US'), 'en-US', true)) && ($fr = Locale::lookup(array('fr-FR'), 'fr-FR', true)))
+if (version_compare(PHP_VERSION, '5.3', '<') && class_exists('Locale') && ($en = Locale::lookup(array('en-US'), 'en-US', true)) && ($fr = Locale::lookup(array('fr-FR'), 'fr-FR', true)))
 {
   $i18n = new sfI18N($configuration, $cache, array('culture' => $fr));
   $frLocale = localeconv();
@@ -45,7 +45,7 @@ if (class_exists('Locale') && ($en = Locale::lookup(array('en-US'), 'en-US', tru
 }
 else
 {
-  $t->skip('Locale class or English and French locales are not installed');
+  $t->skip('PHP version > 5.2 or Locale class or English and French locales are not installed');
 }
 
 // ->getCulture() ->setCulture()

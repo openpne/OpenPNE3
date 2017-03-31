@@ -6,7 +6,7 @@
  * @package    symfony12
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: AttachmentForm.class.php 24971 2009-12-05 15:05:03Z Kris.Wallsmith $
+ * @version    SVN: $Id$
  */
 class AttachmentForm extends BaseAttachmentForm
 {

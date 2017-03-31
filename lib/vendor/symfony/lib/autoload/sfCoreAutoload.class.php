@@ -11,7 +11,7 @@
 /**
  * The current symfony version.
  */
-define('SYMFONY_VERSION', '1.4.13');
+define('SYMFONY_VERSION', '1.5.9');
 
 /**
  * sfCoreAutoload class.
@@ -23,7 +23,7 @@ define('SYMFONY_VERSION', '1.4.13');
  * @subpackage autoload
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @version    SVN: $Id: sfCoreAutoload.class.php 32415 2011-03-30 16:09:00Z Kris.Wallsmith
- $
+ *
  */
 class sfCoreAutoload
 {
@@ -36,7 +36,7 @@ class sfCoreAutoload
 
   protected function __construct()
   {
-    $this->baseDir = realpath(dirname(__FILE__).'/..');
+    $this->baseDir = realpath(__DIR__.'/..');
   }
 
   /**
@@ -141,7 +141,7 @@ class sfCoreAutoload
    */
   static public function make()
   {
-    $libDir = str_replace(DIRECTORY_SEPARATOR, '/', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'));
+    $libDir = str_replace(DIRECTORY_SEPARATOR, '/', realpath(__DIR__.DIRECTORY_SEPARATOR.'..'));
     require_once $libDir.'/util/sfFinder.class.php';
 
     $files = sfFinder::type('file')
@@ -163,7 +163,9 @@ class sfCoreAutoload
       $class = basename($file, false === strpos($file, '.class.php') ? '.php' : '.class.php');
 
       $contents = file_get_contents($file);
-      if (false !== stripos($contents, 'class '.$class) || false !== stripos($contents, 'interface '.$class))
+      if (false !== stripos($contents, 'class '.$class)
+          || false !== stripos($contents, 'interface '.$class)
+          || false !== stripos($contents, 'trait '.$class))
       {
         $classes .= sprintf("    '%s' => '%s',\n", strtolower($class), substr(str_replace($libDir, '', $file), 1));
       }
@@ -228,6 +230,7 @@ class sfCoreAutoload
     'sfrootconfighandler' => 'config/sfRootConfigHandler.class.php',
     'sfroutingconfighandler' => 'config/sfRoutingConfigHandler.class.php',
     'sfsecurityconfighandler' => 'config/sfSecurityConfigHandler.class.php',
+    'sfserviceconfighandler' => 'config/sfServiceConfigHandler.class.php',
     'sfsimpleyamlconfighandler' => 'config/sfSimpleYamlConfigHandler.class.php',
     'sfviewconfighandler' => 'config/sfViewConfigHandler.class.php',
     'sfyamlconfighandler' => 'config/sfYamlConfigHandler.class.php',
@@ -259,8 +262,8 @@ class sfCoreAutoload
     'sfoutputescaperiteratordecorator' => 'escaper/sfOutputEscaperIteratorDecorator.class.php',
     'sfoutputescaperobjectdecorator' => 'escaper/sfOutputEscaperObjectDecorator.class.php',
     'sfoutputescapersafe' => 'escaper/sfOutputEscaperSafe.class.php',
-    'sfevent' => 'event_dispatcher/sfEvent.php',
-    'sfeventdispatcher' => 'event_dispatcher/sfEventDispatcher.php',
+    'sfevent' => 'event/sfEvent.class.php',
+    'sfeventdispatcher' => 'event/sfEventDispatcher.class.php',
     'sfcacheexception' => 'exception/sfCacheException.class.php',
     'sfconfigurationexception' => 'exception/sfConfigurationException.class.php',
     'sfcontrollerexception' => 'exception/sfControllerException.class.php',
@@ -319,22 +322,26 @@ class sfCoreAutoload
     'sfmessagesource_file' => 'i18n/sfMessageSource_File.class.php',
     'sfmessagesource_mysql' => 'i18n/sfMessageSource_MySQL.class.php',
     'sfmessagesource_sqlite' => 'i18n/sfMessageSource_SQLite.class.php',
+    'sfmessagesource_sqlite3' => 'i18n/sfMessageSource_SQLite3.class.php',
     'sfmessagesource_xliff' => 'i18n/sfMessageSource_XLIFF.class.php',
     'sfmessagesource_gettext' => 'i18n/sfMessageSource_gettext.class.php',
     'sfnumberformat' => 'i18n/sfNumberFormat.class.php',
     'sfnumberformatinfo' => 'i18n/sfNumberFormatInfo.class.php',
     'sfaggregatelogger' => 'log/sfAggregateLogger.class.php',
     'sfconsolelogger' => 'log/sfConsoleLogger.class.php',
+    'sfeventlogger' => 'log/sfEventLogger.class.php',
     'sffilelogger' => 'log/sfFileLogger.class.php',
     'sflogger' => 'log/sfLogger.class.php',
     'sfloggerinterface' => 'log/sfLoggerInterface.class.php',
     'sfloggerwrapper' => 'log/sfLoggerWrapper.class.php',
     'sfnologger' => 'log/sfNoLogger.class.php',
+    'sfpsrloggeradapter' => 'log/sfPsrLoggerAdapter.class.php',
     'sfstreamlogger' => 'log/sfStreamLogger.class.php',
     'sfvarlogger' => 'log/sfVarLogger.class.php',
     'sfwebdebuglogger' => 'log/sfWebDebugLogger.class.php',
     'sfmailer' => 'mailer/sfMailer.class.php',
     'sfmailermessageloggerplugin' => 'mailer/sfMailerMessageLoggerPlugin.class.php',
+    'sfnomailer' => 'mailer/sfNoMailer.class.php',
     'sfpearconfig' => 'plugin/sfPearConfig.class.php',
     'sfpeardownloader' => 'plugin/sfPearDownloader.class.php',
     'sfpearenvironment' => 'plugin/sfPearEnvironment.class.php',
@@ -360,6 +367,19 @@ class sfCoreAutoload
     'sfroute' => 'routing/sfRoute.class.php',
     'sfroutecollection' => 'routing/sfRouteCollection.class.php',
     'sfrouting' => 'routing/sfRouting.class.php',
+    'sfservicecontainer' => 'service/sfServiceContainer.class.php',
+    'sfservicecontainerbuilder' => 'service/sfServiceContainerBuilder.class.php',
+    'sfservicecontainerdumper' => 'service/sfServiceContainerDumper.class.php',
+    'sfservicecontainerdumpergraphviz' => 'service/sfServiceContainerDumperGraphviz.class.php',
+    'sfservicecontainerdumperinterface' => 'service/sfServiceContainerDumperInterface.class.php',
+    'sfservicecontainerdumperphp' => 'service/sfServiceContainerDumperPhp.class.php',
+    'sfservicecontainerinterface' => 'service/sfServiceContainerInterface.class.php',
+    'sfservicecontainerloader' => 'service/sfServiceContainerLoader.class.php',
+    'sfservicecontainerloaderarray' => 'service/sfServiceContainerLoaderArray.class.php',
+    'sfservicecontainerloaderinterface' => 'service/sfServiceContainerLoaderInterface.class.php',
+    'sfservicedefinition' => 'service/sfServiceDefinition.class.php',
+    'sfserviceparameter' => 'service/sfServiceParameter.class.php',
+    'sfservicereference' => 'service/sfServiceReference.class.php',
     'sfcachesessionstorage' => 'storage/sfCacheSessionStorage.class.php',
     'sfdatabasesessionstorage' => 'storage/sfDatabaseSessionStorage.class.php',
     'sfmysqlsessionstorage' => 'storage/sfMySQLSessionStorage.class.php',
@@ -417,6 +437,7 @@ class sfCoreAutoload
     'sftestbasetask' => 'task/test/sfTestBaseTask.class.php',
     'sftestcoveragetask' => 'task/test/sfTestCoverageTask.class.php',
     'sftestfunctionaltask' => 'task/test/sfTestFunctionalTask.class.php',
+    'sftestplugintask' => 'task/test/sfTestPluginTask.class.php',
     'sftestunittask' => 'task/test/sfTestUnitTask.class.php',
     'sftestbrowser' => 'test/sfTestBrowser.class.php',
     'sftestfunctional' => 'test/sfTestFunctional.class.php',
@@ -457,11 +478,14 @@ class sfCoreAutoload
     'sfvalidatordatetime' => 'validator/sfValidatorDateTime.class.php',
     'sfvalidatordecorator' => 'validator/sfValidatorDecorator.class.php',
     'sfvalidatoremail' => 'validator/sfValidatorEmail.class.php',
+    'sfvalidatorequal' => 'validator/sfValidatorEqual.class.php',
     'sfvalidatorerror' => 'validator/sfValidatorError.class.php',
     'sfvalidatorerrorschema' => 'validator/sfValidatorErrorSchema.class.php',
     'sfvalidatorfile' => 'validator/sfValidatorFile.class.php',
+    'sfvalidatorfilemulti' => 'validator/sfValidatorFileMulti.class.php',
     'sfvalidatorfromdescription' => 'validator/sfValidatorFromDescription.class.php',
     'sfvalidatorinteger' => 'validator/sfValidatorInteger.class.php',
+    'sfvalidatorip' => 'validator/sfValidatorIp.class.php',
     'sfvalidatornumber' => 'validator/sfValidatorNumber.class.php',
     'sfvalidatoror' => 'validator/sfValidatorOr.class.php',
     'sfvalidatorpass' => 'validator/sfValidatorPass.class.php',
@@ -469,7 +493,6 @@ class sfCoreAutoload
     'sfvalidatorschema' => 'validator/sfValidatorSchema.class.php',
     'sfvalidatorschemacompare' => 'validator/sfValidatorSchemaCompare.class.php',
     'sfvalidatorschemafilter' => 'validator/sfValidatorSchemaFilter.class.php',
-    'sfvalidatorschemaforeach' => 'validator/sfValidatorSchemaForEach.class.php',
     'sfvalidatorstring' => 'validator/sfValidatorString.class.php',
     'sfvalidatortime' => 'validator/sfValidatorTime.class.php',
     'sfvalidatorurl' => 'validator/sfValidatorUrl.class.php',
@@ -497,13 +520,14 @@ class sfCoreAutoload
     'sfwidgetforminput' => 'widget/sfWidgetFormInput.class.php',
     'sfwidgetforminputcheckbox' => 'widget/sfWidgetFormInputCheckbox.class.php',
     'sfwidgetforminputfile' => 'widget/sfWidgetFormInputFile.class.php',
+    'sfwidgetforminputfilemulti' => 'widget/sfWidgetFormInputFileMulti.class.php',
     'sfwidgetforminputfileeditable' => 'widget/sfWidgetFormInputFileEditable.class.php',
     'sfwidgetforminputhidden' => 'widget/sfWidgetFormInputHidden.class.php',
     'sfwidgetforminputpassword' => 'widget/sfWidgetFormInputPassword.class.php',
+    'sfwidgetforminputread' => 'widget/sfWidgetFormInputRead.class.php',
     'sfwidgetforminputtext' => 'widget/sfWidgetFormInputText.class.php',
     'sfwidgetformschema' => 'widget/sfWidgetFormSchema.class.php',
     'sfwidgetformschemadecorator' => 'widget/sfWidgetFormSchemaDecorator.class.php',
-    'sfwidgetformschemaforeach' => 'widget/sfWidgetFormSchemaForEach.class.php',
     'sfwidgetformschemaformatter' => 'widget/sfWidgetFormSchemaFormatter.class.php',
     'sfwidgetformschemaformatterlist' => 'widget/sfWidgetFormSchemaFormatterList.class.php',
     'sfwidgetformschemaformattertable' => 'widget/sfWidgetFormSchemaFormatterTable.class.php',
@@ -513,9 +537,9 @@ class sfCoreAutoload
     'sfwidgetformselectradio' => 'widget/sfWidgetFormSelectRadio.class.php',
     'sfwidgetformtextarea' => 'widget/sfWidgetFormTextarea.class.php',
     'sfwidgetformtime' => 'widget/sfWidgetFormTime.class.php',
-    'sfyaml' => 'yaml/sfYaml.php',
-    'sfyamldumper' => 'yaml/sfYamlDumper.php',
-    'sfyamlinline' => 'yaml/sfYamlInline.php',
-    'sfyamlparser' => 'yaml/sfYamlParser.php',
+    'sfyaml' => 'yaml/sfYaml.class.php',
+    'sfyamldumper' => 'yaml/sfYamlDumper.class.php',
+    'sfyamlinline' => 'yaml/sfYamlInline.class.php',
+    'sfyamlparser' => 'yaml/sfYamlParser.class.php',
   );
 }

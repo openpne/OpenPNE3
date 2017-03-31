@@ -1,0 +1,1625 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Doctrine</name>
+ <channel>pear.doctrine-project.org</channel>
+ <summary>PHP5 Database ORM</summary>
+ <description>Doctrine is an ORM (object relational mapper) for PHP 5.2.x+ that sits on top of
+a powerful DBAL (database abstraction layer). One of its key features is the
+ability to optionally write database queries in an OO (object oriented)
+SQL-dialect called DQL inspired by Hibernates HQL. This provides developers with
+a powerful alternative to SQL that maintains a maximum of flexibility without
+requiring needless code duplication.</description>
+ <lead>
+  <name>Konsta Vesterinen</name>
+  <user>zYne-</user>
+  <email>kvesteri@cc.hut.fi</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Jonathan H. Wage</name>
+  <user>jwage</user>
+  <email>jonwage@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2010-03-29</date>
+ <time>17:03:32</time>
+ <version>
+  <release>1.2.2</release>
+  <api>1.2.2</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+ <notes>
+-
+ </notes>
+ <contents>
+  <dir baseinstalldir="Doctrine" name="/">
+   <dir name="lib">
+    <dir name="Doctrine">
+     <dir name="Adapter">
+      <dir name="Statement">
+       <file name="Interface.php" role="php" />
+       <file name="Mock.php" role="php" />
+       <file name="Oracle.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Adapter/Statement -->
+      <file name="Exception.php" role="php" />
+      <file name="Interface.php" role="php" />
+      <file name="Mock.php" role="php" />
+      <file name="Oracle.php" role="php" />
+      <file name="Statement.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Adapter -->
+     <dir name="AuditLog">
+      <dir name="Listener">
+       <file name="Microtime.php" role="php" />
+      </dir> <!-- /lib/Doctrine/AuditLog/Listener -->
+      <file name="Listener.php" role="php" />
+     </dir> <!-- /lib/Doctrine/AuditLog -->
+     <dir name="Cache">
+      <file name="Apc.php" role="php" />
+      <file name="Array.php" role="php" />
+      <file name="Db.php" role="php" />
+      <file name="Driver.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="Interface.php" role="php" />
+      <file name="Memcache.php" role="php" />
+      <file name="Xcache.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Cache -->
+     <dir name="Cli">
+      <file name="AnsiColorFormatter.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="Formatter.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Cli -->
+     <dir name="Collection">
+      <dir name="Iterator">
+       <file name="Expandable.php" role="php" />
+       <file name="Normal.php" role="php" />
+       <file name="Offset.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Collection/Iterator -->
+      <file name="Exception.php" role="php" />
+      <file name="Iterator.php" role="php" />
+      <file name="Offset.php" role="php" />
+      <file name="OnDemand.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Collection -->
+     <dir name="Compiler">
+      <file name="Exception.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Compiler -->
+     <dir name="Connection">
+      <dir name="Mssql">
+       <file name="Exception.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Connection/Mssql -->
+      <dir name="Mysql">
+       <file name="Exception.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Connection/Mysql -->
+      <dir name="Oracle">
+       <file name="Exception.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Connection/Oracle -->
+      <dir name="Pgsql">
+       <file name="Exception.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Connection/Pgsql -->
+      <dir name="Profiler">
+       <file name="Exception.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Connection/Profiler -->
+      <dir name="Sqlite">
+       <file name="Exception.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Connection/Sqlite -->
+      <file name="Common.php" role="php" />
+      <file name="Db2.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="Mock.php" role="php" />
+      <file name="Module.php" role="php" />
+      <file name="Mssql.php" role="php" />
+      <file name="Mysql.php" role="php" />
+      <file name="Oracle.php" role="php" />
+      <file name="Pgsql.php" role="php" />
+      <file name="Profiler.php" role="php" />
+      <file name="Sqlite.php" role="php" />
+      <file name="Statement.php" role="php" />
+      <file name="UnitOfWork.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Connection -->
+     <dir name="Data">
+      <file name="Exception.php" role="php" />
+      <file name="Export.php" role="php" />
+      <file name="Import.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Data -->
+     <dir name="DataDict">
+      <file name="Exception.php" role="php" />
+      <file name="Mssql.php" role="php" />
+      <file name="Mysql.php" role="php" />
+      <file name="Oracle.php" role="php" />
+      <file name="Pgsql.php" role="php" />
+      <file name="Sqlite.php" role="php" />
+     </dir> <!-- /lib/Doctrine/DataDict -->
+     <dir name="EventListener">
+      <file name="Chain.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="Interface.php" role="php" />
+     </dir> <!-- /lib/Doctrine/EventListener -->
+     <dir name="Export">
+      <file name="Exception.php" role="php" />
+      <file name="Mssql.php" role="php" />
+      <file name="Mysql.php" role="php" />
+      <file name="Oracle.php" role="php" />
+      <file name="Pgsql.php" role="php" />
+      <file name="Reporter.php" role="php" />
+      <file name="Schema.php" role="php" />
+      <file name="Sqlite.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Export -->
+     <dir name="Expression">
+      <file name="Driver.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="Mock.php" role="php" />
+      <file name="Mssql.php" role="php" />
+      <file name="Mysql.php" role="php" />
+      <file name="Oracle.php" role="php" />
+      <file name="Pgsql.php" role="php" />
+      <file name="Sqlite.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Expression -->
+     <dir name="File">
+      <file name="Index.php" role="php" />
+     </dir> <!-- /lib/Doctrine/File -->
+     <dir name="Hook">
+      <dir name="Parser">
+       <file name="Complex.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Hook/Parser -->
+      <file name="Equal.php" role="php" />
+      <file name="Integer.php" role="php" />
+      <file name="Parser.php" role="php" />
+      <file name="WordLike.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Hook -->
+     <dir name="Hydrator">
+      <file name="Abstract.php" role="php" />
+      <file name="ArrayDriver.php" role="php" />
+      <file name="ArrayHierarchyDriver.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="Graph.php" role="php" />
+      <file name="NoneDriver.php" role="php" />
+      <file name="RecordDriver.php" role="php" />
+      <file name="RecordHierarchyDriver.php" role="php" />
+      <file name="ScalarDriver.php" role="php" />
+      <file name="SingleScalarDriver.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Hydrator -->
+     <dir name="I18n">
+      <file name="Exception.php" role="php" />
+     </dir> <!-- /lib/Doctrine/I18n -->
+     <dir name="Import">
+      <dir name="Builder">
+       <file name="Exception.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Import/Builder -->
+      <file name="Builder.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="Mssql.php" role="php" />
+      <file name="Mysql.php" role="php" />
+      <file name="Oracle.php" role="php" />
+      <file name="Pgsql.php" role="php" />
+      <file name="Schema.php" role="php" />
+      <file name="Sqlite.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Import -->
+     <dir name="Locator">
+      <file name="Exception.php" role="php" />
+      <file name="Injectable.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Locator -->
+     <dir name="Locking">
+      <dir name="Manager">
+       <file name="Pessimistic.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Locking/Manager -->
+      <file name="Exception.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Locking -->
+     <dir name="Manager">
+      <file name="Exception.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Manager -->
+     <dir name="Migration">
+      <file name="Base.php" role="php" />
+      <file name="Builder.php" role="php" />
+      <file name="Diff.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="IrreversibleMigrationException.php" role="php" />
+      <file name="Process.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Migration -->
+     <dir name="Node">
+      <dir name="AdjacencyList">
+       <file name="LevelOrderIterator.php" role="php" />
+       <file name="PostOrderIterator.php" role="php" />
+       <file name="PreOrderIterator.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Node/AdjacencyList -->
+      <dir name="MaterializedPath">
+       <file name="LevelOrderIterator.php" role="php" />
+       <file name="PostOrderIterator.php" role="php" />
+       <file name="PreOrderIterator.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Node/MaterializedPath -->
+      <dir name="NestedSet">
+       <file name="LevelOrderIterator.php" role="php" />
+       <file name="PostOrderIterator.php" role="php" />
+       <file name="PreOrderIterator.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Node/NestedSet -->
+      <file name="AdjacencyList.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="Interface.php" role="php" />
+      <file name="MaterializedPath.php" role="php" />
+      <file name="NestedSet.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Node -->
+     <dir name="Pager">
+      <dir name="Range">
+       <file name="Jumping.php" role="php" />
+       <file name="Sliding.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Pager/Range -->
+      <file name="Exception.php" role="php" />
+      <file name="Layout.php" role="php" />
+      <file name="Range.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Pager -->
+     <dir name="Parser">
+      <dir name="sfYaml">
+       <file name="sfYaml.php" role="php" />
+       <file name="sfYamlDumper.php" role="php" />
+       <file name="sfYamlInline.php" role="php" />
+       <file name="sfYamlParser.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Parser/sfYaml -->
+      <file name="Exception.php" role="php" />
+      <file name="Json.php" role="php" />
+      <file name="Serialize.php" role="php" />
+      <file name="Xml.php" role="php" />
+      <file name="Yml.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Parser -->
+     <dir name="Query">
+      <dir name="Filter">
+       <file name="Chain.php" role="php" />
+       <file name="Interface.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Query/Filter -->
+      <dir name="Registry">
+       <file name="Exception.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Query/Registry -->
+      <dir name="Tokenizer">
+       <file name="Exception.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Query/Tokenizer -->
+      <file name="Abstract.php" role="php" />
+      <file name="Check.php" role="php" />
+      <file name="Condition.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="Filter.php" role="php" />
+      <file name="Forupdate.php" role="php" />
+      <file name="From.php" role="php" />
+      <file name="Groupby.php" role="php" />
+      <file name="Having.php" role="php" />
+      <file name="JoinCondition.php" role="php" />
+      <file name="Limit.php" role="php" />
+      <file name="Offset.php" role="php" />
+      <file name="Orderby.php" role="php" />
+      <file name="Parser.php" role="php" />
+      <file name="Part.php" role="php" />
+      <file name="Registry.php" role="php" />
+      <file name="Select.php" role="php" />
+      <file name="Set.php" role="php" />
+      <file name="Tokenizer.php" role="php" />
+      <file name="Where.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Query -->
+     <dir name="RawSql">
+      <file name="Exception.php" role="php" />
+     </dir> <!-- /lib/Doctrine/RawSql -->
+     <dir name="Record">
+      <dir name="Filter">
+       <file name="Compound.php" role="php" />
+       <file name="Standard.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Record/Filter -->
+      <dir name="Listener">
+       <file name="Chain.php" role="php" />
+       <file name="Interface.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Record/Listener -->
+      <dir name="State">
+       <file name="Exception.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Record/State -->
+      <file name="Abstract.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="Filter.php" role="php" />
+      <file name="Generator.php" role="php" />
+      <file name="Iterator.php" role="php" />
+      <file name="Listener.php" role="php" />
+      <file name="UnknownPropertyException.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Record -->
+     <dir name="Relation">
+      <dir name="Association">
+       <file name="Self.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Relation/Association -->
+      <dir name="Parser">
+       <file name="Exception.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Relation/Parser -->
+      <file name="Association.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="ForeignKey.php" role="php" />
+      <file name="LocalKey.php" role="php" />
+      <file name="Nest.php" role="php" />
+      <file name="Parser.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Relation -->
+     <dir name="Search">
+      <dir name="Analyzer">
+       <file name="Exception.php" role="php" />
+       <file name="Interface.php" role="php" />
+       <file name="Standard.php" role="php" />
+       <file name="Utf8.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Search/Analyzer -->
+      <dir name="Indexer">
+       <file name="Dir.php" role="php" />
+       <file name="Exception.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Search/Indexer -->
+      <file name="Analyzer.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="File.php" role="php" />
+      <file name="Indexer.php" role="php" />
+      <file name="Listener.php" role="php" />
+      <file name="Parser.php" role="php" />
+      <file name="Query.php" role="php" />
+      <file name="Record.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Search -->
+     <dir name="Sequence">
+      <file name="Db2.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="Mssql.php" role="php" />
+      <file name="Mysql.php" role="php" />
+      <file name="Oracle.php" role="php" />
+      <file name="Pgsql.php" role="php" />
+      <file name="Sqlite.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Sequence -->
+     <dir name="Table">
+      <dir name="Repository">
+       <file name="Exception.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Table/Repository -->
+      <file name="Exception.php" role="php" />
+      <file name="Repository.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Table -->
+     <dir name="Task">
+      <file name="BuildAll.php" role="php" />
+      <file name="BuildAllLoad.php" role="php" />
+      <file name="BuildAllReload.php" role="php" />
+      <file name="Compile.php" role="php" />
+      <file name="CreateDb.php" role="php" />
+      <file name="CreateTables.php" role="php" />
+      <file name="Dql.php" role="php" />
+      <file name="DropDb.php" role="php" />
+      <file name="DumpData.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="GenerateMigration.php" role="php" />
+      <file name="GenerateMigrationsDb.php" role="php" />
+      <file name="GenerateMigrationsDiff.php" role="php" />
+      <file name="GenerateMigrationsModels.php" role="php" />
+      <file name="GenerateModelsDb.php" role="php" />
+      <file name="GenerateModelsYaml.php" role="php" />
+      <file name="GenerateSql.php" role="php" />
+      <file name="GenerateYamlDb.php" role="php" />
+      <file name="GenerateYamlModels.php" role="php" />
+      <file name="LoadData.php" role="php" />
+      <file name="Migrate.php" role="php" />
+      <file name="RebuildDb.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Task -->
+     <dir name="Template">
+      <dir name="Listener">
+       <file name="Sluggable.php" role="php" />
+       <file name="SoftDelete.php" role="php" />
+       <file name="Timestampable.php" role="php" />
+      </dir> <!-- /lib/Doctrine/Template/Listener -->
+      <file name="Geographical.php" role="php" />
+      <file name="I18n.php" role="php" />
+      <file name="NestedSet.php" role="php" />
+      <file name="Searchable.php" role="php" />
+      <file name="Sluggable.php" role="php" />
+      <file name="SoftDelete.php" role="php" />
+      <file name="Timestampable.php" role="php" />
+      <file name="Versionable.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Template -->
+     <dir name="Transaction">
+      <file name="Exception.php" role="php" />
+      <file name="Mock.php" role="php" />
+      <file name="Mssql.php" role="php" />
+      <file name="Mysql.php" role="php" />
+      <file name="Oracle.php" role="php" />
+      <file name="Pgsql.php" role="php" />
+      <file name="Sqlite.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Transaction -->
+     <dir name="Tree">
+      <file name="AdjacencyList.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="Interface.php" role="php" />
+      <file name="MaterializedPath.php" role="php" />
+      <file name="NestedSet.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Tree -->
+     <dir name="Validator">
+      <file name="Country.php" role="php" />
+      <file name="Creditcard.php" role="php" />
+      <file name="Date.php" role="php" />
+      <file name="Driver.php" role="php" />
+      <file name="Email.php" role="php" />
+      <file name="ErrorStack.php" role="php" />
+      <file name="Exception.php" role="php" />
+      <file name="Future.php" role="php" />
+      <file name="Htmlcolor.php" role="php" />
+      <file name="Ip.php" role="php" />
+      <file name="Minlength.php" role="php" />
+      <file name="Nospace.php" role="php" />
+      <file name="Notblank.php" role="php" />
+      <file name="Notnull.php" role="php" />
+      <file name="Past.php" role="php" />
+      <file name="Range.php" role="php" />
+      <file name="Readonly.php" role="php" />
+      <file name="Regexp.php" role="php" />
+      <file name="Time.php" role="php" />
+      <file name="Timestamp.php" role="php" />
+      <file name="Unique.php" role="php" />
+      <file name="Unsigned.php" role="php" />
+      <file name="Usstate.php" role="php" />
+     </dir> <!-- /lib/Doctrine/Validator -->
+     <dir name="View">
+      <file name="Exception.php" role="php" />
+     </dir> <!-- /lib/Doctrine/View -->
+     <file name="Access.php" role="php" />
+     <file name="AuditLog.php" role="php" />
+     <file name="Builder.php" role="php" />
+     <file name="Cli.php" role="php" />
+     <file name="Collection.php" role="php" />
+     <file name="Column.php" role="php" />
+     <file name="Compiler.php" role="php" />
+     <file name="Configurable.php" role="php" />
+     <file name="Connection.php" role="php" />
+     <file name="Core.php" role="php" />
+     <file name="Data.php" role="php" />
+     <file name="DataDict.php" role="php" />
+     <file name="Event.php" role="php" />
+     <file name="EventListener.php" role="php" />
+     <file name="Exception.php" role="php" />
+     <file name="Export.php" role="php" />
+     <file name="Expression.php" role="php" />
+     <file name="File.php" role="php" />
+     <file name="Formatter.php" role="php" />
+     <file name="Hook.php" role="php" />
+     <file name="Hydrator.php" role="php" />
+     <file name="I18n.php" role="php" />
+     <file name="Import.php" role="php" />
+     <file name="Inflector.php" role="php" />
+     <file name="IntegrityMapper.php" role="php" />
+     <file name="Lib.php" role="php" />
+     <file name="Locator.php" role="php" />
+     <file name="Manager.php" role="php" />
+     <file name="Migration.php" role="php" />
+     <file name="Node.php" role="php" />
+     <file name="Null.php" role="php" />
+     <file name="Overloadable.php" role="php" />
+     <file name="Pager.php" role="php" />
+     <file name="Parser.php" role="php" />
+     <file name="Query.php" role="php" />
+     <file name="RawSql.php" role="php" />
+     <file name="Record.php" role="php" />
+     <file name="Relation.php" role="php" />
+     <file name="Search.php" role="php" />
+     <file name="Sequence.php" role="php" />
+     <file name="Table.php" role="php" />
+     <file name="Task.php" role="php" />
+     <file name="Template.php" role="php" />
+     <file name="Transaction.php" role="php" />
+     <file name="Tree.php" role="php" />
+     <file name="Util.php" role="php" />
+     <file name="Validator.php" role="php" />
+     <file name="View.php" role="php" />
+    </dir> <!-- /lib/Doctrine -->
+    <dir name="vendor">
+     <dir name="sfYaml">
+      <file name="sfYaml.php" role="php" />
+      <file name="sfYamlDumper.php" role="php" />
+      <file name="sfYamlInline.php" role="php" />
+      <file name="sfYamlParser.php" role="php" />
+     </dir> <!-- /lib/vendor/sfYaml -->
+    </dir> <!-- /lib/vendor -->
+    <file name="Doctrine.php" role="php" />
+   </dir> <!-- /lib -->
+   <dir name="tests">
+    <dir name="Cache">
+     <dir name="Query">
+      <file name="SqliteTestCase.php" role="test" />
+     </dir> <!-- /tests/Cache/Query -->
+     <file name="AbstractTestCase.php" role="test" />
+     <file name="ApcTestCase.php" role="test" />
+     <file name="ArrayTestCase.php" role="test" />
+     <file name="DbTestCase.php" role="test" />
+     <file name="MemcacheTestCase.php" role="test" />
+     <file name="QuerySqliteTestCase.php" role="test" />
+     <file name="SqliteTestCase.php" role="test" />
+     <file name="XcacheTestCase.php" role="test" />
+    </dir> <!-- /tests/Cache -->
+    <dir name="CliTestCase">
+     <dir name="testLoadtasksLoadsDoctrineStyleTasksFromTheSpecifiedDirectory">
+      <file name="DoctrineStyleTask.php" role="test" />
+      <file name="EmptyFile.php" role="test" />
+      <file name="InvalidClassNameForATask.php" role="test" />
+      <file name="should-be-ignored.php" role="test" />
+      <file name="TaskDeclaredInAnIncFile.inc.php" role="test" />
+     </dir> <!-- /tests/CliTestCase/testLoadtasksLoadsDoctrineStyleTasksFromTheSpecifiedDirectory -->
+     <file name="baz.php" role="test" />
+     <file name="bip.php" role="test" />
+     <file name="cli-default.php" role="test" />
+     <file name="cli-with-custom-tasks.php" role="test" />
+     <file name="cli-without-autoregistered-custom-tasks.php" role="test" />
+     <file name="CustomDoctrineStyleTask.php" role="test" />
+     <file name="doctrine.php" role="test" />
+     <file name="foo.php" role="test" />
+     <file name="TaskDeclaredInAnIncFile.inc.php" role="test" />
+     <file name="TestTask02.php" role="test" />
+    </dir> <!-- /tests/CliTestCase -->
+    <dir name="Collection">
+     <file name="SnapshotTestCase.php" role="test" />
+    </dir> <!-- /tests/Collection -->
+    <dir name="Connection">
+     <file name="CustomTestCase.php" role="test" />
+     <file name="MssqlTestCase.php" role="test" />
+     <file name="MysqlTestCase.php" role="test" />
+     <file name="OracleTestCase.php" role="test" />
+     <file name="PgsqlTestCase.php" role="test" />
+     <file name="ProfilerTestCase.php" role="test" />
+     <file name="SqliteTestCase.php" role="test" />
+     <file name="UnitOfWork.php" role="test" />
+    </dir> <!-- /tests/Connection -->
+    <dir name="Data">
+     <file name="ExportTestCase.php" role="test" />
+     <file name="ImportTestCase.php" role="test" />
+    </dir> <!-- /tests/Data -->
+    <dir name="DataDict">
+     <file name="MssqlTestCase.php" role="test" />
+     <file name="MysqlTestCase.php" role="test" />
+     <file name="OracleTestCase.php" role="test" />
+     <file name="PgsqlTestCase.php" role="test" />
+     <file name="SqliteTestCase.php" role="test" />
+    </dir> <!-- /tests/DataDict -->
+    <dir name="DataType">
+     <file name="BooleanTestCase.php" role="test" />
+     <file name="EnumTestCase.php" role="test" />
+    </dir> <!-- /tests/DataType -->
+    <dir name="Db">
+     <file name="ProfilerTestCase.php" role="test" />
+    </dir> <!-- /tests/Db -->
+    <dir name="DoctrineTest">
+     <dir name="Reporter">
+      <file name="Cli.php" role="test" />
+      <file name="Html.php" role="test" />
+     </dir> <!-- /tests/DoctrineTest/Reporter -->
+     <file name="Coverage.php" role="test" />
+     <file name="Doctrine_UnitTestCase.php" role="test" />
+     <file name="GroupTest.php" role="test" />
+     <file name="Reporter.php" role="test" />
+     <file name="UnitTestCase.php" role="test" />
+    </dir> <!-- /tests/DoctrineTest -->
+    <dir name="EventListener">
+     <file name="ChainTestCase.php" role="test" />
+    </dir> <!-- /tests/EventListener -->
+    <dir name="Export">
+     <file name="CheckConstraintTestCase.php" role="test" />
+     <file name="MssqlTestCase.php" role="test" />
+     <file name="MysqlTestCase.php" role="test" />
+     <file name="OracleTestCase.php" role="test" />
+     <file name="PgsqlTestCase.php" role="test" />
+     <file name="RecordTestCase.php" role="test" />
+     <file name="SchemaTestCase.php" role="test" />
+     <file name="SqliteTestCase.php" role="test" />
+    </dir> <!-- /tests/Export -->
+    <dir name="Expression">
+     <file name="DriverTestCase.php" role="test" />
+     <file name="MssqlTestCase.php" role="test" />
+     <file name="MysqlTestCase.php" role="test" />
+     <file name="OracleTestCase.php" role="test" />
+     <file name="PgsqlTestCase.php" role="test" />
+     <file name="SqliteTestCase.php" role="test" />
+    </dir> <!-- /tests/Expression -->
+    <dir name="Extension">
+     <dir name="TestExtension">
+      <dir name="lib">
+       <dir name="Doctrine">
+        <dir name="Template">
+         <file name="TestBehavior.php" role="test" />
+        </dir> <!-- /tests/Extension/TestExtension/lib/Doctrine/Template -->
+        <file name="Test.php" role="test" />
+       </dir> <!-- /tests/Extension/TestExtension/lib/Doctrine -->
+      </dir> <!-- /tests/Extension/TestExtension/lib -->
+     </dir> <!-- /tests/Extension/TestExtension -->
+    </dir> <!-- /tests/Extension -->
+    <dir name="Hydrate">
+     <file name="CollectionInitializationTestCase.php" role="test" />
+     <file name="DriverTestCase.php" role="test" />
+     <file name="FetchModeTestCase.php" role="test" />
+     <file name="PerformanceTestCase.php" role="test" />
+     <file name="ScalarTestCase.php" role="test" />
+    </dir> <!-- /tests/Hydrate -->
+    <dir name="Import">
+     <file name="BuilderTestCase.php" role="test" />
+     <file name="MssqlTestCase.php" role="test" />
+     <file name="MysqlTestCase.php" role="test" />
+     <file name="OracleTestCase.php" role="test" />
+     <file name="PgsqlTestCase.php" role="test" />
+     <file name="PluginHierarchyTestCase.php" role="test" />
+     <file name="SchemaTestCase.php" role="test" />
+     <file name="SqliteTestCase.php" role="test" />
+    </dir> <!-- /tests/Import -->
+    <dir name="Migration">
+     <dir name="Diff">
+      <dir name="schema">
+       <file name="from.yml" role="test" />
+       <file name="to.yml" role="test" />
+      </dir> <!-- /tests/Migration/Diff/schema -->
+     </dir> <!-- /tests/Migration/Diff -->
+     <file name="BaseTestCase.php" role="test" />
+     <file name="DiffTestCase.php" role="test" />
+    </dir> <!-- /tests/Migration -->
+    <dir name="migration_classes">
+     <file name="1224120878_add_phonenumber.class.php" role="test" />
+     <file name="1224120879_add_user.class.php" role="test" />
+     <file name="1224120880_add_profile.class.php" role="test" />
+     <file name="1224120881_drop_profile.class.php.php" role="test" />
+    </dir> <!-- /tests/migration_classes -->
+    <dir name="ModelLoadingTest">
+     <dir name="Aggressive">
+      <file name="Models.php" role="test" />
+      <file name="MoreModels.php" role="test" />
+     </dir> <!-- /tests/ModelLoadingTest/Aggressive -->
+     <dir name="Conservative">
+      <file name="BaseConservativeModelLoadingUser.php" role="test" />
+      <file name="ConservativeModelLoadingContact.php" role="test" />
+      <file name="ConservativeModelLoadingProfile.php" role="test" />
+      <file name="ConservativeModelLoadingUser.php" role="test" />
+     </dir> <!-- /tests/ModelLoadingTest/Conservative -->
+    </dir> <!-- /tests/ModelLoadingTest -->
+    <dir name="models">
+     <dir name="export">
+      <file name="Cms_Category.php" role="test" />
+      <file name="Cms_CategoryLanguages.php" role="test" />
+     </dir> <!-- /tests/models/export -->
+     <file name="Account.php" role="test" />
+     <file name="Address.php" role="test" />
+     <file name="Album.php" role="test" />
+     <file name="App.php" role="test" />
+     <file name="App_Category.php" role="test" />
+     <file name="App_User.php" role="test" />
+     <file name="Assignment.php" role="test" />
+     <file name="Auth.php" role="test" />
+     <file name="Author.php" role="test" />
+     <file name="BadlyNamed__Class.php" role="test" />
+     <file name="BarRecord.php" role="test" />
+     <file name="BaseSymfonyRecord.php" role="test" />
+     <file name="Blog.php" role="test" />
+     <file name="BlogTag.php" role="test" />
+     <file name="BoardWithPosition.php" role="test" />
+     <file name="Book.php" role="test" />
+     <file name="Bookmark.php" role="test" />
+     <file name="BookmarkUser.php" role="test" />
+     <file name="BooleanTest.php" role="test" />
+     <file name="CascadeDeleteRelatedTest.php" role="test" />
+     <file name="CascadeDeleteRelatedTest2.php" role="test" />
+     <file name="CascadeDeleteTest.php" role="test" />
+     <file name="CategoryWithPosition.php" role="test" />
+     <file name="CheckConstraintTest.php" role="test" />
+     <file name="ClientModel.php" role="test" />
+     <file name="ColumnAliasTest.php" role="test" />
+     <file name="ConcreteEmail.php" role="test" />
+     <file name="ConcreteGroup.php" role="test" />
+     <file name="ConcreteGroupUser.php" role="test" />
+     <file name="ConcreteInheritanceTestParent.php" role="test" />
+     <file name="ConcreteUser.php" role="test" />
+     <file name="CoverageCodeN.php" role="test" />
+     <file name="CPK_Association.php" role="test" />
+     <file name="CPK_Test.php" role="test" />
+     <file name="CPK_Test2.php" role="test" />
+     <file name="CustomPK.php" role="test" />
+     <file name="CustomSequenceRecord.php" role="test" />
+     <file name="Data_File.php" role="test" />
+     <file name="DateTest.php" role="test" />
+     <file name="Description.php" role="test" />
+     <file name="Element.php" role="test" />
+     <file name="Email.php" role="test" />
+     <file name="Entity.php" role="test" />
+     <file name="EntityAddress.php" role="test" />
+     <file name="EntityReference.php" role="test" />
+     <file name="EnumTest.php" role="test" />
+     <file name="EnumTest2.php" role="test" />
+     <file name="EnumTest3.php" role="test" />
+     <file name="Error.php" role="test" />
+     <file name="EventListenerChainTest.php" role="test" />
+     <file name="EventListenerTest.php" role="test" />
+     <file name="FieldNameTest.php" role="test" />
+     <file name="File_Owner.php" role="test" />
+     <file name="FilterTest.php" role="test" />
+     <file name="FilterTest2.php" role="test" />
+     <file name="FooBarRecord.php" role="test" />
+     <file name="FooForeignlyOwned.php" role="test" />
+     <file name="FooForeignlyOwnedWithPK.php" role="test" />
+     <file name="FooLocallyOwned.php" role="test" />
+     <file name="FooRecord.php" role="test" />
+     <file name="FooReferenceRecord.php" role="test" />
+     <file name="ForeignKeyTest.php" role="test" />
+     <file name="ForeignKeyTest2.php" role="test" />
+     <file name="Forum_Board.php" role="test" />
+     <file name="Forum_Category.php" role="test" />
+     <file name="Forum_Entry.php" role="test" />
+     <file name="Forum_Thread.php" role="test" />
+     <file name="gnatEmail.php" role="test" />
+     <file name="gnatUser.php" role="test" />
+     <file name="Group.php" role="test" />
+     <file name="GroupUser.php" role="test" />
+     <file name="GzipTest.php" role="test" />
+     <file name="I18nRelationTest.php" role="test" />
+     <file name="I18nTest.php" role="test" />
+     <file name="InheritanceDeal.php" role="test" />
+     <file name="InheritanceDealUser.php" role="test" />
+     <file name="InheritanceUser.php" role="test" />
+     <file name="JC1.php" role="test" />
+     <file name="JC2.php" role="test" />
+     <file name="JC3.php" role="test" />
+     <file name="LiabilityCodeN.php" role="test" />
+     <file name="Location.php" role="test" />
+     <file name="LocationI18n.php" role="test" />
+     <file name="Log_Entry.php" role="test" />
+     <file name="Log_Status.php" role="test" />
+     <file name="M2MTest.php" role="test" />
+     <file name="M2MTest2.php" role="test" />
+     <file name="MigrationTest.php" role="test" />
+     <file name="mmrGroupUser_B.php" role="test" />
+     <file name="mmrGroupUser_C.php" role="test" />
+     <file name="mmrGroup_B.php" role="test" />
+     <file name="mmrGroup_C.php" role="test" />
+     <file name="mmrUser_B.php" role="test" />
+     <file name="mmrUser_C.php" role="test" />
+     <file name="MyGroup.php" role="test" />
+     <file name="MyOneThing.php" role="test" />
+     <file name="MyOtherThing.php" role="test" />
+     <file name="MysqlGroup.php" role="test" />
+     <file name="MysqlGroupMember.php" role="test" />
+     <file name="MysqlIndexTestRecord.php" role="test" />
+     <file name="MysqlTestRecord.php" role="test" />
+     <file name="MysqlUser.php" role="test" />
+     <file name="MyUser.php" role="test" />
+     <file name="MyUser2.php" role="test" />
+     <file name="MyUserGroup.php" role="test" />
+     <file name="MyUserOneThing.php" role="test" />
+     <file name="MyUserOtherThing.php" role="test" />
+     <file name="NestedSetTest_SingleRootNode.php" role="test" />
+     <file name="NestedSet_MultiRootNode.php" role="test" />
+     <file name="NestedSet_Timestampable_MultiRootNode.php" role="test" />
+     <file name="NestReference.php" role="test" />
+     <file name="NestTest.php" role="test" />
+     <file name="NotNullTest.php" role="test" />
+     <file name="ORM_AccessControl.php" role="test" />
+     <file name="ORM_AccessControlsGroups.php" role="test" />
+     <file name="ORM_AccessGroup.php" role="test" />
+     <file name="ORM_TestEntry.php" role="test" />
+     <file name="ORM_TestItem.php" role="test" />
+     <file name="Package.php" role="test" />
+     <file name="PackageVersion.php" role="test" />
+     <file name="PackageVersionNotes.php" role="test" />
+     <file name="Page.php" role="test" />
+     <file name="Phonenumber.php" role="test" />
+     <file name="Photo.php" role="test" />
+     <file name="Phototag.php" role="test" />
+     <file name="PluginSymfonyRecord.php" role="test" />
+     <file name="PluginSymfonyRecordTable.php" role="test" />
+     <file name="Policy.php" role="test" />
+     <file name="PolicyAsset.php" role="test" />
+     <file name="PolicyCodeN.php" role="test" />
+     <file name="PolicyN.php" role="test" />
+     <file name="QueryTest_Board.php" role="test" />
+     <file name="QueryTest_Category.php" role="test" />
+     <file name="QueryTest_Entry.php" role="test" />
+     <file name="QueryTest_Item.php" role="test" />
+     <file name="QueryTest_Rank.php" role="test" />
+     <file name="QueryTest_Subscription.php" role="test" />
+     <file name="QueryTest_User.php" role="test" />
+     <file name="QueryTest_UserRank.php" role="test" />
+     <file name="RateN.php" role="test" />
+     <file name="Rec1.php" role="test" />
+     <file name="Rec2.php" role="test" />
+     <file name="RecordFilterTest.php" role="test" />
+     <file name="RecordHookTest.php" role="test" />
+     <file name="Record_City.php" role="test" />
+     <file name="Record_Country.php" role="test" />
+     <file name="Record_District.php" role="test" />
+     <file name="RelationTest.php" role="test" />
+     <file name="Resource.php" role="test" />
+     <file name="ResourceReference.php" role="test" />
+     <file name="ResourceType.php" role="test" />
+     <file name="Role.php" role="test" />
+     <file name="RTC1.php" role="test" />
+     <file name="RTC2.php" role="test" />
+     <file name="RTC3.php" role="test" />
+     <file name="RTC4.php" role="test" />
+     <file name="SearchTest.php" role="test" />
+     <file name="SelfRefTest.php" role="test" />
+     <file name="SequenceRecord.php" role="test" />
+     <file name="SerializeTest.php" role="test" />
+     <file name="SoftDeleteBCTest.php" role="test" />
+     <file name="SoftDeleteTest.php" role="test" />
+     <file name="Song.php" role="test" />
+     <file name="SymfonyRecord.php" role="test" />
+     <file name="SymfonyRecordTable.php" role="test" />
+     <file name="Tag.php" role="test" />
+     <file name="Task.php" role="test" />
+     <file name="TestMovie.php" role="test" />
+     <file name="TestMovieUserBookmark.php" role="test" />
+     <file name="TestMovieUserVote.php" role="test" />
+     <file name="TestRecord.php" role="test" />
+     <file name="TestUser.php" role="test" />
+     <file name="TreeLeaf.php" role="test" />
+     <file name="UnderscoreColumn.php" role="test" />
+     <file name="User.php" role="test" />
+     <file name="ValidatorTest.php" role="test" />
+     <file name="ValidatorTest_AddressModel.php" role="test" />
+     <file name="ValidatorTest_ClientModel.php" role="test" />
+     <file name="ValidatorTest_ClientToAddressModel.php" role="test" />
+     <file name="ValidatorTest_DateModel.php" role="test" />
+     <file name="ValidatorTest_FootballPlayer.php" role="test" />
+     <file name="ValidatorTest_Person.php" role="test" />
+     <file name="VersioningTest.php" role="test" />
+     <file name="ZeroValueTest.php" role="test" />
+    </dir> <!-- /tests/models -->
+    <dir name="mysql_migration_classes">
+     <file name="001_mysql_add_table.php" role="test" />
+     <file name="002_mysql_change_column.php" role="test" />
+    </dir> <!-- /tests/mysql_migration_classes -->
+    <dir name="NestedSet">
+     <file name="HydrationTestCase.php" role="test" />
+     <file name="MultiRootTestCase.php" role="test" />
+     <file name="SingleRootTestCase.php" role="test" />
+     <file name="TimestampableMultiRootTestCase.php" role="test" />
+    </dir> <!-- /tests/NestedSet -->
+    <dir name="Query">
+     <file name="AggregateValueTestCase.php" role="test" />
+     <file name="ApplyInheritanceTestCase.php" role="test" />
+     <file name="CacheTestCase.php" role="test" />
+     <file name="CheckTestCase.php" role="test" />
+     <file name="ComponentAliasTestCase.php" role="test" />
+     <file name="ConditionTestCase.php" role="test" />
+     <file name="CopyTestCase.php" role="test" />
+     <file name="DeleteTestCase.php" role="test" />
+     <file name="DriverTestCase.php" role="test" />
+     <file name="ExpressionTestCase.php" role="test" />
+     <file name="FromTestCase.php" role="test" />
+     <file name="GroupbyTestCase.php" role="test" />
+     <file name="HavingTestCase.php" role="test" />
+     <file name="HydrateNoneTestCase.php" role="test" />
+     <file name="IdentifierQuotingTestCase.php" role="test" />
+     <file name="JoinConditionTestCase.php" role="test" />
+     <file name="JoinTestCase.php" role="test" />
+     <file name="LimitTestCase.php" role="test" />
+     <file name="MultiJoin2TestCase.php" role="test" />
+     <file name="MultiJoinTestCase.php" role="test" />
+     <file name="MultipleAggregateValueTestCase.php" role="test" />
+     <file name="MysqlSubqueryHavingTestCase.php" role="test" />
+     <file name="MysqlSubqueryTestCase.php" role="test" />
+     <file name="OneToOneFetchingTestCase.php" role="test" />
+     <file name="OrderbyTestCase.php" role="test" />
+     <file name="PgsqlSubqueryTestCase.php" role="test" />
+     <file name="ReferenceModelTestCase.php" role="test" />
+     <file name="RegistryTestCase.php" role="test" />
+     <file name="RemoveQueryPartTestCase.php" role="test" />
+     <file name="SelectExpressionTestCase.php" role="test" />
+     <file name="SelectTestCase.php" role="test" />
+     <file name="ShortAliasesTestCase.php" role="test" />
+     <file name="SubqueryTestCase.php" role="test" />
+     <file name="UpdateTestCase.php" role="test" />
+     <file name="WhereTestCase.php" role="test" />
+    </dir> <!-- /tests/Query -->
+    <dir name="Record">
+     <file name="CascadingDeleteTestCase.php" role="test" />
+     <file name="FilterTestCase.php" role="test" />
+     <file name="FromArrayTestCase.php" role="test" />
+     <file name="GeneratorTestCase.php" role="test" />
+     <file name="HookTestCase.php" role="test" />
+     <file name="InheritanceTestCase.php" role="test" />
+     <file name="LockTestCase.php" role="test" />
+     <file name="SaveBlankRecordTestCase.php" role="test" />
+     <file name="SerializeUnserializeTestCase.php" role="test" />
+     <file name="StateTestCase.php" role="test" />
+     <file name="SynchronizeTestCase.php" role="test" />
+     <file name="ZeroValuesTestCase.php" role="test" />
+    </dir> <!-- /tests/Record -->
+    <dir name="Relation">
+     <file name="AccessTestCase.php" role="test" />
+     <file name="CircularSavingTestCase.php" role="test" />
+     <file name="ColumnAliasesTestCase.php" role="test" />
+     <file name="ManyToMany2TestCase.php" role="test" />
+     <file name="ManyToManyTestCase.php" role="test" />
+     <file name="NestTestCase.php" role="test" />
+     <file name="OneToManyTestCase.php" role="test" />
+     <file name="OneToOneTestCase.php" role="test" />
+     <file name="OrderByTestCase.php" role="test" />
+     <file name="ParserTestCase.php" role="test" />
+    </dir> <!-- /tests/Relation -->
+    <dir name="Search">
+     <dir name="_files">
+      <file name="content.html" role="test" />
+      <file name="content.txt" role="test" />
+     </dir> <!-- /tests/Search/_files -->
+     <file name="FileTestCase.php" role="test" />
+     <file name="IndexerTestCase.php" role="test" />
+     <file name="QueryTestCase.php" role="test" />
+     <file name="QueryWeightTestCase.php" role="test" />
+    </dir> <!-- /tests/Search -->
+    <dir name="Sequence">
+     <file name="MssqlTestCase.php" role="test" />
+     <file name="MysqlTestCase.php" role="test" />
+     <file name="OracleTestCase.php" role="test" />
+     <file name="PgsqlTestCase.php" role="test" />
+     <file name="SqliteTestCase.php" role="test" />
+    </dir> <!-- /tests/Sequence -->
+    <dir name="Table">
+     <file name="NamedQueryTestCase.php" role="test" />
+     <file name="RemoveColumnTestCase.php" role="test" />
+    </dir> <!-- /tests/Table -->
+    <dir name="TaskTestCase">
+     <file name="TestTask004.php" role="test" />
+     <file name="TestTask005.php" role="test" />
+     <file name="TestTask006.php" role="test" />
+    </dir> <!-- /tests/TaskTestCase -->
+    <dir name="Ticket">
+     <dir name="1727">
+      <dir name="models1">
+       <file name="Ticket_1727_Model1.php" role="test" />
+       <file name="Ticket_1727_Model2.php" role="test" />
+      </dir> <!-- /tests/Ticket/1727/models1 -->
+      <dir name="models2">
+       <file name="Ticket_1727_Model3.php" role="test" />
+       <file name="Ticket_1727_Model4.php" role="test" />
+      </dir> <!-- /tests/Ticket/1727/models2 -->
+     </dir> <!-- /tests/Ticket/1727 -->
+     <dir name="2375">
+      <dir name="models1">
+       <file name="Ticket_2375_Model1.php" role="test" />
+       <file name="Ticket_2375_Model2.php" role="test" />
+      </dir> <!-- /tests/Ticket/2375/models1 -->
+      <dir name="models2">
+       <file name="Ticket_2375_Model3.php" role="test" />
+       <file name="Ticket_2375_Model4.php" role="test" />
+       <file name="Ticket_2375_Model5.php" role="test" />
+      </dir> <!-- /tests/Ticket/2375/models2 -->
+     </dir> <!-- /tests/Ticket/2375 -->
+     <dir name="DC95">
+      <file name="schema.yml" role="test" />
+     </dir> <!-- /tests/Ticket/DC95 -->
+     <dir name="DC221">
+      <file name="TestMigration.php" role="test" />
+     </dir> <!-- /tests/Ticket/DC221 -->
+     <dir name="DC292">
+      <file name="from.yml" role="test" />
+      <file name="to.yml" role="test" />
+     </dir> <!-- /tests/Ticket/DC292 -->
+     <file name="255TestCase.php" role="test" />
+     <file name="381TestCase.php" role="test" />
+     <file name="384TestCase.php" role="test" />
+     <file name="424BTestCase.php" role="test" />
+     <file name="424CTestCase.php" role="test" />
+     <file name="428TestCase.php" role="test" />
+     <file name="438TestCase.php" role="test" />
+     <file name="480TestCase.php" role="test" />
+     <file name="486TestCase.php" role="test" />
+     <file name="565TestCase.php" role="test" />
+     <file name="574TestCase.php" role="test" />
+     <file name="576TestCase.php" role="test" />
+     <file name="583TestCase.php" role="test" />
+     <file name="587TestCase.php" role="test" />
+     <file name="626BTestCase.php" role="test" />
+     <file name="626CTestCase.php" role="test" />
+     <file name="626DTestCase.php" role="test" />
+     <file name="632TestCase.php" role="test" />
+     <file name="638TestCase.php" role="test" />
+     <file name="642TestCase.php" role="test" />
+     <file name="668TestCase.php" role="test" />
+     <file name="673TestCase.php" role="test" />
+     <file name="697TestCase.php" role="test" />
+     <file name="736TestCase.php" role="test" />
+     <file name="741TestCase.php" role="test" />
+     <file name="749TestCase.php" role="test" />
+     <file name="753TestCase.php" role="test" />
+     <file name="786TestCase.php" role="test" />
+     <file name="832TestCase.php" role="test" />
+     <file name="838TestCase.php" role="test" />
+     <file name="867TestCase.php" role="test" />
+     <file name="876TestCase.php" role="test" />
+     <file name="889TestCase.php" role="test" />
+     <file name="894TestCase.php" role="test" />
+     <file name="904TestCase.php" role="test" />
+     <file name="912TestCase.php" role="test" />
+     <file name="915TestCase.php" role="test" />
+     <file name="923TestCase.php" role="test" />
+     <file name="927TestCase.php" role="test" />
+     <file name="929TestCase.php" role="test" />
+     <file name="930TestCase.php" role="test" />
+     <file name="932TestCase.php" role="test" />
+     <file name="935TestCase.php" role="test" />
+     <file name="941TestCase.php" role="test" />
+     <file name="950TestCase.php" role="test" />
+     <file name="952TestCase.php" role="test" />
+     <file name="963TestCase.php" role="test" />
+     <file name="966TestCase.php" role="test" />
+     <file name="969TestCase.php" role="test" />
+     <file name="973TestCase.php" role="test" />
+     <file name="982TestCase.php" role="test" />
+     <file name="987TestCase.php" role="test" />
+     <file name="990TestCase.php" role="test" />
+     <file name="1015TestCase.php" role="test" />
+     <file name="1028TestCase.php" role="test" />
+     <file name="1044TestCase.php" role="test" />
+     <file name="1071TestCase.php" role="test" />
+     <file name="1072TestCase.php" role="test" />
+     <file name="1077TestCase.php" role="test" />
+     <file name="1099TestCase.php" role="test" />
+     <file name="1106TestCase.php" role="test" />
+     <file name="1113TestCase.php" role="test" />
+     <file name="1116TestCase.php" role="test" />
+     <file name="1118TestCase.php" role="test" />
+     <file name="1121TestCase.php" role="test" />
+     <file name="1123TestCase.php" role="test" />
+     <file name="1124TestCase.php" role="test" />
+     <file name="1125TestCase.php" role="test" />
+     <file name="1131TestCase.php" role="test" />
+     <file name="1133TestCase.php" role="test" />
+     <file name="1134TestCase.php" role="test" />
+     <file name="1160TestCase.php" role="test" />
+     <file name="1175TestCase.php" role="test" />
+     <file name="1192TestCase.php" role="test" />
+     <file name="1195TestCase.php" role="test" />
+     <file name="1205TestCase.php" role="test" />
+     <file name="1206TestCase.php" role="test" />
+     <file name="1208TestCase.php" role="test" />
+     <file name="1211TestCase.php" role="test" />
+     <file name="1213TestCase.php" role="test" />
+     <file name="1225TestCase.php" role="test" />
+     <file name="1228TestCase.php" role="test" />
+     <file name="1230TestCase.php" role="test" />
+     <file name="1236TestCase.php" role="test" />
+     <file name="1244TestCase.php" role="test" />
+     <file name="1250TestCase.php" role="test" />
+     <file name="1251TestCase.php" role="test" />
+     <file name="1253TestCase.php" role="test" />
+     <file name="1254TestCase.php" role="test" />
+     <file name="1257TestCase.php" role="test" />
+     <file name="1276TestCase.php" role="test" />
+     <file name="1277TestCase.php" role="test" />
+     <file name="1280TestCase.php" role="test" />
+     <file name="1281TestCase.php" role="test" />
+     <file name="1289TestCase.php" role="test" />
+     <file name="1296TestCase.php" role="test" />
+     <file name="1304TestCase.php" role="test" />
+     <file name="1305TestCase.php" role="test" />
+     <file name="1307TestCase.php" role="test" />
+     <file name="1315TestCase.php" role="test" />
+     <file name="1323b2TestCase.php" role="test" />
+     <file name="1323TestCase.php" role="test" />
+     <file name="1325TestCase.php" role="test" />
+     <file name="1326TestCase.php" role="test" />
+     <file name="1335TestCase.php" role="test" />
+     <file name="1338TestCase.php" role="test" />
+     <file name="1341TestCase.php" role="test" />
+     <file name="1351TestCase.php" role="test" />
+     <file name="1365TestCase.php" role="test" />
+     <file name="1372TestCase.php" role="test" />
+     <file name="1380TestCase.php" role="test" />
+     <file name="1381TestCase.php" role="test" />
+     <file name="1383TestCase.php" role="test" />
+     <file name="1385TestCase.php" role="test" />
+     <file name="1390TestCase.php" role="test" />
+     <file name="1395TestCase.php" role="test" />
+     <file name="1400TestCase.php" role="test" />
+     <file name="1417TestCase.php" role="test" />
+     <file name="1419TestCase.php" role="test" />
+     <file name="1436TestCase.php" role="test" />
+     <file name="1441TestCase.php" role="test" />
+     <file name="1449TestCase.php" role="test" />
+     <file name="1452TestCase.php" role="test" />
+     <file name="1454TestCase.php" role="test" />
+     <file name="1461TestCase.php" role="test" />
+     <file name="1464TestCase.php" role="test" />
+     <file name="1465TestCase.php" role="test" />
+     <file name="1467TestCase.php" role="test" />
+     <file name="1480TestCase.php" role="test" />
+     <file name="1483TestCase.php" role="test" />
+     <file name="1488TestCase.php" role="test" />
+     <file name="1494TestCase.php" role="test" />
+     <file name="1500TestCase.php" role="test" />
+     <file name="1507TestCase.php" role="test" />
+     <file name="1513TestCase.php" role="test" />
+     <file name="1520TestCase.php" role="test" />
+     <file name="1522TestCase.php" role="test" />
+     <file name="1523TestCase.php" role="test" />
+     <file name="1524TestCase.php" role="test" />
+     <file name="1527TestCase.php" role="test" />
+     <file name="1537TestCase.php" role="test" />
+     <file name="1540TestCase.php" role="test" />
+     <file name="1543TestCase.php" role="test" />
+     <file name="1545TestCase.php" role="test" />
+     <file name="1558TestCase.php" role="test" />
+     <file name="1562TestCase.php" role="test" />
+     <file name="1567TestCase.php" role="test" />
+     <file name="1604TestCase.php" role="test" />
+     <file name="1617TestCase.php" role="test" />
+     <file name="1617_schema.yml" role="test" />
+     <file name="1619TestCase.php" role="test" />
+     <file name="1621bTestCase.php" role="test" />
+     <file name="1621TestCase.php" role="test" />
+     <file name="1622TestCase.php" role="test" />
+     <file name="1623TestCase.php" role="test" />
+     <file name="1628TestCase.php" role="test" />
+     <file name="1629TestCase.php" role="test" />
+     <file name="1630TestCase.php" role="test" />
+     <file name="1636TestCase.php" role="test" />
+     <file name="1641TestCase.php" role="test" />
+     <file name="1652TestCase.php" role="test" />
+     <file name="1653TestCase.php" role="test" />
+     <file name="1658TestCase.php" role="test" />
+     <file name="1674TestCase.php" role="test" />
+     <file name="1703TestCase.php" role="test" />
+     <file name="1706TestCase.php" role="test" />
+     <file name="1713TestCase.php" role="test" />
+     <file name="1716TestCase.php" role="test" />
+     <file name="1725TestCase.php" role="test" />
+     <file name="1727TestCase.php" role="test" />
+     <file name="1729TestCase.php" role="test" />
+     <file name="1745TestCase.php" role="test" />
+     <file name="1762TestCase.php" role="test" />
+     <file name="1763TestCase.php" role="test" />
+     <file name="1764TestCase.php" role="test" />
+     <file name="1768TestCase.php" role="test" />
+     <file name="1783TestCase.php" role="test" />
+     <file name="1793TestCase.php" role="test" />
+     <file name="1795TestCase.php" role="test" />
+     <file name="1799TestCase.php" role="test" />
+     <file name="1808TestCase.php" role="test" />
+     <file name="1818TestCase.php" role="test" />
+     <file name="1821TestCase.php" role="test" />
+     <file name="1824TestCase.php" role="test" />
+     <file name="1830TestCase.php" role="test" />
+     <file name="1841TestCase.php" role="test" />
+     <file name="1843TestCase.php" role="test" />
+     <file name="1858TestCase.php" role="test" />
+     <file name="1860TestCase.php" role="test" />
+     <file name="1865TestCase.php" role="test" />
+     <file name="1875TestCase.php" role="test" />
+     <file name="1876bTestCase.php" role="test" />
+     <file name="1876TestCase.php" role="test" />
+     <file name="1923TestCase.php" role="test" />
+     <file name="1935TestCase.php" role="test" />
+     <file name="1940TestCase.php" role="test" />
+     <file name="1958TestCase.php" role="test" />
+     <file name="1986TestCase.php" role="test" />
+     <file name="1991TestCase.php" role="test" />
+     <file name="1992TestCase.php" role="test" />
+     <file name="2007TestCase.php" role="test" />
+     <file name="2015TestCase.php" role="test" />
+     <file name="2032TestCase.php" role="test" />
+     <file name="2105TestCase.php" role="test" />
+     <file name="2123TestCase.php" role="test" />
+     <file name="2158TestCase.php" role="test" />
+     <file name="2159TestCase.php" role="test" />
+     <file name="2160TestCase.php" role="test" />
+     <file name="2184TestCase.php" role="test" />
+     <file name="2190TestCase.php" role="test" />
+     <file name="2204TestCase.php" role="test" />
+     <file name="2229TestCase.php" role="test" />
+     <file name="2251TestCase.php" role="test" />
+     <file name="2292TestCase.php" role="test" />
+     <file name="2295TestCase.php" role="test" />
+     <file name="2298TestCase.php" role="test" />
+     <file name="2334TestCase.php" role="test" />
+     <file name="2355TestCase.php" role="test" />
+     <file name="2367TestCase.php" role="test" />
+     <file name="2375TestCase.php" role="test" />
+     <file name="2377TestCase.php" role="test" />
+     <file name="2398TestCase.php" role="test" />
+     <file name="AyoubTestCase.php" role="test" />
+     <file name="DC7TestCase.php" role="test" />
+     <file name="DC14TestCase.php" role="test" />
+     <file name="DC23bTestCase.php" role="test" />
+     <file name="DC23TestCase.php" role="test" />
+     <file name="DC24TestCase.php" role="test" />
+     <file name="DC25TestCase.php" role="test" />
+     <file name="DC28TestCase.php" role="test" />
+     <file name="DC36TestCase.php" role="test" />
+     <file name="DC39TestCase.php" role="test" />
+     <file name="DC56TestCase.php" role="test" />
+     <file name="DC57TestCase.php" role="test" />
+     <file name="DC63TestCase.php" role="test" />
+     <file name="DC64TestCase.php" role="test" />
+     <file name="DC69TestCase.php" role="test" />
+     <file name="DC74TestCase.php" role="test" />
+     <file name="DC82TestCase.php" role="test" />
+     <file name="DC86TestCase.php" role="test" />
+     <file name="DC95TestCase.php" role="test" />
+     <file name="DC101TestCase.php" role="test" />
+     <file name="DC112TestCase.php" role="test" />
+     <file name="DC136TestCase.php" role="test" />
+     <file name="DC141TestCase.php" role="test" />
+     <file name="DC147TestCase.php" role="test" />
+     <file name="DC169TestCase.php" role="test" />
+     <file name="DC171TestCase.php" role="test" />
+     <file name="DC187TestCase.php" role="test" />
+     <file name="DC198TestCase.php" role="test" />
+     <file name="DC217TestCase.php" role="test" />
+     <file name="DC221TestCase.php" role="test" />
+     <file name="DC236TestCase.php" role="test" />
+     <file name="DC238TestCase.php" role="test" />
+     <file name="DC240TestCase.php" role="test" />
+     <file name="DC241TestCase.php" role="test" />
+     <file name="DC242TestCase.php" role="test" />
+     <file name="DC266TestCase.php" role="test" />
+     <file name="DC267TestCase.php" role="test" />
+     <file name="DC276TestCase.php" role="test" />
+     <file name="DC292TestCase.php" role="test" />
+     <file name="DC300TestCase.php" role="test" />
+     <file name="DC302TestCase.php" role="test" />
+     <file name="DC317TestCase.php" role="test" />
+     <file name="DC437TestCase.php" role="test" />
+     <file name="DC521TestCase.php" role="test" />
+     <file name="NewTicketTestCase.php" role="test" />
+     <file name="NjeroTestCase.php" role="test" />
+    </dir> <!-- /tests/Ticket -->
+    <dir name="Transaction">
+     <file name="MssqlTestCase.php" role="test" />
+     <file name="MysqlTestCase.php" role="test" />
+     <file name="OracleTestCase.php" role="test" />
+     <file name="PgsqlTestCase.php" role="test" />
+     <file name="SqliteTestCase.php" role="test" />
+    </dir> <!-- /tests/Transaction -->
+    <dir name="Validator">
+     <file name="ForeignKeysTestCase.php" role="test" />
+     <file name="FutureTestCase.php" role="test" />
+     <file name="PastTestCase.php" role="test" />
+    </dir> <!-- /tests/Validator -->
+    <file name="AccessTestCase.php" role="test" />
+    <file name="AuditLogTestCase.php" role="test" />
+    <file name="BaseTestCase.php" role="test" />
+    <file name="BatchIteratorTestCase.php" role="test" />
+    <file name="bootstrap.php" role="test" />
+    <file name="CacheSqliteTestCase.php" role="test" />
+    <file name="ClassTableInheritanceTestCase.php" role="test" />
+    <file name="CliTestCase.php" role="test" />
+    <file name="CollectionOffsetTestCase.php" role="test" />
+    <file name="CollectionTestCase.php" role="test" />
+    <file name="ColumnAggregationInheritanceTestCase.php" role="test" />
+    <file name="ColumnAliasTestCase.php" role="test" />
+    <file name="CompositePrimaryKeyTestCase.php" role="test" />
+    <file name="ConcreteInheritanceTestCase.php" role="test" />
+    <file name="ConfigurableTestCase.php" role="test" />
+    <file name="ConnectionTestCase.php" role="test" />
+    <file name="ConnectionTransactionTestCase.php" role="test" />
+    <file name="CtiColumnAggregationInheritanceTestCase.php" role="test" />
+    <file name="CustomPrimaryKeyTestCase.php" role="test" />
+    <file name="CustomResultSetOrderTestCase.php" role="test" />
+    <file name="DataDictSqliteTestCase.php" role="test" />
+    <file name="DataDictTestCase.php" role="test" />
+    <file name="DbProfilerTestCase.php" role="test" />
+    <file name="DBTestCase.php" role="test" />
+    <file name="DoctrineTest.php" role="test" />
+    <file name="DriverTestCase.php" role="test" />
+    <file name="EventListenerTestCase.php" role="test" />
+    <file name="ExportTestCase.php" role="test" />
+    <file name="ExpressionTestCase.php" role="test" />
+    <file name="ExtensionTestCase.php" role="test" />
+    <file name="ForeignKeyTestCase.php" role="test" />
+    <file name="HookTestCase.php" role="test" />
+    <file name="HydrateTestCase.php" role="test" />
+    <file name="I18nTestCase.php" role="test" />
+    <file name="ImportTestCase.php" role="test" />
+    <file name="index.php" role="test" />
+    <file name="IntegrityActionTestCase.php" role="test" />
+    <file name="ManagerTestCase.php" role="test" />
+    <file name="MigrationTestCase.php" role="test" />
+    <file name="NewCoreTestCase.php" role="test" />
+    <file name="OneTableOneClassInheritanceTestCase.php" role="test" />
+    <file name="ParserTestCase.php" role="test" />
+    <file name="PessimisticLockingTestCase.php" role="test" />
+    <file name="PluginTestCase.php" role="test" />
+    <file name="QueryTestCase.php" role="test" />
+    <file name="RawSqlTestCase.php" role="test" />
+    <file name="RecordFilterTestCase.php" role="test" />
+    <file name="RecordTestCase.php" role="test" />
+    <file name="RelationTestCase.php" role="test" />
+    <file name="RepositoryTestCase.php" role="test" />
+    <file name="run.php" role="test" />
+    <file name="schema.xml" role="test" />
+    <file name="schema.yml" role="test" />
+    <file name="SearchTestCase.php" role="test" />
+    <file name="SequenceTestCase.php" role="test" />
+    <file name="SluggableTestCase.php" role="test" />
+    <file name="SoftDeleteBCTestCase.php" role="test" />
+    <file name="SoftDeleteTestCase.php" role="test" />
+    <file name="TableTestCase.php" role="test" />
+    <file name="TaskTestCase.php" role="test" />
+    <file name="template.tpl" role="test" />
+    <file name="TemplateTestCase.php" role="test" />
+    <file name="TokenizerTestCase.php" role="test" />
+    <file name="TransactionTestCase.php" role="test" />
+    <file name="TreeStructureTestCase.php" role="test" />
+    <file name="UnitOfWorkTestCase.php" role="test" />
+    <file name="unsolved.php" role="test" />
+    <file name="UnsortedTestCase.php" role="test" />
+    <file name="ValidatorTestCase.php" role="test" />
+    <file name="ValueHolderTestCase.php" role="test" />
+    <file name="ViewTestCase.php" role="test" />
+   </dir> <!-- /tests -->
+   <file name="CHANGELOG" role="doc" />
+   <file name="COPYRIGHT" role="doc" />
+   <file name="LICENSE" role="doc" />
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.3</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+   <package>
+    <name>PEAR</name>
+    <channel>pear.php.net</channel>
+    <min>1.3.6</min>
+   </package>
+   <extension>
+    <name>pdo</name>
+   </extension>
+  </required>
+  <optional>
+   <extension>
+    <name>pdo_dblib</name>
+   </extension>
+   <extension>
+    <name>pdo_mysql</name>
+   </extension>
+   <extension>
+    <name>pdo_odbc</name>
+   </extension>
+   <extension>
+    <name>pdo_sqlite</name>
+   </extension>
+   <extension>
+    <name>pdo_oci</name>
+   </extension>
+   <extension>
+    <name>pdo_pgsql</name>
+   </extension>
+  </optional>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>1.2.2</release>
+    <api>1.2.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-03-29</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.2.1</release>
+    <api>1.2.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2009-12-07</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.2.0</release>
+    <api>1.2.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2009-11-30</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.1.2</release>
+    <api>1.1.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2009-06-15</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.1.1</release>
+    <api>1.1.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2009-05-11</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.1.0</release>
+    <api>1.1.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2009-03-16</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.2</release>
+    <api>1.0.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2008-09-11</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.1</release>
+    <api>1.0.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2008-09-09</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.0</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2008-09-01</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.11.0</release>
+    <api>0.11.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2008-06-23</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.10.4</release>
+    <api>0.10.4</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2008-03-28</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.10.3</release>
+    <api>0.10.3</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2008-03-18</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.10.2</release>
+    <api>0.10.2</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2008-03-01</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.10.1</release>
+    <api>0.10.1</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2008-02-29</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.10.0</release>
+    <api>0.10.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2008-02-13</date>
+   <license uri="http://www.doctrine-project.org/license">LGPL license</license>
+   <notes>
+-
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.9</release>
+    <api>0.9</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2008-02-06</date>
+   <license uri="http://doctrine-project.org/license">MIT license</license>
+   <notes>
+barfoo
+   </notes>
+  </release>
+ </changelog>
+</package>
