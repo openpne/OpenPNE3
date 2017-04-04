@@ -215,7 +215,7 @@ abstract class opApplicationConfiguration extends sfApplicationConfiguration
 
     $table = Doctrine::getTable('SnsTerm');
     $application = sfConfig::get('sf_app');
-    if($application == 'pc_backend')
+    if ($application == 'pc_backend')
     {
         $application = 'pc_frontend';
     }
