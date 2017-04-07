@@ -15,10 +15,10 @@ sfContext::getInstance()->getUser()->setCulture('en');
 //------------------------------------------------------------
 $t->diag('opI18N test');
 $t->is($i18N->__('%friend%'), 'friend', 'friend normal.');
-$t->is($i18N->__('%Friend%'), 'Friend', 'friend titleize.');
+$t->is($i18N->__('%Friend%'), 'Friend', 'friend fronting.');
 $t->is($i18N->__('%my_friend%'), 'my friend', 'my friend normal.');
-$t->is($i18N->__('%My_friend%'), 'My friend', 'my friend titleize.');
+$t->is($i18N->__('%My_friend%'), 'My friend', 'my friend fronting.');
 $t->is($i18N->__('%community%'), 'community', 'community normal.');
-$t->is($i18N->__('%Community%'), 'Community', 'community titleize.');
+$t->is($i18N->__('%Community%'), 'Community', 'community fronting.');
 $t->is($i18N->__('%nickname%'), 'nickname', 'nickname normal.');
-$t->is($i18N->__('%Nickname%'), 'Nickname', 'nickname titleize.');
+$t->is($i18N->__('%Nickname%'), 'Nickname', 'nickname fronting.');
