@@ -107,10 +107,6 @@
         <target>ﾌﾟﾛﾌｨｰﾙﾍﾟｰｼﾞの公開範囲</target>
       </trans-unit>
       <trans-unit id="">
-        <source>%my_friend%</source>
-        <target>%my_friend%</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Register mobile</source>
         <target>携帯電話を登録する</target>
       </trans-unit>
