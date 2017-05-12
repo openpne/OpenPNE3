@@ -36,7 +36,7 @@ RECOMMENDED SPECS
     Apache version 2.4.10 or later (the version in the Debian 8 stable distribution)
       * The "mod_rewrite" module is available
   PHP
-    PHP version 5.6.29 or later (the version in the Debian 8 stable distribution)
+    PHP version 7 or later (the version in the Debian 8 stable distribution)
       * The "mbstring" module is available
       * The "xml" module is available
       * The "PCRE" module is available (That must be support UTF-8)
