@@ -9,24 +9,47 @@ This document is for OpenPNE 3.8.
 
 OpenPNE 3 should work under the following server environment.
 
-Web Server
-  Apache
-    * The "mod_rewrite" module is available
-PHP
-  PHP version 5.2.11 or later (if you want to use with earlier than PHP 5.2.11, you should build PHP with libxml 2.9+)
-    * The "mbstring" module is available
-    * The "xml" module is available
-    * The "PCRE" module is available (That must be support UTF-8)
-    * The "PDO" module is available (containing DBMS drivers that you want to use)
-    * The "JSON" module is available
-    * The GD library is available from PHP (That must be support JPEG, GIF and PNG)
-    * The "exif" module is available
-    * The "mcrypt" module recommendation
-    * The "APC" (or "APCu") module recommendation
-Database Server
-  MySQL4.1 or later (5.1 or greater recommended)
-  
-  At this time, PostgreSQL and SQLite are not supported (They will be supported in the future)
+MINIMUM REQUIREMENTS
+  Web Server
+    Apache
+      * The "mod_rewrite" module is available
+  PHP
+    PHP version 5.2.11 or later (if you want to use with earlier than PHP 5.2.11, you should build PHP with libxml 2.9+)
+      * The "mbstring" module is available
+      * The "xml" module is available
+      * The "PCRE" module is available (That must be support UTF-8)
+      * The "PDO" module is available (containing DBMS drivers that you want to use)
+      * The "JSON" module is available
+      * The GD library is available from PHP (That must be support JPEG, GIF and PNG)
+      * The "exif" module is available
+      * The "mcrypt" module recommendation
+      * The "APC" module recommendation
+  Database Server
+    MySQL4.1 or later (5.1 or greater recommended)
+
+    At this time, PostgreSQL and SQLite are not supported (They will be supported in the future)
+
+RECOMMENDED SPECS
+  OS
+    Debian 8 (jessie)
+  RECOMMENDED SPECS
+    Apache version 2.4.10 or later (the version in the Debian 8 stable distribution)
+      * The "mod_rewrite" module is available
+  PHP
+    PHP version 5.6.29 or later (the version in the Debian 8 stable distribution)
+      * The "mbstring" module is available
+      * The "xml" module is available
+      * The "PCRE" module is available (That must be support UTF-8)
+      * The "PDO" module is available (containing DBMS drivers that you want to use)
+      * The "JSON" module is available
+      * The GD library is available from PHP (That must be support JPEG, GIF and PNG)
+      * The "exif" module is available
+      * The "mcrypt" module recommendation
+      * The "APC" module recommendation
+  Database Server
+    MySQL 5.5.53 or later (the version in the Debian 8 stable distribution)
+
+OpenPNE 3 supported under the following environment.
 
 Supported Client
   OS
