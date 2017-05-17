@@ -1,5 +1,8 @@
 rendering: ~
 
+cache_control:
+  class: opCacheControlFilter
+
 security:
   class: opAPISecurityFilter
 
