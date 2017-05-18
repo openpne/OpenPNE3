@@ -23,7 +23,7 @@ MINIMUM REQUIREMENTS
       * The GD library is available from PHP (That must be support JPEG, GIF and PNG)
       * The "exif" module is available
       * The "mcrypt" module recommendation
-      * The "APC" module recommendation
+      * The "APC" (or "APCu") module recommendation
   Database Server
     MySQL 4.1 or later (5.1 or greater recommended)
 
