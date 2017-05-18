@@ -27,6 +27,32 @@ PHP
   
   PostgreSQL, SQLite は現時点で未サポート（将来的にサポート予定）
 
+サポート対象 クライアント
+  OS
+    Windows
+      * Microsoftのサポート期間内であるもの
+    Mac OS (もしくは OS X)
+      * 最新版とその２バージョン前
+    Android
+      * 最新版とその２バージョン前
+    iOS
+      * 最新版とその２バージョン前
+  ブラウザ
+    Internet Explorer(互換モードは無効の状態)
+      * Microsoftのサポート期間内であるもの
+    Microsoft Edge
+      * Microsoftのサポート期間内であるもの
+    Firefox
+      * 最新版
+    Google Chrome
+      * 最新版
+    Safari
+      * 最新版
+サポート対象 サーバー
+  OS
+    Debian
+      * Debian 8
+
 セットアップ
 ============
 
