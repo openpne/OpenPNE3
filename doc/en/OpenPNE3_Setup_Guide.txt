@@ -49,6 +49,8 @@ RECOMMENDED SPECS
   Database Server
     MySQL 5.5.53 or later (the version in the Debian 8 stable distribution)
 
+    At this time, PostgreSQL and SQLite are not supported (They will be supported in the future)
+
 OpenPNE 3 supported under the following environment.
 
 Supported Client
