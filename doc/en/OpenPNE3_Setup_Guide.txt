@@ -32,7 +32,7 @@ MINIMUM REQUIREMENTS
 RECOMMENDED SPECS
   OS
     Debian 8 (jessie)
-  RECOMMENDED SPECS
+  Web Server
     Apache version 2.4.10 or later (the version in the Debian 8 stable distribution)
       * The "mod_rewrite" module is available
   PHP
