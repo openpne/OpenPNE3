@@ -25,7 +25,7 @@ OpenPNE3 は以下のようなサーバ環境で動作させることを想定�
       * PHP の mcrypt 拡張モジュールの使用を推奨
       * PHP の APC 拡張モジュールの使用を推奨
   データベースサーバ
-    MySQL4.1以降（5.1 以降を推奨）
+    MySQL 4.1 以降（5.1 以降を推奨）
 
     PostgreSQL, SQLite は現時点で未サポート（将来的にサポート予定）
 
@@ -54,18 +54,18 @@ OpenPNE3 は以下のような環境での動作をサポートしています�
 サポート対象 クライアント
   OS
     Windows
-      * Microsoftのサポート期間内であるもの
+      * Microsoft のサポート期間内であるもの
     Mac OS (もしくは OS X)
-      * 最新版とその２バージョン前
+      * 最新版とその 2 バージョン前
     Android
-      * 最新版とその２バージョン前
+      * 最新版とその 2 バージョン前
     iOS
-      * 最新版とその２バージョン前
+      * 最新版とその 2 バージョン前
   ブラウザ
-    Internet Explorer(互換モードは無効の状態)
-      * Microsoftのサポート期間内であるもの
+    Internet Explorer (互換モードは無効の状態)
+      * Microsoft のサポート期間内であるもの
     Microsoft Edge
-      * Microsoftのサポート期間内であるもの
+      * Microsoft のサポート期間内であるもの
     Firefox
       * 最新版
     Google Chrome
