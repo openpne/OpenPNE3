@@ -25,7 +25,7 @@ MINIMUM REQUIREMENTS
       * The "mcrypt" module recommendation
       * The "APC" module recommendation
   Database Server
-    MySQL4.1 or later (5.1 or greater recommended)
+    MySQL 4.1 or later (5.1 or greater recommended)
 
     At this time, PostgreSQL and SQLite are not supported (They will be supported in the future)
 
