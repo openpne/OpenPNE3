@@ -30,3 +30,6 @@ return value;}};function pne_url2a(url)
 if(!urlstr)
 {urlstr=url;}
 document.write('<a href="'+url+'" target="_blank">'+urlstr+'</a>');}
+function preventDoubleSubmission(form)
+{var submitted=false;form.addEventListener('submit',function(ev){if(submitted){ev.preventDefault();return;}
+submitted=true;var submitButtons=form.querySelectorAll('input[type="submit"],button[type="submit"]');for(var i=0;i<submitButtons.length;i++){submitButtons[i].disabled=!0;}})}
