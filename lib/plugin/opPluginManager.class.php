@@ -54,6 +54,16 @@ class opPluginManager extends sfSymfonyPluginManager
     catch (sfPluginException $e) {}
   }
 
+  /**
+   * @see sfSymfonyPluginManager::configure()
+   */
+  public function configure()
+  {
+    // register callbacks to manage web content
+    $this->dispatcher->connect('plugin.post_install',  array($this, 'listenToPluginPostInstall'));
+    $this->dispatcher->connect('plugin.post_uninstall', array($this, 'listenToPluginPostUninstall'));
+  }
+
   public function getChannel()
   {
     return $this->getEnvironment()->getRegistry()->getChannel($this->channel);
