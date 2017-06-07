@@ -149,3 +149,25 @@ function pne_url2a(url)
 
   document.write('<a href="'+url+'" target="_blank">'+urlstr+'</a>');
 }
+
+/**
+ * Prevent double submission of forms (eg. double click on submit button)
+ *
+ * @param HTMLFormElement form
+ */
+function preventDoubleSubmission(form)
+{
+  var submitted = false;
+  form.addEventListener('submit', function(ev) {
+    if (submitted) {
+      ev.preventDefault();
+      return;
+    }
+
+    submitted = true;
+    var submitButtons = form.querySelectorAll('input[type="submit"],button[type="submit"]');
+    for (var i = 0; i < submitButtons.length; i++) {
+      submitButtons[i].disabled = true;
+    }
+  });
+}
