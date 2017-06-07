@@ -27,18 +27,19 @@ class CommunityForm extends BaseCommunityForm
     $this->widgetSchema->setLabel('name', '%community% Name');
     $this->setValidator('name', new opValidatorString(array('max_length' => 64, 'trim' => true)));
 
-    $q = Doctrine::getTable('CommunityCategory')->getAllChildrenQuery();
-    if (1 != sfContext::getInstance()->getUser()->getMemberId())
-    {
-      $q->andWhere('is_allow_member_community = 1');
-    }
-    $communityCategories = $q->execute();
+    $isAllowMemberCommunity = 1 != sfContext::getInstance()->getUser()->getMemberId();
+    $communityCategories = Doctrine::getTable('CommunityCategory')->getAllChildren($isAllowMemberCommunity);
     if (0 < count($communityCategories))
     {
       $choices = array();
       foreach ($communityCategories as $category)
       {
         $choices[$category->id] = $category->name;
+      }
+      $currentCategoryId = $this->object->community_category_id;
+      if (!is_null($currentCategoryId) && !isset($choices[$currentCategoryId]))
+      {
+        $choices[$currentCategoryId] = $this->object->CommunityCategory->name;
       }
       $this->setWidget('community_category_id', new sfWidgetFormChoice(array('choices' => array('' => '') + $choices)));
       $this->widgetSchema->setLabel('community_category_id', '%community% Category');
@@ -97,6 +98,11 @@ class CommunityForm extends BaseCommunityForm
     }
 
     if (1 == sfContext::getInstance()->getUser()->getMemberId())
+    {
+      return $value;
+    }
+
+    if ($this->object->community_category_id === $category->id)
     {
       return $value;
     }

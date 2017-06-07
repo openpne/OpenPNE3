@@ -75,7 +75,7 @@ class CommunityConfigForm extends BaseForm
       );
       $name = 'is_send_'.$app.'_'.$template.'_mail';
       $this->setWidget($name, new sfWidgetFormChoice(array('choices' => $choices, 'expanded' => true)));
-      $this->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
+      $this->setValidator($name, new opValidatorChoice(array('choices' => array_keys($choices))));
       $this->widgetSchema->setLabel($name, $i18n->__('Receive a notice mail when member joined'));
       $this->widgetSchema->setHelp($name, $i18n->__('Send a notice mail to administrator when new member joined the %community%.'));
 

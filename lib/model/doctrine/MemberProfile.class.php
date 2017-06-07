@@ -147,7 +147,8 @@ class MemberProfile extends BaseMemberProfile implements opAccessControlRecordIn
     {
       $this->_set('value', $this->_get('value_datetime'));
     }
-    elseif ('date' === $this->getFormType() && isset($modified['value']) && $this->getProfile()->isPreset())
+    elseif ('date' === $this->getFormType() && $this->getProfile()->isPreset() &&
+            isset($modified['value']) && '' !== $modified['value'])
     {
       $this->_set('value_datetime', $this->_get('value'));
     }

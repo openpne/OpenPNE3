@@ -30,6 +30,9 @@ class PHP_CodeSniffer_Standards_OpenPNE3_OpenPNE3CodingStandard extends PHP_Code
       'Squiz/Sniffs/Scope/MemberVarScopeSniff.php',
       'Squiz/Sniffs/Scope/MethodScopeSniff.php',
       'Squiz/Sniffs/Strings/DoubleQuoteUsageSniff.php',
+
+      'Generic/Sniffs/WhiteSpace/DisallowTabIndentSniff.php',
+      'Generic/Sniffs/Functions/OpeningFunctionBraceBsdAllmanSniff.php'
     );
   }
 
@@ -38,6 +41,7 @@ class PHP_CodeSniffer_Standards_OpenPNE3_OpenPNE3CodingStandard extends PHP_Code
     return array(
       'PEAR/Sniffs/ControlStructures/ControlSignatureSniff.php',
       'PEAR/Sniffs/WhiteSpace/ScopeClosingBraceSniff.php',
+      'PEAR/Sniffs/Functions/FunctionCallSignatureSniff.php',
       'Zend/Sniffs/NamingConventions/ValidVariableNameSniff.php',
       'Squiz/Sniffs/Functions/GlobalFunctionSniff.php',
     );

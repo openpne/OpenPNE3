@@ -373,6 +373,16 @@ MemberConfig:
     value: "sns2@example.com"
     Member: third_member
 
+  fifth_member_pc_address:
+    name: "pc_address"
+    value: "sns5@example.com"
+    Member: fifth_member
+
+  fifth_member_password:
+    name: "password"
+    value: <?php echo md5('password') . "\n"; ?>
+    Member: fifth_member
+
 AdminUser:
   first_admin:
     id: ~
@@ -465,6 +475,10 @@ Community:
     name: "CommunityB"
   community_3:
     name: "CommunityC"
+    File:
+      name: dummy_image_community3
+      type: text/plain
+      FileBin: { bin: hogehoge }
   community_4:
     name: "CommunityD"
   community_5:
@@ -491,6 +505,11 @@ CommunityCategory:
     tree_key: 1
     is_allow_member_community: 1
     sort_order: 1
+  community_category_5:
+    name: "CategoryC"
+    tree_key: 2
+    is_allow_member_community: 0
+    sort_order: 3
 
 CommunityConfig:
   community_1_description:
@@ -701,6 +720,13 @@ OAuthConsumerInformation:
     Image: dummy_file1
     using_apis: ["webapi_member_get"]
     Member: first_member
+  consumer_information3:
+    name: test3
+    using_apis: [webapi_member_get]
+    Image:
+      name: dummy_consumer_information3_image
+      type: text/plain
+      FileBin: { bin: ~ }
 
 OAuthAdminToken:
   dummy_admin_token1:
@@ -906,6 +932,14 @@ ActivityData:
     Member: first_member
     body: "dummy8"
     template: "xxxx_template"
+
+ActivityImage:
+  activity1_image:
+    ActivityData: dummy_activity1
+    File:
+      name: dummy_image
+      type: text/plain
+      FileBin: { bin: dummy }
 
 SnsTerm:
   term_friend_pc_frontend:

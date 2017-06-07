@@ -33,7 +33,7 @@ function url2cmd(url)
 
 function main(id, tag)
 {
-    var url = 'http://amazon.openpne.jp/?id=' + id;
+    var url = 'https://amazon.openpne.jp/?id=' + id;
     if (tag) {
         url += '&tag=' + tag;
     }

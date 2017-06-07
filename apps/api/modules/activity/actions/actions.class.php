@@ -50,7 +50,10 @@ class activityActions extends opJsonApiActions
       }
       else
       {
-        $builder->includeSns();
+        $builder
+          ->includeSns()
+          ->includeFriends()
+          ->includeSelf();
       }
     }
 
@@ -150,8 +153,14 @@ class activityActions extends opJsonApiActions
 
   public function executePost(sfWebRequest $request)
   {
+    if (!opConfig::get('is_allow_post_activity'))
+    {
+      return $this->renderJSON(array('status' => 'error', 'message' => "you are not allowed this action."));
+    }
+
     $body = (string)$request['body'];
     $this->forward400If('' === $body, 'body parameter not specified.');
+    $this->forward400If(mb_strlen($body) > 140, 'The body text is too long.');
 
     $memberId = $this->getUser()->getMemberId();
     $options = array();
@@ -181,6 +190,8 @@ class activityActions extends opJsonApiActions
       {
         $this->forward400('target_id parameter not specified.');
       }
+
+      $this->checkCommunityMember($request['target_id']);
 
       $options['foreign_table'] = 'community';
       $options['foreign_id'] = $request['target_id'];
@@ -260,5 +271,13 @@ class activityActions extends opJsonApiActions
     $this->activityData = $query->execute();
 
     $this->setTemplate('array');
+  }
+
+  protected function checkCommunityMember($communityId)
+  {
+    $memberId = $this->getUser()->getMemberId();
+    $isCommunityMember = Doctrine_Core::getTable('CommunityMember')->isMember($memberId, $communityId);
+
+    $this->forward403Unless($isCommunityMember, 'You don\'t participate in this community.');
   }
 }

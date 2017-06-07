@@ -3,7 +3,10 @@
 $culture = sfCultureInfo::getInstance($sf_user->getCulture());
 
 $list = array();
-if ($member->getAge(true))
+
+$list[__('%Nickname%')] = $member->getName();
+
+if ($member->getAge(true) !== false)
 {
   $ageValue = __('%1% years old', array('%1%' => $member->getAge()));
   if ($member->getConfig('age_public_flag') == ProfileTable::PUBLIC_FLAG_FRIEND)

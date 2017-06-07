@@ -62,6 +62,8 @@ abstract class sfImageGeneratorImageTransform extends sfImageGenerator
       $this->disableInterlace();
     }
 
+    $this->configureImageHandle();
+
     if ($this->cropToSquare)
     {
       $srcWidth = $this->transform->getImageWidth();
@@ -89,8 +91,9 @@ abstract class sfImageGeneratorImageTransform extends sfImageGenerator
       {
         throw new sfException($result->getMessage());
       }
-      $this->transform->load($tmpoutputfilename);
-      unlink($tmpoutputfilename);     
+      rename($tmpoutputfilename, $tmpfilename);
+      $this->transform->load($tmpfilename);
+      $this->transform->fit($this->width, $this->height);
     }
 
     if ($this->width && $this->height)
@@ -102,4 +105,8 @@ abstract class sfImageGeneratorImageTransform extends sfImageGenerator
   abstract protected function creaateTransform();
 
   abstract protected function disableInterlace();
+
+  protected function configureImageHandle()
+  {
+  }
 }

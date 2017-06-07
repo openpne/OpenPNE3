@@ -725,7 +725,7 @@
       </trans-unit>
       <trans-unit id="">
         <source>The form submission cannot be processed. It probably means that you have uploaded a file that is too big.</source>
-        <target>送信に失敗しました。</target>
+        <target>フォームの送信に失敗しました。アップロードしたファイルが大きすぎる可能性があります。</target>
       </trans-unit>
       <trans-unit id="">
         <source>"%value%" is not an integer.</source>
@@ -1406,6 +1406,10 @@
       <trans-unit id="">
         <source>%Community% does not exist.</source>
         <target>%Community%がありません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Private&lt;br /&gt;Member</source>
+        <target>非公開&lt;br /&gt;メンバー</target>
       </trans-unit>
     </body>
   </file>

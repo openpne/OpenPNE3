@@ -28,7 +28,7 @@ class opRichTextareaOpenPNEConfigForm extends sfForm
       array_map(array(sfContext::getInstance()->getI18n(), '__') , self::$defaultModeChoice),
       'expanded' => true
     )));
-    $this->setValidator('default_mode', new sfValidatorChoice(array('choices' => array_keys(self::$defaultModeChoice))));
+    $this->setValidator('default_mode', new opValidatorChoice(array('choices' => array_keys(self::$defaultModeChoice))));
     $this->setDefault('default_mode', Doctrine::getTable('SnsConfig')->get('richtextarea_default_mode', 'text'));
     $this->widgetSchema->setLabel('default_mode', 'Default edit mode');
     $this->widgetSchema->setNameFormat('config[%s]');

@@ -73,22 +73,29 @@ abstract class opCommunityAction extends sfActions
 
     $this->communityForm       = new CommunityForm($this->community);
     $this->communityConfigForm = new CommunityConfigForm(array(), array('community' => $this->community));
-    $this->communityFileForm = isset($this->enableImage) && $this->enableImage ?
-      new CommunityFileForm(array(), array('community' => $this->community)) :
-      new CommunityFileForm();
+    if (!sfConfig::get('app_is_mobile', false))
+    {
+      $this->communityFileForm = new CommunityFileForm(array(), array('community' => $this->community));
+    }
 
     if ($request->isMethod('post'))
     {
-      $params = $request->getParameter('community');
+      $params = $request->getParameter($this->communityForm->getName());
       $params['id'] = $this->id;
       $this->communityForm->bind($params);
-      $this->communityConfigForm->bind($request->getParameter('community_config'));
-      $this->communityFileForm->bind($request->getParameter('community_file'), $request->getFiles('community_file'));
-      if ($this->communityForm->isValid() && $this->communityConfigForm->isValid() && $this->communityFileForm->isValid())
+      $this->communityConfigForm->bind($request->getParameter($this->communityConfigForm->getName()));
+      if($this->communityFileForm)
+      {
+        $this->communityFileForm->bind($request->getParameter($this->communityFileForm->getName()), $request->getFiles($this->communityFileForm->getName()));
+      }
+      if ($this->communityForm->isValid() && $this->communityConfigForm->isValid() && (!$this->communityFileForm || $this->communityFileForm->isValid()))
       {
         $this->communityForm->save();
         $this->communityConfigForm->save();
-        $this->communityFileForm->save();
+        if ($this->communityFileForm)
+        {
+          $this->communityFileForm->save();
+        }
 
         $this->redirect('@community_home?id='.$this->community->getId());
       }
@@ -165,6 +172,7 @@ abstract class opCommunityAction extends sfActions
 
     $this->member = Doctrine::getTable('Member')->find($memberId);
     $this->forward404Unless($this->member);
+    $this->forward404Unless($this->member->isAllowed($this->getUser()->getMember(), 'view'));
 
     if (!$this->size)
     {

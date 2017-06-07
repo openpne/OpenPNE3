@@ -83,12 +83,10 @@ all:
 #      logging:         %SF_LOGGING_ENABLED%
 #      use_flash:       true
 #      default_culture: %SF_DEFAULT_CULTURE%
-#
-#  storage:
-#    class: sfSessionStorage
-#    param:
-#      session_name: symfony
-#
+
+  storage:
+    class: sfNoStorage
+
 #  view_cache:
 #    class: sfFileCache
 #    param:

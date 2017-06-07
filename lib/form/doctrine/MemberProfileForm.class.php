@@ -54,18 +54,6 @@ class MemberProfileForm extends BaseForm
 
       $memberProfile = Doctrine::getTable('MemberProfile')->retrieveByMemberIdAndProfileId($memberId, $profile->getId());
 
-      if (is_null($value['value']))
-      {
-        if ($memberProfile)
-        {
-          if ($profile->isMultipleSelect())
-          {
-            $memberProfile->clearChildren();
-          }
-          $memberProfile->delete();
-        }
-        continue;
-      }
       if (!$memberProfile)
       {
         $memberProfile = new MemberProfile();
@@ -141,6 +129,14 @@ class MemberProfileForm extends BaseForm
 
     foreach ($profiles as $profile)
     {
+      if ('mobile_frontend' === sfConfig::get('sf_app'))
+      {
+        if ('op_preset_country' === $profile->getName() || 'op_preset_region' === $profile->getName())
+        {
+          continue;
+        }
+      }
+
       $profileI18n = $profile->Translation[sfContext::getInstance()->getUser()->getCulture()]->toArray();
       $profileWithI18n = $profile->toArray() + $profileI18n;
 
