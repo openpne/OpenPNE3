@@ -6,3 +6,10 @@ $options = array(
 );
 op_include_form('RegisterForm', $form, $options);
 ?>
+
+<script type="text/javascript">
+//<![CDATA[
+var formElement = document.querySelector('#RegisterForm form');
+preventDoubleSubmission(formElement);
+//]]>
+</script>
