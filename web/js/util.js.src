@@ -230,3 +230,70 @@ var smtSwitch = {
     }
   }
 };
+
+/**
+ * opLocalStrage class
+ */
+var opLocalStorage = {
+
+  isEnabledVar: null,
+
+  isEnabled: function()
+  {
+    if (typeof this.isEnabledVar === 'boolean')
+    {
+      return this.isEnabledVar;
+    }
+
+    try
+    {
+      if (typeof window.localStorage === 'undefined')
+      {
+        return this.isEnabledVar = false;
+      }
+      else if (window.localStrage)
+      {
+        var testString = 'opTest';
+        localStorage.setItem(testString, testString);
+        localStorage.removeItem(testString);
+      }
+    }
+    catch(e)
+    {
+      return this.isEnabledVar = false;
+    }
+
+    return this.isEnabledVar = true;
+  },
+
+ /**
+  * Sets a localStrage data
+  *
+  * @params string name
+  * @params string value
+  */
+  set: function(name, value)
+  {
+    if (!opLocalStorage.isEnabled())
+    {
+      return false;
+    }
+
+    localStorage.setItem(name, value);
+  },
+
+ /**
+  * Gets a localStrage data
+  *
+  * @params string name
+  */
+  get: function(name)
+  {
+    if (!opLocalStorage.isEnabled())
+    {
+      return false;
+    }
+
+    return localStorage.getItem(name);
+  }
+};
