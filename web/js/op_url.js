@@ -54,10 +54,10 @@ var opUrl = {
       return deferred.promise();
     }
 
-    return this.request(application, internalUri, absolute);
+    return this.request(application, internalUri, absolute, key);
   },
 
-  request: function(application, internalUri, absolute)
+  request: function(application, internalUri, absolute, key)
   {
     var deferred = $.Deferred();
 
@@ -66,8 +66,14 @@ var opUrl = {
       url: openpne.urlForUrl,
       data: { application: application, params: [internalUri, Number(absolute)] },
       dataType: 'text',
-      success: deferred.resolve,
-      error: function (xhr, textStatus, errorThrown) { deferred.reject(xhr, textStatus, errorThrown); }
+      success: function(data) {
+        opLocalStorage.set(key, data);
+
+        deferred.resolve(data);
+      },
+      error: function(xhr, textStatus, errorThrown) {
+        deferred.reject(xhr, textStatus, errorThrown);
+      }
     });
 
     return deferred.promise();
