@@ -61,7 +61,7 @@ var opUrl = {
   {
     var deferred = $.Deferred();
 
-    return $.ajax({
+    $.ajax({
       type: 'POST',
       url: openpne.urlForUrl,
       data: { application: application, params: [internalUri, Number(absolute)] },
