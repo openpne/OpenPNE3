@@ -32,4 +32,21 @@ if(!urlstr)
 document.write('<a href="'+url+'" target="_blank">'+urlstr+'</a>');}
 function preventDoubleSubmission(form)
 {var submitted=false;form.addEventListener('submit',function(ev){if(submitted){ev.preventDefault();return;}
-submitted=true;var submitButtons=form.querySelectorAll('input[type="submit"],button[type="submit"]');for(var i=0;i<submitButtons.length;i++){submitButtons[i].disabled=!0;}})}
+submitted=true;var submitButtons=form.querySelectorAll('input[type="submit"],button[type="submit"]');for(var i=0;i<submitButtons.length;i++){submitButtons[i].disabled=true;}});}
+var opLocalStorage={isEnabledVar:null,isEnabled:function()
+{if(typeof this.isEnabledVar==='boolean')
+{return this.isEnabledVar;}
+try
+{if(typeof window.localStorage==='undefined')
+{return this.isEnabledVar=false;}
+else if(window.localStrage)
+{var testString='opTest';localStorage.setItem(testString,testString);localStorage.removeItem(testString);}}
+catch(e)
+{return this.isEnabledVar=false;}
+return this.isEnabledVar=true;},set:function(name,value)
+{if(!opLocalStorage.isEnabled())
+{return false;}
+localStorage.setItem(name,value);},get:function(name)
+{if(!opLocalStorage.isEnabled())
+{return false;}
+return localStorage.getItem(name);}};
