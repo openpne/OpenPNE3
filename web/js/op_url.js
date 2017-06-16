@@ -17,19 +17,17 @@
  */
 var opUrl = {
 
-  dummy_callback: function () {},
-
   /**
    * method app_url_for().
    *
-   * @param {strina} application ex: pc_frontend, api ...
-   * @param {string} internalUri 'module/action' or '@rule' of the action
+   * @param  {strina} application ex: api ...
+   * @param  {string} internalUri 'module/action' or '@rule' of the action
    * @param {boolean} absolute  return absolute path?
-   * @param {object} callback {success: function(result) {}, error: function(error) {}}
+   * @returns {Deferred} Return a Deferred's Promise object. opUrl.url_for(... snip ...).done(function(url) {... snip ...}).fail(function(xhr, textStatus, errorThrown) {... snip ...})
    */
-  app_url_for: function(application, internalUri, absolute, callbacks)
+  app_url_for: function(application, internalUri, absolute)
   {
-    this.call(application, internalUri, absolute, callbacks);
+    return this.call(application, internalUri, absolute);
   },
 
   /**
@@ -37,52 +35,26 @@ var opUrl = {
    *
    * @param {string} internalUri 'module/action' or '@rule' of the action
    * @param {boolean} absolute  return absolute path?
-   * @param {object} callback {success: function(result) {}, error: function(error) {}}
+   * @returns {Deferred} Return a Deferred's Promise object. opUrl.url_for(... snip ...).done(function(url) {... snip ...}).fail(function(xhr, textStatus, errorThrown) {... snip ...})
    */
-  url_for: function(internalUri, absolute, callbacks)
+  url_for: function(internalUri, absolute)
   {
-    this.call('', internalUri, absolute, callbacks);
+    return this.call('', internalUri, absolute);
   },
 
-  call: function(application, internalUri, absolute, callbacks)
+  call: function(application, internalUri, absolute)
   {
-    if (typeof callbacks === 'function')
-    {
-      callbacks = { success: callbacks };
-    }
-
-    if (typeof callbacks !== 'object')
-    {
-      callbacks = {};
-    }
-
-    if (typeof callbacks.success !== 'function')
-    {
-      callbacks.success = this.dummy_callback;
-    }
-
-    if (typeof callbacks.error !== 'function')
-    {
-      callbacks.error = this.dummy_callback;
-    }
-
     var key = this.generate_cache_key(application, internalUri, absolute);
     var result = opLocalStorage.get(key);
     if (typeof result === 'string')
     {
-      // Local Storage result.
-      callbacks.success(result);
+      var deferred = $.Deferred();
+      deferred.resolve(result);
 
-      return result;
+      return deferred.promise();
     }
 
-    this.request(application, internalUri, absolute).done(function(result) {
-      opLocalStorage.set(key, result);
-      // Ajax response result.
-      callbacks.success(result);
-    }).fail(function(xhr, textStatus, errorThrown) {
-      callbacks.error(xhr, textStatus, errorThrown);
-    });
+    return this.request(application, internalUri, absolute);
   },
 
   request: function(application, internalUri, absolute)
