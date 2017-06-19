@@ -54,7 +54,7 @@ global_user_agreement:
   param: { module: default, action: userAgreement }
 
 url_for:
-  url:   /default/urlFor
+  url:   /default/urlFor.txt
   param: { module: default, action: urlFor }
 
 # member rules
