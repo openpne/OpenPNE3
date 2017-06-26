@@ -32,4 +32,5 @@ if(!urlstr)
 document.write('<a href="'+url+'" target="_blank">'+urlstr+'</a>');}
 function preventDoubleSubmission(form)
 {var submitted=false;form.addEventListener('submit',function(ev){if(submitted){ev.preventDefault();return;}
-submitted=true;var submitButtons=form.querySelectorAll('input[type="submit"],button[type="submit"]');for(var i=0;i<submitButtons.length;i++){submitButtons[i].disabled=!0;}})}
+submitted=true;var submitButtons=form.querySelectorAll('input[type="submit"],button[type="submit"]');for(var i=0;i<submitButtons.length;i++){submitButtons[i].disabled=true;}});}
+var smtSwitch={key:'disable_smt',datePeriod:30,initialize:function(){smtSwitch.updateExpires(false);$('#smt-switch').show();$('#smt-switch').on('click',function(){smtSwitch.switchPc();});},isSwitchPc:function(){return 1===opCookie.get(this.key);},switchPc:function(){this.updateExpires(true);location.href=$(this).attr('href');},getExpiresDate:function(){var expiresDate=new Date();expiresDate.setTime(expiresDate.getTime()+this.datePeriod*24*60*60*1000);return expiresDate;},updateExpires:function(force){if(force||this.isSwitchPc()){opCookie.set(this.key,'1',this.getExpiresDate(),openpne.baseUrl);}}};
