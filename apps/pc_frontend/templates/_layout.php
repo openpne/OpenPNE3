@@ -116,8 +116,7 @@ include_component('default', 'localNav', $localNavOptions);
 <?php echo javascript_tag('
 smtSwitch.initialize();
 document.getElementById("SmtSwitchLink").addEventListener("click", function() {
-  opCookie.set("disable_smt", "0", undefined, openpne.baseUrl);
-  location.reload();
+  smtSwitch.switchSmt();
 }, false);
 ') ?>
 </div>
