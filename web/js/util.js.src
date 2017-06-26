@@ -184,6 +184,12 @@ var smtSwitch = {
     location.href = smtSwitch.elem.attr('href');
   },
 
+  switchSmt: function() {
+    // delete cookie.
+    opCookie.set(this.key);
+    location.reload();
+  },
+
   getExpiresDate: function() {
     var expiresDate = new Date();
     expiresDate.setTime(expiresDate.getTime() + this.datePeriod * 24 * 60 * 60 * 1000);
