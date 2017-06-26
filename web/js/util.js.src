@@ -157,24 +157,31 @@ var smtSwitch = {
   // default 30 day.
   datePeriod: 30,
 
+  elem: null,
+
   initialize: function() {
-    // update expires.
-    smtSwitch.updateExpires(false);
+    this.elem = document.getElementById('smt-switch');
 
-    $('#smt-switch').show();
+    // update expires when browser is reloaded.
+    this.updateExpires(false);
 
-    $('#smt-switch').on('click', function() {
+    if (!this.elem)
+    {
+      return false;
+    }
+
+    this.elem.addEventListener('click', function() {
       smtSwitch.switchPc();
     });
   },
 
   isSwitchPc: function() {
-    return 1 === opCookie.get(this.key);
+    return '1' === opCookie.get(this.key);
   },
 
   switchPc: function() {
-    this.updateExpires(true);
-    location.href = $(this).attr('href');
+    smtSwitch.updateExpires(true);
+    location.href = smtSwitch.elem.attr('href');
   },
 
   getExpiresDate: function() {

@@ -30,4 +30,6 @@ return value;}};function pne_url2a(url)
 if(!urlstr)
 {urlstr=url;}
 document.write('<a href="'+url+'" target="_blank">'+urlstr+'</a>');}
-var smtSwitch={key:'disable_smt',datePeriod:30,initialize:function(){smtSwitch.updateExpires(false);$('#smt-switch').show();$('#smt-switch').on('click',function(){smtSwitch.switchPc();});},isSwitchPc:function(){return 1===opCookie.get(this.key);},switchPc:function(){this.updateExpires(true);location.href=$(this).attr('href');},getExpiresDate:function(){var expiresDate=new Date();expiresDate.setTime(expiresDate.getTime()+this.datePeriod*24*60*60*1000);return expiresDate;},updateExpires:function(force){if(force||this.isSwitchPc()){opCookie.set(this.key,'1',this.getExpiresDate(),openpne.baseUrl);}}};
+var smtSwitch={key:'disable_smt',datePeriod:30,elem:null,initialize:function(){this.elem=document.getElementById('smt-switch');this.updateExpires(false);if(!this.elem)
+{return false;}
+this.elem.addEventListener('click',function(){smtSwitch.switchPc();});},isSwitchPc:function(){return'1'===opCookie.get(this.key);},switchPc:function(){smtSwitch.updateExpires(true);location.href=smtSwitch.elem.attr('href');},getExpiresDate:function(){var expiresDate=new Date();expiresDate.setTime(expiresDate.getTime()+this.datePeriod*24*60*60*1000);return expiresDate;},updateExpires:function(force){if(force||this.isSwitchPc()){opCookie.set(this.key,'1',this.getExpiresDate(),openpne.baseUrl);}}};
