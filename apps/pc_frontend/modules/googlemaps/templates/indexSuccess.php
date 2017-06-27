@@ -5,8 +5,8 @@
 <?php include_http_metas() ?>
 <?php include_metas() ?>
 <?php include_title() ?>
-<?php $apiKey = !empty($op_config['google_maps_api_key']) ? '&amp;'.$op_config['google_maps_api_key'] : '' ?>
-<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false<?php echo $apiKey ?>"></script>
+<?php $apiKey = !empty($op_config['google_maps_api_key']) ? $op_config['google_maps_api_key'] : '' ?>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $apiKey ?>"></script>
 <script type="text/javascript">
 //<![CDATA[
 
