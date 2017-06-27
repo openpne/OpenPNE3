@@ -181,7 +181,7 @@ var smtSwitch = {
 
   switchPc: function() {
     smtSwitch.updateExpires(true);
-    location.href = smtSwitch.elem.attr('href');
+    location.href = smtSwitch.elem.getAttribute('href');
   },
 
   switchSmt: function() {
