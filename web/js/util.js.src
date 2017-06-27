@@ -182,19 +182,24 @@ var smtSwitch = {
   elem: null,
 
   initialize: function() {
-    this.elem = document.getElementById('smt-switch');
-
     // update expires when browser is reloaded.
     this.updateExpires(false);
 
-    if (!this.elem)
+    this.elem = document.getElementById('smt-switch');
+    if (this.elem)
     {
-      return false;
+      this.elem.addEventListener('click', function() {
+        smtSwitch.switchPc();
+      });
     }
 
-    this.elem.addEventListener('click', function() {
-      smtSwitch.switchPc();
-    });
+    var $toSmt = document.getElementById('SmtSwitchLink');
+    if ($toSmt)
+    {
+      $toSmt.addEventListener('click', function() {
+        smtSwitch.switchSmt();
+      }, false);
+    }
   },
 
   isSwitchPc: function() {
