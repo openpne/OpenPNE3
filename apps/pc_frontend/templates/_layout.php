@@ -113,12 +113,6 @@ include_component('default', 'localNav', $localNavOptions);
 <?php if ($sf_request->isSmartphone(false)): ?>
 <div id="SmtSwitch">
 <a href="javascript:void(0)" id="SmtSwitchLink"><?php echo __('View this page on smartphone style') ?></a>
-<?php echo javascript_tag('
-smtSwitch.initialize();
-document.getElementById("SmtSwitchLink").addEventListener("click", function() {
-  smtSwitch.switchSmt();
-}, false);
-') ?>
 </div>
 <?php endif ?>
 
