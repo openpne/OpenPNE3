@@ -204,7 +204,7 @@ class communityActions extends sfActions
       else
       {
         $i18n = $this->getContext()->getI18N();
-        $this->getUser()->setFlash('error', $i18n->__($form->getWidgetSchema()->getLabel('name'), null, 'form_community').':'.$i18n->__($form['name']->getError()->getMessageFormat(), $form['name']->getError()->getArguments()));
+        $this->getUser()->setFlash('error', $i18n->__($form['name']->renderLabelName(), null, 'form_community').':'.$i18n->__($form['name']->getError()->getMessageFormat(), $form['name']->getError()->getArguments()));
       }
     }
     $this->redirect('community/categoryList');
