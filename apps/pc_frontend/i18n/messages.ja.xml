@@ -279,10 +279,6 @@
         <target>プロフィールページの公開範囲</target>
       </trans-unit>
       <trans-unit id="">
-        <source>%my_friend%</source>
-        <target>%my_friend%</target>
-      </trans-unit>
-      <trans-unit id="">
         <source>Invite a friend to %1%</source>
         <target>友人を%1%に招待する</target>
       </trans-unit>
