@@ -11,7 +11,6 @@ if ($member->getAge(true) !== false)
   $ageValue = __('%1% years old', array('%1%' => $member->getAge()));
   if ($member->getConfig('age_public_flag') == ProfileTable::PUBLIC_FLAG_FRIEND)
   {
-    $i18n = sfContext::getInstance()->getI18N();
     $termMyFriend = Doctrine::getTable('SnsTerm')->get('my_friend');
     $terms = array('%my_friend%' => $termMyFriend->pluralize()->titleize());
 
@@ -57,7 +56,6 @@ foreach ($member->getProfiles(true) as $profile)
 
   if ($member->getId() == $sf_user->getMemberId())
   {
-    $i18n = sfContext::getInstance()->getI18N();
     $termMyFriend = Doctrine::getTable('SnsTerm')->get('my_friend');
     $terms = array('%my_friend%' => $termMyFriend->pluralize()->titleize());
 
