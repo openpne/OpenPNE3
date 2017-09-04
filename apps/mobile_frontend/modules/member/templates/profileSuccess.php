@@ -84,7 +84,6 @@ foreach ($member->getProfiles(true) as $profile)
 
   if ($member->getId() == $sf_user->getMemberId())
   {
-    $i18n = sfContext::getInstance()->getI18N();
     $termMyFriend = Doctrine::getTable('SnsTerm')->get('my_friend');
     $terms = array('%my_friend%' => $termMyFriend->pluralize()->titleize());
 
