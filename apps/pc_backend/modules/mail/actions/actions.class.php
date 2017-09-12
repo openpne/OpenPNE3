@@ -65,7 +65,6 @@ class mailActions extends sfActions
         $this->getUser()->setFlash('notice', 'Saved.');
         $this->redirect('@mail_template_specified?name='.$this->name);
       }
-      $this->getUser()->setFlash('error', (string)$this->form->getErrorSchema(), false);
     }
   }
 
