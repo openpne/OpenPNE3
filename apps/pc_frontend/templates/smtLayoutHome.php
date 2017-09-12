@@ -10,7 +10,7 @@
 <?php op_smt_use_stylesheet('bootstrap') ?>
 <?php op_smt_use_stylesheet('smt_main') ?>
 <?php op_smt_include_stylesheets() ?>
-<meta name="viewport" content="width=320px,user-scalable=no" />
+<meta name="viewport" content="width=320,user-scalable=no" />
 <?php if (opConfig::get('enable_jsonapi') && opToolkit::isSecurePage()): ?>
 <?php
 $jsonData = array(
