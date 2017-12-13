@@ -108,6 +108,19 @@ class opI18N extends sfI18N
 
   public function __($string, $args = array(), $catalogue = 'messages')
   {
+    if (null === $args)
+    {
+      $args = array();
+    }
+
+    foreach ($args as $k => $v)
+    {
+      if ($v instanceof SnsTerm)
+      {
+        $args[$k] = (string)$v;
+      }
+    }
+
     if (empty($this->parsed[$string]))
     {
       $this->parsed[$string] = array();
@@ -135,19 +148,6 @@ class opI18N extends sfI18N
       }
     }
 
-    $parsedString = $this->parsed[$string];
-    if (is_array($args))
-    {
-      foreach ($args as $k => $v)
-      {
-        if ($v instanceof SnsTerm)
-        {
-          $args[$k] = (string)$v;
-        }
-      }
-      $parsedString = array_merge($parsedString, $args);
-    }
-
-    return parent::__($string, $parsedString, $catalogue);
+    return parent::__($string, array_merge($this->parsed[$string], $args), $catalogue);
   }
 }
