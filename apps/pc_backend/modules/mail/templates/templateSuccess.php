@@ -70,10 +70,14 @@
 <h3><?php echo __($rawConfig[$_currentTarget][$_currentKey]['caption']) ?></h3>
 
 <?php echo $form->renderFormTag(url_for('@mail_template_specified?name='.$name), array('method' => 'post')); ?>
+<?php echo $form->renderGlobalErrors() ?>
 <?php echo $form->renderHiddenFields(); ?>
 <?php if (isset($form['title'])): ?>
-<?php echo $form['title']->renderLabel() ?> <?php echo $form['title']->render(array('class' => 'title')) ?>
+<?php echo $form['title']->renderLabel() ?>
+<?php echo $form['title']->renderError() ?>
+<?php echo $form['title']->render(array('class' => 'title')) ?>
 <?php endif; ?>
+<?php echo $form['template']->renderError() ?>
 <?php echo $form['template']->render(array('rows' => 30, 'cols' => 72)) ?>
 
 <input type="submit" value="<?php echo __('Save') ?>">
