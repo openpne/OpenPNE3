@@ -315,6 +315,23 @@ class ActivityDataTable extends Doctrine_Table
       $flag = self::PUBLIC_FLAG_SNS;
     }
 
+    $member = Doctrine::getTable('Member')->find($memberId);
+    if (0 == $viewerMemberId)
+    {
+      if (opConfig::get('is_allow_config_public_flag_profile_page'))
+      {
+        $config = opConfig::get('is_allow_config_public_flag_profile_page');
+      }
+      elseif ($member)
+      {
+        $config = (int)$member->getConfig('profile_page_public_flag');
+      }
+      if (4 == $config)
+      {
+        $flag = self::PUBLIC_FLAG_OPEN;
+      }
+    }
+
     $q->andWhere('member_id = ?', $memberId);
 
     $flags = $this->getViewablePublicFlags($flag);
