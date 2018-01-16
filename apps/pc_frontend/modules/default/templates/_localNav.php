@@ -9,7 +9,7 @@
 <?php endif; ?>
 
 <?php if (op_is_accessible_url($uri)): ?>
-<li id="<?php echo $nav->type ?>_<?php echo op_url_to_id($nav->uri) ?>"><?php echo link_to($nav->caption, $uri); ?></li>
+<li id="<?php echo $nav->type ?>_<?php echo op_url_to_id($nav->uri) ?>"><?php echo link_to(__($nav->caption), $uri); ?></li>
 <?php endif; ?>
 
 <?php endforeach; ?>
