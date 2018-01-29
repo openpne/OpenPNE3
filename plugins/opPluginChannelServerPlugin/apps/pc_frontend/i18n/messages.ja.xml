@@ -1,0 +1,331 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>You've gotten %1% plugins join requests</source>
+        <target>%1% 件のプラグイン開発参加リクエストがあります</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Developing Plugin List</source>
+        <target>開発しているプラグイン</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Popular Plugins</source>
+        <target>人気のプラグイン</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Recently Created Plugins</source>
+        <target>最近作られたプラグイン</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Recently Releases</source>
+        <target>最近のリリース</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>How to use this plugin channel server</source>
+        <target>プラグインチャンネルサーバの利用方法</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If you want to use plugins in this channel server, please install by the following command:</source>
+        <target>このチャンネルサーバのプラグインを利用したい場合は、以下のコマンドを実行してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You can set this server as your default channel server (only OpenPNE 3.5.0 +). Edit your config/OpenPNE.yml like:</source>
+        <target>このサーバをデフォルトのプラグインチャンネルサーバに設定することもできます (OpenPNE 3.5.0 以上)。以下のように config/OpenPNE.yml を編集してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Add release by package file</source>
+        <target>パッケージファイルからリリースする</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Add release by Subversion repository</source>
+        <target>Subversion のリポジトリからリリースする</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Add release by Git repository</source>
+        <target>Git リポジトリからリリースする</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Edit Package</source>
+        <target>パッケージを編集する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>I don't use this plugin</source>
+        <target>このプラグインのユーザではありません</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>I use this plugin</source>
+        <target>このプラグインのユーザです</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please login to vote for this plugin</source>
+        <target>このプラグインに投票するにはログインが必要です</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Plugin Developers</source>
+        <target>プラグイン開発者</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Manage developers</source>
+        <target>開発者管理</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Category</source>
+        <target>カテゴリ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Summary</source>
+        <target>概要</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>License</source>
+        <target>ライセンス</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Description</source>
+        <target>説明文</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Repository URL</source>
+        <target>リポジトリの URL</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>BTS URL</source>
+        <target>バグトラッカーの URL</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Detail of this plugin</source>
+        <target>プラグインの詳細情報</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Edit this plugin information</source>
+        <target>このプラグインの情報を編集する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Join this plugin developer team</source>
+        <target>このプラグインの開発に参加する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Releases of this plugin</source>
+        <target>このプラグインのリリース一覧</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Release Packages</source>
+        <target>リリースする</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Send request to join this plugin developer team</source>
+        <target>プラグイン開発参加リクエストを送信します</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Plugin Developer Setting</source>
+        <target>プラグイン開発者設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Developers</source>
+        <target>開発者</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Create Plugin</source>
+        <target>プラグイン作成</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>There are no releases.</source>
+        <target>まだリリースがありません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>There are no plugins.</source>
+        <target>まだプラグインがありません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Detail of this release</source>
+        <target>リリースの詳細</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Plugin</source>
+        <target>プラグイン</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Version</source>
+        <target>バージョン</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Stability</source>
+        <target>安定性</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Release Note</source>
+        <target>リリースノート</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Installation</source>
+        <target>インストール方法</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Install the plugin:</source>
+        <target>プラグインをインストールします。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Migrate your model and database:</source>
+        <target>モデルとデータベースの更新をします。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Download</source>
+        <target>ダウンロード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you want to delete this release?</source>
+        <target>このリリースを削除しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Search Plugin</source>
+        <target>プラグイン検索</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Search</source>
+        <target>検索</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Create a new plugin</source>
+        <target>プラグインを作成する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Plugin Name</source>
+        <target>プラグイン名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Count of Users</source>
+        <target>ユーザ数</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Search Results</source>
+        <target>検索結果</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your search queries did not match any plugin.</source>
+        <target>該当するプラグインはありませんでした。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Image</source>
+        <target>画像</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>License should be "MIT", "BSD", "LGPL", "PHP", "Apache" (case-insensitive). If you select other license, plugin installer will output notice.</source>
+        <target>ライセンスは「MIT」「BSD」「LGPL」「PHP」「Apache」（大文字小文字の区別なし）を推奨します。他のライセンスを選択した場合、インストーラが警告を表示するようになります。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You can create a package file by the opPlugin:release task.</source>
+        <target>パッケージファイルは opPlugin:release タスクで作成することができます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The first argument</source>
+        <target>第 1 引数</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The second argument</source>
+        <target>第 2 引数</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The third argument</source>
+        <target>第 3 引数</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The --channel option (OpenPNE 3.5.0 +)</source>
+        <target>--channel オプション (OpenPNE 3.5.0 以降)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The name of plugin which you want to release</source>
+        <target>リリースしたいプラグインの名前</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The path to directory which you want to save the generated package file</source>
+        <target>生成したパッケージファイルの保存先ディレクトリ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The channel server which you want to release</source>
+        <target>リリースしたいチャンネルサーバ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Before your releasing, you need to create / update and commit a package definition file (package.xml) to your repository.</source>
+        <target>リリースの前に、パッケージ定義ファイル (package.xml) を作成・更新し、リポジトリにコミットしてください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You can generate a definition file by the following command:</source>
+        <target>パッケージ定義ファイルの生成には以下のコマンドを実行してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The version of plugin which you want to release</source>
+        <target>リリースしたいプラグインのバージョン</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The release note</source>
+        <target>リリースノート</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Before your releasing, you need to create / update and push a package definition file (package.xml) to your repository.</source>
+        <target>リリースの前に、パッケージ定義ファイル (package.xml) を作成・更新し、リポジトリに push してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Tgz file</source>
+        <target>パッケージファイル</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Svn url</source>
+        <target>Subversion の URL</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Git url</source>
+        <target>Git リポジトリの URL</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Git commit</source>
+        <target>Git のコミット</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please specify tag url</source>
+        <target>タグの URL を指定してください</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The url must be HTTP protocol format. e.g. http://github.com/openpne/opSamplePlugin.git</source>
+        <target>URL は HTTP プロトコルのものである必要があります。 例：http://github.com/openpne/opSamplePlugin.git</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>This can be many formatted string: "master" (branch name), "9af9b" (commit object name), "v1.0.0" (tag name)</source>
+        <target>様々な形式の文字列を受け付けます: "master" (ブランチ名)、 "9af9b" (コミットオブジェクト名)、 "v1.0.0" (タグ名)</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Plugin name must start with "op" and end with "Plugin". If you want to use related redmine, a length of the plugin name must be less than 24 characters.</source>
+        <target>プラグイン名は「op」ではじまり「Plugin」で終わらなければなりません。また、もし提携している Redmine のプロジェクトを作成したい場合、 24 文字以内で入力してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Use related redmine</source>
+        <target>Redmine 使用設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Use</source>
+        <target>使用する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do not use</source>
+        <target>使用しない</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If you select "Use", you can use a project of related redmine, and your inputted "Bts" value will be overwritten</source>
+        <target>もし「使用する」を選択した場合、提携している Redmine 上のプロジェクトが利用可能になり、入力されている「バグトラッカーの URL」が上書きされます</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The relating redmine project cannot be created for this plugin because of the name is longer than 24 characters.If you want to create and relate the redmine project, please create project automatically and fill the "bts" field.</source>
+        <target>プラグイン名が 24 文字を超えているために、提携している Redmine プロジェクトを作成することができませんでした。もし提携している Redmine 上にプロジェクトを作りたい場合は、手動で作成した上で「バグトラッカーの URL」に URL を入力してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>More</source>
+        <target>もっと見る</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>More info</source>
+        <target>もっと見る</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

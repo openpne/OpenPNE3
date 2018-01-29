@@ -1,0 +1,155 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Notification of Confirmation of Changing Your PC E-mail Address</source>
+        <target>修改邮箱地址的确认消息</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Confirmation of Changing Your Mobile E-mail Address</source>
+        <target>修改手机端邮箱地址的确认消息</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Confirmation of Changing Password</source>
+        <target>修改密码的确认消息</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Someone's Joining Your Community</source>
+        <target>有人加入群组时的消息</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Completion of Friend Link</source>
+        <target>好友确认消息</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Login URL</source>
+        <target>登录消息</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Completion of Your Registration</source>
+        <target>注册消息</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Completion of Leaving From the SNS</source>
+        <target>退出群组消息</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Registration URL</source>
+        <target>注册消息</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Signature</source>
+        <target>签名</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Daily News</source>
+        <target>日常新闻</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Notification of Friend Birthday</source>
+        <target>好友生日消息</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Login</source>
+        <target>登录</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Saved configuration successfully.</source>
+        <target>保存设置成功。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Sent a mail for your mail address. Please click URL in the mail for completing configuration.</source>
+        <target>已发送了一封验证邮件，请查收你邮箱完成配置。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The public_flag for your age can be configure at "Settings" page.</source>
+        <target>你年龄的公开范围可以在设置中修改</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Age</source>
+        <target>年龄</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1% years old</source>
+        <target>%1% 岁</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Captcha</source>
+        <target>验证码</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please input the below keyword.</source>
+        <target>请输入以下字母。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Invalid mobile_address.</source>
+        <target>无效的手机号。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Mon</source>
+        <target>周一</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Tue</source>
+        <target>周二</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Wed</source>
+        <target>周三</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Thu</source>
+        <target>周四</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Fri</source>
+        <target>周五</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Sat</source>
+        <target>周六</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Sun</source>
+        <target>周日</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Receive</source>
+        <target>接收</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Don't Receive</source>
+        <target>拒收</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Receive a notice mail when member joined</source>
+        <target>当成员加入时发送邮件通知</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Send a notice mail to administrator when new member joined the %community%.</source>
+        <target>当有新成员加入%community%时发送邮件通知管理员。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Couldn't send E-mail. Please retry or contact to administrator.</source>
+        <target>无法发送邮件，请重试或者联系管理员。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The inputted value is already exist.</source>
+        <target>输入值已存在。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>"%value%" must be at most %max%.</source>
+        <target>"%value%" 值必须在 %max% 以下。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>"%value%" must be at least %min%.</source>
+        <target>"%value%" 值必须在 %min% 以上。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Public flag</source>
+        <target>公开范围</target>
+      </trans-unit> 
+    </body>
+  </file>
+</xliff>

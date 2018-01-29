@@ -1,0 +1,20 @@
+Navigation:
+  default_navigation_application:
+    type: "default"
+    uri: "@application"
+    sort_order: 15
+    Translation:
+      ja_JP:
+        caption: "アプリ"
+      en:
+        caption: "Apps"
+
+  friend_navigation_application:
+    type: "friend"
+    uri: "@application_list"
+    sort_order: 25
+    Translation:
+      ja_JP:
+        caption: "アプリ"
+      en:
+        caption: "Apps"

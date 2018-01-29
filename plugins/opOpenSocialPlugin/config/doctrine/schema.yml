@@ -1,0 +1,73 @@
+options:
+  charset: utf8
+
+Application:
+  actAs:
+    I18n:
+      fields: [title, title_url, description, directory_title, screenshot, thumbnail, author, author_aboutme, author_affiliation, author_email, author_photo, author_link, author_quote, settings, views, version]
+      length: 5
+      actAs:
+        Timestampable:
+  columns:
+    member_id: { type: integer(4), notnull: false }
+    url:       { type: string(128), notnull: true }
+    height:    { type: integer, notnull: true }
+    scrolling: { type: boolean, notnull: true, default: false }
+    singleton: { type: boolean, notnull: true, default: true }
+    is_active: { type: boolean, notnull: true, default: true }
+    title:       { type: string(128) }
+    title_url:   { type: string(128) }
+    description: { type: string }
+    directory_title : { type: string(128) }
+    screenshot:  { type: string(128) }
+    thumbnail :  { type: string(128) }
+    author:      { type: string(128) }
+    author_aboutme:      { type: string }
+    author_affiliation : { type: string(128) }
+    author_email:  { type: string(128) }
+    author_photo:  { type: string(128) }
+    author_link:   { type: string(128) }
+    author_quote:  { type: string }
+    settings: { type: array }
+    views:    { type: array }
+  relations:
+    AdditionalMember: { foreignAlias: AddedApplications, onDelete: "SET NULL", class: Member, local: member_id, foreign: id }
+    Members: { foreignAlias: Applications, class: Member, refClass: MemberApplication }
+
+MemberApplication:
+  columns:
+    member_id:      { type: integer(4), notnull: true }
+    application_id: { type: integer, notnull: true }
+    public_flag:    { type: enum, values: [public, friends, private], default: public, notnull: true }
+    sort_order:     { type: integer }
+  relations:
+    Member:       { onDelete: CASCADE, foreignAlias: MemberApplications }
+    Application:  { onDelete: CASCADE, foreignAlias: MemberApplication }
+
+MemberApplicationSetting:
+  columns:
+    member_application_id: { type: integer, notnull: true }
+    type:                  { type: enum, values: [application, user], notnull: true, default: "application" }
+    name:                  { type: string(255), notnull: true }
+    hash:                  { type: string(32), notnull: true }
+    value:                 { type: string }
+  indexes:
+    hash_UNIQUE:
+      fields: [hash]
+      type: unique
+  relations:
+    MemberApplication: { onDelete: CASCADE, foreignAlias: Settings }
+
+ApplicationPersistentData:
+  columns:
+    application_id: { type: integer, notnull: true }
+    member_id:      { type: integer(4), notnull: true }
+    name:           { type: string(128), notnull: true }
+    value:          { type: string }
+  indexes:
+    name_UNIQUE:
+      fields: [application_id, member_id, name]
+      type: unique
+  relations:
+    Application: { onDelete: CASCADE, foreignAlias: PersistentDatas }
+    Member:      { onDelete: CASCADE, foreignAlias: PersistentDatas }

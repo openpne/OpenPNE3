@@ -1,0 +1,5 @@
+all:
+  blog_action_size:       20
+  blog_component_size:    5
+  update_blog_rss_cache_limit: 100
+  blog_rss_cache_dir: "/plugins/opBlogPlugin"

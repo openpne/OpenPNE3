@@ -1,0 +1,252 @@
+diff --git apps/pc_frontend/templates/_tosaka.php apps/pc_frontend/templates/_tosaka.php
+index 556e497..2bc5599 100644
+--- apps/pc_frontend/templates/_tosaka.php
++++ apps/pc_frontend/templates/_tosaka.php
+@@ -60,6 +60,7 @@
+   {{/if}}
+ </script>
+ 
++<?php $publicFlags = Doctrine::getTable('ActivityData')->getPublicFlags(); //コードを一箇所にするためにviewに定義している ?>
+ 
+ <!-- POSTFORM TMPL -->
+ <div class="postform hide toggle1">
+@@ -74,15 +75,34 @@
+     </div>
+   </div>
+   <div class="row posttextarea">
+-    <textarea id="tosaka_postform_body" class="span12" rows="4" placeholder="<?php echo __('What are you doing now?') ?>"></textarea>
++    <textarea id="tosaka_postform_body" class="span12" rows="4" tabindex="1" placeholder="<?php echo __('What are you doing now?') ?>"></textarea>
+   </div>
+   <div class="row">
++    <div id="timeline-submit-error" class="timeline-mode" style="display: none;"></div>
++    <input id="timeline-submit-upload" type="file" name="timeline-submit-upload" enctype="multipart/form-data" class="timeline-mode" style="display: none;">
++    <span id="timeline-upload-photo-button" class="btn timeline-mode" style="display: none;"><span class="icon-camera"></span></span>
++    <?php if (!$community): ?>
++    <select id="timeline-public-flag" class="timeline-mode" style="display: none;">
++          <?php foreach ($publicFlags as $value => $text): ?>
++            <option value="<?php echo $value ?>" style="display: none;" class="timeline-mode"><?php echo __($text) ?></option>
++          <?php endforeach; ?>
++    </select>
++    <?php else: ?>
++    <span class="timeline-community-name" style="display: none" class="timeline-mode">このコミュニティに</span>
++    <input type="hidden" id="timeline-public-flag">
++    <?php endif; ?>
+     <?php if ($community): ?>
+-    <button id="tosaka_postform_submit" data-community-id="<?php echo $community->getId() ?>" class="span12 btn small btn-primary"><?php echo __('%post_activity%') ?></button>
++    <button id="tosaka_postform_submit" data-community-id="<?php echo $community->getId() ?>" class="span12 btn small btn-primary basic-mode"><?php echo __('%post_activity%') ?></button>
++    <button id="timeline_postform_submit" data-community-id="<?php echo $community->getId() ?>" class="span4 btn small btn-primary timeline-mode" tabindex="2" disabled="disabled" style="display: none;"><?php echo __('%post_activity%') ?></button>
+     <?php else: ?>
+-    <button id="tosaka_postform_submit" class="span12 btn small btn-primary"><?php echo __('%post_activity%') ?></button>
++    <button id="tosaka_postform_submit" class="span12 btn small btn-primary basic-mode"><?php echo __('%post_activity%') ?></button>
++    <button id="timeline_postform_submit" class="span4 btn small btn-primary timeline-mode" tabindex="2" disabled="disabled" style="display: none;"><?php echo __('%post_activity%') ?></button>
+     <?php endif; ?>
+-    <div class="center hide" id="timelinePostLoading"><?php echo op_image_tag('ajax-loader.gif') ?></div>
++    <div class="photo-info" style="display: none;">
++      <span id="photo-remove"><span class="icon-remove icon-white"></span></span>
++      <span id="photo-file-name"></span>
++    </div>
++    <div class="center hide" id="timelinePostLoading" class="timeline-mode" style="display: none;"><?php echo op_image_tag('ajax-loader.gif') ?></div>
+   </div>
+ </div>
+ <!-- POSTFORM TMPL -->
+@@ -95,14 +115,18 @@
+     <div class="container">
+       <div class="nav-collapse toggle1">
+         <div class="row">
+-          <div class="span11 white font14 toggle1_close">MENU</div>
++          <div class="span10 white font14 toggle1_close">MENU</div>
+           <div class="span1">
+-            <?php echo op_image_tag('UPARROW', array('class' => 'toggle1_close')) ?>
++            <?php echo op_image_tag('UPARROW', array('class' => 'toggle1_close', 'style' => 'padding-left: 22px;')) ?>
+           </div>
+         </div>
+         <?php include_component('default', 'smtMenu') ?>
+       </div>
+-      <a class="btn btn-navbar brand" data-toggle="collapse" data-target=".nav-collapse"><?php echo $op_config['sns_name'] ?></a>
++      <a class="btn btn-navbar brand" data-toggle="collapse" data-target=".nav-collapse">
++        <span class="icon-bar"></span>
++        <span class="icon-bar"></span>
++        <span class="icon-bar"></span>
++      </a>
+       <?php if (opToolkit::isSecurePage()): ?>
+       <div id="notification_center" class="center">
+         <?php echo op_image_tag('NOTIFY_CENTER.png', array('height' => '32', 'class' => 'ncbutton')) ?>
+diff --git apps/pc_frontend/templates/smtLayoutGroup.php apps/pc_frontend/templates/smtLayoutGroup.php
+index 467e431..60ee782 100644
+--- apps/pc_frontend/templates/smtLayoutGroup.php
++++ apps/pc_frontend/templates/smtLayoutGroup.php
+@@ -31,6 +31,7 @@ var openpne = '.$json.';
+ <?php op_smt_use_javascript('smt_notify') ?>
+ <?php op_smt_use_javascript('smt_tosaka') ?>
+ <?php op_smt_use_javascript('smt_menu') ?>
++<?php op_smt_use_javascript('jquery.upload.min.js') ?>
+ <?php op_smt_include_javascripts() ?>
+ </head>
+ <body id="<?php printf('page_%s_%s', $this->getModuleName(), $this->getActionName()) ?>" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
+@@ -42,7 +43,7 @@ var openpne = '.$json.';
+ <div id="face" class="row">
+   <?php if (isset($op_layout['community'])): ?>
+   <div class="span2">
+-    <?php echo op_image_tag_sf_image($op_layout['community']->getImageFileName(), array('size' => '48x48')) ?>
++    <?php echo op_image_tag_sf_image($op_layout['community']->getImageFileName(), array('size' => '48x48', 'class' => 'rad10')) ?>
+   </div>
+   <div class="span8">
+     <div class="row face-name"><?php echo $op_layout['community']->getName() ?></div>
+diff --git apps/pc_frontend/templates/smtLayoutHome.php apps/pc_frontend/templates/smtLayoutHome.php
+index bf9201a..7b80979 100644
+--- apps/pc_frontend/templates/smtLayoutHome.php
++++ apps/pc_frontend/templates/smtLayoutHome.php
+@@ -31,13 +31,15 @@ var openpne = '.$json.';
+ <?php op_smt_use_javascript('smt_notify') ?>
+ <?php op_smt_use_javascript('smt_tosaka') ?>
+ <?php op_smt_use_javascript('smt_menu') ?>
++<?php op_smt_use_javascript('jquery.upload.min.js') ?>
++
+ <?php op_smt_include_javascripts() ?>
+ </head>
+ <body id="<?php printf('page_%s_%s', $this->getModuleName(), $this->getActionName()) ?>" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
+ <?php include_partial('global/tosaka') ?>
+ <div id="face" class="row">
+   <div class="span2">
+-    <?php echo op_image_tag_sf_image($sf_user->getMember()->getImageFileName(), array('size' => '48x48')) ?>
++    <?php echo op_image_tag_sf_image($sf_user->getMember()->getImageFileName(), array('size' => '48x48', 'class' => 'rad10')) ?>
+   </div>
+   <div class="span8">
+     <div class="row face-name"><?php echo $sf_user->getMember()->getName() ?></div>
+diff --git apps/pc_frontend/templates/smtLayoutMember.php apps/pc_frontend/templates/smtLayoutMember.php
+index edd8588..5a0587b 100644
+--- apps/pc_frontend/templates/smtLayoutMember.php
++++ apps/pc_frontend/templates/smtLayoutMember.php
+@@ -31,6 +31,7 @@ var openpne = '.$json.';
+ <?php op_smt_use_javascript('smt_notify') ?>
+ <?php op_smt_use_javascript('smt_tosaka') ?>
+ <?php op_smt_use_javascript('smt_menu') ?>
++<?php op_smt_use_javascript('jquery.upload.min.js') ?>
+ <?php op_smt_include_javascripts() ?>
+ </head>
+ <body id="<?php printf('page_%s_%s', $this->getModuleName(), $this->getActionName()) ?>" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
+@@ -38,7 +39,7 @@ var openpne = '.$json.';
+ <div id="face" class="row">
+   <?php if (isset($op_layout['member'])): ?>
+   <div class="span2">
+-    <?php echo op_image_tag_sf_image($op_layout['member']->getImageFileName(), array('size' => '48x48')) ?>
++    <?php echo op_image_tag_sf_image($op_layout['member']->getImageFileName(), array('size' => '48x48', 'class' => 'rad10')) ?>
+   </div>
+   <div class="span8">
+     <div class="row face-name"><?php echo $op_layout['member']->getName() ?></div>
+diff --git apps/pc_frontend/templates/smtLayoutSns.php apps/pc_frontend/templates/smtLayoutSns.php
+index 15dba17..5602788 100644
+--- apps/pc_frontend/templates/smtLayoutSns.php
++++ apps/pc_frontend/templates/smtLayoutSns.php
+@@ -31,6 +31,7 @@ var openpne = '.$json.';
+ <?php op_smt_use_javascript('smt_notify') ?>
+ <?php op_smt_use_javascript('smt_tosaka') ?>
+ <?php op_smt_use_javascript('smt_menu') ?>
++<?php op_smt_use_javascript('jquery.upload.min.js') ?>
+ <?php op_smt_include_javascripts() ?>
+ </head>
+ <body id="<?php printf('page_%s_%s', $this->getModuleName(), $this->getActionName()) ?>" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
+diff --git web/css/smt_main.css web/css/smt_main.css
+index 19ba275..e9af164 100644
+--- web/css/smt_main.css
++++ web/css/smt_main.css
+@@ -104,7 +104,8 @@ input[type="checkbox"], input[type="radio"] {
+ }
+ 
+ .postform, .ncform, .menuform {
+-  background: #555;
++  //background: #555;
++  background: #255980;
+ }
+ .white{
+   color:#fff;
+@@ -123,12 +124,12 @@ input[type="checkbox"], input[type="radio"] {
+ }
+ 
+ .postform {
+-  padding-top: 4px;
+-  padding-bottom: 52px;
++  padding-top: 10px;
++  padding-bottom: 8px;
+   border-bottom: 6px solid #909090;
+ }
+ .postform .posttextarea {
+-  margin: 4px 0;
++  margin: 8px 0;
+ }
+ .postform .posttextarea textarea {
+   margin: 0;
+@@ -178,6 +179,7 @@ input[type="checkbox"], input[type="radio"] {
+   top: 2px;
+   left: 90px;
+   line-height: 10px;
++  width: 12px;
+ }
+ 
+ .tosaka_margin, .right_margin, .left_margin, .center_margin {
+@@ -205,10 +207,16 @@ input[type="checkbox"], input[type="radio"] {
+ }
+ 
+ .gadget_header {
+-  height: 20px;
+-  background: #333;
+-  color: #fff;
++  font-size: medium;
+   text-align: center;
++  padding-top: 2px;
++  
++  margin: 10px 0!important;
++  height: 30px;
++  background: transparent url(../opSkinBasicPlugin/images/bg_parts_heading_440.gif) no-repeat 0 0;
++  background-size: 320px 30px;
++  line-height: 26px;
++  color: #FFFFFF;
+ }
+ 
+ body {
+@@ -320,6 +328,7 @@ hr.white2 {
+ 
+ input.btn320[type="submit"] {
+   width: 320px;
++  height: 35px;
+ }
+ 
+ * {
+@@ -384,7 +393,7 @@ table td {
+ 
+ .navbar .brand
+ {
+-  padding: 4px 20px 8px;
++  padding: 8px 8px 8px;
+ }
+ 
+ /*----------------------------------------------
+@@ -423,9 +432,7 @@ table td {
+ .navbar .brand {
+   padding-left: 10px;
+   padding-right: 10px;
+-  margin: 0 0 0 -5px;
+-  min-width: 90px;
+-  max-width: 100px;
++  margin: 0 50px 0 5px;
+   overflow: hidden;
+   text-align: center;
+ }
+diff --git web/js/jquery.upload.min.js web/js/jquery.upload.min.js
+new file mode 100644
+index 0000000..1d843ad
+--- /dev/null
++++ web/js/jquery.upload.min.js
+@@ -0,0 +1,12 @@
++/*
++ * jQuery.upload v1.0.2
++ *
++ * Copyright (c) 2010 lagos
++ * Dual licensed under the MIT and GPL licenses.
++ *
++ * http://lagoscript.org
++ */
++(function(b){function m(e){return b.map(n(e),function(d){return'<input type="hidden" name="'+d.name+'" value="'+d.value+'"/>'}).join("")}function n(e){function d(c,f){a.push({name:c,value:f})}if(b.isArray(e))return e;var a=[];if(typeof e==="object")b.each(e,function(c){b.isArray(this)?b.each(this,function(){d(c,this)}):d(c,b.isFunction(this)?this():this)});else typeof e==="string"&&b.each(e.split("&"),function(){var c=b.map(this.split("="),function(f){return decodeURIComponent(f.replace(/\+/g," "))});
++d(c[0],c[1])});return a}function o(e,d){var a;a=b(e).contents().get(0);if(b.isXMLDoc(a)||a.XMLDocument)return a.XMLDocument||a;a=b(a).find("body").html();switch(d){case "xml":a=a;if(window.DOMParser)a=(new DOMParser).parseFromString(a,"application/xml");else{var c=new ActiveXObject("Microsoft.XMLDOM");c.async=false;c.loadXML(a);a=c}break;case "json":a=window.eval("("+a+")");break}return a}var p=0;b.fn.upload=function(e,d,a,c){var f=this,g,j,h;h="jquery_upload"+ ++p;var k=b('<iframe name="'+h+'" style="position:absolute;top:-9999px" />').appendTo("body"),
++i='<form target="'+h+'" method="post" enctype="multipart/form-data" />';if(b.isFunction(d)){c=a;a=d;d={}}j=b("input:checkbox",this);h=b("input:checked",this);i=f.wrapAll(i).parent("form").attr("action",e);j.removeAttr("checked");h.attr("checked",true);g=(g=m(d))?b(g).appendTo(i):null;i.submit(function(){k.load(function(){var l=o(this,c),q=b("input:checked",f);i.after(f).remove();j.removeAttr("checked");q.attr("checked",true);g&&g.remove();setTimeout(function(){k.remove();c==="script"&&b.globalEval(l);
++a&&a.call(f,l)},0)})}).submit();return this}})(jQuery);

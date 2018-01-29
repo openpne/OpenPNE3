@@ -1,0 +1,30 @@
+Member:
+  member_1:
+    id: ~
+    name: "OpenPNE君"
+    is_active: 1
+
+MemberConfig:
+  member_address_1:
+    name: "pc_address"
+    value: "sns@example.com"
+    Member: member_1
+  member_mobile_address_1:
+    name: "mobile_address"
+    value: "sns@example.com"
+    Member: member_1
+  member_password_1:
+    name: "password"
+    value: "<?php echo md5('password') ?>"
+    Member: member_1
+
+Gadget:
+  timelineall_gadget:
+    type: contents
+    name: timelineAll
+
+GadgetConfig:
+  timelineall_gadget_config:
+    Gadget: timelineall_gadget
+    name: limit
+    value: 5

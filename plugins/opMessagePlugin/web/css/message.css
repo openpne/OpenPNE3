@@ -1,0 +1,159 @@
+@CHARSET "UTF-8";
+
+/*==============================================================================
+ * 14. messageDetailBox（メッセージ詳細ボックス）
+ *----------------------------------------------------------------------------*/
+#Body .messageDetailBox th:first-child,
+#Body .messageDetailBox th.first-child {
+  border-left-width: 1px;
+}
+.messageDetailBox th,
+.messageDetailBox td {
+  padding: 5px;
+}
+.messageDetailBox td.photo {
+  width: 120px;
+  text-align: center;
+}
+.messageDetailBox th {
+  width: 54px;
+  padding-left: 0;
+  padding-right: 16px;
+  text-align: right;
+}
+#Body .messageDetailBox td {
+  border-left: none;
+}
+#Body .messageDetailBox td.photo {
+  border-left: 1px solid #CCCCCC;
+}
+.messageDetailBox ul.photo {
+  margin: 10px;
+  text-align: center;
+}
+.messageDetailBox p.text {
+  margin: 10px 60px;;
+}
+.messageDetailBox ul.photo li {
+  display: inline;
+  margin-left: 6px;
+}
+.messageDetailBox div.operation {
+  zoom: 1;
+  overflow: hidden;
+  overflow: -moz-scrollbars-none;
+}
+.messageDetailBox form.delete {
+  float: left;
+  width: 50%;
+  text-align: left;
+}
+.messageDetailBox form.send {
+  float: right;
+  width: 50%;
+  text-align: right;
+}
+.messageDetailBox form ul.moreInfo {
+  display: inline;
+}
+.messageDetailBox div.attachFile {
+  padding: 16px 5px;
+}
+/*==============================================================================
+ * 29. messageList（メッセージリスト）
+ *----------------------------------------------------------------------------*/
+.messageList .partsHeading p.date {
+  font-weight: bold;
+}
+.messageList .pagerRelativeMulti {
+  zoom: 1;
+  overflow: hidden;
+  overflow: -moz-scrollbars-none;
+}
+.messageList .pagerRelativeMulti .pager {
+  position: static;
+  float: right;
+  width: 350px;
+  margin-top: 1px;
+  text-align: right;
+}
+.messageList p.icons {
+  float: left;
+  width: 160px;
+}
+.messageList p.icons img {
+  padding-right: 16px;
+  vertical-align: text-bottom;
+}
+.messageList tr {
+  height: 20px;
+}
+.messageList tr.unread {
+}
+#Body .messageList th.delete {
+  font-weight: normal;
+}
+#Body .messageList th {
+  padding: 0 2px;
+  border-width: 1px 0 0;
+  font-weight: bold;
+}
+#Body .messageList td {
+  padding: 0 2px;
+  border-width: 1px 0 0;
+}
+#Body .messageList td .input_checkbox {
+  margin-left: 4px;
+}
+.messageList td.status {
+  text-align: center;
+}
+.messageList col.status {
+  width: 35px;
+}
+.messageList col.delete {
+  width: 35px;
+}
+.messageList col.target {
+  width: 130px;
+}
+.messageList col.title {
+  width: auto;
+}
+.messageList col.date {
+  width: 80px;
+}
+.messageList table span {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.messageList div.operation p {
+  margin-top: 8px;
+  margin-bottom: 5px;
+}
+.messageList div.operation ul.moreInfo {
+  text-align: left;
+}
+
+/*==============================================================================
+ * 19. prevNextLinkLine
+ *----------------------------------------------------------------------------*/
+.prevNextLinkLine p.prev {
+  float: left;
+  width: 50%;
+  text-align: left;
+}
+
+.prevNextLinkLine p.next {
+  float: right;
+  width: 50%;
+  text-align: right;
+}
+
+.block.prevNextLinkLine {
+  padding: 4px 10px 20px 10px;
+}
+

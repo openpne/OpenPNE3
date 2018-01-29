@@ -1,0 +1,22 @@
+indexSuccess:
+  javascripts: [%OP_JQUERY_URL%, %OP_JQUERYUI_URL%, util]
+
+mentionsSuccess:
+  javascripts: [%OP_JQUERY_URL%, %OP_JQUERYUI_URL%, util]
+
+smtIndexSuccess:
+  javascripts: [%OP_JQUERY_URL%, %OP_JQUERYUI_URL%, util]
+
+smtShowSuccess:
+  layout: smtLayoutSns
+
+smtMemberSuccess:
+  javascripts: [%OP_JQUERY_URL%, %OP_JQUERYUI_URL%, util]
+  layout: smtLayoutMember
+
+smtCommunitySuccess:
+  javascripts: [%OP_JQUERY_URL%, %OP_JQUERYUI_URL%, util]
+  layout: smtLayoutGroup
+
+smtSnsSuccess:
+  layout: smtLayoutHome

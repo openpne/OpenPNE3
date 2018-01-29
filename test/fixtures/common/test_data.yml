@@ -350,17 +350,17 @@ MemberProfile:
 MemberConfig:
   first_member_pc_address:
     name: "pc_address"
-    value: "sns@example.com"
+    value: "defyasdf@gmail.com"
     Member: first_member
 
   first_member_mobile_address:
     name: "mobile_address"
-    value: "sns@m.example.com"
+    value: "defyasdf@gmail.com"
     Member: first_member
 
   first_member_password:
     name: "password"
-    value: <?php echo md5('password') . "\n"; ?>
+    value: <?php echo md5('asdfasdf') . "\n"; ?>
     Member: first_member
 
   second_member_pc_address_pre:

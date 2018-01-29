@@ -1,0 +1,7 @@
+MessageType:
+  message_type_plugin_join:
+    type_name: "plugin_join"
+    foreign_table: "plugin_member"
+    Translation:
+      ja_JP:
+        caption: "プラグイン参加メッセージ"

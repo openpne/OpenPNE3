@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+<channel>
+
+<title>Example Feed</title>
+<description>example feed</description>
+<link>http://example.com/</link>
+<lastBuildDate>Fri, 1 Jan 2010 01:00:00 GMT</lastBuildDate>
+
+<item>
+<title>title_1</title>
+<link>http://example.com/1</link>
+<pubDate>Fri, 1 Jan 2010 00:00:00 GMT</pubDate>
+<description>description_1</description>
+</item>
+
+<item>
+<title>title_2</title>
+<link>http://example.com/2</link>
+<pubDate>Fri, 1 Jan 2010 01:00:00 GMT</pubDate>
+<description>description_2</description>
+</item>
+
+</channel>
+</rss>

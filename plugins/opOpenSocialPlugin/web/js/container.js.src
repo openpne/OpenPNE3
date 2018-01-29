@@ -1,0 +1,86 @@
+var Container = Class.create();
+
+Container.prototype = {
+  maxHeight: 4096,
+  
+  initialize: function(web_prefix, api_prefix) {
+    gadgets.rpc.register('resize_iframe', this.setHeight);
+    gadgets.rpc.register('set_pref', this.setUserPref);
+    gadgets.rpc.register('set_title', this.setTitle);
+    gadgets.rpc.register('requestNavigateTo', this.requestNavigateTo);
+    gadgets.rpc.register('osapi._handleGadgetRpcMethod', this.handleGadgetRpcMethod);
+
+    this.webPrefix = web_prefix;
+    this.apiPrefix = api_prefix;
+  },
+  
+  setHeight: function(height) {
+    if ($(this.f) != undefined) {
+      height += 28;
+      if (height > gadgets.container.maxHeight) {
+        height = gadgets.container.maxHeight;
+      }
+      Element.setStyle($(this.f), {'height':height+'px'});
+    }
+  },
+  
+  _parseIframeUrl: function(url) {
+    var ret = new Object();
+    var hashParams = url.replace(/#.*$/, '').split('&');
+    var param = key = val = '';
+    for (i = 0 ; i < hashParams.length; i++) {
+      param = hashParams[i];
+      key = param.substr(0, param.indexOf('='));
+      val = param.substr(param.indexOf('=') + 1);
+      ret[key] = val;
+    }
+    return ret;
+  },
+  
+  setUserPref: function(editToken, name, value) {
+    if ($(this.f) != undefined) {
+      var params = gadgets.container._parseIframeUrl($(this.f).src);
+      var url = gadgets.container.apiPrefix + '/prefs/set';
+      new Ajax.Request(url, {method: 'get', parameters: { name: name, value: value, st: params.st }});
+    }
+  },
+  
+  setTitle: function(title) {
+    var element = $(this.f+'_title');
+    if (element != undefined) {
+      element.update(gadgets.util.escapeString(title));
+    }
+  },
+  
+  _getUrlForView: function(view, person, app, mod) {
+    if (view === 'home') {
+      return gadgets.container.webPrefix;
+    } else if (view === 'profile') {
+      return gadgets.container.webPrefix + '/member/' + person;
+    } else if (view === 'canvas') {
+      return gadgets.container.webPrefix + '/application/canvas/' + mod;
+    } else {
+      return null;
+    }
+  },
+  
+  requestNavigateTo: function(view, opt_params) {
+    if ($(this.f) != undefined) {
+      var params = gadgets.container._parseIframeUrl($(this.f).src);
+      var url = gadgets.container._getUrlForView(view, params.owner, params.aid, params.mid);
+      if (opt_params) {
+        var paramStr = Object.toJSON(opt_params);
+        if (paramStr.length > 0) {
+          url += '?appParams=' + encodeURIComponent(paramStr);
+        }
+      }
+      if (url && document.location.href.indexOf(url) == -1) {
+        document.location.href = url;
+      }
+    }
+  },
+
+  handleGadgetRpcMethod: function(requests)
+  {
+  }
+}

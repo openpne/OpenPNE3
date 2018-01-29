@@ -1,0 +1,21 @@
+timelineAll:
+  caption:
+    ja_JP: "SNSメンバーのタイムライン"
+    en_US: "SNS member's timeline"
+  description:
+    ja_JP: "SNSメンバー全員のタイムラインが表示されます。"
+    en_US: "All SNS members' time line is displayed."
+  component: [timeline, timelineAll]
+  config:
+    limit:
+      Name:      "limit"
+      Caption:   "最大表示件数"
+      FormType:  "select"
+      ValueType:  "int"
+      IsRequired: true
+      Default:    20
+      Choices:
+        5: 5
+        10: 10
+        15: 15
+        20: 20

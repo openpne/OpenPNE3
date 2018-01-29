@@ -8,6 +8,8 @@ Navigation:
         caption: "マイホーム"
       en:
         caption: "My Home"
+      zh_CN:
+        caption: "我的首页"
 
   secure_global_navigation_member_search:
     type: "secure_global"
@@ -18,6 +20,8 @@ Navigation:
         caption: "メンバー検索"
       en:
         caption: "Search Members"
+      zh_CN:
+        caption: "找成员"
 
   secure_global_navigation_community_search:
     type: "secure_global"
@@ -28,6 +32,8 @@ Navigation:
         caption: "コミュニティ検索"
       en:
         caption: "Search Communities"
+      zh_CN:
+        caption: "找群组"
 
   secure_global_navigation_config:
     type: "secure_global"
@@ -38,6 +44,8 @@ Navigation:
         caption: "設定変更"
       en:
         caption: "Settings"
+      zh_CN:
+        caption: "设置"
 
   secure_global_navigation_invite:
     type: "secure_global"
@@ -48,6 +56,8 @@ Navigation:
         caption: "友人を招待する"
       en:
         caption: "Invite"
+      zh_CN:
+        caption: "邀请"
 
   secure_global_navigation_logout:
     type: "secure_global"
@@ -58,6 +68,8 @@ Navigation:
         caption: "ログアウト"
       en:
         caption: "Logout"
+      zh_CN:
+        caption: "退出"
 
   default_navigation_home:
     type: "default"
@@ -68,6 +80,8 @@ Navigation:
         caption: "ホーム"
       en:
         caption: "Home"
+      zh_CN:
+        caption: "首页"
 
   default_navigation_friend_list:
     type: "default"
@@ -78,6 +92,8 @@ Navigation:
         caption: "マイフレンド"
       en:
         caption: "My Friends"
+      zh_CN:
+        caption: "我的好友"
 
   default_navigation_profile_confirm:
     type: "default"
@@ -88,6 +104,8 @@ Navigation:
         caption: "プロフィール確認"
       en:
         caption: "Profile"
+      zh_CN:
+        caption: "资料"
 
   default_navigation_profile_edit:
     type: "default"
@@ -98,6 +116,8 @@ Navigation:
         caption: "プロフィール編集"
       en:
         caption: "Edit Profile"
+      zh_CN:
+        caption: "编辑资料"
 
   friend_navigation_home:
     type: "friend"
@@ -108,6 +128,8 @@ Navigation:
         caption: "ホーム"
       en:
         caption: "Home"
+      zh_CN:
+        caption: "首页"
 
   friend_navigation_friend_list:
     type: "friend"
@@ -118,6 +140,8 @@ Navigation:
         caption: "フレンドリスト"
       en:
         caption: "Friends"
+      zh_CN:
+        caption: "好友"
 
   community_navigation_home:
     type: "community"
@@ -128,6 +152,8 @@ Navigation:
         caption: "コミュニティトップ"
       en:
         caption: "Community Top"
+      zh_CN:
+        caption: "群榜"
 
   community_navigation_join:
     type: "community"
@@ -138,6 +164,8 @@ Navigation:
         caption: "コミュニティに参加"
       en:
         caption: "Join Community"
+      zh_CN:
+        caption: "加群"
 
   community_navigation_quit:
     type: "community"
@@ -148,3 +176,5 @@ Navigation:
         caption: "コミュニティを退会"
       en:
         caption: "Leave Community"
+      zh_CN:
+        caption: "离开"

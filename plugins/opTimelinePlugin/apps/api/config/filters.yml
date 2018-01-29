@@ -1,0 +1,10 @@
+rendering: ~
+
+security:
+  class: opAPISecurityFilter
+
+# insert your own filters here
+
+cache:     ~
+
+execution: ~

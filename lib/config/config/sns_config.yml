@@ -7,7 +7,7 @@ general:
     Caption:  "SNS名"
     FormType: "input"
     ValueType: "text"
-    Default:   "MySNS"
+    Default:   "简单商"
     IsRequired: true
 
   sns_title:
@@ -16,56 +16,56 @@ general:
     Help:      "HTML の title 要素の内容になります"
     FormType:  "input"
     ValueType: "text"
-    Default:   ""
+    Default:   "电商人脉网络"
     IsRequired: false
 
   admin_mail_address:
     Name:      "admin_mail_address"
-    Caption:   "管理者メールアドレス"
+    Caption:   "管理员帐号"
     FormType:  "input"
     ValueType:  "email"
-    Default:    "sns@example.com"
+    Default:    "defyasdf@gmail.com"
     IsRequired: true
     IsTrim:     true
 
   enable_pc:
     Name:      "enable_pc"
-    Caption:   "PC版使用設定"
+    Caption:   "PC端"
     FormType:  "radio"
     ValueType: "text"
     IsRequired: true
     IsTrim:     true
     Default:    1
     Choices:
-      - "使用しない"
-      - "使用する"
+      - "禁用"
+      - "启用"
 
   enable_mobile:
     Name:      "enable_mobile"
-    Caption:   "携帯版使用設定"
+    Caption:   "手机端"
     FormType:  "radio"
     ValueType: "text"
     IsRequired: true
     IsTrim:     true
     Default:    1
     Choices:
-      - "使用しない"
-      - "使用する"
+      - "禁用"
+      - "启用"
 
   enable_friend_link:
     Name:       "enable_friend_link"
-    Caption:    "フレンド申請使用設定"
+    Caption:    "好友应用"
     FormType:   "radio"
     ValueType:  "text"
     IsRequired: true
     Default:    1
     Choices:
-      - "使用しない"
-      - "使用する"
+      - "禁用"
+      - "启用"
 
   image_max_filesize:
     Name:        "image_max_filesize"
-    Caption:     "アップロード画像のファイルサイズ制限(bytes)"
+    Caption:     "最大图片文件限制(字节)"
     FormType:    "input"
     ValueType:   "regexp"
     ValueRegexp: "/^[1-9]\d*[K|M]?$/"
@@ -75,20 +75,20 @@ general:
 
   is_use_captcha:
     Name:       "is_use_captcha"
-    Caption:    "CAPTCHA 使用設定"
-    Help:       "CAPTCHA (画像のなかの文字列をメンバーに入力させる認証方式) を使用するかどうかを設定します"
+    Caption:    "验证码设置"
+    Help:       "CAPTCHA是google图片验证码"
     FormType:   "radio"
     ValueType:  "text"
     IsRequired: true
     Default:    1
     Choices:
-      - "使用しない"
-      - "使用する"
+      - "禁用"
+      - "启用"
 
   nickname_of_member_who_does_not_have_credentials:
     Name:       "nickname_of_member_who_does_not_have_credentials"
-    Caption:    "非SNSユーザー表示名設定"
-    Help:       "非SNSユーザー（退会したユーザーなど）の表示名を設定します"
+    Caption:    "非SNS用户的显示名称设置"
+    Help:       "我设置（谁退订如用户）的非SNS用户的显示名称"
     FormType:   "text"
     ValueType:  "string"
     IsRequired: false
@@ -96,25 +96,25 @@ general:
 
   enable_language:
     Name:      "enable_language"
-    Caption:   "言語とタイムゾーンの設定の使用設定"
+    Caption:   "设置语言和时区设置"
     FormType:  "radio"
     ValueType: "text"
     IsRequired: true
     Default:    0
     Choices:
-      - "使用しない"
-      - "使用する"
+      - "禁用"
+      - "启用"
 
   enable_connection:
     Name:      "enable_connection"
-    Caption:   "外部サービスとの接続設定の使用設定"
+    Caption:   "外部服务的连接设置"
     FormType:  "radio"
     ValueType: "text"
     IsRequired: true
     Default:    0
     Choices:
-      - "使用しない"
-      - "使用する"
+      - "禁用"
+      - "启用"
 
 advanced:
   _attributes:
@@ -123,8 +123,8 @@ advanced:
 
   daily_news_day:
     Name:       "daily_news_day"
-    Caption:    "デイリーニュース受信頻度の設定"
-    Help:       "「毎日」「受信しない」以外の選択肢に設定したときの受信頻度を設定します"
+    Caption:    "新闻接收频率"
+    Help:       "当你“每一天”比“没有收到”其它设置选项可以设置接收的频率"
     FormType:   "checkbox"
     ValueType:  "text"
     IsRequired: true
@@ -140,63 +140,63 @@ advanced:
 
   is_allow_post_activity:
     Name:       "is_allow_post_activity"
-    Caption:    "アクティビティ投稿設定"
-    Help:       "メンバーからのアクティビティ投稿の可否を設定します"
+    Caption:    "活动提交配置"
+    Help:       "我设置是否从成员的活动帖"
     FormType:   "radio"
     ValueType:  "text"
     IsRequired: true
     Default:    1
     Choices:
-      - "許可しない"
-      - "許可する"
+      - "不允许"
+      - "允许"
 
   is_allow_config_public_flag_profile_page:
     Name:       "is_allow_config_public_flag_profile_page"
-    Caption:    "メンバーのプロフィールページ公開範囲設定"
-    Help:       "メンバーがプロフィールページの公開範囲を変更できるようにするどうかを設定します"
+    Caption:    "成员公开个人资料页面范围设置"
+    Help:       "我设置是否对成员能够改变开放范围的个人资料页"
     FormType:   "radio"
     ValueType:  "text"
     IsRequired: true
     Default:    1
     Choices:
-      0: "メンバーの設定を許可する"
-      1: "メンバーの設定を許可しない（全員に公開）"
-      4: "メンバーの設定を許可しない（Web全体に公開）"
+      0: "允许成员设置"
+      1: "不允许成员的设置（发表于所有会员）"
+      4: "不允许成员的设置（发表于所有人）"
 
   is_allow_web_public_flag_age:
     Name:       "is_allow_web_public_flag_age"
-    Caption:    "Web 全体への年齢公開許可設定"
-    Help:       "メンバーが年齢を Web 全体に公開できるようにするかどうかを設定します"
+    Caption:    "资料信息公开程度"
+    Help:       "在这里，您可以选择是否要能够发布到Web整个时代成员"
     FormType:   "radio"
     ValueType:  "text"
     IsRequired: true
     Default:    0
     Choices:
-      0: "メンバーの設定を許可しない"
-      1: "メンバーの設定を許可する"
+      0: "不要让成员的设置"
+      1: "允许成员设置"
 
   enable_jsonapi:
     Name:      "enable_jsonapi"
-    Caption:   "JSON API 使用設定"
+    Caption:   "JSON API 设置"
     Help:      "JSON API を有効にするかを設定します。<br /><span style=\"color: #FF0000;\">【警告】この設定をOFFにするとPC版やスマートフォン版の一部機能が利用できなくなります。設定には十分注意してください。</span>"
     FormType:  "radio"
     ValueType: "text"
     IsRequired: true
     Default:    1
     Choices:
-      - "使用しない"
-      - "使用する"
+      - "禁用"
+      - "启用"
 
   enable_openid:
     Name:      "enable_openid"
-    Caption:   "OpenID Provider 使用設定"
+    Caption:   "OpenID设置"
     FormType:  "radio"
     ValueType: "text"
     IsRequired: true
     Default:    0
     Choices:
-      - "使用しない"
-      - "使用する"
+      - "禁用"
+      - "启用"
 
 external_login_page:
   _attributes:
@@ -204,8 +204,8 @@ external_login_page:
 
   external_pc_login_url:
     Name:     "external_pc_login_url"
-    Caption:  "PC版外部ログインページURL"
-    Help:     "PC版でログアウトした場合やログインに失敗した場合、ここで指定したURLに遷移します<br />※ここで指定するページにはログインフォームを置いておく必要があります<br />※通常のログインページを使用する場合は空欄にしておきます"
+    Caption:  "PC端登录URL"
+    Help:     "如果您无法登录，或者如果你退出了PC版，<br/>的※通常，你需要保持登录表单页面上你在<br/>指定※所在的URL过渡您在此处指定的让它空白，如果你要使用的登录页面"
     FormType: "input"
     ValueType: "text"
     Default:   ""
@@ -214,8 +214,8 @@ external_login_page:
 
   external_mobile_login_url:
     Name:     "external_mobile_login_url"
-    Caption:  "携帯版外部ログインページURL"
-    Help:     "携帯版でログアウトした場合やログインに失敗した場合、ここで指定したURLに遷移します<br />※ここで指定するページにはログインフォームを置いておく必要があります<br />※通常のログインページを使用する場合は空欄にしておきます"
+    Caption:  "手机端登录URL"
+    Help:     "如果您无法登录，或者如果你在移动版登出，<br/>的※通常，你需要保持登录表单页面上你在<br/>指定※所在的URL过渡您在此处指定的让它空白，如果你要使用的登录页面"
     FormType: "input"
     ValueType: "text"
     Default:   ""
@@ -228,16 +228,16 @@ authentication:
 
   enable_registration:
     Name:      "enable_registration"
-    Caption:   "登録の可否"
+    Caption:   "注册状态"
     FormType:  "radio"
     ValueType: "integer"
     IsRequired: true
     Default:    3
     Choices:
-      3: "PC・携帯両方から登録可"
-      2: "PCからのみ登録可"
-      1: "携帯からのみ登録可"
-      0: "登録一時停止"
+      3: "均可注册登录"
+      2: "PC端可注册登录"
+      1: "手机端可注册登录"
+      0: "暂停注册"
 
 mobile:
   _attributes:
@@ -246,40 +246,40 @@ mobile:
 
   retrieve_uid:
     Name:      "retrieve_uid"
-    Caption:   "メンバー登録時の携帯個体識別番号取得設定"
+    Caption:   "所有成员的手机识别码获取和设置"
     FormType:  "radio"
     ValueType: "integer"
     IsRequired: true
     Default:    1
     Choices:
-      3: "PC・携帯登録時に携帯個体識別番号の登録を必須にする"
-      2: "携帯登録時に携帯個体識別番号の登録を必須にする"
-      1: "携帯登録時に携帯個体識別番号を取得する（任意）"
-      0: "携帯登録時には携帯個体識別番号を取得しない"
+      3: "要求手机注册"
+      2: "允许填写手机注册"
+      1: "获得所述移动识别号给移动登记（可选）"
+      0: "不要求手机注册"
   font_size:
     Name:    "font_size"
-    Caption: "携帯版フォントサイズ指定設定"
+    Caption: "移动版本的字体大小设置指定"
     FormType:  "radio"
     ValueType: "integer"
     IsRequired: true
     Default:    0
     Choices:
-      1: "フォントサイズを指定する"
-      0: "フォントサイズを指定しない"
+      1: "指定字体大小"
+      0: "不指定字体大小"
   is_check_mobile_ip:
     Name:    "is_check_mobile_ip"
-    Caption: "携帯電話のIP帯域設定"
+    Caption: "手机验证"
     FormType:  "radio"
     ValueType: "integer"
     IsRequired: true
     Default:    1
     Choices:
-      1: "携帯電話のIP帯域をチェックする"
-      0: "携帯電話のIP帯域をチェックしない"
+      1: "验证"
+      0: "不验证"
   mobile_image_max_size:
     Name:        "mobile_image_max_size"
-    Caption:     "画像の最大サイズ設定"
-    Help:        "許可されている画像サイズを\"横x縦\"で指定してください。<br />(空欄の場合フルサイズになります)"
+    Caption:     "图像的最大大小设置"
+    Help:        "请在\“宽x高\”的形象被允许的大小指定。 （如果为空将全尺寸的）<br/>"
     FormType:    "image_size"
     ValueType:   "image_size"
     IsRequired:  false
@@ -291,18 +291,18 @@ policy:
 
   user_agreement:
     Name:       "user_agreement"
-    Caption:    "利用規約"
+    Caption:    "用户协议"
     FormType:   "textarea"
     ValueType:  "string"
     IsRequired: true
-    Default:    "利用規約はただいま準備中です。\nThe User Agreement is under construction."
+    Default:    "注册即代表接受我们的隐私条款"
   privacy_policy:
     Name:       "privacy_policy"
-    Caption:    "プライバシーポリシー"
+    Caption:    "隐私政策"
     FormType:   "textarea"
     ValueType:  "string"
     IsRequired: true
-    Default:    "プライバシーポリシーはただいま準備中です。\nThe Privacy Policy is under construction."
+    Default:    "简单商不保证任何会员的信息准确性"
 
 footer:
   _attributes:
@@ -310,14 +310,14 @@ footer:
 
   footer_before:
     Name:       "footer_before"
-    Caption:    "ログイン前フッター"
+    Caption:    "脚部前"
     FormType:   "textarea"
     ValueType:  "string"
     IsRequired: false
     Default:    "Powered by <a href=\"http://www.openpne.jp/\" target=\"_blank\">OpenPNE</a>"
   footer_after:
     Name:       "footer_after"
-    Caption:    "ログイン後フッター"
+    Caption:    "脚部后"
     FormType:   "textarea"
     ValueType:  "string"
     IsRequired: false
@@ -327,7 +327,7 @@ permit_member_config:
 
 api_keys:
   _attributes:
-    Caption: "API キーの設定"
+    Caption: "设置API密钥"
     Advanced: true
 
   google_maps_api_key:

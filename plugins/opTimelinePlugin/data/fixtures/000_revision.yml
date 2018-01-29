@@ -1,0 +1,4 @@
+SnsConfig:
+  op_timeline_plugin_current_revision:
+    name: "opTimelinePlugin_revision"
+    value: 1

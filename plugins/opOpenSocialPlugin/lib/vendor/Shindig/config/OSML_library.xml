@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<Templates xmlns:os="http://ns.opensocial.org/2008/markup">
+  <Namespace prefix="os" url="http://ns.opensocial.org/2008/markup"/>
+  <Template tag="os:Name">
+    <os:If condition="${!My.person.profileUrl}">
+      ${My.person.name.formatted}
+    </os:If>
+    <a href="${My.person.profileUrl}" if="${My.person.profileUrl}">${My.person.name.formatted}</a>
+  </Template>
+  <Template tag="os:Badge">
+    <div>
+      <img src="${My.person.thumbnailUrl}" if="${My.person.thumbnailUrl}"/>
+      <os:If condition="${!My.person.profileUrl}">
+        ${My.person.name.formatted}
+      </os:If>
+      <a href="${My.person.profileUrl}" if="${My.person.profileUrl}">${My.person.name.formatted}</a>
+    </div> 
+  </Template>
+  <TemplateDef tag="os:PeopleSelector">
+    <Template>
+      <select onchange="os_PeopleSelector_onchange(this)" 
+          name="${My.inputName}" 
+          multiple="${My.multiple}"
+          x-var="${My.var}"
+          x-max="${My.max}"
+          x-onselect="${My.onselect}">
+        <option repeat="${My.group}" value="${Cur.id}" selected="${Cur.id == My.selected}">${Cur.name.formatted}</option>          
+      </select>
+    </Template>
+    <JavaScript><![CDATA[
+        function os_PeopleSelector_onchange(select) {
+          var selected;
+          if (!select.multiple) {
+            selected = select.options[select.selectedIndex].value;
+          } else {
+            selected = [];
+            for (var i = 0; i < select.options.length; i++) {
+              if (select.options[i].selected) {
+                selected.push(select.options[i].value);
+              }
+            }
+            var max = select.getAttribute("x-max");
+            try {
+              max = 1*max;
+            } catch (e) {
+              max = 0;
+            }
+            if (max && selected.length > max && select['x-selected']) {
+              selected = select['x-selected'];
+              for (var i = 0; i < select.options.length; i++) {
+                select.options[i].selected = false;
+                for (var j = 0; j < selected.length; j++) {
+                  if (select.options[i].value == selected[j]) {
+                    select.options[i].selected = true;
+                    break;
+                  }
+                }
+              }
+            }
+          }
+          select['x-selected'] = selected;          
+          var varAttr = select.getAttribute("x-var");
+          if (varAttr) {
+            if (opensocial.data) {
+              opensocial.data.getDataContext().putDataSet(varAttr, selected);
+            }
+          }
+          var onSelect = select.getAttribute("x-onselect");
+          if (onSelect) {
+            if (window[onSelect] && typeof(window[onSelect]) == 'function') {
+              window[onSelect](selected);
+            } else {
+              if (!select['x-onselect-fn']) {
+                select['x-onselect-fn'] = new Function(onSelect);
+              }
+              select['x-onselect-fn'].apply(select);
+            }
+          }
+        }
+    ]]></JavaScript>
+  </TemplateDef>
+</Templates>

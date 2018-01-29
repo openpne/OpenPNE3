@@ -1,0 +1,235 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Apps</source>
+        <target>アプリ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>App Gallery</source>
+        <target>アプリギャラリー</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>You haven't the app.</source>
+        <target>アプリを持っていません。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The Apps can be added from %0%.</source>
+        <target>%0%からアプリを追加することができます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>About App</source>
+        <target>アプリ詳細</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>App Info</source>
+        <target>アプリ情報</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>App Information</source>
+        <target>アプリ情報</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Name</source>
+        <target>名前</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Status</source>
+        <target>状態</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Screen Shot</source>
+        <target>スクリーンショット</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Thumbnail</source>
+        <target>サムネイル</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Discription</source>
+        <target>詳細</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Users</source>
+        <target>ユーザ数</target>
+      </trans-unit>
+      <trans-unit>
+        <source>App Users</source>
+        <target>アプリ利用者</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Members that has "%0%"</source>
+        <target>「%0%」を利用しているメンバー</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>About Author</source>
+        <target>作成者詳細</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Author</source>
+        <target>作成者</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Affiliation</source>
+        <target>所属</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Aboutme</source>
+        <target>作者について</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Photo</source>
+        <target>写真</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Link</source>
+        <target>リンク</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Quote</source>
+        <target>引用</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Search Apps</source>
+        <target>アプリ検索</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Keyword</source>
+        <target>キーワード</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Order by</source>
+        <target>並び順</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Newest</source>
+        <target>新着順</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Oldest</source>
+        <target>古い順</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Your search queries did not match any Apps.</source>
+        <target>アプリが見つかりませんでした。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Add this App</source>
+        <target>このアプリを追加</target>
+      </trans-unit>
+      <trans-unit id ="">
+        <source>Remove</source>
+        <target>削除</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Information</source>
+        <target>情報</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Add a new App</source>
+        <target>アプリを新しく追加する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Add</source>
+        <target>追加</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Add App: %0%</source>
+        <target>アプリ追加: %0%</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you wish to install this App?</source>
+        <target>このアプリを追加しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The App might use your profile and your %friend% information.</source>
+        <target>アプリはあなたのプロフィール情報や、%friend%情報を扱うことがあります。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Failed in adding the App.</source>
+        <target>アプリの追加に失敗しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Remove the App</source>
+        <target>アプリを削除する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you really delete this App?</source>
+        <target>本当にこのアプリを削除しますか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The App was removed successfully.</source>
+        <target>アプリを削除しました。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>App Settings: %0%</source>
+        <target>アプリ設定: %0%</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Display on the home</source>
+        <target>ホームに表示する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Display on your profile</source>
+        <target>プロフィールに表示する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Display on your profile</source>
+        <target>プロフィールに表示する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Deny</source>
+        <target>禁止</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>The SNS administrator's permission is necessary</source>
+        <target>SNS管理者の許可が必要</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Allow</source>
+        <target>許可</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Install new App</source>
+        <target>新しいアプリをインストールする</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Apps Installed by You</source>
+        <target>あなたがインストールしたアプリ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Update</source>
+        <target>更新</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If the members use the app, the SNS administrator's permission is necessary.</source>
+        <target>メンバーがアプリを利用するには、SNS管理者による許可が必要です。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>This app is waiting to approval by the SNS administrator, or is inactive.</source>
+        <target>このアプリは管理者による承認待ちか、無効化されています。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>This app is already installed.</source>
+        <target>このアプリはすでにインストールされています。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Member who Added App</source>
+        <target>アプリ提供者</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Information for Developer</source>
+        <target>開発者向け情報</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Update App Info</source>
+        <target>アプリ情報更新</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>This is waiting to approval by the SNS administrator.</source>
+        <target>管理者による承認待ち</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

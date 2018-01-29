@@ -1,0 +1,258 @@
+input.error, select.error, textarea.error {
+  color: #B94A48;
+  border-color: #B94A48;
+}
+
+input.error:focus, select.error:focus, textarea.error:focus {
+  border-color: #953b39;
+  -webkit-box-shadow: 0 0 6px #d59392;
+  -moz-box-shadow: 0 0 6px #d59392;
+  box-shadow: 0 0 6px #d59392;
+}
+
+.timestamp,
+.public-flag {
+  color: #999!important;
+}
+
+a.screen-name {
+  color: #000;
+  font-weight: bold!important;
+}
+
+a.screen-name:link {
+  color: #000;
+}
+
+.timeline-postform {
+  position: relative; 
+  margin-bottom: 20px;
+}
+
+#timeline-textarea {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+#timeline-submit-loader {
+  position: absolute;
+  display: none;
+  margin-left: 230px;
+  margin-top: 3px;
+}
+
+#timeline-submit-loader img {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  max-width: 28px;
+  max-height : 28px;
+}
+
+#timeline-submit-error,
+#timeline-upload-error
+{
+  display: none;
+  color: #EE0000;
+  padding-bottom: 5px;
+}
+
+#timeline-submit-area{
+  width: 48px;
+  float: left;
+  display: none;
+}
+
+.timeline-submit {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  display: none;
+  float: right;
+  display: table;
+}
+
+#timeline-loadmore {
+  width: 100%;
+}
+
+#timeline-loadmore-loading {
+  width: 100%;
+  text-align: center;
+  display: none;
+}
+
+.timeline-post {
+  padding: 10px;
+  border-top: 2px solid #DDD;
+  overflow: hidden;
+}
+
+.timeline-post-member-image {
+  float: left;
+  width: 50px;
+}
+
+.timeline-post-member-image img {
+  max-width: 48px;
+  max-height: 48px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.timeline-post-content {
+  margin-left: 50px;
+}
+
+.timeline-member-name {
+  display: block;
+  padding: 0 5px;
+}
+
+.timeline-post-body {
+  display: block;
+  padding: 5px;
+}
+
+.timeline-post-control {
+  display: block;
+  padding: 0 5px;
+  font-size: 12px;
+}
+
+.timeline-post-comments {
+  margin-top: 10px;
+  background-color: whiteSmoke;
+}
+
+.timeline-post-comment {
+  display: block;
+  padding: 5px;
+  border-top: 1px solid #DDD;
+}
+
+.timeline-post-comment-member-image {
+  float: left;
+  width: 40px;
+  max-height: 36px;
+  max-width: 36px;
+}
+
+.timeline-post-comment-content {
+  min-height: 33px;
+  margin-left: 40px;
+}
+
+.timeline-post-comment-name-and-body {
+  display: inline;
+  font-size: 12px;
+}
+
+.timeline-post-comment-control {
+  display: block;
+  font-size: 11px;
+}
+
+
+
+.timeline-post-comment-form {
+  display: none;
+  padding: 5px;
+  border-top: 1px solid #DDD;
+}
+
+.timeline-post-comment-form-loader {
+  display: none;
+  padding: 5px;
+  border-top: 1px solid #DDD;
+  text-align: center;
+  color: #EE0000;
+}
+
+.timeline-post-comment-form-loader img {
+  max-width: 20px;
+  max-height: 20px;
+}
+
+.comment-form-show {
+  display: block;
+}
+
+.timeline-post-comment-form-input {
+  width: 308px;
+  height: 15px;
+  padding: 2px;
+  margin-bottom: 0px;
+  margin-right: 4px;
+}
+
+.timeline-comment-link {
+  cursor: pointer;
+}
+
+.timeline-post-delete-confirm {
+  display: none;
+}
+
+.timeline-comment-loadmore {
+  display: none;
+  cursor: pointer;
+  padding: 2px 0 2px 6px;
+  margin: 3px 0 -8px 0;
+  font-size: 12px;
+  background-color: whiteSmoke;
+}
+
+.timeline-comment-loader {
+  display: none;
+}
+
+.urlBlock {
+  margin: 5px;
+  padding: 5px;
+  background-color: whiteSmoke;
+  border: 1px solid #DDD;
+}
+
+#timeline-public-flag {
+  position: absolute;
+  margin: 0;
+  width: 100px;
+  right: 110px;
+  bottom: 5px;
+}
+
+#timeline-submit-upload {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  display: none;
+}
+
+#timeline-upload-photo-button {
+  position: absolute;
+  padding: 6px 7px;
+  bottom: 5px;
+}
+
+#photo-file-name {
+  position: absolute;
+  bottom: 10px;
+  left: 68px;
+  width: 200px;
+}
+
+#photo-remove {
+  display: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 12px;
+  left: 53px;
+}
+
+#timeline-submit-button {
+  margin-right: 9px;
+}

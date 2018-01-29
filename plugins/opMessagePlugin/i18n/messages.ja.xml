@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>%Friend% link request message</source>
+        <target>%Friend%申請メッセージ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%Community% joining request message</source>
+        <target>%Community%参加申請メッセージ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%Community% taking over request message</source>
+        <target>%Community%管理者交代要請メッセージ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%Community% sub admin request message</source>
+        <target>%Community%副管理者申請依頼</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1% sent you %friend% link request message.</source>
+        <target>%1% さんから%friend%申請メッセージが届いています。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Message</source>
+        <target>メッセージ</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Please allow or reject this request in the confirmation list page.</source>
+        <target>この要請について承認待ちリストから認証または拒否を選択してください。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1% sent you %2% %community% joining request message.</source>
+        <target>%1% さんから%2%%community%の参加希望メッセージが届いています。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1% sent you %2% %community% taking over request message.</source>
+        <target>%1% さんから%2%%community%の管理者交代希望メッセージが届いています。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%1% sent you %2% %community% sub admin request message.</source>
+        <target>%1% さんから%2%%community%の副管理者申請依頼が届いています。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you delete this message?</source>
+        <target>削除してよろしいですか？</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Do you delete messages?</source>
+        <target>削除してよろしいですか？</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

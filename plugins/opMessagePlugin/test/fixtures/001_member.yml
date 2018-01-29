@@ -1,0 +1,26 @@
+Member:
+  first_member:
+    id: 1
+    name: "<&\"'>Member.name ESCAPING HTML TEST DATA"
+    is_active: 1
+
+  second_member:
+    id: 2
+    name: "<&\"'>Member.name ESCAPING HTML TEST DATA"
+    is_active: 1
+
+MemberConfig:
+  first_member_member_config_pc_address:
+    name: "pc_address"
+    value: "sns@example.com"
+    Member: first_member
+
+  first_member_member_config_pc_address:
+    name: "mobile_address"
+    value: "sns@example.com"
+    Member: first_member
+
+  first_member_member_config_password:
+    name: "password"
+    value: <?php echo md5('password') . "\n"; ?>
+    Member: first_member

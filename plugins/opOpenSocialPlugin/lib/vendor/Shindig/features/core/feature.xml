@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements. See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership. The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License. You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied. See the License for the
+  specific language governing permissions and limitations under the License.
+-->
+<feature>
+  <name>core</name>
+  <gadget>
+    <script src="core.js"/>
+    <script src="config.js"/>
+    <!-- for gadgets.util.sanitizeHtml -->
+    <script src="res://com/google/caja/plugin/html-sanitizer-minified.js"></script>
+    <script src="util.js"/>
+    <script src="auth.js"/>
+    <script src="auth-init.js"/>
+    <script src="prefs.js"/>
+    <script src="json.js"/>
+    <script src="legacy.js"/>
+    <script src="log.js"/>
+  </gadget>
+  <container>
+    <script src="log.js"/>
+    <script src="util.js"/>
+    <script src="json.js"/>
+  </container>
+</feature>

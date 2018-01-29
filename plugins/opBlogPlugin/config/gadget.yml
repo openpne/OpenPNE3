@@ -1,0 +1,12 @@
+blogFriend:
+  caption:
+    ja_JP: "フレンドの最新ブログ"
+  description:
+    ja_JP: "フレンドの最新のブログの一覧を表示します。"
+  component: [blog, blogFriend]
+blogUser:
+  caption:
+    ja_JP: "自分の最新ブログ"
+  description:
+    ja_JP: "自分の最新のブログの一覧を表示します。"
+  component: [blog, blogUser]

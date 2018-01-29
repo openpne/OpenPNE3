@@ -1,0 +1,4 @@
+all:
+  message_is_upload_images:   false
+  message_max_image_file_num: 3
+  message_pagenateSize:       10

@@ -1,0 +1,11 @@
+general:
+  pear_handle:
+    Name:       "pear_handle"
+    Caption:    "PEAR Account"
+    FormType:   "input"
+    ValueType:  "text"
+    IsRegist:   true
+    IsConfig:   false
+    IsUnique:   true
+    IsRequired: true
+    IsConfirm:  false

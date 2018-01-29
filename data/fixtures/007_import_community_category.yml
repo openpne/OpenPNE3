@@ -1,6 +1,6 @@
 CommunityCategory:
   community_category:
-    name: "コミュニティカテゴリ"
+    name: "群组类别"
     is_allow_member_community: 1
 
   community_category_local:
@@ -9,11 +9,11 @@ CommunityCategory:
     is_allow_member_community: 1
 
   community_category_gourmet:
-    name: "グルメ"
+    name: "美食"
     tree_key: 1
     is_allow_member_community: 1
 
   community_category_sports:
-    name: "スポーツ"
+    name: "运动"
     tree_key: 1
     is_allow_member_community: 1

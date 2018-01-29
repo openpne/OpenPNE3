@@ -1,0 +1,32 @@
+memberPluginBox:
+  caption:
+    ja_JP: "開発しているプラグインリスト（画像リスト）"
+  description:
+    ja_JP: "開発しているプラグインのリストを設置できます。"
+  viewable_privilege: 4
+  component: [package, memberPlugins]
+  config:
+    row:
+      Name:      "row"
+      Caption:   "表示する行"
+      FormType:  "select"
+      ValueType:  "int"
+      IsRequired: true
+      Default:    3
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
+    col:
+      Name:      "col"
+      Caption:   "表示する列"
+      FormType:  "select"
+      ValueType:  "int"
+      IsRequired: true
+      Default:    3
+      Choices:    {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
+
+listMemberPlugin:
+  caption:
+    ja_JP: "開発しているプラグインリスト"
+  description:
+    ja_JP: "開発しているプラグインのリストを設置できます。"
+  viewable_privilege: 4
+  component: [package, listMemberPlugin]

@@ -1,0 +1,102 @@
+options:
+  charset: utf8
+actAs: [Timestampable]
+
+PluginPackage:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    name: { type: string(64), notnull: true }
+    summary: { type: string, notnull: true }
+    description: { type: string, notnull: true }
+    repository: { type: string }
+    bts: { type: string }
+    license: { type: string, notnull: true }
+    file_id: { type: integer(4) }
+    category_id: { type: integer(4), default: 1, notnull: true }
+    user_count: { type: integer(4), default: 0 }
+  indexes:
+    name_UNIQUE:
+      fields: [name]
+      type: unique
+  relations:
+    Image:
+      class: File
+      local: file_id
+      onDelete: set null
+    Category:
+      class: PluginCategory
+      local: category_id
+      onDelete: cascade
+
+PluginCategory:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    name: { type: string(64), default: "", notnull: true }
+    description: { type: string }
+  indexes:
+    name_UNIQUE:
+      fields: [name]
+      type: unique
+
+PluginMember:
+  actAs: [Timestampable, opActivateBehavior]
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    position: { type: enum, values: [lead, developer, contributor], default: "lead" }
+    package_id: { type: integer(4), notnull: true }
+    member_id: { type: integer(4), notnull: true }
+  relations:
+    Package:
+      class: PluginPackage
+      local: package_id
+      foreign: id
+      onDelete: cascade
+    Member:
+      local: member_id
+      foreign: id
+      onDelete: cascade
+
+PluginRelease:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    package_id: { type: integer(4), notnull: true }
+    version: { type: string(64), default: "", notnull: true }
+    stability: { type: enum, values: [dev, alpha, beta, stable], default: "stable" }
+    file_id: { type: integer(4), notnull: true }
+    member_id: { type: integer(4), notnull: true }
+    package_definition: { type: clob, notnull: true }
+  indexes:
+    package_id_version_UNIQUE:
+      fields: [package_id, version]
+      type: unique
+  relations:
+    Package:
+      class: PluginPackage
+      local: package_id
+      foreign: id
+      onDelete: cascade
+    File:
+      local: file_id
+      foreign: id
+      onDelete: cascade
+    Member:
+      local: member_id
+      foreign: id
+      onDelete: cascade
+
+PluginUser:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    package_id: { type: integer(4), notnull: true }
+    member_id: { type: integer(4), notnull: true }
+  relations:
+    Package:
+      class: PluginPackage
+      local: package_id
+      foreign: id
+      onDelete: cascade
+    Member:
+      local: member_id
+      foreign: id
+      onDelete: cascade
+

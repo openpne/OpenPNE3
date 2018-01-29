@@ -1,0 +1,23 @@
+# History
+
+Original work come from http://google-jstemplate.googlecode.com and was included at 2009-04-03.
+
+# Running Tests
+
+You need to download JsUnit from http://jsunit.net/ and unzip to this folder,
+or create a symlink 'jsunit' to your local jsunit directory.
+Then you can run the tests for OpenSocial Template library by running the
+following script in a unix-like environment:
+
+firefox jsunit/testRunner.html?testpage=$PWD/ost_test.html
+
+TODO: Instructions for loading test page for other operating system/browser
+environments.
+
+N.B.: Has been verified only on FF1.5 and FF2.
+
+N.B.: These tests run in the jsunit.net version JsUnit, other than the
+jsunit.berlios.de version used in the tests for other features. The heavy use of
+client-side objects requires a browser-based JsUnit. This rules out the other
+version, which uses an embedded Rhino engine. jsnuit.net does not support Maven,
+so we cannot integrate the testing into Maven build process.

@@ -1,0 +1,16 @@
+#for information
+homeSuccess:
+  customize:
+    unreadMessage:
+      template:     [message, unreadMessage]
+      is_component: true
+      parts:        [information]
+      target:       [bottom]
+
+#for member profile
+profileSuccess:
+  customize:
+    sendMessageLink:
+      template: [message, sendMessageLink]
+      parts:    [menu]
+      target:   [friendBottom]

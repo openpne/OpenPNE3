@@ -1,0 +1,357 @@
+# pear channel rest interface
+channel_xml:
+  url:  /channel.xml
+  class: sfRequestRoute
+  param: { module: pluginRest, action: channel, sf_format: xml }
+  requirements:
+    sf_method: [get, head]
+
+plugin_rest:
+  url:  /pluginRest/
+  class: sfRequestRoute
+  param: { module: pluginRest, action: root, sf_format: xml }
+  requirements:
+    sf_method: [get, head]
+
+plugin_rest_category_all:
+  url:  /pluginRest/c/categories.xml
+  class: sfRequestRoute
+  param: { module: pluginRest, action: categoryAll, sf_format: xml }
+  requirements:
+    sf_method: [get, head]
+
+plugin_rest_category_info:
+  url:  /pluginRest/c/:name/info.xml
+  class: sfDoctrineRoute
+  options: { model: PluginCategory, type: object }
+  param: { module: pluginRest, action: categoryInfo, sf_format: xml }
+  requirements:
+    sf_method: [get, head]
+
+plugin_rest_category_packages:
+  url:  /pluginRest/c/:name/packages.xml
+  class: sfDoctrineRoute
+  options: { model: PluginCategory, type: object }
+  param: { module: pluginRest, action: categoryPackages, sf_format: xml }
+  requirements:
+    sf_method: [get, head]
+
+plugin_rest_category_packagesinfo:
+  url:  /pluginRest/c/:category/packagesinfo.xml
+  class: sfDoctrineRoute
+  options: { model: PluginCategory, type: object }
+  param: { module: pluginRest, action: categoryPackagesInfo, sf_format: xml }
+  requirements:
+    sf_method: [get, head]
+
+plugin_rest_maintainer_all:
+  url:  /pluginRest/m/allmaintainers.xml
+  class: sfRequestRoute
+  param: { module: pluginRest, action: maintainerAll, sf_format: xml }
+  requirements:
+    sf_method: [get, head]
+
+plugin_rest_maintainer_info:
+  url:  /pluginRest/m/:name/info.xml
+  class: sfRequestRoute
+  param: { module: pluginRest, action: maintainerInfo, sf_format: xml }
+  requirements:
+    sf_method: [get, head]
+
+plugin_rest_package_all:
+  url:  /pluginRest/p/packages.xml
+  class: sfRequestRoute
+  param: { module: pluginRest, action: packageAll, sf_format: xml }
+  requirements:
+    sf_method: [get, head]
+
+plugin_rest_package_info:
+  url:  /pluginRest/p/:name/info.xml
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: packageInfo, sf_format: xml }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+plugin_rest_package_maintainers:
+  url:  /pluginRest/p/:name/maintainers.xml
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: packageMaintainers, sf_format: xml }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+plugin_rest_package_maintainers2:
+  url:  /pluginRest/p/:name/maintainers2.xml
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: packageMaintainers2, sf_format: xml }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+plugin_rest_release_all:
+  url:  /pluginRest/r/:name/allreleases.xml
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: releaseAll, sf_format: xml }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+plugin_rest_release_all2:
+  url:  /pluginRest/r/:name/allreleases2.xml
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: releaseAll2, sf_format: xml }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+plugin_rest_release_latest:
+  url:  /pluginRest/r/:name/latest.txt
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: latestRelease, sf_format: txt }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+plugin_rest_release_stable:
+  url:  /pluginRest/r/:name/stable.txt
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: stableRelease, sf_format: txt }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+plugin_rest_release_beta:
+  url:  /pluginRest/r/:name/beta.txt
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: betaRelease, sf_format: txt }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+plugin_rest_release_alpha:
+  url:  /pluginRest/r/:name/alpha.txt
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: alphaRelease, sf_format: txt }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+plugin_rest_release_devel:
+  url:  /pluginRest/r/:name/devel.txt
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: pluginRest, action: develRelease, sf_format: txt }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+plugin_rest_release_version:
+  url:  /pluginRest/r/:name/:version
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object, segment_separators: [/], suffix: .xml }
+  param: { module: pluginRest, action: releaseVersion, sf_format: xml }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+#plugin_rest_release_deps:
+#  url:  /pluginRest/r/:name/deps.:version.txt
+
+# plugin_download
+plugin_download_tgz:
+  url:  /get/:name-:version
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object, segment_separators: [/, -], suffix: .tgz }
+  param: { module: pluginRest, action: downloadTgz }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+plugin_download_without_extension:
+  url:  /get/:name-:version
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object, segment_separators: [/, -] }
+  param: { module: pluginRest, action: downloadTgz, sf_format: tgz }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+# application
+package_new:
+  url:  /package/new
+  class: sfRequestRoute
+  param: { module: package, action: new }
+  requirements:
+    sf_method: [get, head]
+
+package_create:
+  url:  /package/create
+  class: sfRequestRoute
+  param: { module: package, action: create }
+  requirements:
+    sf_method: [post]
+
+package_edit:
+  url:  /package/edit/:name
+  class: opDynamicAclRoute
+  options: { model: PluginPackage, type: object, privilege: edit }
+  param: { module: package, action: edit }
+  requirements:
+    name: op.+Plugin
+    sf_method: [get, head]
+
+package_update:
+  url:  /package/:name
+  class: opDynamicAclRoute
+  options: { model: PluginPackage, type: object, privilege: edit }
+  param: { module: package, action: update }
+  requirements:
+    name: op.+Plugin
+    sf_method: [post]
+
+package_use:
+  url:  /package/use/:name
+  class: opDynamicAclRoute
+  options: { model: PluginPackage, type: object, privilege: countUser }
+  param: { module: package, action: toggleUsing }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [post]
+
+package_unuse:
+  url:  /package/unuse/:name
+  class: opDynamicAclRoute
+  options: { model: PluginPackage, type: object, privilege: countUser }
+  param: { module: package, action: toggleUsing }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [post]
+
+package_add_release:
+  url:  /package/:name/release/add
+  class: opDynamicAclRoute
+  options: { model: PluginPackage, type: object, privilege: release }
+  param: { module: package, action: addRelease }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head, post]
+
+package_join:
+  url:  /package/:name/join
+  class: opDynamicAclRoute
+  options: { model: PluginPackage, type: object, privilege: request }
+  param: { module: package, action: join }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head, post]
+
+package_manageMember:
+  url:  /package/:name/manageMember
+  class: opDynamicAclRoute
+  options: { model: PluginPackage, type: object, privilege: manageMember }
+  param: { module: package, action: manageMember }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head, post]
+
+package_home:
+  url:  /package/:name
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: package, action: home }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+package_home_id:
+  url:  /package/id/:id
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: package, action: homeRedirector }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+release_detail:
+  url:  /release/:id
+  class: sfDoctrineRoute
+  options: { model: PluginRelease, type: object }
+  param: { module: package, action: release }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+release_delete:
+  url:  /release/:id/delete
+  class: opDynamicAclRoute
+  options: { model: PluginRelease, type: object, privilege: delete }
+  param: { module: package, action: releaseDelete }
+  requirements:
+    sf_method: [post]
+
+package_list_release:
+  url:  /package/:name/releases
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: package, action: releaseList }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+package_list_member:
+  url:  /package/:name/developers
+  class: sfDoctrineRoute
+  options: { model: PluginPackage, type: object }
+  param: { module: package, action: memberList }
+  requirements:
+    name: op.+[pP]lugin
+    sf_method: [get, head]
+
+package_search:
+  url:  /package/search
+  class: sfRequestRoute
+  param: { module: package, action: search }
+  requirements:
+    sf_method: [get, head]
+
+package_listMember:
+  url:  /package/listMember
+  class: sfRequestRoute
+  param: { module: package, action: listMember }
+  requirements:
+    sf_method: [get, head]
+
+package_listMember_member:
+  url:  /package/listMember/:id
+  class: sfDoctrineRoute
+  options: { model: Member, type: object }
+  param: { module: package, action: listMember }
+  requirements:
+    sf_method: [get, head]
+
+#nodefaults
+package_nodefaults:
+  url: /package/*
+  param: { module: default, action: error }
+
+release_nodefaults:
+  url: /release/*
+  param: { module: default, action: error }
+
+pluginRest_nodefaults:
+  url: /pluginRest/*
+  param: { module: default, action: error }
+
+get_nodefaults:
+  url: /get/*
+  param: { module: default, action: error }

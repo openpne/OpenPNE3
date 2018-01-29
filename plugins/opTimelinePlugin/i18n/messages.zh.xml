@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>Invalid op_screen_name.</source>
+        <target>它是一种用于对其他用户已经在屏幕名称。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

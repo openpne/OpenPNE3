@@ -1,6 +1,6 @@
 Member:
   first_member:
-    name: "OpenPNE君"
+    name: "defyasdf"
     is_active: 1
 
 MemberProfile:
@@ -11,19 +11,19 @@ MemberProfile:
     Profile: profile_sex
 
   first_member_profile_birthday:
-    value: "1988-04-23"
+    value: "1982-06-16"
     public_flag: 1
     Member: first_member
     Profile: profile_birthday
 
   first_member_profile_region:
-    value: "Tokyo"
+    value: "中国"
     public_flag: 1
     Member: first_member
     Profile: profile_region
 
   first_member_profile_self_intro:
-    value: "よろしくお願いします。"
+    value: "谢谢。"
     public_flag: 1
     Member: first_member
     Profile: profile_self_intro
@@ -31,12 +31,12 @@ MemberProfile:
 MemberConfig:
   first_member_pc_address:
     name: "pc_address"
-    value: "sns@example.com"
+    value: "defyasdf@gmail.com"
     Member: first_member
 
   first_member_password:
     name: "password"
-    value: <?php echo md5('password') . "\n"; ?>
+    value: <?php echo md5('asdfasdf') . "\n"; ?>
     Member: first_member
 
   first_member_secret_question:

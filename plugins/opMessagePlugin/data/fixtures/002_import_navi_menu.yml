@@ -1,0 +1,59 @@
+Navigation:
+  default_navigation_message:
+    type: "default"
+    uri:  "message/index"
+    sort_order: 11
+    Translation:
+      ja_JP:
+        caption: "メッセージ"
+      en:
+        caption: "Message"
+
+  friend_navigation_message:
+    type: "friend"
+    uri:  "message/sendToFriend"
+    sort_order: 22
+    Translation:
+      ja_JP:
+        caption: "メッセージを送る"
+      en:
+        caption: "Send Message"
+
+  mobile_home_side_navigation_message:
+    type: "mobile_home_side"
+    uri:  "message/index"
+    sort_order: 20
+    Translation:
+      ja_JP:
+        caption: "ﾒｯｾｰｼﾞ"
+      en:
+        caption: "Message"
+
+#NavigationI18n:
+#  default_navigation_message_i18n_ja:
+#    id: default_navigation_message
+#    caption: "メッセージ"
+#    culture: "ja_JP"
+#  default_navigation_message_i18n_en:
+#    id: default_navigation_message
+#    caption: "Message"
+#    culture: "en"
+#    
+#  friend_navigation_message_i18n_ja:
+#    id: friend_navigation_message
+#    caption: "メッセージを送る"
+#    culture: "ja_JP"
+#  friend_navigation_message_i18n_en:
+#    id: friend_navigation_message
+#    caption: "Send Message"
+#    culture: "en"
+#
+#  mobile_home_side_navigation_message_i18n_ja:
+#    id: mobile_home_side_navigation_message
+#    caption: "ﾒｯｾｰｼﾞ"
+#    culture: "ja_JP"
+#
+#  mobile_home_side_navigation_message_i18n_en:
+#    id: mobile_home_side_navigation_message
+#    caption: "Message"
+#    culture: "en"

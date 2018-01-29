@@ -1,0 +1,19 @@
+Application:
+  paypal_app:
+    url: "http://labs.spicebox.jp/opensocial/apps/paypalbutton.xml"
+    singleton: true
+    is_active: true
+    Translation:
+      ja_JP:
+        title: "PayPal ボタン（寄付・購入）"
+        description: "PayPal（ペイパル）の決済サービスを簡単に設置・利用できるアプリです。会費の集金、アイテム購入の支払いに使える「購入ボタン」と、SNSへの寄付や募金に使える「寄付」ボタンがあります。PayPal ボタンのご利用には PayPal アカウントの登録が必要です。"
+        screenshot: "http://labs.spicebox.jp/opensocial/apps/paypalbutton/ppbutton_screenshot280.png"
+        thumbnail:  "http://labs.spicebox.jp/opensocial/apps/paypalbutton/ppgadget.png"
+        author: "スパイスボックスラボラトリ"
+        author_aboutme: "神部竜二"
+        author_affiliation: "SPICEBOX LABORATORY"
+        author_email: "lab@spicebox.co.jp"
+        author_photo: "http://labs.spicebox.jp/about/images/members/member002.jpg"
+        author_link:  "http://labs.spicebox.jp/"
+        author_quote: "spicebox.NEXT をつくる"
+        updated_at: "1989-01-08 00:00:00"

@@ -1,0 +1,40 @@
+MessageType:
+  message_type_default:
+    type_name: "message"
+    Translation:
+      ja_JP:
+        caption: "通常のメッセージ"
+
+  message_type_friend:
+    type_name: "friend_link"
+    Translation:
+      ja_JP:
+        caption: "フレンド申請"
+
+  message_type_community:
+    type_name: "community_message"
+    foreign_table: "community"
+    Translation:
+      ja_JP:
+        caption: "コミュニティ一括メッセージ"
+
+  message_type_taking_over_community:
+    type_name: "community_taking_over"
+    foreign_table: "community"
+    Translation:
+      ja_JP:
+        caption: "コミュニティ管理者交代メッセージ"
+
+  message_type_joining_community:
+    type_name: "community_joining_request"
+    foreign_table: "community_member"
+    Translation:
+      ja_JP:
+        caption: "コミュニティ参加申請メッセージ"
+
+  message_type_community_sub_admin_request:
+    type_name: "community_sub_admin_request"
+    foreign_table: "community"
+    Translation:
+      ja_JP:
+        caption: "サークル副管理者依頼メッセージ"

@@ -1,0 +1,13 @@
+member_timeline:
+  url: /member/:id/timeline
+  param: { module: timeline, action: member }
+  requirements: { id: \d+ }
+
+community_timeline:
+  url: /community/:id/timeline
+  param: { module: timeline, action: community }
+  requirements: { id: \d+ }
+
+sns_timeline:
+  url: /sns/timeline
+  param: { module: timeline, action: sns }

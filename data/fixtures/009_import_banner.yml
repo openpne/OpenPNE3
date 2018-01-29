@@ -6,6 +6,8 @@ Banner:
         caption: "トップバナー（ログイン前）"
       en:
         caption: "Top banner(before login)"
+      zh_CN:
+        caption: "登录前顶部banner"
   banner_side_before:
     name: "side_before"
     Translation:
@@ -13,6 +15,8 @@ Banner:
         caption: "サイドバナー（ログイン前）"
       en:
         caption: "Side banner(before login)"
+      zh_CN:
+        caption: "登录前侧边banner"
   banner_top_after:
     name: "top_after"
     Translation:
@@ -20,6 +24,8 @@ Banner:
         caption: "トップバナー（ログイン後）"
       en:
         caption: "Top banner (after login)"
+      zh_CN:
+        caption: "登录后顶部banner"
   banner_side_after:
     name: "side_after"
     Translation:
@@ -27,3 +33,5 @@ Banner:
         caption: "サイドバナー（ログイン後）"
       en:
         caption: "Side banner (after login)"
+      zh_CN:
+        caption: "登录后侧边banner"

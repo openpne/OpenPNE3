@@ -1,0 +1,22 @@
+Gadget:
+  timeline_all:
+    type: "contents"
+    name: "timelineAll"
+    sort_order: 120
+  timeline_profile:
+    type: "profileContents"
+    name: "timelineProfile"
+    sort_order: 20
+  timeline_smartphone_home:
+    type: "smartphoneContents"
+    name: "smtTimeline"
+    sort_order: 10
+  timeline_smartphone_profile_by1:
+    type: "smartphoneProfileContents"
+    name: "smtTimelineMemberBy1"
+    sort_order: 200
+  timeline_smartphone_community:
+    type: "smartphoneCommunityContents"
+    name: "smtCommunityTimelineBox"
+    sort_order: 20
+

@@ -1,10 +1,6 @@
 lib/form/doctrine/op*Plugin
 web/cache/*
 log/*
-plugins/op*
-!plugins/opAuthMailAddressPlugin
-!plugins/opSkinBasicPlugin
-plugins/.*
 lib/filter/doctrine/*
 cache/*
 data/migrations/generated/*
@@ -23,3 +19,7 @@ data/config/*
 web/cache/*
 config/config.OpenPNE2.php
 data/*.lck
+/.settings
+/.buildpath
+/.project
+/cache

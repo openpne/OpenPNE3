@@ -1,0 +1,10 @@
+Navigation:
+  secure_global_navi_blog:
+    type: "secure_global"
+    uri: "blog/index"
+    sort_order: 26
+    Translation:
+      ja_JP:
+        caption: "最新Blog"
+      en:
+        caption: "Newest Blog"

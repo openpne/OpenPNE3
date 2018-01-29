@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>OpenSocial API: get member / member's friend item(s)</source>
+        <target>OpenSocial API: メンバー/フレンド情報の取得</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
+

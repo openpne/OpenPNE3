@@ -1,0 +1,39 @@
+Navigation:
+  secure_global_navigation_search_plugin:
+    type: "secure_global"
+    uri: "@package_search"
+    sort_order: 15
+    Translation:
+      en:
+        caption: "Search Plugins"
+      ja_JP:
+        caption: "プラグイン検索"
+  secure_global_navigation_register_plugin:
+    type: "secure_global"
+    uri: "@package_new"
+    sort_order: 15
+    Translation:
+      en:
+        caption: "Regiter Plugins"
+      ja_JP:
+        caption: "プラグイン登録"
+
+  default_navigation_plugin:
+    type: "default"
+    uri: "@package_listMember"
+    sort_order: 15
+    Translation:
+      en:
+        caption: "Plugin"
+      ja_JP:
+        caption: "プラグイン"
+
+  friend_navigation_plugin:
+    type: "friend"
+    uri: "@package_listMember"
+    sort_order: 15
+    Translation:
+      en:
+        caption: "Plugin"
+      ja_JP:
+        caption: "プラグイン"

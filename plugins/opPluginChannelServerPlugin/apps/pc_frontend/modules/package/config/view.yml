@@ -1,0 +1,14 @@
+homeSuccess:
+  layout: layoutA
+
+releaseSuccess:
+  layout: layoutB
+
+memberListSuccess:
+  layout: layoutB
+
+releaseListSuccess:
+  layout: layoutB
+
+addReleaseSuccess:
+  layout: layoutB

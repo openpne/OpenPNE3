@@ -1,0 +1,147 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+        <source>Inbox</source>
+        <target>受信メッセージ</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Sent Message</source>
+        <target>送信済みメッセージ</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>Drafts</source>
+        <target>下書きメッセージ</target>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>Trash</source>
+        <target>ゴミ箱</target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>From</source>
+        <target>送信者</target>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>To</source>
+        <target>宛先</target>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>From/To</source>
+        <target>相手</target>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>Delete</source>
+        <target>削除</target>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>Restore</source>
+        <target>元に戻す</target>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>Reply</source>
+        <target>返信する</target>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>Subject</source>
+        <target>件名</target>
+      </trans-unit>
+      <trans-unit id="12">
+        <source>Created At</source>
+        <target>日付</target>
+      </trans-unit>
+      <trans-unit id="13">
+        <source>Replied</source>
+        <target>返信済み</target>
+      </trans-unit>
+      <trans-unit id="14">
+        <source>Open</source>
+        <target>既読</target>
+      </trans-unit>
+      <trans-unit id="15">
+        <source>Unopened</source>
+        <target>未読</target>
+      </trans-unit>
+      <trans-unit id="16">
+        <source>Check All</source>
+        <target>全てをチェック</target>
+      </trans-unit>
+      <trans-unit id="17">
+        <source>Clear All</source>
+        <target>全てのチェックをはずす</target>
+      </trans-unit>
+      <trans-unit id="18">
+        <source>There are no messages</source>
+        <target>メッセージがありません</target>
+      </trans-unit>
+      <trans-unit id="19">
+        <source>There are new %d messages!</source>
+        <target>新着メッセージが%d件あります！</target>
+      </trans-unit>
+      <trans-unit id="20">
+        <source>Read messages</source>
+        <target>メッセージを読む</target>
+      </trans-unit>
+      <trans-unit id="21">
+        <source>Message</source>
+        <target>メッセージの詳細</target>
+      </trans-unit>
+      <trans-unit id="22">
+        <source>Compose Message</source>
+        <target>メッセージを書く</target>
+      </trans-unit>
+      <trans-unit id="23">
+        <source>Image1</source>
+        <target>写真1</target>
+      </trans-unit>
+      <trans-unit id="24">
+        <source>Image2</source>
+        <target>写真2</target>
+      </trans-unit>
+      <trans-unit id="25">
+        <source>Image3</source>
+        <target>写真3</target>
+      </trans-unit>
+      <trans-unit id="26">
+        <source>Send</source>
+        <target>送信</target>
+      </trans-unit>
+      <trans-unit id="27">
+        <source>Draft</source>
+        <target>下書き保存</target>
+      </trans-unit>
+      <trans-unit id="28">
+        <source>Required.</source>
+        <target>必須項目です。</target>
+      </trans-unit>
+      <trans-unit id="29">
+        <source>remove the current file</source>
+        <target>このファイルを削除する</target>
+      </trans-unit>
+      <trans-unit id="30">
+        <source>The message was sent successfully.</source>
+        <target>メッセージの送信が完了しました。</target>
+      </trans-unit>
+      <trans-unit id="31">
+        <source>The message was saved successfully.</source>
+        <target>メッセージを保存しました。</target>
+      </trans-unit>
+      <trans-unit id="32">
+        <source>Body</source>
+        <target>本文</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Cannot send the message.</source>
+        <target>メッセージを送信できませんでした。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete this message</source>
+        <target>このメッセージを削除する</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Delete messages</source>
+        <target>メッセージを削除する</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

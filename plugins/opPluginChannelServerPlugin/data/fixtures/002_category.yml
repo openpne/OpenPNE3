@@ -1,0 +1,4 @@
+PluginCategory:
+  plugin_category_default:
+    name: default
+    description: "The default catgory"

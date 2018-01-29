@@ -1,5 +1,5 @@
 AdminUser:
   first_admin:
     id: ~
-    username: "admin"
-    password: "password"
+    username: "defyasdf"
+    password: "asdfasdf"
