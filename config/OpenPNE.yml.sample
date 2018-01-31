@@ -244,3 +244,10 @@ mobile_proxys:
 # Configuration of using cookie with mobile (only if it can use)
 #
 is_use_mobile_cookie: true
+
+####################################
+# JSON API 設定
+####################################
+
+# 検索系APIで取得可能にする件数の上限
+json_api_fetch_limit: 20

@@ -2,7 +2,7 @@
 
 $data = array();
 
-foreach ($communities as $community)
+foreach ($pager as $community)
 {
   $data[] = op_api_community($community);
 }
@@ -10,4 +10,5 @@ foreach ($communities as $community)
 return array(
   'status' => 'success',
   'data' => $data,
+  'hasNext' => !$pager->isLastPage(),
 );

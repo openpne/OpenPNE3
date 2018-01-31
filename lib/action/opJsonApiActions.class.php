@@ -111,4 +111,28 @@ class opJsonApiActions extends sfActions
       $this->forward403($message);
     }
   }
+
+  static protected function addSearchCondition(opCursorPager $pager, $request)
+  {
+    if (isset($request['max_id']))
+    {
+      $pager->setMaxId((int)$request['max_id']);
+    }
+
+    if (isset($request['since_id']))
+    {
+      $pager->setSinceId((int)$request['since_id']);
+    }
+
+    $apiFetchLimit = (int)sfConfig::get('op_json_api_fetch_limit');
+    if (isset($request['count']))
+    {
+      $limit = min((int)$request['count'], $apiFetchLimit);
+      $pager->setMaxPerPage($limit);
+    }
+    else
+    {
+      $pager->setMaxPerPage($apiFetchLimit);
+    }
+  }
 }

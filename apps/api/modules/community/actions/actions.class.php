@@ -26,11 +26,13 @@ class communityActions extends opJsonApiActions
       $query->andWhereLike('name', $request['keyword']);
     }
 
-    $this->communities = $query
-      ->limit(sfConfig::get('op_json_api_limit', 20))
-      ->execute();
+    $pager = new opCursorPager($query);
+    self::addSearchCondition($pager, $request);
+    $pager->fetch();
 
-    $this->setTemplate('array');
+    $this->pager = $pager;
+
+    $this->setTemplate('page');
   }
 
   public function executeMember(sfWebRequest $request)
@@ -48,12 +50,16 @@ class communityActions extends opJsonApiActions
       $this->forward400('community_id parameter not specified.');
     }
 
-    $this->members = Doctrine::getTable('Member')->createQuery('m')
-      ->addWhere('EXISTS (FROM CommunityMember cm WHERE m.id = cm.member_id AND cm.is_pre = false AND cm.community_id = ?)', $communityId)
-      ->limit(sfConfig::get('op_json_api_limit', 20))
-      ->execute();
+    $query = Doctrine::getTable('Member')->createQuery('m')
+      ->addWhere('EXISTS (FROM CommunityMember cm WHERE m.id = cm.member_id AND cm.is_pre = false AND cm.community_id = ?)', $communityId);
 
-    $this->setTemplate('array', 'member');
+    $pager = new opCursorPager($query);
+    self::addSearchCondition($pager, $request);
+    $pager->fetch();
+
+    $this->pager = $pager;
+
+    $this->setTemplate('page', 'member');
   }
 
   public function executeJoin(sfWebRequest $request)

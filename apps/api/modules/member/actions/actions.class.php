@@ -33,17 +33,20 @@ class memberActions extends opJsonApiActions
     }
 
     $query = Doctrine::getTable('Community')->createQuery('c')
-      ->innerJoin('c.CommunityMember cm WITH cm.is_pre = false AND cm.member_id = ?', $memberId)
-      ->limit(sfConfig::get('op_json_api_limit', 20));
+      ->innerJoin('c.CommunityMember cm WITH cm.is_pre = false AND cm.member_id = ?', $memberId);
 
     if (isset($request['keyword']))
     {
       $query->whereLike('c.name', $request['keyword']);
     }
 
-    $this->communities = $query->execute();
+    $pager = new opCursorPager($query);
+    self::addSearchCondition($pager, $request);
+    $pager->fetch();
 
-    $this->setTemplate('array', 'community');
+    $this->pager = $pager;
+
+    $this->setTemplate('page', 'community');
   }
 
   public function executeSearch(sfWebRequest $request)
@@ -82,11 +85,13 @@ class memberActions extends opJsonApiActions
       $query->andWhereLike('m.name', $request['keyword']);
     }
 
-    $this->members = $query
-      ->limit(sfConfig::get('op_json_api_limit', 20))
-      ->execute();
+    $pager = new opCursorPager($query);
+    self::addSearchCondition($pager, $request);
+    $pager->fetch();
 
-    $this->setTemplate('array');
+    $this->pager = $pager;
+
+    $this->setTemplate('page');
   }
 
   public function executeFriendAccept(sfWebRequest $request)

@@ -64,36 +64,20 @@ class activityActions extends opJsonApiActions
       $query->andWhereLike('body', $request['keyword']);
     }
 
-    $globalAPILimit = sfConfig::get('op_json_api_limit', 20);
-    if (isset($request['count']) && (int)$request['count'] < $globalAPILimit)
-    {
-      $query->limit($request['count']);
-    }
-    else
-    {
-      $query->limit($globalAPILimit);
-    }
-
-    if (isset($request['max_id']))
-    {
-      $query->addWhere('id <= ?', $request['max_id']);
-    }
-
-    if (isset($request['since_id']))
-    {
-      $query->addWhere('id > ?', $request['since_id']);
-    }
-
     if (isset($request['activity_id']))
     {
       $query->addWhere('id = ?', $request['activity_id']);
     }
 
-    $this->activityData = $query
-      ->andWhere('in_reply_to_activity_id IS NULL')
-      ->execute();
+    $query->andWhere('in_reply_to_activity_id IS NULL');
 
-    $this->setTemplate('array');
+    $pager = new opCursorPager($query);
+    self::addSearchCondition($pager, $request);
+    $pager->fetch();
+
+    $this->pager = $pager;
+
+    $this->setTemplate('page');
   }
 
   public function executeMember(sfWebRequest $request)
@@ -270,9 +254,13 @@ class activityActions extends opJsonApiActions
       ->andWhere('foreign_id IS NULL')
       ->limit(20);
 
-    $this->activityData = $query->execute();
+    $pager = new opCursorPager($query);
+    self::addSearchCondition($pager, $request);
+    $pager->fetch();
 
-    $this->setTemplate('array');
+    $this->pager = $pager;
+
+    $this->setTemplate('page');
   }
 
   protected function checkCommunityMember($communityId)

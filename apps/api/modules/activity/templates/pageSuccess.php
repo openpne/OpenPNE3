@@ -2,7 +2,7 @@
 
 $ac = array();
 
-foreach ($activityData as $activity)
+foreach ($pager as $activity)
 {
   $acEntity = op_api_activity($activity);
 
@@ -23,4 +23,5 @@ foreach ($activityData as $activity)
 return array(
   'status' => 'success',
   'data' => $ac,
+  'hasNext' => !$pager->isLastPage(),
 );
