@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ruleset name="OpenPNE3 Coding Standard">
+  <description>OpenPNE3 Coding Standard</description>
+
+  <exclude-pattern type="relative">^(cache|config|data|plugins|test|web)/</exclude-pattern>
+  <exclude-pattern type="relative">^lib/plugins/</exclude-pattern>
+  <exclude-pattern type="relative">^lib/vendor/</exclude-pattern>
+  <exclude-pattern type="relative">^lib/(filter|form|model)/doctrine/base/</exclude-pattern>
+  <exclude-pattern type="relative">^lib/(filter|form|model)/doctrine/op.+Plugin/</exclude-pattern>
+  <exclude-pattern type="relative">(^|/)templates/</exclude-pattern>
+
+  <rule ref="Zend">
+    <exclude name="PEAR.ControlStructures.ControlSignature"/>
+    <exclude name="PEAR.WhiteSpace.ScopeClosingBrace"/>
+    <exclude name="PEAR.Functions.FunctionCallSignature"/>
+    <exclude name="Zend.NamingConventions.ValidVariableName"/>
+    <exclude name="Squiz.Functions.GlobalFunction"/>
+  </rule>
+  <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+  <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+  <rule ref="Squiz.Scope.MemberVarScope"/>
+  <rule ref="Squiz.Scope.MethodScope"/>
+  <rule ref="Squiz.Strings.DoubleQuoteUsage"/>
+  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+  <rule ref="Generic.WhiteSpace.ScopeIndent">
+    <properties>
+      <property name="indent" value="2"/>
+    </properties>
+  </rule>
+  <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
+</ruleset>
