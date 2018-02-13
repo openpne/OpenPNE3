@@ -203,6 +203,14 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
     return 'everyone';
   }
 
+  public function preDelete($event)
+  {
+    if ($this->relatedExists('File'))
+    {
+      $this->File->delete();
+    }
+  }
+
   public function joinAllMembers($free = false)
   {
     $conn = Doctrine::getTable('Member')->getConnection();

@@ -485,6 +485,10 @@ Community:
     name: "CommunityB"
   community_3:
     name: "CommunityC"
+    File:
+      name: dummy_image_community3
+      type: text/plain
+      FileBin: { bin: hogehoge }
   community_4:
     name: "CommunityD"
   community_5:
@@ -743,6 +747,13 @@ OAuthConsumerInformation:
     Image: dummy_file1
     using_apis: ["webapi_member_get"]
     Member: first_member
+  consumer_information3:
+    name: test3
+    using_apis: [webapi_member_get]
+    Image:
+      name: dummy_consumer_information3_image
+      type: text/plain
+      FileBin: { bin: ~ }
 
 OAuthAdminToken:
   dummy_admin_token1:
@@ -948,6 +959,14 @@ ActivityData:
     Member: first_member
     body: "dummy8"
     template: "xxxx_template"
+
+ActivityImage:
+  activity1_image:
+    ActivityData: dummy_activity1
+    File:
+      name: dummy_image
+      type: text/plain
+      FileBin: { bin: dummy }
 
 SnsTerm:
   term_friend_pc_frontend:
