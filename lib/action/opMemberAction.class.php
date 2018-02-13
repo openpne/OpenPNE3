@@ -396,6 +396,8 @@ abstract class opMemberAction extends sfActions
 
   public function executeDelete(opWebRequest $request)
   {
+    $this->forward404Unless(opConfig::get('enable_leave'));
+
     if (1 == $this->getUser()->getMemberId())
     {
       return sfView::ERROR;

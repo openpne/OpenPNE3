@@ -36,8 +36,12 @@ if ($list)
 ?>
 
 <?php
-$list = array(link_to(__('Delete your %1% account', array('%1%' => $op_config['sns_name'])), '@member_delete'));
-op_include_parts('pageNav', 'navForDelete', array('list' => $list));
+$list = array();
+if (opConfig::get('enable_leave'))
+{
+  $list = link_to(__('Delete your %1% account', array('%1%' => $op_config['sns_name'])), '@member_delete');
+  op_include_parts('pageNav', 'navForDelete', array('list' => $list));
+}
 ?>
 <?php end_slot(); ?>
 
