@@ -131,6 +131,8 @@ class MemberConfigForm extends BaseForm
         'empty_value' => $this->validatorSchema[$name]->getOption('empty_value'),
       ));
 
+      $uniqueValidator->addMessage('duplicate', 'Invalid %name%.');
+
       $this->validatorSchema[$name] = new sfValidatorAnd(array(
         $this->validatorSchema[$name],
         $uniqueValidator,
@@ -235,7 +237,7 @@ class MemberConfigForm extends BaseForm
       return $value;
     }
 
-    throw new sfValidatorError($validator, 'Invalid %name%.', array('name' => $name));
+    throw new sfValidatorError($validator, 'duplicate', array('name' => $name));
   }
 
   public function isValid()
