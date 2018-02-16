@@ -101,14 +101,16 @@ class MemberConfigForm extends BaseForm
       unset($configs['age_public_flag']['Choices'][4]);
     }
 
-    if (!$this->category) {
-      $this->memberConfigSettings = $configs;
-      return true;
-    }
-
-    foreach ($categories[$this->category] as $value)
+    if (!$this->category)
     {
-      $this->memberConfigSettings[$value] = $configs[$value];
+      $this->memberConfigSettings = $configs;
+    }
+    else
+    {
+      foreach ($categories[$this->category] as $value)
+      {
+        $this->memberConfigSettings[$value] = $configs[$value];
+      }
     }
   }
 
