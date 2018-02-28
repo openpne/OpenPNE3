@@ -15,9 +15,9 @@ $browser
 
   ->info('/mail - CSRF')
   ->post('/mail', array())
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/mail/edit - CSRF')
   ->post('/mail/edit', array())
-  ->checkCSRF()
+  ->todo('checkCSRF')
 ;
