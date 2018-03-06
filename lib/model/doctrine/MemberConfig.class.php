@@ -117,7 +117,7 @@ class MemberConfig extends BaseMemberConfig implements opAccessControlRecordInte
     return $config[$this->getName()];
   }
 
-  public function checkUniqueness()
+  public function validateUniqueness()
   {
     $settings = $this->getSetting();
     if (!isset($settings['IsUnique']) || !$settings['IsUnique'])
