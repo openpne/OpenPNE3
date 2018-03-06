@@ -38,6 +38,11 @@ $confirmToken = $member1->getConfig('pc_address_token');
 
 $tester
   ->get('/member/configComplete', array('id' => 1, 'type' => 'pc_address', 'token' => $confirmToken))
+  ->with('response')->begin()
+    ->checkElement('#formConfigComplete tr:nth-child(1) th', 'PCメールアドレス')
+    ->checkElement('#formConfigComplete tr:nth-child(1) td', 'sns+new@example.com')
+  ->end()
+
   ->click('送信', array(
     'password' => array(
       'password' => 'password',
@@ -98,6 +103,11 @@ $member2->setConfig('pc_address', 'sns+dupe@example.com');
 
 $tester
   ->get('/member/configComplete', array('id' => 1, 'type' => 'pc_address', 'token' => $confirmToken))
+  ->with('response')->begin()
+    ->checkElement('#formConfigComplete tr:nth-child(1) th', 'PCメールアドレス')
+    ->checkElement('#formConfigComplete tr:nth-child(1) td', 'sns+dupe@example.com')
+  ->end()
+
   ->click('送信', array(
     'password' => array(
       'password' => 'password',
