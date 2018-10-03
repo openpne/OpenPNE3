@@ -11,7 +11,7 @@
 <div>
   <table>
     <tr>
-      <th><?php echo __('%Friend%') ?></th>
+      <th><?php echo __('%friend%') ?></th>
       <td>%friend%</td>
     </tr>
     <tr>
@@ -19,15 +19,15 @@
       <td>%my_friend%</td>
     </tr>
     <tr>
-      <th><?php echo __('%Community%') ?></th>
+      <th><?php echo __('%community%') ?></th>
       <td>%community%</td>
     </tr>
     <tr>
-      <th><?php echo __('%Nickname%') ?></th>
+      <th><?php echo __('%nickname%') ?></th>
       <td>%nickname%</td>
     </tr>
     <tr>
-      <th><?php echo __('%Activity%') ?></th>
+      <th><?php echo __('%activity%') ?></th>
       <td>%activity%</td>
     </tr>
     <tr>
