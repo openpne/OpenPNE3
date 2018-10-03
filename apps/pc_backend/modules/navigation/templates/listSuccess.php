@@ -10,30 +10,12 @@
 <p><?php echo __('If it is not reflected, clear the caches in "Cache Clear" in "SNS".'); ?></p>
 <div>
   <table>
+    <?php foreach($snsTerms as $snsTerm): ?>
     <tr>
-      <th><?php echo __('%friend%') ?></th>
-      <td>%friend%</td>
+      <th><?php echo $snsTerm['value'] ?></th>
+      <td>%<?php echo $snsTerm['name']; ?>%</td>
     </tr>
-    <tr>
-      <th><?php echo __('%my_friend%') ?></th>
-      <td>%my_friend%</td>
-    </tr>
-    <tr>
-      <th><?php echo __('%community%') ?></th>
-      <td>%community%</td>
-    </tr>
-    <tr>
-      <th><?php echo __('%nickname%') ?></th>
-      <td>%nickname%</td>
-    </tr>
-    <tr>
-      <th><?php echo __('%activity%') ?></th>
-      <td>%activity%</td>
-    </tr>
-    <tr>
-      <th><?php echo __('%post_activity%') ?></th>
-      <td>%post_activity%</td>
-    </tr>
+    <?php endforeach; ?>
   </table>
 </div>
 
