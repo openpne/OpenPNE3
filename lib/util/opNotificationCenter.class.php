@@ -123,9 +123,7 @@ class opNotificationCenter
 
     if (!$notificationObject)
     {
-      $notificationObject = new MemberConfig();
-      $notificationObject->setMemberId($member->getId());
-      $notificationObject->setName('notification_center');
+      return;
     }
 
     $notifications = unserialize($notificationObject->getValue());
