@@ -26,11 +26,8 @@
         <div class="row">
           <div class="span9">
           {{if category=="link"}}
-            {{if unread==false}}
-              <?php echo __('%Friend% request from') ?>&nbsp;<a href="<?php echo $sf_request->getRelativeUrlRoot() ?>/member/${member_id_from}">${member_from.name}</a><br />
-            {{/if}}
+            <?php echo __('%Friend% request from') ?>&nbsp;<a href="<?php echo $sf_request->getRelativeUrlRoot() ?>/member/${member_id_from}">${member_from.name}</a><br />
             {{if unread==true}}
-              <?php echo __('%Friend% request from') ?>&nbsp;<a href="<?php echo $sf_request->getRelativeUrlRoot() ?>/member/${member_id_from}">{{if body}}${member_from.name}{{/if}}</a><br />
               <?php echo __('Do you accept %friend% link request?') ?>
             {{/if}}
           {{else}}
