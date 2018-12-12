@@ -311,11 +311,3 @@ api_keys:
     IsRequired: false
     IsTrim:     true
     Default:    ""
-  google_AJAX_search_api_key:
-    Name:       "google AJAX search api key"
-    Caption:    "google AJAX search api key"
-    FormType:   "text"
-    ValueType:  "string"
-    IsRequired: false
-    IsTrim:     true
-    Default:    ""

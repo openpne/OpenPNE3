@@ -501,9 +501,15 @@ Community:
     name: "CommunityE"
 
 CommunityCategory:
-  community_category:
-    name: "コミュニティカテゴリ"
+  community_category_a:
+    name: "コミュニティカテゴリA"
     is_allow_member_community: 1
+    sort_order: 2
+
+  community_category_b:
+    name: "コミュニティカテゴリB"
+    is_allow_member_community: 1
+    sort_order: 1
 
   community_category_1:
     name: "CategoryA"

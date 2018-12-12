@@ -94,7 +94,7 @@ EOF;
       $str = "\"%s\" is already installed manually, so it will not be reinstalled.\n"
            . "If you want to manage it automatically, delete it manually and retry this command.";
       $this->logBlock(sprintf($str, $arguments['name']), 'INFO');
-      return false;
+      return 1;
     }
 
     try
@@ -163,7 +163,7 @@ EOF;
         $this->log($message);
       }
 
-      return false;
+      return 1;
     }
   }
 
