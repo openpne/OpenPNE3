@@ -117,6 +117,22 @@ class MemberConfig extends BaseMemberConfig implements opAccessControlRecordInte
     return $config[$this->getName()];
   }
 
+  public function validateUniqueness()
+  {
+    $settings = $this->getSetting();
+    if (!isset($settings['IsUnique']) || !$settings['IsUnique'])
+    {
+      return true;
+    }
+
+    $duplicate = $this->getTable()->createQuery('mc')
+      ->andWhere('mc.member_id <> ?', $this->member_id)
+      ->andWhere('mc.name_value_hash = ?', $this->getTable()->generateNameValueHash($this->name, $this->value))
+      ->fetchOne();
+
+    return !$duplicate;
+  }
+
   public function generateRoleId(Member $member)
   {
     if ($this->Member->id === $member->id)

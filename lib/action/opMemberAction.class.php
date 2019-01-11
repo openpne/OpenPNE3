@@ -286,11 +286,17 @@ abstract class opMemberAction extends sfActions
 
     $memberId = $request->getParameter('id');
 
-    $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_token', $memberId);
-    $this->forward404Unless($memberConfig);
-    $this->forward404Unless($request->getParameter('token') === $memberConfig->getValue());
+    $token = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_token', $memberId);
+    $this->forward404Unless($token);
+    $this->forward404Unless($request->getParameter('token') === $token->getValue());
 
-    $option = array('member' => $memberConfig->getMember());
+    $pre = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_pre', $memberId);
+
+    $settings = sfConfig::get('openpne_member_config');
+    $this->settings = $settings[$type];
+    $this->newValue = $pre->getValue();
+
+    $option = array('member' => $token->getMember());
     $this->form = new opPasswordForm(array(), $option);
 
     if ($request->isMethod('post'))
@@ -299,7 +305,6 @@ abstract class opMemberAction extends sfActions
       if ($this->form->isValid())
       {
         $config = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type, $memberId);
-        $pre = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_pre', $memberId);
 
         if (!$config)
         {
@@ -309,12 +314,17 @@ abstract class opMemberAction extends sfActions
         }
         $config->setValue($pre->getValue());
 
-        if ($config->save())
+        if (!$config->validateUniqueness())
         {
-          $pre->delete();
-          $token = Doctrine::getTable('MemberConfig')->retrieveByNameAndMemberId($type.'_token', $memberId);
-          $token->delete();
+          $this->getUser()->setFlash('error', 'The inputted value is already exist.');
+
+          return sfView::SUCCESS;
         }
+
+        $config->save();
+
+        $pre->delete();
+        $token->delete();
 
         $this->redirect('@homepage');
       }
