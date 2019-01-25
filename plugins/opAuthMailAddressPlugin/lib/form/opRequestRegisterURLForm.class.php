@@ -138,6 +138,6 @@ class opRequestRegisterURLForm extends BaseForm
       'authMode' => 'MailAddress',
       'subject' => opConfig::get('sns_name').'招待状',
     );
-    opMailSend::sendTemplateMail('notifyRegisterURL', $address, opConfig::get('admin_mail_address'), $params);
+    opMailSend::sendTemplateMail('requestRegisterURL', $address, opConfig::get('admin_mail_address'), $params);
   }
 }
