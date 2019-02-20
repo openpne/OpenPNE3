@@ -29,17 +29,7 @@ class opPluginManager extends sfSymfonyPluginManager
   {
     if (!$environment)
     {
-      $tz = @date_default_timezone_get();
-
-      $environment = new sfPearEnvironment($dispatcher, array(
-        'plugin_dir'            => sfConfig::get('sf_plugins_dir'),
-        'cache_dir'             => sfConfig::get('sf_cache_dir').'/.pear',
-        'web_dir'               => sfConfig::get('sf_web_dir'),
-        'rest_base_class'       => 'opPearRest',
-        'downloader_base_class' => 'opPluginDownloader',
-      ));
-
-      date_default_timezone_set($tz);
+      $environment = self::createPearEnvironment($dispatcher);
 
       $this->channel = $channel;
       if (!$this->channel)
@@ -136,6 +126,23 @@ class opPluginManager extends sfSymfonyPluginManager
         $filesystem->remove($targetDir);
       }
     }
+  }
+
+  public static function createPearEnvironment(sfEventDispatcher $dispatcher)
+  {
+    $tz = @date_default_timezone_get();
+
+    $environment = new sfPearEnvironment($dispatcher, array(
+      'plugin_dir'            => sfConfig::get('sf_plugins_dir'),
+      'cache_dir'             => sfConfig::get('sf_cache_dir').'/.pear',
+      'web_dir'               => sfConfig::get('sf_web_dir'),
+      'rest_base_class'       => 'opPearRest',
+      'downloader_base_class' => 'opPluginDownloader',
+    ));
+
+    date_default_timezone_set($tz);
+
+    return $environment;
   }
 
   public static function getPluginActivationList()
