@@ -48,7 +48,12 @@ class MemberConfigForm extends BaseForm
   public function generateConfigWidgets()
   {
     foreach ($this->memberConfigSettings as $key => $value) {
-      if ($this->isNew && $value['IsRegist'] || !$this->isNew && $value['IsConfig']) {
+      if($value['Name'] == "age_public_flag" && !opConfig::get('is_allow_web_public_flag_age'))
+      {
+        $value['IsRegist'] = false;
+      }
+      if ($this->isNew && $value['IsRegist'] || !$this->isNew && $value['IsConfig'])
+      {
         $this->setMemberConfigWidget($key);
       }
     }
