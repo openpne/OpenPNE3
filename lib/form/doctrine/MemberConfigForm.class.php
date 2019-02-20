@@ -95,6 +95,12 @@ class MemberConfigForm extends BaseForm
     $categories = sfConfig::get('openpne_member_category');
     $configs = sfConfig::get('openpne_member_config');
 
+    if (!opConfig::get('is_allow_web_public_flag_age') && isset($configs['age_public_flag']['Choices'][4]))
+    {
+      // Remove `All Users on the Web` choice from age_public_flag setting
+      unset($configs['age_public_flag']['Choices'][4]);
+    }
+
     if (!$this->category) {
       $this->memberConfigSettings = $configs;
       return true;
