@@ -209,21 +209,9 @@ class opActivityQueryBuilder
       {
         continue;
       }
-      elseif (0 === $this->viewerId)
+      elseif (!$this->viewerId)
       {
-        $member = Doctrine::getTable('Member')->find($memberId);
-        if (opConfig::get('is_allow_config_public_flag_profile_page'))
-        {
-          $config = opConfig::get('is_allow_config_public_flag_profile_page');
-        }
-        elseif ($member)
-        {
-          $config = (int)$member->getConfig('profile_page_public_flag');
-        }
-        if (4 == $config)
-        {
-          $subQuery[] = $this->buildMemberQuery($query->createSubquery(), $id, ActivityDataTable::PUBLIC_FLAG_OPEN);
-        }
+        $subQuery[] = $this->buildMemberQuery($query->createSubquery(), $id, ActivityDataTable::PUBLIC_FLAG_OPEN);
       }
       else
       {
