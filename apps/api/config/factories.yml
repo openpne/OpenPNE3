@@ -83,19 +83,14 @@ all:
 #      prefix:                    %SF_APP_DIR%/template
 #
   i18n:
-    class: sfI18N
+    class: opI18N
     param:
       source:               OpenPNE
       debug:                false
       untranslated_prefix:  "[T]"
       untranslated_suffix:  "[/T]"
-      cache:
-        class: sfFileCache
-        param:
-          automatic_cleaning_factor: 0
-          cache_dir:                 %SF_I18N_CACHE_DIR%
-          lifetime:                  31556926
-          prefix:                    %SF_APP_DIR%/i18n
+      cache: ~
+
 #
 #  routing:
 #    class: sfPatternRouting
