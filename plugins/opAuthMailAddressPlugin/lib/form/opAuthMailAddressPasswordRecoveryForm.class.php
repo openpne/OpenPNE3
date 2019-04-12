@@ -32,7 +32,7 @@ class opAuthMailAddressPasswordRecoveryForm extends BaseForm
 
     $this->setValidators(array(
       'mail_address' => new sfValidatorEmail(),
-      'secret_question' => new sfValidatorChoice(array('choices' => array_keys($choices))),
+      'secret_question' => new opValidatorChoice(array('choices' => array_keys($choices))),
       'secret_answer' => new opValidatorString(),
     ));
 
