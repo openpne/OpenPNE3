@@ -5,7 +5,16 @@
     }, settings);
 
     return this.each(function(){
-      var linkUrl = $(this).attr('data-location-url');
+      var dataLocationUrl = $(this).attr('data-location-url');
+      var linkUrl = '';
+      if (dataLocationUrl.match(/^\//))
+      {
+        linkUrl = dataLocationUrl;
+      }
+      else
+      {
+        linkUrl = openpne.baseUrl + dataLocationUrl;
+      }
       var notifyId = $(this).attr('data-notify-id');
       $(this).click(function(){
         if ( false == settings.isDisableRead )
