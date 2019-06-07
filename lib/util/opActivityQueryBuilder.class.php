@@ -193,11 +193,11 @@ class opActivityQueryBuilder
     $publicFlags = $this->table->getViewablePublicFlags($publicFlag);
     if (1 === count($publicFlags))
     {
-      $query->andWhere('a.public_flag = ?', $this->table->getViewablePublicFlags($publicFlag));
+      $query->andWhere('a.public_flag = ?', $publicFlags);
     }
     else
     {
-      $query->andWhereIn('a.public_flag', $this->table->getViewablePublicFlags($publicFlag));
+      $query->andWhereIn('a.public_flag', $publicFlags);
     }
 
     return $query;
