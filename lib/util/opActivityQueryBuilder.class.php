@@ -209,6 +209,10 @@ class opActivityQueryBuilder
       {
         continue;
       }
+      elseif (!$this->viewerId)
+      {
+        $subQuery[] = $this->buildMemberQuery($query->createSubquery(), $id, ActivityDataTable::PUBLIC_FLAG_OPEN);
+      }
       else
       {
         $relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($this->viewerId, $id);
