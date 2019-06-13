@@ -297,7 +297,7 @@ class ActivityDataTable extends Doctrine_Table
       $viewerMemberId = $this->getMyMemberId();
     }
 
-    if (null === $viewerMemberId)
+    if (!$viewerMemberId)
     {
       $flag = self::PUBLIC_FLAG_OPEN;
     }
