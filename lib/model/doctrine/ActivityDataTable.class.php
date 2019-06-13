@@ -196,7 +196,7 @@ class ActivityDataTable extends Doctrine_Table
       case self::PUBLIC_FLAG_OPEN:
         $flags[] = self::PUBLIC_FLAG_OPEN;
         break;
-      default: 
+      default:
         break;
     }
 
@@ -308,7 +308,7 @@ class ActivityDataTable extends Doctrine_Table
       $viewerMemberId = $this->getMyMemberId();
     }
 
-    if (is_null($viewerMemberId))
+    if (!$viewerMemberId)
     {
       $flag = self::PUBLIC_FLAG_OPEN;
     }
