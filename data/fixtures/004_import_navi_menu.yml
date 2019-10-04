@@ -25,7 +25,7 @@ Navigation:
     sort_order: 20
     Translation:
       ja_JP:
-        caption: "コミュニティ検索"
+        caption: "%community%検索"
       en:
         caption: "Search Communities"
 
@@ -75,7 +75,7 @@ Navigation:
     sort_order: 10
     Translation:
       ja_JP:
-        caption: "マイフレンド"
+        caption: "%my_friend%"
       en:
         caption: "My Friends"
 
@@ -115,7 +115,7 @@ Navigation:
     sort_order: 20
     Translation:
       ja_JP:
-        caption: "フレンドリスト"
+        caption: "%friend%リスト"
       en:
         caption: "Friends"
 
@@ -125,9 +125,9 @@ Navigation:
     sort_order: 0
     Translation:
       ja_JP:
-        caption: "コミュニティトップ"
+        caption: "%community%トップ"
       en:
-        caption: "Community Top"
+        caption: "%Community% Top"
 
   community_navigation_join:
     type: "community"
@@ -135,9 +135,9 @@ Navigation:
     sort_order: 10
     Translation:
       ja_JP:
-        caption: "コミュニティに参加"
+        caption: "%community%に参加"
       en:
-        caption: "Join Community"
+        caption: "Join %Community%"
 
   community_navigation_quit:
     type: "community"
@@ -145,6 +145,6 @@ Navigation:
     sort_order: 20
     Translation:
       ja_JP:
-        caption: "コミュニティを退会"
+        caption: "%community%を退会"
       en:
-        caption: "Leave Community"
+        caption: "Leave %Community%"

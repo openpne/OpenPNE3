@@ -38,6 +38,7 @@ class navigationActions extends sfActions
     $this->list = array();
     $this->deleteForm = new BaseForm();
     $this->sortForm = new BaseForm();
+    $this->snsTerms = $this->getSnsTerms($request->getParameter('app'));
 
     $types = Doctrine::getTable('Navigation')->getTypesByAppName($request->getParameter('app', 'pc'));
 
@@ -207,5 +208,23 @@ class navigationActions extends sfActions
       $cache->remove('@sf_cache_partial?module=default&action=_localNav&sf_cache_key=*');
     }
     sfContext::switchTo($currentApp);
+  }
+
+  private function getSnsTerms($app)
+  {
+    $app = 'mobile' == $app ? 'mobile_frontend' : 'pc_frontend';
+    $availableTerms = (array)include(sfContext::getInstance()->getConfigCache()->checkConfig('config/sns_term.yml'));
+
+    $snsTerms = array();
+    foreach ($availableTerms as $name => $config)
+    {
+      $snsTerm = Doctrine::getTable('SnsTerm')->findOneByApplicationAndName($app, $name);
+      $snsTerms[] = array(
+        'name' => $name,
+        'value' => $snsTerm->SnsTerm->value,
+      );
+    }
+
+    return $snsTerms;
   }
 }
