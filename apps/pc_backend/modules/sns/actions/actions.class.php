@@ -68,6 +68,7 @@ class snsActions extends sfActions
       if ($this->form->isValid())
       {
         $this->form->save();
+        $this->removeNavCaches();
         $this->getUser()->setFlash('notice', 'Saved.');
         $this->redirect('sns/term');
       }
@@ -141,5 +142,30 @@ class snsActions extends sfActions
       Doctrine::getTable('SnsConfig')->set('richtextarea_buttons_sort_order', serialize($buttons));
     }
     return sfView::NONE;
+  }
+
+  private function removeNavCaches()
+  {
+    $currentApp = sfContext::getInstance()->getConfiguration()->getApplication();
+    $cacheApp = 'pc_frontend';
+
+    if (!sfContext::hasInstance($cacheApp))
+    {
+      sfContext::createInstance(
+        ProjectConfiguration::getApplicationConfiguration(
+          $cacheApp,
+          $this->getContext()->getConfiguration()->getEnvironment(),
+          $this->getContext()->getConfiguration()->isDebug()
+        )
+      );
+    }
+
+    sfContext::switchTo($cacheApp);
+    if ($cache = sfContext::getInstance($cacheApp)->getViewCacheManager())
+    {
+      $cache->remove('@sf_cache_partial?module=default&action=_globalNav&sf_cache_key=*');
+      $cache->remove('@sf_cache_partial?module=default&action=_localNav&sf_cache_key=*');
+    }
+    sfContext::switchTo($currentApp);
   }
 }
