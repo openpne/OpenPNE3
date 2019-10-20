@@ -19,7 +19,7 @@ if ($isAdmin || $isSubAdmin)
 {
   $options['moreInfo'][] = link_to(__('Management member'), '@community_memberManage?id='.$community->getId());
 }
-op_include_parts('nineTable', 'frendList', $options);
+op_include_parts('nineTable', 'friendList', $options);
 ?>
 <?php end_slot(); ?>
 
