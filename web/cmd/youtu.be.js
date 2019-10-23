@@ -1,3 +1,15 @@
+function url2cmd(url) {
+    if (!url.match(/^https?:\/\/youtu\.be\/([a-zA-Z0-9_\-]+)/)) {
+        alert(url);
+        pne_url2a(url);
+        return;
+    }
+    var id = RegExp.$1;
+    var width = 425;
+    var height = 350;
+    main(id, width, height);
+}
+
 function main(id, width, height) {
     if (!id.match(/^[a-zA-Z0-9_\-]+$/)) {
         return;
