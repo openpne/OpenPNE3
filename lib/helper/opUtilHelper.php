@@ -146,7 +146,7 @@ function pager_navigation($pager, $link_to, $is_total = true, $query_string = ''
  *
  * @deprecated since 3.0.3
  * @param  sfPager $pager
- * @return string 
+ * @return string
  */
 function pager_total($pager)
 {
@@ -346,6 +346,28 @@ function _op_url_cmd($matches)
   {
     $cmd .= 'www.';
     $url = 'http://'.$url;
+  }
+
+  // 入力されたURLが google の短縮形であった場合
+  if (preg_match('/^goo\.gl.*/', $matches[3]))
+  {
+    // プロトコルは https にする
+    // http にした場合、いったん https にリダイレクトされてしまうため、'Location' の内容が変わってしまう
+    $gglUrl = 'https://'.$matches[3];
+    $header = get_headers($gglUrl, 1);
+
+    $gglLocation = $header["Location"];
+    // 'Location' の内容が array の場合、1つ目を取得
+    if (is_array($gglLocation))
+    {
+      $gglLocation = $gglLocation[0];
+    }
+
+    // リダイレクト先URLが google map のURLであった場合、リダイレクト先のURLで小窓表示を行いたいので再帰処理
+    if (preg_match('/^https:\/\/www\.google\.co\.jp\/maps\/.*/', $gglLocation))
+    {
+      return preg_replace_callback(SF_AUTO_LINK_RE, '_op_url_cmd', $gglLocation);
+    }
   }
 
   if (preg_match('/([a-zA-Z0-9\-.]+)\/?(?:[a-zA-Z0-9_\-\/.,:;\~\?@&=+$%#!()])*/', $matches[3], $pmatch))
