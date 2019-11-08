@@ -1,6 +1,9 @@
 <?php use_helper('Javascript') ?>
 <?php
 op_include_parts('descriptionBox', 'smtProfileTop', array());
+
+$culture = sfCultureInfo::getInstance($sf_user->getCulture());
+
 foreach ($member->getProfiles(true) as $profile)
 {
   $caption = $profile->getProfile()->getCaption();
