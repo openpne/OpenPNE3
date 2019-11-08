@@ -7,6 +7,8 @@ SnsTerm:
         value: "フレンド"
       en:
         value: "friend"
+      zh_CN:
+        value: "好友"
 
   term_friend_mobile_frontend:
     name: "friend"
@@ -16,6 +18,8 @@ SnsTerm:
         value: "ﾌﾚﾝﾄﾞ"
       en:
         value: "friend"
+      zh_CN:
+        value: "好友"
 
   term_my_friend_pc_frontend:
     name: "my_friend"
@@ -25,6 +29,8 @@ SnsTerm:
         value: "マイフレンド"
       en:
         value: "my friend"
+      zh_CN:
+        value: "我的好友"
 
   term_my_friend_mobile_frontend:
     name: "my_friend"
@@ -34,6 +40,8 @@ SnsTerm:
         value: "ﾏｲﾌﾚﾝﾄﾞ"
       en:
         value: "my friend"
+      zh_CN:
+        value: "我的好友"
 
   term_community_pc_frontend:
     name: "community"
@@ -43,6 +51,8 @@ SnsTerm:
         value: "コミュニティ"
       en:
         value: "community"
+      zh_CN:
+        value: "群组"
 
   term_community_mobile_frontend:
     name: "community"
@@ -52,6 +62,8 @@ SnsTerm:
         value: "ｺﾐｭﾆﾃｨ"
       en:
         value: "community"
+      zh_CN:
+        value: "群组"
 
   term_nickname_pc_frontend:
     name: "nickname"
@@ -61,6 +73,8 @@ SnsTerm:
         value: "ニックネーム"
       en:
         value: "nickname"
+      zh_CN:
+        value: "昵称"
 
   term_nickname_mobile_frontend:
     name: "nickname"
@@ -70,6 +84,8 @@ SnsTerm:
         value: "ﾆｯｸﾈｰﾑ"
       en:
         value: "nickname"
+      zh_CN:
+        value: "昵称"
 
   term_activity_pc_frontend:
     name: "activity"
@@ -79,6 +95,8 @@ SnsTerm:
         value: "タイムライン"
       en:
         value: "Timeline"
+      zh_CN:
+        value: "时间轴"
 
   term_activity_mobile_frontend:
     name: "activity"
@@ -88,6 +106,8 @@ SnsTerm:
         value: "ﾀｲﾑﾗｲﾝ"
       en:
         value: "Timeline"
+      zh_CN:
+        value: "时间轴"
 
   term_post_activity_pc_frontend:
     name: "post_activity"
@@ -97,6 +117,8 @@ SnsTerm:
         value: "つぶやく"
       en:
         value: "Tweet"
+      zh_CN:
+        value: "发送"
 
   term_post_activity_mobile_frontend:
     name: "post_activity"
@@ -106,3 +128,5 @@ SnsTerm:
         value: "つぶやく"
       en:
         value: "Tweet"
+      zh_CN:
+        value: "发送"

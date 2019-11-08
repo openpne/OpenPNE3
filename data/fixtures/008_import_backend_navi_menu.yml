@@ -8,6 +8,8 @@ Navigation:
         caption: "メンバー管理"
       en:
         caption: "Members"
+      zh_CN:
+        caption: "成员"
 
   backend_side_monitoring:
     type: "backend_side"
@@ -18,6 +20,8 @@ Navigation:
         caption: "画像・書き込み管理"
       en:
         caption: "Media"
+      zh_CN:
+        caption: "文件管理"
 
   backend_side_community:
     type: "backend_side"
@@ -28,6 +32,8 @@ Navigation:
         caption: "コミュニティ管理"
       en:
         caption: "Communities"
+      zh_CN:
+        caption: "群组"
 
   backend_side_sns_config:
     type: "backend_side"
@@ -38,6 +44,8 @@ Navigation:
         caption: "SNS設定"
       en:
         caption: "SNS"
+      zh_CN:
+        caption: "社交设置"
 
   backend_side_mail:
     type: "backend_side"
@@ -48,6 +56,8 @@ Navigation:
         caption: "メール設定"
       en:
         caption: "Email"
+      zh_CN:
+        caption: "邮箱设置"
 
   backend_side_design:
     type: "backend_side"
@@ -58,6 +68,8 @@ Navigation:
         caption: "デザイン設定"
       en:
         caption: "Appearance"
+      zh_CN:
+        caption: "模板"
 
   backend_side_navigation:
     type: "backend_side"
@@ -68,6 +80,8 @@ Navigation:
         caption: "ナビゲーション設定"
       en:
         caption: "Navigations"
+      zh_CN:
+        caption: "导航"
 
   backend_side_profile_list:
     type: "backend_side"
@@ -78,6 +92,8 @@ Navigation:
         caption: "プロフィール項目設定"
       en:
         caption: "Profile"
+      zh_CN:
+        caption: "资料"
 
   backend_side_plugin_list:
     type: "backend_side"
@@ -88,6 +104,8 @@ Navigation:
         caption: "プラグイン設定"
       en:
         caption: "Plugins"
+      zh_CN:
+        caption: "插件"
 
   backend_side_advanced_config:
     type: "backend_side"
@@ -98,6 +116,8 @@ Navigation:
         caption: "上級者向け設定"
       en:
         caption: "Advanced Settings"
+      zh_CN:
+        caption: "高级设置"
 
   backend_side_admin:
     type: "backend_side"
@@ -108,3 +128,5 @@ Navigation:
         caption: "管理画面設定"
       en:
         caption: "Administration settings"
+      zh_CN:
+        caption: "系统设置"

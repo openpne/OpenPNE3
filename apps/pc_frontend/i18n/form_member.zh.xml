@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+        <source>%nickname%</source>
+        <target>%nickname%</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Required.</source>
+        <target>必填。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>"%value%" is too long (%max_length% characters max).</source>
+        <target>"%value%" 过大 (最多%max_length%字符)。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>CSRF attack detected.</source>
+        <target>请刷新页面。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

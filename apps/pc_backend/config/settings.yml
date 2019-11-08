@@ -102,7 +102,7 @@ all:
 #    logging_enabled:        true
 #
 #    # i18n
-    default_culture:        ja_JP        # Default user culture
+    default_culture:        zh_CN        # Default user culture
 #
 #    # enable 1.0 compatibility
 #    compat_10:              false

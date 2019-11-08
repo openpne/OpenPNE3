@@ -8,6 +8,8 @@ Navigation:
         caption: "マイホーム"
       en:
         caption: "My Home"
+      zh_CN:
+        caption: "我的首页"
 
   smartphone_default_navigation_profile_confirm:
     type: "smartphone_default"
@@ -18,6 +20,8 @@ Navigation:
         caption: "プロフィール確認"
       en:
         caption: "Profile"
+      zh_CN:
+        caption: "资料"
 
   smartphone_default_navigation_member_search:
     type: "smartphone_default"
@@ -28,6 +32,8 @@ Navigation:
         caption: "メンバー検索"
       en:
         caption: "Member Search"
+      zh_CN:
+        caption: "找人"
 
   smartphone_default_navigation_community_search:
     type: "smartphone_default"
@@ -38,6 +44,8 @@ Navigation:
         caption: "コミュニティ検索"
       en:
         caption: "Community Search"
+      zh_CN:
+        caption: "找群"
 
   smartphone_default_navigation_logout:
     type: "smartphone_default"
@@ -48,6 +56,8 @@ Navigation:
         caption: "ログアウト"
       en:
         caption: "Logout"
+      zh_CN:
+        caption: "退出"
 
   smartphone_insecure_navigation_privacy_policy:
     type: "smartphone_insecure"
@@ -58,6 +68,8 @@ Navigation:
         caption: "プライバシーポリシー"
       en:
         caption: "Privacy Policy"
+      zh_CN:
+        caption: "隐私条款"
 
   smartphone_insecure_navigation_user_agreement:
     type: "smartphone_insecure"
@@ -68,4 +80,6 @@ Navigation:
         caption: "利用規約"
       en:
         caption: "User Agreement"
+      zh_CN:
+        caption: "用户声明"
 

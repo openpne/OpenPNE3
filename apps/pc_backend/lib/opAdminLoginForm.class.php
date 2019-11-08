@@ -34,8 +34,8 @@ class opAdminLoginForm extends sfForm
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
     $this->widgetSchema->setLabels(array(
-      'username' => 'アカウント名',
-      'password' => 'パスワード',
+      'username' => '用户名',
+      'password' => '密码',
     ));
 
     $this->validatorSchema->setPostValidator(new sfValidatorCallback(array(
