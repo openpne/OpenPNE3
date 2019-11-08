@@ -174,7 +174,7 @@ class MemberProfileTable extends opAccessControlDoctrineTable
               continue;
             }
 
-            if ('year' !== $dateValue)
+            if ('year' !== $k)
             {
               $dateValue[$k] = sprintf('%02d', $dateValue[$k]);
             }
