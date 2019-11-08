@@ -21,18 +21,12 @@ function main(id, width, height) {
     if (height <= 0 || height > 350) {
         height = 350;
     }
-    var html = '<object width="'
+    var html = '<iframe width="'
             + width
             + '" height="'
             + height
-            + '"><param name="movie" value="http://www.youtube.com/v/'
+            + '" src="//www.youtube.com/embed/'
             + id
-            + '"></param><embed src="http://www.youtube.com/v/'
-            + id
-            + '" type="application/x-shockwave-flash" width="'
-            + width
-            + '" height="'
-            + height
-            + '"></embed></object>';
+            + '" frameborder="0" allowfullscreen="allowfullscreen"></iframe>';
     document.write(html);
 }
