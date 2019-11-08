@@ -56,7 +56,6 @@ class communityActions extends opCommunityAction
   {
     $this->forwardIf($request->isSmartphone(), 'community', 'smtEdit');
 
-    $this->enableImage = true;
     $result = parent::executeEdit($request);
 
     if ($this->community->isNew()) {
