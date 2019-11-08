@@ -13,8 +13,12 @@
 use_helper('Javascript');
 
 use_javascript('jquery.min.js');
+use_javascript('underscore-min.js');
+use_javascript('backbone-min.js');
 use_javascript('jquery.tmpl.min.js');
 use_javascript('jquery.notify.js');
+use_javascript('openpne/api.js');
+
 use_javascript('op_notify.js');
 $jsonData = array(
   'apiKey' => $sf_user->getMemberApiKey(),
@@ -23,11 +27,14 @@ $jsonData = array(
 );
 
 $json = defined('JSON_PRETTY_PRINT') ? json_encode($jsonData, JSON_PRETTY_PRINT) : json_encode($jsonData);
-
-echo javascript_tag('
-var openpne = '.$json.';
-');
 ?>
+<?php endif ?>
+<?php if (opConfig::get('enable_jsonapi') && opToolkit::isSecurePage()): ?>
+<script type="text/javascript">
+var op = {
+  api: <?php echo $json ?>
+};
+</script>
 <?php endif ?>
 <?php include_javascripts() ?>
 <?php echo $op_config->get('pc_html_head') ?>

@@ -7,7 +7,7 @@
 </script>
 <script type="text/javascript">
 $(function(){
-  $.getJSON( openpne.apiBase + 'community/search.json?apiKey=' + openpne.apiKey, function(json) {
+  op.api.getJSON('community/search.json', function(json) {
     if (json.data.length > 0) {
       $('#joinCommunityListTemplate').tmpl(json.data).appendTo('#memberJoinCommunityList');
       $('#memberJoinCommunityList').show();
@@ -24,8 +24,8 @@ $(function(){
   });
   $('#joinCommunitySearch').blur(function(){
     var keyword = $('#joinCommunitySearch').val();
-    var requestData = { keyword: keyword, apiKey: openpne.apiKey };
-    $.getJSON( openpne.apiBase + 'community/search.json', requestData, function(json) {
+    var requestData = {keyword: keyword};
+    op.api.getJSON('community/search.json', requestData, function(json) {
       if (json.data.length > 0) {
         $result = $('#joinCommunityListTemplate').tmpl(json.data);
         $('#memberJoinCommunityList').html($result);

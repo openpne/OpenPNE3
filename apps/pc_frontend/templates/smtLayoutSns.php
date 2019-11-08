@@ -20,19 +20,25 @@ $jsonData = array(
 );
 
 $json = defined('JSON_PRETTY_PRINT') ? json_encode($jsonData, JSON_PRETTY_PRINT) : json_encode($jsonData);
-
-echo javascript_tag('
-var openpne = '.$json.';
-');
 ?>
+<script type="text/javascript">
+var op = {
+  api: <?php echo $json ?>
+};
+</script>
 <?php endif ?>
-<?php op_smt_use_javascript('jquery.min.js') ?>
-<?php op_smt_use_javascript('jquery.tmpl.min.js') ?>
-<?php op_smt_use_javascript('smt_main') ?>
-<?php op_smt_use_javascript('smt_notify') ?>
-<?php op_smt_use_javascript('smt_tosaka') ?>
-<?php op_smt_use_javascript('smt_menu') ?>
-<?php op_smt_include_javascripts() ?>
+<?php
+op_smt_use_javascript('jquery.min.js');
+op_smt_use_javascript('underscore-min.js');
+op_smt_use_javascript('backbone-min.js');
+op_smt_use_javascript('jquery.tmpl.min.js');
+op_smt_use_javascript('jquery.notify.js');
+op_smt_use_javascript('openpne/api.js');
+op_smt_use_javascript('smt_main');
+op_smt_use_javascript('smt_tosaka');
+op_smt_use_javascript('smt_menu');
+op_smt_include_javascripts();
+?>
 </head>
 <body id="<?php printf('page_%s_%s', $this->getModuleName(), $this->getActionName()) ?>" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
 

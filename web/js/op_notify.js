@@ -1,46 +1,38 @@
-$(document).ready(function(){
-  var is_read_flag = false;
-  $.getJSON( openpne.apiBase + 'push/count.json?apiKey=' + openpne.apiKey, function(json){
-    if(json.status=='success')
-    {
-      $pushHtml = $("#notificationCenterCountTemplate").tmpl(json.data);
-      $("#notificationCenter").append($pushHtml);
-    }
-  });
-
-  $('.ncbutton').click(function(){
-    if ('none' == $('#notificationCenterDetail').css('display'))
-    {
-      $('#notificationCenterDetail').show();
-      if (is_read_flag == false)
+var NotifyView = Backbone.View.extend({
+  events: {
+    'click .ncbutton': 'toggleNotify'
+  },
+  initialize:function() {
+    _.bindAll(this, 'toggleNotify');
+    op.api.getJSON('push/count.json', function(json){
+      if(json.status=='success')
       {
-        $.getJSON( openpne.apiBase + 'push/search.json?apiKey=' + openpne.apiKey, function(json){
-          if(json.status=='success')
-          {
-            if(json.data[0])
-            {
-              $pushHtml = $('#notificationCenterListTemplate').tmpl(json.data);
-              $('.friend-accept', $pushHtml).friendLink();
-              $('.friend-reject', $pushHtml).friendUnlink()
-              $('#notificationCenterLoading').hide();
-              $('#notificationCenterError').hide();
-              $('#notificationCenterDetail').append($pushHtml);
-            }else{
-              $('#notificationCenterLoading').hide();
-              $('#notificationCenterError').show();
-            }            
-          }else{
-            $('#notificationCenterLoading').hide();
-            $('#notificationCenterError').show();
-          }
-          $('.nclink').pushLink();
-        });
-        is_read_flag = true;
+        $pushHtml = $("#notificationCenterCountTemplate").tmpl(json.data);
+        $("#notificationCenter").append($pushHtml);
       }
-    }
-    else
-    {
-      $('#notificationCenterDetail').hide();
-    }
-  });
+    });
+  },
+  toggleNotify: function() {
+    $('#notificationCenterDetail').toggle();
+    this._getNotify();
+  },
+  _getNotify: _.once(function() {
+    op.api.getJSON('push/search.json', function(json){
+      if(json.status === 'success' && json.data[0]) {
+        $pushHtml = $('#notificationCenterListTemplate').tmpl(json.data);
+        $('.friend-accept', $pushHtml).friendLink();
+        $('.friend-reject', $pushHtml).friendUnlink()
+        $('#notificationCenterError').hide();
+        $('#notificationCenterDetail').append($pushHtml);
+      }else{
+        $('#notificationCenterError').show();
+      }
+      $('#notificationCenterLoading').hide();
+      $('.nclink').pushLink();
+    });
+  })
+});
+
+$(document).ready(function() {
+  var notifyView = new NotifyView({el:$('#notificationCenter')});
 });
