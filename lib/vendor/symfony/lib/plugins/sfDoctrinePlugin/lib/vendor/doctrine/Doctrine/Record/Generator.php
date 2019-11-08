@@ -32,8 +32,6 @@
  */
 abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
 {
-    protected static $initializedTables = array();
-
     /**
      * _options
      *
@@ -162,12 +160,11 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
             $this->_options['tableName'] = str_replace('%TABLE%', $ownerTableName, $tableName);
         }
 
-        $currentTableHash = spl_object_hash($table);
-        if (!empty(self::$initializedTables[$currentTableHash])) {
-            return null;
+        // check that class doesn't exist (otherwise we cannot create it)
+        if ($this->_options['generateFiles'] === false && class_exists($this->_options['className'])) {
+            $this->_table = Doctrine_Core::getTable($this->_options['className']);
+            return false;
         }
-
-        self::$initializedTables[$currentTableHash] = true;
 
         $this->buildTable();
 
@@ -180,9 +177,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
         $this->setTableDefinition();
         $this->setUp();
 
-        if ($this->_options['generateFiles'] === true || !class_exists($this->_options['className'])) {
-            $this->generateClassFromTable($this->_table);
-        }
+        $this->generateClassFromTable($this->_table);
 
         $this->buildChildDefinitions();
 
