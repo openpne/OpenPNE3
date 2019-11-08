@@ -101,7 +101,7 @@ class opMemberProfileSearchForm extends BaseForm
       {
         if (!empty($value))
         {
-          $query->andWhereLike('name', $values);
+          $query->andWhereLike('name', $value);
         }
       }
     }
