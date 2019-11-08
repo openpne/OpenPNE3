@@ -613,6 +613,10 @@
         <target>アップロードファイルリスト</target>
       </trans-unit>
       <trans-unit id="">
+        <source>%Activity% list</source>
+        <target>%Activity%リスト</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Cache Clear</source>
         <target>キャッシュの削除</target>
       </trans-unit>
@@ -1468,6 +1472,39 @@
       <trans-unit id="">
         <source>%Community% Sub Administrator</source>
         <target>%Community%副管理者</target>
+      </trans-unit>
+
+      <trans-unit id="">
+        <source>Created Date</source>
+        <target>作成日時</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Author</source>
+        <target>投稿者</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Public Flag</source>
+        <target>公開範囲</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Body</source>
+        <target>本文</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Foreign Table</source>
+        <target>外部テーブル</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Foreign ID</source>
+        <target>外部ID</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Foreign Table / ID</source>
+        <target>外部テーブル / ID</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Reply To ID</source>
+        <target>返信先ID</target>
       </trans-unit>
     </body>
   </file>
