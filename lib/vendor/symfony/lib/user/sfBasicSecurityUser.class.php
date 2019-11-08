@@ -16,7 +16,7 @@
  * @subpackage user
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfBasicSecurityUser.class.php 29528 2010-05-19 13:12:27Z fabien $
+ * @version    SVN: $Id: sfBasicSecurityUser.class.php 33466 2012-05-30 07:33:03Z fabien $
  */
 class sfBasicSecurityUser extends sfUser implements sfSecurityUser
 {
