@@ -45,7 +45,7 @@ Navigation:
     sort_order: 40
     Translation:
       ja_JP:
-        caption: "友人を招待する"
+        caption: "%friend%を招待する"
       en:
         caption: "Invite"
 
