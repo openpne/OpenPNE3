@@ -8,7 +8,12 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
-if (!defined('OPENPNE_VERSION'))
+class Revision48_DeleteUnusedGoogleApiKey extends Doctrine_Migration_Base
 {
-  define('OPENPNE_VERSION', '3.9.6-dev');
+  public function up()
+  {
+    Doctrine_Query::create()->delete('SnsConfig')
+      ->where('name = ?', 'google_AJAX_search_api_key')
+      ->execute();
+  }
 }

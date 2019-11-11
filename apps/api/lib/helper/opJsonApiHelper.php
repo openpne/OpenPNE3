@@ -198,7 +198,7 @@ function op_api_notification($notification)
     'body' => sfContext::getInstance()->getI18N()->__($notification['body']),
     'category' => $notification['category'],
     'unread' => $notification['unread'],
-    'created_at' => date('r', strtotime($notification['created_at'])),
+    'created_at' => date('r', $notification['created_at']),
     'icon_url' => $iconUrl,
     'url' => $notification['url'] ? url_for($notification['url'], array('abstract' => true)) : null,
     'member_id_from' => $notification['member_id_from'],

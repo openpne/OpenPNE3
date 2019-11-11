@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="1">
+        <source>All Users on the Web</source>
+        <target>Web全体に公開</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>All Members</source>
+        <target>全員に公開</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>%my_friend%</source>
+        <target>%my_friend%まで公開</target>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>Private</source>
+        <target>公開しない</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
