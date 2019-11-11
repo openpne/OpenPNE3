@@ -1465,6 +1465,14 @@
         <source>%Community% Sub Administrator</source>
         <target>%Community%副管理者</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>When the following values are set in "Entry name", the setting value in "Term Configuration in this SNS" is reflected in the navigation.</source>
+        <target>「項目名」に下記の値が設定されている場合、SNS内名称設定の設定値がナビゲーションに反映されます。</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If it is not reflected, clear the caches in "Cache Clear" in "SNS".</source>
+        <target>反映されない場合は、SNS設定→キャッシュの削除にてキャッシュの削除を行ってください。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -6,6 +6,19 @@
 
 <h2><?php echo __('Navigation settings') ?></h2>
 
+<p><?php echo __('When the following values are set in "Entry name", the setting value in "Term Configuration in this SNS" is reflected in the navigation.') ?></p>
+<p><?php echo __('If it is not reflected, clear the caches in "Cache Clear" in "SNS".'); ?></p>
+<div>
+  <table>
+    <?php foreach($snsTerms as $snsTerm): ?>
+    <tr>
+      <th><?php echo $snsTerm['value'] ?></th>
+      <td>%<?php echo $snsTerm['name']; ?>%</td>
+    </tr>
+    <?php endforeach; ?>
+  </table>
+</div>
+
 <?php foreach ($list as $type => $nav) : ?>
 <h3><?php echo $type ?></h3>
 

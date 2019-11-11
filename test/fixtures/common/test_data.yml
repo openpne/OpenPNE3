@@ -430,9 +430,9 @@ Navigation:
     sort_order: 0
     Translation:
       ja_JP:
-        caption: "コミュニティトップ"
+        caption: "%community%トップ"
       en:
-        caption: "Community Top"
+        caption: "%Community% Top"
 
 MemberRelationship:
   first_member_second_member:
