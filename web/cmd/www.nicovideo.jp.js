@@ -4,8 +4,8 @@ function url2cmd(url) {
         return false;
     }
     var vid = RegExp.$1;
-    var html = '<iframe src="https://ext.nicovideo.jp/thumb/' + vid + '" width="100%"'
-        + ' height="198" scrolling="no" style="border:solid 1px #ccc;" frameborder="0">'
+    var html = '<iframe id="iframe1" src="https://ext.nicovideo.jp/thumb/' + vid + '" width="350"'
+        + ' height="230" scrolling="no" style="border: solid 1px #ccc;" frameborder="0">'
         + '<a href="' + url + '">' + url + '</a>'
         + '</iframe>';
     document.write(html);
