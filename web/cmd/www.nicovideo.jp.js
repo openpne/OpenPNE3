@@ -4,10 +4,9 @@ function url2cmd(url) {
         return false;
     }
     var vid = RegExp.$1;
-    var html = '<div style="width:318px; border:solid 1px #CCC;">'
-        + '<iframe src="https://embed.nicovideo.jp/watch/' + vid + '" width="100%"'
-        + ' height="198" scrolling="no" border="0" frameborder="0">'
-        + '<p style="font-size:12px; padding:4px;">iframe対応ブラウザでご覧下さい。</p>'
-        + '</iframe></div>';
+    var html = '<iframe src="https://ext.nicovideo.jp/thumb/' + vid + '" width="100%"'
+        + ' height="198" scrolling="no" style="border:solid 1px #ccc;" frameborder="0">'
+        + '<a href="' + url + '">' + url + '</a>'
+        + '</iframe>';
     document.write(html);
 }
