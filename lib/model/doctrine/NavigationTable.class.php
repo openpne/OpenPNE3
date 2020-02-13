@@ -15,7 +15,6 @@ class NavigationTable extends Doctrine_Table
     return $this->createQuery('n')
       ->where('n.type = ?', $type)
       ->leftJoin('n.Translation t')
-      ->andWhere('t.lang = ?', sfContext::getInstance()->getUser()->getCulture())
       ->orderBy('n.sort_order')
       ->execute();
   }
