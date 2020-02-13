@@ -71,10 +71,11 @@ class SnsTermTable extends Doctrine_Table implements ArrayAccess
       return false;
     }
 
-    $term = $this->createQuery()
-      ->andWhere('name = ?', $name)
-      ->andWhere('application = ?', $application)
-      ->andWhere('id IN (SELECT id FROM SnsTermTranslation WHERE lang = ?)', $culture)
+    $term = $this->createQuery('s')
+      ->andWhere('s.name = ?', $name)
+      ->andWhere('s.application = ?', $application)
+      ->leftJoin('s.Translation t')
+      ->andWhere('t.lang = ?', $culture)
       ->fetchOne();
 
     if (!$term)
@@ -95,16 +96,17 @@ class SnsTermTable extends Doctrine_Table implements ArrayAccess
     {
       $this->terms = array();
 
-      $q = $this->createQuery();
+      $q = $this->createQuery('s');
 
       if ($this->application)
       {
-        $q->andWhere('application = ?', $this->application);
+        $q->andWhere('s.application = ?', $this->application);
       }
+      $q->leftJoin('s.Translation t');
 
       if ($this->culture)
       {
-        $q->andWhere('id IN (SELECT id FROM SnsTermTranslation WHERE lang = ?)', $this->culture);
+        $q->andWhere('t.lang = ?', $this->culture);
       }
 
       foreach ($q->execute() as $term)
@@ -134,5 +136,15 @@ class SnsTermTable extends Doctrine_Table implements ArrayAccess
   public function offsetUnset($offset)
   {
     throw new LogicException('The SnsTermTable class is not writable.');
+  }
+
+  public function getOneByApplicationAndName($app, $name, $culture = null)
+  {
+    return $this->createQuery('s')
+      ->andWhere('s.name = ?', $name)
+      ->andWhere('s.application = ?', $app)
+      ->leftJoin('s.Translation t')
+      ->andWhere('t.lang = ?', is_null($culture) ? $this->culture: $culture)
+      ->fetchOne();
   }
 }
