@@ -1391,6 +1391,10 @@
         <source>Private&lt;br /&gt;Member</source>
         <target>非公開&lt;br /&gt;メンバー</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>%Friend% request from</source>
+        <target>%Friend%申請</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

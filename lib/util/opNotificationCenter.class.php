@@ -115,4 +115,29 @@ class opNotificationCenter
 
     return $notifications;
   }
+
+  static public function delete(Member $member, $notificationId)
+  {
+    $notificationObject = Doctrine::getTable('MemberConfig')
+      ->findOneByMemberIdAndName($member->getId(), 'notification_center');
+
+    if (!$notificationObject)
+    {
+      return;
+    }
+
+    $notifications = unserialize($notificationObject->getValue());
+
+    foreach ($notifications as $key => $notification)
+    {
+      if ($notificationId === $notification['id'])
+      {
+        unset($notifications[$key]);
+      }
+    }
+
+    $notificationObject->setValue(serialize($notifications));
+    $notificationObject->save();
+    $notificationObject->free(true);
+  }
 }

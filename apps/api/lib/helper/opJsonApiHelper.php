@@ -202,5 +202,6 @@ function op_api_notification($notification)
     'icon_url' => $iconUrl,
     'url' => $notification['url'] ? url_for($notification['url'], array('abstract' => true)) : null,
     'member_id_from' => $notification['member_id_from'],
+    'member_from' => op_api_member($fromMember)
   );
 }
