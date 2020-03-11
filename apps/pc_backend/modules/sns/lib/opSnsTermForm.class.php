@@ -33,7 +33,7 @@ class opSnsTermForm extends sfForm
         $field = $name.'['.$app.']';
         $this->setWidget($field, new sfWidgetFormInput());
         $this->widgetSchema->setLabel($field, $config['caption'][$culture].'('.$appCaption.')');
-        $this->setDefault($field, Doctrine::getTable('SnsTerm')->findOneByApplicationAndName($app, $name));
+        $this->setDefault($field, Doctrine::getTable('SnsTerm')->getOneByApplicationAndName($app, $name, $culture));
       }
 
       $this->setValidator($name, new sfValidatorPass());
