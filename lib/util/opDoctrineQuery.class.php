@@ -217,6 +217,25 @@ class opDoctrineQuery extends Doctrine_Query
     return $this;
   }
 
+  public function execute($params = array(), $hydrationMode = null)
+  {
+    $origWhereInCount = $this->whereInCount;
+
+    foreach ($params as $param)
+    {
+      if (is_array($param))
+      {
+        $this->addWhereInCount(count($param));
+      }
+    }
+
+    $results = parent::execute($params, $hydrationMode);
+
+    $this->whereInCount = $origWhereInCount;
+
+    return $results;
+  }
+
   public function calculateQueryCacheHash()
   {
     if ($this->cachedQueryCacheHash)
