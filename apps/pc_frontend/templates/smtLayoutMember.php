@@ -28,6 +28,7 @@ var openpne = '.$json.';
 <?php endif ?>
 <?php op_smt_use_javascript('jquery.min.js') ?>
 <?php op_smt_use_javascript('jquery.tmpl.min.js') ?>
+<?php op_smt_use_javascript('util') ?>
 <?php op_smt_use_javascript('smt_main') ?>
 <?php op_smt_use_javascript('smt_notify') ?>
 <?php op_smt_use_javascript('smt_tosaka') ?>
