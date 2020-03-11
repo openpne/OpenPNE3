@@ -29,7 +29,7 @@ class sfReversibleDoctrinePager extends sfDoctrinePager
     $sqlOrder       = self::DESC,
     $listOrder      = self::ASC;
 
-  public function getResults()
+  public function getResults($hydrationMode = null)
   {
     if (is_null($this->results))
     {
