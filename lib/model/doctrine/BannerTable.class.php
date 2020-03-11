@@ -20,4 +20,12 @@ class BannerTable extends Doctrine_Table
   {
     return $this->createQuery()->orderBy('id')->fetchOne();
   }
+
+  public function getBannerList()
+  {
+    return $this->createQuery('b')
+      ->leftJoin('b.Translation t')
+      ->andWhere('t.lang = ?', sfContext::getInstance()->getUser()->getCulture())
+      ->execute();
+  }
 }
