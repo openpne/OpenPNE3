@@ -12,9 +12,10 @@ class NavigationTable extends Doctrine_Table
 {
   public function retrieveByType($type)
   {
-    return $this->createQuery()
-      ->where('type = ?', $type)
-      ->orderBy('sort_order')
+    return $this->createQuery('n')
+      ->where('n.type = ?', $type)
+      ->leftJoin('n.Translation t')
+      ->orderBy('n.sort_order')
       ->execute();
   }
 
