@@ -193,6 +193,25 @@ function op_api_notification($notification)
     $iconUrl = sf_image_path($iconUrl, array('size' => '48x48'), true);
   }
 
+  $url = null;
+  if (null !== $notification['url'] && '' !== $notification['url'])
+  {
+    if ('/' === $notification['url'][0])
+    {
+      // Backward compatibility before OpenPNE 3.8.24.
+      // Basically, those URLs begin with relative URL root (ex. "/subdir/member/1").
+      $url = $notification['url'];
+    }
+    elseif (preg_match('#^https?://#i', $notification['url']))
+    {
+      $url = $notification['url'];
+    }
+    else
+    {
+      $url = app_url_for('pc_frontend', $notification['url'], true);
+    }
+  }
+
   return array(
     'id' => $notification['id'],
     'body' => sfContext::getInstance()->getI18N()->__($notification['body']),
