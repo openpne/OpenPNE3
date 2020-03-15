@@ -219,7 +219,7 @@ function op_api_notification($notification)
     'unread' => $notification['unread'],
     'created_at' => date('r', $notification['created_at']),
     'icon_url' => $iconUrl,
-    'url' => $notification['url'] ? url_for($notification['url'], array('abstract' => true)) : null,
+    'url' => $url,
     'member_id_from' => $notification['member_id_from'],
     'member_from' => op_api_member($fromMember)
   );
