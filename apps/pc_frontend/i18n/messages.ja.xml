@@ -1392,8 +1392,13 @@
         <target>非公開&lt;br /&gt;メンバー</target>
       </trans-unit>
       <trans-unit id="">
+<<<<<<< HEAD
         <source>%Friend% request from</source>
         <target>%Friend%申請</target>
+=======
+        <source>%Community% Information</source>
+        <target>%Community%情報</target>
+>>>>>>> f9832ab... (refs #4082-6) %community% を %Community% に修正
       </trans-unit>
     </body>
   </file>

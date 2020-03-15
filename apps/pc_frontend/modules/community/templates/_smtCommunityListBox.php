@@ -1,5 +1,9 @@
 <div class="row">
+<<<<<<< HEAD
   <div class="gadget_header span12">コミュニティ情報</div>
+=======
+  <div class="gadget_header span12"><?php echo __('%Community% Information') ?></div>
+>>>>>>> f9832ab... (refs #4082-6) %community% を %Community% に修正
 </div>
 <div class="row">
   <div class="span12">
@@ -21,7 +25,7 @@
 </tr>
 <?php
 $subAdminCaption = array();
-foreach ($communitySubAdmins as $m) 
+foreach ($communitySubAdmins as $m)
 {
   $subAdminCaption[] = link_to($m->getName(), '@member_profile?id='.$m->getId());
 }
