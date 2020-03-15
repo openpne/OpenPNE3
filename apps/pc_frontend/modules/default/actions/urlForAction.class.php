@@ -26,6 +26,8 @@ class urlForAction extends sfAction
   {
     // for javascript.
     $this->forward404Unless($request->isXmlHttpRequest());
+    $this->getResponse()->setContentType('text/plain');
+    $this->getResponse()->setHttpHeader('X-Content-Type-Options', 'nosniff', true);
 
     $this->getContext()->getConfiguration()->loadHelpers(array('Url', 'opUtil'));
 
