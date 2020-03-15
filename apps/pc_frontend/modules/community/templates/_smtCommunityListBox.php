@@ -1,9 +1,13 @@
 <div class="row">
 <<<<<<< HEAD
+<<<<<<< HEAD
   <div class="gadget_header span12">コミュニティ情報</div>
 =======
   <div class="gadget_header span12"><?php echo __('%Community% Information') ?></div>
 >>>>>>> f9832ab... (refs #4082-6) %community% を %Community% に修正
+=======
+  <div class="gadget_header span12"><?php echo __('%community% Information') ?></div>
+>>>>>>> 37db341... (fixed #4082) スマートフォン版にてSNS内名称設定に対応していなかった箇所を修正
 </div>
 <div class="row">
   <div class="span12">
