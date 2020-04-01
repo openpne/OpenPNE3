@@ -4,7 +4,7 @@
 =========================================================================
 
 OpenPNE3
-Copyright 2005-2009 OpenPNE Project
+Copyright 2005-2020 OpenPNE Project
 
 This product includes software developed at
 OpenPNE Project (http://www.openpne.jp/).
@@ -36,7 +36,7 @@ This product includes also softwares developed by :
     - BSD 3-clause License (Calendar)
 
 This product needs the third-party softwares listed blow to run.
-  - PHP: Hypertext Preprocessor (5.2.4 +)
+  - PHP: Hypertext Preprocessor (5.4 +)
 
 This product includes dependent libraries listed blow:
   - LExpress/symfony1 1.5.9 (fork of symfony 1.4)
