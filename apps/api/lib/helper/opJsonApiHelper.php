@@ -17,6 +17,11 @@
  */
 function op_api_member($member)
 {
+  if (!$member)
+  {
+    return null;
+  }
+
   $viewMemberId = sfContext::getInstance()->getUser()->getMemberId();
 
   $memberImageFileName = $member->getImageFileName();
