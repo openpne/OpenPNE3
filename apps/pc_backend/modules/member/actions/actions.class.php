@@ -101,7 +101,7 @@ class memberActions extends sfActions
     $this->form = new AdminInviteForm(null, $options);
 
     $query = Doctrine_Core::getTable('Member')->createQuery('m')
-      ->innerJoin('m.MemberConfig mc WITH (mc.name = "is_admin_invited" AND mc.value = true)')
+      ->innerJoin('m.MemberConfig mc WITH (mc.name_value_hash = "'.Doctrine_Core::getTable('MemberConfig')->generateNameValueHash('is_admin_invited', true).'")')
       ->andWhere('m.is_active = false')
       ->orderBy('m.id desc');
     $pager = new sfDoctrinePager('Member', 10);
