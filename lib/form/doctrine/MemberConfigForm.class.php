@@ -102,22 +102,12 @@ class MemberConfigForm extends BaseForm
     }
 
     $i18n = sfContext::getInstance()->getI18N();
-    $application = sfConfig::get('sf_app');
-    $culture = sfContext::getInstance()->getUser()->getCulture();
-    if (in_array($application, array('pc_backend', 'api'), true))
-    {
-      $application = 'pc_frontend';
-    }
-    $snsTermTable = Doctrine::getTable('SnsTerm');
-    $snsTermTable->configure($culture, $application);
-    $termMyFriend = $snsTermTable->get('my_friend');
-    $terms = array('%my_friend%' => $termMyFriend->pluralize()->titleize());
     $publicFlagChoiceNames = ['age_public_flag', 'profile_page_public_flag'];
     foreach ($publicFlagChoiceNames as $name)
     {
       foreach ($configs[$name]['Choices'] as $key => $publicFlag)
       {
-        $configs[$name]['Choices'][$key] = $i18n->__($publicFlag, $terms, 'publicFlags');
+        $configs[$name]['Choices'][$key] = $i18n->__($publicFlag, array(), 'publicFlags');
       }
     }
 
