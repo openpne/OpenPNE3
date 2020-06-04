@@ -1,11 +1,11 @@
 ========================
-OpenPNE3.8 Setup Process
+OpenPNE3.10 Setup Process
 ========================
 
 Introduction
 ============
 
-This document is for OpenPNE 3.8.
+This document is for OpenPNE 3.10.
 
 OpenPNE 3 should work under the following server environment.
 
@@ -14,7 +14,7 @@ MINIMUM REQUIREMENTS
     Apache
       * The "mod_rewrite" module is available
   PHP
-    PHP version 5.2.11 or later (if you want to use with earlier than PHP 5.2.11, you should build PHP with libxml 2.9+)
+    PHP version 5.4 or later
       * The "mbstring" module is available
       * The "xml" module is available
       * The "PCRE" module is available (That must be support UTF-8)
@@ -109,7 +109,7 @@ Set the files to be the following structure:
   +-- plugins/
   +-- symfony
   +-- test/
-  
+
   (You can access the following directories from web browser)
   +-- web/ (This directory name can be changed)
       +-- index.php
@@ -128,7 +128,7 @@ Copy config files as follows
   $ cd OpenPNE3
   $ cp config/ProjectConfiguration.class.php.sample config/ProjectConfiguration.class.php
   $ cp config/OpenPNE.yml.sample config/OpenPNE.yml
-  
+
 Then you should change the config values in OpenPNE.yml as your environment. Make sure you set "base_url" and "mail_domain", because they are used for posting and delivering mail.
 
 Install Command Execution
@@ -139,8 +139,8 @@ Execute the following command to begin installing process.
 ::
 
   $ ./symfony openpne:install
-  
-This command deletes the database and rebuild it. 
+
+This command deletes the database and rebuild it.
 NOTE: The above command does not download and install bundled plugins. If you download and install these plugins, you should add --internet option as follows.
 
 ::
@@ -152,7 +152,7 @@ If you don't want to delete your specified database -- for example, OpenPNE will
 ::
 
   $ ./symfony openpne:install --non-recreate-db
-  
+
 This option attempts to remove the old tables in proper order by considering the new one.
 It is strongly recommended to set prefixes with the tables used by OpenPNE in "OpenPNE.yml" for avoiding deleting tables of other system unexpectedly or failing deleting tables.
 
@@ -161,7 +161,7 @@ NOTE: Take care with their prefixes that avoid conflicting table names shared wi
 ::
 
   table_prefix: "op_"
-  
+
 After Running "openpne:install", you will be required inputting the following:
 
 * The DBMS (mysql, pgsql or sqlite, but we are now only support mysql)
@@ -223,7 +223,7 @@ In /etc/crontab, write:
   # Delivering the daily news /path/to/OpenPNE3 by running the script
   # /path/to/OpenPNE3/bin/send_daily_news.cron on /path/to/php at 6.
   00 6 * * * root sh /path/to/OpenPNE3/bin/send_daily_news.cron /path/to/OpenPNE3 /path/to/php
-  
+
   # Delivering the birthday notification /path/to/OpenPNE3 by running the script /path/to/OpenPNE3/bin/birthday_mail.cron on /path/to/php at 6.
   00 6 * * * root sh /path/to/OpenPNE3/bin/birthday_mail.cron /path/to/OpenPNE3 /path/to/php
 
