@@ -1,0 +1,36 @@
+diff --git a/lib/vendor/symfony/lib/routing/sfPatternRouting.class.php b/lib/vendor/symfony/lib/routing/sfPatternRouting.class.php
+index 3479c7d61..eeb582fe1 100644
+--- a/lib/vendor/symfony/lib/routing/sfPatternRouting.class.php
++++ b/lib/vendor/symfony/lib/routing/sfPatternRouting.class.php
+@@ -144,6 +144,16 @@ class sfPatternRouting extends sfRouting
+    */
+   public function getRoutes()
+   {
++    foreach ($this->routes as $name => $route)
++    {
++      if (is_string($route))
++      {
++        $route = unserialize($route);
++        $route->setDefaultParameters($this->defaultParameters);
++        $this->routes[$name] = $route;
++      }
++    }
++
+     return $this->routes;
+   }
+
+diff --git a/lib/vendor/symfony/test/unit/routing/sfPatternRoutingTest.php b/lib/vendor/symfony/test/unit/routing/sfPatternRoutingTest.php
+index 20398fbe6..394d6a90c 100644
+--- a/lib/vendor/symfony/test/unit/routing/sfPatternRoutingTest.php
++++ b/lib/vendor/symfony/test/unit/routing/sfPatternRoutingTest.php
+@@ -639,8 +639,8 @@ $t->diag('load_configuration with serialized routes');
+ // see fixtures/config_routing.yml.php
+ $r = new sfPatternRoutingTest(new sfEventDispatcher(), new sfNoCache(), array('load_configuration' => true));
+ $t->ok($r->hasRouteName('test1'), '->loadConfiguration() Config file is loaded');
+-$routes = $r->getRoutes();
+-$t->ok(is_string($routes['test1']), '->loadConfiguration() Route objects are not serialized in cache');
+ $route = $r->getRoute('test1');
+ $t->ok(is_object($route), '->loadConfiguration() Route objects are unserialized on demand');
++$routes = $r->getRoutes();
++$t->ok(is_object($routes['test1']), '->loadConfiguration() Route objects are not serialized in cache');
+ $t->is_deeply($r->parse('/'), array('module' => 'default', 'action' => 'index'), '->parse() Default parameters are applied to serialized routes');
