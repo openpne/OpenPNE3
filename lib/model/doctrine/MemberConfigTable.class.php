@@ -126,7 +126,7 @@ class MemberConfigTable extends opAccessControlDoctrineTable
   public function getAdminInvitedMemberIds()
   {
     $adminInviteds = $this->createQuery()
-      ->where('name_value_hash = ?', $this->generateNameValueHash('is_admin_invited', true))
+      ->where('name_value_hash = ?', $this->generateNameValueHash('is_admin_invited', '1'))
       ->execute();
 
     $ids = array();
