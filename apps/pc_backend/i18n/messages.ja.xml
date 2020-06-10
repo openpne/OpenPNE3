@@ -1472,6 +1472,20 @@
       <trans-unit id="">
         <source>If it is not reflected, clear the caches in "Cache Clear" in "SNS".</source>
         <target>反映されない場合は、SNS設定→キャッシュの削除にてキャッシュの削除を行ってください。</target>
+        <source>Send history</source>
+        <target>送信履歴</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Send situation</source>
+        <target>送信状況</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Send completion</source>
+        <target>送信完了</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>Send date</source>
+        <target>送信日時</target>
       </trans-unit>
     </body>
   </file>
