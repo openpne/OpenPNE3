@@ -42,7 +42,7 @@ $("#button tbody").sortable({
     postData += "&'.urlencode($sortForm->getCSRFFieldName()).'='.urlencode($sortForm->getCSRFToken()).'";
 
     $.ajax({
-      url: "'.url_for('sns/changeRichTextareaButtonOrder').'",
+      url: "'.url_for('advanced/changeRichTextareaButtonOrder').'",
       type: "POST",
       data: postData
     });
