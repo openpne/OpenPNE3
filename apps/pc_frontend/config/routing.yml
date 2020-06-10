@@ -53,6 +53,10 @@ global_user_agreement:
   url: /userAgreement
   param: { module: default, action: userAgreement }
 
+url_for:
+  url:   /default/urlFor.txt
+  param: { module: default, action: urlFor }
+
 # member rules
 member_config_image:
   url: /member/image/config
