@@ -100,13 +100,41 @@ class memberActions extends sfActions
     );
     $this->form = new AdminInviteForm(null, $options);
 
+    $query = Doctrine_Core::getTable('Member')->createQuery('m')
+      ->innerJoin('m.MemberConfig mc WITH (mc.name_value_hash = "'.Doctrine_Core::getTable('MemberConfig')->generateNameValueHash('is_admin_invited', '1').'")')
+      ->andWhere('m.is_active = false')
+      ->orderBy('m.id desc');
+    $pager = new sfDoctrinePager('Member', 10);
+    $pager->setQuery($query);
+    $pager->setPage($request->getParameter('page', 1));
+    $pager->init();
+
+    $deleteForm = new InvitelistForm(array(), array(
+      'invites' => iterator_to_array($pager),
+    ));
+
+    $this->pager = $pager;
+    $this->deleteForm = $deleteForm;
+
     if ($request->isMethod(sfWebRequest::POST))
     {
-      $this->form->bind($request->getParameter('member_config'));
-      if ($this->form->isValid())
+      if ($request->hasParameter($this->form->getName()))
       {
-        $this->form->save();
-        $this->redirect('member/invite');
+        $this->form->bind($request->getParameter($this->form->getName()));
+        if ($this->form->isValid())
+        {
+          $this->form->save();
+          $this->redirect('member/invite');
+        }
+      }
+      elseif ($request->hasParameter($deleteForm->getName()))
+      {
+        $deleteForm->bind($request->getParameter($deleteForm->getName()));
+        if ($deleteForm->isValid())
+        {
+          $deleteForm->save();
+          $this->redirect('member/invite');
+        }
       }
     }
 

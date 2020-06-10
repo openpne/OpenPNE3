@@ -122,4 +122,19 @@ class MemberConfigTable extends opAccessControlDoctrineTable
       ->allow('self', $resource, 'edit')
       ->deny('everyone');
   }
+
+  public function getAdminInvitedMemberIds()
+  {
+    $adminInviteds = $this->createQuery()
+      ->where('name_value_hash = ?', $this->generateNameValueHash('is_admin_invited', '1'))
+      ->execute();
+
+    $ids = array();
+    foreach ($adminInviteds as $line)
+    {
+      $ids[] = $line['member_id'];
+    }
+
+    return $ids;
+  }
 }
