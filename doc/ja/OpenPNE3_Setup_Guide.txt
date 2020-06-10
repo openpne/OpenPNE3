@@ -1,11 +1,11 @@
 ===========================
-OpenPNE3.8 セットアップ手順
+OpenPNE3.10 セットアップ手順
 ===========================
 
 はじめに
 ========
 
-このドキュメントは、 OpenPNE バージョン 3.8 を基にして書かれています。
+このドキュメントは、 OpenPNE バージョン 3.10 を基にして書かれています。
 
 OpenPNE3 は以下のようなサーバ環境で動作させることを想定しています。
 
@@ -14,7 +14,7 @@ OpenPNE3 は以下のようなサーバ環境で動作させることを想定�
     Apache
       * mod_rewrite を使用可能
   PHP
-    PHP 5.2.11 以降 (PHP 5.2.11 未満で動作させる場合は libxml 2.9 以降と一緒に PHP をビルドしてください)
+    PHP 5.4 以降
       * PHP の mbstring 拡張モジュールを使用可能
       * PHP の XML 拡張モジュールを使用可能
       * PHP の PCRE 拡張モジュールを使用可能 (UTF-8 サポート)
@@ -108,7 +108,7 @@ http://www.openpne.jp/pne-downloads/
   +-- plugins/
   +-- symfony
   +-- test/
-  
+
   (ブラウザから閲覧可能)
   +-- web/  (ディレクトリ名は変更可能)
       +-- index.php
@@ -159,7 +159,7 @@ http://www.openpne.jp/pne-downloads/
 
 ::
 
-  table_prefix: "op_" 
+  table_prefix: "op_"
 
 openpne:install コマンドを実行すると、はじめに、以下の事項の入力を求められます。
 
@@ -222,7 +222,7 @@ cron ファイルに設定権限を付加します。
 
   # 6 時に /path/to/OpenPNE3/bin/send_daily_news.cron というスクリプトを /path/to/php で実行することで /path/to/OpenPNE3 のデイリー・ニュースを配信する
   00   6 * * * root sh /path/to/OpenPNE3/bin/send_daily_news.cron     /path/to/OpenPNE3 /path/to/php
-  
+
   # 6 時に /path/to/OpenPNE3/bin/birthday_mail.cron というスクリプトを /path/to/php で実行することで /path/to/OpenPNE3 の誕生日通知メールを配信する
   00   6 * * * root sh /path/to/OpenPNE3/bin/birthday_mail.cron     /path/to/OpenPNE3 /path/to/php
 
@@ -259,7 +259,7 @@ cron ファイルに設定権限を付加します。
 ------------------------------
 
 (1) http://example.com/pc_backend.php にアクセス
-(2) ログインフォームに admin / password と入力し、ログインできるかどうか確認 
+(2) ログインフォームに admin / password と入力し、ログインできるかどうか確認
 
 ※メールアドレスとパスワードはログイン後に必ず変更してください
 
