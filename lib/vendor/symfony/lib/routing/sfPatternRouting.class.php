@@ -144,6 +144,16 @@ class sfPatternRouting extends sfRouting
    */
   public function getRoutes()
   {
+    foreach ($this->routes as $name => $route)
+    {
+      if (is_string($route))
+      {
+        $route = unserialize($route);
+        $route->setDefaultParameters($this->defaultParameters);
+        $this->routes[$name] = $route;
+      }
+    }
+
     return $this->routes;
   }
 
