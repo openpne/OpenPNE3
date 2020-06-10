@@ -50,3 +50,7 @@ localStorage.setItem(name,value);},get:function(name)
 {if(!opLocalStorage.isEnabled())
 {return false;}
 return localStorage.getItem(name);}};
+var smtSwitch={key:'disable_smt',datePeriod:30,elem:null,initialize:function(){this.updateExpires(false);this.elem=document.getElementById('smt-switch');if(this.elem)
+{this.elem.addEventListener('click',function(){smtSwitch.switchPc();});}
+var $toSmt=document.getElementById('SmtSwitchLink');if($toSmt)
+{$toSmt.addEventListener('click',function(){smtSwitch.switchSmt();},false);}},isSwitchPc:function(){return'1'===opCookie.get(this.key);},switchPc:function(){smtSwitch.updateExpires(true);location.href=smtSwitch.elem.getAttribute('href');},switchSmt:function(){opCookie.set(this.key);location.reload();},getExpiresDate:function(){var expiresDate=new Date();expiresDate.setTime(expiresDate.getTime()+this.datePeriod*24*60*60*1000);return expiresDate;},updateExpires:function(force){if(force||this.isSwitchPc()){opCookie.set(this.key,'1',this.getExpiresDate(),openpne.baseUrl);}}};
