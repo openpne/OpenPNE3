@@ -8,27 +8,26 @@
 <?php if (Doctrine::getTable('SnsConfig')->get('customizing_css')): ?>
 <link rel="stylesheet" type="text/css" href="<?php echo url_for('@customizing_css') ?>" />
 <?php endif; ?>
-<?php use_helper('Javascript'); ?>
-<?php if (opConfig::get('enable_jsonapi') && opToolkit::isSecurePage()): ?>
 <?php
-
 use_javascript('jquery.min.js');
-use_javascript('jquery.tmpl.min.js');
-use_javascript('jquery.notify.js');
-use_javascript('op_notify.js');
-$jsonData = array(
-  'apiKey' => $sf_user->getMemberApiKey(),
-  'apiBase' => app_url_for('api', 'homepage'),
-  'baseUrl' => $sf_request->getRelativeUrlRoot().'/',
-);
+use_helper('Javascript');
+$jsonData = array('urlForUrl' => url_for('@url_for'));
+if (opConfig::get('enable_jsonapi') && opToolkit::isSecurePage())
+{
+  use_javascript('jquery.tmpl.min.js');
+  use_javascript('jquery.notify.js');
+  use_javascript('op_notify.js');
+  $jsonData = array_merge(array(
+    'apiKey' => $sf_user->getMemberApiKey(),
+    'apiBase' => app_url_for('api', 'homepage'),
+    'baseUrl' => $sf_request->getRelativeUrlRoot().'/',
+  ), $jsonData);
+}
 
 $json = defined('JSON_PRETTY_PRINT') ? json_encode($jsonData, JSON_PRETTY_PRINT) : json_encode($jsonData);
 
-echo javascript_tag('
-var openpne = '.$json.';
-');
+echo javascript_tag('var openpne = '.$json.';');
 ?>
-<?php endif ?>
 <?php include_javascripts() ?>
 <?php echo javascript_tag(<<<JS
 document.addEventListener('DOMContentLoaded', function() {

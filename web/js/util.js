@@ -37,3 +37,20 @@ var smtSwitch={key:'disable_smt',datePeriod:30,elem:null,initialize:function(){t
 {this.elem.addEventListener('click',function(){smtSwitch.switchPc();});}
 var $toSmt=document.getElementById('SmtSwitchLink');if($toSmt)
 {$toSmt.addEventListener('click',function(){smtSwitch.switchSmt();},false);}},isSwitchPc:function(){return'1'===opCookie.get(this.key);},switchPc:function(){smtSwitch.updateExpires(true);location.href=smtSwitch.elem.getAttribute('href');},switchSmt:function(){opCookie.set(this.key);location.reload();},getExpiresDate:function(){var expiresDate=new Date();expiresDate.setTime(expiresDate.getTime()+this.datePeriod*24*60*60*1000);return expiresDate;},updateExpires:function(force){if(force||this.isSwitchPc()){opCookie.set(this.key,'1',this.getExpiresDate(),openpne.baseUrl);}}};
+var opLocalStorage={isEnabledVar:null,isEnabled:function()
+{if(typeof this.isEnabledVar==='boolean')
+{return this.isEnabledVar;}
+try
+{if(typeof window.localStorage==='undefined')
+{return this.isEnabledVar=false;}
+else if(window.localStrage)
+{var testString='opTest';localStorage.setItem(testString,testString);localStorage.removeItem(testString);}}
+catch(e)
+{return this.isEnabledVar=false;}
+return this.isEnabledVar=true;},set:function(name,value)
+{if(!opLocalStorage.isEnabled())
+{return false;}
+localStorage.setItem(name,value);},get:function(name)
+{if(!opLocalStorage.isEnabled())
+{return false;}
+return localStorage.getItem(name);}};
