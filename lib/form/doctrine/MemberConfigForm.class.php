@@ -102,14 +102,12 @@ class MemberConfigForm extends BaseForm
     }
 
     $i18n = sfContext::getInstance()->getI18N();
-    $termMyFriend = Doctrine::getTable('SnsTerm')->get('my_friend');
-    $terms = array('%my_friend%' => $termMyFriend->pluralize()->titleize());
     $publicFlagChoiceNames = ['age_public_flag', 'profile_page_public_flag'];
     foreach ($publicFlagChoiceNames as $name)
     {
       foreach ($configs[$name]['Choices'] as $key => $publicFlag)
       {
-        $configs[$name]['Choices'][$key] = $i18n->__($publicFlag, $terms, 'publicFlags');
+        $configs[$name]['Choices'][$key] = $i18n->__($publicFlag, array(), 'publicFlags');
       }
     }
 
