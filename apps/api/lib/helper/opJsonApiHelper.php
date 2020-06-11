@@ -17,6 +17,11 @@
  */
 function op_api_member($member)
 {
+  if (!$member)
+  {
+    return null;
+  }
+
   $viewMemberId = sfContext::getInstance()->getUser()->getMemberId();
 
   $memberImageFileName = $member->getImageFileName();
@@ -172,9 +177,13 @@ function op_api_notification($notification)
   }
   else
   {
+    $fromMember = Doctrine::getTable('Member')->find($notification['member_id_from']);
+    if (!$fromMember)
+    {
+      opNotificationCenter::delete(sfContext::getInstance()->getUser()->getMember(), $notification['id']);
+    }
     if ('link' === $notification['category'])
     {
-      $fromMember = Doctrine::getTable('Member')->find($notification['member_id_from']);
       $fromMemberImageFileName = $fromMember ? $fromMember->getImageFileName() : null;
 
       if ($fromMemberImageFileName)
