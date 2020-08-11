@@ -5,7 +5,7 @@
   <?php if('@member_profile_mine' === $nav->uri): ?>
   <li class="active"><?php echo link_to($sf_user->getMember()->getName(), $nav->uri, array('id' => sprintf('smtMenu_%1', op_url_to_id($nav->uri, true)))) ?></li>
   <?php else: ?>
-  <li><?php echo link_to($nav->caption, $nav->uri, array('id' => sprintf('smtMenu_%1', op_url_to_id($nav->uri, true)))) ?></li>
+  <li><?php echo link_to(__($nav->caption), $nav->uri, array('id' => sprintf('smtMenu_%1', op_url_to_id($nav->uri, true)))) ?></li>
   <?php endif ?>
   <?php endif ?>
   <?php endforeach ?>
