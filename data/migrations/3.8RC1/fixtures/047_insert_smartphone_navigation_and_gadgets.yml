@@ -35,9 +35,9 @@ Navigation:
     sort_order: 30
     Translation:
       ja_JP:
-        caption: "コミュニティ検索"
+        caption: "%community%検索"
       en:
-        caption: "Community Search"
+        caption: "%community% Search"
 
   smartphone_default_navigation_logout:
     type: "smartphone_default"
