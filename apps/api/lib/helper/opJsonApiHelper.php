@@ -17,6 +17,11 @@
  */
 function op_api_member($member)
 {
+  if (!$member)
+  {
+    return null;
+  }
+
   $viewMemberId = sfContext::getInstance()->getUser()->getMemberId();
 
   $memberImageFileName = $member->getImageFileName();
@@ -172,9 +177,13 @@ function op_api_notification($notification)
   }
   else
   {
+    $fromMember = Doctrine::getTable('Member')->find($notification['member_id_from']);
+    if (!$fromMember)
+    {
+      opNotificationCenter::delete(sfContext::getInstance()->getUser()->getMember(), $notification['id']);
+    }
     if ('link' === $notification['category'])
     {
-      $fromMember = Doctrine::getTable('Member')->find($notification['member_id_from']);
       $fromMemberImageFileName = $fromMember ? $fromMember->getImageFileName() : null;
 
       if ($fromMemberImageFileName)
@@ -193,14 +202,34 @@ function op_api_notification($notification)
     $iconUrl = sf_image_path($iconUrl, array('size' => '48x48'), true);
   }
 
+  $url = null;
+  if (null !== $notification['url'] && '' !== $notification['url'])
+  {
+    if ('/' === $notification['url'][0])
+    {
+      // Backward compatibility before OpenPNE 3.8.24.
+      // Basically, those URLs begin with relative URL root (ex. "/subdir/member/1").
+      $url = $notification['url'];
+    }
+    elseif (preg_match('#^https?://#i', $notification['url']))
+    {
+      $url = $notification['url'];
+    }
+    else
+    {
+      $url = app_url_for('pc_frontend', $notification['url'], true);
+    }
+  }
+
   return array(
     'id' => $notification['id'],
     'body' => sfContext::getInstance()->getI18N()->__($notification['body']),
     'category' => $notification['category'],
     'unread' => $notification['unread'],
-    'created_at' => date('r', strtotime($notification['created_at'])),
+    'created_at' => date('r', $notification['created_at']),
     'icon_url' => $iconUrl,
-    'url' => $notification['url'] ? url_for($notification['url'], array('abstract' => true)) : null,
+    'url' => $url,
     'member_id_from' => $notification['member_id_from'],
+    'member_from' => op_api_member($fromMember)
   );
 }

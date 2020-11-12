@@ -18,4 +18,4 @@ if ($member->getId() == $sf_user->getMember()->getId())
   )), '@friend_manage');
 }
 
-op_include_parts('nineTable', 'frendList_'.$gadget->getId(), $options);
+op_include_parts('nineTable', 'friendList_'.$gadget->getId(), $options);

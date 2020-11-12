@@ -20,18 +20,13 @@ class opI18N extends sfI18N
   {
     parent::initialize($configuration, $cache, $options);
 
-    $this->terms = Doctrine::getTable('SnsTerm');
     $application = sfConfig::get('sf_app');
-    if ('pc_backend' == $application)
+    if (in_array($application, array('pc_backend', 'api'), true))
     {
         $application = 'pc_frontend';
     }
     $this->terms = Doctrine::getTable('SnsTerm');
     $this->terms->configure($this->culture, $application);
-    if (!$this->terms['member'])
-    {
-      $this->terms->configure('en', $application);
-    }
   }
 
   public function generateApplicationMessages($dirs)
@@ -108,6 +103,19 @@ class opI18N extends sfI18N
 
   public function __($string, $args = array(), $catalogue = 'messages')
   {
+    if (null === $args)
+    {
+      $args = array();
+    }
+
+    foreach ($args as $k => $v)
+    {
+      if ($v instanceof SnsTerm)
+      {
+        $args[$k] = (string)$v;
+      }
+    }
+
     if (empty($this->parsed[$string]))
     {
       $this->parsed[$string] = array();
@@ -135,19 +143,6 @@ class opI18N extends sfI18N
       }
     }
 
-    $parsedString = $this->parsed[$string];
-    if (is_array($args))
-    {
-      foreach ($args as $k => $v)
-      {
-        if ($v instanceof SnsTerm)
-        {
-          $args[$k] = (string)$v;
-        }
-      }
-      $parsedString = array_merge($parsedString, $args);
-    }
-
-    return parent::__($string, $parsedString, $catalogue);
+    return parent::__($string, array_merge($this->parsed[$string], $args), $catalogue);
   }
 }

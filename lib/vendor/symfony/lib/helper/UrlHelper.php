@@ -496,7 +496,7 @@ function mail_to($email, $name = '', $options = array(), $default_value = array(
   $default = array();
   foreach ($default_tmp as $key => $value)
   {
-    $default[] = urlencode($key).'='.urlencode($value);
+    $default[] = rawurlencode($key).'='.rawurlencode($value);
   }
   $options = count($default) ? '?'.implode('&', $default) : '';
 

@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="gadget_header span12">コミュニティ情報</div>
+  <div class="gadget_header span12"><?php echo __('%Community% Information') ?></div>
 </div>
 <div class="row">
   <div class="span12">
@@ -21,7 +21,7 @@
 </tr>
 <?php
 $subAdminCaption = array();
-foreach ($communitySubAdmins as $m) 
+foreach ($communitySubAdmins as $m)
 {
   $subAdminCaption[] = link_to($m->getName(), '@member_profile?id='.$m->getId());
 }

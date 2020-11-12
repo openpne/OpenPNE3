@@ -30,7 +30,7 @@ Gadget:
     sort_order: 10
 
   login_gadget_login_form_box:
-    type: "loginTop"
+    type: "loginContents"
     name: "loginForm"
     sort_order: 10
 

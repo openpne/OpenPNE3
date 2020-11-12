@@ -25,7 +25,7 @@ require_once sfConfig::get('sf_lib_dir').'/helper/JavascriptHelper.php';
  */
 function make_modal_box($id, $contents)
 {
-  sfContext::getInstance()->getResponse()->addJavascript(sfConfig::get('op_jquery_url'));
+  sfContext::getInstance()->getResponse()->addJavascript('jquery.min.js');
   sfContext::getInstance()->getResponse()->addJavascript('util');
   $div = '<div id="'.$id.'" class="modalWall" style="display:none" onclick="$(this).hide(); $(\'#'.$id.'_contents\').hide()"></div>'
        . '<div id="'.$id.'_contents" class="modalBox" style="display: none;">'

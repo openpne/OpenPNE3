@@ -10,7 +10,7 @@
 <?php op_smt_use_stylesheet('bootstrap') ?>
 <?php op_smt_use_stylesheet('smt_main') ?>
 <?php op_smt_include_stylesheets() ?>
-<meta name="viewport" content="width=320px,user-scalable=no" />
+<meta name="viewport" content="width=320,user-scalable=no" />
 <?php if (opConfig::get('enable_jsonapi') && opToolkit::isSecurePage()): ?>
 <?php
 $jsonData = array(
@@ -26,6 +26,7 @@ var openpne = '.json_encode($jsonData).';
 <?php endif ?>
 <?php op_smt_use_javascript('jquery.min.js') ?>
 <?php op_smt_use_javascript('jquery.tmpl.min.js') ?>
+<?php op_smt_use_javascript('util') ?>
 <?php op_smt_use_javascript('smt_main') ?>
 <?php op_smt_use_javascript('smt_notify') ?>
 <?php op_smt_use_javascript('smt_tosaka') ?>

@@ -17,7 +17,7 @@
 * @author     Florian Anderiasch <fa@php.net>
 * @copyright  1997-2005 The PHP Group
 * @license    http://www.php.net/license/3_01.txt  PHP License 3.01
-* @version    CVS: $Id: IPv4.php,v 1.11 2005/11/29 12:56:35 fa Exp $
+* @version    CVS: $Id$
 * @link       http://pear.php.net/package/Net_IPv4
 */
 
@@ -32,41 +32,7 @@ require_once 'PEAR.php';
  *
  * @global array $GLOBALS['Net_IPv4_Netmask_Map']
  */
-$GLOBALS['Net_IPv4_Netmask_Map'] = array(
-            0 => "0.0.0.0",
-            1 => "128.0.0.0",
-            2 => "192.0.0.0",
-            3 => "224.0.0.0",
-            4 => "240.0.0.0",
-            5 => "248.0.0.0",
-            6 => "252.0.0.0",
-            7 => "254.0.0.0",
-            8 => "255.0.0.0",
-            9 => "255.128.0.0",
-            10 => "255.192.0.0",
-            11 => "255.224.0.0",
-            12 => "255.240.0.0",
-            13 => "255.248.0.0",
-            14 => "255.252.0.0",
-            15 => "255.254.0.0",
-            16 => "255.255.0.0",
-            17 => "255.255.128.0",
-            18 => "255.255.192.0",
-            19 => "255.255.224.0",
-            20 => "255.255.240.0",
-            21 => "255.255.248.0",
-            22 => "255.255.252.0",
-            23 => "255.255.254.0",
-            24 => "255.255.255.0",
-            25 => "255.255.255.128",
-            26 => "255.255.255.192",
-            27 => "255.255.255.224",
-            28 => "255.255.255.240",
-            29 => "255.255.255.248",
-            30 => "255.255.255.252",
-            31 => "255.255.255.254",
-            32 => "255.255.255.255"
-        );
+$GLOBALS['Net_IPv4_Netmask_Map'] = Net_IPv4::$Net_IPv4_Netmask_Map;
 // }}}
 // {{{ Net_IPv4
 
@@ -96,7 +62,42 @@ class Net_IPv4
     var $network = "";
     var $broadcast = "";
     var $long = 0;
-    
+    public static $Net_IPv4_Netmask_Map = array(
+        0 => "0.0.0.0",
+        1 => "128.0.0.0",
+        2 => "192.0.0.0",
+        3 => "224.0.0.0",
+        4 => "240.0.0.0",
+        5 => "248.0.0.0",
+        6 => "252.0.0.0",
+        7 => "254.0.0.0",
+        8 => "255.0.0.0",
+        9 => "255.128.0.0",
+        10 => "255.192.0.0",
+        11 => "255.224.0.0",
+        12 => "255.240.0.0",
+        13 => "255.248.0.0",
+        14 => "255.252.0.0",
+        15 => "255.254.0.0",
+        16 => "255.255.0.0",
+        17 => "255.255.128.0",
+        18 => "255.255.192.0",
+        19 => "255.255.224.0",
+        20 => "255.255.240.0",
+        21 => "255.255.248.0",
+        22 => "255.255.252.0",
+        23 => "255.255.254.0",
+        24 => "255.255.255.0",
+        25 => "255.255.255.128",
+        26 => "255.255.255.192",
+        27 => "255.255.255.224",
+        28 => "255.255.255.240",
+        29 => "255.255.255.248",
+        30 => "255.255.255.252",
+        31 => "255.255.255.254",
+        32 => "255.255.255.255"
+    );
+
     // }}}
     // {{{ validateIP()
 
@@ -120,7 +121,7 @@ class Net_IPv4
             return false;
         }
     }
-    
+
     // }}}
     // {{{ check_ip()
 
@@ -140,7 +141,7 @@ class Net_IPv4
 
     // }}}
     // {{{ validateNetmask()
-    
+
     /**
      * Validate the syntax of a four octet netmask
      *
@@ -154,7 +155,7 @@ class Net_IPv4
      */
     function validateNetmask($netmask)
     {
-        if (! in_array($netmask, $GLOBALS['Net_IPv4_Netmask_Map'])) {
+        if (! in_array($netmask, self::$Net_IPv4_Netmask_Map)) {
             return false;
         }
         return true;
@@ -162,7 +163,7 @@ class Net_IPv4
 
     // }}}
     // {{{ parseAddress()
-    
+
     /**
      * Parse a formatted IP address
      *
@@ -208,11 +209,11 @@ class Net_IPv4
             }
             $myself->ip = $parts[0];
 
-            // Check the style of netmask that was entered 
+            // Check the style of netmask that was entered
             /*
              *  a hexadecimal string was entered
              */
-            if (eregi("^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$", $parts[1], $regs)) {
+            if (preg_match("/^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i", $parts[1], $regs)) {
                 // hexadecimal string
                 $myself->netmask = hexdec($regs[1]) . "." .  hexdec($regs[2]) . "." .
                     hexdec($regs[3]) . "." .  hexdec($regs[4]);
@@ -229,7 +230,7 @@ class Net_IPv4
             /*
              *  a CIDR bitmask type was entered
              */
-            } else if ($parts[1] >= 0 && $parts[1] <= 32) {
+            } else if (ctype_digit($parts[1]) && $parts[1] >= 0 && $parts[1] <= 32) {
                 // bitmask was entered
                 $myself->bitmask = $parts[1];
 
@@ -248,10 +249,10 @@ class Net_IPv4
             return PEAR::raiseError("invalid IP address");
         }
     }
-    
+
     // }}}
     // {{{ calculate()
-    
+
     /**
      * Calculates network information based on an IP address and netmask.
      *
@@ -264,7 +265,7 @@ class Net_IPv4
      */
     function calculate()
     {
-        $validNM = $GLOBALS['Net_IPv4_Netmask_Map'];
+        $validNM = self::$Net_IPv4_Netmask_Map;
 
         if (! is_a($this, "net_ipv4")) {
             $myself = new Net_IPv4;
@@ -306,7 +307,7 @@ class Net_IPv4
 
     // }}}
     // {{{ getNetmask()
-    
+
 	function getNetmask($length)
 	{
 		if (! PEAR::isError($ipobj = Net_IPv4::parseAddress("0.0.0.0/" . $length))) {
@@ -316,7 +317,7 @@ class Net_IPv4
 		}
 		return false;
 	}
-    
+
     // }}}
     // {{{ getNetLength()
 
@@ -332,7 +333,7 @@ class Net_IPv4
 
     // }}}
     // {{{ getSubnet()
-    
+
 	function getSubnet($ip, $netmask)
 	{
 		if (! PEAR::isError($ipobj = Net_IPv4::parseAddress($ip . "/" . $netmask))) {
@@ -345,7 +346,7 @@ class Net_IPv4
 
     // }}}
     // {{{ inSameSubnet()
-    
+
 	function inSameSubnet($ip1, $ip2)
 	{
 		if (! is_object($ip1) || strcasecmp(get_class($ip1), 'net_ipv4') <> 0) {
@@ -366,7 +367,7 @@ class Net_IPv4
 		}
 		return false;
 	}
-    
+
     // }}}
     // {{{ atoh()
 
@@ -386,7 +387,7 @@ class Net_IPv4
 
     // }}}
     // {{{ htoa()
-    
+
     /**
      * Converts a hexadecimal string into a dot-quad formatted IP address
      * @param  string $addr IP-adress in hexadecimal format
@@ -394,17 +395,17 @@ class Net_IPv4
      */
     function htoa($addr)
     {
-        if (eregi("^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$",
+        if (preg_match("/^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i",
                     $addr, $regs)) {
             return hexdec($regs[1]) . "." .  hexdec($regs[2]) . "." .
                    hexdec($regs[3]) . "." .  hexdec($regs[4]);
         }
         return false;
     }
-    
+
     // }}}
     // {{{ ip2double()
-    
+
     /**
      * Converts an IP address to a PHP double.  Better than ip2long because
      * a long in PHP is a signed integer.
@@ -415,7 +416,7 @@ class Net_IPv4
     {
         return (double)(sprintf("%u", ip2long($ip)));
     }
-    
+
     // }}}
     // {{{ ipInNetwork()
 
@@ -427,7 +428,7 @@ class Net_IPv4
      * network ($network) may be either a string containing a CIDR
      * formatted network definition, or a Net_IPv4 object.
      *
-     * @param  string  $ip      A dot quad representation of an IP address 
+     * @param  string  $ip      A dot quad representation of an IP address
      * @param  string  $network A string representing the network in CIDR format or a Net_IPv4 object.
      * @return bool             true if the IP address exists within the network
      */
@@ -436,7 +437,9 @@ class Net_IPv4
         if (! is_object($network) || strcasecmp(get_class($network), 'net_ipv4') <> 0) {
             $network = Net_IPv4::parseAddress($network);
         }
-        
+        if (strcasecmp(get_class($network), 'pear_error') === 0) {
+            return false;
+        }
         $net = Net_IPv4::ip2double($network->network);
         $bcast = Net_IPv4::ip2double($network->broadcast);
         $ip = Net_IPv4::ip2double($ip);
@@ -446,7 +449,7 @@ class Net_IPv4
         }
         return false;
     }
-    
+
     // }}}
 }
 

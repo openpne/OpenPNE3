@@ -52,10 +52,7 @@ class InvitelistForm extends BaseForm
 
       foreach ($invites as $invite)
       {
-        if (
-          $key == $invite->getId()
-          && $invite->getInviteMemberId() == sfContext::getInstance()->getUser()->getMemberId()
-        )
+        if ($key == $invite->getId())
         {
           $invite->delete();
         }

@@ -190,7 +190,15 @@ class opActivityQueryBuilder
       $query->andWhere('a.member_id = ?', $memberId);
     }
 
-    $query->andWhereIn('a.public_flag', $this->table->getViewablePublicFlags($publicFlag));
+    $publicFlags = $this->table->getViewablePublicFlags($publicFlag);
+    if (1 === count($publicFlags))
+    {
+      $query->andWhere('a.public_flag = ?', $publicFlags);
+    }
+    else
+    {
+      $query->andWhereIn('a.public_flag', $publicFlags);
+    }
 
     return $query;
   }
@@ -208,6 +216,10 @@ class opActivityQueryBuilder
       elseif (in_array($id, $this->inactiveIds))
       {
         continue;
+      }
+      elseif (!$this->viewerId)
+      {
+        $subQuery[] = $this->buildMemberQuery($query->createSubquery(), $id, ActivityDataTable::PUBLIC_FLAG_OPEN);
       }
       else
       {

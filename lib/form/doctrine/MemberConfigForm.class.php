@@ -101,14 +101,44 @@ class MemberConfigForm extends BaseForm
       unset($configs['age_public_flag']['Choices'][4]);
     }
 
-    if (!$this->category) {
-      $this->memberConfigSettings = $configs;
-      return true;
+    $i18n = sfContext::getInstance()->getI18N();
+    $publicFlagChoiceNames = ['age_public_flag', 'profile_page_public_flag'];
+    foreach ($publicFlagChoiceNames as $name)
+    {
+      foreach ($configs[$name]['Choices'] as $key => $publicFlag)
+      {
+        $configs[$name]['Choices'][$key] = $i18n->__($publicFlag, array(), 'publicFlags');
+      }
     }
 
-    foreach ($categories[$this->category] as $value)
+    if (!$this->category)
     {
-      $this->memberConfigSettings[$value] = $configs[$value];
+      $this->memberConfigSettings = $configs;
+    }
+    else
+    {
+      foreach ($categories[$this->category] as $value)
+      {
+        $this->memberConfigSettings[$value] = $configs[$value];
+      }
+    }
+
+    foreach ($this->memberConfigSettings as $configName => $configSettings)
+    {
+      if (null === $configSettings)
+      {
+        continue;
+      }
+
+      // Set default values if key not in array
+      $this->memberConfigSettings[$configName] = $configSettings + array(
+        'IsRegist' => false,
+        'IsConfig' => false,
+        'IsRequired' => false,
+        'IsUnique' => false,
+        'IsConfirm' => false,
+        'Info' => '',
+      );
     }
   }
 
@@ -123,13 +153,15 @@ class MemberConfigForm extends BaseForm
     }
     $this->validatorSchema[$name] = opFormItemGenerator::generateValidator($config);
 
-    if (!empty($config['IsUnique']))
+    if ($config['IsUnique'])
     {
       $uniqueValidator = new sfValidatorCallback(array(
         'callback'    => array($this, 'isUnique'),
         'arguments'   => array('name' => $name),
         'empty_value' => $this->validatorSchema[$name]->getOption('empty_value'),
       ));
+
+      $uniqueValidator->addMessage('duplicate', 'The inputted value is already exist.');
 
       $this->validatorSchema[$name] = new sfValidatorAnd(array(
         $this->validatorSchema[$name],
@@ -141,7 +173,7 @@ class MemberConfigForm extends BaseForm
       ));
     }
 
-    if (!empty($config['IsConfirm']))
+    if ($config['IsConfirm'])
     {
       $this->validatorSchema[$name.'_confirm'] = $this->validatorSchema[$name];
       $this->widgetSchema[$name.'_confirm'] = $this->widgetSchema[$name];
@@ -157,7 +189,7 @@ class MemberConfigForm extends BaseForm
       )));
     }
 
-    if (!empty($config['Info']))
+    if ($config['Info'])
     {
       $this->widgetSchema->setHelp($name, $config['Info']);
     }
@@ -235,7 +267,7 @@ class MemberConfigForm extends BaseForm
       return $value;
     }
 
-    throw new sfValidatorError($validator, 'Invalid %name%.', array('name' => $name));
+    throw new sfValidatorError($validator, 'duplicate');
   }
 
   public function isValid()
@@ -249,7 +281,7 @@ class MemberConfigForm extends BaseForm
 
     foreach ($this->getValues() as $key => $value)
     {
-      if (!empty($this->memberConfigSettings[$key]['IsUnique']))
+      if ($this->memberConfigSettings[$key]['IsUnique'])
       {
         $memberConfig = Doctrine::getTable('MemberConfig')->retrieveByNameAndValue($key.'_pre', $value);
         if ($memberConfig)

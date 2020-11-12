@@ -202,7 +202,7 @@ class designActions extends sfActions
     }
 
     $this->bannerImageList = Doctrine::getTable('BannerImage')->createQuery()->execute();
-    $this->bannerList = Doctrine::getTable('Banner')->createQuery()->execute();
+    $this->bannerList = Doctrine::getTable('Banner')->getBannerList();
   }
 
  /**

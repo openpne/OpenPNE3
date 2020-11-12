@@ -1,10 +1,10 @@
-OpenPNE3.8 Update Process
+OpenPNE3.10 Update Process
 =========================
 
 Introduction
 ------------
 
-This document is for all of the version OpenPNE 3.4.0 or later to OpenPNE 3.8.x.
+This document is for all of the version OpenPNE 3.8.0 or later to OpenPNE 3.10.x.
 
 ※You should backup database before updating.
 
@@ -23,14 +23,14 @@ Update process
 Setting Files
 ~~~~~~~~~~~~~
 
-Set the OpenPNE 3.8 files to your web server.
+Set the OpenPNE 3.10 files to your web server.
 
 Avoiding problems with mixing the old and new files, you have to change all of the files instead of overwriting.
 
 Update the Configuration File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Copy config files in OpenPNE 3.8 as follows:
+Copy config files in OpenPNE 3.10 as follows:
 
 ::
 
@@ -45,7 +45,7 @@ And copy the old config/database.yml to new config/database.yml. Then you should
 ::
 
   $ cp /path/to/old/OpenPNE3/config/databases.yml /path/to/new/OpenPNE3/config/databases.yml
-  
+
 Copy the Plugin Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -72,7 +72,7 @@ In the project root directory, execute:
 
   $ ./symfony doctrine:build-model
   $ ./symfony cc
-  
+
 The next "Execute the Updating Command" requires these processes.
 
 Execute the Updating Command
@@ -87,16 +87,6 @@ In the project root directory, execute:
 
 This command will update OpenPNE and plugins to newer version.
 
-You have to execute the following command if your using version is earlier than or equal to OpenPNE 3.2.7.2, OpenPNE 3.4.9 or OpenPNE 3.6beta6.
-
-Please check the following blog post before performing the command.
-
-http://www.openpne.jp/archives/5689/
-
-::
-
-  $ ./symfony openpne:fix-session-db
-
 Now you are all updating.
 
 Note
@@ -104,21 +94,4 @@ Note
 
 Here are some notes in updating.
 
-* Updating from 3.6beta11 or earlier, you cannot get the followings. If you use them, you have to set "Use" in administration page(pc_backend.php/sns/config/category/general).
-
-  * Language and Time Zone Configuration
-  * Connecting with External Application
-  * OpenID Configuration
-
-* Some features of the admin screen go to 'Advanced Settings' since OpenPNE 3.8.0. These features are:
-  * SNS > General Configuration
-    - Activity Post
-    - JSON API
-    - OpenID Provider
-    - Daily News Receiving Frequency
-    - Public Flag for Age to Entire Web settings
-    - Public Flag for Member's Profile settings
-    - Rich Text Area settings
-
-  * SNS > Mobile-related
-  * SNS > API Key
+  * OpenPNE 3.10.0 or later will not work unless you have PHP 5.4 or later.

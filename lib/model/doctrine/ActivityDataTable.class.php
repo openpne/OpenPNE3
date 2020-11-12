@@ -147,8 +147,10 @@ class ActivityDataTable extends Doctrine_Table
   public function publicFlagToCaption($flag)
   {
     $i18n = sfContext::getInstance()->getI18N();
+    $termMyFriend = Doctrine::getTable('SnsTerm')->get('my_friend');
+    $terms = array('%my_friend%' => $termMyFriend->pluralize()->titleize());
 
-    return $i18n->__(self::$publicFlags[$flag]);
+    return $i18n->__(self::$publicFlags[$flag], $terms, 'publicFlags');
   }
 
   public function getPublicFlags($isI18n = true)
@@ -194,7 +196,7 @@ class ActivityDataTable extends Doctrine_Table
       case self::PUBLIC_FLAG_OPEN:
         $flags[] = self::PUBLIC_FLAG_OPEN;
         break;
-      default: 
+      default:
         break;
     }
 
@@ -306,7 +308,7 @@ class ActivityDataTable extends Doctrine_Table
       $viewerMemberId = $this->getMyMemberId();
     }
 
-    if (is_null($viewerMemberId))
+    if (!$viewerMemberId)
     {
       $flag = self::PUBLIC_FLAG_OPEN;
     }
