@@ -24,9 +24,9 @@ if (opConfig::get('enable_jsonapi') && opToolkit::isSecurePage())
   ), $jsonData);
 }
 
-$json = defined('JSON_PRETTY_PRINT') ? json_encode($jsonData, JSON_PRETTY_PRINT) : json_encode($jsonData);
-
-echo javascript_tag('var openpne = '.$json.';');
+echo javascript_tag('
+var openpne = '.json_encode($jsonData).';
+');
 ?>
 <?php include_javascripts() ?>
 <?php echo $op_config->get('pc_html_head') ?>
