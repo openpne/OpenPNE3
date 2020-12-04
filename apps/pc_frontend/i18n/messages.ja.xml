@@ -1384,6 +1384,10 @@
         <target>リセット</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Save</source>
+        <target>確定</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>%Community% does not exist.</source>
         <target>%Community%がありません。</target>
       </trans-unit>
