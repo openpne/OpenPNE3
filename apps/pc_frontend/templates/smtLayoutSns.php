@@ -14,7 +14,7 @@
 <?php if (opConfig::get('enable_jsonapi')): ?>
 <?php
 $jsonData = array(
-  'apiKey' => opToolkit::isSecurePage() ? $sf_user->getMemberApiKey() : 'UNAUTHORIZED',
+  'apiKey' => $sf_user->getMemberApiKey(),
   'apiBase' => app_url_for('api', 'homepage'),
   'baseUrl' => $sf_request->getRelativeUrlRoot().'/',
 );
