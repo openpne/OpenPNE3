@@ -495,11 +495,6 @@ class opSecurityUser extends opAdaptableUser
   {
     $member = $this->getMember();
 
-    if ($member instanceof opAnonymousMember)
-    {
-      return '';
-    }
-
     return $member->getApiKey();
   }
 }

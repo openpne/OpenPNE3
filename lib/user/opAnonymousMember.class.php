@@ -155,4 +155,9 @@ class opAnonymousMember extends Member
   {
     return false;
   }
+
+  public function getApiKey()
+  {
+    return 'UNAUTHORIZED';
+  }
 }
