@@ -12,11 +12,14 @@
 use_javascript('jquery.min.js');
 use_helper('Javascript');
 $jsonData = array('urlForUrl' => url_for('@url_for'));
-if (opConfig::get('enable_jsonapi') && opToolkit::isSecurePage())
+if (opConfig::get('enable_jsonapi'))
 {
-  use_javascript('jquery.tmpl.min.js');
-  use_javascript('jquery.notify.js');
-  use_javascript('op_notify.js');
+  if (opToolkit::isSecurePage())
+  {
+    use_javascript('jquery.tmpl.min.js');
+    use_javascript('jquery.notify.js');
+    use_javascript('op_notify.js');
+  }
   $jsonData = array_merge(array(
     'apiKey' => $sf_user->getMemberApiKey(),
     'apiBase' => app_url_for('api', 'homepage'),
