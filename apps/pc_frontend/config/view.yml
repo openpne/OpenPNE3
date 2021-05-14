@@ -11,7 +11,7 @@ default:
 
   stylesheets:    []
 
-  javascripts:    ['util.js', 'op_url.js']
+  javascripts:    ['jquery.min.js', 'util.js', 'op_url.js']
 
   has_layout:     true
   layout:         layoutC
