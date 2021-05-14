@@ -37,6 +37,9 @@ class opConfig extends sfConfig implements ArrayAccess
  /**
   * Retrieves a config parameter.
   *
+  * sns_config テーブルに該当する値が存在しない場合は、sns_config.yml に設定したデフォルト値が返却される。
+  * sns_config テーブルに該当する値が存在せず、且つ sns_config.yml にデフォルト値が設定されていない場合に、引数の $default が返却される。
+  *
   * @param  string $name    A config parameter name
   * @param  mixed  $default A default config parameter value
   *
@@ -45,9 +48,8 @@ class opConfig extends sfConfig implements ArrayAccess
   public static function get($name, $default = null)
   {
     $setting = self::getConfigurationSetting();
-    $result = null;
-
     $result = Doctrine::getTable('SnsConfig')->get($name, null);
+
     if (isset($setting[$name]))
     {
       if (is_null($result))
