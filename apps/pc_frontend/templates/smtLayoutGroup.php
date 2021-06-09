@@ -11,7 +11,7 @@
 <?php op_smt_use_stylesheet('smt_main') ?>
 <?php op_smt_include_stylesheets() ?>
 <meta name="viewport" content="width=320,user-scalable=no" />
-<?php if (opConfig::get('enable_jsonapi') && opToolkit::isSecurePage()): ?>
+<?php if (opConfig::get('enable_jsonapi')): ?>
 <?php
 $jsonData = array(
   'apiKey' => $sf_user->getMemberApiKey(),
