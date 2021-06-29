@@ -1,0 +1,22 @@
+image: openpne/openpne3-env:latest
+
+before_script:
+  - apt-get update
+  - apt-get install -y git
+
+  - cp config/ProjectConfiguration.class.php{.sample,}
+  - cp config/OpenPNE.yml{.sample,}
+
+  - service mysql start
+
+  - git clone git://github.com/upsilon/opIgnoreKnownErrorsPlugin.git plugins/opIgnoreKnownErrorsPlugin
+
+  - DBTYPE=mysql DBUSER=root DBPASS= DBHOST=localhost DBPORT= DBNAME=openpne
+  - DBSOCK=/var/run/mysqld/mysqld.sock
+  - echo -e "$DBTYPE\n$DBUSER\n$DBPASS\n$DBHOST\n$DBPORT\n$DBNAME\n$DBSOCK\ny\n" | ./symfony openpne:install
+
+  - ./symfony cc
+
+test:
+  script:
+    - ./symfony test:all
