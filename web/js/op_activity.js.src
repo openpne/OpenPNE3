@@ -50,7 +50,15 @@ var opActivity = function(id, posturl){
     data =  data.length > 1 ? data.substring(1) : "";
     req.onreadystatechange = function (e) {
       if (req.readyState == 4 && req.status == 200) {
-        t.timeline.innerHTML = req.responseText + t.timeline.innerHTML;
+        if (0 == req.responseText.indexOf('same-message'))
+        {
+          var message = req.responseText.split('|')[1];
+          alert(message);
+        }
+        else
+        {
+          t.timeline.innerHTML = req.responseText + t.timeline.innerHTML;
+        }
       }
     }
 

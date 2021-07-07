@@ -5,7 +5,8 @@
   'title' => __("SNS Member's %activity%", array(
     '%activity%' => $op_term['activity']->titleize()->pluralize()
   )),
-  'moreUrl' => 'member/showAllMemberActivity'
+  'moreUrl' => 'member/showAllMemberActivity',
+  'activityMessage' => isset($activityMessage) ? $activityMessage : '',
 ) ?>
 <?php if (isset($form)): ?>
 <?php $params['form'] = $form ?>

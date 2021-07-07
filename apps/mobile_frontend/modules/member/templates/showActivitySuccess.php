@@ -10,7 +10,9 @@
 </center>
 <?php include_partial('default/activityBox', array(
   'title' => '',
-  'activities' => $pager->getResults())
+  'activities' => $pager->getResults(),
+  'activityMessage' => $activityMessage,
+  )
 ) ?>
 <?php op_include_pager_navigation($pager, 'member/showActivity?page=%d&id='.$id) ?>
 <?php else: ?>
