@@ -64,6 +64,16 @@ class opWidgetFormRichTextarea extends sfWidgetFormTextarea
     return $tmpAttributes['id'];
   }
 
+  /**
+   * not call the fixDoubleEscape() to not convert the HTML special characters that set in the entity reference
+   * 
+   * @see sfWidget::escapeOnce()
+   */
+  static public function escapeOnce($value)
+  {
+    return htmlspecialchars((string) $value, ENT_QUOTES, self::getCharset());
+  }
+
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
     if (sfConfig::get('sf_app') == 'mobile_frontend')
@@ -142,7 +152,17 @@ EOF
         sfContext::getInstance()->getI18N()->__('Preview Mode')
       );
     }
-    return $toggle.sprintf($this->getOption('textarea_template'), parent::render($name, $value, $attributes, $errors)).$js;
+
+    return $toggle.sprintf($this->getOption('textarea_template'), $this->renderTextarea($name, $value, $attributes, $errors)).$js;
+  }
+
+  /**
+   *
+   * @see sfWidgetFormTextarea::render()
+   */
+  protected function renderTextarea($name, $value = null, $attributes = array(), $errors = array())
+  {
+    return $this->renderContentTag('textarea', self::escapeOnce($value), array_merge(array('name' => $name), $attributes));
   }
 }
 
