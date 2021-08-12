@@ -1,3 +1,4 @@
+var is_tosaka_submit = false;
 $(document).ready(function(){
   $(".ncbutton").click(function(){
     $(".toggle1:not(.ncform)").hide();
@@ -45,6 +46,7 @@ $(document).ready(function(){
   $('#tosaka_postform_submit').click(function() {
     var body_elem = $('#tosaka_postform_body');
     var body_text = body_elem.val();
+    is_tosaka_submit = true;
     if (body_text == '') return;
 
     var params = {
