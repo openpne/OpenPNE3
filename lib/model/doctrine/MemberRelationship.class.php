@@ -29,13 +29,16 @@ class MemberRelationship extends BaseMemberRelationship implements opAccessContr
     }
     else
     {
-      $notifications = opNotificationCenter::getNotifications($this->Member);
-      foreach ($notifications as $notification)
+      if (!is_null($this->Member->getId()))
       {
-        if ('link' === $notification['category']
-          && $this->member_id_from === $notification['member_id_from'])
+        $notifications = opNotificationCenter::getNotifications($this->Member);
+        foreach ($notifications as $notification)
         {
-          opNotificationCenter::delete($this->Member, $notification['id']);
+          if ('link' === $notification['category']
+            && $this->member_id_from === $notification['member_id_from'])
+          {
+            opNotificationCenter::delete($this->Member, $notification['id']);
+          }
         }
       }
     }
@@ -110,13 +113,13 @@ class MemberRelationship extends BaseMemberRelationship implements opAccessContr
 
   public function getToInstance()
   {
-    if ($this->toInstance) 
+    if ($this->toInstance)
     {
       return $this->toInstance;
     }
 
     $relation = Doctrine::getTable('MemberRelationship')->retrieveByFromAndTo($this->getMemberIdTo(), $this->getMemberIdFrom());
-    if (!$relation) 
+    if (!$relation)
     {
       $relation = new MemberRelationship();
       $relation->setMemberIdFrom($this->getMemberIdTo());
