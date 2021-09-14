@@ -11,7 +11,9 @@
 <?php include_slot('pager') ?>
 <?php include_partial('default/activityBox', array(
   'title' => $title,
-  'activities' => $pager->getResults())
+  'activities' => $pager->getResults(),
+  'activityMessage' => $activityMessage,
+  )
 ) ?>
 <?php include_slot('pager') ?>
 <?php else: ?>

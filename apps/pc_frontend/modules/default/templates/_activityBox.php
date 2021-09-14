@@ -1,5 +1,6 @@
 <?php $id = 'activityBox' ?>
 <?php $id .= isset($gadget) ? '_'.$gadget->getId() : '' ?>
+<?php $activityMessage = isset($activityMessage) ? $activityMessage : '' ?>
 
 <?php slot('activities') ?>
 <?php if (isset($form)): ?>
@@ -15,6 +16,7 @@
 </div>
 <div class="box_body">
 <span class="inputForm"><?php echo $form['body']->render(array('id' => $id.'_activity_data_body')) ?></span>
+<span class="box_errormessage"><?php echo $activityMessage;?></span>
 <span class="submit"><input id="<?php echo $id ?>_submit" type="submit" value="<?php echo __('%post_activity%', array('%post_activity%' => $op_term['post_activity']->titleize())) ?>" class="submit" /></span>
 </div>
 </div></form>

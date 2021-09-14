@@ -2,6 +2,7 @@
 <?php $params = array(
   'activities' => $activities,
   'gadget' => $gadget,
+  'activityMessage' => $activityMessage,
 ) ?>
 <?php if (isset($form)): ?>
 <?php $params['form'] = $form ?>
