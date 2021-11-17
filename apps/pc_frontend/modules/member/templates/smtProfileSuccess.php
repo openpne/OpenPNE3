@@ -3,6 +3,7 @@
 <div class="alert alert-info">
 <p><?php echo __('Other members look your page like this.') ?></p>
 <p><?php echo link_to(__('Edit profile'), '@member_editProfile') ?></p>
+<p><?php echo link_to(__('Edit Photo'), '@member_config_image') ?></p>
 </div>
 <?php $content = ob_get_clean() ?>
 <?php op_include_parts('descriptionBox', 'informationAboutThisIsYourProfilePage', array('body' => $content)) ?>
