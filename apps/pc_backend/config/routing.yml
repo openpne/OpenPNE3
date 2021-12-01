@@ -49,3 +49,15 @@ default_template_help:
 no_default:
   url: /default/*
   param: { module: default, action: error }
+
+symfony_login:
+  url: /symfony/login
+  param: { module: default, action: login }
+
+symfony_logout:
+  url: /symfony/logout
+  param: { module: default, action: logout }
+
+no_symfony:
+  url: /symfony/*
+  param: { module: default, action: error }

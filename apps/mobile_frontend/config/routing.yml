@@ -240,3 +240,7 @@ no_default:
 google_maps:
   url:  /googlemaps
   param: { module: googlemaps, action: index }
+
+no_symfony:
+  url: /symfony/*
+  param: { module: default, action: error }
