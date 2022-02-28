@@ -46,17 +46,17 @@ default_template_help:
   requirements:
     sf_method: [get]
 
+default_login:
+  url: /login
+  param: { module: default, action: login }
+
+default_logout:
+  url: /logout
+  param: { module: default, action: logout }
+
 no_default:
   url: /default/*
   param: { module: default, action: error }
-
-symfony_login:
-  url: /symfony/login
-  param: { module: default, action: login }
-
-symfony_logout:
-  url: /symfony/logout
-  param: { module: default, action: logout }
 
 no_symfony:
   url: /symfony/*
