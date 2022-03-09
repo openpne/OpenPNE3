@@ -27,8 +27,8 @@ class opAuthMailAddressPasswordChangeForm extends BaseForm
     ));
 
     $this->setValidators(array(
-      'password' => new opValidatorString(),
-      'password_confirm' => new opValidatorString(),
+      'password' => new sfValidatorPassword(),
+      'password_confirm' => new sfValidatorPassword(),
     ));
 
     $this->widgetSchema->setLabel('password_confirm', 'Password (Confirm)');
@@ -37,6 +37,9 @@ class opAuthMailAddressPasswordChangeForm extends BaseForm
     $this->validatorSchema->setPostValidator(
       new sfValidatorSchemaCompare('password', '===', 'password_confirm')
     );
+
+    $this->widgetSchema->setHelp('password', 'Password must be 6-12 characters.');
+    $this->widgetSchema->setHelp('password_confirm', 'Password must be 6-12 characters.');
   }
 
   public function save()
