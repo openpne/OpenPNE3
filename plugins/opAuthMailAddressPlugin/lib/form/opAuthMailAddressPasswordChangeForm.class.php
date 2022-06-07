@@ -44,7 +44,7 @@ class opAuthMailAddressPasswordChangeForm extends BaseForm
 
   public function save()
   {
-    $this->member->setConfig('password', md5($this->getValue('password')));
+    $this->member->setConfig('password', $this->getValue('password'));
   }
 }
 
