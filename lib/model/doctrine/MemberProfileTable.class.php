@@ -222,6 +222,7 @@ class MemberProfileTable extends opAccessControlDoctrineTable
       if (
         ProfileTable::PUBLIC_FLAG_SNS == $item->getDefaultPublicFlag()
         || ProfileTable::PUBLIC_FLAG_WEB == $item->getDefaultPublicFlag()
+        || ('pc_backend' == sfConfig::get('sf_app') && ProfileTable::PUBLIC_FLAG_PRIVATE == $item->getDefaultPublicFlag())
       )
       {
         $isCheckPublicFlag = false;
