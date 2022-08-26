@@ -256,7 +256,14 @@ class opFormItemGenerator
     switch ($field['ValueType'])
     {
       case 'email':
-        $obj = new sfValidatorEmail($option);
+        if ('textarea' === $field['FormType'])
+        {
+          $obj = new opValidatorMultipleEmail($option);
+        }
+        else
+        {
+          $obj = new sfValidatorEmail($option);
+        }
         break;
       case 'pc_email':
         $obj = new opValidatorPCEmail($option);
@@ -265,14 +272,28 @@ class opFormItemGenerator
         $obj = new sfValidatorMobileEmail($option);
         break;
       case 'integer':
-        $obj = new sfValidatorInteger($option);
+        if ('textarea' === $field['FormType'])
+        {
+          $obj = new opValidatorMultipleInteger($option);
+        }
+        else
+        {
+          $obj = new sfValidatorInteger($option);
+        }
         break;
       case 'regexp':
         $option['pattern'] = $field['ValueRegexp'];
         $obj = new sfValidatorRegex($option);
         break;
       case 'url':
-        $obj = new sfValidatorUrl($option);
+        if ('textarea' === $field['FormType'])
+        {
+          $obj = new opValidatorMultipleUrl($option);
+        }
+        else
+        {
+          $obj = new sfValidatorUrl($option);
+        }
         break;
       case 'password':
         $obj = new sfValidatorPassword($option);
