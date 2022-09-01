@@ -47,7 +47,7 @@ class opMemberProfileSearchForm extends BaseForm
 
     foreach ($this->getProfiles() as $profile)
     {
-      if ('pc_backend' != sfConfig::get('sf_app')
+      if ($this->getOption('is_check_public_flag', true)
         && ProfileTable::PUBLIC_FLAG_PRIVATE == $profile->default_public_flag
         && !$profile->is_edit_public_flag)
       {
