@@ -210,6 +210,7 @@ class MemberProfileTable extends opAccessControlDoctrineTable
 
   public function filterMemberIdByProfile($ids, $column, $value, Profile $item, $publicFlag = 1)
   {
+
     $_result = array();
     $q = Doctrine::getTable('MemberProfile')->createQuery('m');
     $q = opFormItemGenerator::filterSearchQuery($q, 'm.'.$column, $value, $item->toArray())
@@ -219,8 +220,8 @@ class MemberProfileTable extends opAccessControlDoctrineTable
     $isCheckPublicFlag = is_integer($publicFlag);
     if (!$item->getIsEditPublicFlag())
     {
-      if (
-        ProfileTable::PUBLIC_FLAG_SNS == $item->getDefaultPublicFlag()
+      if (!$isCheckPublicFlag
+        || ProfileTable::PUBLIC_FLAG_SNS == $item->getDefaultPublicFlag()
         || ProfileTable::PUBLIC_FLAG_WEB == $item->getDefaultPublicFlag()
       )
       {
