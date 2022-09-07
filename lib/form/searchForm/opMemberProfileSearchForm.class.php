@@ -47,7 +47,9 @@ class opMemberProfileSearchForm extends BaseForm
 
     foreach ($this->getProfiles() as $profile)
     {
-      if (ProfileTable::PUBLIC_FLAG_PRIVATE == $profile->default_public_flag && !$profile->is_edit_public_flag)
+      if ($this->getOption('is_check_public_flag', true)
+        && ProfileTable::PUBLIC_FLAG_PRIVATE == $profile->default_public_flag
+        && !$profile->is_edit_public_flag)
       {
         continue;
       }
