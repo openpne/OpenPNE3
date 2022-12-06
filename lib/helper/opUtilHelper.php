@@ -339,6 +339,11 @@ function op_url_cmd($text)
 
 function _op_url_cmd($matches)
 {
+  if (!opConfig::get('enable_cmd', 1))
+  {
+    return op_auto_link_text($matches[0]);
+  }
+
   $url = $matches[2].$matches[3];
   $cmd = '';
 
