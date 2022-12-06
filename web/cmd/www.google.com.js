@@ -11,18 +11,20 @@ function url2cmd(url, googlemapsUrl) {
 
 function main(id, googlemapsUrl) {
   var param = { lon: 0, lat: 0, z: 15, t: '', q: '' };
-  var result = id.match(/(?:^|\/)@(-?[0-9\.]+),(-?[0-9\.]+),([0-9\.]+z)(\/data=!3m1!1e3)?/);
+  var result = id.match(/(?:^|\/)@(-?[0-9\.]+),(-?[0-9\.]+),([0-9\.]+m|[0-9\.]+z)(\/data=!3m1!1e3)?/);
 
   if (result) {
     param.lon = result[1];
     param.lat = result[2];
     param.z   = result[3];
 
-    if (result[4]) {
+    if (param.z.indexOf('m') !== -1) {
+      param.z = 15;
       param.t = 'k';
     }
   } else {
-    var query = id.split('&amp;');
+    id.replace('&amp;', '&');
+    var query = id.split('&');
     for(i = 0; i < query.length; i++) {
       var pair = query[i].split('=');
       if (pair.length !== 2) {
