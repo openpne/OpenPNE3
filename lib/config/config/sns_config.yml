@@ -116,6 +116,17 @@ general:
       - "使用しない"
       - "使用する"
 
+  enable_cmd:
+    Name:      "enable_cmd"
+    Caption:   "小窓機能の使用設定"
+    FormType:  "radio"
+    ValueType: "text"
+    IsRequired: true
+    Default:    1
+    Choices:
+      - "使用しない"
+      - "使用する"
+
 advanced:
   _attributes:
     Caption: "Advanced Settings"
