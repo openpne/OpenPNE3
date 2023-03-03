@@ -69,7 +69,7 @@ class opValidatorDate extends sfValidatorDate
       $min = new DateTime($this->getOption('min'));
       if (!$this->getOption('with_time'))
       {
-        $max->setTime(0, 0);
+        $min->setTime(0, 0);
       }
       if ($min && $clean->format('U') < $min->format('U'))
       {
