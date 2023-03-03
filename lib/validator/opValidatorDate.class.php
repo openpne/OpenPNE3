@@ -54,7 +54,10 @@ class opValidatorDate extends sfValidatorDate
     if ($this->hasOption('max'))
     {
       $max = new DateTime($this->getOption('max'));
-      $max->setTime(0, 0);
+      if (!$this->getOption('with_time'))
+      {
+        $max->setTime(0, 0);
+      }
       if ($max && $clean->format('U') > $max->format('U'))
       {
         throw new sfValidatorError($this, 'max', array('max' => $max->format($this->getOption('date_format_range_error'))));
@@ -64,7 +67,10 @@ class opValidatorDate extends sfValidatorDate
     if ($this->hasOption('min'))
     {
       $min = new DateTime($this->getOption('min'));
-      $min->setTime(0, 0);
+      if (!$this->getOption('with_time'))
+      {
+        $max->setTime(0, 0);
+      }
       if ($min && $clean->format('U') < $min->format('U'))
       {
         throw new sfValidatorError($this, 'min', array('min' => $min->format($this->getOption('date_format_range_error'))));
