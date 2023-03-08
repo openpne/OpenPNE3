@@ -208,12 +208,12 @@ var smtSwitch = {
 
   switchPc: function() {
     smtSwitch.updateExpires(true);
-    location.href = smtSwitch.elem.getAttribute('href');
+    location.reload();
   },
 
   switchSmt: function() {
     // delete cookie.
-    opCookie.set(this.key);
+    opCookie.set(this.key, null, this.getExpiresDate(), openpne.baseUrl);
     location.reload();
   },
 

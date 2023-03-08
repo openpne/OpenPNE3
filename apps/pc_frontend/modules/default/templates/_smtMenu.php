@@ -9,7 +9,7 @@
   <?php endif ?>
   <?php endif ?>
   <?php endforeach ?>
-  <li><a href="<?php echo url_for('@homepage') ?>" id="smt-switch"><?php echo __('View this page on regular style') ?></a></li>
+  <li><a href="javascript:void(0)" id="smt-switch"><?php echo __('View this page on regular style') ?></a></li>
   <?php use_helper('Javascript') ?>
   <?php echo javascript_tag(<<<JS
 document.addEventListener('DOMContentLoaded', function() {
