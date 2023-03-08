@@ -27,7 +27,7 @@ class snsActions extends sfActions
     $this->category = $request->getParameter('category', 'general');
     $this->categoryAttributes = sfConfig::get('openpne_sns_category_attribute');
 
-    $this->forward404If(!empty($this->categoryAttributes[$this->category]['Hidden']));
+    $this->forward404If(empty($this->categoryAttributes[$this->category]) || !empty($this->categoryAttributes[$this->category]['Hidden']));
 
     $formName = 'op'.sfInflector::camelize($this->category).'SnsConfigForm';
     if (class_exists($formName, true))
