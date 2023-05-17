@@ -19,6 +19,14 @@ freeArea:
       ValueType:  "text"
       IsRequired: false
 
+memberImageBox:
+  caption:
+    ja_JP: "プロフィール写真"
+  description:
+    ja_JP: "メンバーの登録した写真をホームに表示します"
+  viewable_privilege: 4
+  component: [default, smtMemberImageBox]
+
 profileListBox:
   caption:
     ja_JP: "プロフィール"
@@ -40,4 +48,3 @@ memberJoinCommunityListBox:
   description:
     ja_JP: "メンバーが参加しているコミュニティの一覧を表示します"
   component: [member, smtMemberJoinCommunityListBox]
-
