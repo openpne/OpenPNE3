@@ -115,7 +115,7 @@ foreach ($member->getProfiles(true) as $profile)
 
 <tr><td colspan="2">
 
-<?php if (opConfig::get('enable_friend_link') && !$relation->isFriend() && !$relation->isSelf() && $relation->isAllowed($sf_user->getRawValue()->getMember(), 'friend_link')) : ?>
+<?php if (opConfig::get('enable_friend_link') && !$relation->isFriend() && !$relation->isSelf() && $relation->isAllowed($sf_user->getRawValue()->getMember(), 'friend_link') && !$relation->getIsAccessBlock()) : ?>
 <?php echo link_to(__('Makes %friend%', array('%friend%' => $op_term['friend']->pluralize())), 'friend/link?id='.$member->getId()) ?><br>
 <?php endif; ?>
 
