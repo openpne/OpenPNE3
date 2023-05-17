@@ -275,6 +275,10 @@
         <target>プロフィール</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Profile Photo</source>
+        <target>プロフィール写真</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Public Flag for Profile Page</source>
         <target>プロフィールページの公開範囲</target>
       </trans-unit>
