@@ -23,10 +23,6 @@
 <?php echo $form->renderHiddenFields(); ?>
 <input type="submit" name="submit" value="<?php echo __('Upload') ?>" class="btn btn-primary" />
 </form>
-<?php if (3 >= $sf_user->getMember()->getMemberImage()->count()): ?>
-<?php echo __('Send E-mail that has a photo to use as your image.') ?><br>
-<?php echo op_mail_to('member_add_image', array(), __('Send E-mail')) ?>
-<?php endif; ?>
 </div>
 
 <div class="row">
