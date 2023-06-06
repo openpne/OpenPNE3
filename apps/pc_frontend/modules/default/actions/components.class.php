@@ -130,4 +130,17 @@ class defaultComponents extends sfComponents
   public function executeLinkListBox()
   {
   }
+
+  public function executeSmtMemberImageBox($request)
+  {
+    if ($request->hasParameter('id') && $request->getParameter('module') == 'member' && $request->getParameter('action') == 'profile')
+    {
+      $this->member = Doctrine::getTable('Member')->find($request->getParameter('id'));
+    }
+    else
+    {
+      $this->member = $this->getUser()->getMember();
+    }
+    $this->id = $this->getUser()->getMemberId();
+  }
 }
