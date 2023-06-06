@@ -35,8 +35,7 @@
 <?php $form = new sfForm() ?>
 <?php $csrfToken = '&'.$form->getCSRFFieldName().'='.$form->getCSRFToken() ?>
 <?php for ($i = 0; $i < 3; $i++) : ?>
-<div class="span4">
-  <div class="row center"> 
+<div class="span4"><div class="row center">
 <?php if (isset($images[$i])) : ?>
 <?php $image = $images[$i]; ?>
 <?php echo op_image_tag_sf_image($image->getFile(), array('size' => '120x120', 'width' => '80', 'height' => '80')) ?></div>
