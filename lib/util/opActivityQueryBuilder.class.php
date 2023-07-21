@@ -22,7 +22,8 @@ class opActivityQueryBuilder
     $viewerId = null,
     $communityId = null,
     $inactiveIds,
-    $include;
+    $include,
+    $notInclude;
 
   static public function create()
   {
@@ -100,6 +101,13 @@ class opActivityQueryBuilder
     return $this;
   }
 
+  public function notIncludeBlocked()
+  {
+    $this->notInclude['blocked'] = true;
+
+    return $this;
+  }
+
   public function buildQuery()
   {
     $query = $this->table->createQuery('a')
@@ -148,8 +156,11 @@ class opActivityQueryBuilder
         ->addWhere('EXISTS (FROM CommunityMember cm WHERE cm.member_id = a.member_id AND cm.community_id = ?)', $this->communityId);
     }
 
-    $blockedBy = Doctrine_Core::getTable('MemberRelationship')->getBlockedMemberIdsByTo($this->viewerId);
-    $query->whereNotIn('a.member_id', $blockedBy);
+    if (!$this->notInclude['blocked'])
+    {
+      $blockedBy = Doctrine_Core::getTable('MemberRelationship')->getBlockedMemberIdsByTo($this->viewerId);
+      $query->whereNotIn('a.member_id', $blockedBy);
+    }
 
     return $query->orderBy('id DESC');
   }
