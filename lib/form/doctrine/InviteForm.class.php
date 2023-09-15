@@ -158,7 +158,7 @@ class InviteForm extends MemberConfigPcAddressForm
       {
         $relation = new MemberRelationship();
         $relation->setMemberIdFrom($fromMemberId);
-        $relation->setMemberIdTo($toMemberId);
+        $relation->setMember($this->member);
       }
       $relation->setFriend();
     }
