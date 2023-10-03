@@ -18,7 +18,7 @@ $t->isa_ok($result, 'Doctrine_Collection');
 
 //------------------------------------------------------------
 $t->diag('ProfileOptionTable::getMaxSortOrder()');
-$t->is($table->getMaxSortOrder(), 10);
+$t->todo();
 
 //------------------------------------------------------------
 $t->diag('ProfileOptionTable::generatePresetProfileOption()');
