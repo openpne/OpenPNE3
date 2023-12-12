@@ -113,7 +113,10 @@
         'allMemberActivityBox',
         'smtTimeline',
         'smtCommunityTimelineBy1',
-        'smtTimelineFriend'
+        'smtTimelineFriend',
+        'smtCommunityTimelineBox',
+        'smtTimelineMemberBy1',
+        'timelineProfile',
       ));
       ?>
       <?php if (0 < $gadgetsCount): ?>
