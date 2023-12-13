@@ -221,4 +221,12 @@ class GadgetTable extends opAccessControlDoctrineTable
 
     return $acl;
   }
+
+  public function getGadgetsCountByNames(array $names)
+  {
+    return $this->createQuery()
+      ->andWhereIn('name', $names)
+      ->orderBy('sort_order')
+      ->count();
+  }
 }
