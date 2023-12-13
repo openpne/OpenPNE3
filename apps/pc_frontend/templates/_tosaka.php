@@ -105,7 +105,23 @@
       <div id="notification_center" class="center">
         <?php echo op_image_tag('NOTIFY_CENTER.png', array('height' => '32', 'class' => 'ncbutton')) ?>
       </div>
+      <?php
+      $gadgetsCount = Doctrine::getTable('Gadget')->getGadgetsCountByNames(array(
+        'timelineAll',
+        'timelineFriend',
+        'activityBox',
+        'allMemberActivityBox',
+        'smtTimeline',
+        'smtCommunityTimelineBy1',
+        'smtTimelineFriend',
+        'smtCommunityTimelineBox',
+        'smtTimelineMemberBy1',
+        'timelineProfile',
+      ));
+      ?>
+      <?php if (0 < $gadgetsCount): ?>
       <div class="right"><?php echo op_image_tag('POST.png', array('height' => '32', 'class' =>'postbutton')) ?></div>
+      <?php endif ?>
       <?php endif ?>
     </div>
   </div>
