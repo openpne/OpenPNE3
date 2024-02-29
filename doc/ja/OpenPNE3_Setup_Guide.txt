@@ -14,7 +14,7 @@ OpenPNE3 は以下のようなサーバ環境で動作させることを想定�
     Apache
       * mod_rewrite を使用可能
   PHP
-    PHP 5.4 以降
+    PHP 7.4 以降
       * PHP の mbstring 拡張モジュールを使用可能
       * PHP の XML 拡張モジュールを使用可能
       * PHP の PCRE 拡張モジュールを使用可能 (UTF-8 サポート)
@@ -24,19 +24,21 @@ OpenPNE3 は以下のようなサーバ環境で動作させることを想定�
       * PHP の exif 拡張モジュールを使用可能
       * PHP の mcrypt 拡張モジュールの使用を推奨
       * PHP の APC (もしくは APCu) 拡張モジュールの使用を推奨
+
+    PHP 8 は現時点で未サポート（将来的にサポート予定）
   データベースサーバ
-    MySQL 4.1 以降（5.1 以降を推奨）
+    MySQL 8.0 以降（MariaDB 10.11 以降）
 
     PostgreSQL, SQLite は現時点で未サポート（将来的にサポート予定）
 
 推奨環境
   OS
-    Debian 8 (jessie)
+    Debian 12 (bookworm)
   Webサーバ
-    Apache 2.4.10 以降 (Debian 8 安定版 (stable) ディストリビューションのパッケージ に含まれているバージョン)
+    Apache 2.4.10 以降 (Debian 12 安定版 (stable) ディストリビューションのパッケージ に含まれているバージョン)
       * mod_rewrite を使用可能
   PHP
-    PHP 7 以降 (Debian 8 安定版 (stable) ディストリビューションのパッケージ に含まれているバージョン)
+    PHP 7.4
       * PHP の mbstring 拡張モジュールを使用可能
       * PHP の XML 拡張モジュールを使用可能
       * PHP の PCRE 拡張モジュールを使用可能 (UTF-8 サポート)
@@ -46,8 +48,11 @@ OpenPNE3 は以下のようなサーバ環境で動作させることを想定�
       * PHP の exif 拡張モジュールを使用可能
       * PHP の mcrypt 拡張モジュールの使用を推奨
       * PHP の APCu 拡張モジュールの使用を推奨
+
+    PHP 8 は現時点で未サポート（将来的にサポート予定）
   データベースサーバ
-    MySQL 5.5.53 以降 (Debian 8 安定版 (stable) ディストリビューションのパッケージ に含まれているバージョン)
+    MySQL 8.0 以降
+    MariaDB 10.11 以降 (Debian 12 安定版 (stable) ディストリビューションのパッケージ に含まれているバージョン)
 
     PostgreSQL, SQLite は現時点で未サポート（将来的にサポート予定）
 
@@ -77,7 +82,7 @@ OpenPNE3 は以下のような環境での動作をサポートしています�
 サポート対象 サーバー
   OS
     Debian
-      * Debian 8
+      * Debian 12
 
 セットアップ
 ============
@@ -163,8 +168,7 @@ http://www.openpne.jp/pne-downloads/
 
 openpne:install コマンドを実行すると、はじめに、以下の事項の入力を求められます。
 
-* 使用する DBMS （mysql, pgsql, sqlite から選択。ただし mysql
-* 以外は未サポート）
+* 使用する DBMS （mysql, pgsql, sqlite から選択。ただし mysql以外は未サポート、mariadb を利用する場合は mysql を選択。）
 * データベース名
 * データベースへの接続用ユーザ名
 * データベースへの接続用パスワード（未入力可）
