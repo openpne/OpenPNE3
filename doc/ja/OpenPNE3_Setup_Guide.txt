@@ -56,6 +56,8 @@ OpenPNE3 は以下のようなサーバ環境で動作させることを想定�
 
     PostgreSQL, SQLite は現時点で未サポート（将来的にサポート予定）
 
+    ※ MySQL 8.0 以降の場合、'default_authentication_plugin' には 'mysql_native_password' を設定してください。
+
 OpenPNE3 は以下のような環境での動作をサポートしています。
 
 サポート対象 クライアント
