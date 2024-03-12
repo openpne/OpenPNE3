@@ -56,6 +56,8 @@ RECOMMENDED SPECS
 
     At this time, PostgreSQL and SQLite are not supported (They will be supported in the future)
 
+    * For MySQL 8.0 and later, set 'default_authentication_plugin' to 'mysql_native_password'.
+
 OpenPNE 3 supported under the following environment.
 
 Supported Client
