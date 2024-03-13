@@ -14,7 +14,7 @@ MINIMUM REQUIREMENTS
     Apache
       * The "mod_rewrite" module is available
   PHP
-    PHP version 5.4 or later
+    PHP version 7.4 or later
       * The "mbstring" module is available
       * The "xml" module is available
       * The "PCRE" module is available (That must be support UTF-8)
@@ -24,19 +24,21 @@ MINIMUM REQUIREMENTS
       * The "exif" module is available
       * The "mcrypt" module recommendation
       * The "APC" (or "APCu") module recommendation
+
+    At this time, PHP version 8 is not supported (It will be supported in the future)
   Database Server
-    MySQL 4.1 or later (5.1 or greater recommended)
+    MySQL 8.0 or later (MariaDB 10.11 or later)
 
     At this time, PostgreSQL and SQLite are not supported (They will be supported in the future)
 
 RECOMMENDED SPECS
   OS
-    Debian 8 (jessie)
+    Debian 12 (bookworm)
   Web Server
-    Apache version 2.4.10 or later (the version in the Debian 8 stable distribution)
+    Apache version 2.4.10 or later (the version in the Debian 12 stable distribution)
       * The "mod_rewrite" module is available
   PHP
-    PHP version 7 or later (the version in the Debian 8 stable distribution)
+    PHP version 7.4 or later
       * The "mbstring" module is available
       * The "xml" module is available
       * The "PCRE" module is available (That must be support UTF-8)
@@ -46,10 +48,15 @@ RECOMMENDED SPECS
       * The "exif" module is available
       * The "mcrypt" module recommendation
       * The "APCu" module recommendation
+
+    At this time, PHP version 8 is not supported (It will be supported in the future)
   Database Server
-    MySQL 5.5.53 or later (the version in the Debian 8 stable distribution)
+    MySQL 8.0 or later
+    MariaDB 10.11 or later (the version in the Debian 12 stable distribution)
 
     At this time, PostgreSQL and SQLite are not supported (They will be supported in the future)
+
+    * For MySQL 8.0 and later, set 'default_authentication_plugin' to 'mysql_native_password'.
 
 OpenPNE 3 supported under the following environment.
 
@@ -77,7 +84,7 @@ Supported Client
 Supported Server
   OS
     Debian
-      * Debian 8
+      * Debian 12
 
 Setup
 =====
@@ -164,7 +171,7 @@ NOTE: Take care with their prefixes that avoid conflicting table names shared wi
 
 After Running "openpne:install", you will be required inputting the following:
 
-* The DBMS (mysql, pgsql or sqlite, but we are now only support mysql)
+* The DBMS (mysql, pgsql or sqlite, but we are now only support mysql. When you want to use mariadb, choose mysql.)
 * The Database Name
 * The Database Username
 * The Database Password(optional)
