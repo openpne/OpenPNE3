@@ -19,7 +19,7 @@ $options->setDefault('use_op_link_to_member_private', false);
 <p class="crown"><?php echo op_image_tag('icon_crown.gif', array('alt' => 'admin')) ?></p>
 <?php endif; ?>
 <?php if ($options->use_op_link_to_member): ?>
-<?php echo op_link_to_member($options->list[$j], array('link_target'  => op_image_tag_sf_image($options->list[$j]->getImageFileName(), array('size' => '76x76')), 'private_text' => op_image_tag_sf_image(NULL, array('size' => '76x76'))), '@obj_member_profile', $options->use_op_link_to_member_private) ?>
+<?php echo op_link_to_member($options->list[$j], array('link_target'  => op_image_tag_sf_image($options->list[$j]->getImageFileName(), array('size' => '76x76')), 'private_text' => 'private_text'), '@obj_member_profile', $options->use_op_link_to_member_private) ?>
 <?php else: ?>
 <?php echo link_to(op_image_tag_sf_image($options->list[$j]->getImageFileName(), array('size' => '76x76')), $options->link_to.$options->list[$j]->getId()) ?>
 <?php endif; ?>
