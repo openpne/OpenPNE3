@@ -17,14 +17,21 @@ class SnsTermTable extends Doctrine_Table implements ArrayAccess
 
   public function configure($culture = '', $application = '')
   {
-    if ($culture)
+    if (in_array($application, array('pc_backend', 'api'), true))
     {
-      $this->culture = $culture;
+        $application = 'pc_frontend';
     }
 
-    if ($application)
+    if ($culture && $culture !== $this->culture)
+    {
+      $this->culture = $culture;
+      $this->terms = null;
+    }
+
+    if ($application && $application !== $this->application)
     {
       $this->application = $application;
+      $this->terms = null;
     }
   }
 
