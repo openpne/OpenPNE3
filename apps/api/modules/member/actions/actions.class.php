@@ -65,7 +65,7 @@ class memberActions extends opJsonApiActions
       }
       if ('community' === $request['target'])
       {
-        $query->andWhere('EXISTS (FROM CommunityMember cm WHERE m.id = cm.member_id AND cm.community_id = ?)', $targetId);
+        $query->andWhere('EXISTS (FROM CommunityMember cm WHERE m.id = cm.member_id AND cm.community_id = ? AND cm.is_pre = false)', $targetId);
       }
     }
 
