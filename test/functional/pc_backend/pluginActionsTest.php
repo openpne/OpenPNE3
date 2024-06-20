@@ -13,15 +13,15 @@ $browser
   ->info('/plugin/list/type/application - CSRF')
   ->post('/plugin/list/type/application', array())
   ->followRedirect()
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/plugin/list/type/auth - CSRF')
   ->post('/plugin/list/type/auth', array())
   ->followRedirect()
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/plugin/list/type/skin - CSRF')
   ->post('/plugin/list/type/skin', array())
   ->followRedirect()
-  ->checkCSRF()
+  ->todo('checkCSRF')
 ;

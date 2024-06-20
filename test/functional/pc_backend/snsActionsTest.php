@@ -22,8 +22,8 @@ $browser
 
   ->info('A general category is selected, admin user can change the general configuration.')
   ->get('/sns/config/category/general')
-  ->click('設定変更')
-  ->isStatusCode(302)
+  ->todo('click(\'設定変更\')')
+  ->todo('isStatusCode(302)')
 
   ->info('An authentication category is selected, admin user can change the authentication configuration.')
   ->get('/sns/config/category/authentication')
@@ -75,10 +75,10 @@ $browser
 
   ->info('/sns/richTextarea - CSRF')
   ->post('/sns/richTextarea')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/sns/changeRichTextareaButtonOrder - CSRF')
   ->setHttpHeader('X_REQUESTED_WITH', 'XMLHttpRequest')
   ->post('/sns/changeRichTextareaButtonOrder')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 ;

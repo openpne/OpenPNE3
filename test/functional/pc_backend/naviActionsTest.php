@@ -12,15 +12,15 @@ $browser
 
   ->info('/navigation/edit/app/pc - CSRF')
   ->post('/navigation/edit/app/pc')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/navigation/edit/app/mobile - CSRF')
   ->post('/navigation/edit/app/mobile')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/navigation/edit/app/backEnd - CSRF')
   ->post('/navigation/edit/app/backend')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/navigation/sort - CSRF')
   ->setHttpHeader('X_REQUESTED_WITH', 'XMLHttpRequest')

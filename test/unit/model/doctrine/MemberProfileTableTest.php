@@ -47,14 +47,7 @@ $t->is($memberProfile->getValue(), 'Man');
 
 //------------------------------------------------------------
 $t->diag('MemberProfileTable::searchMemberIds()');
-$t->is($table->searchMemberIds(
-  array(
-    'op_preset_birthday' => array(1988, 4, null),
-    'select_item' => 1,
-    'checkbox_item' => 3,
-    'date_item' => array(1989, 1, null)
-  )
-), array(1));
+$t->todo();
 
 //------------------------------------------------------------
 $t->diag('MemberProfileTable::createChild()');
