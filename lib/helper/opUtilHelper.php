@@ -1076,6 +1076,8 @@ function op_link_to_member($value, $options = array(), $routeName = '@obj_member
       unset($options['link_target']);
     }
 
+    unset($options['private_text']);
+
     return link_to($link_target, sprintf('%s?id=%d', $routeName, $member->id), $options);
   }
 
