@@ -28,7 +28,7 @@ ul.error_list {
   width: auto;
 }
 
-ul > li > input[type="text"], 
+ul > li > input[type="text"],
 ul > li > input[type="textarea"],
 ul > li > input[type="password"] {
   width: 285px;
@@ -532,3 +532,22 @@ table td {
   float: right;
 }
 
+/*==============================================================================
+ * informationBox
+ *----------------------------------------------------------------------------*/
+.smtInformationBox {
+  border: 1px solid #CCCCCC;
+}
+.smtInformationBox .pad12 {
+  padding: 12px;
+}
+
+.smtInformationBox div.body {
+  min-height: 1.2em;
+  padding: 5px;
+  border-left: 1px solid #CCCCCC;
+  background: #FFFFFF;
+}
+.smtInformationBox .caution {
+  color: #FF0000;
+}

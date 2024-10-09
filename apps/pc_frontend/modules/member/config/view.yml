@@ -10,7 +10,7 @@ homeSuccess:
       template    : [community, cautionAboutCommunityMemberPre]
       parts       : [information]
       target      : [bodyBottom]
-      is_component: true 
+      is_component: true
     cautionAboutChangeAdminRequest:
       template    : [community, cautionAboutChangeAdminRequest]
       parts       : [information]
@@ -33,6 +33,26 @@ loginSuccess:
 
 smtHomeSuccess:
   layout: smtLayoutHome
+  customize:
+    cautionAboutFriendPre:
+      template: [friend, smtCautionAboutFriendPre]
+      parts   : [information]
+      target  : [bodyBottom]
+    cautionAboutCommunityMemberPre:
+      template    : [community, smtCautionAboutCommunityMemberPre]
+      parts       : [information]
+      target      : [bodyBottom]
+      is_component: true
+    cautionAboutChangeAdminRequest:
+      template    : [community, smtCautionAboutChangeAdminRequest]
+      parts       : [information]
+      target      : [bodyBottom]
+      is_component: true
+    cautionAboutSubAdminRequest:
+      template    : [community, smtCautionAboutSubAdminRequest]
+      parts       : [information]
+      target      : [bodyBottom]
+      is_component: true
 
 smtProfileSuccess:
   layout: smtLayoutMember
