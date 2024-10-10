@@ -99,4 +99,7 @@ Gadget:
     name: "loginForm"
     sort_order: 10
 
-
+  gadget_smt_information:
+    type: "smartphoneContents"
+    name: "informationBox"
+    sort_order: 10

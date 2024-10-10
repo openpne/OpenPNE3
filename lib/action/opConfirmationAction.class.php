@@ -44,6 +44,12 @@ class opConfirmationAction extends sfActions
     }
 
     $this->form = new sfForm();
+
+    if ($request->isSmartphone())
+    {
+      $this->setLayout('smtLayoutSns');
+      $this->setTemplate('smtList');
+    }
   }
 
   public function executeDecision(opWebRequest $request)
