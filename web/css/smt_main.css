@@ -551,3 +551,38 @@ table td {
 .smtInformationBox .caution {
   color: #FF0000;
 }
+
+/*==============================================================================
+ * Other
+ *----------------------------------------------------------------------------*/
+.pad12 {
+  padding: 12px;
+}
+
+.smt-table table {
+  table-layout: fixed;
+}
+
+.smt-table th,
+.smt-table td {
+  border-width: 1px 1px 1px 1px !important;
+  border-style: solid !important;
+  border-color: #CCCCCC !important;
+  padding: 3px 3px 3px 3px !important;
+  font-weight: normal;
+  font-size: 0.98em;
+}
+
+.smt-table tr.operation {
+  text-align: right;
+  padding-top: 2px !important;
+}
+
+.input_submit {
+  border: 1px solid #888888;
+  background: #dadce6 url('../images/bg_button.gif') repeat-x scroll 50% 0;
+  letter-spacing: 0;
+  width: 50px !important;
+  margin-bottom: 0 !important;
+  margin-left: 2px !important;
+}
