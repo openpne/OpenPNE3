@@ -3,7 +3,7 @@ informationBox:
     ja_JP: "インフォメーションボックス"
   description:
     ja_JP: "ホーム画面にお知らせなどの通知が可能なインフォメーションボックスを設置できます。"
-  component: [default, SmtInformationBox]
+  component: [default, smtInformationBox]
   config:
     value:
       Name:       "value"
