@@ -1292,6 +1292,10 @@
         <target>SNSメンバーの%activity%</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Can not post same message</source>
+        <target>既に送信済みです。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Remember me</source>
         <target>次回から自動的にログイン</target>
       </trans-unit>

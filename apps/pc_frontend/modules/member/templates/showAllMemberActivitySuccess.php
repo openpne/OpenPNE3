@@ -9,7 +9,8 @@
   'title' => __("SNS Member's %activity%", array(
     '%activity%' => $op_term['activity']->titleize()->pluralize()
   )),
-  'activities' => $pager->getResults()
+  'activities' => $pager->getResults(),
+  'activityMessage' => $activityMessage,
 ) ?>
 <?php if (isset($form)): ?>
 <?php $params['form'] = $form ?>
