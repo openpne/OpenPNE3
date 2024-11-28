@@ -119,7 +119,7 @@ class defaultComponents extends sfComponents
       $this->result = @$fetcher->fetch($this->gadget->getConfig('url'), true);
       if ($this->result)
       {
-        $this->result[1] = array_slice($this->result[1], 0, 5);
+        $this->result[1] = array_slice($this->result[1], 0, $this->gadget->getConfig('col'));
       }
     }
     catch (Exception $e)
