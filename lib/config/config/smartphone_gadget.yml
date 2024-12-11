@@ -1,3 +1,17 @@
+informationBox:
+  caption:
+    ja_JP: "インフォメーションボックス"
+  description:
+    ja_JP: "ホーム画面にお知らせなどの通知が可能なインフォメーションボックスを設置できます。"
+  component: [default, smtInformationBox]
+  config:
+    value:
+      Name:       "value"
+      Caption:    "内容"
+      FormType:   "rich_textarea"
+      ValueType:  "text"
+      IsRequired: false
+
 freeArea:
   caption:
     ja_JP: "フリーエリア"

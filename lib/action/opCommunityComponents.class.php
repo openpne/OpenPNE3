@@ -35,4 +35,21 @@ abstract class opCommunityComponents extends sfComponents
     $this->communityCount = Doctrine::getTable('Community')->countPositionRequestCommunities('sub_admin');
   }
 
+  public function executeSmtCautionAboutCommunityMemberPre(opWebRequest $request)
+  {
+    $memberId = sfContext::getInstance()->getUser()->getMemberId();
+
+    $this->communityMembersCount = Doctrine::getTable('CommunityMember')->countCommunityMembersPre($memberId);
+  }
+
+  public function executeSmtCautionAboutChangeAdminRequest(opWebRequest $request)
+  {
+    $this->communityCount = Doctrine::getTable('Community')->countPositionRequestCommunities('admin');
+  }
+
+  public function executeSmtCautionAboutSubAdminRequest(opWebRequest $request)
+  {
+    $this->communityCount = Doctrine::getTable('Community')->countPositionRequestCommunities('sub_admin');
+  }
+
 }
