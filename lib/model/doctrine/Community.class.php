@@ -211,16 +211,37 @@ class Community extends BaseCommunity implements opAccessControlRecordInterface
     }
   }
 
-	public function joinAllMembers()
+  public function joinAllMembers()
   {
-    $conn = Doctrine::getTable('Member')->getConnection();
-    $query = 'SELECT id FROM '.Doctrine::getTable('Member')->getTableName().' m'
-           . '  WHERE NOT EXISTS (SELECT * FROM '.Doctrine::getTable('CommunityMember')->getTableName().' cm WHERE m.id = cm.member_id AND cm.community_id = ?)'
-           . '        AND (m.is_active = 1 OR m.is_active IS NULL)';
-    $insertIds = $conn->fetchColumn($query, array($this->getId()));
-    foreach ($insertIds as $memberId)
+    $pdo = opDoctrineQuery::getMasterConnection()->getDbh();
+    $pdo->beginTransaction();
+
+    $query = <<<SQL
+INSERT INTO community_member (community_id, member_id, created_at, updated_at)
+  SELECT :community_id, id, NOW(), NOW() FROM member m
+    WHERE NOT EXISTS (
+      SELECT * FROM community_member cm
+      WHERE m.id = cm.member_id AND cm.community_id = :community_id
+    )
+    AND (m.is_active = 1 OR m.is_active IS NULL)
+SQL;
+
+    $total = 0;
+    try
     {
-      Doctrine::getTable('CommunityMember')->join($memberId, $this->getId());
+      $stmt = $pdo->prepare($query);
+      $stmt->execute(array('community_id' => $this->id));
+      $total = $stmt->rowCount();
+
+      $pdo->commit();
     }
+    catch (Exception $e)
+    {
+      $pdo->rollback();
+
+      throw $e;
+    }
+
+    return $total;
   }
 }
