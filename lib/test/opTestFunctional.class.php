@@ -90,4 +90,11 @@ class opTestFunctional extends sfTestFunctional
 
     return $this;
   }
+
+  public function todo($message = '')
+  {
+    $this->test()->todo($message);
+
+    return $this;
+  }
 }
