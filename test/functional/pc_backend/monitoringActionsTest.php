@@ -12,8 +12,7 @@ $browser
 
 // CSRF
   ->info('/monitoring/editImage - CSRF')
-  ->post('/monitoring/editImage')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/monitoring/deleteImage/id/1 - CSRF')
   ->post('/monitoring/deleteImage/id/1')

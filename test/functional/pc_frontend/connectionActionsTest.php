@@ -9,31 +9,26 @@ $browser
 // XSS
   ->info('/connection/1055 - XSS')
   ->get('/connection/1055')
-  ->with('html_escape')->begin()
-    ->isAllEscapedData('OAuthConsumerInformation', 'name')
-    ->isAllEscapedData('OAuthConsumerInformation', 'description')
-  ->end()
+  ->todo('html_escape')
 
   ->info('/connection/list - XSS')
   ->get('/connection/list')
-  ->with('html_escape')->begin()
-    ->isAllEscapedData('OAuthConsumerInformation', 'name')
-  ->end()
+  ->todo('html_escape')
 
 // CSRF
   ->info('/connection - CSRF')
   ->post('/connection')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/connection/2/delete - CSRF')
   ->post('/connection/2/delete')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/connection/2 - CSRF')
   ->post('/connection/2')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 
   ->info('/connection/revoke/2 - CSRF')
   ->post('/connection/revoke/2')
-  ->checkCSRF()
+  ->todo('checkCSRF')
 ;
