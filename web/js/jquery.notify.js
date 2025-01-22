@@ -5,7 +5,8 @@
     }, settings);
 
     return this.each(function(){
-      var linkUrl = $(this).attr('data-location-url');
+      var dataLocationUrl = $(this).attr('data-location-url');
+      var linkUrl = openpne.baseUrl + dataLocationUrl.replace(/^\/*/g, '');
       var notifyId = $(this).attr('data-notify-id');
       $(this).click(function(){
         if ( false == settings.isDisableRead )
