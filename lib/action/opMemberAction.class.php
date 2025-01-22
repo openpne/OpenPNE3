@@ -590,6 +590,18 @@ abstract class opMemberAction extends sfActions
       $this->form->bind($params);
       if ($this->form->isValid())
       {
+        $lastactivity = Doctrine::getTable('ActivityData')->getActivityList($this->getUser()->getMemberId(), null, 1);
+        if ($params['body'] == $lastactivity[0]['body'])
+        {
+          if ($request->isMobile())
+          {
+            $this->getUser()->setFlash('error', 'Can not post same message');
+            $this->redirect($params['next_uri']);
+          }
+          sfContext::getInstance()->getConfiguration()->loadHelpers('I18N');
+          return $this->renderText('same-message|'.__('Can not post same message'));
+        }
+
         $this->form->save();
         if ($request->isXmlHttpRequest())
         {

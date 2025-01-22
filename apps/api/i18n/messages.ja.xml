@@ -230,6 +230,10 @@
         <source>Self Introduction</source>
         <target>自己紹介</target>
       </trans-unit>
+      <trans-unit id="">
+        <source>Can not post same message</source>
+        <target>既に送信済みです。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

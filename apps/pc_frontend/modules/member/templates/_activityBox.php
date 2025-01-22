@@ -9,6 +9,7 @@
     '%activity%' => $op_term['activity']->titleize()->pluralize()
   )),
   'moreUrl' => 'member/showActivity?id='.$member->getId(),
+  'activityMessage' => $activityMessage,
 ) ?>
 <?php include_partial('default/activityBox', $params) ?>
 <?php endif; ?>

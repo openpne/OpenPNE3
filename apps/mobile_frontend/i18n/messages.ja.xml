@@ -1180,6 +1180,10 @@
         <target>SNSﾒﾝﾊﾞｰの%activity%</target>
       </trans-unit>
       <trans-unit id="">
+        <source>Can not post same message</source>
+        <target>既に送信済みです。</target>
+      </trans-unit>
+      <trans-unit id="">
         <source>Link outside URL</source>
         <target>外部URLへのリンク</target>
       </trans-unit>
