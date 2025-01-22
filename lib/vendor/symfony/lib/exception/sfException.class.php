@@ -18,7 +18,7 @@
  * @subpackage exception
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfException.class.php 32641 2011-06-11 13:39:35Z fabien $
+ * @version    SVN: $Id: sfException.class.php 33539 2012-09-19 05:36:02Z fabien $
  */
 class sfException extends Exception
 {
@@ -100,7 +100,9 @@ class sfException extends Exception
         }
       }
 
-      ob_start(sfConfig::get('sf_compressed') ? 'ob_gzhandler' : '');
+      if (sfConfig::get('sf_compressed')) {
+          ob_start('ob_gzhandler');
+      }
 
       header('HTTP/1.0 500 Internal Server Error');
     }
@@ -193,8 +195,9 @@ class sfException extends Exception
       }
     }
 
-    // when using CLI, we force the format to be TXT
-    if (0 == strncasecmp(PHP_SAPI, 'cli', 3))
+    // when using CLI, we force the format to be TXT. Compare exactly to 
+    // the string 'cli' because the php 5.4 server is identified by 'cli-server'
+    if ('cli' == PHP_SAPI)
     {
       $format = 'txt';
     }
